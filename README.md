@@ -1,3 +1,3 @@
-# 42sh project - arsciand @ 42
+# 42sh project - arsciand && gvillat @ 42
 
 To be continued ..
