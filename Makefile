@@ -12,7 +12,8 @@ define MSG
 # **************************************************************************** #
 endef
 
-# Progress bar
+# Progress bar with on line output printing. This script get the maximum
+# lines , then expr a compilation percentage.
 
 ifneq ($(words $(MAKECMDGOALS)),1)
 .DEFAULT_GOAL = make
@@ -45,14 +46,16 @@ NAME = 42sh
 LNAME = libft.a
 #TNAME =
 
-# Version
+# Build information that can be added the predefines buffer at compilation
 
-BUILD_NUMBER_FILE = .build-number
-BUILD_DATE = $$(date +'%Y%m%d')
-BUILD_BRANCH = $$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
-BUILD_VERSION = $$(cat .version)
-BUILD_PATCH = $$(cat $(BUILD_NUMBER_FILE))
-BUILD_RELEASE = $$(cat .release)
+BUILD_FILE			=	.build
+BUILD_DATE			=	$$(date +'%Y%m%d')
+BUILD_BRANCH		=	$$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
+BUILD_RELEASE		=	$$(awk 'NR==3 {print $$3}' $(BUILD_FILE))
+BUILD_VERSION		=	$$(awk 'NR==4 {print $$3}' $(BUILD_FILE))
+BUILD_PATCH			=	$$(awk 'NR==5 {print $$3}' $(BUILD_FILE))
+DEFAULT_BUILD_FILE	=	"Build information, patch level is incremented at \
+compilation.\n\nRELEASE\t=\t0\nVERSION\t=\t0\nPATCH\t=\t0"
 
 # Dir/Files Path
 
@@ -126,21 +129,32 @@ make:
 
 all: libm $(BUILD) $(NAME)
 
-$(NAME): $(OBJ) $(BUILD_NUMBER_FILE)
+# Compilation core
+
+$(NAME): $(OBJ) $(BUILD_FILE)
 	@$(ECHO) $(GCFIL) $(NAME)
 	@$(CMPLO) $(NAME) $(OBJ) $(LIB)
 	@$(GCSUC)
 	@echo "---\nCFLAG\t- =$(B_C)\t$(CFLAG)$(RESET_C)\n---"
-	@echo "\n$(G_C)[$(BUILD_BRANCH)] $(RESET_C)$@ v.$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE) is ready !"
-	@cp $(NAME) $(B_PATH)$(NAME)_$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE)
+	@echo "\n$(G_C)[$(BUILD_BRANCH)] $(RESET_C)$@ \
+	v.$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE) is ready !"
+	@cp $(NAME) \
+	$(B_PATH)$(NAME)_$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE)
 
 $(OBJ): $(O_PATH)%.o: $(S_PATH)%.c $(HDR)
-	@$(CMPLC) -DBUILDR=$(BUILD_RELEASE) -DBUILDV=$(BUILD_VERSION) -DBUILDP=$(BUILD_PATCH) -DDATE=$(BUILD_DATE) $< -o $@
+	@$(CMPLC) -DBUILDR=$(BUILD_RELEASE) -DBUILDV=$(BUILD_VERSION) \
+	-DBUILDP=$(BUILD_PATCH) -DDATE=$(BUILD_DATE) $< -o $@
 	@$(ECHO) $(GCFIL) $<
 
-$(BUILD_NUMBER_FILE): $(OBJ)
-	@if ! test -f $(BUILD_NUMBER_FILE); then echo 0 > $(BUILD_NUMBER_FILE); fi
-	@echo $$(($$(cat $(BUILD_NUMBER_FILE)) + 1)) > $(BUILD_NUMBER_FILE)
+# Check if .build exist, then incremente patch level each compilation.
+# If not exist, create it with default values
+
+$(BUILD_FILE): $(OBJ)
+	@if ! test -f $(BUILD_FILE); \
+	then echo $(DEFAULT_BUILD_FILE) > $(BUILD_FILE); fi
+	@sed -i '.bak' "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
+	$(BUILD_FILE)
+	@rm $(BUILD_FILE).bak
 
 $(PATHS):
 	@$(MKDIR) $(PATHS)
@@ -150,9 +164,6 @@ norme:
 	@$(NORMR)
 	@$(NORME) $(SRC) $(H_PATH)$(HNAME)
 	@$(NORMD)
-
-test:
-	@$(GCRUN)
 
 clean: libco
 	@for i in $(OBJ); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
@@ -164,6 +175,8 @@ fclean: libc
 	@$(RM_RF) $(NAME)
 	@$(ECHO) $(RMSHW) $(NAME)
 	@$(CLSUC)
+
+# Libc rules
 
 libm:
 	@make -C $(L_PATH)
