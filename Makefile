@@ -43,7 +43,7 @@ C_C = \033[0;36m
 # Programms names
 
 NAME = 42sh
-LNAME = libft.a
+LNAME = shared_libft.a
 #TNAME =
 
 # Build information that can be added the predefines buffer at compilation
@@ -61,10 +61,10 @@ compilation.\n\nRELEASE\t=\t0\nVERSION\t=\t0\nPATCH\t=\t0"
 
 S_PATH = srcs/
 H_PATH += includes/
-H_PATH += libft/includes/
+H_PATH += shared_libft/includes/
 B_PATH = build/
 O_PATH = build/objs/
-L_PATH = libft/
+L_PATH = shared_libft/
 
 CR_PATH = build/objs/core/
 
@@ -83,7 +83,7 @@ SRC += $(S_PATH)core/42sh.c
 HDR += sh42.h
 HDR += define.h
 HDR += struct.h
-HDR += libft.h
+HDR += shared_libft.h
 
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
 LIB = $(L_PATH)$(LNAME)
