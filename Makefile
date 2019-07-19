@@ -131,6 +131,7 @@ all: libm $(BUILD) $(NAME)
 
 # Compilation core
 
+
 $(NAME): $(OBJ) $(BUILD_FILE)
 	@$(ECHO) $(GCFIL) $(NAME)
 	@$(CMPLO) $(NAME) $(OBJ) $(LIB)
@@ -149,12 +150,22 @@ $(OBJ): $(O_PATH)%.o: $(S_PATH)%.c $(HDR)
 # Check if .build exist, then incremente patch level each compilation.
 # If not exist, create it with default values
 
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S), Darwin)
 $(BUILD_FILE): $(OBJ)
 	@if ! test -f $(BUILD_FILE); \
 	then echo $(DEFAULT_BUILD_FILE) > $(BUILD_FILE); fi
 	@sed -i '.bak' "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
 	$(BUILD_FILE)
 	@rm $(BUILD_FILE).bak
+else
+$(BUILD_FILE): $(OBJ)
+	@if ! test -f $(BUILD_FILE); \
+	then echo $(DEFAULT_BUILD_FILE) > $(BUILD_FILE); fi
+	@sed -i "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
+	$(BUILD_FILE)
+endif
 
 $(PATHS):
 	@$(MKDIR) $(PATHS)
