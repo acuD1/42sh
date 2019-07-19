@@ -4,9 +4,9 @@ define MSG
 #                                                         :::      ::::::::    #
 #    Makefile for 42sh                                  :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+         #
+#    By arsciand fcatusse guvillat                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/10/14 19:23:44 by arsciand          #+#    #+#              #
+#                                                      #+#    #+#              #
 #                                                     ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -44,7 +44,6 @@ C_C = \033[0;36m
 
 NAME = 42sh
 LNAME = shared_libft.a
-#TNAME =
 
 # Build information that can be added the predefines buffer at compilation
 
@@ -57,7 +56,7 @@ BUILD_PATCH			=	$$(awk 'NR==5 {print $$3}' $(BUILD_FILE))
 DEFAULT_BUILD_FILE	=	"Build information, patch level is incremented at \
 compilation.\n\nRELEASE\t=\t0\nVERSION\t=\t0\nPATCH\t=\t0"
 
-# Dir/Files Path
+# Dir/Files Path (Do not modify)
 
 S_PATH = srcs/
 H_PATH += includes/
@@ -66,24 +65,36 @@ B_PATH = build/
 O_PATH = build/objs/
 L_PATH = shared_libft/
 
-CR_PATH = build/objs/core/
+###############################################################################
+#                               Modifications                                 #
+###############################################################################
 
-PATHS = $(B_PATH) $(O_PATH) $(CR_PATH)
+# Add custom dir for .o
 
-OBJP = "$(O_PATH){core}*.o"
+CORE = core/
+
+# Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
+
+PATHS += $(B_PATH)
+PATHS += $(O_PATH)
+PATHS += $(O_PATH)$(CORE)
 
 # Files
 
-SRC += $(S_PATH)core/42sh.c
+SRC += $(S_PATH)$(CORE)42sh.c
 
-#SRC += $(S_PATH)dev.c
-
-# Objects and Headers
+# Headers
 
 HDR += sh42.h
 HDR += define.h
 HDR += struct.h
 HDR += shared_libft.h
+
+###############################################################################
+#                                                                             #
+###############################################################################
+
+# Objects
 
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
 LIB = $(L_PATH)$(LNAME)
