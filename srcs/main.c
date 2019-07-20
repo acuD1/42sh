@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:28 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/18 18:36:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/20 18:59:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <sys/ioctl.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include "inc/twenty_one.h"
+# include "twenty_one.h"
+
+/* Je t'ai mis une option de compilation `make DEBUG=dev re`
+** comme tu compile pas avec les flags LOL :D*/
 
 int			main(int ac, char **av, char **env)
 {

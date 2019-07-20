@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   insert_in_buffer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/11 19:16:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/20 18:33:52 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/twenty_one.h"
+# include "twenty_one.h"
 
 void		insert_char_in_buffer(char buf, t_read *input, int buf_index)
 {

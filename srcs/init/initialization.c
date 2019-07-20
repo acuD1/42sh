@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:07 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/18 09:39:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/20 18:34:30 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/twenty_one.h"
+# include "twenty_one.h"
 # include <sys/ioctl.h>
 
 void				init_term(t_sh *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   twenty_one.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:39 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/09 18:28:49 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/20 18:31:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <termcap.h>
 # include <stdlib.h>
 
-# include "../libft/libft.h"
+# include "shared_libft.h"
 # include "cmdline.h"
 # include "builtins.h"
 

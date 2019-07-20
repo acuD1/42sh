@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_history.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/18 16:08:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/20 18:34:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include "../../inc/twenty_one.h"
+# include "twenty_one.h"
 
 void			save_history(t_read *term)
 {

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   move_cursor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/18 12:12:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/20 18:55:16 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <sys/ioctl.h>
-# include "../../inc/twenty_one.h"
+# include "twenty_one.h"
 
 /*
 ** Alt + f to jump one word forward

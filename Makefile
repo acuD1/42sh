@@ -4,9 +4,9 @@ define MSG
 #                                                         :::      ::::::::    #
 #    Makefile for 42sh                                  :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+         #
+#    By arsciand fcatusse guvillat                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/10/14 19:23:44 by arsciand          #+#    #+#              #
+#                                                      #+#    #+#              #
 #                                                     ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
@@ -44,7 +44,6 @@ C_C = \033[0;36m
 
 NAME = 42sh
 LNAME = shared_libft.a
-#TNAME =
 
 # Build information that can be added the predefines buffer at compilation
 
@@ -57,7 +56,7 @@ BUILD_PATCH			=	$$(awk 'NR==5 {print $$3}' $(BUILD_FILE))
 DEFAULT_BUILD_FILE	=	"Build information, patch level is incremented at \
 compilation.\n\nRELEASE\t=\t0\nVERSION\t=\t0\nPATCH\t=\t0"
 
-# Dir/Files Path
+# Dir/Files Path (Do not modify)
 
 S_PATH = srcs/
 H_PATH += includes/
@@ -66,33 +65,74 @@ B_PATH = build/
 O_PATH = build/objs/
 L_PATH = shared_libft/
 
-CR_PATH = build/objs/core/
+###############################################################################
+#                               Modifications                                 #
+###############################################################################
 
-PATHS = $(B_PATH) $(O_PATH) $(CR_PATH)
+# Add custom dir for .o
 
-OBJP = "$(O_PATH){core}*.o"
+CORE		=	core/
+BUILTINS	=	builtins/
+COMMANDLINE =	commandline/
+EXEC		=	exec/
+INIT		=	init/
+
+# Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
+
+PATHS		+=	$(B_PATH)
+PATHS		+=	$(O_PATH)
+PATHS		+=	$(O_PATH)$(CORE)
+PATHS		+=	$(O_PATH)$(BUILTINS)
+PATHS		+=	$(O_PATH)$(COMMANDLINE)
+PATHS		+=	$(O_PATH)$(EXEC)
+PATHS		+=	$(O_PATH)$(INIT)
 
 # Files
 
-SRC += $(S_PATH)core/42sh.c
+#SRC			+=	$(S_PATH)$(CORE)42sh.c
+SRC			+=	$(S_PATH)main.c
 
-#SRC += $(S_PATH)dev.c
+SRC			+=	$(S_PATH)$(BUILTINS)check_builtins.c
+SRC			+=	$(S_PATH)$(BUILTINS)exit.c
+SRC			+=	$(S_PATH)$(BUILTINS)history.c
 
-# Objects and Headers
+SRC			+=	$(S_PATH)$(COMMANDLINE)check_caps.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)del_keys.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)insert_in_buffer.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)move_cursor.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)save_history.c
 
-HDR += sh42.h
-HDR += define.h
-HDR += struct.h
-HDR += shared_libft.h
+SRC			+=	$(S_PATH)$(EXEC)run_process.c
+
+SRC			+=	$(S_PATH)$(INIT)init_termcaps.c
+SRC			+=	$(S_PATH)$(INIT)initialization.c
+
+# Headers
+
+HDR			+=	sh42.h
+HDR			+=	define.h
+HDR			+=	struct.h
+HDR			+=	builtins.h
+HDR			+=	cmdline.h
+HDR			+=	twenty_one.h
+HDR			+=	shared_libft.h
+
+
+###############################################################################
+#                                                                             #
+###############################################################################
+
+# Objects
 
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
-LIB = $(L_PATH)$(LNAME)
+LIB = $(L_PATH)$(LNAME) -ltermcap
 vpath %.h $(H_PATH)
 
 # Variables
 
 C_GCC = gcc $(CFLAG)
-IFLAGS = $(addprefix -I, $(H_PATH))
+IFLAGS += $(addprefix -I, $(H_PATH))
 CMPLC = $(C_GCC) -c $(IFLAGS)
 CMPLO = $(C_GCC) -o
 BUILD = $(PATHS)
@@ -118,6 +158,8 @@ ifeq ($(DEBUG), g)
 	CFLAG = -g
 else ifeq ($(DEBUG), fsanitize)
 	CFLAG = -fsanitize=address
+else ifeq ($(DEBUG), dev)
+	CFLAG =
 else
 	CFLAG = -Wall -Wextra -Werror
 endif
@@ -130,6 +172,7 @@ make:
 all: libm $(BUILD) $(NAME)
 
 # Compilation core
+
 
 $(NAME): $(OBJ) $(BUILD_FILE)
 	@$(ECHO) $(GCFIL) $(NAME)
@@ -149,12 +192,22 @@ $(OBJ): $(O_PATH)%.o: $(S_PATH)%.c $(HDR)
 # Check if .build exist, then incremente patch level each compilation.
 # If not exist, create it with default values
 
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S), Darwin)
 $(BUILD_FILE): $(OBJ)
 	@if ! test -f $(BUILD_FILE); \
 	then echo $(DEFAULT_BUILD_FILE) > $(BUILD_FILE); fi
 	@sed -i '.bak' "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
 	$(BUILD_FILE)
 	@rm $(BUILD_FILE).bak
+else
+$(BUILD_FILE): $(OBJ)
+	@if ! test -f $(BUILD_FILE); \
+	then echo $(DEFAULT_BUILD_FILE) > $(BUILD_FILE); fi
+	@sed -i "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
+	$(BUILD_FILE)
+endif
 
 $(PATHS):
 	@$(MKDIR) $(PATHS)
