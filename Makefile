@@ -71,24 +71,32 @@ L_PATH = shared_libft/
 
 # Add custom dir for .o
 
-CORE = core/
+CORE	=	core/
+DB		=	db/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
-PATHS += $(B_PATH)
-PATHS += $(O_PATH)
-PATHS += $(O_PATH)$(CORE)
+PATHS	+=	$(B_PATH)
+PATHS	+=	$(O_PATH)
+PATHS	+=	$(O_PATH)$(CORE)
+PATHS	+=	$(O_PATH)$(DB)
 
 # Files
 
-SRC += $(S_PATH)$(CORE)42sh.c
+SRC		+=	$(S_PATH)$(CORE)42sh.c
+SRC		+=	$(S_PATH)$(CORE)print_opt.c
+
+SRC		+=	$(S_PATH)$(DB)init_shell.c
+SRC		+=	$(S_PATH)$(DB)get_opt.c
+SRC		+=	$(S_PATH)$(DB)set_env.c
+SRC		+=	$(S_PATH)$(DB)fetch_db.c
 
 # Headers
 
-HDR += sh42.h
-HDR += define.h
-HDR += struct.h
-HDR += shared_libft.h
+HDR		+=	sh42.h
+HDR		+=	define.h
+HDR		+=	struct.h
+HDR		+=	shared_libft.h
 
 ###############################################################################
 #                                                                             #
