@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/20 17:13:04 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/21 14:09:35 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 int8_t	set_env(t_core *shell, char **environ)
 {
-	t_lst	*env;
 	size_t	i;
 
 	i = 0;
-	env = NULL;
 
 	/*
 	NOT IMPLEMENTED YET
@@ -27,7 +25,7 @@ int8_t	set_env(t_core *shell, char **environ)
 
 	while (environ[i])
 	{
-		ft_lstappend(&env,
+		ft_lstappend(&shell->env,
 			ft_lstnew(fetch_db(&shell->db, environ[i]), sizeof(t_db)));
 		i++;
 	}
@@ -36,7 +34,7 @@ int8_t	set_env(t_core *shell, char **environ)
 	NOT IMPLEMENTED YET
 	define_env_list(shell, env);*/
 
-	if (env == NULL)
+	if (shell->env == NULL)
 		return (FAILURE);
 	return (SUCCESS);
 }

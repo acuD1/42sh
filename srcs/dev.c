@@ -1,29 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   dev.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/21 13:45:21 by arsciand         ###   ########.fr       */
+/*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
+/*   Updated: 2019/07/21 14:05:47 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-/*
-**	Global variable are initialized here. We need to figure it out wich ones
-**	need to be shared.
-*/
-
-void	init_shell(t_core *shell)
+void	print_tokens(t_core *shell)
 {
-	shell->build.release = BUILDR;
-	shell->build.version = BUILDV;
-	shell->build.patch = BUILDP + 1;
-	shell->build.date = DATE;
-	shell->tokens = NULL;
-	shell->env = NULL;
-	shell->opt = 0;
+	char	**tokens;
+	size_t	i;
+
+	i = 0;
+	tokens = shell->tokens;
+	while (tokens[i])
+	{
+		dprintf(STDOUT_FILENO, "TOKEN[%zu] = |%s|\n", i, tokens[i]);
+		i++;
+	}
+}
+
+void	print_env(t_core *shell)
+{
+	t_lst	*env;
+
+	env = shell->env;
+	while (env)
+	{
+		dprintf(STDOUT_FILENO, "[KEY] = |%s|\n[VALUE] = |%s|\n",
+			((t_db*)(env->content))->key, ((t_db*)(env->content))->value);
+		env = env->next;
+	}
 }

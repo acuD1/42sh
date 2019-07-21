@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   free_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/21 13:45:21 by arsciand         ###   ########.fr       */
+/*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
+/*   Updated: 2019/07/21 14:10:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-/*
-**	Global variable are initialized here. We need to figure it out wich ones
-**	need to be shared.
-*/
-
-void	init_shell(t_core *shell)
+void	free_env(t_lst *env)
 {
-	shell->build.release = BUILDR;
-	shell->build.version = BUILDV;
-	shell->build.patch = BUILDP + 1;
-	shell->build.date = DATE;
-	shell->tokens = NULL;
-	shell->env = NULL;
-	shell->opt = 0;
+	t_lst	*tmp;
+
+	while (env)
+	{
+		ft_strdel(&((t_db*)(env->content))->key);
+		ft_strdel(&((t_db*)(env->content))->value);
+		free(env->content);
+		tmp = env;
+		env = env->next;
+		free(tmp);
+	}
+}
+
+void	free_prompt(t_core *shell, char *line)
+{
+	ft_tabdel(&shell->tokens);
+	ft_strdel(&line);
 }

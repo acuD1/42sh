@@ -1,16 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_opt.c                                        :+:      :+:    :+:   */
+/*   output.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:20:07 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/20 17:34:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/21 13:14:08 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+void	init_prompt(void)
+{
+	dprintf(STDOUT_FILENO, "> %s$%s ", C_G, C_X);
+}
+
+void	credit(t_core *shell)
+{
+	dprintf(STDOUT_FILENO,
+		"%s|%sv.%d_%d_%d%s|%s 42sh%s\n\n",
+		C_G, C_X,
+		shell->build.release, shell->build.version, shell->build.patch,
+		C_G, C_Y, C_X);
+}
 
 void	print_opt(t_core *shell)
 {

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/20 17:32:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/21 12:08:36 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct	s_db
 }				t_db;
 
 /*
-**	t_core struct shares global variables
+**	t_core shares global variables
 */
 
 typedef struct	s_core
@@ -49,8 +49,9 @@ typedef struct	s_core
 	t_lst		*env;
 
 	/* variables */
-	char		**base_env;
-	u_int8_t	opt;
+	char		**tokens;		//	ft_strplit of char *line from GNL [BETA]
+	u_int8_t	opt;			//	Options
+
 }				t_core;
 
 #endif

@@ -73,6 +73,7 @@ L_PATH = shared_libft/
 
 CORE	=	core/
 DB		=	db/
+EXEC	=	exec/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -80,16 +81,22 @@ PATHS	+=	$(B_PATH)
 PATHS	+=	$(O_PATH)
 PATHS	+=	$(O_PATH)$(CORE)
 PATHS	+=	$(O_PATH)$(DB)
+PATHS	+=	$(O_PATH)$(EXEC)
 
 # Files
 
 SRC		+=	$(S_PATH)$(CORE)42sh.c
-SRC		+=	$(S_PATH)$(CORE)print_opt.c
+SRC		+=	$(S_PATH)$(CORE)load_prompt.c
+SRC		+=	$(S_PATH)$(CORE)output.c
+SRC		+=	$(S_PATH)$(CORE)free_handler.c
 
 SRC		+=	$(S_PATH)$(DB)init_shell.c
 SRC		+=	$(S_PATH)$(DB)get_opt.c
 SRC		+=	$(S_PATH)$(DB)set_env.c
 SRC		+=	$(S_PATH)$(DB)fetch_db.c
+SRC		+=	$(S_PATH)$(DB)get_tokens.c
+
+SRC		+=	$(S_PATH)dev.c
 
 # Headers
 

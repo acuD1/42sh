@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/20 17:38:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/21 14:12:00 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		main(int ac, char **av, char **environ)
 {
 	t_core	shell;
 
-	init_shell(&shell, environ);
+	init_shell(&shell);
 
 	/* Parse char **av and fill option */
 	if (get_opt(ac, av, &shell) != SUCCESS)
@@ -38,7 +38,11 @@ int		main(int ac, char **av, char **environ)
 	/* Options output */
 	print_opt(&shell);
 
-	/* Everything else will happen here */
+	/* DEBUG */
+	print_env(&shell);
 
+	/* Everything else will happen here */
+	load_prompt(&shell);
+	free_env(shell.env);
 	return (EXIT_SUCCESS);
 }

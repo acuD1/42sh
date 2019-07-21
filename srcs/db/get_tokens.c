@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_shell.c                                       :+:      :+:    :+:   */
+/*   get_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/21 13:45:21 by arsciand         ###   ########.fr       */
+/*   Created: 2019/07/21 13:05:26 by arsciand          #+#    #+#             */
+/*   Updated: 2019/07/21 13:06:46 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-/*
-**	Global variable are initialized here. We need to figure it out wich ones
-**	need to be shared.
-*/
-
-void	init_shell(t_core *shell)
+int8_t		get_tokens(t_core *shell, char *line)
 {
-	shell->build.release = BUILDR;
-	shell->build.version = BUILDV;
-	shell->build.patch = BUILDP + 1;
-	shell->build.date = DATE;
-	shell->tokens = NULL;
-	shell->env = NULL;
-	shell->opt = 0;
+	shell->tokens = ft_strsplit(line, " \t");
+	if (shell->tokens == NULL)
+		return (FAILURE);
+	return (SUCCESS);
 }
