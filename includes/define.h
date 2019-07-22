@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/20 17:24:21 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/22 13:00:46 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,15 @@
 
 # define OPT_VERS		0x001
 # define OPT_HELP		0x002
+
+/*
+**	Exec handler
+*/
+
+# define BIN_ERROR		0x001
+# define PATH_ERROR		0x002
+# define FORK_ERROR		0x004
+# define PERM_ERROR		0x008
+# define EXEC_ERROR		0x010
 
 #endif
