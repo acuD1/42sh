@@ -96,6 +96,11 @@ SRC		+=	$(S_PATH)$(DB)set_env.c
 SRC		+=	$(S_PATH)$(DB)fetch_db.c
 SRC		+=	$(S_PATH)$(DB)get_tokens.c
 
+SRC		+=	$(S_PATH)$(EXEC)exec_process.c
+SRC		+=	$(S_PATH)$(EXEC)exec_handler.c
+SRC		+=	$(S_PATH)$(EXEC)get_bin.c
+SRC		+=	$(S_PATH)$(EXEC)set_envp.c
+
 SRC		+=	$(S_PATH)dev.c
 
 # Headers

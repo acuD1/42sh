@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/21 14:09:35 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/27 13:49:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ int8_t	set_env(t_core *shell, char **environ)
 	i = 0;
 
 	/*
-	NOT IMPLEMENTED YET
+	**	NOT IMPLEMENTED YET
 	if (environ == NULL || *environ == NULL)
-		return (set_default_env(shell, env));*/
+		return (set_default_env(shell, env));
+	*/
 
 	while (environ[i])
 	{
@@ -31,8 +32,9 @@ int8_t	set_env(t_core *shell, char **environ)
 	}
 
 	/*
-	NOT IMPLEMENTED YET
-	define_env_list(shell, env);*/
+	**	NOT IMPLEMENTED YET
+	define_env_list(shell, env);
+	*/
 
 	if (shell->env == NULL)
 		return (FAILURE);

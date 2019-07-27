@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/21 12:08:36 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/27 14:21:33 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct	s_core
 
 	/* variables */
 	char		**tokens;		//	ft_strplit of char *line from GNL [BETA]
+	char		*bin;			//	dup of the binary found or located [BETA]
 	u_int8_t	opt;			//	Options
 
 }				t_core;

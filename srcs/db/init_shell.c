@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/21 13:45:21 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/27 14:24:16 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	init_shell(t_core *shell)
 	shell->build.version = BUILDV;
 	shell->build.patch = BUILDP + 1;
 	shell->build.date = DATE;
-	shell->tokens = NULL;
 	shell->env = NULL;
+	shell->tokens = NULL;
+	shell->bin = NULL;
 	shell->opt = 0;
 }

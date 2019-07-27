@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/21 14:11:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/27 14:38:28 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ int8_t		get_tokens(t_core *shell, char *line);
 **	Exec
 */
 
+void		exec_process(t_core *shell, t_lst *env);
+void		exec_handler(t_core *shell, u_int8_t handler);
+char		*get_bin(t_core *shell, t_lst *env);
+char		**set_envp(t_core *shell, t_lst *env);
 
 /*
 **	DEV
