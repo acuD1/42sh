@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 14:22:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/27 14:53:45 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		exec_process(t_core *shell, t_lst *env)
 	**	set_envp format a table of environement for execve.
 	**	like : PATH=/usr/bin
 	*/
-	envp = set_envp(shell, env);
+	envp = set_envp(shell);
 
 	/* binary is executed here by execve */
 	if (child == 0 && execve(shell->bin, shell->tokens, envp) < 0)
