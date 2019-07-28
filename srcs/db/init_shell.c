@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 14:24:16 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/27 16:54:21 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,10 @@ void	init_shell(t_core *shell)
 	shell->tokens = NULL;
 	shell->bin = NULL;
 	shell->opt = 0;
+
+	/*
+	**	hash
+	*/
+
+	shell->hash.binaries = NULL;
 }

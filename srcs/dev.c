@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/21 14:05:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/28 11:18:51 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,19 @@ void	print_env(t_core *shell)
 			((t_db*)(env->content))->key, ((t_db*)(env->content))->value);
 		env = env->next;
 	}
+}
+
+/*
+**	hash_table
+*/
+
+void	hash_module(t_core *shell)
+{
+	(void)shell;
+	return ;
+}
+
+void	hash_table(t_core *shell)
+{
+
 }

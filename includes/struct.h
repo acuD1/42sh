@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 14:21:33 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/27 16:53:26 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct	s_core
 {
 	/* structs */
 	t_build		build;
+	t_hash		hash;			// Gonna call it on the stack for now
 	t_db		db;
 
 	/* lists */
@@ -54,5 +55,14 @@ typedef struct	s_core
 	u_int8_t	opt;			//	Options
 
 }				t_core;
+
+/*
+**	t_hash for hash table implementation
+*/
+
+typedef struct	s_hash
+{
+	char	**binaries;
+}				t_hash;
 
 #endif

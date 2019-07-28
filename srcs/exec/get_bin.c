@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 14:41:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/27 16:47:33 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ char		*get_bin(t_core *shell, t_lst *env)
 	if ((shell->tokens[0][0] == '.'
 		|| shell->tokens[0][0] == '/') && shell->tokens[0][1])
 		return (shell->bin = ft_strdup(shell->tokens[0]));
+
+	/*
+	**	HASH_TABLE
+	*/
+	// hash module call
 
 	/*
 	**	If not local, we're going to find it in PATH
