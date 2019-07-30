@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 16:47:33 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/30 10:40:11 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ static char	*get_bin_path(char **path, const char *file)
 char		*get_bin(t_core *shell, t_lst *env)
 {
 	struct stat	stat;
-	char		**path;
+	char		**split_path;
+	char		*path;
 
+	split_path = NULL;
 	path = NULL;
 	/*
 	**	Severals test here :
@@ -80,7 +82,8 @@ char		*get_bin(t_core *shell, t_lst *env)
 	/*
 	**	HASH_TABLE
 	*/
-	// hash module call
+	if (locate_hash(shell) == SUCCESS)
+		return (shell->hash.table[shell->hash.value]);
 
 	/*
 	**	If not local, we're going to find it in PATH
@@ -91,12 +94,13 @@ char		*get_bin(t_core *shell, t_lst *env)
 		{
 
 			/* PATH splited by ":" */
-			path = ft_strsplit(((t_db*)(env->content))->value, ":");
+			split_path = ft_strsplit(((t_db*)(env->content))->value, ":");
+			path = get_bin_path(split_path, shell->tokens[0]);
 
 			/* set correct path if the binary is found in PATH */
-			shell->bin = ft_strjoinf(get_bin_path(path, shell->tokens[0]),
-								ft_strjoin("/", shell->tokens[0]), FREE_ALL);
-
+			shell->bin = ft_strjoinf(path, ft_strjoin("/", shell->tokens[0]),
+							FREE_ALL);
+			append_hash(shell, path);
 			ft_tabdel(&path);
 		}
 		env = env->next;

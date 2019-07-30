@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/28 11:18:51 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/30 16:36:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,3 @@ void	print_env(t_core *shell)
 /*
 **	hash_table
 */
-
-void	hash_module(t_core *shell)
-{
-	(void)shell;
-	return ;
-}
-
-void	hash_table(t_core *shell)
-{
-
-}

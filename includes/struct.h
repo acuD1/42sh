@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 16:53:26 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/30 10:53:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ typedef struct	s_core
 
 typedef struct	s_hash
 {
-	char	**binaries;
+	char		**table;
+	u_int32_t	value;
+	u_int32_t	size;
 }				t_hash;
 
 #endif

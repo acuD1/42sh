@@ -5,22 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/28 11:18:53 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/28 18:59:56 by arsciand         ###   ########.fr       */
+/*   Created: 2019/07/30 13:47:19 by arsciand          #+#    #+#             */
+/*   Updated: 2019/07/30 16:37:55 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdio.h"
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <time.h>
 #include "shared_libft.h"
 #include "define.h"
-#include <limits.h>
-#define L 620000 //75% load factor
+#include <stdio.h>
+//#include <sys/stat.h>
+#include <fcntl.h>
+//#include <sys/types.h>
+
+typedef struct s_db
+{
+	char	*bin;
+	char	*path;
+}			t_db;
+
+typedef struct s_hash
+{
+	t_lst	**table;
+	t_db	*db;
+}				t_hash;
 
 u_int32_t	get_hash(char *line)
 {
@@ -28,71 +35,56 @@ u_int32_t	get_hash(char *line)
 	size_t i = 0;
 	while (i < ft_strlen(line))
 	{
-		hash = ((hash << 8) + line[i]) % L;
+		hash = ((hash << 8) + line[i]) % HASH_SIZE;
 		i++;
 	}
 	return (hash);
 }
 
-int8_t	linear_probing(char **tab, char *line, u_int32_t hash)
+t_db	*fetch(t_hash *hash, const char *key, const char *path)
 {
-	while (hash < L)
-	{
-		if (tab[hash] == NULL)
-		{
-			tab[hash] = ft_strdup(line);
-			return (SUCCESS);
-		}
-		hash++;
-	}
-	return (FAILURE);
+	hash->db->bin = ft_strdup(key);
+	hash->db->path = ft_strdup(path);
+	return (hash->db);
 }
-
-u_int32_t	check_tab(char **tab)
+int		main(void)
 {
-	u_int32_t cell_filled = 0;
-	size_t	len = L;
-
-	while (len--)
-	{
-		if (tab[len])
-			cell_filled++;
-	}
-	return (cell_filled);
-}
-
-int	main(void)
-{
-	char		*line;
-	char		**tab = NULL;
-	u_int32_t	hash;
-	int			fd;
-	size_t		i;
-	size_t		c = 0;
+	t_hash	hash;
+	t_db	db;
+	char	*line;
+	size_t	i;
+	int		fd;
+	int		col = 0;
 
 	i = 0;
-	hash = 0;
 	line = NULL;
-	//ft_bzero(tab, sizeof(tab) * L);
+	hash.table = ft_memalloc(sizeof(t_lst*) * HASH_SIZE);
 	fd = open("words.txt.bak", O_RDONLY);
-	tab = ft_memalloc(sizeof(tab) * (L + 1));
-	while (ft_getnextline(fd, &line))
+	while(ft_getnextline(fd, &line))
 	{
-		hash = get_hash(line);
-		if (tab[hash] && linear_probing(tab, line, hash) != SUCCESS)
-			c++;
-		else
-			tab[hash] = ft_strdup(line);
-//		printf("word = |%s| hash = |%u|\n", line, hash);
+		if (hash.table[get_hash(line)] && hash.table[get_hash(line)]->next)
+			col++;
+		ft_lstappend(&hash.table[get_hash(line)], ft_lstnew(fetch(&hash, line, ""), sizeof(t_db)));
 		free(line);
 	}
-	tab[L] = NULL;
-	while (i < L)
+	// PRINT
+	while (i < HASH_SIZE)
 	{
-		if (tab[i])
-			printf("tab[%zu] = |%s|\n", i, tab[i]);
+		int z = 0;
+		while (hash.table[i])
+		{
+			if (z > 0)
+				printf("\t");
+			printf("[%zu][%d] BIN|%s| PATH|%s|\n", i, z,
+				((t_db*)(hash.table[i]->content))->bin,
+				((t_db*)(hash.table[i]->content))->path);
+			hash.table[i] = hash.table[i]->next;
+			z++;
+		}
 		i++;
 	}
-	printf("tablen = |%d|\ncollision = |%zu| %0.2f%c\n\n", check_tab(tab), c, (float)(c * 100) / L, '%');
+	printf("\nCOLLISION\n\n[%d] %0.2f %c\n\nLOAD FACTOR\n\n%0.2f\n\n", col, (float)(col * 100) / HASH_SIZE, '%', (float)466551 / HASH_SIZE);
+	//
 	close(fd);
+	return (0);
 }

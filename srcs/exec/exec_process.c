@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 14:53:45 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/30 10:15:46 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		exec_process(t_core *shell, t_lst *env)
 
 	envp = NULL;
 
-	/* get_bin check if is a local binary or find the binary in PATH */
+	/* get_bin check if is a local binary or find the binary in PATH or hash table*/
 	shell->bin = get_bin(shell, env);
 
 	/*
