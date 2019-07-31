@@ -14,26 +14,78 @@
 # define LEXER_H
 
 
-t_parser	*lexer(t_core shell, char *line);
-t_ast		*parser(t_core shell, t_parser *parser);
+/*
+** AST
+*/
 
-typedef struct		quote
+#define NODETYPE(a) (a & (~NODE_DATA))	// get the type of the nodes
+
+typedef enum {
+    NODE_PIPE 			= (1 << 0),
+    NODE_BCKGRND 		= (1 << 1),
+    NODE_SEQ 			= (1 << 2),
+    NODE_REDIRECT_IN 	= (1 << 3),
+    NODE_REDIRECT_OUT 	= (1 << 4),
+    NODE_CMDPATH		= (1 << 5),
+    NODE_ARGUMENT		= (1 << 6),
+    NODE_DATA 			= (1 << 7),
+} nodetype;
+
+typedef struct b_ast
 {
-	const char		*start;
-	const size_t		lenstart;
-	const char		*stop;
-	const size_t		lenstop;
-} s_quote;
+    int type;
+    char	*data;
+    struct ast* left;
+    struct ast* right;
 
-s_quote	quotes[] =
+} ast;
+
+void astAttachBinaryBranch (ast *root , ast *leftNode , ast *rightNode);
+void astSetType (ast *node , nodetype nodetype);
+void astSetData (ast *node , char *data );
+void astDelete (ast *node );
+
+/*
+** Lexer
+*/
+
+typedef struct 	s_token
 {
-	{"\"", 1, "\"", 1},
-	{"'", 1, "'", 1},
-	{"`", 1, "`", 1},
-	{"${", 2, "}", 1},
-	{"$((", 2, "))", 2},
-	{"$(", 2, ")", 1},
-	{NULL, 0, NULL, 0},
-};
+	char	*id;
+	enum tokentype type;
+	struct s_token	*next;
+	struct s_token	*prev;
+} 				t_token;
 
-#endif LEXER_H
+typedef struct s_lexer
+{
+	char			*buff;
+	size_t			status;
+	size_t			ntok;	
+	size_t			szbuff;
+	struct s_token	*tok;
+} 				t_lexer;
+
+
+// t_ast		*parser(t_core shell, t_parser *parser);
+
+// typedef struct		quote
+// {
+// 	const char		*start;
+// 	const size_t		lenstart;
+// 	const char		*stop;
+// 	const size_t		lenstop;
+// } s_quote;
+
+// s_quote	quotes[] =
+// {
+// 	{"\"", 1, "\"", 1},
+// 	{"'", 1, "'", 1},
+// 	{"`", 1, "`", 1},
+// 	{"${", 2, "}", 1},
+// 	{"$((", 2, "))", 2},
+// 	{"$(", 2, ")", 1},
+// 	{NULL, 0, NULL, 0},
+// };
+
+#endif

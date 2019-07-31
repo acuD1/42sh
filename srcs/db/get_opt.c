@@ -24,7 +24,7 @@ static int8_t	usage(const char *av, int i)
 		if (!(ft_strchr("-vh", av[i])))
 		{
 			dprintf(STDERR_FILENO, "42sh: illegal option -%c\n", av[i]); /* /!\ */
-			ft_putendl_fd("usage : ./42sh [-vh]", STDERR_FILENO);
+			dprintf(STDERR_FILENO, "usage : ./42sh [-vh]");
 			break ;
 		}
 		i++;

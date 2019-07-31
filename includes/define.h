@@ -55,6 +55,7 @@
 # define BITOK_ERROR		0x001
 # define PATH_ERROR		0x002
 # define FORK_ERROR		0x004
+# define BIN_ERROR		0x006
 # define PERM_ERROR		0x008
 # define EXEC_ERROR		0x010
 

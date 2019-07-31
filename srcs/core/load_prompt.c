@@ -23,12 +23,13 @@
 **	TO DO:
 */
 
+
 void			load_prompt(t_core *shell)
 {
 	char	*line;
 	int8_t	status;
-	t_parser *parser;
-	t_ast	*ast;
+	// t_parser *parser;
+	// t_ast	*ast;
 
 	line = NULL;
 	status = 1;
@@ -56,13 +57,13 @@ void			load_prompt(t_core *shell)
 		// 	free_prompt(shell, line);
 		// 	continue ;
 		// }
-		parser = lexer(shell, line);
-		ast = parser(shell, parser);˚˚˚∫
+		lexer(shell, line);
+		// ast = parser(shell, parser);˚˚˚∫
 		/* DEBUG */
-		print_tokens(shell);
+		// print_tokens(shell);
 
 		/* Same here, mainly binary executions, need rework */
-		exec_process(shell, shell->env);
+		// exec_process(shell, shell->env);
 		free_prompt(shell, line);
 	}
 	ft_strdel(&line);

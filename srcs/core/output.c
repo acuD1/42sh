@@ -31,8 +31,8 @@ void	print_opt(t_core *shell)
 	if (shell->opt & OPT_HELP)
 	{
 		/* Need more stuff ... */
-		ft_putendl_fd("42sh by arsciand, fcatusse and guvillat\nto run : ./42sh",
-			STDOUT_FILENO);
+		printf("%s\n", "42sh by arsciand, fcatusse and guvillat\nto run : ./42sh");
+			// STDOUT_FILENO);
 		exit(1);
 	}
 	if (shell->opt & OPT_VERS)

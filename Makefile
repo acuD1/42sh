@@ -74,7 +74,7 @@ L_PATH = shared_libft/
 CORE	=	core/
 DB		=	db/
 EXEC	=	exec/
-LEXER	= 	lexer/
+LEXER	= 	lexer_parser_ast/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -83,6 +83,7 @@ PATHS	+=	$(O_PATH)
 PATHS	+=	$(O_PATH)$(CORE)
 PATHS	+=	$(O_PATH)$(DB)
 PATHS	+=	$(O_PATH)$(EXEC)
+PATHS	+=	$(O_PATH)$(LEXER)
 
 # Files
 

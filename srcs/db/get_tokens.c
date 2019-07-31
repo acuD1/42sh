@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh42.h"
+// #include "sh42.h"
 
-int8_t		get_tokens(t_core *shell, char *line)
-{
-	shell->tokens = ft_strsplit(line, " \t");
-	if (ft_tablen(shell->tokens) == 0)
-		return (FAILURE);
-	return (SUCCESS);
-}
+// int8_t		get_tokens(t_core *shell, char *line)
+// {
+// 	shell->tokens = ft_strsplit(line, " \t");
+// 	if (ft_tablen(shell->tokens) == 0)
+// 		return (FAILURE);
+// 	return (SUCCESS);
+// }
