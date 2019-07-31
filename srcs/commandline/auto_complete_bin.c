@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:38:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 12:16:15 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 12:26:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char			**split_path(char **env, char *str)
 			len++;
 		if (!ft_strncmp(str, env[i], len))
 		{
-			array = ft_strsplit(env[i] + len + 1, ':');
+			array = ft_strsplit(env[i] + len + 1, ":");
 			break ;
 		}
 	}
