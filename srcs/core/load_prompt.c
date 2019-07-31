@@ -27,6 +27,8 @@ void			load_prompt(t_core *shell)
 {
 	char	*line;
 	int8_t	status;
+	t_parser *parser;
+	t_ast	*ast;
 
 	line = NULL;
 	status = 1;
@@ -49,12 +51,13 @@ void			load_prompt(t_core *shell)
 		**	- Builtins ? (Maybe not accurate for now with futurs implementations)
 		**	- etc ...
 		*/
-		if (get_tokens(shell, line) != SUCCESS) /* ft_strsplit with for now tab and space charset */
-		{
-			free_prompt(shell, line);
-			continue ;
-		}
-
+		// if (get_tokens(shell, line) != SUCCESS) //// ft_strsplit with for now tab and space charset 
+		// {
+		// 	free_prompt(shell, line);
+		// 	continue ;
+		// }
+		parser = lexer(shell, line);
+		ast = parser(shell, parser);˚˚˚∫
 		/* DEBUG */
 		print_tokens(shell);
 

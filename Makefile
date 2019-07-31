@@ -74,6 +74,7 @@ L_PATH = shared_libft/
 CORE	=	core/
 DB		=	db/
 EXEC	=	exec/
+LEXER	= 	lexer/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -103,10 +104,14 @@ SRC		+=	$(S_PATH)$(EXEC)set_envp.c
 
 SRC		+=	$(S_PATH)dev.c
 
+SRC		+=	$(S_PATH)$(LEXER)lexer.c
+
+
 # Headers
 
 HDR		+=	sh42.h
 HDR		+=	define.h
+HDR		+=	lexer.h
 HDR		+=	struct.h
 HDR		+=	shared_libft.h
 

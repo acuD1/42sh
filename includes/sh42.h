@@ -16,6 +16,7 @@
 # include "shared_libft.h"
 # include "define.h"
 # include "struct.h"
+# include "lexer.h"
 
 # include <stdlib.h>
 
@@ -57,5 +58,12 @@ char		**set_envp(t_core *shell);
 
 void		print_tokens(t_core *shell);
 void		print_env(t_core *shell);
+
+
+/*
+** Lexer
+*/
+
+void	lexer(t_core *shell, char *line);
 
 #endif
