@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 13:47:19 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/31 09:29:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/31 10:39:51 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef struct s_db
 
 typedef struct s_hash
 {
-	t_lst	**table;
-	t_db	*db;
+	t_lst	**map;
+	t_db	db;
 }				t_hash;
 
 u_int32_t	get_hash(char *line)
@@ -43,14 +43,21 @@ u_int32_t	get_hash(char *line)
 
 t_db	*fetch(t_hash *hash, const char *key, const char *path)
 {
-	hash->db->bin = ft_strdup(key);
-	hash->db->path = ft_strdup(path);
-	return (hash->db);
+	hash->db.bin = ft_strdup(key);
+	hash->db.path = ft_strdup(path);
+	return (&hash->db);
+}
+
+void	init_hash_map(t_hash *hash)
+{
+	hash->map = NULL;
+	//hash->db->bin = NULL;
+	//hash->db->path = NULL;
+//	hash->db = NULL;
 }
 int		main(void)
 {
 	t_hash	hash;
-	t_db	db;
 	char	*line;
 	size_t	i;
 	int		fd;
@@ -59,28 +66,29 @@ int		main(void)
 
 	i = 0;
 	line = NULL;
-	hash.table = ft_memalloc(sizeof(t_lst*) * HASH_SIZE);
+	init_hash_map(&hash);
+	hash.map = ft_memalloc(sizeof(t_lst*) * HASH_SIZE);
 	fd = open("words.txt.bak", O_RDONLY);
 	while(ft_getnextline(fd, &line))
 	{
 		c++;
-		if (hash.table[get_hash(line)] && hash.table[get_hash(line)]->next)
+		if (ft_lstlen(hash.map[get_hash(line)]) > 0)
 			col++;
-		ft_lstappend(&hash.table[get_hash(line)], ft_lstnew(fetch(&hash, line, ""), sizeof(t_db)));
+		ft_lstappend(&hash.map[get_hash(line)], ft_lstnew(fetch(&hash, line, ""), sizeof(t_db)));
 		free(line);
 	}
 	// PRINT
 	while (i < HASH_SIZE)
 	{
 		int z = 0;
-		while (hash.table[i])
+		while (hash.map[i])
 		{
 			if (z > 0)
 				printf("\t");
 			printf("[%zu][%d] BIN|%s| PATH|%s|\n", i, z,
-				((t_db*)(hash.table[i]->content))->bin,
-				((t_db*)(hash.table[i]->content))->path);
-			hash.table[i] = hash.table[i]->next;
+				((t_db*)(hash.map[i]->content))->bin,
+				((t_db*)(hash.map[i]->content))->path);
+			hash.map[i] = hash.map[i]->next;
 			z++;
 		}
 		i++;
