@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/30 13:47:19 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/30 16:37:55 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/31 09:29:07 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int		main(void)
 	size_t	i;
 	int		fd;
 	int		col = 0;
+	int		c = 0;
 
 	i = 0;
 	line = NULL;
@@ -62,6 +63,7 @@ int		main(void)
 	fd = open("words.txt.bak", O_RDONLY);
 	while(ft_getnextline(fd, &line))
 	{
+		c++;
 		if (hash.table[get_hash(line)] && hash.table[get_hash(line)]->next)
 			col++;
 		ft_lstappend(&hash.table[get_hash(line)], ft_lstnew(fetch(&hash, line, ""), sizeof(t_db)));
@@ -83,7 +85,9 @@ int		main(void)
 		}
 		i++;
 	}
-	printf("\nCOLLISION\n\n[%d] %0.2f %c\n\nLOAD FACTOR\n\n%0.2f\n\n", col, (float)(col * 100) / HASH_SIZE, '%', (float)466551 / HASH_SIZE);
+	printf("\nCOLLISION\n\n[%d] %0.2f %c\n\nLOAD FACTOR\n\n%0.2f\n\n", col, (float)(col * 100) / HASH_SIZE, '%', (float)c / HASH_SIZE);
+	if (((float)c / HASH_SIZE) > 0.75)
+		printf("RESZIE NEEDED");
 	//
 	close(fd);
 	return (0);
