@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_cursor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 12:01:45 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 15:42:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void			move_key_up(t_read *line)
 
 void		move_right(char *buf, t_read *input)
 {
+	(void)buf;
 	if (input->x < input->ws_col - 1 && input->x + (input->ws_col * input->y) < input->width)
 	{
 		tputs(tgetstr("nd", NULL), 1, my_outc);
@@ -116,6 +117,7 @@ void		move_right(char *buf, t_read *input)
 
 void		move_left(char *buf, t_read *input)
 {
+	(void)buf;
 	int	i;
 
 	i = input->width;

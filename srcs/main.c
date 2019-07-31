@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:28 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 13:51:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 14:25:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int			main(int ac, char **av, char **env)
 
 	sh = NULL;
 	sh = ft_memalloc(sizeof(sh));
-	init_term(sh);
+	//init_term(sh);
 	caps = init_termcaps();
 	tab_cpy = ft_tabcopy(tab_cpy, env);
 	term.history = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   twenty_one.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:39 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 12:19:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 15:44:20 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct		s_sh
 */
 t_sh		*init_prompt(t_sh *term);
 t_termcaps	*init_termcaps(void);
-void		init_term(t_sh *data);
+void		init_term(void);
 t_read		*get_size(t_read *data);
 
 /*

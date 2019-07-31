@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmdline.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:38:24 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 13:45:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 14:41:12 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ typedef struct			s_history
 
 typedef struct			s_read
 {
+	//
+	//struct s_core		*core;
+	/*
+	** faire pointer core->buffer ici.
+	*/
+
 	char				*prompt;
 	int					prompt_len;
 	int					x;
@@ -36,18 +42,18 @@ typedef struct			s_read
 	int					width;
 	int					ws_col;
 	int					ws_li;
-	char				buffer[4096];
+	char				buffer[4096]; //Pour lexer parser, reader
 	int					x_index;
 	char				*line;
 	int					ac;
-	char				**cmd;	
+	char				**cmd;
 	char				**env;
 	struct s_history	*history;
 	struct s_history	*history_index;
 	struct s_read		*next;
 	struct s_read		*prev;
 }						t_read;
-	
+
 /*
 ** Prompt
 */

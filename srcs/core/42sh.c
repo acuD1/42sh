@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 13:47:51 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/31 15:53:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		main(int ac, char **av, char **environ)
 	t_core	shell;
 
 	init_shell(&shell);
+	//shell.new_t = ft_memalloc(sizeof(shell.new_t));
 
 	/* Parse char **av and fill option */
 	if (get_opt(ac, av, &shell) != SUCCESS)
@@ -41,7 +42,7 @@ int		main(int ac, char **av, char **environ)
 	print_opt(&shell);
 
 	/* DEBUG */
-	print_env(&shell);
+	//print_env(&shell);
 
 	/* Everything else will happen here */
 	load_prompt(&shell);
