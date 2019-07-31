@@ -81,20 +81,20 @@ INIT		=	init/
 
 PATHS		+=	$(B_PATH)
 PATHS		+=	$(O_PATH)
-PATHS		+=	$(O_PATH)$(CORE)
+#PATHS		+=	$(O_PATH)$(CORE)
 PATHS		+=	$(O_PATH)$(BUILTINS)
 PATHS		+=	$(O_PATH)$(COMMANDLINE)
-PATHS		+=	$(O_PATH)$(EXEC)
+#PATHS		+=	$(O_PATH)$(EXEC)
 PATHS		+=	$(O_PATH)$(INIT)
 
 # Files
 
 #SRC			+=	$(S_PATH)$(CORE)42sh.c
-SRC			+=	$(S_PATH)main.c
+#SRC			+=	$(S_PATH)main.c
 
-SRC			+=	$(S_PATH)$(BUILTINS)check_builtins.c
-SRC			+=	$(S_PATH)$(BUILTINS)exit.c
-SRC			+=	$(S_PATH)$(BUILTINS)history.c
+#SRC			+=	$(S_PATH)$(BUILTINS)check_builtins.c
+#SRC			+=	$(S_PATH)$(BUILTINS)exit.c
+#SRC			+=	$(S_PATH)$(BUILTINS)history.c
 
 SRC			+=	$(S_PATH)$(COMMANDLINE)check_caps.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)del_keys.c
@@ -103,7 +103,7 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)move_cursor.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)save_history.c
 
-SRC			+=	$(S_PATH)$(EXEC)run_process.c
+#SRC			+=	$(S_PATH)$(EXEC)run_process.c
 
 SRC			+=	$(S_PATH)$(INIT)init_termcaps.c
 SRC			+=	$(S_PATH)$(INIT)initialization.c
@@ -112,6 +112,9 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)auto_completion.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_current_dir.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_buffer.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_bin.c
+
+
+SRC		+=	$(S_PATH)dev.c
 # Headers
 
 HDR			+=	sh42.h
@@ -121,6 +124,41 @@ HDR			+=	builtins.h
 HDR			+=	cmdline.h
 HDR			+=	twenty_one.h
 HDR			+=	shared_libft.h
+
+
+###############################################################################
+#                                                                             #
+###############################################################################
+
+CORE	=	core/
+DB		=	db/
+EXEC	=	exec/
+
+# Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
+
+#PATHS	+=	$(B_PATH)
+#PATHS	+=	$(O_PATH)
+PATHS	+=	$(O_PATH)$(CORE)
+PATHS	+=	$(O_PATH)$(DB)
+PATHS	+=	$(O_PATH)$(EXEC)
+
+# Files
+
+SRC		+=	$(S_PATH)$(CORE)42sh.c
+SRC		+=	$(S_PATH)$(CORE)load_prompt.c
+SRC		+=	$(S_PATH)$(CORE)output.c
+SRC		+=	$(S_PATH)$(CORE)free_handler.c
+
+SRC		+=	$(S_PATH)$(DB)init_shell.c
+SRC		+=	$(S_PATH)$(DB)get_opt.c
+SRC		+=	$(S_PATH)$(DB)set_env.c
+SRC		+=	$(S_PATH)$(DB)fetch_db.c
+SRC		+=	$(S_PATH)$(DB)get_tokens.c
+
+SRC		+=	$(S_PATH)$(EXEC)exec_process.c
+SRC		+=	$(S_PATH)$(EXEC)exec_handler.c
+SRC		+=	$(S_PATH)$(EXEC)get_bin.c
+SRC		+=	$(S_PATH)$(EXEC)set_envp.c
 
 
 ###############################################################################
