@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 15:57:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/07/31 16:09:29 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,10 @@ t_read		*display_prompt(t_read *term)
 {
 	char	path[BUFF_SIZE + 1];
 
-	if (term->prompt && term->line)
-	{
-		//free(term->prompt);
-		//free(term->line);
-	}
+	/* if (term->prompt) */
+	/* 	free(term->prompt); */
 	getcwd(path, BUFF_SIZE);
-	//term->prompt = ft_strdup(ft_strrchr(path, '/'));
+	term->prompt = ft_strdup(ft_strrchr(path, '/'));
 	term->prompt_len = ft_strlen(term->prompt) + 6;
 	term->x = term->prompt_len;
 	term->x_index = term->x;
