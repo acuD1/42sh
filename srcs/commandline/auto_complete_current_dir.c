@@ -6,11 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:55:05 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/26 13:59:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 12:16:34 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/twenty_one.h"
+# include "twenty_one.h"
 
 /*
 ** Display all files in current directory if no any char is inserted

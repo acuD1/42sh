@@ -6,11 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/11 17:41:40 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 12:02:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/twenty_one.h"
+# include "twenty_one.h"
 
 int	my_outc(int c)
 {

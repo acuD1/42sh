@@ -6,11 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/09 14:35:59 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 12:08:03 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/twenty_one.h"
+# include "twenty_one.h"
 # include <sys/ioctl.h>
 # include <stdio.h>
 

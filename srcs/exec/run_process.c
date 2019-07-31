@@ -1,7 +1,20 @@
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_process.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/18 16:29:30 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/07/20 18:54:01 by arsciand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
-# include "../../inc/twenty_one.h"
+# include "twenty_one.h"
 
 static int		run_fork(char *path, char **av, char **env)
 {
@@ -42,7 +55,7 @@ char			**walking_path(char **env, char *str)
 			len++;
 		if (!ft_strncmp(str, env[i], len))
 		{
-			cmd = ft_strsplit(env[i] + len + 1, ':');
+			cmd = ft_strsplit(env[i] + len + 1, ":");
 			break ;
 		}
 	}

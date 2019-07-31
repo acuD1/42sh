@@ -6,11 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/26 13:53:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 12:04:40 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/twenty_one.h"
+# include "twenty_one.h"
 
 void		paste_board(char *buf, t_read *input, int buf_index)
 {

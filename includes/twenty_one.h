@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:39 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/26 13:40:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 12:19:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 # include <term.h>
 # include <termcap.h>
 # include <stdlib.h>
+# include <dirent.h>
 
-# include "../libft/libft.h"
+# include "shared_libft.h"
 # include "cmdline.h"
 # include "builtins.h"
 

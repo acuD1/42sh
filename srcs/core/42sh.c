@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_builtins.c                                   :+:      :+:    :+:   */
+/*   42sh.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/09 14:35:43 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 11:49:51 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
+/*   Updated: 2019/07/17 10:04:28 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "twenty_one.h"
+#include "sh42.h"
+#include <unistd.h>
+#include <stdio.h>
 
-int	check_builtins(char **cmd, char **env, t_read *term)
+int		main(void)
 {
-	(void)env;
-	if (!ft_strcmp(term->buffer, "exit"))
-		return (exit_sh(term));
-	else if (!ft_strcmp(cmd[0], "history"))
-		return (history(term, cmd));
-	return (0);
+	dprintf(STDOUT_FILENO, "Ready to work !\n");
+	return (EXIT_SUCCESS);
 }

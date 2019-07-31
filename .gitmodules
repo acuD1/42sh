@@ -1,0 +1,3 @@
+[submodule "shared_libft"]
+	path = shared_libft
+	url = https://github.com/acuD1/shared_libft.git

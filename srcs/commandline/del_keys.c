@@ -6,17 +6,17 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/23 11:38:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 11:58:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/twenty_one.h"
+# include "twenty_one.h"
 
 void		del_key(t_read *input)
 {
-	int	buf_index;
+	int		buf_index;
 	char	*save;
-	int	i;
+	int		i;
 
 	i = -1;
 	if (input->x >= input->prompt_len * (input->y == 0 ? 1 : 0)

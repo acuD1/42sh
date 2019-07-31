@@ -6,12 +6,12 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/24 16:40:49 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 12:01:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include <sys/ioctl.h>
-# include "../../inc/twenty_one.h"
+# include "twenty_one.h"
 
 /*
 ** Alt + f to jump one word forward

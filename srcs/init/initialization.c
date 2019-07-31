@@ -6,12 +6,12 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:07 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 11:26:43 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 12:05:13 by fcatusse         ###   ########.fr       */
 /*   Updated: 2019/07/23 11:04:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/twenty_one.h"
+# include "twenty_one.h"
 # include <sys/ioctl.h>
 
 void				init_term(t_sh *data)

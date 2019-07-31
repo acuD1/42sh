@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_builtins.c                                   :+:      :+:    :+:   */
+/*   sh42.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/09 14:35:43 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 11:49:51 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
+/*   Updated: 2019/07/17 10:01:16 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "twenty_one.h"
+#ifndef SH42_H
+# define SH42_H
 
-int	check_builtins(char **cmd, char **env, t_read *term)
-{
-	(void)env;
-	if (!ft_strcmp(term->buffer, "exit"))
-		return (exit_sh(term));
-	else if (!ft_strcmp(cmd[0], "history"))
-		return (history(term, cmd));
-	return (0);
-}
+# include "shared_libft.h"
+# include "define.h"
+# include "struct.h"
+
+# include <stdlib.h>
+
+#endif
