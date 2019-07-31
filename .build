@@ -2,4 +2,9 @@ Build information, patch level is incremented at compilation.
 
 RELEASE	=	0
 VERSION	=	1
+<<<<<<< Updated 7
 PATCH	=	19
+=======
+PATCH	=	32
+
+>>>>>>> Stashed changes

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:38:24 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/26 13:50:12 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 13:45:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,66 +22,66 @@
 
 typedef struct			s_history
 {
-	char			*data;
+	char				*data;
 	struct s_history	*next;
 	struct s_history	*prev;
-}				t_history;
+}						t_history;
 
 typedef struct			s_read
 {
-	char			*prompt;
-	int			prompt_len;
-	int			x;
-	int			y;
-	int			width;
-	int			ws_col;
-	int			ws_li;
-	char			buffer[4096];
-	int			x_index;
-	char			*line;
-	int			ac;
-	char			**cmd;	
-	char			**env;
+	char				*prompt;
+	int					prompt_len;
+	int					x;
+	int					y;
+	int					width;
+	int					ws_col;
+	int					ws_li;
+	char				buffer[4096];
+	int					x_index;
+	char				*line;
+	int					ac;
+	char				**cmd;	
+	char				**env;
 	struct s_history	*history;
 	struct s_history	*history_index;
 	struct s_read		*next;
 	struct s_read		*prev;
-}				t_read;
+}						t_read;
 	
 /*
- ** Prompt
- */
-t_read	*display_prompt(t_read *term);
-void	goto_prompt(t_read *line);
+** Prompt
+*/
+t_read			*display_prompt(t_read *term);
+void			goto_prompt(t_read *line);
 
 /*
- ** Cursor Moves
- */
-void	move_right(char *buf, t_read *input);
-void	move_left(char *buf, t_read *input);
-void	move_key_up(t_read *line);
-void	move_key_down(t_read *line);
-void	jump_words(char *buf, t_read *line);
+** Cursor Moves
+*/
+void			move_right(char *buf, t_read *input);
+void			move_left(char *buf, t_read *input);
+void			move_key_up(t_read *line);
+void			move_key_down(t_read *line);
+void			jump_words(char *buf, t_read *line);
 
 /*
- ** Delete Keys
- */
-void	del_key(t_read *line);
-void	bs_key(char *buf, t_read *line);
+** Delete Keys
+*/
+void			del_key(t_read *line);
+void			bs_key(char *buf, t_read *line);
 
 /*
- ** Check Caps and Interpret
- */
-int	check_caps(char *buf, t_read *line);
-void	insert_in_buffer(char *buf, t_read *line);
-void	insert_char_in_buffer(char buf, t_read *input, int buf_index);
-void	insert_str_in_buffer(char *d_name, t_read *input);
-int	my_outc(int c);
+** Check Caps and Interpret
+*/
+int				check_caps(char *buf, t_read *line);
+void			insert_in_buffer(char *buf, t_read *line);
+void			insert_char_in_buffer(char buf, t_read *input, int buf_index);
+void			insert_str_in_buffer(char *d_name, t_read *input);
+int				my_outc(int c);
 
 /*
- ** Save history in Buffer
- */
-void	save_history(t_read *term);
+** Save history in Buffer
+*/
+void			save_history(t_read *term);
 
 /*
 ** Auto completion

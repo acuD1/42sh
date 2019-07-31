@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:28 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 12:06:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/07/31 13:51:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int			main(int ac, char **av, char **env)
 	{
 		display_prompt(&term);
 		ft_bzero(term.buffer, term.width);
-		while (read(0, buf, 5) > 0)
+		while (read(0, buf, 2048) > 0)
 			if (!check_caps(buf, &term))
 				break ;
 			else
