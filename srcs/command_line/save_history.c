@@ -6,19 +6,19 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 12:03:00 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/01 13:16:21 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <unistd.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include "twenty_one.h"
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include "sh42.h"
 
 void			save_history(t_read *term)
 {
-	t_history	*saved;
+	t_lst		*saved;
 
 	if (ft_strcmp(term->buffer, ""))
 	{

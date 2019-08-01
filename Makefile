@@ -74,7 +74,7 @@ L_PATH = shared_libft/
 CORE		=	core/
 DB			=	db/
 BUILTINS	=	builtins/
-COMMANDLINE =	commandline/
+COMMANDLINE =	command_line/
 EXEC		=	exec/
 INIT		=	init/
 
@@ -104,6 +104,10 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)insert_in_buffer.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)move_cursor.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)save_history.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)auto_completion.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_current_dir.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_buffer.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_bin.c
 
 SRC		+=	$(S_PATH)$(CORE)42sh.c
 SRC		+=	$(S_PATH)$(CORE)load_prompt.c
@@ -126,12 +130,6 @@ SRC		+=	$(S_PATH)$(EXEC)set_envp.c
 SRC			+=	$(S_PATH)$(INIT)init_termcaps.c
 #SRC			+=	$(S_PATH)$(INIT)initialization.c
 
-SRC			+=	$(S_PATH)$(COMMANDLINE)auto_completion.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_current_dir.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_buffer.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_bin.c
-
-
 SRC		+=	$(S_PATH)dev.c
 # Headers
 
@@ -139,7 +137,7 @@ HDR			+=	sh42.h
 HDR			+=	define.h
 HDR			+=	struct.h
 HDR			+=	builtins.h
-HDR			+=	cmdline.h
+HDR			+=	command_line.h
 HDR			+=	twenty_one.h
 HDR			+=	shared_libft.h
 ###############################################################################

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/31 16:01:16 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/01 14:35:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,11 @@
 
 void			load_prompt(t_core *shell)
 {
-	char	*line;
-	int8_t	status;
-	//
-	char		buff[2048];
+	char		*line;
+	int8_t		status;
+	char		buff[READ_SIZE];
 	t_termcaps	*caps;
 	t_read		term;
-	//
 
 	line = NULL;
 	status = 1;
@@ -39,9 +37,10 @@ void			load_prompt(t_core *shell)
 
 	/* BETA */
 	caps = init_termcaps();
+	init_term();
 	term.history = NULL;
 	term.history_index = NULL;
-
+	term.env = set_envp(shell);
 	/* Loop for prompt with status of GNL */
 	while (status)
 	{
@@ -49,14 +48,14 @@ void			load_prompt(t_core *shell)
 		//init_prompt();
 		display_prompt(&term);
 		ft_bzero(term.buffer, term.width);
-		/* GNL */
-		while (read(0, buff, 2048))
+		while (read(0, buff, READ_SIZE))
 		{
-			if (!(check_caps(buff, &term)))
-				break ;
-			else
+			if (check_caps(buff, &term) == TRUE)
 				continue ;
+			else
+				break ;
 		}
+		free(term.prompt);
 		/*
 		**	[NEED REWORK] A lot of stuff happening here :
 		**	- tokens parser (for now)
@@ -64,9 +63,10 @@ void			load_prompt(t_core *shell)
 		**	- Builtins ? (Maybe not accurate for now with futurs implementations)
 		**	- etc ...
 		*/
-		if (get_tokens(shell, term.buffer) != SUCCESS) /* ft_strsplit with for now tab and space charset */
+		line = ft_strdup(term.buffer);
+		if (get_tokens(shell, line) != SUCCESS) /* ft_strsplit with for now tab and space charset */
 		{
-			//free_prompt(shell, term.buffer);
+			free_prompt(shell, line);
 			continue ;
 		}
 
@@ -76,7 +76,7 @@ void			load_prompt(t_core *shell)
 		/* Same here, mainly binary executions, need rework */
 		exec_process(shell, shell->env);
 		save_history(&term);
-		//free_prompt(shell, line);
+		free_prompt(shell, line);
 	}
 	//ft_strdel(&line);
 }

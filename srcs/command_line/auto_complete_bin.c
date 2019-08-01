@@ -6,15 +6,16 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:38:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 12:26:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/01 16:21:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "twenty_one.h"
+#include "sh42.h"
 
 /*
 ** Split all bin/sbin directories in an array
 */
+
 char			**split_path(char **env, char *str)
 {
 	char		**array;
@@ -39,8 +40,8 @@ char			**split_path(char **env, char *str)
 
 /*
 ** Function to save in buffer the current bin found at buffer[0]
-** ToDo: check if the buffer is right
 */
+
 void			insert_bin_in_buffer(char *d_name, t_read *input)
 {
 	int			i;
@@ -57,38 +58,56 @@ void			insert_bin_in_buffer(char *d_name, t_read *input)
 }
 
 /*
-** Open directories in the PATH variable
-** Check in each one if an exe bin already exists with the current buffer inserted
-** ToDo: recursive function
+** Check if the buffer match with the current bin
+** Return true if another tab key is pressed or no match found
 */
-void				walking_path_var(char **env, char *buf, t_read *input)
+
+uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 {
-	struct dirent 	*data;
+	if (isstart(name, to_find))
+	{
+		goto_prompt(input);
+		insert_bin_in_buffer(name, input);
+		if (read(0, buf, READ_SIZE) > 0)
+		{
+			if (buf[0] == '\t')
+				return (TRUE);
+			else
+				return (FALSE);
+		}
+	}
+	return (TRUE);
+}
+
+/*
+** Open directories in the PATH variable
+** Check if an exe bin already exists with the curr buffer inserted
+*/
+
+void			walking_path_var(char *buf, char *to_find, t_read *input)
+{
+	struct dirent	*data;
 	DIR				*dir;
 	char			**path;
-	char			*tmp;
 	int				i;
 
 	i = -1;
-	path = split_path(env, "PATH");
-	tmp = ft_strdup(input->buffer);
+	path = split_path(input->env, "PATH");
 	while (path && path[++i])
 	{
 		dir = opendir(path[i]);
 		while ((data = readdir(dir)) != NULL)
 		{
-			if (isstart(data->d_name, tmp))
+			if (not_found(data->d_name, to_find, buf, input))
+				continue ;
+			else
 			{
-				goto_prompt(input);
-				insert_bin_in_buffer(data->d_name, input);
-				if (read(0, buf, 5) > 0)
-					if (buf[0] == '\t')
-						continue ;
-				ft_strdel(&tmp);
 				ft_tabfree(path);
 				closedir(dir);
 				return ;
 			}
 		}
+		closedir(dir);
 	}
+	walking_path_var(buf, to_find, input);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:39 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 15:44:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/01 13:17:00 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 # include <dirent.h>
 
 # include "shared_libft.h"
-# include "cmdline.h"
-# include "builtins.h"
+# include "command_line.h"
 
 typedef struct		s_termcaps
 {

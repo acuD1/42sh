@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   check_caps.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/09 14:37:13 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 11:55:58 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/08/01 16:30:03 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "twenty_one.h"
+#include "sh42.h"
 
 /*
 ** Combination of Keys
 ** Ctrl + l to clear the screen
-** Ctrl + a to move the cursor to the beginning of line
-** Ctrl + e to move move the cursor to the end of line
+** Ctrl + a && HOME key to move the cursor to the beginning of line
+** Ctrl + e && END key to move move the cursor to the end of line
 ** Ctrl + k to clear from the cursor to the end of line
 ** Alt + b to jump one word backward
 ** Alt + f to jump one word forward
@@ -29,10 +29,10 @@ void	check_keys_comb(char *buf, t_read *line)
 		tputs(tgetstr("cl", NULL), 1, my_outc);
 		display_prompt(line);
 	}
-	else if (*buf == 1)
+	else if (*buf == 1 || (buf[0] == 27 && buf[1] == 91 && buf[2] == 72))
 		while (line->x > line->prompt_len)
 			move_left(buf, line);
-	else if (*buf == 5)
+	else if (*buf == 5 || (buf[0] == 27 && buf[1] == 91 && buf[2] == 70))
 		while (line->x < line->width)
 			move_right(buf, line);
 	else if (*buf == 11)
@@ -51,10 +51,10 @@ void	check_keys_comb(char *buf, t_read *line)
 ** Backspace/Delete keys to delete character in line
 */
 
-int	check_caps(char *buf, t_read *line)
+uint8_t		check_caps(char *buf, t_read *line)
 {
-	if (buf[0] == '\t' && ft_strlen(line->buffer) > 0)
-		auto_complete_mode(line->env, buf, line);
+	if (buf[0] == '\t')
+		auto_complete_mode(buf, line);
 	if (buf[0] == 27 && buf[1] == 91 && buf[2] == 65)
 		move_key_up(line);
 	else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 66)
@@ -66,7 +66,7 @@ int	check_caps(char *buf, t_read *line)
 	else if (buf[0] == 10)
 	{
 		ft_putchar('\n');
-		return (0);
+		return (FALSE);
 	}
 	else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 51 && buf[3] == 126)
 		del_key(line);
@@ -76,5 +76,5 @@ int	check_caps(char *buf, t_read *line)
 		insert_in_buffer(buf, line);
 	else
 		check_keys_comb(buf, line);
-	return (1);
+	return (TRUE);
 }

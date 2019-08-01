@@ -6,11 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 12:04:40 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/01 13:19:44 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "twenty_one.h"
+#include "sh42.h"
 
 void		paste_board(char *buf, t_read *input, int buf_index)
 {
@@ -88,7 +88,7 @@ void		insert_inline_char(char *buf, t_read *input, int buf_index)
 
 void		insert_in_buffer(char *buf, t_read *input)
 {
-	int	buf_index;
+	int		buf_index;
 
 	if (input->x >= input->ws_col)
 	{
@@ -96,7 +96,7 @@ void		insert_in_buffer(char *buf, t_read *input)
 		input->x = 0;
 	}
 	buf_index = input->x_index - input->prompt_len;
-	if (input->x >= 2048)
+	if (input->x >= BUFF_SIZE)
 		return ;
 	/* if (ft_strlen(buf) > 1) */
 	/* { */

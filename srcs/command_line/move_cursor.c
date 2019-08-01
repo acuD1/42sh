@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   move_cursor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 15:42:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/01 13:28:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <sys/ioctl.h>
-# include "twenty_one.h"
+#include "sh42.h"
 
 /*
 ** Alt + f to jump one word forward
@@ -46,8 +45,8 @@ void			jump_words(char *buf, t_read *line)
 
 void			move_key_down(t_read *line)
 {
-	t_history 	*w;
-	int		i;
+	t_lst	 	*w;
+	int			i;
 
 	i = -1;
 	if (line->history)
@@ -71,8 +70,8 @@ void			move_key_down(t_read *line)
 
 void			move_key_up(t_read *line)
 {
-	t_history 	*w;
-	int		i;
+	t_lst	 	*w;
+	int			i;
 
 	i = -1;
 	if (line->history)
@@ -117,10 +116,12 @@ void		move_right(char *buf, t_read *input)
 
 void		move_left(char *buf, t_read *input)
 {
-	(void)buf;
 	int	i;
 
 	i = input->width;
+	(void)buf;
+	if (((input->ws_li % input->ws_col) == 1) && input->x == input->prompt_len)
+		tputs(tgetstr("sf", NULL), 1, my_outc);
 	if (input->x != 0 && (input->x > (input->prompt_len * (input->y == 0 ? 1 : 0))))
 	{
 		tputs(tgetstr("le", NULL), 1, my_outc);

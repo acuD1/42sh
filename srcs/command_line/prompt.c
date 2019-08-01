@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 16:09:29 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/01 13:16:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "twenty_one.h"
+#include "sh42.h"
 
-int	my_outc(int c)
+int			my_outc(int c)
 {
 	write(0, &c, 1);
 	return (0);
@@ -29,8 +29,6 @@ t_read		*display_prompt(t_read *term)
 {
 	char	path[BUFF_SIZE + 1];
 
-	/* if (term->prompt) */
-	/* 	free(term->prompt); */
 	getcwd(path, BUFF_SIZE);
 	term->prompt = ft_strdup(ft_strrchr(path, '/'));
 	term->prompt_len = ft_strlen(term->prompt) + 6;

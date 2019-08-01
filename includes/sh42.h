@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/31 15:45:58 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/01 13:13:01 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 # include "shared_libft.h"
 # include "define.h"
 # include "struct.h"
+# include "command_line.h"
+# include "twenty_one.h"
 
 //
 # include <sys/ioctl.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include "twenty_one.h"
 //
 # include <stdlib.h>
 

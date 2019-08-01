@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/31 15:48:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/01 13:29:00 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct	s_db
 /*
 **	t_core shares global variables
 */
+
+struct termios	old_t;
 
 typedef struct	s_core
 {

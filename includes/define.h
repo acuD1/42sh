@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 13:02:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/01 16:00:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,11 @@
 # define FORK_ERROR		0x004
 # define PERM_ERROR		0x008
 # define EXEC_ERROR		0x010
+
+/*
+** Command Line define
+*/
+# define BUFF_SIZE		4096
+# define READ_SIZE		4
 
 #endif

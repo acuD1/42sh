@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/31 15:43:59 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/01 13:33:29 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 void				init_term(void)
 {
-	struct termios		old_t;
 	struct termios		new_t;
 
 	tgetent(NULL, "xterm-256color");
@@ -48,6 +47,4 @@ void	init_shell(t_core *shell)
 	shell->bin = NULL;
 	shell->opt = 0;
 	shell->buf = NULL;
-
-	init_term();
 }
