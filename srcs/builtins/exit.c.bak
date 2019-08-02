@@ -12,15 +12,6 @@
 
 # include "twenty_one.h"
 
-void			reset_term()
-{
-	struct termios	old_t;
-
-	tcgetattr(0, &old_t);
-	old_t.c_lflag |= (ICANON | ECHO);
-	tcsetattr(0, TCSANOW, &old_t);
-}
-
 int			exit_sh(t_read *term)
 {
 	reset_term();

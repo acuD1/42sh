@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:38:24 by fcatusse          #+#    #+#             */ 
-/*   Updated: 2019/08/02 13:16:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/02 15:37:50 by fcatusse         ###   ########.fr       */
 /*                                                                            */ 
 /* ************************************************************************** */ 
 
@@ -43,11 +43,12 @@ typedef struct			s_read
 }				t_read;
 
 /*
-** Initialization
+** Configuration
 */
 
 void		init_termcaps(void);
-void		init_config(void);
+uint8_t		init_config(void);
+uint8_t		reset_config(void);
 t_read		*get_size(t_read *data);
 
 /*
@@ -58,7 +59,7 @@ t_read			*display_prompt(t_read *term);
 void			goto_prompt(t_read *line);
 
 /*
-** Cursor Moves
+** Cursor Motion
 */
 
 void			move_right(char *buf, t_read *input);
@@ -85,7 +86,7 @@ void			insert_str_in_buffer(char *d_name, t_read *input);
 int			my_outc(int c);
 
 /*
-** Save history in Buffer
+** History
 */
 
 void			save_history(t_read *term);

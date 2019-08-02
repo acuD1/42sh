@@ -6,12 +6,12 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/02 14:21:41 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/02 15:09:40 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "sh42.h"
-# include <sys/ioctl.h>
+#include "sh42.h"
+#include <sys/ioctl.h>
 
 t_read			*get_size(t_read *data)
 {

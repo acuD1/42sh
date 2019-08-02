@@ -104,6 +104,7 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_current_dir.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_buffer.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_bin.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)term_config.c
 
 SRC		+=	$(S_PATH)$(CORE)42sh.c
 SRC		+=	$(S_PATH)$(CORE)load_prompt.c
