@@ -6,13 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/30 10:40:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/02 16:34:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <dirent.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 /*
 **	get_bin locate tokens[0] in the PATH variable with get_bin_path or set it as a
@@ -37,7 +39,10 @@ static char	*get_bin_path(char **path, const char *file)
 		**	If so, we return the correct path.
 		*/
 		if (!(content = opendir(path[i])))
+		{
+			i++;
 			continue;
+		}
 		while (content && (dir = readdir(content)))
 		{
 			if (ft_strequ(file, dir->d_name))
@@ -82,8 +87,11 @@ char		*get_bin(t_core *shell, t_lst *env)
 	/*
 	**	HASH_TABLE
 	*/
-	if (locate_hash(shell) == SUCCESS)
-		return (shell->hash.table[shell->hash.value]);
+	print_hash_map(&shell->hash);
+	if (locate_hash(shell, &shell->hash) == SUCCESS)
+		return (shell->bin);
+	else
+		dprintf(STDERR_FILENO, "BIN NOT FOUND IN HASH MAP !\n");
 
 	/*
 	**	If not local, we're going to find it in PATH
@@ -98,10 +106,12 @@ char		*get_bin(t_core *shell, t_lst *env)
 			path = get_bin_path(split_path, shell->tokens[0]);
 
 			/* set correct path if the binary is found in PATH */
-			shell->bin = ft_strjoinf(path, ft_strjoin("/", shell->tokens[0]),
+			shell->bin = ft_strjoinf(path , ft_strjoin("/", shell->tokens[0]),
 							FREE_ALL);
-			append_hash(shell, path);
-			ft_tabdel(&path);
+
+			/* insert hash to hashmap, NOT PROTECTED */
+			add_hash_map(shell, &shell->hash);
+			ft_tabdel(&split_path);
 		}
 		env = env->next;
 	}

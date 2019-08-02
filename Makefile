@@ -74,6 +74,7 @@ L_PATH = shared_libft/
 CORE	=	core/
 DB		=	db/
 EXEC	=	exec/
+HASH	=	$(EXEC)hash_map/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -82,6 +83,7 @@ PATHS	+=	$(O_PATH)
 PATHS	+=	$(O_PATH)$(CORE)
 PATHS	+=	$(O_PATH)$(DB)
 PATHS	+=	$(O_PATH)$(EXEC)
+PATHS	+=	$(O_PATH)$(HASH)
 
 # Files
 
@@ -100,6 +102,12 @@ SRC		+=	$(S_PATH)$(EXEC)exec_process.c
 SRC		+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC		+=	$(S_PATH)$(EXEC)get_bin.c
 SRC		+=	$(S_PATH)$(EXEC)set_envp.c
+
+SRC		+=	$(S_PATH)$(HASH)add_hash_map.c
+SRC		+=	$(S_PATH)$(HASH)fetch_hash_db.c
+SRC		+=	$(S_PATH)$(HASH)get_hash.c
+SRC		+=	$(S_PATH)$(HASH)locate_hash.c
+SRC		+=	$(S_PATH)$(HASH)resize_hash_map.c
 
 SRC		+=	$(S_PATH)dev.c
 

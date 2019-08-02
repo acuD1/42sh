@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/30 13:01:48 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/02 15:51:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,21 @@ void	init_shell(t_core *shell)
 	shell->build.patch = BUILDP + 1;
 	shell->build.date = DATE;
 
+	/*
+	**	hash
+	*/
+	shell->hash.map = NULL;
+	shell->hash.value = 0;
+	shell->hash.size = HASH_SIZE;
+	shell->hash.collision = 0;
+	shell->hash.lenght = 0;
+
+	/*	global
+	**
+	*/
 	shell->env = NULL;
 	shell->tokens = NULL;
 	shell->bin = NULL;
 	shell->opt = 0;
 
-	/*
-	**	hash
-	*/
-
-	shell->hash.table = NULL;
-	shell->hash.value = 0;
-	shell->hash.size = HASH_SIZE;
 }

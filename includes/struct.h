@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/31 11:10:04 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/02 15:50:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ typedef struct	s_db
 }				t_db;
 
 /*
+**	t_hash for hash table implementation
+*/
+
+typedef struct	s_hash
+{
+	t_lst		**map;
+	u_int32_t	value;
+	u_int32_t	size;			// Size located
+	u_int32_t	collision;		// Numbers of collisionon the linked list
+	u_int32_t	lenght;			// Numbers of keys
+}				t_hash;
+
+/*
 **	t_core shares global variables
 */
 
@@ -53,20 +66,8 @@ typedef struct	s_core
 	char		*buff;
 	char		**tokens;		//	ft_strplit of char *line from GNL [BETA]
 	char		*bin;			//	dup of the binary found or located [BETA]
-	u_int8_t	opt;			//	Options
-	id_t		pronpt_len
-
+	u_int8_t	opt;			//	Option
 }				t_core;
 
-/*
-**	t_hash for hash table implementation
-*/
-
-typedef struct	s_hash
-{
-	char		**table;
-	u_int32_t	value;
-	u_int32_t	size;
-}				t_hash;
 
 #endif

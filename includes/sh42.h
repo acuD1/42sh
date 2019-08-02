@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 14:53:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/02 16:31:24 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,21 @@ char		*get_bin(t_core *shell, t_lst *env);
 char		**set_envp(t_core *shell);
 
 /*
+**	hash_map
+*/
+int8_t		locate_hash(t_core *shell, t_hash *hash);
+int8_t		add_hash_map(t_core *shell, t_hash *hash);
+int8_t		resize_hash_map(t_core *shell, t_hash *hash);
+u_int32_t	get_hash(char *line, u_int32_t size);
+t_db		*fetch_hash_db(t_db *db, const char *key, const char *value);
+void		free_hash_map(t_hash *hash);
+
+/*
 **	DEV
 */
 
 void		print_tokens(t_core *shell);
 void		print_env(t_core *shell);
+void		print_hash_map(t_hash *hash);
 
 #endif

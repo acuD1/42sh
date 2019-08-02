@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/02 13:57:21 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/02 16:39:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@
 **	Hash table
 */
 
-# define HASH_SIZE		10
+# define HASH_SIZE		2
+# define MAX_F			0.75
 
 #endif
