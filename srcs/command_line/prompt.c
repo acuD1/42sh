@@ -6,22 +6,25 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/02 14:18:53 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/02 16:21:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int			my_outc(int c)
+int		my_outc(int c)
 {
 	write(0, &c, 1);
-	return (0);
+	return (SUCCESS);
 }
 
 void		goto_prompt(t_read *line)
 {
 	while (line->x > line->prompt_len)
+	{
+		line->width--;
 		move_left(line->buffer, line);
+	}
 	tputs(tgetstr("ce", NULL), 1, my_outc);
 }
 

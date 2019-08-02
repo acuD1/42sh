@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/01 13:28:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/02 16:21:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,19 @@ void			jump_words(char *buf, t_read *line)
 	}
 }
 
+/*
+** Arrow down print the prev saved in history from history index
+*/
 void			move_key_down(t_read *line)
 {
 	t_lst	 	*w;
-	int			i;
+	int		i;
 
 	i = -1;
 	if (line->history)
 	{
 		goto_prompt(line);
+		memset(line->buffer, 0, strlen(line->buffer));
 		if (line->history_index && line->history_index->prev)
 		{
 			w = line->history_index->prev;
@@ -59,25 +63,28 @@ void			move_key_down(t_read *line)
 		}
 		else
 		{
-			line->history_index = line->history;
-			w = line->history;
+			line->history_index = line->history->prev;
+			return ;
 		}
-		memset(line->buffer, 0, strlen(line->buffer));
 		while (w->data && w->data[++i])
 			insert_char_in_buffer(w->data[i], line, i);
 	}
 }
 
+/*
+** Arrow up print the next saved in history from history index
+*/
+
 void			move_key_up(t_read *line)
 {
 	t_lst	 	*w;
-	int			i;
+	int		i;
 
 	i = -1;
 	if (line->history)
 	{
 		if (line->history_index && !line->history_index->next)
-			return;
+			return ;
 		if (line->history_index && line->history_index->next)
 		{
 			w = line->history_index->next;
@@ -94,6 +101,10 @@ void			move_key_up(t_read *line)
 			insert_char_in_buffer(w->data[i], line, i);
 	}
 }
+
+/*
+** Arrow right to move the cursor one char on the right
+*/
 
 void		move_right(char *buf, t_read *input)
 {
@@ -114,12 +125,16 @@ void		move_right(char *buf, t_read *input)
 	}
 }
 
+/*
+** Arrow left to move the cursor one char on the left
+*/
+
 void		move_left(char *buf, t_read *input)
 {
 	int	i;
 
-	i = input->width;
 	(void)buf;
+	i = input->width;
 	if (((input->ws_li % input->ws_col) == 1) && input->x == input->prompt_len)
 		tputs(tgetstr("sf", NULL), 1, my_outc);
 	if (input->x != 0 && (input->x > (input->prompt_len * (input->y == 0 ? 1 : 0))))

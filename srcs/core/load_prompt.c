@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/02 13:14:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/02 16:06:00 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ void			load_prompt(t_core *shell)
 	credit(shell);
 
 	/* BETA */
-	init_termcaps();
-	init_config();
 	term.history = NULL;
 	term.history_index = NULL;
 	term.env = set_envp(shell);
-	/* Loop for prompt with status of GNL */
+
+	init_termcaps();
+	init_config();
+	/* Loop for prompt */
 	while (status)
 	{
 		/* Base output for prompt */
