@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/01 13:33:29 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/02 14:23:19 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,18 @@
 **	need to be shared.
 */
 
-void				init_term(void)
+void				init_config(void)
 {
 	struct termios		new_t;
 
 	tgetent(NULL, "xterm-256color");
-	if (tcgetattr(0, &old_t) == -1)
-		return ;
-	if (ioctl(0, TIOCGETA, &old_t) < 0)
+	if (tcgetattr(STDIN_FILENO, &old_t) == -1)
 		return ;
 	new_t = old_t;
 	new_t.c_lflag &= ~(ICANON | ECHO);
 	new_t.c_cc[VMIN] = 1;
 	new_t.c_cc[VTIME] = 0;
-	if (ioctl(0, TIOCSETA, &old_t) < 0)
-		return ;
-	if (tcsetattr(0, TCSANOW, &new_t) == -1)
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &new_t) == -1)
 		return ;
 }
 

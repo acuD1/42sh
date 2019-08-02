@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/01 14:35:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/02 13:14:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void			load_prompt(t_core *shell)
 	char		*line;
 	int8_t		status;
 	char		buff[READ_SIZE];
-	t_termcaps	*caps;
 	t_read		term;
 
 	line = NULL;
@@ -36,8 +35,8 @@ void			load_prompt(t_core *shell)
 	credit(shell);
 
 	/* BETA */
-	caps = init_termcaps();
-	init_term();
+	init_termcaps();
+	init_config();
 	term.history = NULL;
 	term.history_index = NULL;
 	term.env = set_envp(shell);

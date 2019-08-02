@@ -1,46 +1,66 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmdline.h                                          :+:      :+:    :+:   */
+/*   command_line.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/09 14:38:24 by fcatusse          #+#    #+#             */ /*   Updated: 2019/08/01 12:52:47 by fcatusse         ###   ########.fr       */ /*                                                                            */ /* ************************************************************************** */ 
+/*   Created: 2019/07/09 14:38:24 by fcatusse          #+#    #+#             */ 
+/*   Updated: 2019/08/02 13:16:06 by fcatusse         ###   ########.fr       */
+/*                                                                            */ 
+/* ************************************************************************** */ 
+
 #ifndef CMDLINE_H
 # define CMDLINE_H
 
 # define O_PERMISSIONS		(S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
 # define O_MODE_WR		(O_CREAT | O_TRUNC | O_WRONLY)
 
-#include "sh42.h"
+# include "sh42.h"
+# include "shared_libft.h"
+# include <stdint.h>
+# include <termios.h>
+# include <term.h>
+# include <termcap.h>
+# include <dirent.h>
 
 typedef struct			s_read
 {
-	char				*prompt;
-	int					prompt_len;
-	int					x;
-	int					y;
-	int					width;
-	int					ws_col;
-	int					ws_li;
-	char				buffer[BUFF_SIZE];
-	int					x_index;
-	int					ac;
-	char				**env;
-	char				**cmd;
-	t_lst				*history;
-	t_lst				*history_index;
-}						t_read;
+	char			*prompt;
+	int			prompt_len;
+	int			x;
+	int			y;
+	int			width;
+	int			ws_col;
+	int			ws_li;
+	char			buffer[BUFF_SIZE];
+	int			x_index;
+	int			ac;
+	char			**env;
+	char			**cmd;
+	t_lst			*history;
+	t_lst			*history_index;
+}				t_read;
+
+/*
+** Initialization
+*/
+
+void		init_termcaps(void);
+void		init_config(void);
+t_read		*get_size(t_read *data);
 
 /*
 ** Prompt
 */
+
 t_read			*display_prompt(t_read *term);
 void			goto_prompt(t_read *line);
 
 /*
 ** Cursor Moves
 */
+
 void			move_right(char *buf, t_read *input);
 void			move_left(char *buf, t_read *input);
 void			move_key_up(t_read *line);
@@ -50,26 +70,30 @@ void			jump_words(char *buf, t_read *line);
 /*
 ** Delete Keys
 */
+
 void			del_key(t_read *line);
 void			bs_key(char *buf, t_read *line);
 
 /*
 ** Check Caps and Interpret
 */
+
 uint8_t			check_caps(char *buf, t_read *line);
 void			insert_in_buffer(char *buf, t_read *line);
 void			insert_char_in_buffer(char buf, t_read *input, int buf_index);
 void			insert_str_in_buffer(char *d_name, t_read *input);
-int				my_outc(int c);
+int			my_outc(int c);
 
 /*
 ** Save history in Buffer
 */
+
 void			save_history(t_read *term);
 
 /*
 ** Auto completion
 */
+
 void			auto_complete_mode(char *buf, t_read *input);
 void			walking_path_var(char *buf, char *to_find, t_read *input);
 void			to_complete_buffer(char *buf, char *last_buf, char *to_find, t_read *input);

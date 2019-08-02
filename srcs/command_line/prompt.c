@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/01 13:16:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/02 14:18:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ t_read		*display_prompt(t_read *term)
 	term->width = term->x;
 	term = get_size(term);
 	//term->line = ft_memalloc(2048);
-	my_printf("\033[1;35;195m");
-	my_printf("<< %s >> ", term->prompt + 1);
-	my_printf("\033[0m");
+	//"\033[1;35;195m"
+	dprintf(STDOUT_FILENO, "%s<< %s >>%s ", C_C, term->prompt + 1, C_X);
 	return (term);
 }

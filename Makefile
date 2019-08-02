@@ -74,9 +74,8 @@ L_PATH = shared_libft/
 CORE		=	core/
 DB			=	db/
 BUILTINS	=	builtins/
-COMMANDLINE =	command_line/
+COMMANDLINE	=	command_line/
 EXEC		=	exec/
-INIT		=	init/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -84,15 +83,11 @@ PATHS		+=	$(B_PATH)
 PATHS		+=	$(O_PATH)
 PATHS		+=	$(O_PATH)$(BUILTINS)
 PATHS		+=	$(O_PATH)$(COMMANDLINE)
-PATHS		+=	$(O_PATH)$(INIT)
 PATHS		+=	$(O_PATH)$(CORE)
 PATHS		+=	$(O_PATH)$(DB)
 PATHS		+=	$(O_PATH)$(EXEC)
 
 # Files
-
-#SRC			+=	$(S_PATH)$(CORE)42sh.c
-#SRC			+=	$(S_PATH)main.c
 
 #SRC			+=	$(S_PATH)$(BUILTINS)check_builtins.c
 #SRC			+=	$(S_PATH)$(BUILTINS)exit.c
@@ -108,6 +103,7 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)auto_completion.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_current_dir.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_buffer.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_bin.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
 
 SRC		+=	$(S_PATH)$(CORE)42sh.c
 SRC		+=	$(S_PATH)$(CORE)load_prompt.c
@@ -125,11 +121,6 @@ SRC		+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC		+=	$(S_PATH)$(EXEC)get_bin.c
 SRC		+=	$(S_PATH)$(EXEC)set_envp.c
 
-#SRC			+=	$(S_PATH)$(EXEC)run_process.c
-
-SRC			+=	$(S_PATH)$(INIT)init_termcaps.c
-#SRC			+=	$(S_PATH)$(INIT)initialization.c
-
 SRC		+=	$(S_PATH)dev.c
 # Headers
 
@@ -138,7 +129,6 @@ HDR			+=	define.h
 HDR			+=	struct.h
 HDR			+=	builtins.h
 HDR			+=	command_line.h
-HDR			+=	twenty_one.h
 HDR			+=	shared_libft.h
 ###############################################################################
 #                                                                             #
@@ -147,7 +137,7 @@ HDR			+=	shared_libft.h
 # Objects
 
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
-LIB = $(L_PATH)$(LNAME) -ltermcap
+LIB = $(L_PATH)$(LNAME) -ltermcap -no-pie
 vpath %.h $(H_PATH)
 
 # Variables
