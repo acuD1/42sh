@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:20:26 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/02 16:03:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/03 11:29:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,12 @@ int8_t	locate_hash(t_core *shell, t_hash *hash)
 	if (map[hash->value] == NULL)
 		return (FAILURE);
 	sub_map = map[hash->value];
-	dprintf(STDOUT_FILENO, "?\n");
 	while (sub_map)
 	{
-		dprintf(STDOUT_FILENO, "%s ?\n", ((t_db*)(sub_map->content))->key);
 		if (ft_strequ(shell->tokens[0], ((t_db*)(sub_map->content))->key))
 		{
 			shell->bin = ft_strdup(((t_db*)(sub_map->content))->value);
-			dprintf(STDOUT_FILENO, "BIN LOCATED\n");
+			((t_db*)(sub_map->content))->hit += 1;
 			return (SUCCESS);
 		}
 		sub_map = sub_map->next;

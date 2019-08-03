@@ -6,11 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:01:15 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/02 16:28:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/03 11:37:16 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+/* This fuctions resize the current hash map with a x2 multiplicator.
+** It will almost be never call tho, it's just in case ..
+*/
 
 static void	fill_new_hash_map
 	(t_core *shell, t_hash *hash, t_lst **map, t_lst **new_map)
@@ -27,8 +31,6 @@ static void	fill_new_hash_map
 			hash->lenght++;
 			hash->value = get_hash(((t_db*)(sub_map->content))->key,
 									(hash->size * 2));
-			if (ft_lstlen(new_map[hash->value]) > 0)
-				hash->collision++;
 			ft_lstappend(&new_map[hash->value],
 				ft_lstnew(fetch_hash_db(&shell->db,
 					((t_db*)(sub_map->content))->key,
@@ -46,7 +48,6 @@ int8_t		resize_hash_map(t_core *shell, t_hash *hash)
 
 	map = hash->map;
 
-	hash->collision = 0;
 	hash->lenght = 0;
 	if (!(new_map = ft_memalloc(sizeof(t_lst*) * (hash->size * 2))))
 		return (FAILURE);
@@ -54,6 +55,5 @@ int8_t		resize_hash_map(t_core *shell, t_hash *hash)
 	free_hash_map(hash);
 	hash->map = new_map;
 	hash->size *= 2;
-	dprintf(STDOUT_FILENO, "HASH MAP RESIZE\n");
 	return (SUCCESS);
 }

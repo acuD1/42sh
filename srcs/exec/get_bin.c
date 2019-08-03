@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/02 16:34:32 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/03 11:33:04 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,11 @@ char		*get_bin(t_core *shell, t_lst *env)
 		return (shell->bin = ft_strdup(shell->tokens[0]));
 
 	/*
-	**	HASH_TABLE
+	**	HASH_TABLE : Locate token[0] in the hash_map first, if found retourn the path found !
 	*/
-	print_hash_map(&shell->hash);
+	//print_hash_map(&shell->hash);							//Shows error with valgrind ??
 	if (locate_hash(shell, &shell->hash) == SUCCESS)
 		return (shell->bin);
-	else
-		dprintf(STDERR_FILENO, "BIN NOT FOUND IN HASH MAP !\n");
 
 	/*
 	**	If not local, we're going to find it in PATH

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/02 15:50:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/03 11:33:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ typedef struct	s_db
 {
 	char		*key;
 	char		*value;
+	u_int32_t	hit;		// Only for hash_map
 }				t_db;
 
 /*
-**	t_hash for hash table implementation
+**	t_hash and his db for hash table implementation
 */
 
 typedef struct	s_hash
@@ -44,7 +45,6 @@ typedef struct	s_hash
 	t_lst		**map;
 	u_int32_t	value;
 	u_int32_t	size;			// Size located
-	u_int32_t	collision;		// Numbers of collisionon the linked list
 	u_int32_t	lenght;			// Numbers of keys
 }				t_hash;
 

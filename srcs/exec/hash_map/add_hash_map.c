@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:38:40 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/02 16:43:01 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/03 11:36:12 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int8_t	add_hash_map(t_core *shell, t_hash *hash)
 
 	/* Check factor, if > 0.75, increase hash size */
 	load_factor = hash->lenght / hash->size;
-	dprintf(STDERR_FILENO, "LOAD_FACTOR = %0.2f\n", load_factor);
-	if (load_factor > MAX_F && resize_hash_map(shell, hash) != SUCCESS)
+	if (load_factor > MAX_LOAD_F && resize_hash_map(shell, hash) != SUCCESS)
 		return (FAILURE);
 
 	/*	get hash value from the binary found in PATH */
@@ -35,7 +34,8 @@ int8_t	add_hash_map(t_core *shell, t_hash *hash)
 	hash->lenght++;
 	/* add to hash map */
 	ft_lstappend(&hash->map[hash->value],
-		ft_lstnew(fetch_hash_db(&shell->db, shell->tokens[0], shell->bin), sizeof(t_db)));
+		ft_lstnew(fetch_hash_db(&shell->db, shell->tokens[0],
+						shell->bin), sizeof(t_db)));
 
 	return (SUCCESS);
 }

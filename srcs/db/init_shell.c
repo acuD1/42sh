@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/02 15:51:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/03 11:18:56 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	init_shell(t_core *shell)
 	shell->hash.map = NULL;
 	shell->hash.value = 0;
 	shell->hash.size = HASH_SIZE;
-	shell->hash.collision = 0;
 	shell->hash.lenght = 0;
 
 	/*	global
