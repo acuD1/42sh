@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/02 16:21:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/04 19:13:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@ int		my_outc(int c)
 	return (SUCCESS);
 }
 
+/*
+** Move the cursor right to prompt and clear the line
+*/
+
 void		goto_prompt(t_read *line)
 {
 	while (line->x > line->prompt_len)
@@ -28,20 +32,50 @@ void		goto_prompt(t_read *line)
 	tputs(tgetstr("ce", NULL), 1, my_outc);
 }
 
+/*
+** Display prompt as the current directory
+** Store some data for pressed keys
+*/
+
 t_read		*display_prompt(t_read *term)
 {
 	char	path[BUFF_SIZE + 1];
 
-	getcwd(path, BUFF_SIZE);
-	term->prompt = ft_strdup(ft_strrchr(path, '/'));
+	if (!getcwd(path, BUFF_SIZE))
+		term->prompt = ft_strdup("undefined");
+	else
+		term->prompt = ft_strdup(ft_strrchr(path, '/'));
 	term->prompt_len = ft_strlen(term->prompt) + 6;
 	term->x = term->prompt_len;
 	term->x_index = term->x;
 	term->y = 0;
 	term->width = term->x;
 	term = get_size(term);
-	//term->line = ft_memalloc(2048);
-	//"\033[1;35;195m"
 	dprintf(STDOUT_FILENO, "%s<< %s >>%s ", C_C, term->prompt + 1, C_X);
 	return (term);
+}
+
+/*
+** Clear the last buffer/line inserted & Display current prompt
+** Launch line edition: read stdin and interpret pressed keys
+** Save the current buffer in a history list
+*/
+
+char		*init_prompt(t_read *term)
+{
+	char	buff[READ_SIZE];
+
+	ft_bzero(term->buffer, term->width);
+	display_prompt(term);
+	while (read(STDIN_FILENO, buff, READ_SIZE))
+	{
+		if (check_caps(buff, term) == TRUE)
+			continue ;
+		else
+			break ;
+	}
+	free(term->prompt);
+	save_history(term);
+	check_quotes(term);
+	return (term->buffer);
 }

@@ -6,12 +6,16 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/02 15:51:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/02 16:57:14 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <sys/ioctl.h>
+
+/*
+** Store the number of line and column in struct
+*/
 
 t_read			*get_size(t_read *data)
 {

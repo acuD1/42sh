@@ -3,12 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   command_line.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/09 14:38:24 by fcatusse          #+#    #+#             */ 
-/*   Updated: 2019/08/02 15:37:50 by fcatusse         ###   ########.fr       */
-/*                                                                            */ 
-/* ************************************************************************** */ 
+/*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/08/04 14:09:43 by fcatusse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef CMDLINE_H
 # define CMDLINE_H
@@ -24,39 +24,51 @@
 # include <termcap.h>
 # include <dirent.h>
 
-typedef struct			s_read
+typedef struct		s_read
 {
-	char			*prompt;
-	int			prompt_len;
-	int			x;
-	int			y;
-	int			width;
-	int			ws_col;
-	int			ws_li;
-	char			buffer[BUFF_SIZE];
-	int			x_index;
-	int			ac;
-	char			**env;
-	char			**cmd;
-	t_lst			*history;
-	t_lst			*history_index;
-}				t_read;
+	char		*prompt;
+	int		prompt_len;
+	int		x;
+	int		y;
+	int		width;
+	int		ws_col;
+	int		ws_li;
+	char		buffer[BUFF_SIZE];
+	int		x_index;
+	int		ac;
+	char		**env;
+	char		**cmd;
+	t_lst		*history;
+	t_lst		*history_index;
+}			t_read;
 
 /*
 ** Configuration
 */
 
-void		init_termcaps(void);
-uint8_t		init_config(void);
-uint8_t		reset_config(void);
-t_read		*get_size(t_read *data);
+void			init_termcaps(void);
+uint8_t			init_config(void);
+uint8_t			reset_config(void);
+t_read			*get_size(t_read *data);
 
 /*
 ** Prompt
 */
 
+char			*init_prompt(t_read *term);
 t_read			*display_prompt(t_read *term);
 void			goto_prompt(t_read *line);
+
+/*
+** Check Caps and Interpret
+*/
+
+uint8_t			check_caps(char *buf, t_read *line);
+void			insert_in_buffer(char *buf, t_read *line);
+void			insert_char_in_buffer(char buf, t_read *input, int buf_index);
+void			insert_str_in_buffer(char *d_name, t_read *input);
+int			my_outc(int c);
+
 
 /*
 ** Cursor Motion
@@ -76,20 +88,16 @@ void			del_key(t_read *line);
 void			bs_key(char *buf, t_read *line);
 
 /*
-** Check Caps and Interpret
-*/
-
-uint8_t			check_caps(char *buf, t_read *line);
-void			insert_in_buffer(char *buf, t_read *line);
-void			insert_char_in_buffer(char buf, t_read *input, int buf_index);
-void			insert_str_in_buffer(char *d_name, t_read *input);
-int			my_outc(int c);
-
-/*
 ** History
 */
 
 void			save_history(t_read *term);
+
+/*
+** Quotes and Multiline
+*/
+
+void			check_quotes(t_read *line);
 
 /*
 ** Auto completion

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:55:05 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/01 16:22:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/02 16:57:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Return only TRUE if tab key is pressed
 */
 
-uint8_t				is_tab(char *buf, char *d_name, t_read *input)
+uint8_t			is_tab(char *buf, char *d_name, t_read *input)
 {
 	if (read(0, buf, READ_SIZE) > 0)
 	{
@@ -36,11 +36,11 @@ uint8_t				is_tab(char *buf, char *d_name, t_read *input)
 ** That display not hidden files in current directory while tab key is pressed
 */
 
-void				display_current_directory(char *buf, t_read *input)
+void			display_current_directory(char *buf, t_read *input)
 {
 	struct dirent	*data;
-	DIR				*dir;
-	char			current_dir[BUFF_SIZE];
+	DIR		*dir;
+	char		current_dir[BUFF_SIZE];
 
 	if (!getcwd(current_dir, BUFF_SIZE))
 		return ;

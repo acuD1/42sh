@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/01 13:19:44 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/02 16:37:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void		paste_board(char *buf, t_read *input, int buf_index)
 	i = -1;
 	while (buf[++i])
 		insert_char_in_buffer(buf[i], input, buf_index);
-
 }
 
 /*
