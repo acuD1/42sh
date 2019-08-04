@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/02 16:37:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/04 21:53:37 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void		insert_inline_char(char *buf, t_read *input, int buf_index)
 
 void		insert_in_buffer(char *buf, t_read *input)
 {
-	int		buf_index;
+	int	buf_index;
 
 	if (input->x >= input->ws_col)
 	{
