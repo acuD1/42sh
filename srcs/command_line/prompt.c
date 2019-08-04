@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/04 19:13:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/04 19:40:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		goto_prompt(t_read *line)
 
 /*
 ** Display prompt as the current directory
-** Store some data for pressed keys
+** Store some datas for pressed keys
 */
 
 t_read		*display_prompt(t_read *term)
@@ -51,20 +51,21 @@ t_read		*display_prompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term = get_size(term);
-	dprintf(STDOUT_FILENO, "%s<< %s >>%s ", C_C, term->prompt + 1, C_X);
+	dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_M, term->prompt + 1, C_X);
 	return (term);
 }
 
 /*
 ** Clear the last buffer/line inserted & Display current prompt
-** Launch line edition: read stdin and interpret pressed keys
-** Save the current buffer in a history list
+** Launch line edition: read stdin until enter key is pressed
+** The current buffer is saved in a list history
 */
 
 char		*init_prompt(t_read *term)
 {
 	char	buff[READ_SIZE];
 
+	init_config();
 	ft_bzero(term->buffer, term->width);
 	display_prompt(term);
 	while (read(STDIN_FILENO, buff, READ_SIZE))
@@ -77,5 +78,6 @@ char		*init_prompt(t_read *term)
 	free(term->prompt);
 	save_history(term);
 	check_quotes(term);
+	reset_config();
 	return (term->buffer);
 }

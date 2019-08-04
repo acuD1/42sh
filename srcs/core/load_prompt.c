@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/04 18:21:49 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/04 19:40:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void			load_prompt(t_core *shell)
 	term.env = set_envp(shell);
 
 	init_termcaps();
-	init_config();
 	/* Loop for prompt */
 	while (status)
 	{

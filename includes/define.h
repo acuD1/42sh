@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/01 16:00:53 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/04 19:32:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define C_M			"\x1b[35m"
 # define C_C			"\x1b[36m"
 # define C_X			"\x1b[0m"
+# define C_BOLD			"\x1b[1m"
 
 /*
 **	Free

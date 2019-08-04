@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:55:05 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/02 16:57:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/04 20:04:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,15 @@ uint8_t			is_tab(char *buf, char *d_name, t_read *input)
 	return (FALSE);
 }
 
+uint8_t			is_dot(char *d_name)
+{
+	if (!ft_strcmp(d_name, "."))
+		return (TRUE);
+	else if (!ft_strcmp(d_name, ".."))
+		return (TRUE);
+	return (FALSE);
+}
+
 /*
 ** Display all files in current directory if no any char is inserted
 ** That display not hidden files in current directory while tab key is pressed
@@ -47,7 +56,7 @@ void			display_current_directory(char *buf, t_read *input)
 	dir = opendir(current_dir);
 	while ((data = readdir(dir)) != NULL)
 	{
-		if (data->d_name[0] != '.')
+		if (is_dot(data->d_name) == FALSE)
 			insert_str_in_buffer(data->d_name, input);
 		else
 			continue ;

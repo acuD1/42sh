@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:38:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/01 16:21:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/04 19:48:00 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 void			walking_path_var(char *buf, char *to_find, t_read *input)
 {
 	struct dirent	*data;
-	DIR				*dir;
-	char			**path;
-	int				i;
+	DIR		*dir;
+	char		**path;
+	int		i;
 
 	i = -1;
 	path = split_path(input->env, "PATH");
