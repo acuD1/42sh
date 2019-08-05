@@ -6,51 +6,48 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 20:37:41 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/04 22:35:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/05 19:20:48 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		display_subprompt(t_read *line)
+void		insert_newline_in_buff(t_read *line)
 {
-	ft_putstr("> ");
-	line->prompt_len = 2;
-	line->x = line->prompt_len;
-	line->y = 0;
-}
+	int	buf_index;
 
-/*
-** ToDo: remove quotes in line->buffer but save before with quotes in history...
-*/
+	buf_index = line->x_index - line->prompt_len;
+	if (line->found != 1)
+	{
+		line->buffer[buf_index] = '\n';
+		line->width++;
+		line->x_index++;
+	}
+}
 
 void		load_subshell_quote(t_read *line)
 {
 	char	buff[READ_SIZE];
-	int	buf_index;
 
-	line->x_index = 2;
-	line->width = 2;
-	while (1)
+	insert_newline_in_buff(line);
+	line->found = 0;
+	while (TRUE)
 	{
-		//ft_bzero(line->buffer, line->width);
-		display_subprompt(line);
+		ft_putstr("> ");
 		while (read(STDIN_FILENO, buff, READ_SIZE))
 		{
 			if (check_caps(buff, line) == TRUE)
+			{
+				(buff[0] == '\'') ? line->found = 1 : 0;
 				continue ;
-			if (!ft_strcmp(buff, "'"))
-				break ;
+			}
 			else
 			{
-				buf_index = line->x_index - line->prompt_len;
-				line->width++;
-				line->x_index++;
-				line->buffer[buf_index] = '\n';
+				insert_newline_in_buff(line);
 				break ;
 			}
 		}
-		if (ft_strchr(line->buffer, '\''))
-			break ;
+		if (line->found == 1)
+			return ;
 	}
 }

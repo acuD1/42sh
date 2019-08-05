@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:06:36 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/04 20:47:44 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/05 16:15:50 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,16 @@ void		remove_quotes(t_read *line)
 	ft_strdel(&tmp);
 }
 
-void		check_quotes(t_read *line)
+uint8_t		check_quotes(t_read *line)
 {
 	if (quotes_is_matching(line) == TRUE)
 		remove_quotes(line);
 	else if (ft_strchr(line->buffer, '\''))
+	{
 		load_subshell_quote(line);
+		save_history(line);
+		remove_quotes(line);
+		return (TRUE);
+	}
+	return (FALSE);
 }
