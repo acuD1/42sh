@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/04 20:47:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/05 15:30:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@ typedef struct		s_read
 {
 	char		*prompt;
 	int		prompt_len;
+	int		x_index;
 	int		x;
 	int		y;
 	int		width;
 	int		ws_col;
 	int		ws_li;
-	char		buffer[BUFF_SIZE];
-	int		x_index;
 	int		ac;
+	int		found;	
+	char		buffer[BUFF_SIZE];
 	char		**env;
 	char		**cmd;
 	t_lst		*history;

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/04 20:10:33 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/05 15:43:58 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void			auto_complete_mode(char *buf, t_read *input)
 
 	last_buf = NULL;
 	to_find = NULL;
+	input->found = 0;
 	if (split_cmd(&last_buf, &to_find, input) == FALSE)
 		return ;
 	if (input->buffer[ft_strlen(input->buffer) - 1] == ' '
@@ -74,6 +75,8 @@ void			auto_complete_mode(char *buf, t_read *input)
 			display_current_directory(buf, input);
 		else
 			walking_path_var(buf, to_find, input);
+		if (input->found == 0)
+			to_complete_buffer(buf, last_buf, to_find, input);
 	}
 	free(to_find);
 	ft_tabfree(input->cmd);

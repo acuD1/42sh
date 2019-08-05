@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:48:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/02 16:59:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/05 15:41:01 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ uint8_t			read_again(char **prev_b, char *buf, char *name, t_read *input)
 ** To complete files if char inserted match with any files in current dir
 */
 
-void			to_complete_buffer(char *buf, char *last_buf,											char *to_find, t_read *input)
+void			to_complete_buffer(char *buf, char *last_buf,
+						char *to_find, t_read *input)
 {
 	struct dirent	*data;
 	DIR		*dir;

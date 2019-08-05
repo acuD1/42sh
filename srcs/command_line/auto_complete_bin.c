@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:38:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/04 19:48:00 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/05 15:37:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 {
 	if (isstart(name, to_find))
 	{
+		input->found = 1;
 		goto_prompt(input);
 		insert_bin_in_buffer(name, input);
 		if (read(0, buf, READ_SIZE) > 0)
@@ -109,5 +110,5 @@ void			walking_path_var(char *buf, char *to_find, t_read *input)
 		}
 		closedir(dir);
 	}
-	walking_path_var(buf, to_find, input);
+	input->found == 1 ? walking_path_var(buf, to_find, input) : 0;
 }
