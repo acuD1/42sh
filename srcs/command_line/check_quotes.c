@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:06:36 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/06 14:33:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/06 15:51:40 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ uint8_t		goto_next_quote(char *buffer, char quote_type, int *i)
 
 char		set_quote_type(char quote)
 {
-	if (quote == SINGLE_QUOTE || quote == DQUOTE)
+	if (quote == QUOTE || quote == DQUOTE || quote == BQUOTE)
 		return (quote);
 	return ('\0');
 }
@@ -58,7 +58,7 @@ void		remove_quotes(t_read *line)
 	ft_bzero(line->buffer, line->width);
 	while (tmp[++i])
 	{
-		if (tmp[i] == SINGLE_QUOTE || tmp[i] == DQUOTE)
+		if (tmp[i] == QUOTE || tmp[i] == DQUOTE || tmp[i] == BQUOTE)
 			line->width--;
 		else
 			line->buffer[++j] = tmp[i];
@@ -74,7 +74,7 @@ uint8_t		check_quotes(t_read *line)
 	i = -1;
 	if (quotes_is_matching(line) == TRUE)
 		remove_quotes(line);
-	else if (ft_strchr(line->buffer, SINGLE_QUOTE)
+	else if (ft_strchr(line->buffer, QUOTE)
 			|| ft_strchr(line->buffer, DQUOTE))
 	{
 		while (line->buffer[++i])

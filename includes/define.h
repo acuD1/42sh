@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/06 14:32:22 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/06 15:51:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@
 
 # define BUFF_SIZE		4096
 # define READ_SIZE		4
-# define SINGLE_QUOTE		'\''
+# define QUOTE			'\''
 # define DQUOTE			'\"'
+# define BQUOTE			'`'
 
 #endif
