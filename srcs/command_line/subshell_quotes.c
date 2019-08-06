@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   single_quote.c                                     :+:      :+:    :+:   */
+/*   subshell_quotes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/04 20:37:41 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/05 19:20:48 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/08/06 14:28:32 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/08/06 14:49:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		insert_newline_in_buff(t_read *line)
 	}
 }
 
-void		load_subshell_quote(t_read *line)
+void		load_subshell_quote(char quote, t_read *line)
 {
 	char	buff[READ_SIZE];
 
@@ -33,12 +33,13 @@ void		load_subshell_quote(t_read *line)
 	line->found = 0;
 	while (TRUE)
 	{
-		ft_putstr("> ");
+		(quote == DQUOTE) ? ft_putstr("dquote> ") : ft_putstr("> ");
 		while (read(STDIN_FILENO, buff, READ_SIZE))
 		{
 			if (check_caps(buff, line) == TRUE)
 			{
-				(buff[0] == '\'') ? line->found = 1 : 0;
+				(buff[0] == SINGLE_QUOTE && quote == SINGLE_QUOTE) ? line->found = 1 : 0;
+				(buff[0] == DQUOTE && quote == DQUOTE) ? line->found = 1 : 0;
 				continue ;
 			}
 			else

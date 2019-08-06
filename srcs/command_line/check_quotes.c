@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:06:36 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/05 16:15:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/06 14:33:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ uint8_t		goto_next_quote(char *buffer, char quote_type, int *i)
 
 char		set_quote_type(char quote)
 {
-	if (quote == '\'' || quote == '\"')
+	if (quote == SINGLE_QUOTE || quote == DQUOTE)
 		return (quote);
 	return ('\0');
 }
@@ -58,7 +58,7 @@ void		remove_quotes(t_read *line)
 	ft_bzero(line->buffer, line->width);
 	while (tmp[++i])
 	{
-		if (tmp[i] == '\'' || tmp[i] == '\"')
+		if (tmp[i] == SINGLE_QUOTE || tmp[i] == DQUOTE)
 			line->width--;
 		else
 			line->buffer[++j] = tmp[i];
@@ -68,11 +68,19 @@ void		remove_quotes(t_read *line)
 
 uint8_t		check_quotes(t_read *line)
 {
+	int	i;
+	char	quote_type;
+
+	i = -1;
 	if (quotes_is_matching(line) == TRUE)
 		remove_quotes(line);
-	else if (ft_strchr(line->buffer, '\''))
+	else if (ft_strchr(line->buffer, SINGLE_QUOTE)
+			|| ft_strchr(line->buffer, DQUOTE))
 	{
-		load_subshell_quote(line);
+		while (line->buffer[++i])
+			if ((quote_type = set_quote_type(line->buffer[i])) != '\0')
+				break ;
+		load_subshell_quote(quote_type, line);
 		save_history(line);
 		remove_quotes(line);
 		return (TRUE);

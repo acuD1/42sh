@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/05 16:16:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/06 14:24:51 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void			save_history(t_read *term);
 */
 
 uint8_t			check_quotes(t_read *line);
-void			load_subshell_quote(t_read *line);
+void			load_subshell_quote(char quote, t_read *line);
 
 /*
 ** Auto completion
