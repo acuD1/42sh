@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/05 16:16:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/07 19:40:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_read		*display_prompt(t_read *term)
 
 char		*init_prompt(t_read *term)
 {
-	char	buff[READ_SIZE];
+	char	buff[READ_SIZE + 1];
 
 	init_config();
 	ft_bzero(term->buffer, term->width);

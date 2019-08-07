@@ -6,23 +6,14 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/04 21:53:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/07 20:04:14 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		paste_board(char *buf, t_read *input, int buf_index)
-{
-	int		i;
-
-	i = -1;
-	while (buf[++i])
-		insert_char_in_buffer(buf[i], input, buf_index);
-}
-
 /*
-** To insert a string in buffer at the end of line
+**	To insert a string in buffer at the end of line
 */
 void			insert_str_in_buffer(char *d_name, t_read *input)
 {
@@ -39,8 +30,9 @@ void			insert_str_in_buffer(char *d_name, t_read *input)
 }
 
 /*
-** To insert a char in buffer at the end of line
+**	To insert a char in buffer at the end of line
 */
+
 void		insert_char_in_buffer(char buf, t_read *input, int buf_index)
 {
 	ft_putchar(buf);
@@ -56,8 +48,9 @@ void		insert_char_in_buffer(char buf, t_read *input, int buf_index)
 }
 
 /*
-** To insert char in buffer if cursor is inline
+**	To insert char in buffer if cursor is inline
 */
+
 void		insert_inline_char(char *buf, t_read *input, int buf_index)
 {
 	char	*end_line;
@@ -85,6 +78,12 @@ void		insert_inline_char(char *buf, t_read *input, int buf_index)
 	}
 }
 
+/*
+**	Insert one char if size of buff is equal to 1
+**	Otherwise (size greater than 1) paste the string in buffer
+**	If cursor position is under the width of line => insert inline
+*/
+
 void		insert_in_buffer(char *buf, t_read *input)
 {
 	int	buf_index;
@@ -97,11 +96,13 @@ void		insert_in_buffer(char *buf, t_read *input)
 	buf_index = input->x_index - input->prompt_len;
 	if (input->x >= BUFF_SIZE)
 		return ;
-	/* if (ft_strlen(buf) > 1) */
-	/* { */
-	/* 	paste_board(buf, input, buf_index); */
-	/* 	return ; */
-	/* } */
+	if (ft_strlen(buf) > 1)
+	{
+		insert_str_in_buffer(buf, input);
+		//have to insert inline if cursor is not at the eol
+		ft_bzero(buf, READ_SIZE);
+		return ;
+	}
 	else if (buf_index == input->width - input->prompt_len)
 		insert_char_in_buffer(*buf, input, buf_index);
 	else if (buf_index < input->width - input->prompt_len)
