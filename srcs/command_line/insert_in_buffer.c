@@ -6,28 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/07 20:04:14 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/08 16:07:01 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-/*
-**	To insert a string in buffer at the end of line
-*/
-void			insert_str_in_buffer(char *d_name, t_read *input)
-{
-	int		i;
-	int		buf_index;
-
-	i = -1;
-	buf_index = input->x_index - input->prompt_len;
-	while (d_name[++i])
-	{
-		insert_char_in_buffer(d_name[i], input, buf_index);
-		buf_index++;
-	}
-}
 
 /*
 **	To insert a char in buffer at the end of line
@@ -79,6 +62,26 @@ void		insert_inline_char(char *buf, t_read *input, int buf_index)
 }
 
 /*
+**	To insert a string in buffer at the end of line
+*/
+
+void			insert_str_in_buffer(char *d_name, t_read *input)
+{
+	int		buf_index;
+
+	buf_index = input->x_index - input->prompt_len;
+	while (*d_name)
+	{
+		if (buf_index < input->width - input->prompt_len)
+			insert_inline_char(d_name, input, buf_index);
+		else
+			insert_char_in_buffer(*d_name, input, buf_index);
+		d_name++;
+		buf_index++;
+	}
+}
+
+/*
 **	Insert one char if size of buff is equal to 1
 **	Otherwise (size greater than 1) paste the string in buffer
 **	If cursor position is under the width of line => insert inline
@@ -99,7 +102,6 @@ void		insert_in_buffer(char *buf, t_read *input)
 	if (ft_strlen(buf) > 1)
 	{
 		insert_str_in_buffer(buf, input);
-		//have to insert inline if cursor is not at the eol
 		ft_bzero(buf, READ_SIZE);
 		return ;
 	}

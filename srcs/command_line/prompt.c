@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/07 19:40:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/08 15:52:44 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ char		*init_prompt(t_read *term)
 	while (read(STDIN_FILENO, buff, READ_SIZE))
 	{
 		if (check_caps(buff, term) == TRUE)
+		{
+			ft_bzero(buff, READ_SIZE);
 			continue ;
+		}
 		else
 			break ;
 	}
