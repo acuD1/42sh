@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/07 17:57:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/08 19:38:58 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,28 +22,28 @@
 ** Alt + f to jump one word forward
 */
 
-void	check_keys_comb(char *buf, t_read *line)
+void	check_keys_comb(char *buff, t_read *line)
 {
-	if (*buf == 12)
+	if (*buff == CLEAR_SCREEN)
 	{
 		tputs(tgetstr("cl", NULL), 1, my_outc);
 		display_prompt(line);
 	}
-	else if (*buf == 1 || (buf[0] == 27 && buf[1] == 91 && buf[2] == 72))
+	else if (*buff == BEGINNING_LINE || (buff[0] == 27 && buff[1] == 91 && buff[2] == 72))
 		while (line->x > line->prompt_len)
-			move_left(buf, line);
-	else if (*buf == 5 || (buf[0] == 27 && buf[1] == 91 && buf[2] == 70))
+			move_left(buff, line);
+	else if (*buff == END_LINE || (buff[0] == 27 && buff[1] == 91 && buff[2] == 70))
 		while (line->x < line->width)
-			move_right(buf, line);
-	else if (*buf == 11)
+			move_right(buff, line);
+	else if (*buff == CLEAR_LINE)
 		while (line->x < line->width)
 			del_key(line);
 	else
-		jump_words(buf, line);
+		jump_words(buff, line);
 }
 
 /*
-** Interpret and insert char in buffer
+** Interpret and insert char in bufffer
 ** Tab key to turn on auto complete mode
 ** Right/Left arrows keys to move cursor in line
 ** Up/Down arrows keys to navigate through history
@@ -51,30 +51,30 @@ void	check_keys_comb(char *buf, t_read *line)
 ** Backspace/Delete keys to delete character in line
 */
 
-uint8_t		check_caps(char *buf, t_read *line)
+uint8_t		check_caps(char *buff, t_read *line)
 {
-	if (buf[0] == '\t')
-		auto_complete_mode(buf, line);
-	if (buf[0] == 27 && buf[1] == 91 && buf[2] == 65)
+	if (*buff == TAB_KEY)
+		auto_complete_mode(buff, line);
+	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 65)
 		move_key_up(line);
-	else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 66)
+	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 66)
 		move_key_down(line);
-	else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 67)
-		move_right(buf, line);
-	else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 68)
-		move_left(buf, line);
-	else if (buf[0] == 10)
+	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 67)
+		move_right(buff, line);
+	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 68)
+		move_left(buff, line);
+	else if (*buff == ENTER_KEY)
 	{
 		ft_putchar('\n');
 		return (FALSE);
 	}
-	else if (buf[0] == 27 && buf[1] == 91 && buf[2] == 51 && buf[3] == 126)
+	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 51 && buff[3] == 126)
 		del_key(line);
-	else if (buf[0] == 127)
-		bs_key(buf, line);
-	else if (is_print(buf[0]))
-		insert_in_buffer(buf, line);
+	else if (*buff == BS_KEY)
+		bs_key(buff, line);
+	else if (is_print(*buff))
+		insert_in_buffer(buff, line);
 	else
-		check_keys_comb(buf, line);
+		check_keys_comb(buff, line);
 	return (TRUE);
 }

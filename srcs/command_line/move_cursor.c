@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/07 17:40:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/08 19:11:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void			jump_words(char *buf, t_read *line)
 {
-	if (buf[0] == 6)
+	if (buf[0] == ONE_WORD_LEFT)
 	{
 		if (line->buffer[line->x - line->prompt_len] != ' ')
 			move_left(buf, line);
@@ -30,7 +30,7 @@ void			jump_words(char *buf, t_read *line)
 			line->buffer[line->x - line->prompt_len - 1] != ' ')
 			move_left(buf, line);
 	}
-	else if (buf[0] == 2)
+	else if (buf[0] == ONE_WORD_RIGHT)
 	{
 		if (line->buffer[line->x - line->prompt_len] != ' ')
 			move_right(buf, line);
