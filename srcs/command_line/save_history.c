@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/02 16:55:36 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/09 16:26:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include "sh42.h"
 
 /*
-** Save the last line inserted in history list
-** Next ptr to the last line saved
+**	Save the last line inserted in history list
+**	Next ptr to the last line saved
 */
 
 void			save_history(t_read *term)

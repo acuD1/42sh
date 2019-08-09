@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/06 14:28:32 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/06 15:52:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/09 14:39:43 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,17 @@ void		load_subshell_quote(char quote, t_read *line)
 {
 	char	buff[READ_SIZE];
 
-	insert_newline_in_buff(line);
 	line->found = 0;
+	insert_newline_in_buff(line);
 	while (TRUE)
 	{
 		(quote == DQUOTE) ? ft_putstr("dquote> ") : ft_putstr("> ");
 		while (read(STDIN_FILENO, buff, READ_SIZE))
 		{
+			if (is_eof(buff[0], quote) == TRUE)
+				line->found = 1;
 			if (check_caps(buff, line) == TRUE)
-			{
-				if (is_eof(buff[0], quote) == TRUE)
-					line->found = 1;
 				continue ;
-			}
 			else
 			{
 				insert_newline_in_buff(line);

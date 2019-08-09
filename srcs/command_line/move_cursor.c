@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/08 19:11:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/09 16:17:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,31 @@
 /*
 ** Alt + f to jump one word forward
 ** Alt + b to jump one word backward
+** To Do: (*f) / infinite loop multiline
 */
 
-void			jump_words(char *buf, t_read *line)
+void			jump_words(char *buff, t_read *line)
 {
-	if (buf[0] == ONE_WORD_LEFT)
+	int		last_char;
+
+	last_char = line->x_index - line->prompt_len;
+	if (buff[0] == ONE_WORD_LEFT)
 	{
-		if (line->buffer[line->x - line->prompt_len] != ' ')
-			move_left(buf, line);
-		while (line->x > line->prompt_len &&
-			line->buffer[line->x - line->prompt_len] == ' ')
-			move_left(buf, line);
-		while (line->x > line->prompt_len &&
-			line->buffer[line->x - line->prompt_len - 1] != ' ')
-			move_left(buf, line);
+		if (line->buffer[last_char] != ' ')
+			move_left(buff, line);
+		while (line->x > line->prompt_len && line->buffer[last_char] == ' ')
+			move_left(buff, line);
+		while (line->x > line->prompt_len && line->buffer[last_char - 1] != ' ')
+			move_left(buff, line);
 	}
-	else if (buf[0] == ONE_WORD_RIGHT)
+	else if (buff[0] == ONE_WORD_RIGHT)
 	{
-		if (line->buffer[line->x - line->prompt_len] != ' ')
-			move_right(buf, line);
-		while (line-> x < line->width &&
-			line->buffer[line->x - line->prompt_len] == ' ')
-			move_right(buf, line);
-		while (line->x < line->width &&
-			line->buffer[line->x - line->prompt_len] != ' ')
-			move_right(buf, line);
+		if (line->buffer[last_char] != ' ')
+			move_right(buff, line);
+		while (line-> x < line->width && line->buffer[last_char] == ' ')
+			move_right(buff, line);
+		while (line->x < line->width && line->buffer[last_char] != ' ')
+			move_right(buff, line);
 	}
 }
 
@@ -106,9 +106,9 @@ void			move_key_up(t_read *line)
 ** Arrow right to move the cursor one char on the right
 */
 
-void		move_right(char *buf, t_read *input)
+void		move_right(char *buff, t_read *input)
 {
-	(void)buf;
+	(void)buff;
 	if (input->x < input->ws_col - 1 && input->x + (input->ws_col * input->y) < input->width)
 	{
 		tputs(tgetstr("nd", NULL), 1, my_outc);
@@ -129,11 +129,11 @@ void		move_right(char *buf, t_read *input)
 ** Arrow left to move the cursor one char on the left
 */
 
-void		move_left(char *buf, t_read *input)
+void		move_left(char *buff, t_read *input)
 {
 	int	i;
 
-	(void)buf;
+	(void)buff;
 	i = input->width;
 	if (input->x != 0 && (input->x > (input->prompt_len * (input->y == 0 ? 1 : 0))))
 	{

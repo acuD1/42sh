@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/08 16:41:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/09 15:47:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,55 @@ int		my_outc(int c)
 }
 
 /*
-** Move the cursor right to prompt and clear the line
+**	Go up with termcap while there is newline
+**	Go to first column to clear the line
+*/
+
+uint8_t		is_multiline(t_read *line)
+{
+	int	buff_index;
+
+	if (ft_strchr(line->buffer, '\n'))
+	{
+		buff_index = line->x_index - line->prompt_len;
+		while (line->y--)
+		{
+			while (line->buffer[buff_index] != '\n')
+			{
+				move_left(line->buffer, line);
+				buff_index--;
+			}
+			tputs(tgetstr("ce", NULL), 1, my_outc);
+			tputs(tgetstr("up", NULL), 1, my_outc);
+		}
+		display_prompt(line);
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
+/*
+**	Move the cursor right to prompt and clear the line
+**	If there are multilines => Go up to prompt and clear all lines
 */
 
 void		goto_prompt(t_read *line)
 {
-	while (line->x > line->prompt_len)
+	if (is_multiline(line) == TRUE)
+		return ;
+	while (line->x_index > line->prompt_len)
 	{
 		line->width--;
 		move_left(line->buffer, line);
+		if (line->y > 0 && line->x == 0)
+			tputs(tgetstr("ce", NULL), 1, my_outc);
 	}
 	tputs(tgetstr("ce", NULL), 1, my_outc);
 }
 
 /*
-** Display prompt as the current directory
-** Store some datas for pressed keys
+**	Display prompt as the current directory
+**	Store some datas for pressed keys
 */
 
 t_read		*display_prompt(t_read *term)
@@ -56,9 +89,9 @@ t_read		*display_prompt(t_read *term)
 }
 
 /*
-** Clear the last buffer/line inserted & Display current prompt
-** Launch line edition: read stdin until enter key is pressed
-** The current buffer is saved in a list history
+**	Clear the last buffer/line inserted & Display current prompt
+**	Launch line edition: read stdin until enter key is pressed
+**	The current buffer is saved in a list history
 */
 
 char		*init_prompt(t_read *term)
