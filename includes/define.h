@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/08 19:45:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/09 17:06:18 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@
 # define BQUOTE			'`'
 # define BEGINNING_LINE		1
 # define END_LINE		5
-# define ONE_WORD_LEFT		6
-# define ONE_WORD_RIGHT		2
+# define ONE_WORD_LEFT		2
+# define ONE_WORD_RIGHT		6
 # define TAB_KEY		9
 # define ENTER_KEY		10
 # define CLEAR_LINE		11

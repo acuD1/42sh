@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/08 19:38:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/09 19:09:29 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,28 @@
 ** Alt + f to jump one word forward
 */
 
-void	check_keys_comb(char *buff, t_read *line)
+void		check_keys_comb(char *buff, t_read *line)
 {
+	int	i;
+
 	if (*buff == CLEAR_SCREEN)
 	{
+		i = line->x;
 		tputs(tgetstr("cl", NULL), 1, my_outc);
-		display_prompt(line);
+		dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_M, line->prompt + 1, C_X);
+		ft_putstr(line->buffer);
+		tputs(tgetstr("ho", NULL), 1, my_outc);
+		while (i--)
+			tputs(tgetstr("nd", NULL), 1, my_outc);
 	}
 	else if (*buff == BEGINNING_LINE || (buff[0] == 27 && buff[1] == 91 && buff[2] == 72))
-		while (line->x > line->prompt_len)
+		while (line->x_index > line->prompt_len)
 			move_left(buff, line);
 	else if (*buff == END_LINE || (buff[0] == 27 && buff[1] == 91 && buff[2] == 70))
-		while (line->x < line->width)
+		while (line->x_index < line->width)
 			move_right(buff, line);
 	else if (*buff == CLEAR_LINE)
-		while (line->x < line->width)
+		while (line->x_index < line->width)
 			del_key(line);
 	else
 		jump_words(buff, line);

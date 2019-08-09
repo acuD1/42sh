@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/09 16:17:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/09 17:56:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,30 @@
 /*
 ** Alt + f to jump one word forward
 ** Alt + b to jump one word backward
-** To Do: (*f) / infinite loop multiline
 */
 
 void			jump_words(char *buff, t_read *line)
 {
-	int		last_char;
-
-	last_char = line->x_index - line->prompt_len;
 	if (buff[0] == ONE_WORD_LEFT)
 	{
-		if (line->buffer[last_char] != ' ')
+		if (line->buffer[line->x_index - line->prompt_len] != ' ')
 			move_left(buff, line);
-		while (line->x > line->prompt_len && line->buffer[last_char] == ' ')
+		while (line->x_index > line->prompt_len
+			&& line->buffer[line->x_index - line->prompt_len] == ' ')
 			move_left(buff, line);
-		while (line->x > line->prompt_len && line->buffer[last_char - 1] != ' ')
+		while (line->x_index > line->prompt_len
+			&& line->buffer[line->x_index - line->prompt_len - 1] != ' ')
 			move_left(buff, line);
 	}
 	else if (buff[0] == ONE_WORD_RIGHT)
 	{
-		if (line->buffer[last_char] != ' ')
+		if (line->buffer[line->x_index - line->prompt_len] != ' ')
 			move_right(buff, line);
-		while (line-> x < line->width && line->buffer[last_char] == ' ')
+		while (line-> x_index < line->width
+			&& line->buffer[line->x_index - line->prompt_len] == ' ')
 			move_right(buff, line);
-		while (line->x < line->width && line->buffer[last_char] != ' ')
+		while (line->x_index < line->width
+			&& line->buffer[line->x_index - line->prompt_len] != ' ')
 			move_right(buff, line);
 	}
 }
