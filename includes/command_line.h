@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/12 12:14:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/13 18:19:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,25 @@
 
 typedef struct		s_read
 {
-	char		*prompt;
-	int		prompt_len;
-	int		x_index;
-	int		x;
-	int		y;
-	int		width;
-	int		ws_col;
-	int		ws_li;
-	int		ac;
-	int		found;
-	int		new_line;
-	char		buffer[BUFF_SIZE];
-	char		**env;
-	char		**cmd;
-	t_lst		*history;
-	t_lst		*history_index;
-}			t_read;
+	char			*prompt;
+	int				prompt_len;
+	int				x_index;
+	int				x;
+	int				y;
+	int				width;
+	int				ws_col;
+	int				ws_li;
+	int				ac;
+	int				found;
+	char			buffer[BUFF_SIZE];
+	char			**env;
+	char			**cmd;
+	t_lst			*history;
+	t_lst			*history_index;
+}					t_read;
 
 /*
-** Configuration
+**		Configuration
 */
 
 void			init_termcaps(void);
@@ -54,7 +53,7 @@ uint8_t			reset_config(void);
 t_read			*get_size(t_read *data);
 
 /*
-** Prompt
+**		Prompt
 */
 
 char			*init_prompt(t_read *term);
@@ -62,7 +61,7 @@ t_read			*display_prompt(t_read *term);
 void			goto_prompt(t_read *line);
 
 /*
-** Check Caps and Interpret
+**		Check Caps and Interpret
 */
 
 uint8_t			check_caps(char *buf, t_read *line);
@@ -70,11 +69,9 @@ void			insert_in_buffer(char *buf, t_read *line);
 void			insert_char_in_buffer(char buf, t_read *input, int buf_index);
 void			insert_str_in_buffer(char *d_name, t_read *input);
 void			insert_newline_in_buff(t_read *line);
-int			my_outc(int c);
-
 
 /*
-** Cursor Motion
+**		Cursor Motion
 */
 
 void			move_right(char *buf, t_read *input);
@@ -84,27 +81,27 @@ void			move_key_down(t_read *line);
 void			jump_words(char *buf, t_read *line);
 
 /*
-** Delete Keys
+**		Delete Keys
 */
 
 void			del_key(t_read *line);
 void			bs_key(char *buf, t_read *line);
 
 /*
-** History
+**		History
 */
 
 void			save_history(t_read *term);
 
 /*
-** Quotes and Multiline
+**		Quotes and Subprompt/Multiline
 */
 
 uint8_t			check_quotes(t_read *line);
-void			load_multiline(char quote, t_read *line);
+void			load_subprompt(char quote, t_read *line);
 
 /*
-** Auto completion
+**		Auto completion
 */
 
 void			auto_complete_mode(char *buf, t_read *input);
@@ -112,5 +109,13 @@ void			walking_path_var(char *buf, char *to_find, t_read *input);
 void			to_complete_buffer(char *buf, char *last_buf, char *to_find, t_read *input);
 void			display_current_directory(char *buf, t_read *input);
 void			delete_last_cmd(char *d_name, t_read *input);
+
+/*
+**		Utils
+*/
+
+int				my_outc(int c);
+uint8_t			get_width_last_line(t_read *input);
+uint8_t			get_width_current_line(t_read *input);
 
 #endif

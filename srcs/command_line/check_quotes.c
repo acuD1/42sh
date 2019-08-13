@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:06:36 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/12 10:00:17 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/13 17:26:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ uint8_t		check_quotes(t_read *line)
 		while (line->buffer[++i])
 			if ((quote = set_quote_type(line->buffer[i])) != '\0')
 				break ;
-		load_multiline(quote, line);
+		load_subprompt(quote, line);
 		save_history(line);
 		remove_quotes(line);
 		return (TRUE);

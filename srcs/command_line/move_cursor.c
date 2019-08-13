@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/12 22:42:14 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/13 19:16:03 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,47 +103,6 @@ void			move_key_up(t_read *line)
 	}
 }
 
-
-uint8_t		get_width_last_line(t_read *input)
-{
-	int	buf_index;
-	int	width;
-
-	width = 0;
-	buf_index = input->x_index - input->prompt_len;
-	while (--buf_index > 0)
-	{
-		if (input->buffer[buf_index] == '\n')
-		{
-			while (buf_index > 0 && input->buffer[--buf_index] != '\n')
-				width++;
-			break ;
-		}
-	}
-	if (input->y == 1 && input->x == 0)
-		width += input->prompt_len - 1;
-	return (width);
-}
-
-uint8_t		get_width_current_line(t_read *input)
-{
-	int	buf_index;
-	int	width;
-
-	width = 0;
-	buf_index = input->x_index - input->prompt_len;
-	while (input->buffer[buf_index])
-	{
-		if (input->buffer[buf_index] == '\n')
-			break ;
-		width++;
-		buf_index++;
-	}
-	width += input->x;
-	return (width);
-
-}
-
 /*
 **	Arrow right to move the cursor one char on the right
 */
@@ -162,7 +121,7 @@ void		move_right(char *buff, t_read *input)
 		input->x_index++;
 		input->x++;
 	}
-	else if (input->buffer[buff_index] == '\n')
+	else if (*buff == NEW_LINE || input->buffer[buff_index] == NEW_LINE)
 	{
 		tputs(tgetstr("cr", NULL), 1, my_outc);
 		tputs(tgetstr("do", NULL), 1, my_outc);
@@ -178,7 +137,7 @@ void		move_right(char *buff, t_read *input)
 
 void		move_left(char *buff, t_read *input)
 {
-	int	width;
+	int		width;
 
 	(void)buff;
 	if ((input->x > input->prompt_len && input->y == 0)

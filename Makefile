@@ -23,9 +23,7 @@ else
 ifndef ECHO
 T := $(shell $(MAKE) $(MAKECMDGOALS) --no-print-directory \
 	  -nrRf $(firstword $(MAKEFILE_LIST)) \
-	  ECHO="OutputPrintable" | grep -c "OutputPrintable")
-N := x
-C = $(words $N)$(eval N := x $N)
+	  ECHO="OutputPrintable" | grep -c "OutputPrintable") N := x C = $(words $N)$(eval N := x $N)
 V = "`expr "   [\`expr $C '*' 100 / $T\`" : '.*\(....\)$$'`%]"
 ECHO = printf "\e[1A\r%s %s %s                        \n" $V
 endif
@@ -33,9 +31,7 @@ endif
 # Color
 
 RESET_C = \033[m
-B_C = \033[0;34m
-Y_C = \033[0;33m
-G_C = \033[0;32m
+B_C = \033[0;34m Y_C = \033[0;33m G_C = \033[0;32m
 R_C = \033[0;31m
 M_C = \033[0;35m
 C_C = \033[0;36m
@@ -106,7 +102,8 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_bin.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)term_config.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)check_quotes.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)multiline.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)sub_prompt.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)utils.c
 
 SRC		+=	$(S_PATH)$(CORE)42sh.c
 SRC		+=	$(S_PATH)$(CORE)load_prompt.c
@@ -140,7 +137,7 @@ HDR			+=	shared_libft.h
 # Objects
 
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
-LIB = $(L_PATH)$(LNAME) -ltermcap -no-pie
+LIB = $(L_PATH)$(LNAME) -ltermcap #-no-pie
 vpath %.h $(H_PATH)
 
 # Variables
