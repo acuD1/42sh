@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/09 17:06:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/09 19:12:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@
 # define ONE_WORD_LEFT		2
 # define ONE_WORD_RIGHT		6
 # define TAB_KEY		9
-# define ENTER_KEY		10
+# define RETURN_KEY		10
 # define CLEAR_LINE		11
 # define CLEAR_SCREEN		12
 # define BS_KEY			127

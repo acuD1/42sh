@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/09 16:24:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/13 01:24:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,20 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
 	ft_putchar(buff);
 	if (buff == '\n')
+	{
+		input->x = 0;
 		input->y++;
-	input->x++;
+	}
+	else
+		input->x++;
 	input->width++;
 	input->buffer[buff_index] = buff;
 	input->x_index++;
 	if (input->x == input->ws_col)
 	{
-		move_right(&buff, input);
-		input->x_index--;
+		/* move_right(&buff, input); */
+		/* input->x_index--; */
+		insert_newline_in_buff(input);
 	}
 }
 
@@ -38,29 +43,41 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 
 void		insert_inline_char(char *buff, t_read *input, int buff_index)
 {
-	char	*end_line;
-	int	rest;
 	int 	j;
+	int	x;
+	int	x_index;
 
-	j = ft_strlen(input->buffer) + 1;
-	rest = input->width - input->x_index;
+	j = ft_strlen(input->buffer) + input->y + 1;
 	while (--j > buff_index)
-		input->buffer[j] = input->buffer[j - 1];
-	input->buffer[buff_index] = *buff;
-	ft_putchar(*buff);
-	tputs(tgetstr("sc", NULL), 1, my_outc);
-	end_line = ft_strsub(input->buffer, buff_index + 1, rest);
-	ft_putstr(end_line);
-	tputs(tgetstr("rc", NULL), 1, my_outc);
-	input->x++;
-	input->x_index++;
-	input->width++;
-	free(end_line);
-	if (input->x == input->ws_col)
 	{
-		move_right(buff, input);
-		input->x_index--;
+		if (input->buffer[j - 1] == '\n')
+		{
+			input->buffer[j] = input->buffer[j - 2];
+			j = j - 2;
+		}
+		input->buffer[j] = input->buffer[j - 1];
 	}
+	input->buffer[buff_index] = *buff;
+	tputs(tgetstr("sc", NULL), 1, my_outc);
+	j = input->width;
+	x = input->x;
+	x_index = input->x_index;
+	goto_prompt(input);
+	input->width = j++;
+	input->x = x;
+	input->x_index = x_index;
+	ft_putstr(input->buffer);
+	tputs(tgetstr("rc", NULL), 1, my_outc);
+	move_right(buff, input);
+
+	/* ft_putchar(*buff); */
+	/* j = -1; */
+	/* end_line = ft_strsub(input->buffer, buff_index + 1, rest); */
+	/* while (end_line[++j]) */
+	/* { */
+	/* 	ft_putchar(end_line[j]); */
+	/* } */
+	//free(end_line);
 }
 
 /*

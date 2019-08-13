@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/09 19:09:29 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/09 19:12:07 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ uint8_t		check_caps(char *buff, t_read *line)
 		move_right(buff, line);
 	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 68)
 		move_left(buff, line);
-	else if (*buff == ENTER_KEY)
+	else if (*buff == RETURN_KEY)
 	{
 		ft_putchar('\n');
 		return (FALSE);

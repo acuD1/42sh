@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/09 16:18:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/12 12:14:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef struct		s_read
 	int		ws_col;
 	int		ws_li;
 	int		ac;
-	int		found;	
+	int		found;
+	int		new_line;
 	char		buffer[BUFF_SIZE];
 	char		**env;
 	char		**cmd;
@@ -68,6 +69,7 @@ uint8_t			check_caps(char *buf, t_read *line);
 void			insert_in_buffer(char *buf, t_read *line);
 void			insert_char_in_buffer(char buf, t_read *input, int buf_index);
 void			insert_str_in_buffer(char *d_name, t_read *input);
+void			insert_newline_in_buff(t_read *line);
 int			my_outc(int c);
 
 
@@ -99,7 +101,7 @@ void			save_history(t_read *term);
 */
 
 uint8_t			check_quotes(t_read *line);
-void			load_subshell_quote(char quote, t_read *line);
+void			load_multiline(char quote, t_read *line);
 
 /*
 ** Auto completion

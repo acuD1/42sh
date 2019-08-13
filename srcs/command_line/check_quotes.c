@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:06:36 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/09 13:55:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/12 10:00:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ char		set_quote_type(char quote)
 uint8_t		quotes_is_matching(t_read *line)
 {
 	int	i;
-	char	quote_type;
+	char	quote;
 
 	i = -1;
 	while (line->buffer[++i])
 	{
-		if ((quote_type = set_quote_type(line->buffer[i])) != '\0')
+		if ((quote = set_quote_type(line->buffer[i])) != '\0')
 		{
-			if (goto_next_quote(line->buffer, quote_type, &i) == TRUE)
+			if (goto_next_quote(line->buffer, quote, &i) == TRUE)
 				continue ;
 			else
 				return (FALSE);
@@ -69,7 +69,7 @@ void		remove_quotes(t_read *line)
 uint8_t		check_quotes(t_read *line)
 {
 	int	i;
-	char	quote_type;
+	char	quote;
 
 	i = -1;
 	if (quotes_is_matching(line) == TRUE)
@@ -78,9 +78,9 @@ uint8_t		check_quotes(t_read *line)
 			|| ft_strchr(line->buffer, DQUOTE))
 	{
 		while (line->buffer[++i])
-			if ((quote_type = set_quote_type(line->buffer[i])) != '\0')
+			if ((quote = set_quote_type(line->buffer[i])) != '\0')
 				break ;
-		load_subshell_quote(quote_type, line);
+		load_multiline(quote, line);
 		save_history(line);
 		remove_quotes(line);
 		return (TRUE);

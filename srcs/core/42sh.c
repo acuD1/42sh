@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/02 11:31:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/12 18:29:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		main(int ac, char **av, char **environ)
 	t_core	shell;
 
 	init_shell(&shell);
+
 	//shell.new_t = ft_memalloc(sizeof(shell.new_t));
 
 	/* Parse char **av and fill option */

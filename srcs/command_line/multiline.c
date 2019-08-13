@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   subshell_quotes.c                                  :+:      :+:    :+:   */
+/*   multiline.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/06 14:28:32 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/09 14:39:43 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/08/12 10:00:45 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/08/12 19:18:58 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void		insert_newline_in_buff(t_read *line)
 	{
 		line->buffer[buf_index] = '\n';
 		line->width++;
+		line->x = 0;
+		line->y++;
 		line->x_index++;
 	}
 }
@@ -36,12 +38,13 @@ uint8_t		is_eof(char buff, char quote)
 	return (FALSE);
 }
 
-void		load_subshell_quote(char quote, t_read *line)
+void		load_multiline(char quote, t_read *line)
 {
 	char	buff[READ_SIZE];
 
 	line->found = 0;
 	insert_newline_in_buff(line);
+	ft_bzero(buff, READ_SIZE);
 	while (TRUE)
 	{
 		(quote == DQUOTE) ? ft_putstr("dquote> ") : ft_putstr("> ");

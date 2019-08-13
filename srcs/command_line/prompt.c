@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/09 15:47:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/13 01:01:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,16 @@ uint8_t		is_multiline(t_read *line)
 			while (line->buffer[buff_index] != '\n')
 			{
 				move_left(line->buffer, line);
+				line->width--;
 				buff_index--;
 			}
+			line->width--;
+			buff_index--;
 			tputs(tgetstr("ce", NULL), 1, my_outc);
 			tputs(tgetstr("up", NULL), 1, my_outc);
 		}
+		tputs(tgetstr("cr", NULL), 1, my_outc);
+		tputs(tgetstr("ce", NULL), 1, my_outc);
 		display_prompt(line);
 		return (TRUE);
 	}
@@ -84,6 +89,7 @@ t_read		*display_prompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term = get_size(term);
+	term->new_line = FALSE;
 	dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_M, term->prompt + 1, C_X);
 	return (term);
 }
