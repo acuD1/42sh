@@ -12,46 +12,35 @@
 
 #include "sh42.h"
 
-// t_lexage *init_lexage()
-// {
-// 	static t_lexage *lexage[] ={
-// 		;
-// 							{"cd", ft_cd},
-// 							{"exit", ft_exit},
-// 							{"env", ft_env},
-// 							{"setenv", ft_setenv},
-// 							{"unsetenv", ft_unsetenv},
-// 							{"echo", ft_echo}};
-
-// }
-
-
-t_token	*ft_create_token(char *name)
+t_lst	*ft_create_token(char *name)
 {
-	t_token *new;
+	t_lst *new;
+	t_token *tok;
 
-	if (!(new = (t_token*)malloc(sizeof(t_token))))
+	tok = NULL;
+	if (!(new = (t_lst*)malloc(sizeof(t_lst))))
 		return (NULL);
 	new->next = NULL;
 	new->prev = NULL;
-	new->id = ft_strdup(name);
-	new->type = NODE_NULL; 
+	if (!(tok = (t_token*)malloc(sizeof(t_token))))
+		return (NULL);
+	tok->id = ft_strdup(name);
+	tok->type = NODE_NULL; 
+	new->content = (char*)tok;
 	return (new);
 }
 
-t_token	*ft_add_token(char *name, t_token **curr)
+t_lst	*ft_add_token(char *name, t_lst **curr)
 {
-	t_token		*tmp;
-	t_token		*new;
+	t_lst		*tmp;
+	t_lst		*new;
 
 	if (!(*curr))
-	{
 		return (*curr = ft_create_token(name));
-	}
 	if ((*curr)->next)
 	{
 		new = (*curr);
-		while (new && new->next)
+		while (new->next)
 			new = new->next;
 		tmp = ft_create_token(name);
 		tmp->prev = new;
@@ -79,35 +68,31 @@ t_lexer *init_lexer(t_core *shell, char *line)
 	new->status = 1;
 	new->ntok = 0;
 	new->szbuff = ft_strlen(line);
-	new->tok = (t_token*)malloc(sizeof(t_token));
-	// new->tok->next = NULL;
+	new->tok = NULL;
+	// new->tok = (t_lst*)malloc(sizeof(t_lst));
 	// new->tok->prev = NULL;
-	// new->tok->id = NULL;
-	// new->tok->type = NODE_NULL;
-	// lexer->lexatisation = init_lexage();
-	// lexer->lexatisation = NULL;
+	// new->tok->next = NULL;
 	return (new);
 }
 
-// t_token *create_token(enum nodetype type, char *data, t_lexer *lexer)
-// {
-// 	ft_lstappend(&lexer->tok, ft_lstnew(line, ft_strlen(line)));
-
-// }
-
 void ft_printtoklist(t_lexer *lexer)
 {
+	t_token *tmp;
+
+	tmp = NULL;
 	if (!lexer->tok)
 		return;
 	printf("list avec %zu node \nAc en data        '%s'\n", lexer->ntok, lexer->buff);
 	while (lexer->tok->next)
 	{
-		printf("%s\n", lexer->tok->id);
+		tmp = (t_token*)lexer->tok->content;
+		printf("%s\n", tmp->id);
 		lexer->tok = lexer->tok->next;
 	}
-	while (lexer->tok->prev)
+	while (lexer->tok)
 	{
-		printf("%s\n", lexer->tok->id);
+		tmp = (t_token*)lexer->tok->content;
+		printf("%s\n", tmp->id);
 		lexer->tok = lexer->tok->prev;
 	}
 }
@@ -131,26 +116,10 @@ void tokenizator(t_lexer *lexer, char *line)
 	ft_printtoklist(lexer);
 }
 
-// addtok
-// print token
-// ft_lstappend(&shell->env, ft_lstnew(fetch_db(&shell->db, environ[i]), sizeof(t_db)));
-
-// int ft_isescaped(char c)
-// {
-// 	return ((c == '\a' || c == '\b' || c == '\f' || c == '\n' || c == '\r'
-// 		|| c == '\t' || c == '\v') ? 1 : 0);
-// }
-
 void	lexer(t_core *shell, char *line)
 {
 	t_lexer *lexer;
-	int	*pos[2]; //0 start 1 end
-	int i;
-
-	pos[0] = 0;
-	pos[1] = 0;
-	i = 0;
-
+	// t_parser *parser;
 
 	if (line == NULL)
 		return ;
@@ -159,19 +128,7 @@ void	lexer(t_core *shell, char *line)
 	if (*line == '\0')
 		return ;
 	lexer = init_lexer(shell, line);
-	tokenizator(lexer, line);
-	//envoyer line par line a une fct qui va la parcourir et creer une list de token en consequence
-	// while (ft_isescaped(line[i])) //skip space
-	// 	i++;
-	// i = 0;
-	// while (ft_iscomments(line[i])) //skip commentaire
-		// i++;
-
-	// while (lexer->tok->type != EOF)
-	// {
-	// 	//ptr sur fct qui prend lchar par char et cree les token jusqua EOF et/ou !line
-	// 	if (!line[i])
-
-	// }
+	tokenizator(lexer, line); // envoyer line par line a une fct qui va la parcourir et creer une list de token en consequence
+	//parser = parser(lexer, shell);// while (lexer->tok->type != EOF) -> PARSER
+	//shell.ast = ast(parser);// ptr sur fct qui prend lchar par char et cree les token jusqua EOF et/ou !line
 }
- 

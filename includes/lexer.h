@@ -49,18 +49,10 @@ typedef enum nodetype {
 ** Lexer
 */
 
-// typedef struct      s_lexage
-// {
-//     t_lexage        *(*lexatisation)(t_lexer *);
-// }                   t_lexage;
-
-
 typedef struct 	s_token
 {
 	char	*id;
 	enum nodetype type;
-    struct s_token *next;
-    struct s_token *prev;
 } 				t_token;
 
 typedef struct s_lexer
@@ -70,10 +62,8 @@ typedef struct s_lexer
 	size_t			ntok;	
 	size_t			szbuff;
     
-    t_token	        *tok;
-    // t_lexage        *lexatisation;
+    t_lst	        *tok;
 } 				t_lexer;
-
 
 // t_ast		*parser(t_core shell, t_parser *parser);
 
