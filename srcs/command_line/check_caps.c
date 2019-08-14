@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/09 19:12:07 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/14 11:36:03 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		check_keys_comb(char *buff, t_read *line)
 	{
 		i = line->x;
 		tputs(tgetstr("cl", NULL), 1, my_outc);
-		dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_M, line->prompt + 1, C_X);
+		dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, line->prompt + 1, C_X);
 		ft_putstr(line->buffer);
 		tputs(tgetstr("ho", NULL), 1, my_outc);
 		while (i--)

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/13 19:16:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/14 17:09:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void		move_left(char *buff, t_read *input)
 	int		width;
 
 	(void)buff;
-	if ((input->x > input->prompt_len && input->y == 0)
+	if ((input->x >= input->prompt_len && input->y == 0)
 		|| (input->x != 0 && input->y > 0))
 	{
 		tputs(tgetstr("le", NULL), 1, my_outc);

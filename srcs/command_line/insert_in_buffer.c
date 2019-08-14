@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/13 19:34:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/14 17:12:36 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,10 @@
 
 void		test(t_read *test)
 {
-	int		buf_i = test->x_index - test->prompt_len;
+	size_t		i = -1;
 
-	printf("ws_col: [%d]\n", test->ws_col);
-
-	printf("width: [%d]\n", test->width);
-	printf("x: [%d]\n", test->x);
-	printf("y: [%d]\n", test->y);
-	printf("x_index: [%d]\n", test->x_index);
-	printf("buff_index: [%d]\n", buf_i);
-	printf("buffer: [%s]\n", test->buffer);
-	printf("prompt_len: [%d]\n", test->prompt_len);
-	puts("______________________________________");
+	while (i++ <= ft_strlen(test->buffer))
+		printf("[%zu] => %c\n", i, test->buffer[i]);
 }
 
 /*
@@ -97,15 +89,15 @@ void			insert_str_in_buffer(char *d_name, t_read *input)
 {
 	int		buff_index;
 
-	buff_index = input->x_index - input->prompt_len;
 	while (*d_name)
 	{
+		buff_index = input->x_index - input->prompt_len;
 		if (input->x_index < input->width)
 			insert_inline_char(d_name, input, buff_index);
 		else
 			insert_char_in_buffer(*d_name, input, buff_index);
 		d_name++;
-		buff_index++;
+		//printf("[%d] %c\n", input->x, input->buffer[buff_index] );
 	}
 }
 

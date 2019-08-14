@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/13 19:34:23 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/14 16:59:07 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_read		*display_prompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term = get_size(term);
-	dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_M, term->prompt + 1, C_X);
+	dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, term->prompt + 1, C_X);
 	return (term);
 }
 
@@ -75,7 +75,7 @@ char		*init_prompt(t_read *term)
 			continue ;
 		}
 		else
-			break ;
+			break;
 	}
 	free(term->prompt);
 	if (check_quotes(term) == FALSE)
