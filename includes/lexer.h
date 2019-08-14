@@ -14,13 +14,14 @@
 # define LEXER_H
 
 
-/*
-** AST
-*/
+// /*
+// ** AST
+// */
 
 #define NODETYPE(a) (a & (~NODE_DATA))	// get the type of the nodes
 
-typedef enum {
+typedef enum nodetype {
+    NODE_NULL           = (0 << 0),
     NODE_PIPE 			= (1 << 0),
     NODE_BCKGRND 		= (1 << 1),
     NODE_SEQ 			= (1 << 2),
@@ -31,30 +32,35 @@ typedef enum {
     NODE_DATA 			= (1 << 7),
 } nodetype;
 
-typedef struct b_ast
-{
-    int type;
-    char	*data;
-    struct ast* left;
-    struct ast* right;
+// typedef struct b_ast
+// {
+//     int type;
+//     char	*data;
+//     struct ast* left;
+//     struct ast* right;
+// } ast;
 
-} ast;
-
-void astAttachBinaryBranch (ast *root , ast *leftNode , ast *rightNode);
-void astSetType (ast *node , nodetype nodetype);
-void astSetData (ast *node , char *data );
-void astDelete (ast *node );
+// void astAttachBinaryBranch (ast *root , ast *leftNode , ast *rightNode);
+// void astSetType (ast *node , nodetype nodetype);
+// void astSetData (ast *node , char *data );
+// void astDelete (ast *node );
 
 /*
 ** Lexer
 */
 
+// typedef struct      s_lexage
+// {
+//     t_lexage        *(*lexatisation)(t_lexer *);
+// }                   t_lexage;
+
+
 typedef struct 	s_token
 {
 	char	*id;
-	enum tokentype type;
-	struct s_token	*next;
-	struct s_token	*prev;
+	enum nodetype type;
+    struct s_token *next;
+    struct s_token *prev;
 } 				t_token;
 
 typedef struct s_lexer
@@ -63,7 +69,9 @@ typedef struct s_lexer
 	size_t			status;
 	size_t			ntok;	
 	size_t			szbuff;
-	struct s_token	*tok;
+    
+    t_token	        *tok;
+    // t_lexage        *lexatisation;
 } 				t_lexer;
 
 
@@ -89,3 +97,4 @@ typedef struct s_lexer
 // };
 
 #endif
+    

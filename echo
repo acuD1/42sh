@@ -1,0 +1,16 @@
+.
+..
+.build
+.git
+.gitattributes
+.gitignore
+.gitmodules
+42sh
+Makefile
+README.md
+a
+build
+echo
+includes
+shared_libft
+srcs
