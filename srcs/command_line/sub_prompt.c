@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   multiline.c                                        :+:      :+:    :+:   */
+/*   sub_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/12 10:00:45 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/12 19:18:58 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/08/14 16:57:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void		insert_newline_in_buff(t_read *line)
 {
-	int	buf_index;
+	int		buff_index;
 
-	buf_index = line->x_index - line->prompt_len;
+	buff_index = line->x_index - line->prompt_len;
 	if (line->found != 1)
 	{
-		line->buffer[buf_index] = '\n';
+		line->buffer[buff_index] = NEW_LINE;
 		line->width++;
 		line->x = 0;
 		line->y++;
@@ -38,7 +38,7 @@ uint8_t		is_eof(char buff, char quote)
 	return (FALSE);
 }
 
-void		load_multiline(char quote, t_read *line)
+void		load_subprompt(char quote, t_read *line)
 {
 	char	buff[READ_SIZE];
 
