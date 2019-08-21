@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/14 17:09:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/21 17:54:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ void		move_right(char *buff, t_read *input)
 		input->x_index++;
 		input->x++;
 	}
-	else if (*buff == NEW_LINE || input->buffer[buff_index] == NEW_LINE)
+	else if (input->x == input->ws_col || *buff == NEW_LINE
+			|| input->buffer[buff_index] == NEW_LINE)
 	{
 		tputs(tgetstr("cr", NULL), 1, my_outc);
 		tputs(tgetstr("do", NULL), 1, my_outc);
@@ -140,8 +141,8 @@ void		move_left(char *buff, t_read *input)
 	int		width;
 
 	(void)buff;
-	if ((input->x >= input->prompt_len && input->y == 0)
-		|| (input->x != 0 && input->y > 0))
+	if ((input->x > input->prompt_len && input->y == 0)
+		|| (input->x > 0 && input->y > 0))
 	{
 		tputs(tgetstr("le", NULL), 1, my_outc);
 		input->x_index--;

@@ -139,7 +139,7 @@ HDR			+=	shared_libft.h
 # Objects
 
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
-LIB = $(L_PATH)$(LNAME) -ltermcap #-no-pie
+LIB = $(L_PATH)$(LNAME) -ltermcap -no-pie
 vpath %.h $(H_PATH)
 
 # Variables

@@ -3,31 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/09 14:36:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/14 16:59:07 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/08/21 17:47:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
+/*
+**	Termcaps capabilities:
+**	- `cr' => to move the cursor to the beginning of the line it is on
+**	- `ce' => to clear from the cursor to the end of the current line
+**	- `up' => to move the cursor vertically up one line
+*/
+
 void		goto_prompt(t_read *line)
 {
-	int		y;
-
-	y = line->y;
-	while (line->x_index > line->prompt_len + 1)
+	while (line->y > 0)
 	{
-		if (line->y > 0 && line->x == 0)
-			tputs(tgetstr("ce", NULL), 1, my_outc);
-		line->width--;
-		move_left(line->buffer, line);
+		tputs(tgetstr("cr", NULL), 1, my_outc);
+		tputs(tgetstr("ce", NULL), 1, my_outc);
+		tputs(tgetstr("up", NULL), 1, my_outc);
+		line->y--;
 	}
 	tputs(tgetstr("cr", NULL), 1, my_outc);
 	tputs(tgetstr("ce", NULL), 1, my_outc);
 	display_prompt(line);
-	line->y = y;
 }
 
 /*
@@ -39,6 +42,7 @@ t_read		*display_prompt(t_read *term)
 {
 	char	path[BUFF_SIZE + 1];
 
+	ft_bzero(path, BUFF_SIZE + 1);
 	if (!getcwd(path, BUFF_SIZE))
 		term->prompt = ft_strdup("undefined");
 	else
