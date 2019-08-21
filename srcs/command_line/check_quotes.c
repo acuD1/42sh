@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:06:36 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/13 17:26:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/21 18:03:21 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ uint8_t		check_quotes(t_read *line)
 	char	quote;
 
 	i = -1;
-	if (quotes_is_matching(line) == TRUE)
-		remove_quotes(line);
-	else if (ft_strchr(line->buffer, QUOTE)
+	/* if (quotes_is_matching(line) == TRUE) */
+	/* 	remove_quotes(line); */
+	if (ft_strchr(line->buffer, QUOTE)
 			|| ft_strchr(line->buffer, DQUOTE))
 	{
 		while (line->buffer[++i])
@@ -82,7 +82,7 @@ uint8_t		check_quotes(t_read *line)
 				break ;
 		load_subprompt(quote, line);
 		save_history(line);
-		remove_quotes(line);
+		//remove_quotes(line);
 		return (TRUE);
 	}
 	return (FALSE);

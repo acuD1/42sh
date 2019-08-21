@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/21 17:53:48 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/21 18:01:55 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,6 @@ void			insert_str_in_buffer(char *d_name, t_read *input)
 			insert_inline_char(d_name, input, buff_index);
 		else
 			insert_char_in_buffer(d_name[++j], input, buff_index);
-	//	printf("[%c]\n", input->buffer[j]);
-//		printf("[%d] %d {%c}\n", input->x, buff_index,input->buffer[buff_index] );
 	}
 }
 
