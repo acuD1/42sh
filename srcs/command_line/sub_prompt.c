@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/21 17:53:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/22 00:06:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		load_subprompt(char quote, t_read *line)
 {
 	char	buff[READ_SIZE];
 
-	line->found = 0;
+	line->new_line = 0;
 	insert_newline_in_buff(line);
 	ft_bzero(buff, READ_SIZE);
 	while (TRUE)
@@ -48,7 +48,7 @@ void		load_subprompt(char quote, t_read *line)
 		while (read(STDIN_FILENO, buff, READ_SIZE))
 		{
 			if (is_eof(buff[0], quote) == TRUE)
-				line->found = 1;
+				line->new_line = 1;
 			if (check_caps(buff, line) == TRUE)
 				continue ;
 			else
@@ -57,7 +57,7 @@ void		load_subprompt(char quote, t_read *line)
 				break ;
 			}
 		}
-		if (line->found == 1)
+		if (line->new_line == 1)
 			return ;
 	}
 }

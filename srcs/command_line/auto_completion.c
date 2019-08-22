@@ -6,29 +6,29 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/05 15:43:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/22 14:36:35 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
-** Delete the last cmd in buffer if an another key tab is pressed
-** Termcaps `ce' clear from the cursor to the end of the current line
+**	Delete the last cmd in buffer if an another key tab is pressed
+**	Termcaps `ce' => clear from the cursor to the end of the current line
 */
 
 void			delete_last_cmd(char *d_name, t_read *input)
 {
 	int		i;
-	int		buf_index;
+	int		buff_index;
 
 	i = ft_strlen(d_name);
-	buf_index = input->x_index - input->prompt_len;
+	buff_index = input->x_index - input->prompt_len - 1;
 	while (i--)
 	{
-		input->buffer[buf_index] = '\0';
+		input->buffer[buff_index] = '\0';
 		move_left(d_name, input);
-		buf_index--;
+		buff_index--;
 	}
 	tputs(tgetstr("ce", NULL), 1, my_outc);
 }
@@ -48,10 +48,10 @@ uint8_t			split_cmd(char **last_buf, char **to_find, t_read *input)
 }
 
 /*
-** Three auto_complete mode is possible
-** - complete bin for the first argument only
-** - display all files of current dir if the buffer is empty
-** - complete char inserted with the corresponding file
+**	Three auto_complete mode
+**	- complete bin for the first argument only
+**	- display all files of current dir
+**	- complete char inserted with matching file
 */
 
 void			auto_complete_mode(char *buf, t_read *input)

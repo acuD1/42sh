@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/21 18:01:55 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/22 14:22:43 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		test(t_read *test)
 
 void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
-	if ((input->found == 0 && buff != NEW_LINE) || input->found == 1)
+	if ((input->new_line == 0 && buff != NEW_LINE) || input->new_line == 1)
 		ft_putchar(buff);
 	if (buff == NEW_LINE)
 	{
@@ -94,17 +94,16 @@ void			insert_str_in_buffer(char *d_name, t_read *input)
 {
 	int		buff_index;
 	int		i;
-	int		j;
 
 	i = ft_strlen(d_name);
-	j = -1;
 	while (i--)
 	{
 		buff_index = input->x_index - input->prompt_len;
 		if (input->x_index < input->width)
 			insert_inline_char(d_name, input, buff_index);
 		else
-			insert_char_in_buffer(d_name[++j], input, buff_index);
+			insert_char_in_buffer(*d_name, input, buff_index);
+		d_name++;
 	}
 }
 
