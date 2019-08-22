@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/21 17:00:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/22 17:58:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ uint8_t		get_width_last_line(t_read *input)
 		x--;
 	}
 	if (input->y == 1 && input->x == 0 && width != input->ws_col)
-		width += input->prompt_len - 1;
+		width += input->prompt_len - 2;
 	return (width);
 }
 

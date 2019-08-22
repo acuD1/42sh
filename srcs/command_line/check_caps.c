@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/22 16:11:55 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/22 17:54:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ void		check_keys_comb(char *buff, t_read *line)
 }
 
 /*
-**	Check if is EOF (CTRL+D) to exit program
+**	Check if is EOF (CTRL+D) to exit program is buffer is empty
 */
 
 void		end_of_file(char *buff, t_read *line)
 {
-	if (*buff == END_OF_FILE)
+	if (!ft_strcmp(line->buffer, "") && *buff == END_OF_FILE)
 	{
 		ft_putstr("exit\n");
 		reset_config(line);
