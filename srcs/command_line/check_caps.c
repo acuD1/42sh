@@ -6,20 +6,20 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/15 00:53:04 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/22 16:11:55 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
-** Combination of Keys
-** Ctrl + l to clear the screen
-** Ctrl + a && HOME key to move the cursor to the beginning of line
-** Ctrl + e && END key to move move the cursor to the end of line
-** Ctrl + k to clear from the cursor to the end of line
-** Alt + b to jump one word backward
-** Alt + f to jump one word forward
+**	Combination of Keys :
+**	CTRL + L to clear the screen
+**	CTRL + A && HOME key to move the cursor to the beginning of line
+**	CTRL + E && END key to move move the cursor to the end of line
+**	CTRL + K to clear from the cursor to the end of line
+**	ALT + B to jump one word backward
+**	ALT + F to jump one word forward
 */
 
 void		check_keys_comb(char *buff, t_read *line)
@@ -50,12 +50,26 @@ void		check_keys_comb(char *buff, t_read *line)
 }
 
 /*
-** Interpret and insert char in bufffer
-** Tab key to turn on auto complete mode
-** Right/Left arrows keys to move cursor in line
-** Up/Down arrows keys to navigate through history
-** Enter key to return the line
-** Backspace/Delete keys to delete character in line
+**	Check if is EOF (CTRL+D) to exit program
+*/
+
+void		end_of_file(char *buff, t_read *line)
+{
+	if (*buff == END_OF_FILE)
+	{
+		ft_putstr("exit\n");
+		reset_config(line);
+		exit(0);
+	}
+}
+
+/*
+**	Interpret and insert char in bufffer
+**	Tab key to turn on auto complete mode
+**	Right/Left arrows keys to move cursor in line
+**	Up/Down arrows keys to navigate through history
+**	Enter key to return the line
+**	Backspace/Delete keys to delete character in line
 */
 
 uint8_t		check_caps(char *buff, t_read *line)
@@ -83,5 +97,6 @@ uint8_t		check_caps(char *buff, t_read *line)
 		insert_in_buffer(buff, line);
 	else
 		check_keys_comb(buff, line);
+	end_of_file(buff, line);
 	return (TRUE);
 }

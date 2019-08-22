@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/22 00:14:15 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/22 15:54:29 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct		s_read
 
 void			init_termcaps(void);
 uint8_t			init_config(void);
-uint8_t			reset_config(void);
+uint8_t			reset_config(t_read *input);
 t_read			*get_size(t_read *data);
 
 /*
@@ -93,6 +93,7 @@ void			bs_key(char *buf, t_read *line);
 */
 
 void			save_history(t_read *term);
+void			free_history(t_lst *history);
 
 /*
 **		Quotes and Subprompt/Multiline

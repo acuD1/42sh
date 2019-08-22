@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/09 16:26:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/22 16:10:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void			save_history(t_read *term)
 {
 	t_lst		*saved;
 
+	saved = NULL;
 	if (ft_strcmp(term->buffer, ""))
 	{
 		saved = ft_memalloc(sizeof(*saved));
@@ -34,5 +35,6 @@ void			save_history(t_read *term)
 			term->history->prev = saved;
 		term->history = saved;
 		term->history_index = NULL;
+		free(saved->data);
 	}
 }

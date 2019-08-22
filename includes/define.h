@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/13 17:27:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/22 15:17:36 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,15 @@
 # define DQUOTE			'\"'
 # define BQUOTE			'`'
 # define NEW_LINE		'\n'
-# define BEGINNING_LINE	1
+# define BEGINNING_LINE		1
+# define END_OF_FILE		4
 # define END_LINE		5
-# define ONE_WORD_LEFT	2
-# define ONE_WORD_RIGHT	6
+# define ONE_WORD_LEFT		2
+# define ONE_WORD_RIGHT		6
 # define TAB_KEY		9
 # define RETURN_KEY		10
 # define CLEAR_LINE		11
-# define CLEAR_SCREEN	12
+# define CLEAR_SCREEN		12
 # define BS_KEY			127
 
 #endif

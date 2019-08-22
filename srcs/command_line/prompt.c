@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/21 17:47:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/22 16:19:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void		goto_prompt(t_read *line)
 	}
 	tputs(tgetstr("cr", NULL), 1, my_outc);
 	tputs(tgetstr("ce", NULL), 1, my_outc);
+	free(line->prompt);
 	display_prompt(line);
 }
 
@@ -79,11 +80,10 @@ char		*init_prompt(t_read *term)
 			continue ;
 		}
 		else
-			break;
+			break ;
 	}
-	free(term->prompt);
 	if (check_quotes(term) == FALSE)
 		save_history(term);
-	reset_config();
+	reset_config(term);
 	return (term->buffer);
 }

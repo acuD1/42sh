@@ -6,17 +6,17 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/02 15:34:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/22 16:08:22 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
-** Store current config in a globale var
-** Set new attributes to term config
-** - ICANON enable non-canonical mode
-** - ECHO disable echo input characters
+**	Store current config in a globale var
+**	Set new attributes to term config
+**	- ICANON enable non-canonical mode
+**	- ECHO disable echo input characters
 */
 
 uint8_t				init_config(void)
@@ -46,11 +46,11 @@ uint8_t				init_config(void)
 }
 
 /*
-** Restore the old term config
-** Reset term when exit, before launch another shell, set term in bg..
+**	Restore the old term config
+**	Reset term when exit, before launch another shell, set term in bg..
 */
 
-uint8_t			reset_config(void)
+uint8_t			reset_config(t_read *input)
 {
 	if (tcsetattr(STDOUT_FILENO, TCSANOW, &old_t) == FAILURE)
 	{
@@ -58,6 +58,6 @@ uint8_t			reset_config(void)
 		return (FAILURE);
 	}
 	old_t.c_lflag |= (ICANON | ECHO);
-	// free function for line edition
+	free(input->prompt);
 	return (SUCCESS);
 }
