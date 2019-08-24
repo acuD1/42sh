@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 14:41:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/24 13:03:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ char		*get_bin(t_core *shell, t_lst *env)
 
 			/* PATH splited by ":" */
 			path = ft_strsplit(((t_db*)(env->content))->value, ":");
-
 			/* set correct path if the binary is found in PATH */
 			shell->bin = ft_strjoinf(get_bin_path(path, shell->tokens[0]),
 								ft_strjoin("/", shell->tokens[0]), FREE_ALL);

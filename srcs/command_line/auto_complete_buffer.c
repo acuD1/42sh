@@ -6,11 +6,12 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:48:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/05 15:41:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/24 16:44:29 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <sys/stat.h>
 
 /*
 ** Delete last command insert in buffer and insert the new one
@@ -20,6 +21,8 @@
 uint8_t			read_again(char **prev_b, char *buf, char *name, t_read *input)
 {
 	delete_last_cmd(*prev_b, input);
+	if (is_dir(name) == TRUE)
+		ft_strcat(name, "/");
 	insert_str_in_buffer(name, input);
 	if (read(0, buf, READ_SIZE) > 0)
 	{

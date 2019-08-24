@@ -6,11 +6,12 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/22 14:36:35 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/24 16:56:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <sys/stat.h>
 
 /*
 **	Delete the last cmd in buffer if an another key tab is pressed
@@ -47,6 +48,17 @@ uint8_t			split_cmd(char **last_buf, char **to_find, t_read *input)
 	return (TRUE);
 }
 
+
+uint8_t			is_dir(char *dir)
+{
+	struct stat 	buf;
+
+	lstat(dir, &buf);
+	if (S_ISDIR(buf.st_mode))
+		return (TRUE);
+	return (FALSE);
+}
+
 /*
 **	Three auto_complete mode
 **	- complete bin for the first argument only
@@ -64,15 +76,17 @@ void			auto_complete_mode(char *buf, t_read *input)
 	input->found = 0;
 	if (split_cmd(&last_buf, &to_find, input) == FALSE)
 		return ;
+	if (is_dir(to_find) == TRUE)
+		display_current_directory(buf, input, to_find);
 	if (input->buffer[ft_strlen(input->buffer) - 1] == ' '
 		|| (input->ac > 1 && !ft_strcmp(last_buf, "./")))
-		display_current_directory(buf, input);
+		display_current_directory(buf, input, to_find);
 	else if (input->ac > 1)
 		to_complete_buffer(buf, last_buf, to_find, input);
 	else if (input->ac == 1)
 	{
 		if (!ft_strcmp(input->buffer, "./"))
-			display_current_directory(buf, input);
+			display_current_directory(buf, input, to_find);
 		else
 			walking_path_var(buf, to_find, input);
 		if (input->found == 0)
