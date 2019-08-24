@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/22 15:54:29 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/24 12:04:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_read			*get_size(t_read *data);
 
 char			*init_prompt(t_read *term);
 t_read			*display_prompt(t_read *term);
+void			display_subprompt(t_read *term, char quote);
 void			goto_prompt(t_read *line);
 
 /*

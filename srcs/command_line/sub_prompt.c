@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/22 00:06:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/24 12:05:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,22 @@ uint8_t		is_eof(char buff, char quote)
 	return (FALSE);
 }
 
+void		display_subprompt(t_read *term, char quote)
+{
+	if (term->prompt)
+		free(term->prompt);
+	if (quote == DQUOTE)
+		term->prompt = ft_strdup("dquote> ");
+	else
+		term->prompt = ft_strdup("> ");
+//	term->prompt_len = ft_strlen(term->prompt);
+	term->x = term->prompt_len;
+	term->y = 0;
+	term = get_size(term);
+//	ft_putstr(term->prompt);
+	(quote == DQUOTE) ? ft_putstr("dquote> ") : ft_putstr("> ");
+}
+
 void		load_subprompt(char quote, t_read *line)
 {
 	char	buff[READ_SIZE];
@@ -44,7 +60,8 @@ void		load_subprompt(char quote, t_read *line)
 	ft_bzero(buff, READ_SIZE);
 	while (TRUE)
 	{
-		(quote == DQUOTE) ? ft_putstr("dquote> ") : ft_putstr("> ");
+		display_subprompt(line, quote);
+	//	(quote == DQUOTE) ? ft_putstr("dquote> ") : ft_putstr("> ");
 		while (read(STDIN_FILENO, buff, READ_SIZE))
 		{
 			if (is_eof(buff[0], quote) == TRUE)
