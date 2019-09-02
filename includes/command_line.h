@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/24 14:49:57 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/02 18:30:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct		s_read
 	int		ac;
 	int		new_line;
 	int		found;
+	int		sub_prompt;
 	char		buffer[BUFF_SIZE];
 	char		**env;
 	char		**cmd;
@@ -54,13 +55,14 @@ uint8_t			reset_config(t_read *input);
 t_read			*get_size(t_read *data);
 
 /*
-**		Prompt
+**		Prompt/Subprompt
 */
 
 char			*init_prompt(t_read *term);
 t_read			*display_prompt(t_read *term);
-void			display_subprompt(t_read *term, char quote);
 void			goto_prompt(t_read *line);
+void			display_subprompt(t_read *term, char quote);
+void			goto_subprompt(t_read *line);
 
 /*
 **		Check Caps and Interpret
@@ -80,7 +82,9 @@ void			move_right(char *buf, t_read *input);
 void			move_left(char *buf, t_read *input);
 void			move_key_up(t_read *line);
 void			move_key_down(t_read *line);
+void			move_in_column(char *buff, t_read *line);
 void			jump_words(char *buf, t_read *line);
+void			move_in_column(char *buff, t_read *line);
 
 /*
 **		Delete Keys
@@ -121,5 +125,6 @@ uint8_t			is_dir(char *dir);
 int				my_outc(int c);
 uint8_t			get_width_last_line(t_read *input);
 uint8_t			get_width_current_line(t_read *input);
+uint8_t		newline_count(char *buffer);
 
 #endif

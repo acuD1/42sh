@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/24 16:57:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/02 15:35:15 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@
 
 void		goto_prompt(t_read *line)
 {
-	while (line->y > 0)
+	/* if (line->sub_prompt != FALSE) */
+	/* { */
+	/* 	goto_subprompt(line); */
+	/* 	return ; */
+	/* } */
+	while (line->y-- > 0)
 	{
 		tputs(tgetstr("cr", NULL), 1, my_outc);
 		tputs(tgetstr("ce", NULL), 1, my_outc);
 		tputs(tgetstr("up", NULL), 1, my_outc);
-		line->y--;
 	}
 	tputs(tgetstr("cr", NULL), 1, my_outc);
 	tputs(tgetstr("ce", NULL), 1, my_outc);

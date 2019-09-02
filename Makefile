@@ -106,6 +106,7 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)term_config.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)check_quotes.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)sub_prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)utils.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)keys_comb.c
 
 SRC		+=	$(S_PATH)$(CORE)42sh.c
 SRC		+=	$(S_PATH)$(CORE)load_prompt.c

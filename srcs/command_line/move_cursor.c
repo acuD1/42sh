@@ -6,42 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/23 14:16:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/02 17:51:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-/*
-**	Alt + f to jump one word forward
-**	Alt + b to jump one word backward
-*/
-
-void			jump_words(char *buff, t_read *line)
-{
-	if (buff[0] == ONE_WORD_LEFT)
-	{
-		if (line->buffer[line->x_index - line->prompt_len] != ' ')
-			move_left(buff, line);
-		while (line->x_index > line->prompt_len
-			&& line->buffer[line->x_index - line->prompt_len] == ' ')
-			move_left(buff, line);
-		while (line->x_index > line->prompt_len
-			&& line->buffer[line->x_index - line->prompt_len - 1] != ' ')
-			move_left(buff, line);
-	}
-	else if (buff[0] == ONE_WORD_RIGHT)
-	{
-		if (line->buffer[line->x_index - line->prompt_len] != ' ')
-			move_right(buff, line);
-		while (line-> x_index < line->width
-			&& line->buffer[line->x_index - line->prompt_len] == ' ')
-			move_right(buff, line);
-		while (line->x_index < line->width
-			&& line->buffer[line->x_index - line->prompt_len] != ' ')
-			move_right(buff, line);
-	}
-}
 
 /*
 **	Arrow down print the prev saved in history from history index

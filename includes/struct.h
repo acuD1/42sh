@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/24 13:03:12 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/08/24 17:01:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define STRUCT_H
 
 # include "sh42.h"
-# include "command_line.h"
 
 /*
 **	Some build data

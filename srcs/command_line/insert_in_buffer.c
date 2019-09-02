@@ -6,19 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/24 16:49:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/02 17:01:40 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-void		test(t_read *test)
-{
-	size_t		i = -1;
-
-	while (i++ <= ft_strlen(test->buffer))
-		printf("[%zu] => %c\n", i, test->buffer[i]);
-}
 
 /*
 **	To insert a char in buffer at the end of line
@@ -26,10 +18,11 @@ void		test(t_read *test)
 
 void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
-	if ((input->new_line == 0 && buff != NEW_LINE) || input->new_line == 1)
+	if (input->x != 0 || (input->x == 0 && buff != NEW_LINE))
 		ft_putchar(buff);
 	if (buff == NEW_LINE)
 	{
+		(input->x == 0) ? input->y-- : 0;
 		input->x = 0;
 		input->y++;
 	}
@@ -38,11 +31,10 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 	input->width++;
 	input->buffer[buff_index] = buff;
 	input->x_index++;
-	if (input->x == input->ws_col)
+	if (input->x >= input->ws_col)
 	{
-		move_right("\n", input);
-		input->x_index--;
-		input->y--;
+		tputs(tgetstr("do", NULL), 1, my_outc);
+		tputs(tgetstr("cr", NULL), 1, my_outc);
 		insert_newline_in_buff(input);
 	}
 }
