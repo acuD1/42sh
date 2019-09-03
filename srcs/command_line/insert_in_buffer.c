@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/02 17:01:40 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/03 12:34:34 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 	input->x_index++;
 	if (input->x >= input->ws_col)
 	{
-		tputs(tgetstr("do", NULL), 1, my_outc);
-		tputs(tgetstr("cr", NULL), 1, my_outc);
+		xtputs(xtgetstr("do", NULL), 1, my_outc);
+		xtputs(xtgetstr("cr", NULL), 1, my_outc);
 		insert_newline_in_buff(input);
 	}
 }
@@ -64,7 +64,7 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	}
 	input->buffer[buff_index] = *buff;
 	move_right(buff, input);
-	tputs(tgetstr("sc", NULL), 1, my_outc);
+	xtputs(xtgetstr("sc", NULL), 1, my_outc);
 	j = input->x;
 	x = input->x_index;
 	w = input->width;
@@ -75,7 +75,7 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	input->x_index = x;
 	input->width = w + 1;
 	input->y = y;
-	tputs(tgetstr("rc", NULL), 1, my_outc);
+	xtputs(xtgetstr("rc", NULL), 1, my_outc);
 }
 
 /*

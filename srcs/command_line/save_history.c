@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/02 16:32:36 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/03 18:55:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,31 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "sh42.h"
+
+/*
+**	Open ".history" file to write history datas at the end of file
+*/
+
+void			write_history(char *history_data)
+{
+	int		fd;
+
+	if (!history_data)
+		return ;
+	if ((fd = open("./.history", MODE_WRITE, PERMISSIONS)) == -1)
+		dprintf(STDIN_FILENO, "can't open history file\n");
+	else
+	{
+		if (write(fd, history_data, ft_strlen(history_data)) == FAILURE
+			|| write(fd, "\n", 1) == FAILURE)
+		{
+			dprintf(2, "can't open history file\n");
+			close(fd);
+			return ;
+		}
+	}
+	close(fd);
+}
 
 /*
 **	Save the last line inserted in history list
@@ -36,4 +61,5 @@ void			save_history(t_read *term)
 		term->history = saved;
 		term->history_index = NULL;
 	}
+	write_history(saved->data);
 }

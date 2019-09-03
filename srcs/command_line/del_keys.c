@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/23 14:12:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/03 12:34:03 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@
 
 void		clear_all_lines(t_read *input)
 {
-	int	j;
+	uint8_t	nb_ofline;
 
-	j = (input->width / input->ws_col);
-	tputs(tgetstr("dc", NULL), 1, my_outc);
-	tputs(tgetstr("sc", NULL), 1, my_outc);
-	while (j--)
+	nb_ofline = newline_count(input->buffer) + 1;
+	xtputs(xtgetstr("dc", NULL), 1, my_outc);
+	xtputs(xtgetstr("sc", NULL), 1, my_outc);
+	while (nb_ofline--)
 	{
-		tputs(tgetstr("do", NULL), 1, my_outc);
-		tputs(tgetstr("cr", NULL), 1, my_outc);
-		tputs(tgetstr("ce", NULL), 1, my_outc);
+		xtputs(xtgetstr("do", NULL), 1, my_outc);
+		xtputs(xtgetstr("cr", NULL), 1, my_outc);
+		xtputs(xtgetstr("ce", NULL), 1, my_outc);
 	}
-	tputs(tgetstr("rc", NULL), 1, my_outc);
-	tputs(tgetstr("sc", NULL), 1, my_outc);
+	xtputs(xtgetstr("rc", NULL), 1, my_outc);
+	xtputs(xtgetstr("sc", NULL), 1, my_outc);
 	goto_prompt(input);
 }
 
@@ -69,7 +69,7 @@ void		del_key(t_read *input)
 		input->x_index = i;
 		input->y = y;
 		input->width = w;
-		tputs(tgetstr("rc", NULL), 1, my_outc);
+		xtputs(xtgetstr("rc", NULL), 1, my_outc);
 	}
 }
 

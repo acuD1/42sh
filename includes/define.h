@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/02 17:02:51 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/03 18:45:07 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@
 **	Command Line
 */
 
+# define PERMISSIONS		(S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
+# define MODE_WRITE		(O_CREAT | O_WRONLY | O_APPEND)
 # define BUFF_SIZE		4096
 # define READ_SIZE		8
 # define QUOTE			'\''
@@ -79,6 +81,7 @@
 # define RETURN_KEY		10
 # define CLEAR_LINE		11
 # define CLEAR_SCREEN		12
+# define CTRL_R			18
 # define MOVE_UP		65
 # define MOVE_DO		66
 # define BS_KEY			127

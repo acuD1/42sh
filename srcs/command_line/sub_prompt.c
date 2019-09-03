@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/26 13:44:00 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/03 12:35:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void		goto_subprompt(t_read *line)
 	new_line = newline_count(line->buffer);
 	while (new_line--)
 	{
-		tputs(tgetstr("cr", NULL), 1, my_outc);
-		tputs(tgetstr("ce", NULL), 1, my_outc);
-		tputs(tgetstr("up", NULL), 1, my_outc);
+		xtputs(xtgetstr("cr", NULL), 1, my_outc);
+		xtputs(xtgetstr("ce", NULL), 1, my_outc);
+		xtputs(xtgetstr("up", NULL), 1, my_outc);
 	}
-	tputs(tgetstr("cr", NULL), 1, my_outc);
-	tputs(tgetstr("ce", NULL), 1, my_outc);
+	xtputs(xtgetstr("cr", NULL), 1, my_outc);
+	xtputs(xtgetstr("ce", NULL), 1, my_outc);
 	free(line->prompt);
 	display_prompt(line);
 	/* while (sb--) */
@@ -101,7 +101,7 @@ void		load_subprompt(char quote, t_read *line)
 	{
 		display_subprompt(line, quote);
 	//	(quote == DQUOTE) ? ft_putstr("dquote> ") : ft_putstr("> ");
-		while (read(STDIN_FILENO, buff, READ_SIZE) > 0)
+		while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 		{
 			if (is_eof(buff[0], quote) == TRUE)
 				line->new_line = 1;

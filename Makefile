@@ -97,6 +97,7 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)insert_in_buffer.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)move_cursor.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)save_history.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)search_in_history.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_completion.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_current_dir.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_buffer.c
@@ -107,6 +108,7 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)check_quotes.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)sub_prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)utils.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)keys_comb.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)xfunctions.c
 
 SRC		+=	$(S_PATH)$(CORE)42sh.c
 SRC		+=	$(S_PATH)$(CORE)load_prompt.c

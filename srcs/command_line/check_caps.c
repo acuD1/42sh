@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/02 17:45:43 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/03 18:53:16 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void		check_keys_comb(char *buff, t_read *line)
 	if (*buff == CLEAR_SCREEN)
 	{
 		i = line->x;
-		tputs(tgetstr("cl", NULL), 1, my_outc);
+		xtputs(xtgetstr("cl", NULL), 1, my_outc);
 		dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, line->prompt + 1, C_X);
 		ft_putstr(line->buffer);
-		tputs(tgetstr("ho", NULL), 1, my_outc);
+		xtputs(xtgetstr("ho", NULL), 1, my_outc);
 		while (--i)
-			tputs(tgetstr("nd", NULL), 1, my_outc);
+			xtputs(xtgetstr("nd", NULL), 1, my_outc);
 	}
 	else if (*buff == BEGINNING_LINE || (buff[0] == 27 && buff[1] == 91 && buff[2] == 72))
 		while (line->x_index > line->prompt_len)
@@ -95,6 +95,11 @@ uint8_t		check_caps(char *buff, t_read *line)
 		bs_key(buff, line);
 	else if (is_print(*buff))
 		insert_in_buffer(buff, line);
+	else if (*buff == CTRL_R)
+	{
+		resharper(&line);
+		return (FALSE);
+	}
 	else
 		check_keys_comb(buff, line);
 	end_of_file(buff, line);

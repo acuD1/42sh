@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/02 15:35:15 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/03 16:48:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void		goto_prompt(t_read *line)
 	/* } */
 	while (line->y-- > 0)
 	{
-		tputs(tgetstr("cr", NULL), 1, my_outc);
-		tputs(tgetstr("ce", NULL), 1, my_outc);
-		tputs(tgetstr("up", NULL), 1, my_outc);
+		xtputs(xtgetstr("cr", NULL), 1, my_outc);
+		xtputs(xtgetstr("ce", NULL), 1, my_outc);
+		xtputs(xtgetstr("up", NULL), 1, my_outc);
 	}
-	tputs(tgetstr("cr", NULL), 1, my_outc);
-	tputs(tgetstr("ce", NULL), 1, my_outc);
+	xtputs(xtgetstr("cr", NULL), 1, my_outc);
+	xtputs(xtgetstr("ce", NULL), 1, my_outc);
 	free(line->prompt);
 	display_prompt(line);
 }
@@ -76,7 +76,7 @@ char		*init_prompt(t_read *term)
 	ft_bzero(term->buffer, BUFF_SIZE);
 	init_config();
 	display_prompt(term);
-	while (read(STDIN_FILENO, buff, READ_SIZE) > 0)
+	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		if (check_caps(buff, term) == TRUE)
 		{

@@ -6,15 +6,12 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/02 18:30:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/03 18:54:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CMDLINE_H
 # define CMDLINE_H
-
-# define O_PERMISSIONS		(S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
-# define O_MODE_WR		(O_CREAT | O_TRUNC | O_WRONLY)
 
 # include "sh42.h"
 # include "shared_libft.h"
@@ -84,7 +81,6 @@ void			move_key_up(t_read *line);
 void			move_key_down(t_read *line);
 void			move_in_column(char *buff, t_read *line);
 void			jump_words(char *buf, t_read *line);
-void			move_in_column(char *buff, t_read *line);
 
 /*
 **		Delete Keys
@@ -99,6 +95,7 @@ void			bs_key(char *buf, t_read *line);
 
 void			save_history(t_read *term);
 void			free_history(t_lst *history);
+void			resharper(t_read **line);
 
 /*
 **		Quotes and Subprompt/Multiline
@@ -122,9 +119,17 @@ uint8_t			is_dir(char *dir);
 **		Utils
 */
 
-int				my_outc(int c);
+int			my_outc(int c);
 uint8_t			get_width_last_line(t_read *input);
 uint8_t			get_width_current_line(t_read *input);
-uint8_t		newline_count(char *buffer);
+uint8_t			newline_count(char *buffer);
+
+/*
+**		Functions safe
+*/
+
+void		xtputs(char *str, int i, int (*f)(int));
+char		*xtgetstr(char *id, char **area);
+size_t		xread(int fd, char *buff, int size);
 
 #endif
