@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/03 17:43:55 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/04 13:05:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void			load_prompt(t_core *shell)
 	term.new_line = 0;
 
 	init_termcaps();
+	init_history(&term);
 	/* Loop for prompt */
 	while (status)
 	{

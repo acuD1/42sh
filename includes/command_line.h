@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/03 18:54:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/04 13:44:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,11 @@ void			bs_key(char *buf, t_read *line);
 **		History
 */
 
+void			init_history(t_read *term);
 void			save_history(t_read *term);
 void			free_history(t_lst *history);
 void			resharper(t_read **line);
+void			write_history(t_read *line);
 
 /*
 **		Quotes and Subprompt/Multiline
@@ -123,6 +125,7 @@ int			my_outc(int c);
 uint8_t			get_width_last_line(t_read *input);
 uint8_t			get_width_current_line(t_read *input);
 uint8_t			newline_count(char *buffer);
+void			remove_newline(t_read *line);
 
 /*
 **		Functions safe

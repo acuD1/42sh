@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/03 18:53:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/04 12:48:34 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		search_in_history(t_read *line)
 	{
 		xtputs(xtgetstr("cr", NULL), 1, my_outc);
 		xtputs(xtgetstr("ce", NULL), 1, my_outc);
-		if (*buff == NEW_LINE)
+		if (!is_print(*buff))
 		{
 			ft_strcpy(line->buffer, buff_tmp);
 			return ;

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/03 18:55:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/04 13:56:15 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,28 @@
 **	Open ".history" file to write history datas at the end of file
 */
 
-void			write_history(char *history_data)
+void			write_history(t_read *line)
 {
 	int		fd;
+	t_lst		*hst;
 
-	if (!history_data)
+	hst = line->history;
+	if (!hst)
 		return ;
-	if ((fd = open("./.history", MODE_WRITE, PERMISSIONS)) == -1)
+	if ((fd = open("./.history", MODE_WRITE, S_USR_RW | S_GRP_OTH_R)) == -1)
 		dprintf(STDIN_FILENO, "can't open history file\n");
-	else
+	while (hst->next)
+		hst = hst->next;
+	while (hst)
 	{
-		if (write(fd, history_data, ft_strlen(history_data)) == FAILURE
+		if (write(fd, hst->data, ft_strlen(hst->data)) == FAILURE
 			|| write(fd, "\n", 1) == FAILURE)
 		{
-			dprintf(2, "can't open history file\n");
+			dprintf(2, "write failure\n");
 			close(fd);
 			return ;
 		}
+		hst = hst->prev;
 	}
 	close(fd);
 }
@@ -61,5 +66,30 @@ void			save_history(t_read *term)
 		term->history = saved;
 		term->history_index = NULL;
 	}
-	write_history(saved->data);
+}
+
+/*
+**	Init history list -> load datas from history file
+*/
+
+void			init_history(t_read *term)
+{
+	char		*line;
+	int		fd;
+	uint8_t		i;
+
+	i = -1;
+	line = NULL;
+	if ((fd = open("./.history", O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)
+		return ;
+	while (ft_getnextline(fd, &line) > 0)
+	{
+		while (++i < ft_strlen(line))
+			term->buffer[i] = line[i];
+		save_history(term);
+		free(line);
+		ft_bzero(term->buffer, ft_strlen(term->buffer));
+		i = -1;
+	}
+	close(fd);
 }

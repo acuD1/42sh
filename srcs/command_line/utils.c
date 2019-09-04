@@ -6,16 +6,37 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/03 11:49:19 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/04 12:35:36 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int			my_outc(int c)
+int		my_outc(int c)
 {
 	write(0, &c, 1);
 	return (SUCCESS);
+}
+
+void		remove_newline(t_read *line)
+{
+	char	*tmp;
+	int	i;
+	int	j;
+
+	i = -1;
+	j = -1;
+	tmp = ft_strdup(line->buffer);
+	ft_bzero(line->buffer, line->width);
+	while (tmp[++i])
+	{
+		if (tmp[i] == NEW_LINE)
+			line->width--;
+		else
+			line->buffer[++j] = tmp[i];
+	}
+	line->buffer[j + 1] = '\0';
+	ft_strdel(&tmp);
 }
 
 uint8_t		to_next_newline(char *buffer, int buff_index)
