@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/04 13:58:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/04 16:56:52 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 **	CTRL + A && HOME key to move the cursor to the beginning of line
 **	CTRL + E && END key to move move the cursor to the end of line
 **	CTRL + K to clear from the cursor to the end of line
-**	ALT + B to jump one word backward
-**	ALT + F to jump one word forward
+**	(CTRL | ALT) + B to jump one word backward
+**	(CTRL | ALT) + F to jump one word forward
 */
 
 void		check_keys_comb(char *buff, t_read *line)
@@ -27,15 +27,7 @@ void		check_keys_comb(char *buff, t_read *line)
 	int	i;
 
 	if (*buff == CLEAR_SCREEN)
-	{
-		i = line->x;
-		xtputs(xtgetstr("cl", NULL), 1, my_outc);
-		dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, line->prompt + 1, C_X);
-		ft_putstr(line->buffer);
-		xtputs(xtgetstr("ho", NULL), 1, my_outc);
-		while (--i)
-			xtputs(xtgetstr("nd", NULL), 1, my_outc);
-	}
+		clr_screen(line);
 	else if (*buff == BEGINNING_LINE || (buff[0] == 27 && buff[1] == 91 && buff[2] == 72))
 		while (line->x_index > line->prompt_len)
 			move_left(buff, line);
@@ -43,8 +35,11 @@ void		check_keys_comb(char *buff, t_read *line)
 		while (line->x_index < line->width)
 			move_right(buff, line);
 	else if (*buff == CLEAR_LINE)
-		while (line->x_index < line->width)
+	{
+		i = line->x_index;
+		while (i++ < line->width)
 			del_key(line);
+	}
 	else
 		jump_words(buff, line);
 }

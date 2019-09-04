@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:48:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/24 16:44:29 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/04 15:40:03 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ uint8_t			read_again(char **prev_b, char *buf, char *name, t_read *input)
 	if (is_dir(name) == TRUE)
 		ft_strcat(name, "/");
 	insert_str_in_buffer(name, input);
-	if (read(0, buf, READ_SIZE) > 0)
+	if (xread(0, buf, READ_SIZE) > 0)
 	{
 		if (buf[0] == '\t')
 		{

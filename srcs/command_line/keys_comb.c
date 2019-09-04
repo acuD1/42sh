@@ -6,11 +6,24 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/03 12:41:30 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/04 16:57:18 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+void		clr_screen(t_read *line)
+{
+	int	i;
+
+	i = line->x;
+	xtputs(xtgetstr("cl", NULL), 1, my_outc);
+	dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, line->prompt + 1, C_X);
+	ft_putstr(line->buffer);
+	xtputs(xtgetstr("ho", NULL), 1, my_outc);
+	while (--i)
+		xtputs(xtgetstr("nd", NULL), 1, my_outc);
+}
 
 /*
 **	CTRL + ARROW_UP to move up one line in the same column

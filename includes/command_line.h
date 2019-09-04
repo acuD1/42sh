@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/04 13:44:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/04 16:56:15 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void			jump_words(char *buf, t_read *line);
 
 void			del_key(t_read *line);
 void			bs_key(char *buf, t_read *line);
+void			clr_screen(t_read *input);
 
 /*
 **		History
@@ -126,6 +127,7 @@ uint8_t			get_width_last_line(t_read *input);
 uint8_t			get_width_current_line(t_read *input);
 uint8_t			newline_count(char *buffer);
 void			remove_newline(t_read *line);
+uint8_t			is_dot(char *d_name);
 
 /*
 **		Functions safe

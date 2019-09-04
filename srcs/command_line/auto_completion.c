@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/24 16:56:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/04 16:14:21 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void			delete_last_cmd(char *d_name, t_read *input)
 		move_left(d_name, input);
 		buff_index--;
 	}
-	tputs(tgetstr("ce", NULL), 1, my_outc);
+	xtputs(xtgetstr("ce", NULL), 1, my_outc);
 }
 
 uint8_t			split_cmd(char **last_buf, char **to_find, t_read *input)
@@ -76,7 +76,7 @@ void			auto_complete_mode(char *buf, t_read *input)
 	input->found = 0;
 	if (split_cmd(&last_buf, &to_find, input) == FALSE)
 		return ;
-	if (is_dir(to_find) == TRUE)
+	if (!is_dot(to_find) && is_dir(to_find) == TRUE)
 		display_current_directory(buf, input, to_find);
 	if (input->buffer[ft_strlen(input->buffer) - 1] == ' '
 		|| (input->ac > 1 && !ft_strcmp(last_buf, "./")))
