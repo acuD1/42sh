@@ -12,6 +12,70 @@
 
 #include "sh42.h"
 
+int	ft_isdigit(int c)
+{
+	return ((c >= '0' && c <= '9') ? 1 : 0);
+}
+
+void ft_init_lex(t_lexer *lexer)
+{
+	lexer->lex[START] = start_lexer;
+	// lexer->lex[NAME] = name_lexer;
+	// lexer->lex[IO_NUMBER] = number_lexer;
+	// lexer->lex[NEWLINE] = newline_lexer;
+	// lexer->lex[ASSIGNEMENT_WORD] = assignement_word_lexer;
+	// lexer->lex[END] = end_lexer;
+}
+
+t_lexer *init_lexer(t_core *shell, char *line)
+{
+	t_lexer *new;
+
+	if (!line || !shell)
+		return (NULL);
+	if (!(new = (t_lexer*)malloc(sizeof(t_lexer))))
+		return (NULL);
+	new->buff = line;
+	new->status = START;
+	new->ntok = 0;
+	new->szbuff = ft_strlen(line);
+	new->tok = NULL;
+	// new->tok = (t_lst*)malloc(sizeof(t_lst));
+	// new->tok->prev = NULL;
+	// new->tok->next = NULL;
+	ft_init_lex(new);
+	return (new);
+}
+
+// enum nodetype add_tok_type(char *name)
+// {
+
+// }
+
+// void end_lexer(t_lexer *lexer);
+// void name_lexer(t_lexer *lexer);
+// void number_lexer(t_lexer *lexer);
+// void assignement_word_lexer(t_lexer *lexer);
+
+
+void start_lexer(t_lexer *lexer)
+{
+	if (*lexer->buff == '\0')
+		lexer->status = END;
+	else if (*lexer->buff == ' ' || *lexer->buff == '\t')
+	{
+		while (*lexer->buff == ' ' || *lexer->buff == '\t')
+			lexer->buff++;
+	}
+	else if (*lexer->buff == '\n')
+		lexer->status = NEWLINE;
+	else if (ft_isdigit(*lexer->buff))
+		lexer->status = IO_NUMBER;
+	else
+		lexer->status = NAME;
+	printf("%u\n", lexer->status);
+}
+
 t_lst	*ft_create_token(char *name)
 {
 	t_lst *new;
@@ -25,7 +89,7 @@ t_lst	*ft_create_token(char *name)
 	if (!(tok = (t_token*)malloc(sizeof(t_token))))
 		return (NULL);
 	tok->id = ft_strdup(name);
-	tok->type = NODE_NULL; 
+	// tok->type = add_tok_type(name); 
 	new->content = (char*)tok;
 	return (new);
 }
@@ -56,25 +120,6 @@ t_lst	*ft_add_token(char *name, t_lst **curr)
 	return (*curr);
 }
 
-t_lexer *init_lexer(t_core *shell, char *line)
-{
-	t_lexer *new;
-
-	if (!line || !shell)
-		return (NULL);
-	if (!(new = (t_lexer*)malloc(sizeof(t_lexer))))
-		return (NULL);
-	new->buff = line;
-	new->status = 1;
-	new->ntok = 0;
-	new->szbuff = ft_strlen(line);
-	new->tok = NULL;
-	// new->tok = (t_lst*)malloc(sizeof(t_lst));
-	// new->tok->prev = NULL;
-	// new->tok->next = NULL;
-	return (new);
-}
-
 void ft_printtoklist(t_lexer *lexer)
 {
 	t_token *tmp;
@@ -82,7 +127,7 @@ void ft_printtoklist(t_lexer *lexer)
 	tmp = NULL;
 	if (!lexer->tok)
 		return;
-	printf("list avec %zu node \nAc en data        '%s'\n", lexer->ntok, lexer->buff);
+	printf("list avec %zu node \nAc en data        '%s'  '%u'\n", lexer->ntok, lexer->buff, lexer->status);
 	while (lexer->tok->next)
 	{
 		tmp = (t_token*)lexer->tok->content;
@@ -121,14 +166,16 @@ void	lexer(t_core *shell, char *line)
 	t_lexer *lexer;
 	// t_parser *parser;
 
-	if (line == NULL)
-		return ;
-	while (*line == '\t' || *line == ' ')
-		line++;
-	if (*line == '\0')
-		return ;
+	// if (line == NULL)
+	// 	return ;
+	// while (*line == '\t' || *line == ' ')
+	// 	line++;
+	// if (*line == '\0')
+		// return ;
 	lexer = init_lexer(shell, line);
-	tokenizator(lexer, line); // envoyer line par line a une fct qui va la parcourir et creer une list de token en consequence
+	// while (lexer->status != END)
+		lexer->lex[lexer->status](lexer);
+		// tokenizator(lexer, line); // envoyer line par line a une fct qui va la parcourir et creer une list de token en consequence
 	//parser = parser(lexer, shell);// while (lexer->tok->type != EOF) -> PARSER
 	//shell.ast = ast(parser);// ptr sur fct qui prend lchar par char et cree les token jusqua EOF et/ou !line
 }

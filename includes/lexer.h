@@ -32,6 +32,15 @@ typedef enum nodetype {
     NODE_DATA 			= (1 << 7),
 } nodetype;
 
+typedef enum state {
+    START,
+    NAME,
+    NEWLINE, 
+    IO_NUMBER,  
+    ASSIGNEMENT_WORD,
+    END,
+} state;
+
 // typedef struct b_ast
 // {
 //     int type;
@@ -48,6 +57,13 @@ typedef enum nodetype {
 /*
 ** Lexer
 */
+// // t_env           *(*func)(char **args, t_env *lst);
+
+
+
+typedef struct s_lexer t_lexer;
+
+typedef void (*t_lexing)(t_lexer*);
 
 typedef struct 	s_token
 {
@@ -58,13 +74,20 @@ typedef struct 	s_token
 typedef struct s_lexer
 {
 	char			*buff;
-	size_t			status;
+	enum state		status;
 	size_t			ntok;	
 	size_t			szbuff;
-    
+    t_lexing        lex[7];
+
     t_lst	        *tok;
 } 				t_lexer;
 
+void start_lexer(t_lexer *lexer);
+void end_lexer(t_lexer *lexer);
+void name_lexer(t_lexer *lexer);
+void newline_lexer(t_lexer *lexer);
+void number_lexer(t_lexer *lexer);
+void assignement_word_lexer(t_lexer *lexer);
 // t_ast		*parser(t_core shell, t_parser *parser);
 
 // typedef struct		quote
