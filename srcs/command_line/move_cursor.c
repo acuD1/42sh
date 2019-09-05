@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/03 12:35:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/05 10:32:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void		move_left(char *buff, t_read *input)
 	}
 	else if (input->y > 0 && input->x == 0)
 	{
+
 		width = get_width_last_line(input);
 		(input->x == 0) ? input->x = width : 0;
 		while (width--)

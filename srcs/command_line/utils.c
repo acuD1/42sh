@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/04 12:35:36 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/05 10:26:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,19 @@ void		remove_newline(t_read *line)
 	ft_strdel(&tmp);
 }
 
-uint8_t		to_next_newline(char *buffer, int buff_index)
+uint8_t		to_next_newline(t_read *line, int buff_index)
 {
 	int	width;
+	int	x;
 
+	x = 0;
 	width = 0;
-	while (buffer[buff_index--])
+	while (line->buffer[buff_index--])
 	{
-		if (buffer[buff_index] == '\n')
+		if (x >= line->ws_col || line->buffer[buff_index] == '\n')
 			return (width);
 		width++;
+		x++;
 	}
 	return (width);
 }
@@ -66,7 +69,7 @@ uint8_t		get_width_last_line(t_read *input)
 	{
 		if (x == 0)
 		{
-			width = to_next_newline(input->buffer, buff_index);
+			width = to_next_newline(input, buff_index);
 				break ;
 		}
 		x--;
