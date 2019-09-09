@@ -20,11 +20,12 @@ int	ft_isdigit(int c)
 void ft_init_lex(t_lexer *lexer)
 {
 	lexer->lex[START] = start_lexer;
-	// lexer->lex[NAME] = name_lexer;
-	// lexer->lex[IO_NUMBER] = number_lexer;
-	// lexer->lex[NEWLINE] = newline_lexer;
-	// lexer->lex[ASSIGNEMENT_WORD] = assignement_word_lexer;
-	// lexer->lex[END] = end_lexer;
+	lexer->lex[OPERATOR] = operator_lexer;
+	lexer->lex[NAME] = name_lexer;
+	lexer->lex[IO_NUMBER] = number_lexer;
+	lexer->lex[NEWLINE] = newline_lexer;
+	lexer->lex[ASSIGNEMENT_WORD] = assignement_word_lexer;
+	lexer->lex[END] = end_lexer;
 }
 
 t_lexer *init_lexer(t_core *shell, char *line)
@@ -40,6 +41,7 @@ t_lexer *init_lexer(t_core *shell, char *line)
 	new->ntok = 0;
 	new->szbuff = ft_strlen(line);
 	new->tok = NULL;
+	new->io_here = 0;
 	// new->tok = (t_lst*)malloc(sizeof(t_lst));
 	// new->tok->prev = NULL;
 	// new->tok->next = NULL;
@@ -47,16 +49,58 @@ t_lexer *init_lexer(t_core *shell, char *line)
 	return (new);
 }
 
-// enum nodetype add_tok_type(char *name)
-// {
 
-// }
+void end_lexer(t_lexer *lexer)
+{
+	printf("END %u\n", lexer->status);
+	lexer->status = END;
+}
 
-// void end_lexer(t_lexer *lexer);
-// void name_lexer(t_lexer *lexer);
-// void number_lexer(t_lexer *lexer);
-// void assignement_word_lexer(t_lexer *lexer);
+void name_lexer(t_lexer *lexer)
+{
+	ft_add_token(lexer->buff, &lexer->tok);
+	lexer->ntok++;
+	printf("NAME %u   %s\n", lexer->status, ((t_token*)lexer->tok->content)->id);
+	// lexer->status = NAME;
+	lexer->status = START;
+}
 
+void number_lexer(t_lexer *lexer)
+{
+	ft_add_token(lexer->buff, &lexer->tok);
+	lexer->ntok++;
+	lexer->buff++;
+	printf("Nbr %u   %s\n", lexer->status, ((t_token*)lexer->tok->content)->id);
+	// lexer->status = IO_NUMBER;
+	lexer->status = START;
+}
+
+void newline_lexer(t_lexer *lexer)
+{
+	ft_add_token(lexer->buff, &lexer->tok);
+	lexer->ntok++;
+	printf("NwlinE %u   %s\n", lexer->status, ((t_token*)lexer->tok->content)->id);
+	// lexer->status = NEWLINE;
+	lexer->status = START;
+}
+
+void operator_lexer(t_lexer *lexer)
+{
+	ft_add_token(lexer->buff, &lexer->tok);
+	lexer->ntok++;
+	printf("ope %u   %s\n", lexer->status, ((t_token*)lexer->tok->content)->id);
+	// lexer->status = OPERATOR;
+	lexer->status = START;
+}
+
+void assignement_word_lexer(t_lexer *lexer)
+{
+	ft_add_token(lexer->buff, &lexer->tok);
+	lexer->ntok++;
+	printf("assi namE %u   %s\n", lexer->status, ((t_token*)lexer->tok->content)->id);
+	// lexer->status = ASSIGNEMENT_WORD;
+	lexer->status = START;
+}
 
 void start_lexer(t_lexer *lexer)
 {
@@ -64,13 +108,18 @@ void start_lexer(t_lexer *lexer)
 		lexer->status = END;
 	else if (*lexer->buff == ' ' || *lexer->buff == '\t')
 	{
+		lexer->io_here = 0;
 		while (*lexer->buff == ' ' || *lexer->buff == '\t')
 			lexer->buff++;
 	}
-	else if (*lexer->buff == '\n')
-		lexer->status = NEWLINE;
 	else if (ft_isdigit(*lexer->buff))
 		lexer->status = IO_NUMBER;
+	else if (ft_strchr(OPERATORS, *lexer->buff))
+		lexer->status = OPERATOR;
+	else if (ft_strchr(CHAR_INTERRUPT, *lexer->buff))
+		lexer->status = NEWLINE;
+	else if (ft_strchr("=", *lexer->buff)) // contien un signe = a la fin
+		lexer->status = ASSIGNEMENT_WORD;
 	else
 		lexer->status = NAME;
 	printf("%u\n", lexer->status);
@@ -149,6 +198,7 @@ void tokenizator(t_lexer *lexer, char *line)
 
 
 	i = 0;
+	//rajouter la fct qui prend chr par char et fait des token
 	if (!(tab = ft_strsplit(line, " \t")))
 		return ;
 	while (tab[i])
@@ -166,15 +216,17 @@ void	lexer(t_core *shell, char *line)
 	t_lexer *lexer;
 	// t_parser *parser;
 
-	// if (line == NULL)
-	// 	return ;
-	// while (*line == '\t' || *line == ' ')
-	// 	line++;
-	// if (*line == '\0')
-		// return ;
+	if (line == NULL)
+		return ;
+	while (*line == '\t' || *line == ' ')
+		line++;
+	if (*line == '\0')
+		return ;
 	lexer = init_lexer(shell, line);
-	// while (lexer->status != END)
+	while (lexer->status != END)
 		lexer->lex[lexer->status](lexer);
+	ft_printtoklist(lexer);
+
 		// tokenizator(lexer, line); // envoyer line par line a une fct qui va la parcourir et creer une list de token en consequence
 	//parser = parser(lexer, shell);// while (lexer->tok->type != EOF) -> PARSER
 	//shell.ast = ast(parser);// ptr sur fct qui prend lchar par char et cree les token jusqua EOF et/ou !line

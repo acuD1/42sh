@@ -18,7 +18,38 @@
 // ** AST
 // */
 
-#define NODETYPE(a) (a & (~NODE_DATA))	// get the type of the nodes
+#define NODETYPE(a) (a & (~NODE_DATA))	// ge7t the type of the nodes
+
+
+typedef enum operators
+{
+    TOK_ANDIF,
+    TOK_ORIF,
+    TOK_DSEMI,
+    TOK_DLESS,
+    TOK_DGREAT,
+    TOK_LESSAND,
+    TOK_GREATAND,
+    TOK_LESSGREAT,
+    TOK_ANDDGREAT,
+    TOK_ANDGREAT,
+    TOK_DLESSDASH,
+} operators;
+
+typedef enum reservedword {
+    TOK_IF,
+    TOK_THEN,
+    TOK_ELSE,
+    TOK_ELIF,
+    TOK_FI,
+    TOK_DO,
+    TOK_DONE,
+    TOK_CASE,
+    TOK_ESAC,
+    TOK_WHILE,
+    TOK_UNTIL,
+    TOK_FOR,
+} reservedword;
 
 typedef enum nodetype {
     NODE_NULL           = (0 << 0),
@@ -38,6 +69,7 @@ typedef enum state {
     NEWLINE, 
     IO_NUMBER,  
     ASSIGNEMENT_WORD,
+    OPERATOR,
     END,
 } state;
 
@@ -78,7 +110,7 @@ typedef struct s_lexer
 	size_t			ntok;	
 	size_t			szbuff;
     t_lexing        lex[7];
-
+    size_t          io_here;
     t_lst	        *tok;
 } 				t_lexer;
 
@@ -88,6 +120,8 @@ void name_lexer(t_lexer *lexer);
 void newline_lexer(t_lexer *lexer);
 void number_lexer(t_lexer *lexer);
 void assignement_word_lexer(t_lexer *lexer);
+void operator_lexer(t_lexer *lexer);
+t_lst   *ft_add_token(char *name, t_lst **curr);
 // t_ast		*parser(t_core shell, t_parser *parser);
 
 // typedef struct		quote
