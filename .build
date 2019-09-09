@@ -2,8 +2,4 @@ Build information, patch level is incremented at compilation.
 
 RELEASE	=	0
 VERSION	=	1
-<<<<<<< HEAD
-PATCH	=	1482
-=======
-PATCH	=	493
->>>>>>> 507a45d13a0d90efba7e63e1beb29f22e51b8c9b
+PATCH	=	1660

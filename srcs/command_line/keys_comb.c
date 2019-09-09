@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/04 16:57:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/09 12:36:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		clr_screen(t_read *line)
 {
-	int	i;
+	int		i;
 
 	i = line->x;
 	xtputs(xtgetstr("cl", NULL), 1, my_outc);
@@ -28,13 +28,13 @@ void		clr_screen(t_read *line)
 /*
 **	CTRL + ARROW_UP to move up one line in the same column
 **	Termcaps capabilities :	`up' to go up one line in same col
-**				`nd' to move the cursor on right
+**							`nd' to move the cursor on right
 **
 */
 
 void		move_col_up(t_read *line)
 {
-	int	width;
+	int		width;
 
 	xtputs(xtgetstr("up", NULL), 1, my_outc);
 	if (line->x < line->prompt_len && line->y == 1)
@@ -57,16 +57,16 @@ void		move_col_up(t_read *line)
 /*
 **	CTRL + ARROW_DOWN to move down one line in same column
 **	Termcaps capabilities : `do' to move cursor down at beginning of line
-**				`nd' to move cursor on the right
+**							`nd' to move cursor on the right
 **
 */
 
 void		move_col_down(t_read *line)
 {
-	int	width;
-	int	nb_ofline;
-	int	x;
-	int	x2;
+	int		width;
+	int		nb_ofline;
+	int		x;
+	int		x2;
 
 	x = line->x;
 	width = get_width_current_line(line) - line->x_index;
@@ -97,8 +97,8 @@ void		move_in_column(char *buff, t_read *line)
 }
 
 /*
-**	Alt + f to jump one word forward
-**	Alt + b to jump one word backward
+**	(ALT+F | CTRL+F) to jump one word forward
+**	(ALT+B | CTRL+B) to jump one word backward
 */
 
 void			jump_words(char *buff, t_read *line)

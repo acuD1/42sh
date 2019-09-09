@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:48:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/05 17:02:07 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/09 15:56:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include <sys/stat.h>
 
 /*
-**	Delete last command insert in buffer and insert the new one
-**	Read again buff if another tab key is pressed => return TRUE
+**		Delete last command insert in buffer and insert the new one
+**		Read again buff if another tab key is pressed => return TRUE
 */
 
 uint8_t			read_again(char **prev_b, char *buf, char *name, t_read *input)
@@ -26,7 +26,7 @@ uint8_t			read_again(char **prev_b, char *buf, char *name, t_read *input)
 	insert_str_in_buffer(name, input);
 	if (xread(0, buf, READ_SIZE) > 0)
 	{
-		if (buf[0] == '\t')
+		if (buf[0] == TAB_KEY)
 		{
 			*prev_b = name;
 			return (TRUE);
@@ -37,16 +37,15 @@ uint8_t			read_again(char **prev_b, char *buf, char *name, t_read *input)
 	return (FALSE);
 }
 
-
 char			**split_env_var(char **env)
 {
-	char		**var;
-	int		i;
-	int		j;
+	char			**var;
+	int				i;
+	int				j;
 
 	i = -1;
 	var = ft_memalloc(sizeof(var) * ft_tablen(env));
-	while (env && env[++i])
+	while (env[++i])
 	{
 		j = 0;
 		while (env[i][j] && env[i][j] != '=')
@@ -54,24 +53,24 @@ char			**split_env_var(char **env)
 		var[i] = ft_strsub(env[i], 0, j);
 		var[i] = ft_strjoin("$", var[i]);
 	}
-	var[i] = '\0';
+	var[i] = 0;
 	return (var);
 }
 
-void			to_complete_env_var(char *buf, char *last_buf, char *to_find, t_read *input)
+void			parse_env(char *buf, char *prev_b, char *to_find, t_read *input)
 {
-	char		**var;
-	int		i;
-	int		found;
+	char			**var;
+	int				i;
+	int				found;
 
 	i = -1;
 	var = split_env_var(input->env);
-	while (var && var[++i])
+	while (var[++i])
 	{
-		if (isstart(var[i], to_find + 1))
+		if (isstart(var[i], to_find))
 		{
 			found = TRUE;
-			if (read_again(&last_buf, buf, var[i], input) == TRUE)
+			if (read_again(&prev_b, buf, var[i], input) == TRUE)
 				continue ;
 			else
 			{
@@ -79,44 +78,66 @@ void			to_complete_env_var(char *buf, char *last_buf, char *to_find, t_read *inp
 				return ;
 			}
 		}
+		if (i == ft_tablen(var) - 1)
+			i = -1;
 	}
-	ft_tabfree(var);
-	found == TRUE ? to_complete_env_var(buf, last_buf, to_find, input) : 0;
 }
 
 /*
-** To complete files if char inserted match with any files in current dir
+**		Reading data name of the current directory opened
+**		Return FAILURE(-1) to stop reading (an error occured or no tab key pressed)
 */
 
-void			to_complete_buffer(char *buf, char *last_buf,
-						char *to_find, t_read *input)
+uint8_t			read_dir(char *buf, char **prev_b, char *to_find, t_read *input)
 {
+	char			current_dir[BUFF_SIZE];
 	struct dirent	*data;
-	DIR		*dir;
-	char		current_dir[BUFF_SIZE];
-	int		found;
+	uint8_t			found;
+	DIR				*dir;
 
-	/* if (isstart(to_find, "$")) */
-	/* { */
-	/* 	to_complete_env_var(buf, last_buf, to_find, input); */
-	/* 	return ; */
-	/* } */
 	if (!getcwd(current_dir, BUFF_SIZE))
-		return ;
+		return (FAILURE);
+	/* if (ft_strchr(to_find, '/')) */
+	/* { */
+	/* 	char *tmp = ft_strchr(to_find, '/') + 1; */
+	/* 	ft_strcat(current_dir, "/"); */
+	/* 	ft_strncat(current_dir, to_find, strlen_to(to_find, '/')); */
+	/* 	to_find = tmp; */
+	/* 	prev_b = &tmp; */
+	/* } */
 	dir = opendir(current_dir);
 	while ((data = readdir(dir)) != NULL)
 	{
 		if (isstart(data->d_name, to_find))
 		{
 			found = TRUE;
-			if (read_again(&last_buf, buf, data->d_name, input) == TRUE)
+			if (read_again(prev_b, buf, data->d_name, input) == TRUE)
 				continue ;
 			else
 			{
 				closedir(dir);
-				return ;
+				return (FAILURE);
 			}
 		}
 	}
-	found == TRUE ? to_complete_buffer(buf, last_buf, to_find, input) : 0;
+	return (found);
+}
+
+/*
+**		To complete files if char inserted match with any files in current dir
+*/
+
+void			to_complete_buffer(char *buf, char *prev_b, char *to_find, t_read *input)
+{
+	int				found;
+
+	found = FALSE;
+	if (isstart(to_find, "$"))
+	{
+		parse_env(buf, prev_b, to_find, input);
+		return ;
+	}
+	if ((found = read_dir(buf, &prev_b, to_find, input)) == FAILURE)
+		return ;
+	found == TRUE ? to_complete_buffer(buf, prev_b, to_find, input) : 0;
 }
