@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/09 12:36:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/10 14:46:06 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		clr_screen(t_read *line)
 }
 
 /*
-**	CTRL + ARROW_UP to move up one line in the same column
+**	CTRL/SHIFT + ARROW_UP to move up one line in the same column
 **	Termcaps capabilities :	`up' to go up one line in same col
 **							`nd' to move the cursor on right
 **
@@ -55,7 +55,7 @@ void		move_col_up(t_read *line)
 }
 
 /*
-**	CTRL + ARROW_DOWN to move down one line in same column
+**	CTRL/SHIFT + ARROW_DOWN to move down one line in same column
 **	Termcaps capabilities : `do' to move cursor down at beginning of line
 **							`nd' to move cursor on the right
 **
