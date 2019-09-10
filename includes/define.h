@@ -65,7 +65,7 @@
 
 # define CHAR_INTERRUPT 			" \t<>|;&!=\n" 
 # define OPERATORS 					"&|;;><-" 
-
+// # define TOKEN					NULL			
 // # define TOK_ESCSEQ				"\\"
 // # define TOK_EOF					"EOF"
 // # define TOK_DB_QUOTE				"\""
@@ -118,6 +118,7 @@
 // # define TOK_END					"end"
 // # define TOK_ERROR					"ERROR"
 // # define TOK_START					"START"
+
 
 /*
 ** LEXER 

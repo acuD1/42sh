@@ -21,35 +21,62 @@
 #define NODETYPE(a) (a & (~NODE_DATA))	// ge7t the type of the nodes
 
 
-typedef enum operators
-{
-    TOK_ANDIF,
-    TOK_ORIF,
-    TOK_DSEMI,
-    TOK_DLESS,
-    TOK_DGREAT,
-    TOK_LESSAND,
-    TOK_GREATAND,
-    TOK_LESSGREAT,
-    TOK_ANDDGREAT,
-    TOK_ANDGREAT,
-    TOK_DLESSDASH,
-} operators;
+// typedef enum operators
+// {
+//     TOK_ANDIF,
+//     TOK_ORIF,
+//     TOK_DSEMI,
+//     TOK_DLESS,
+//     TOK_DGREAT,
+//     TOK_LESSAND,
+//     TOK_GREATAND,
+//     TOK_LESSGREAT,
+//     TOK_ANDDGREAT,
+//     TOK_ANDGREAT,
+//     TOK_DLESSDASH,
+//     TOK_NULL,
+// } operators;
 
-typedef enum reservedword {
-    TOK_IF,
-    TOK_THEN,
-    TOK_ELSE,
-    TOK_ELIF,
-    TOK_FI,
-    TOK_DO,
-    TOK_DONE,
-    TOK_CASE,
-    TOK_ESAC,
-    TOK_WHILE,
-    TOK_UNTIL,
-    TOK_FOR,
-} reservedword;
+// typedef enum reservedword {
+//     TOK_IF,
+//     TOK_THEN,
+//     TOK_ELSE,
+//     TOK_ELIF,
+//     TOK_FI,
+//     TOK_DO,
+//     TOK_DONE,
+//     TOK_CASE,
+//     TOK_ESAC,
+//     TOK_WHILE,
+//     TOK_UNTIL,
+//     TOK_FOR,
+// } reservedword;
+
+typedef enum        tokenid
+  {
+    TOKEN,
+    TOK_NEWLINE,    // \n
+    TOK_EOF,        // EOF
+    TOK_ANDIF,        // &&
+    TOK_AND,     // &
+    TOK_ORIF,     // ||
+    TOK_PIPE,       // |
+    TOK_DSEMI,      // ;;
+    TOK_SEMICOLON,        // ;
+    TOK_PARENT_OPEN,     // (
+    TOK_PARENT_CLOSE,     // )
+    TOK_DLESSDASH,  // <<-
+    TOK_DLESS,      // <<
+    TOK_LESSGREAT,  // <>
+    TOK_LESSAND,    // <&
+    TOK_LESS,       // <
+    TOK_DGREAT,     // >>
+    TOK_GREATAND,   // >&
+    TOK_CLOBBER,    // >|
+    TOK_GREAT,      // >
+    TOK_IONUMBER,   // number juste before '>' or '<'
+    TOK_WORD        // all others
+  } e_tokenid;
 
 typedef enum nodetype {
     NODE_NULL           = (0 << 0),
@@ -92,16 +119,16 @@ typedef enum state {
 // // t_env           *(*func)(char **args, t_env *lst);
 
 
-
 typedef struct s_lexer t_lexer;
 
 typedef void (*t_lexing)(t_lexer*);
 
 typedef struct 	s_token
 {
-	char	*id;
-	enum nodetype type;
-} 				t_token;
+    e_tokenid id;
+	char	*data;
+    size_t data_len;
+;} 				t_token;
 
 typedef struct s_lexer
 {
@@ -109,6 +136,7 @@ typedef struct s_lexer
 	enum state		status;
 	size_t			ntok;	
 	size_t			szbuff;
+    size_t          buf_pos;
     t_lexing        lex[7];
     size_t          io_here;
     t_lst	        *tok;
@@ -121,7 +149,7 @@ void newline_lexer(t_lexer *lexer);
 void number_lexer(t_lexer *lexer);
 void assignement_word_lexer(t_lexer *lexer);
 void operator_lexer(t_lexer *lexer);
-t_lst   *ft_add_token(char *name, t_lst **curr);
+t_lst   *ft_add_token(t_lst **curr, e_tokenid opeid, char *data);
 // t_ast		*parser(t_core shell, t_parser *parser);
 
 // typedef struct		quote
@@ -131,17 +159,7 @@ t_lst   *ft_add_token(char *name, t_lst **curr);
 // 	const char		*stop;
 // 	const size_t		lenstop;
 // } s_quote;
-
-// s_quote	quotes[] =
-// {
-// 	{"\"", 1, "\"", 1},
-// 	{"'", 1, "'", 1},
-// 	{"`", 1, "`", 1},
-// 	{"${", 2, "}", 1},
-// 	{"$((", 2, "))", 2},
-// 	{"$(", 2, ")", 1},
-// 	{NULL, 0, NULL, 0},
-// };
+ 
 
 #endif
     
