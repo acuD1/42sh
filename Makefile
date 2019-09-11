@@ -106,6 +106,9 @@ SRC		+=	$(S_PATH)$(EXEC)set_envp.c
 SRC		+=	$(S_PATH)dev.c
 
 SRC		+=	$(S_PATH)$(LEXER)lexer.c
+SRC		+=	$(S_PATH)$(LEXER)init_lexer.c
+SRC		+=	$(S_PATH)$(LEXER)lexer_memory.c
+SRC		+=	$(S_PATH)$(LEXER)lexer_states.c
 
 
 # Headers

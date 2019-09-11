@@ -65,6 +65,10 @@ typedef enum        tokenid
     TOK_SEMICOLON,        // ;
     TOK_PARENT_OPEN,     // (
     TOK_PARENT_CLOSE,     // )
+    TOK_BRACKET_OPEN,     // {
+    TOK_BRACKET_CLOSE,     // }
+    TOK_HOOK_OPEN,     // [
+    TOK_HOOK_CLOSE,     // ]
     TOK_DLESSDASH,  // <<-
     TOK_DLESS,      // <<
     TOK_LESSGREAT,  // <>
@@ -119,9 +123,11 @@ typedef enum state {
 // // t_env           *(*func)(char **args, t_env *lst);
 
 
+
 typedef struct s_lexer t_lexer;
 
 typedef void (*t_lexing)(t_lexer*);
+typedef void (*t_machine)(t_lexer*);
 
 typedef struct 	s_token
 {
@@ -138,9 +144,22 @@ typedef struct s_lexer
 	size_t			szbuff;
     size_t          buf_pos;
     t_lexing        lex[7];
+    t_machine       state[22];
     size_t          io_here;
     t_lst	        *tok;
 } 				t_lexer;
+
+
+// struct s_token quote[] =
+// {
+//     {TOKEN, NULL, 0},
+//     {TOK_PARENT_OPEN, "(", 1},
+//     {TOK_PARENT_CLOSE, ")", 1},
+//     {TOK_BRACKET_OPEN, "{", 1},
+//     {TOK_BRACKET_CLOSE, "}", 1},
+//     {TOK_HOOK_OPEN, "[", 1},
+//     {TOK_HOOK_CLOSE, "]", 1},
+// };
 
 void start_lexer(t_lexer *lexer);
 void end_lexer(t_lexer *lexer);
@@ -149,7 +168,10 @@ void newline_lexer(t_lexer *lexer);
 void number_lexer(t_lexer *lexer);
 void assignement_word_lexer(t_lexer *lexer);
 void operator_lexer(t_lexer *lexer);
+void ft_printtoklist(t_lexer *lexer);
 t_lst   *ft_add_token(t_lst **curr, e_tokenid opeid, char *data);
+t_lexer *init_lexer(t_core *shell, char *line);
+void    *token_set(t_token *token, e_tokenid opeid, char *data);
 // t_ast		*parser(t_core shell, t_parser *parser);
 
 // typedef struct		quote
