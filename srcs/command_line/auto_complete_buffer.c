@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:48:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/09 15:56:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/11 11:16:06 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void			parse_env(char *buf, char *prev_b, char *to_find, t_read *input)
 				continue ;
 			else
 			{
-				ft_tabfree(var);
+				free(var);
 				return ;
 			}
 		}
