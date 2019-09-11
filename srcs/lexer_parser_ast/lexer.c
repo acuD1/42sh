@@ -97,11 +97,7 @@ void name_lexer(t_lexer *lexer)
 
 void number_lexer(t_lexer *lexer)
 {
-	// ft_add_token(lexer->buff, &lexer->tok);
-	// lexer->ntok++;
-	// lexer->buff++;
-	// printf("Nbr %u   %s\n", lexer->status, ((t_token*)lexer->tok->content)->id);
-	// lexer->status = IO_NUMBER;
+	// if end_lexer
 	lexer->status = START;
 }
 
@@ -145,12 +141,12 @@ void operator_lexer(t_lexer *lexer)
 	{
 		if (!strncmp(lexer->buff, ope[i].data, ope[i].data_len))
 		{
+			
 			    if (lexer->buf_pos)
 					lexer->buf_pos += ope[i].data_len;
      			if (lexer->tok)
 					token_set(lexer->tok->content, ope[i].id, ope[i].data);
 				// printf("%u %s \n", ((t_token*)lexer->tok->content)->id, ((t_token*)lexer->tok->content)->data);
-				printf("%s\n", ope[i].data);
       	}
       	i++;
 	}
@@ -179,7 +175,7 @@ void start_lexer(t_lexer *lexer)
 		while (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 			lexer->buf_pos++;
 	}
-	// else if (ft_isdigit(lexer->buff[buf_pos]))
+	// else if (ft_isdigit(lexer->buff[lexer->buf_pos]))
 		// lexer->status = IO_NUMBER;
 	else if (ft_strchr(OPERATORS, lexer->buff[lexer->buf_pos]))
 	{
