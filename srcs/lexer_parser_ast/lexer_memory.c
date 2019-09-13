@@ -12,12 +12,15 @@
 
 #include "sh42.h"
 
+
+// FREE TOKEN->DATA
 void	*token_set(t_token *token, e_tokenid opeid, char *data)
 {
   if (token->id == TOK_WORD)
     free(token->data);
   token->id = opeid;
-  token->data = ft_strdup(data);
+  if (!(token->data = ft_strdup(data))) //FREE LA DATA !!!!!!!!
+  	token->data = data;
   if (data)
   	token->data_len = ft_strlen(data);
   else

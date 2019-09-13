@@ -58,8 +58,10 @@ void name_lexer(t_lexer *lexer)
 		i = lexer->buf_pos;
 		while (!ft_strchr(CHAR_INTERRUPT, lexer->buff[i]) && lexer->buff[i])
 			i++;
-		buf = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos);
-		ft_add_token(&lexer->tok, TOK_WORD, buf);
+		if(!(buf = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
+			return;
+		if(!(ft_add_token(&lexer->tok, TOK_WORD, buf)))
+			return;
 		lexer->ntok++;
 		lexer->buf_pos = i;
 		lexer->status = START;
@@ -82,10 +84,12 @@ void number_lexer(t_lexer *lexer)
 			i++;
 		if ((lexer->buff[i] == '<' || lexer->buff[i] == '>') && i != (int)lexer->buf_pos)
 		{
-			buf = ft_strsub(lexer->buff, lexer->buf_pos, i);
-	 		ft_add_token(&lexer->tok, TOK_IONUMBER, buf);
+			if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
+				return;
+	 		if(!(ft_add_token(&lexer->tok, TOK_IONUMBER, buf)))
+	 			return;
 	     	lexer->io_here = ft_atoi(buf);
-	     	lexer->buf_pos += i;
+	     	lexer->buf_pos = i;
 	     	lexer->ntok++;
 	     	free(buf);
 	     	operator_lexer(lexer);
@@ -109,7 +113,8 @@ void operator_lexer(t_lexer *lexer)
 		{
 			if (!strncmp(&lexer->buff[lexer->buf_pos], ope[i].data, ope[i].data_len))
 			{
-	     			ft_add_token(&lexer->tok, ope[i].id, ft_strsub(lexer->buff, lexer->buf_pos, ope[i].data_len));
+	     			if (!(ft_add_token(&lexer->tok, ope[i].id, ft_strsub(lexer->buff, lexer->buf_pos, ope[i].data_len))))
+	     				return ;
 			     	lexer->ntok++;
 					lexer->buf_pos += ope[i].data_len;
 					lexer->status = START;
@@ -133,8 +138,6 @@ static int isvalid_assignement_word(char *str)
 		return (0);	
 	while (str[i])
 	{
-		if (ft_isdigit(str[0]) || str[0] == '=')
-			return (0);
 		if (str[i] == '_' || ft_isdigit(str[i]) || ft_isalpha(str[i]))
 			i++;
 		else
@@ -154,16 +157,25 @@ void assignement_word_lexer(t_lexer *lexer)
 		lexer->status = END;
 	else
 	{
+		if (ft_isdigit(lexer->buff[lexer->buf_pos]) || lexer->buff[lexer->buf_pos] == '=')
+		{
+			lexer->status = NAME;
+			return;
+		}
 		while (lexer->buff[i] != '=')
 			i++;
-		buf = ft_strsub(lexer->buff, lexer->buf_pos, i);
+		if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, i)))
+			return ;
 		if (isvalid_assignement_word(buf))
 		{
-			ft_add_token(&lexer->tok, TOK_ASSIGN, ft_strsub(lexer->buff, lexer->buf_pos, i + 1));
+			if (!(ft_add_token(&lexer->tok, TOK_ASSIGN, ft_strsub(lexer->buff, lexer->buf_pos, i + 1))))
+				return;
 			lexer->ntok++;
 			lexer->buf_pos += i + 1;
 			free(buf);
 		}
+		else
+			lexer->status = NAME;
 	}
 	lexer->status = START;
 }

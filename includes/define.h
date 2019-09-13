@@ -63,8 +63,8 @@
 **  Lexer Token
 */
 
-# define CHAR_INTERRUPT 			" \t<>|;&!=\n" 
-# define OPERATORS 					"&|;><-" 
+# define CHAR_INTERRUPT 			" \t<>|;&\n" 
+# define OPERATORS 					"&|;><-\n" 
 // # define TOKEN					NULL			
 # define T_ESCSEQ				"\\"
 # define T_EOF					"EOF"

@@ -34,8 +34,10 @@ void newline_lexer(t_lexer *lexer)
 	{
 		if (lexer->buff[lexer->buf_pos] == '\n')
 		{
-			buf = ft_strsub(lexer->buff, lexer->buf_pos, 1);
-	 		ft_add_token(&lexer->tok, TOK_NEWLINE, buf);
+			if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, 1)))
+				return;
+	 		if (!(ft_add_token(&lexer->tok, TOK_NEWLINE, buf)))
+	 			return;
 	 		lexer->ntok++;
 	 		lexer->buf_pos++;
 	 		free(buf);
@@ -47,7 +49,12 @@ void newline_lexer(t_lexer *lexer)
 void start_lexer(t_lexer *lexer)
 {
 	if (lexer->buff[lexer->buf_pos] == '\0')
+	{
+		if (!(ft_add_token(&lexer->tok, TOKEN, "(null)")))
+			return;
+		lexer->ntok++;
 		lexer->status = END;
+	}
 	else if (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 	{
 		lexer->io_here = 0;
@@ -66,23 +73,22 @@ void start_lexer(t_lexer *lexer)
 		lexer->status = NAME;
 }
 
-
-//A COMPLETER
 void end_lexer(t_lexer *lexer)
 {
-	if (lexer->buff == '\0')
-		lexer->status = END;
-	else
-	{
-		lexer->status = START;
-		lexer->buf_pos++;
-	}
+	printf("USELESSSSS %u\n", lexer->status);
+	// fct de liaison vers le parser ?
+	// if (lexer->buff == '\0')
+	// 	lexer->status = END;
+	// else
+	// {
+	// 	lexer->status = START;
+	// 	lexer->buf_pos++;
+	// }
 }
 
 void	lexer(t_core *shell, char *line)
 {
 	t_lexer *lexer;
-	// t_parser *parser;
 
 	if (line == NULL)
 		return ;
