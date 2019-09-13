@@ -12,26 +12,28 @@
 
 #include "sh42.h"
 
+/*
+** SET UN TOKEN LEXER /!\ FREE(DATA) /!\
+*/
 
-// FREE TOKEN->DATA
-void	*token_set(t_token *token, e_tokenid opeid, char *data)
+static void		*lexer_token_set(t_token *token, e_tokenid opeid, char *data)
 {
-  if (token->id == TOK_WORD)
-    free(token->data);
-  token->id = opeid;
-  if (!(token->data = ft_strdup(data))) //FREE LA DATA !!!!!!!!
-  	token->data = data;
-  if (data)
-  	token->data_len = ft_strlen(data);
-  else
-  	token->data_len = 0;
-  return (token);
+	if (token->id == TOK_WORD)
+		free(token->data);
+	token->id = opeid;
+	if (!(token->data = ft_strdup(data))) //FREE LA DATA !!!!!!!!
+		token->data = data;
+	if (data)
+		token->data_len = ft_strlen(data);
+	else
+		token->data_len = 0;
+	return (token);
 }
 
 static t_lst	*ft_create_token(char *data, e_tokenid opeid)
 {
-	t_lst *new;
-	t_token *tok;
+	t_lst		*new;
+	t_token		*tok;
 
 	tok = NULL;
 	if (!(new = (t_lst*)malloc(sizeof(t_lst))))
@@ -40,11 +42,15 @@ static t_lst	*ft_create_token(char *data, e_tokenid opeid)
 	new->prev = NULL;
 	if (!(tok = (t_token*)malloc(sizeof(t_token))))
 		return (NULL);
-	new->content = token_set(tok, opeid, data);
+	new->content = lexer_token_set(tok, opeid, data);
 	return (new);
 }
 
-t_lst	*ft_add_token(t_lst **curr, e_tokenid opeid, char *data)
+/*
+** CREE LES TOKENS LEXER 
+*/
+
+t_lst			*ft_add_token(t_lst **curr, e_tokenid opeid, char *data)
 {
 	t_lst		*tmp;
 	t_lst		*new;
@@ -70,9 +76,10 @@ t_lst	*ft_add_token(t_lst **curr, e_tokenid opeid, char *data)
 	return (*curr);
 }
 
-void ft_printtoklist(t_lexer *lexer)
+
+void			ft_printtoklist(t_lexer *lexer)
 {
-	t_token *tmp;
+	t_token		*tmp;
 
 	tmp = NULL;
 	if (!lexer->tok)

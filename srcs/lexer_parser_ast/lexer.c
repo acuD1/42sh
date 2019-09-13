@@ -22,10 +22,14 @@ int	ft_isdigit(int c)
 	return ((c >= '0' && c <= '9') ? 1 : 0);
 }
 
-//NEED ledition de ligne pour tester
-void newline_lexer(t_lexer *lexer)
+/*
+** NEED ledition de ligne pour tester 
+** STATE CREANT LES TOKENS NEWLINE
+*/
+
+void		newline_lexer(t_lexer *lexer)
 {
-	char *buf;
+	char	*buf;
 
 	buf = NULL;
 	if (!lexer->buff)
@@ -36,17 +40,22 @@ void newline_lexer(t_lexer *lexer)
 		{
 			if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, 1)))
 				return;
-	 		if (!(ft_add_token(&lexer->tok, TOK_NEWLINE, buf)))
-	 			return;
-	 		lexer->ntok++;
-	 		lexer->buf_pos++;
-	 		free(buf);
+			if (!(ft_add_token(&lexer->tok, TOK_NEWLINE, buf)))
+				return;
+			lexer->ntok++;
+			lexer->buf_pos++;
+			free(buf);
 		}
 	}
 	lexer->status = START;
 }
 
-void start_lexer(t_lexer *lexer)
+/*
+** ETAT DE LA STATE MACHINE DE DEFAULT ET DE DEPART
+** CHANGE LE STATUS DE LA MACHINE EN FONCTION DU CHAR IDENTIFIÉ
+*/
+
+void		start_lexer(t_lexer *lexer)
 {
 	if (lexer->buff[lexer->buf_pos] == '\0')
 	{
@@ -73,7 +82,11 @@ void start_lexer(t_lexer *lexer)
 		lexer->status = NAME;
 }
 
-void end_lexer(t_lexer *lexer)
+/*
+** ETAT DE TRANSITION VERS LE PARSER ?
+*/
+
+void		end_lexer(t_lexer *lexer)
 {
 	printf("USELESSSSS %u\n", lexer->status);
 	// fct de liaison vers le parser ?
@@ -86,9 +99,13 @@ void end_lexer(t_lexer *lexer)
 	// }
 }
 
-void	lexer(t_core *shell, char *line)
+/*
+*** LEXER IN = LINE EDITION    OUT = PARSER
+*/
+
+void		lexer(t_core *shell, char *line)
 {
-	t_lexer *lexer;
+	t_lexer	*lexer;
 
 	if (line == NULL)
 		return ;
