@@ -12,34 +12,72 @@
 
 #include "sh42.h"
 
+int	ft_isalpha(int c)
+{
+	return (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) ? 1 : 0);
+}
+
 int	ft_isdigit(int c)
 {
 	return ((c >= '0' && c <= '9') ? 1 : 0);
 }
 
-// void tokenizator(t_lexer *lexer, char *line)
-// {
-// 	char **tab;
-// 	int i;
+//NEED ledition de ligne pour tester
+void newline_lexer(t_lexer *lexer)
+{
+	char *buf;
+
+	buf = NULL;
+	if (!lexer->buff)
+		lexer->status = END;
+	else
+	{
+		if (lexer->buff[lexer->buf_pos] == '\n')
+		{
+			buf = ft_strsub(lexer->buff, lexer->buf_pos, 1);
+	 		ft_add_token(&lexer->tok, TOK_NEWLINE, buf);
+	 		lexer->ntok++;
+	 		lexer->buf_pos++;
+	 		free(buf);
+		}
+	}
+	lexer->status = START;
+}
+
+void start_lexer(t_lexer *lexer)
+{
+	if (lexer->buff[lexer->buf_pos] == '\0')
+		lexer->status = END;
+	else if (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
+	{
+		lexer->io_here = 0;
+		while (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
+			lexer->buf_pos++;
+	}
+	else if (ft_strchr(OPERATORS, lexer->buff[lexer->buf_pos]))
+		lexer->status = OPERATOR;
+	else if (ft_isdigit(lexer->buff[lexer->buf_pos]))
+		lexer->status = IO_NUMBER;
+	else if (ft_strchr(&lexer->buff[lexer->buf_pos], '\n'))
+		lexer->status = NEWLINE;
+	else if (ft_strchr(&lexer->buff[lexer->buf_pos], '='))
+		lexer->status = ASSIGNEMENT_WORD;
+	else
+		lexer->status = NAME;
+}
 
 
-// 	i = 0;
-// 	//rajouter la fct qui prend chr par char et fait des token
-// 	if (!(tab = ft_strsplit(line, " \t")))
-// 		return ;
-// 	while (tab[i])
-// 	{
-// 		printf("%s %zu\n", tab[i], ft_strlen(tab[i]));
-// 		ft_add_token(tab[i], &lexer->tok);
-// 		lexer->ntok++;
-// 		i++;
-// 	}
-// 	ft_printtoklist(lexer);
-// }
-
-/*
-**	TO DO:
-*/
+//A COMPLETER
+void end_lexer(t_lexer *lexer)
+{
+	if (lexer->buff == '\0')
+		lexer->status = END;
+	else
+	{
+		lexer->status = START;
+		lexer->buf_pos++;
+	}
+}
 
 void	lexer(t_core *shell, char *line)
 {
@@ -56,8 +94,4 @@ void	lexer(t_core *shell, char *line)
 	while (lexer->status != END)
 		lexer->lex[lexer->status](lexer);
 	ft_printtoklist(lexer);
-
-		// tokenizator(lexer, line); // envoyer line par line a une fct qui va la parcourir et creer une list de token en consequence
-	//parser = parser(lexer, shell);// while (lexer->tok->type != EOF) -> PARSER
-	//shell.ast = ast(parser);// ptr sur fct qui prend lchar par char et cree les token jusqua EOF et/ou !line
 }

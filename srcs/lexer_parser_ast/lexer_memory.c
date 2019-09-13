@@ -17,7 +17,7 @@ void	*token_set(t_token *token, e_tokenid opeid, char *data)
   if (token->id == TOK_WORD)
     free(token->data);
   token->id = opeid;
-  token->data = data;
+  token->data = ft_strdup(data);
   if (data)
   	token->data_len = ft_strlen(data);
   else
@@ -31,7 +31,6 @@ static t_lst	*ft_create_token(char *data, e_tokenid opeid)
 	t_token *tok;
 
 	tok = NULL;
-	printf("TOK %s\n",data );
 	if (!(new = (t_lst*)malloc(sizeof(t_lst))))
 		return (NULL);
 	new->next = NULL;
@@ -75,17 +74,20 @@ void ft_printtoklist(t_lexer *lexer)
 	tmp = NULL;
 	if (!lexer->tok)
 		return;
-	printf("list avec %zu node \nAc en data        '%s'  '%u'\n", lexer->ntok, lexer->buff, lexer->status);
-	while (lexer->tok->next)
-	{
-		tmp = (t_token*)lexer->tok->content;
-		printf("%s\n", tmp->data);
-		lexer->tok = lexer->tok->next;
-	}
+	printf("list avec %zu node \nAc en data        '%s' status '%u'\n", lexer->ntok, lexer->buff, lexer->status);
 	while (lexer->tok)
 	{
 		tmp = (t_token*)lexer->tok->content;
-		printf("%s\n", tmp->data);
+		printf("ALLER %s %u\n", tmp->data, tmp->id);
+		if (!lexer->tok->next)
+			break;
+		lexer->tok = lexer->tok->next;
+	}
+	printf("====  =====\n");
+	while (lexer->tok)
+	{
+		tmp = (t_token*)lexer->tok->content;
+		printf("RETOUR %s %u\n", tmp->data, tmp->id);
 		lexer->tok = lexer->tok->prev;
 	}
 }
