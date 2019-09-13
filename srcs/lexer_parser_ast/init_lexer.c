@@ -38,7 +38,6 @@ t_lexer *init_lexer(t_core *shell, char *line)
 	// new->szbuff = ft_strlen(line);
 	new->tok = NULL;
 	new->io_here = 0;
-	new->assign = 1;
 	ft_init_lex(new);
 	// ft_init_machine(new->machina);
 	return (new);

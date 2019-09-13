@@ -197,7 +197,6 @@ typedef struct s_lexer
     // t_machine       state[34];
     enum e_type          last_state;
     size_t          io_here;
-    int             assign;
     t_lst	        *tok;
 } 				t_lexer;
 
