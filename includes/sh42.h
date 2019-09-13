@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 14:53:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/02 13:10:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@
 # include "shared_libft.h"
 # include "define.h"
 # include "struct.h"
+// # include "command_line.h"
 # include "lexer.h"
 
+# include <sys/wait.h>
+# include <sys/ioctl.h>
+# include <fcntl.h>
 # include <stdlib.h>
+# include <stdint.h>
 # include <unistd.h>
 # include <stdio.h> // /!\ For debug only !
 
@@ -27,7 +32,9 @@
 */
 
 void		credit(t_core *shell);
+
 void		init_prompt(void);
+
 void		print_opt(t_core *shell);
 void		load_prompt(t_core *shell);
 void		free_env(t_lst *env);

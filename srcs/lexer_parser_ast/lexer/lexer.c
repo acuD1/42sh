@@ -12,44 +12,6 @@
 
 #include "sh42.h"
 
-int	ft_isalpha(int c)
-{
-	return (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) ? 1 : 0);
-}
-
-int	ft_isdigit(int c)
-{
-	return ((c >= '0' && c <= '9') ? 1 : 0);
-}
-
-/*
-** NEED ledition de ligne pour tester 
-** STATE CREANT LES TOKENS NEWLINE
-*/
-
-void		newline_lexer(t_lexer *lexer)
-{
-	char	*buf;
-
-	buf = NULL;
-	if (!lexer->buff)
-		lexer->status = END;
-	else
-	{
-		if (lexer->buff[lexer->buf_pos] == '\n')
-		{
-			if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, 1)))
-				return;
-			if (!(ft_add_token(&lexer->tok, TOK_NEWLINE, buf)))
-				return;
-			lexer->ntok++;
-			lexer->buf_pos++;
-			free(buf);
-		}
-	}
-	lexer->status = START;
-}
-
 /*
 ** ETAT DE LA STATE MACHINE DE DEFAULT ET DE DEPART
 ** CHANGE LE STATUS DE LA MACHINE EN FONCTION DU CHAR IDENTIFIÉ

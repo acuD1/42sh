@@ -75,29 +75,3 @@ t_lst			*ft_add_token(t_lst **curr, e_tokenid opeid, char *data)
 	}
 	return (*curr);
 }
-
-
-void			ft_printtoklist(t_lexer *lexer)
-{
-	t_token		*tmp;
-
-	tmp = NULL;
-	if (!lexer->tok)
-		return;
-	printf("list avec %zu node \nAc en data        '%s' status '%u'\n", lexer->ntok, lexer->buff, lexer->status);
-	while (lexer->tok)
-	{
-		tmp = (t_token*)lexer->tok->content;
-		printf("ALLER %s %u\n", tmp->data, tmp->id);
-		if (!lexer->tok->next)
-			break;
-		lexer->tok = lexer->tok->next;
-	}
-	printf("====  =====\n");
-	while (lexer->tok)
-	{
-		tmp = (t_token*)lexer->tok->content;
-		printf("RETOUR %s %u\n", tmp->data, tmp->id);
-		lexer->tok = lexer->tok->prev;
-	}
-}

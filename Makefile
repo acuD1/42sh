@@ -74,7 +74,7 @@ L_PATH = shared_libft/
 CORE	=	core/
 DB		=	db/
 EXEC	=	exec/
-LEXER	= 	lexer_parser_ast/
+LEXER	= 	lexer_parser_ast/lexer/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -105,10 +105,13 @@ SRC		+=	$(S_PATH)$(EXEC)set_envp.c
 
 SRC		+=	$(S_PATH)dev.c
 
-SRC		+=	$(S_PATH)$(LEXER)lexer.c
+SRC		+=	$(S_PATH)$(LEXER)assign_token.c
 SRC		+=	$(S_PATH)$(LEXER)init_lexer.c
+SRC		+=	$(S_PATH)$(LEXER)lexer.c
 SRC		+=	$(S_PATH)$(LEXER)lexer_memory.c
-SRC		+=	$(S_PATH)$(LEXER)lexer_states.c
+SRC		+=	$(S_PATH)$(LEXER)name_io_nwln_token.c
+SRC		+=	$(S_PATH)$(LEXER)operator_token.c
+SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
 
 
 # Headers
