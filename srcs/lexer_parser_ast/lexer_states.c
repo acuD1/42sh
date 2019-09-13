@@ -175,7 +175,7 @@ void assignement_word_lexer(t_lexer *lexer)
 			free(buf);
 		}
 		else
-			lexer->status = NAME;
+			name_lexer(lexer);
 	}
 	lexer->status = START;
 }
