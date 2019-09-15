@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/03 11:33:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/09/15 19:01:41 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct	s_db
 {
 	char		*key;
 	char		*value;
+	u_int8_t	type;
 	u_int32_t	hit;		// Only for hash_map
 }				t_db;
 

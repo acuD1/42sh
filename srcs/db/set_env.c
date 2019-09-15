@@ -6,28 +6,22 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 13:49:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/09/15 19:12:21 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t	set_env(t_core *shell, char **environ)
+int8_t	set_env(t_core *shell, char **argv, char **environ)
 {
 	size_t	i;
 
 	i = 0;
 
-	/*
-	**	NOT IMPLEMENTED YET
-	if (environ == NULL || *environ == NULL)
-		return (set_default_env(shell, env));
-	*/
-
-	while (environ[i])
+	while (*environ && environ[i])
 	{
 		ft_lstappend(&shell->env,
-			ft_lstnew(fetch_db(&shell->db, environ[i]), sizeof(t_db)));
+			ft_lstnew(fetch_db(&shell->db, environ[i], ENV_VAR), sizeof(t_db)));
 		i++;
 	}
 
