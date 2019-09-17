@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/05 10:32:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/17 12:46:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void			move_key_down(t_read *line)
 			line->history_index = line->history->prev;
 			return ;
 		}
-		while (w->data && w->data[++i])
-			insert_char_in_buffer(w->data[i], line, i);
+		while (w->content && ((char*)w->content)[++i])
+			insert_char_in_buffer(((char*)w->content)[i], line, i);
 	}
 }
 
@@ -67,8 +67,8 @@ void			move_key_up(t_read *line)
 		}
 		goto_prompt(line);
 		memset(line->buffer, 0, strlen(line->buffer));
-		while (w->data && w->data[++i])
-			insert_char_in_buffer(w->data[i], line, i);
+		while (w->content && ((char *)w->content)[++i])
+			insert_char_in_buffer(((char *)w->content)[i], line, i);
 	}
 }
 

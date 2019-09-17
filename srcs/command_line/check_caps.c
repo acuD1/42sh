@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/09 19:46:30 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/17 13:24:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,9 @@ uint8_t		cursor_motion(char *buff, t_read *line)
 
 uint8_t		check_caps(char *buff, t_read *line)
 {
-	if (*buff == CTRL_R)
+	if (is_print(*buff))
+		insert_in_buffer(buff, line);
+	else if (*buff == CTRL_R)
 		research_mode(&line);
 	else if (*buff == TAB_KEY)
 		auto_complete_mode(buff, line);
@@ -102,8 +104,6 @@ uint8_t		check_caps(char *buff, t_read *line)
 		ft_putchar('\n');
 		return (FALSE);
 	}
-	else if (is_print(*buff))
-		insert_in_buffer(buff, line);
 	else
 		check_keys_comb(buff, line);
 	end_of_file(buff, line);

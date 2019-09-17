@@ -6,17 +6,17 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/04 12:29:44 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/17 13:30:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
-**	Termcaps capabilities:
-**	- `cr' => to move the cursor to the beginning of the line it is on
-**	- `ce' => to clear from the cursor to the end of the current line
-**	- `up' => to move the cursor vertically up one line
+**	  Termcaps capabilities:
+**	  - `cr' => to move the cursor to the beginning of the line it is on
+**	  - `ce' => to clear from the cursor to the end of the current line
+**	  - `up' => to move the cursor vertically up one line
 */
 
 void		goto_prompt(t_read *line)
@@ -39,8 +39,8 @@ void		goto_prompt(t_read *line)
 }
 
 /*
-**	Display prompt as the current directory
-**	Store some datas for pressed keys
+**	  Display prompt as the current directory
+**	  Store some datas for pressed keys
 */
 
 t_read		*display_prompt(t_read *term)
@@ -63,9 +63,9 @@ t_read		*display_prompt(t_read *term)
 }
 
 /*
-**	Clear the last buffer/line inserted & Display current prompt
-**	Launch line edition: read stdin until enter key is pressed
-**	The current buffer is saved in a list history
+**	  Clear the last buffer/line inserted & Display current prompt
+**	  Launch line edition: read stdin until enter key is pressed
+**	  The current buffer is saved in a list history
 */
 
 char		*init_prompt(t_read *term)

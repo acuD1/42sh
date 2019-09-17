@@ -6,13 +6,13 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/05 10:26:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/17 13:07:35 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int		my_outc(int c)
+int			my_outc(int c)
 {
 	write(0, &c, 1);
 	return (SUCCESS);
@@ -21,8 +21,8 @@ int		my_outc(int c)
 void		remove_newline(t_read *line)
 {
 	char	*tmp;
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 
 	i = -1;
 	j = -1;

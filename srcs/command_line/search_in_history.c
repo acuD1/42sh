@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/11 14:57:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/17 12:45:46 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ char		*walking_history(char buff_tmp[BUFF_SIZE], t_read *line, t_lst **history)
 {
 	while (*history)
 	{
-		if (ft_strstr((*history)->data, buff_tmp))
+		if (ft_strstr((*history)->content, buff_tmp))
 		{
 			xtputs(xtgetstr("cr", NULL), 1, my_outc);
 			xtputs(xtgetstr("ce", NULL), 1, my_outc);
 			dprintf(STDIN_FILENO, "(reverse-i-search)`%s':", buff_tmp);
-			dprintf(STDIN_FILENO, " %s", (*history)->data);
-			ft_strcpy(line->buffer, (*history)->data);
+			dprintf(STDIN_FILENO, " %s",(*history)->content);
+			ft_strcpy(line->buffer, (*history)->content);
 			if ((*history)->next)
 				(*history) = (*history)->next;
-			return ((*history)->data);
+			return ((*history)->content);
 		}
 		(*history) = (*history)->next;
 	}

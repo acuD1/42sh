@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 12:13:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/03 12:36:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/17 13:27:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,5 @@ size_t		xread(int fd, char *buff, int size)
 			exit(EXIT_FAILURE);
 		}
 	}
-	buff[ret + 1] = '\0';
 	return (ret);
 }

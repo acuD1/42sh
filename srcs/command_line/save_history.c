@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/11 11:24:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/17 13:45:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void			write_history(t_read *line)
 		hst = hst->next;
 	while (hst)
 	{
-		if (write(fd, hst->data, ft_strlen(hst->data)) == FAILURE
+		if (write(fd, hst->content, ft_strlen(hst->content)) == FAILURE
 			|| write(fd, "\n", 1) == FAILURE)
 		{
 			dprintf(2, "write failure\n");
@@ -60,7 +60,7 @@ void			save_history(t_read *term)
 		saved = ft_memalloc(sizeof(*saved));
 		saved->prev = NULL;
 		saved->next = term->history;
-		saved->data = ft_strdup(term->buffer);
+		saved->content = ft_strdup(term->buffer);
 		if (term->history)
 			term->history->prev = saved;
 		term->history = saved;
@@ -76,7 +76,7 @@ void			init_history(t_read *term)
 {
 	char		*line;
 	int			fd;
-	uint8_t		i;
+	int			i;
 
 	i = -1;
 	line = NULL;
@@ -84,7 +84,7 @@ void			init_history(t_read *term)
 		return ;
 	while (ft_getnextline(fd, &line) > 0)
 	{
-		while (++i < ft_strlen(line))
+		while (++i < (int)ft_strlen(line))
 			term->buffer[i] = line[i];
 		save_history(term);
 		free(line);

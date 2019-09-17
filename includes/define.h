@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/11 11:20:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/17 12:54:52 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@
 # define S_GRP_OTH_R		(S_IRGRP | S_IROTH)
 # define MODE_WRITE		(O_CREAT | O_WRONLY | O_TRUNC)
 # define BUFF_SIZE		4096
-# define READ_SIZE		8
+# define READ_SIZE		4
 # define HISTORY_FILE	"./.history"
 # define QUOTE			'\''
 # define DQUOTE			'\"'
