@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/09 18:53:55 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/17 14:11:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void			save_history(t_read *term);
 void			free_history(t_lst *history);
 void			research_mode(t_read **line);
 void			write_history(t_read *line);
+void			check_expansions(t_read *line);
 
 /*
 **		Quotes and Subprompt/Multiline

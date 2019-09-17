@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/17 13:30:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/17 13:59:18 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ char		*init_prompt(t_read *term)
 	if (check_quotes(term) == FALSE)
 	{
 		remove_newline(term);
+		check_expansions(term);
 		save_history(term);
 	}
 	reset_config(term);

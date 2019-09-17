@@ -109,6 +109,7 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)sub_prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)utils.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)keys_comb.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)xfunctions.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)history_expansions.c
 
 SRC		+=	$(S_PATH)$(CORE)42sh.c
 SRC		+=	$(S_PATH)$(CORE)load_prompt.c
