@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/17 16:35:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/18 11:33:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ void		last_cmd_back(t_read *line, int i)
 	j = -1;
 	len = line->width - line->prompt_len - 2;
 	tmp = ft_strsub(line->buffer, i + 2, len);
-	while (((char*)line->history->content)[++j])
+	while (i < BUFF_SIZE && ((char*)line->history->content)[++j])
 	{
 		line->buffer[i] = ((char *)line->history->content)[j];
 		i++;
 	}
+	if (i >= BUFF_SIZE)
+		return ;
 	j = -1;
 	while (tmp[++j])
 		line->buffer[i++] = tmp[j];
