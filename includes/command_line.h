@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/17 14:11:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/18 16:50:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct		s_read
 	int				new_line;
 	int				found;
 	int				sub_prompt;
-	char			buffer[BUFF_SIZE];
+	char			*buffer;
 	char			**env;
 	char			**cmd;
 	t_lst			*history;
@@ -55,7 +55,7 @@ t_read			*get_size(t_read *data);
 **		Prompt/Subprompt
 */
 
-char			*init_prompt(t_read *term);
+void			init_prompt(t_read *term);
 t_read			*display_prompt(t_read *term);
 void			goto_prompt(t_read *line);
 void			display_subprompt(t_read *term, char quote);

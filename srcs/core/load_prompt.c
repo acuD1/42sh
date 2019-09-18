@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/11 11:22:34 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/18 16:55:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ void			load_prompt(t_core *shell)
 	term.new_line = 0;
 
 	init_termcaps();
+	term.buffer = ft_memalloc(BUFF_SIZE);
 	init_history(&term);
 	/* Loop for prompt */
 	while (status)
 	{
 		/* Base output for prompt */
-		line = ft_strdup(init_prompt(&term));
+		init_prompt(&term);
 
 		/*
 		**	[NEED REWORK] A lot of stuff happening here :
@@ -55,9 +56,9 @@ void			load_prompt(t_core *shell)
 		**	- etc ...
 		*/
 
-		if (get_tokens(shell, line) != SUCCESS) /* ft_strsplit with for now tab and space charset */
+		if (get_tokens(shell, term.buffer) != SUCCESS) /* ft_strsplit with for now tab and space charset */
 		{
-			free_prompt(shell, line);
+	//		free_prompt(shell, term.buffer);
 			continue ;
 		}
 
@@ -66,7 +67,7 @@ void			load_prompt(t_core *shell)
 
 		/* Same here, mainly binary executions, need rework */
 		exec_process(shell, shell->env);
-		free_prompt(shell, line);
+//		free_prompt(shell, term.buffer);
 	}
-	//ft_strdel(&line);
+	ft_strdel(&term.buffer);
 }

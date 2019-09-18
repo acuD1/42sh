@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/17 13:59:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/18 16:58:01 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,11 @@ t_read		*display_prompt(t_read *term)
 **	  The current buffer is saved in a list history
 */
 
-char		*init_prompt(t_read *term)
+void		init_prompt(t_read *term)
 {
 	char	buff[READ_SIZE + 1];
 
 	ft_bzero(buff, READ_SIZE + 1);
-	ft_bzero(term->buffer, BUFF_SIZE);
 	init_config();
 	display_prompt(term);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
@@ -92,6 +91,6 @@ char		*init_prompt(t_read *term)
 		check_expansions(term);
 		save_history(term);
 	}
+	ft_bzero(term->buffer, ft_strlen(term->buffer));
 	reset_config(term);
-	return (term->buffer);
 }

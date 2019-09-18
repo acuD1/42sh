@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/18 11:29:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/18 16:31:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void		insert_in_buffer(char *buff, t_read *input)
 
 	buff_index = input->x_index - input->prompt_len;
 	if (input->x_index >= BUFF_SIZE)
-		return ;
+		input->buffer = realloc(input->buffer, ft_strlen(input->buffer) + 1);
 	if (ft_strlen(buff) > 1)
 	{
 		insert_str_in_buffer(buff, input);
