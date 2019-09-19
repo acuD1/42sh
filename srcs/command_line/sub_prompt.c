@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/03 12:35:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:41:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ void		goto_subprompt(t_read *line)
 	new_line = newline_count(line->buffer);
 	while (new_line--)
 	{
-		xtputs(xtgetstr("cr", NULL), 1, my_outc);
-		xtputs(xtgetstr("ce", NULL), 1, my_outc);
-		xtputs(xtgetstr("up", NULL), 1, my_outc);
+		xtputs(line->termcaps->cr, 1, my_outc);
+		xtputs(line->termcaps->clr_end, 1, my_outc);
+		xtputs(line->termcaps->up, 1, my_outc);
 	}
-	xtputs(xtgetstr("cr", NULL), 1, my_outc);
-	xtputs(xtgetstr("ce", NULL), 1, my_outc);
+	xtputs(line->termcaps->cr, 1, my_outc);
+	xtputs(line->termcaps->clr_end, 1, my_outc);
 	free(line->prompt);
 	display_prompt(line);
 	/* while (sb--) */

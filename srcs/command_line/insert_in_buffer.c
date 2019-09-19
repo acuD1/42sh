@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/18 16:31:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:37:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	}
 	input->buffer[buff_index] = *buff;
 	move_right(buff, input);
-	xtputs(xtgetstr("sc", NULL), 1, my_outc);
+	xtputs(input->termcaps->save_cr, 1, my_outc);
 	j = input->x;
 	x = input->x_index;
 	w = input->width;
@@ -71,7 +71,7 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	input->x_index = x;
 	input->width = w + 1;
 	input->y = y;
-	xtputs(xtgetstr("rc", NULL), 1, my_outc);
+	xtputs(input->termcaps->reset_cr, 1, my_outc);
 }
 
 /*

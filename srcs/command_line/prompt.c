@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/18 16:58:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:40:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void		goto_prompt(t_read *line)
 	/* } */
 	while (line->y-- > 0)
 	{
-		xtputs(xtgetstr("cr", NULL), 1, my_outc);
-		xtputs(xtgetstr("ce", NULL), 1, my_outc);
-		xtputs(xtgetstr("up", NULL), 1, my_outc);
+		xtputs(line->termcaps->cr, 1, my_outc);
+		xtputs(line->termcaps->clr_end, 1, my_outc);
+		xtputs(line->termcaps->up, 1, my_outc);
 	}
-	xtputs(xtgetstr("cr", NULL), 1, my_outc);
-	xtputs(xtgetstr("ce", NULL), 1, my_outc);
+	xtputs(line->termcaps->cr, 1, my_outc);
+	xtputs(line->termcaps->clr_end, 1, my_outc);
 	free(line->prompt);
 	display_prompt(line);
 }
@@ -74,6 +74,7 @@ void		init_prompt(t_read *term)
 
 	ft_bzero(buff, READ_SIZE + 1);
 	init_config();
+	init_termcaps(term);
 	display_prompt(term);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{

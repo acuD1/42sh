@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/17 12:45:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:42:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ char		*walking_history(char buff_tmp[BUFF_SIZE], t_read *line, t_lst **history)
 	{
 		if (ft_strstr((*history)->content, buff_tmp))
 		{
-			xtputs(xtgetstr("cr", NULL), 1, my_outc);
-			xtputs(xtgetstr("ce", NULL), 1, my_outc);
+			xtputs(line->termcaps->cr, 1, my_outc);
+			xtputs(line->termcaps->clr_end, 1, my_outc);
 			dprintf(STDIN_FILENO, "(reverse-i-search)`%s':", buff_tmp);
 			dprintf(STDIN_FILENO, " %s",(*history)->content);
 			ft_strcpy(line->buffer, (*history)->content);
@@ -55,12 +55,12 @@ void		search_in_history(t_read *line)
 void		research_mode(t_read **line)
 {
 	goto_prompt(*line);
-	xtputs(xtgetstr("cr", NULL), 1, my_outc);
-	xtputs(xtgetstr("ce", NULL), 1, my_outc);
+	xtputs((*line)->termcaps->cr, 1, my_outc);
+	xtputs((*line)->termcaps->clr_end, 1, my_outc);
 	dprintf(STDIN_FILENO, "(reverse-i-search)`':");
 	search_in_history(*line);
-	xtputs(xtgetstr("cr", NULL), 1, my_outc);
-	xtputs(xtgetstr("ce", NULL), 1, my_outc);
+	xtputs((*line)->termcaps->cr, 1, my_outc);
+	xtputs((*line)->termcaps->clr_end, 1, my_outc);
 	display_prompt(*line);
 	dprintf(STDIN_FILENO, "%s", (*line)->buffer);
 	(*line)->x += ft_strlen((*line)->buffer);

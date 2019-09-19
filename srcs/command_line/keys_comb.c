@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/10 14:46:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:38:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void		clr_screen(t_read *line)
 	int		i;
 
 	i = line->x;
-	xtputs(xtgetstr("cl", NULL), 1, my_outc);
+	xtputs(line->termcaps->clear, 1, my_outc);
 	dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, line->prompt + 1, C_X);
 	ft_putstr(line->buffer);
-	xtputs(xtgetstr("ho", NULL), 1, my_outc);
+	xtputs(line->termcaps->ho, 1, my_outc);
 	while (--i)
-		xtputs(xtgetstr("nd", NULL), 1, my_outc);
+		xtputs(line->termcaps->right, 1, my_outc);
 }
 
 /*
@@ -36,11 +36,11 @@ void		move_col_up(t_read *line)
 {
 	int		width;
 
-	xtputs(xtgetstr("up", NULL), 1, my_outc);
+	xtputs(line->termcaps->up, 1, my_outc);
 	if (line->x < line->prompt_len && line->y == 1)
 	{
 		while (++(line->x) < line->prompt_len)
-			xtputs(xtgetstr("nd", NULL), 1, my_outc);
+			xtputs(line->termcaps->right, 1, my_outc);
 		line->x_index = line->x;
 	}
 	else
@@ -73,7 +73,7 @@ void		move_col_down(t_read *line)
 	nb_ofline = newline_count(line->buffer);
 	if (line->y < nb_ofline)
 	{
-		xtputs(xtgetstr("do", NULL), 1, my_outc);
+		xtputs(line->termcaps->down, 1, my_outc);
 		x2 = line->x_index + 1;
 		line->x_index = line->x_index * 2 + width;
 		if (line->x_index > line->width)
@@ -83,7 +83,7 @@ void		move_col_down(t_read *line)
 		}
 		else
 			while (--x)
-				xtputs(xtgetstr("nd", NULL), 1, my_outc);
+				xtputs(line->termcaps->right, 1, my_outc);
 		line->y++;
 	}
 }

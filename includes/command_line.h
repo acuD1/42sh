@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/18 16:50:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:28:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,11 @@
 # include <termcap.h>
 # include <dirent.h>
 
-typedef struct		s_read
-{
-	char			*prompt;
-	int				prompt_len;
-	int				x_index;
-	int				x;
-	int				y;
-	int				width;
-	int				ws_col;
-	int				ws_li;
-	int				ac;
-	int				new_line;
-	int				found;
-	int				sub_prompt;
-	char			*buffer;
-	char			**env;
-	char			**cmd;
-	t_lst			*history;
-	t_lst			*history_index;
-}					t_read;
-
 /*
 **		Configuration
 */
 
-void			init_termcaps(void);
+void			init_termcaps(t_read *term);
 uint8_t			init_config(void);
 uint8_t			reset_config(t_read *input);
 t_read			*get_size(t_read *data);
