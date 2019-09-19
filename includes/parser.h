@@ -73,9 +73,12 @@ typedef enum	parser_state
     // P_WHILE,
 }				e_parser_state;
 
-struct s_parser
+struct 				s_parser
 {
-	t_parsing pars[NB_PARSER_STATE];
+	t_parsing 		pars[NB_PARSER_STATE];
+	t_lst 			*tok;
+	e_parser_state	state;
+
 };
 
 void parser(t_core *shell, t_lexer *lexer);

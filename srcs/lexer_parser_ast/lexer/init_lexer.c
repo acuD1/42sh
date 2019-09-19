@@ -36,7 +36,7 @@ t_lexer			*init_lexer(t_core *shell, char *line)
 		return (NULL);
 	if (!(new = (t_lexer*)malloc(sizeof(t_lexer))))
 		return (NULL);
-	new->buff = line;
+	new->buff = line; //FREE LINE et dup le buff
 	new->status = START;
 	new->ntok = 0;
 	new->buf_pos = 0;
