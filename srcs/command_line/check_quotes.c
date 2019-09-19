@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:06:36 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/04 12:36:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 16:15:43 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ uint8_t		quotes_is_matching(t_read *line)
 
 uint8_t		check_quotes(t_read *line)
 {
-	int	i;
+	int		i;
 	char	quote;
 
 	i = -1;
+	if (quotes_is_matching(line) == TRUE)
+		return (FALSE);
 	if (ft_strchr(line->buffer, QUOTE)
 			|| ft_strchr(line->buffer, DQUOTE))
 	{

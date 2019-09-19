@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 15:42:22 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 16:05:19 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,19 @@
 
 /*
 **	  Termcaps capabilities:
-**	  - `cr' => to move the cursor to the beginning of the line it is on
-**	  - `ce' => to clear from the cursor to the end of the current line
 **	  - `up' => to move the cursor vertically up one line
+**	  - `cr' => to move the cursor to the beginning of the line it is on
+**	  - `clr_lines' => to clear line from the cursor and following lines
 */
 
 void		goto_prompt(t_read *line)
 {
-	/* if (line->sub_prompt != FALSE) */
-	/* { */
-	/* 	goto_subprompt(line); */
-	/* 	return ; */
-	/* } */
+	if (line->sub_prompt != FALSE)
+	{
+		while (line->sub_prompt-- >= 0)
+			xtputs(line->termcaps->up, 1, my_outc);
+		return ;
+	}
 	while (line->y-- > 0)
 		xtputs(line->termcaps->up, 1, my_outc);
 	xtputs(line->termcaps->cr, 1, my_outc);
