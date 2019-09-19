@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/19 13:22:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 16:47:18 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void			load_prompt(t_core *shell)
 	{
 		/* Base output for prompt */
 		init_prompt(&term);
-
+		line = ft_strdup(term.buffer);
 		/*
 		**	[NEED REWORK] A lot of stuff happening here :
 		**	- tokens parser (for now)

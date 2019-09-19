@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 16:42:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 17:02:57 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void		init_prompt(t_read *term)
 	char	buff[READ_SIZE + 1];
 
 	ft_bzero(buff, READ_SIZE + 1);
+	ft_bzero(term->buffer, BUFF_SIZE);
 	init_config();
 	init_termcaps(term);
 	display_prompt(term);
@@ -89,6 +90,5 @@ void		init_prompt(t_read *term)
 		check_expansions(term);
 		save_history(term);
 	}
-	ft_bzero(term->buffer, ft_strlen(term->buffer));
 	reset_config(term);
 }
