@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 13:37:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:50:22 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 void		insert_inline_char(char *buff, t_read *input, int buff_index)
 {
 	int 	j;
-	int	x;
-	int	w;
-	int	y;
+	int		x;
+	int		w;
+	int		y;
 
 	j = ft_strlen(input->buffer) + 1;
 	while (--j > buff_index)

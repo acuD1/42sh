@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/19 13:44:40 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 15:33:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct		s_termcaps
 	char 			*del;
 	char			*clear;
 	char			*clr_end;
+	char			*clr_lines;
 	char			*right;
 	char			*left;
 	char			*down;
