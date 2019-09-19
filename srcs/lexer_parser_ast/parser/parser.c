@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_tokens.c                                       :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/21 13:05:26 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 15:05:10 by arsciand         ###   ########.fr       */
+/*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
+/*   Updated: 2019/09/19 11:47:17 by guvillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "sh42.h"
+#include "sh42.h"
 
-// int8_t		get_tokens(t_core *shell, char *line)
-// {
-// 	shell->tokens = ft_strsplit(line, " \t");
-// 	if (ft_tablen(shell->tokens) == 0)
-// 		return (FAILURE);
-// 	return (SUCCESS);
-// }
+void parser(t_core *shell, t_lexer *lexer)
+{
+	t_parser *parser;
+
+	parser = NULL;
+	// ft_init_parser(parser)
+	(void)shell;
+	(void)lexer;
+}

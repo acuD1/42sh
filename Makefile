@@ -74,6 +74,8 @@ DB			=	db/
 BUILTINS	=	builtins/
 COMMANDLINE	=	command_line/
 EXEC		=	exec/
+LEXER		= 	lexer_parser_ast/lexer/
+PARSER		= 	lexer_parser_ast/parser/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -84,6 +86,8 @@ PATHS		+=	$(O_PATH)$(COMMANDLINE)
 PATHS		+=	$(O_PATH)$(CORE)
 PATHS		+=	$(O_PATH)$(DB)
 PATHS		+=	$(O_PATH)$(EXEC)
+PATHS		+=	$(O_PATH)$(LEXER)
+PATHS		+=	$(O_PATH)$(PARSER)
 
 # Files
 
@@ -127,6 +131,16 @@ SRC		+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC		+=	$(S_PATH)$(EXEC)get_bin.c
 SRC		+=	$(S_PATH)$(EXEC)set_envp.c
 
+SRC		+=	$(S_PATH)$(LEXER)assign_token.c
+SRC		+=	$(S_PATH)$(LEXER)init_lexer.c
+SRC		+=	$(S_PATH)$(LEXER)lexer.c
+SRC		+=	$(S_PATH)$(LEXER)lexer_memory.c
+SRC		+=	$(S_PATH)$(LEXER)name_io_nwln_token.c
+SRC		+=	$(S_PATH)$(LEXER)operator_token.c
+SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
+
+SRC		+=	$(S_PATH)$(PARSER)parser.c
+
 SRC		+=	$(S_PATH)dev.c
 # Headers
 
@@ -134,6 +148,7 @@ HDR			+=	sh42.h
 HDR			+=	define.h
 HDR			+=	struct.h
 HDR			+=	builtins.h
+HDR			+=	lexer.h
 HDR			+=	command_line.h
 HDR			+=	shared_libft.h
 ###############################################################################

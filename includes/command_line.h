@@ -40,6 +40,7 @@ typedef struct		s_read
 	char			**cmd;
 	t_lst			*history;
 	t_lst			*history_index;
+	char			*line;
 }					t_read;
 
 /*

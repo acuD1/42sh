@@ -54,9 +54,10 @@
 **	Exec handler
 */
 
-# define BIN_ERROR		0x001
+# define BITOK_ERROR	0x001
 # define PATH_ERROR		0x002
 # define FORK_ERROR		0x004
+# define BIN_ERROR		0x006
 # define PERM_ERROR		0x008
 # define EXEC_ERROR		0x010
 
@@ -88,4 +89,15 @@
 # define MOVE_DO			66
 # define BS_KEY				127
 
+# define NB_OF_OPE 16
+# define CHAR_INTERRUPT 			" \t<>|;&\n"
+# define OPERATORS 					"&|;><-\n" 
+
+/*
+** LEXER 
+*/
+
+
+# define NB_LEXER_STATE 7
+# define NB_PARSER_STATE 36
 #endif

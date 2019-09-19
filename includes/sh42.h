@@ -17,12 +17,14 @@
 # include "define.h"
 # include "struct.h"
 # include "command_line.h"
-
+# include "lexer.h"
+# include "parser.h"
 # include <sys/wait.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <stdint.h>
+# include <unistd.h>
 # include <stdio.h> // /!\ For debug only !
 
 /*
@@ -31,7 +33,7 @@
 
 void		credit(t_core *shell);
 
-//void		init_prompt(void);
+char		*init_prompt(t_read *term);
 
 void		print_opt(t_core *shell);
 void		load_prompt(t_core *shell);
@@ -63,5 +65,12 @@ char		**set_envp(t_core *shell);
 
 void		print_tokens(t_core *shell);
 void		print_env(t_core *shell);
+
+
+/*
+** Lexer
+*/
+
+void	lexer(t_core *shell, char *line);
 
 #endif

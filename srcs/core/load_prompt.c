@@ -23,11 +23,15 @@
 **	TO DO:
 */
 
+
 void			load_prompt(t_core *shell)
 {
 	char		*line;
 	int8_t		status;
 	t_read		term;
+
+	// t_parser *parser;
+	// t_ast	*ast;
 
 	line = NULL;
 	status = 1;
@@ -47,6 +51,7 @@ void			load_prompt(t_core *shell)
 		/* Base output for prompt */
 		line = ft_strdup(init_prompt(&term));
 
+		/* GNL */
 		/*
 		**	[NEED REWORK] A lot of stuff happening here :
 		**	- tokens parser (for now)
@@ -54,18 +59,13 @@ void			load_prompt(t_core *shell)
 		**	- Builtins ? (Maybe not accurate for now with futurs implementations)
 		**	- etc ...
 		*/
-
-		if (get_tokens(shell, line) != SUCCESS) /* ft_strsplit with for now tab and space charset */
-		{
-			free_prompt(shell, line);
-			continue ;
-		}
-
+		lexer(shell, line);
+		// ast = parser(shell, parser);˚˚˚∫
 		/* DEBUG */
-		//print_tokens(shell);
+		// print_tokens(shell);
 
 		/* Same here, mainly binary executions, need rework */
-		exec_process(shell, shell->env);
+		// exec_process(shell, shell->env);
 		free_prompt(shell, line);
 	}
 	//ft_strdel(&line);
