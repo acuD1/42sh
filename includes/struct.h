@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/19 15:33:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/23 16:43:23 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct		s_read
 	char			*buffer;
 	char			**env;
 	char			**cmd;
+	t_core			*shell;
 	t_termcaps		*termcaps;
 	t_lst			*history;
 	t_lst			*history_index;

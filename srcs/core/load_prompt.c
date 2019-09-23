@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/19 16:47:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/23 17:02:01 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void			load_prompt(t_core *shell)
 	term.history_index = NULL;
 	term.env = set_envp(shell);
 	term.new_line = 0;
-
 	term.buffer = ft_memalloc(BUFF_SIZE);
 	init_history(&term);
 	/* Loop for prompt */

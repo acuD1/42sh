@@ -6,12 +6,12 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 16:47:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/23 17:43:14 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CMDLINE_H
-# define CMDLINE_H
+#ifndef COMMAND_LINE_H
+# define COMMAND_LINE_H
 
 # include "sh42.h"
 # include "shared_libft.h"
@@ -79,6 +79,10 @@ void			free_history(t_lst *history);
 void			research_mode(t_read **line);
 void			write_history(t_read *line);
 void			check_expansions(t_read *line);
+void			call_number(t_read *line, int i);
+void			last_cmd_back(t_read *line, int i);
+void			callback_number(t_read *line, int i);
+void			call_word(t_read *line, int i);
 
 /*
 **		Quotes and Subprompt/Multiline
