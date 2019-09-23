@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:32:46 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 14:52:45 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/09/23 22:18:42 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,24 @@ char	**set_envp(t_core *shell)
 	size_t	i;
 
 	i = 0;
-	/*
-	** NOT IMPLEMENTED YET
-	if (shell->default_env == TRUE)
-		set_default_env(shell, env);
-	else
-	{
-		if (shell->env_mode == TRUE)
-			env = shell->tmp_env;
-		else
-			env = shell->env;
-	}*/
 	env = shell->env;
-	if (!(envp = ft_memalloc(sizeof(envp) * ((ft_lstlen(env)) + 1))))
+	while (env != NULL)
+	{
+		if (((t_db*)env->content)->type & ENV_VAR)
+			i++;
+		env = env->next;
+	}
+	if (!(envp = ft_memalloc(sizeof(envp) * (i + 1))))
 		return (NULL);
+	env = shell->env;
+	i = 0;
 	while (env)
 	{
+		if (((t_db*)env->content)->type & ENV_VAR)
+		{
 		envp[i] = ft_strjoinf(ft_strjoin(((t_db*)(env->content))->key, "="),
 						((t_db*)(env->content))->value, 1);
+		}
 		env = env->next;
 		i++;
 	}

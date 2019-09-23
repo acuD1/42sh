@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/15 00:26:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/09/23 19:13:41 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		free_prompt(t_core *shell, char *line);
 void		init_shell(t_core *shell);
 int8_t		get_opt(int ac, char **av, t_core *shell);
 int8_t		set_env(t_core *shell, char **argv, char **environ);
-t_db		*fetch_db(t_db *db, const char *s);
+t_db		*fetch_db(t_db *db, const char *s, const u_int8_t var_type);
 int8_t		get_tokens(t_core *shell, char *line);
 
 /*
@@ -68,5 +68,21 @@ void		free_hash_map(t_hash *hash);
 void		print_tokens(t_core *shell);
 void		print_env(t_core *shell);
 void		print_hash_map(t_hash *hash);
+
+/*
+**	===========================================================================
+**	SHELL VARIABLES TOOLS......................................................
+**	===========================================================================
+*/
+
+int8_t	increment_shlvl(t_core *core);
+int8_t	update_pwd(t_core *core);
+int8_t	update_(t_core *core);
+int8_t	update_ifs(t_core *core);
+int8_t	update_termsize(t_core *core);
+int8_t	create_term(t_core *core);
+t_db	*modify_db(t_db	*db, char *new_value, u_int8_t new_type);
+t_db	*get_or_create_db(t_core *core, char *key, u_int8_t var_type);
+t_db	*search_db(t_lst *env, char *key);
 
 #endif
