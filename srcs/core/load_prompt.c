@@ -19,6 +19,60 @@
 **	wiches are globals variables, such as tokens, env list etc...
 */
 
+static int	match_brackets(char a, char b)
+{
+	return ((a == '[' && b == ']') || (a == '{' && b == '}') \
+				|| (a == '(' && b == ')'));
+}
+
+static int	check_brackets(char *str)
+{
+	int		i;
+	int		top;
+	int		stack[4096];
+
+	i = 0;
+	top = 0;
+	while (str[i])
+	{
+		if (str[i] == '(' || str[i] == '{' || str[i] == '[')
+			stack[++top] = str[i];
+		if (str[i] == ')' || str[i] == '}' || str[i] == ']')
+			if (!match_brackets(stack[top--], str[i]))
+				return (0);
+		i += 1;
+	}
+	return (!top);
+}
+
+static int	match_quotes(char a, char b)
+{
+	return ((a == '\"' && b == '\"') || (a == '\'' && b == '\'') \
+				|| (a == '`' && b == '`'));
+}
+
+static int	check_quote(char *str)
+{
+	int		i;
+	int		top;
+	int		stack[4096];
+
+	i = 0;
+	top = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"' || str[i] == '\'' || str[i] == '`')
+			stack[++top] = str[i];
+		if (str[i] == '\"' || str[i] == '\'' || str[i] == '`')
+			if (!match_quotes(stack[top--], str[i]))
+				return (0);
+		i += 1;
+	}
+	return (!top);
+}
+
+
+
 /*
 **	TO DO:
 */
@@ -59,7 +113,10 @@ void			load_prompt(t_core *shell)
 		**	- Builtins ? (Maybe not accurate for now with futurs implementations)
 		**	- etc ...
 		*/
-		lexer(shell, line);
+		if (check_brackets(line) || check_quote(line))
+			lexer(shell, line);
+		// else
+			// error_quotes_brackets(line);
 		// ast = parser(shell, parser);˚˚˚∫
 		/* DEBUG */
 		// print_tokens(shell);

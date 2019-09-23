@@ -68,9 +68,9 @@ void		end_lexer(t_lexer *lexer)
 void		lexer(t_core *shell, char *line)
 {
 	t_lexer	*lexer;
-	t_lexer **head;
+	// t_lst **head;
 
-	head = &lexer;
+	// head = NULL;
 	if (line == NULL)
 		return ;
 	while (*line == '\t' || *line == ' ')
@@ -78,8 +78,10 @@ void		lexer(t_core *shell, char *line)
 	if (*line == '\0')
 		return ;
 	lexer = init_lexer(shell, line);
+	// head = &lexer->tok;
 	while (lexer->status != END)
 		lexer->lex[lexer->status](lexer);
-	// ft_printtoklist(lexer);
+	// lexer->tok = *head;
+	ft_printtoklist(lexer);
 	parser(shell, lexer);
 }

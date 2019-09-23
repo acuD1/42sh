@@ -14,7 +14,7 @@
 
 void ft_init_parser(t_parser *parser)
 {
-	
+	(void)parser;	
 
 }
 
