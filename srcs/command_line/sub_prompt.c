@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/03 12:35:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 16:01:58 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,6 @@ uint8_t		newline_count(char *buffer)
 			new_line++;
 	}
 	return (new_line);
-}
-
-void		goto_subprompt(t_read *line)
-{
-	int	new_line;
-//	int	sb;
-
-//	sb = line->sub_prompt;
-	new_line = newline_count(line->buffer);
-	while (new_line--)
-	{
-		xtputs(xtgetstr("cr", NULL), 1, my_outc);
-		xtputs(xtgetstr("ce", NULL), 1, my_outc);
-		xtputs(xtgetstr("up", NULL), 1, my_outc);
-	}
-	xtputs(xtgetstr("cr", NULL), 1, my_outc);
-	xtputs(xtgetstr("ce", NULL), 1, my_outc);
-	free(line->prompt);
-	display_prompt(line);
-	/* while (sb--) */
-	/* { */
-	/* 	ft_putchar('\n'); */
-	/* 	display_subprompt(line, QUOTE); */
-	/* } */
 }
 
 void		insert_newline_in_buff(t_read *line)
@@ -110,7 +86,7 @@ void		load_subprompt(char quote, t_read *line)
 			else
 			{
 				line->sub_prompt++;
-				insert_newline_in_buff(line);
+				// insert_newline_in_buff(line);
 				break ;
 			}
 		}

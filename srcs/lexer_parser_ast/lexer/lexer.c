@@ -36,7 +36,7 @@ void		start_lexer(t_lexer *lexer)
 		lexer->status = OPERATOR;
 	else if (ft_isdigit(lexer->buff[lexer->buf_pos]))
 		lexer->status = IO_NUMBER;
-	else if (ft_strchr(&lexer->buff[lexer->buf_pos], '\n'))
+	else if (!ft_strcmp(&lexer->buff[lexer->buf_pos], "\n"))
 		lexer->status = NEWLINE;
 	else if (ft_strchr(&lexer->buff[lexer->buf_pos], '='))
 		lexer->status = ASSIGNEMENT_WORD;
@@ -50,15 +50,7 @@ void		start_lexer(t_lexer *lexer)
 
 void		end_lexer(t_lexer *lexer)
 {
-	printf("USELESSSSS %u\n", lexer->status);
-	// fct de liaison vers le parser ?
-	// if (lexer->buff == '\0')
-	// 	lexer->status = END;
-	// else
-	// {
-	// 	lexer->status = START;
-	// 	lexer->buf_pos++;
-	// }
+	lexer->status = END;
 }
 
 /*
@@ -82,6 +74,6 @@ void		lexer(t_core *shell, char *line)
 	while (lexer->status != END)
 		lexer->lex[lexer->status](lexer);
 	// lexer->tok = *head;
-	ft_printtoklist(lexer);
+	// ft_printtoklist(lexer);
 	parser(shell, lexer);
 }

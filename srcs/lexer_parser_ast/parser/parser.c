@@ -12,22 +12,24 @@
 
 #include "sh42.h"
 
-void ft_init_parser(t_parser *parser)
-{
-	(void)parser;	
+// void ft_init_parser(t_parser *parser)
+// {
+// 	(void)parser;
 
-}
+// }
 
 void parser(t_core *shell, t_lexer *lexer)
 {
-	t_parser *parser;
+	t_parser	*parser;
 
 	parser = NULL;
 	if (!lexer || !shell)
 		return;
-	ft_init_parser(parser);
-	(void)shell;
-	(void)lexer;
+	// ft_init_parser(parser);
+	// (void)shell;
+	while (lexer->tok)
+	{
+		ft_printf("%s\n", ((t_token*)lexer->tok->content)->data);
+		lexer->tok = lexer->tok->next;
+	}
 }
-
-

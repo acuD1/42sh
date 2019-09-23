@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/17 17:24:41 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:50:22 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 void		insert_inline_char(char *buff, t_read *input, int buff_index)
 {
 	int 	j;
-	int	x;
-	int	w;
-	int	y;
+	int		x;
+	int		w;
+	int		y;
 
 	j = ft_strlen(input->buffer) + 1;
 	while (--j > buff_index)
@@ -60,7 +60,7 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	}
 	input->buffer[buff_index] = *buff;
 	move_right(buff, input);
-	xtputs(xtgetstr("sc", NULL), 1, my_outc);
+	xtputs(input->termcaps->save_cr, 1, my_outc);
 	j = input->x;
 	x = input->x_index;
 	w = input->width;
@@ -71,7 +71,7 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	input->x_index = x;
 	input->width = w + 1;
 	input->y = y;
-	xtputs(xtgetstr("rc", NULL), 1, my_outc);
+	xtputs(input->termcaps->reset_cr, 1, my_outc);
 }
 
 /*
@@ -106,8 +106,8 @@ void		insert_in_buffer(char *buff, t_read *input)
 	int		buff_index;
 
 	buff_index = input->x_index - input->prompt_len;
-	if (input->x >= BUFF_SIZE)
-		return ;
+	if (input->x_index >= BUFF_SIZE)
+		input->buffer = realloc(input->buffer, ft_strlen(input->buffer) + 1);
 	if (ft_strlen(buff) > 1)
 	{
 		insert_str_in_buffer(buff, input);

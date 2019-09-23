@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/17 12:46:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/19 13:39:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,15 @@ void		move_right(char *buff, t_read *input)
 	buff_index = input->x_index - input->prompt_len;
 	if (input->x < width)
 	{
-		xtputs(xtgetstr("nd", NULL), 1, my_outc);
+		xtputs(input->termcaps->right, 1, my_outc);
 		input->x_index++;
 		input->x++;
 	}
 	else if (input->x == input->ws_col || *buff == NEW_LINE
 			|| input->buffer[buff_index] == NEW_LINE)
 	{
-		xtputs(xtgetstr("cr", NULL), 1, my_outc);
-		xtputs(xtgetstr("do", NULL), 1, my_outc);
+		xtputs(input->termcaps->cr, 1, my_outc);
+		xtputs(input->termcaps->down, 1, my_outc);
 		input->x_index++;
 		input->x = 0;
 		input->y++;
@@ -113,7 +113,7 @@ void		move_left(char *buff, t_read *input)
 	if ((input->x > input->prompt_len && input->y == 0)
 		|| (input->x > 0 && input->y > 0))
 	{
-		xtputs(xtgetstr("le", NULL), 1, my_outc);
+		xtputs(input->termcaps->left, 1, my_outc);
 		input->x_index--;
 		input->x--;
 	}
@@ -123,8 +123,8 @@ void		move_left(char *buff, t_read *input)
 		width = get_width_last_line(input);
 		(input->x == 0) ? input->x = width : 0;
 		while (width--)
-			xtputs(xtgetstr("nd", NULL), 1, my_outc);
-		xtputs(xtgetstr("up", NULL), 1, my_outc);
+			xtputs(input->termcaps->right, 1, my_outc);
+		xtputs(input->termcaps->up, 1, my_outc);
 		input->x_index--;
 		input->y--;
 	}
