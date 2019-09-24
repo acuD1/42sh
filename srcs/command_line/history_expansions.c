@@ -6,11 +6,15 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/23 17:48:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/24 13:47:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+/*
+**		To insert in buffer the content found from the hst lst
+*/
 
 int			insert_content(int j, int i, t_read *line, char *content)
 {
@@ -36,6 +40,10 @@ int			insert_content(int j, int i, t_read *line, char *content)
 	return (len - 1);
 }
 
+/*
+**		"!word" expansion search the word to find from the end of hst lst
+*/
+
 void		call_word(t_read *line, int i)
 {
 	char	word[BUFF_SIZE];
@@ -46,23 +54,27 @@ void		call_word(t_read *line, int i)
 	w = line->history;
 	j = -1;
 	n = i + 1;
-	while (!ft_isblank(line->buffer[n]))
+	while (n < (int)ft_strlen(line->buffer) && !ft_isblank(line->buffer[n]))
 	{
 		word[++j] = line->buffer[n];
-	printf("%c\n", word[j]);
 		n++;
 	}
 	if (!w || n > (int)ft_lstlen(w) || n > 500)
 		return ;
-	while (w)
+	while (w->next)
 	{
-		if (isstart((char *)w->content, word))
+		if (!ft_strncmp((char *)w->content, word, ft_strlen(word)))
 			break ;
-		if (w->next)
-			w = w->next;
+		w = w->next;
 	}
-	insert_content(j, i, line, (char *)w->content);
+	if (!w->next)
+		return ;
+	insert_content(j + 2, i, line, (char *)w->content);
 }
+
+/*
+**		"!-number" expansion search from the end of hst lst
+*/
 
 void		callback_number(t_read *line, int i)
 {
@@ -79,9 +91,9 @@ void		callback_number(t_read *line, int i)
 		nb[++j] = line->buffer[n];
 		n++;
 	}
-	n = atoi(nb);
-	if (!w || n > (int)ft_lstlen(w) || n > 500 || n == -1)
-		return ;
+	n = ft_atoi(nb);
+	if (!w || n > (int)ft_lstlen(w) || n > 500 || n < 0)
+		return ; // call error fct
 	while (w && n != 0 && --n)
 	{
 		if (w->next)
@@ -90,6 +102,10 @@ void		callback_number(t_read *line, int i)
 	insert_content(j + 3, i, line, (char *)w->content);
 	i = i + j + 1;
 }
+
+/*
+**		"!number" expansion search from the beggining of hst lst
+*/
 
 void		call_number(t_read *line, int i)
 {
@@ -108,7 +124,7 @@ void		call_number(t_read *line, int i)
 	}
 	n = ft_atoi(nb);
 	if (!w || n > (int)ft_lstlen(w) || n > 500 || n < 0)
-		return ;
+		return ; //call error fct
 	while (w->next)
 		w = w->next;
 	while (w && n != 0 && --n)
@@ -119,6 +135,10 @@ void		call_number(t_read *line, int i)
 	insert_content(j + 2, i, line, (char *)w->content);
 	i = i + j + 1;
 }
+
+/*
+**		"!!" expansion search the last occurence of hst list
+*/
 
 void		last_cmd_back(t_read *line, int i)
 {
