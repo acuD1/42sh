@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/24 13:26:07 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/24 13:48:07 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ void		find_expansions(t_read *line, int *i)
 	if (ft_isdigit(line->buffer[*i + 1]))
 		call_number(line, *i);
 	if (ft_isalpha(line->buffer[*i + 1]))
-	{
 		call_word(line, *i);
-	}
 	if (line->buffer[*i + 1] == '-' && ft_isdigit(line->buffer[*i + 2]))
 		callback_number(line, *i);
 }
