@@ -100,6 +100,8 @@ SRC		+=	$(S_PATH)$(DB)get_tokens.c
 SRC		+=	$(S_PATH)$(DB)env_updates.c
 SRC		+=	$(S_PATH)$(DB)set_updates.c
 SRC		+=	$(S_PATH)$(DB)db_tools.c
+SRC		+=	$(S_PATH)$(DB)history.c
+SRC		+=	$(S_PATH)$(DB)version.c
 
 SRC		+=	$(S_PATH)$(EXEC)exec_process.c
 SRC		+=	$(S_PATH)$(EXEC)exec_handler.c

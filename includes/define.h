@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/23 00:28:27 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/09/25 00:59:53 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,11 @@
 **	===========================================================================
 */
 
-#define ENV_VAR			0x001
-#define SET_VAR			0x002
-#define INTERN_VAR		0x004
+# define ENV_VAR		0x001
+# define SET_VAR		0x002
+# define INTERN_VAR		0x004
+
+# define HIST_SIZE		500
+# define HISTFILE_SIZE	500
 
 #endif

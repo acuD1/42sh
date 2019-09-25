@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/23 21:05:00 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/09/25 02:23:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int8_t	set_env(t_core *shell, char **argv, char **environ)
 	update_ifs(shell);
 	update_termsize(shell);
 	create_term(shell);
-	/*
-	**	NOT IMPLEMENTED YET
-	define_env_list(shell, env);
-	*/
+	update_histfile(shell);
+	update_hist_size(shell);
+	update_histfile_size(shell);
+	update_version(shell);
 
 	if (shell->env == NULL)
 		return (FAILURE);

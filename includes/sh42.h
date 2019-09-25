@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/23 19:13:41 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/09/25 02:21:48 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,14 @@ void		free_prompt(t_core *shell, char *line);
 **	DB
 */
 
-void		init_shell(t_core *shell);
 int8_t		get_opt(int ac, char **av, t_core *shell);
 int8_t		set_env(t_core *shell, char **argv, char **environ);
-t_db		*fetch_db(t_db *db, const char *s, const u_int8_t var_type);
 int8_t		get_tokens(t_core *shell, char *line);
+void		init_shell(t_core *shell);
+t_db		*fetch_db(t_db *db, const char *s, const u_int8_t var_type);
+t_db		*modify_db(t_db	*db, char *new_value, u_int8_t new_type);
+t_db		*get_or_create_db(t_core *core, char *key, u_int8_t var_type);
+t_db		*search_db(t_lst *env, char *key);
 
 /*
 **	Exec
@@ -75,14 +78,15 @@ void		print_hash_map(t_hash *hash);
 **	===========================================================================
 */
 
-int8_t	increment_shlvl(t_core *core);
-int8_t	update_pwd(t_core *core);
-int8_t	update_(t_core *core);
-int8_t	update_ifs(t_core *core);
-int8_t	update_termsize(t_core *core);
-int8_t	create_term(t_core *core);
-t_db	*modify_db(t_db	*db, char *new_value, u_int8_t new_type);
-t_db	*get_or_create_db(t_core *core, char *key, u_int8_t var_type);
-t_db	*search_db(t_lst *env, char *key);
+int8_t		increment_shlvl(t_core *core);
+int8_t		update_pwd(t_core *core);
+int8_t		update_(t_core *core);
+int8_t		update_ifs(t_core *core);
+int8_t		update_termsize(t_core *core);
+int8_t		create_term(t_core *core);
+int8_t		update_histfile(t_core *core);
+int8_t		update_hist_size(t_core *core);
+int8_t		update_histfile_size(t_core *core);
+int8_t		update_version(t_core *core);
 
 #endif
