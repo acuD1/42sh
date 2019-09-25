@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:55:05 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/09 15:14:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:31:48 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@
 ** Return only TRUE if tab key is pressed
 */
 
-uint8_t			is_tab(char *buf, char *d_name, t_read *input)
+uint8_t			is_tab(char *buff, char *d_name, t_read *input)
 {
-	ft_bzero(buf, READ_SIZE + 1);
-	if (xread(0, buf, READ_SIZE) > 0)
+	uint64_t	value;
+
+	ft_bzero(buff, READ_SIZE + 1);
+	if (xread(0, buff, READ_SIZE) > 0)
 	{
-		if (buf[0] == TAB_KEY)
+		value = get_mask(buff);
+		if (value == TAB_KEY)
 		{
 			delete_last_cmd(d_name, input);
 			return (TRUE);

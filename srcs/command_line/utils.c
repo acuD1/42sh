@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/17 13:07:35 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:19:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,46 +39,26 @@ void		remove_newline(t_read *line)
 	ft_strdel(&tmp);
 }
 
-uint8_t		to_next_newline(t_read *line, int buff_index)
-{
-	int	width;
-	int	x;
-
-	x = 0;
-	width = 0;
-	while (line->buffer[buff_index--])
-	{
-		if (x >= line->ws_col || line->buffer[buff_index] == '\n')
-			return (width);
-		width++;
-		x++;
-	}
-	return (width);
-}
-
 uint8_t		get_width_last_line(t_read *input)
 {
-	int	buff_index;
-	int	width;
-	int	x;
+	int		buff_index;
+	int		width;
 
 	width = 0;
-	x = input->x;
-	buff_index = input->x_index - input->prompt_len;
-	while (buff_index-- > 0)
+	buff_index = input->x_index - input->prompt_len - 1;
+	while (--buff_index)
 	{
-		if (x == 0)
-		{
-			width = to_next_newline(input, buff_index);
-				break ;
-		}
-		x--;
+		if (input->buffer[buff_index] == '\n')
+			break ;
+		width++;
 	}
-	if (input->y == 1 && input->x == 0 && width != input->ws_col)
+	if (input->y == 1 && width != input->ws_col - input->prompt_len)
 	{
 		input->x = width + input->prompt_len - 1;
 		width += input->prompt_len - 2;
 	}
+	else if (input->y == 1)
+		width += input->prompt_len;
 	return (width);
 }
 
@@ -101,4 +81,26 @@ uint8_t		get_width_current_line(t_read *input)
 	}
 	width += input->x;
 	return (width);
+}
+
+uint64_t		get_mask(char *buff)
+{
+	uint16_t	i;
+	uint16_t 	shift;
+	uint64_t	value;
+	uint64_t	tmp;
+
+	i = 0;
+	tmp = 0;
+	value = 0;
+	shift = 56;
+	while (i < 8 && buff[i])
+	{
+		value = buff[i];
+		value <<= shift;
+		tmp |= value;
+		shift -= 8;
+		i++;
+	}
+	return (tmp);
 }

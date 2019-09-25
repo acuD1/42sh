@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/25 12:06:34 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:32:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,35 @@
 **	CTRL + F to jump one word forward
 */
 
-void		check_keys_comb(char *buff, t_read *line)
+void		check_keys_comb(char *buff, t_read *line, uint64_t value)
 {
 	int	i;
 
-	if (*buff == CLEAR_SCREEN)
+	if (value == CTRL_L)
 		clr_screen(line);
-	else if (*buff == BEGINNING_LINE || (buff[0] == 27 && buff[1] == 91 && buff[2] == 72))
+	else if (value == CTRL_A || value == HOME)
 		while (line->x_index > line->prompt_len)
 			move_left(buff, line);
-	else if (*buff == END_LINE || (buff[0] == 27 && buff[1] == 91 && buff[2] == 70))
+	else if (value == CTRL_E || value == END)
 		while (line->x_index < line->width)
 			move_right(buff, line);
-	else if (*buff == CLEAR_LINE)
+	else if (value == CTRL_K)
 	{
 		i = line->x_index;
 		while (i++ < line->width)
 			del_key(line);
 	}
 	else
-		jump_words(buff, line);
+		jump_words(buff, line, value);
 }
 
 /*
 **		Check if is EOF (CTRL+D) to exit program is buffer is empty
 */
 
-void		end_of_file(char *buff, t_read *line)
+void		end_of_file(t_read *line, uint64_t value)
 {
-	if (!ft_strcmp(line->buffer, "") && *buff == END_OF_FILE)
+	if (!ft_strcmp(line->buffer, "") && value == CTRL_D)
 	{
 		ft_putstr("exit\n");
 		reset_config(line);
@@ -60,19 +60,19 @@ void		end_of_file(char *buff, t_read *line)
 	}
 }
 
-uint8_t		cursor_motion(char *buff, t_read *line)
+uint8_t		cursor_motion(char *buff, t_read *line, uint64_t value)
 {
-	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 65)
+	if (value == ARROW_UP)
 		move_key_up(line);
-	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 66)
+	else if (value == ARROW_DOWN)
 		move_key_down(line);
-	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 67)
+	else if (value == ARROW_RIGHT)
 		move_right(buff, line);
-	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 68)
+	else if (value == ARROW_LEFT)
 		move_left(buff, line);
-	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 51 && buff[3] == 126)
+	else if (value == DEL_KEY)
 		del_key(line);
-	else if (*buff == BS_KEY)
+	else if (value == BS_KEY)
 		bs_key(buff, line);
 	else
 		return (FALSE);
@@ -91,21 +91,24 @@ uint8_t		cursor_motion(char *buff, t_read *line)
 
 uint8_t		check_caps(char *buff, t_read *line)
 {
+	uint64_t	value;
+
+	value = get_mask(buff);
 	if (is_print(*buff))
 		insert_in_buffer(buff, line);
-	else if (*buff == CTRL_R)
+	else if (value == CTRL_R)
 		research_mode(&line);
-	else if (*buff == TAB_KEY)
+	else if (value == TAB_KEY)
 		auto_complete_mode(buff, line);
-	else if (cursor_motion(buff, line))
+	else if (cursor_motion(buff, line, value))
 		return (TRUE);
-	else if (*buff == RETURN_KEY)
+	else if (value == RETURN_KEY)
 	{
 		ft_putchar('\n');
 		return (FALSE);
 	}
 	else
-		check_keys_comb(buff, line);
-	end_of_file(buff, line);
+		check_keys_comb(buff, line, value);
+	end_of_file(line, value);
 	return (TRUE);
 }

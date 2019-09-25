@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/25 12:20:34 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:28:55 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ void		move_col_down(t_read *line)
 	}
 }
 
-void		move_in_column(char *buff, t_read *line)
+void		move_in_column(uint64_t value, t_read *line)
 {
-	if (buff[3] == MOVE_UP && line->y != 0)
+	if (value & ALT_AW_UP && line->y != 0)
 		move_col_up(line);
-	else if (buff[3] == MOVE_DO)
+	else if (value &  ALT_AW_DO)
 		move_col_down(line);
 }
 
@@ -101,9 +101,9 @@ void		move_in_column(char *buff, t_read *line)
 **	(ALT+B | CTRL+B) to jump one word backward
 */
 
-void			jump_words(char *buff, t_read *line)
+void			jump_words(char *buff, t_read *line, uint64_t value)
 {
-	if (buff[0] == ONE_WORD_LEFT)
+	if (value == CTRL_F)
 	{
 		if (line->buffer[line->x_index - line->prompt_len] != ' ')
 			move_left(buff, line);
@@ -114,7 +114,7 @@ void			jump_words(char *buff, t_read *line)
 			&& line->buffer[line->x_index - line->prompt_len - 1] != ' ')
 			move_left(buff, line);
 	}
-	else if (buff[0] == ONE_WORD_RIGHT)
+	else if (value == CTRL_B)
 	{
 		if (line->buffer[line->x_index - line->prompt_len] != ' ')
 			move_right(buff, line);
@@ -125,6 +125,6 @@ void			jump_words(char *buff, t_read *line)
 			&& line->buffer[line->x_index - line->prompt_len] != ' ')
 			move_right(buff, line);
 	}
-	else if (buff[0] == 27 && buff[1] == 27 && buff[2] == 91)
-		move_in_column(buff, line);
+	else if (value == ALT_AW_UP || value == ALT_AW_DO)
+		move_in_column(value, line);
 }

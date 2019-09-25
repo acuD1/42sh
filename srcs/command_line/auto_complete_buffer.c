@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:48:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/11 11:16:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:29:14 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@
 **		Read again buff if another tab key is pressed => return TRUE
 */
 
-uint8_t			read_again(char **prev_b, char *buf, char *name, t_read *input)
+uint8_t			read_again(char **prev_b, char *buff, char *name, t_read *input)
 {
+	uint64_t	value;
+
 	delete_last_cmd(*prev_b, input);
 	if (is_dir(name) == TRUE)
 		ft_strcat(name, "/");
 	insert_str_in_buffer(name, input);
-	if (xread(0, buf, READ_SIZE) > 0)
+	if (xread(0, buff, READ_SIZE) > 0)
 	{
-		if (buf[0] == TAB_KEY)
+		value = get_mask(buff);
+		if (value == TAB_KEY)
 		{
 			*prev_b = name;
 			return (TRUE);

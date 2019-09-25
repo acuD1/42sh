@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:38:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/08/24 13:03:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:29:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void			insert_bin_in_buffer(char *d_name, t_read *input)
 
 uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 {
+	uint64_t	value;
+
 	if (isstart(name, to_find))
 	{
 		input->found = 1;
@@ -71,7 +73,8 @@ uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 		insert_bin_in_buffer(name, input);
 		if (read(0, buf, READ_SIZE) > 0)
 		{
-			if (buf[0] == '\t')
+			value = get_mask(buf);
+			if (value == TAB_KEY)
 				return (TRUE);
 			else
 				return (FALSE);

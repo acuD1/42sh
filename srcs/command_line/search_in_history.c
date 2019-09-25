@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 13:42:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:33:55 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,21 @@ char		*walking_history(char buff_tmp[BUFF_SIZE], t_read *line, t_lst **history)
 	return (NULL);
 }
 
-void		search_in_history(t_read *line)
+void			search_in_history(t_read *line)
 {
-	char	buff[READ_SIZE + 1];
-	char	buff_tmp[BUFF_SIZE];
-	int		i;
-	t_lst	*history;
+	char		buff[READ_SIZE + 1];
+	char		buff_tmp[BUFF_SIZE];
+	int			i;
+	t_lst		*history;
+	uint64_t 	value;
 
 	history = line->history;
 	i = -1;
 	ft_bzero(buff_tmp, BUFF_SIZE);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
-		if (!is_print(*buff) && *buff != CTRL_R)
+		value = get_mask(buff);
+		if (!is_print(*buff) && value != CTRL_R)
 			return ;
 		else if (is_print(*buff))
 			buff_tmp[++i] = *buff;

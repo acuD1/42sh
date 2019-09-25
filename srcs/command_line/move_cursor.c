@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/25 12:27:55 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/25 14:08:57 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,14 @@ void		move_left(char *buff, t_read *input)
 	else if (input->y > 0 && input->x == 0)
 	{
 		width = get_width_last_line(input);
-		(input->x == 0) ? input->x = width : 0;
-		while (width--)
-			xtputs(input->termcaps->right, 1, my_outc);
-		xtputs(input->termcaps->up, 1, my_outc);
+		input->x = width;
+		xtputs(input->termcaps->left, 1, my_outc);
+		if (width < input->prompt_len)
+		{
+			while (width--)
+				xtputs(input->termcaps->right, 1, my_outc);
+			xtputs(input->termcaps->up, 1, my_outc);
+		}
 		input->x_index--;
 		input->y--;
 	}
