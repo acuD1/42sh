@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 13:38:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/25 12:20:34 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void		move_col_up(t_read *line)
 }
 
 /*
-**	CTRL/SHIFT + ARROW_DOWN to move down one line in same column
-**	Termcaps capabilities : `do' to move cursor down at beginning of line
-**							`nd' to move cursor on the right
+**	CTRL/ALT + ARROW_DOWN to move down one line in same column
+**	Termcaps capabilities : `down' to move cursor down at beginning of line
+**							`right' to move cursor on the right
 **
 */
 
@@ -90,9 +90,9 @@ void		move_col_down(t_read *line)
 
 void		move_in_column(char *buff, t_read *line)
 {
-	if (buff[5] == MOVE_UP && line->y != 0)
+	if (buff[3] == MOVE_UP && line->y != 0)
 		move_col_up(line);
-	else if (buff[5] == MOVE_DO)
+	else if (buff[3] == MOVE_DO)
 		move_col_down(line);
 }
 
@@ -125,6 +125,6 @@ void			jump_words(char *buff, t_read *line)
 			&& line->buffer[line->x_index - line->prompt_len] != ' ')
 			move_right(buff, line);
 	}
-	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 49)
+	else if (buff[0] == 27 && buff[1] == 27 && buff[2] == 91)
 		move_in_column(buff, line);
 }
