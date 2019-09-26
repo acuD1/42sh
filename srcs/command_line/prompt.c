@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 17:02:57 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/26 13:56:35 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@
 
 void		goto_prompt(t_read *line)
 {
-	/* if (line->sub_prompt != FALSE) */
-	/* { */
-	/* 	while (line->sub_prompt-- >= 0) */
-	/* 		xtputs(line->termcaps->up, 1, my_outc); */
-	/* 	return ; */
-	/* } */
 	while (line->y-- > 0)
 		xtputs(line->termcaps->up, 1, my_outc);
 	xtputs(line->termcaps->cr, 1, my_outc);
@@ -55,7 +49,7 @@ t_read		*display_prompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term = get_size(term);
-	dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, term->prompt + 1, C_X);
+	ft_dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, term->prompt + 1, C_X);
 	return (term);
 }
 
