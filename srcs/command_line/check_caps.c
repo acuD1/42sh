@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/25 18:32:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/26 16:40:22 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,15 @@ void		end_of_file(t_read *line, uint64_t value)
 		ft_putstr("exit\n");
 		reset_config(line);
 		write_history(line);
-		//free history
+		if (line->history)
+		{
+			while (line->history)
+			{
+				free(line->history->content);
+				line->history = line->history->next;
+			}
+		}
+		free(line->history);
 		exit(0);
 	}
 }

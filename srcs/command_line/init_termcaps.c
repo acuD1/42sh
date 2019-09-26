@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 15:32:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/26 16:21:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ t_read			*get_size(t_read *data)
 
 void			stock_termcaps(t_termcaps *termcaps)
 {
-	termcaps->del = ft_strdup(xtgetstr("dc", NULL));
-	termcaps->save_cr = ft_strdup(xtgetstr("sc", NULL));
-	termcaps->reset_cr = ft_strdup(xtgetstr("rc", NULL));
-	termcaps->down = ft_strdup(xtgetstr("do", NULL));
-	termcaps->up = ft_strdup(xtgetstr("up", NULL));
-	termcaps->right = ft_strdup(xtgetstr("nd", NULL));
-	termcaps->left = ft_strdup(xtgetstr("le", NULL));
-	termcaps->cr = ft_strdup(xtgetstr("cr", NULL));
-	termcaps->ho = ft_strdup(xtgetstr("ho", NULL));
-	termcaps->clear = ft_strdup(xtgetstr("cl", NULL));
-	termcaps->clr_lines = ft_strdup(xtgetstr("cd", NULL));
-	termcaps->clr_end = ft_strdup(xtgetstr("ce", NULL));
+	termcaps->del = xtgetstr("dc", NULL);
+	termcaps->save_cr = xtgetstr("sc", NULL);
+	termcaps->reset_cr = xtgetstr("rc", NULL);
+	termcaps->down = xtgetstr("do", NULL);
+	termcaps->up = xtgetstr("up", NULL);
+	termcaps->right = xtgetstr("nd", NULL);
+	termcaps->left = xtgetstr("le", NULL);
+	termcaps->cr = xtgetstr("cr", NULL);
+	termcaps->ho = xtgetstr("ho", NULL);
+	termcaps->clear = xtgetstr("cl", NULL);
+	termcaps->clr_lines = xtgetstr("cd", NULL);
+	termcaps->clr_end = xtgetstr("ce", NULL);
 }
 
 void			init_termcaps(t_read *term)

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/23 16:31:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/26 14:39:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void			write_history(t_read *line)
 	if (!hst)
 		return ;
 	if ((fd = open(HISTORY_FILE, MODE_WRITE, S_USR_RW | S_GRP_OTH_R)) == -1)
-		dprintf(STDIN_FILENO, "can't open history file\n");
+		ft_dprintf(STDIN_FILENO, "can't open history file\n");
 	while (hst->next)
 		hst = hst->next;
 	while (hst)
@@ -36,7 +36,7 @@ void			write_history(t_read *line)
 		if (write(fd, hst->content, ft_strlen(hst->content)) == FAILURE
 			|| write(fd, "\n", 1) == FAILURE)
 		{
-			dprintf(2, "write failure\n");
+			ft_dprintf(2, "write failure\n");
 			close(fd);
 			return ;
 		}
@@ -92,5 +92,6 @@ void			init_history(t_read *term)
 		ft_bzero(term->buffer, ft_strlen(term->buffer));
 		i = -1;
 	}
+	free(line);
 	close(fd);
 }
