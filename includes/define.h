@@ -100,4 +100,9 @@
 
 # define NB_LEXER_STATE 7
 # define NB_PARSER_STATE 36
+# define NB_OF_TOKENS 20
+# define REDIR                      P_GREAT, P_LESS
+# define REDIR_AND                  P_GREATAND, P_LESSAND, P_ANDGREAT
+# define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH, P_ANDDGREAT
+# define ALL_REDIRECT               REDIR, REDIR_DB, REDIR_AND
 #endif

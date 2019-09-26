@@ -140,6 +140,7 @@ SRC		+=	$(S_PATH)$(LEXER)operator_token.c
 SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
 
 SRC		+=	$(S_PATH)$(PARSER)parser.c
+SRC		+=	$(S_PATH)$(PARSER)graph.c
 
 SRC		+=	$(S_PATH)dev.c
 # Headers

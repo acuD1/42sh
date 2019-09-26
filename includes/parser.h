@@ -15,8 +15,9 @@
 
 # include "sh42.h" 
 
-typedef struct s_parser t_parser;
-typedef int (*t_parsing)(t_parser*);
+typedef struct  s_parser t_parser;
+typedef void    (*t_parsing)(t_parser*, t_lexer*);
+typedef t_parsing t_pars[NB_PARSER_STATE][NB_OF_TOKENS];
 
 typedef enum	parser_state
 {
@@ -73,14 +74,30 @@ typedef enum	parser_state
     // P_WHILE,
 }				e_parser_state;
 
-struct 				s_parser
+typedef struct          s_graph
 {
-	t_parsing 		pars[NB_PARSER_STATE];
-	t_lst 			*tok;
-	e_parser_state	state;
+    e_parser_state      *good_type;
+}                       t_graph;
 
-};
 
-void parser(t_core *shell, t_lexer *lexer);
+typedef struct      s_parser
+{
+    t_pars          parsing;
+    t_graph         graph[NB_OF_TOKENS];
+
+    // t_lst            *tok;
+    e_parser_state  state;
+}                   t_parser;
+
+void        parser(t_core *shell, t_lexer *lexer);
+// void        init_word_graph(t_graph *graph);
+// void        init_redirect_graph(t_graph *graph);
+// void        init_assign_graph(t_graph *graph);
+// void        init_pipe_graph(t_graph *graph);
+// void        init_ionumber_graph(t_graph *graph);
+// void        init_start_graph(t_graph *graph);
+void        ft_init_graph(t_parser *parser);
+
+
 
 #endif
