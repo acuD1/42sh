@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/26 16:46:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/26 17:27:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,18 @@ void			search_in_history(t_read *line)
 	}
 }
 
-void		research_mode(t_read **line)
+void		research_mode(t_read *line)
 {
-	goto_prompt(*line);
-	xtputs((*line)->termcaps->cr, 1, my_outc);
-	xtputs((*line)->termcaps->clr_end, 1, my_outc);
+	goto_prompt(line);
+	xtputs(line->termcaps->cr, 1, my_outc);
+	xtputs(line->termcaps->clr_lines, 1, my_outc);
 	dprintf(STDIN_FILENO, "(reverse-i-search)`':");
-	search_in_history(*line);
-	xtputs((*line)->termcaps->cr, 1, my_outc);
-	xtputs((*line)->termcaps->clr_end, 1, my_outc);
-	display_prompt(*line);
-	ft_dprintf(STDIN_FILENO, "%s", (*line)->buffer);
-	(*line)->x += ft_strlen((*line)->buffer);
-	(*line)->width = (*line)->x;
-	(*line)->x_index = (*line)->x;
+	search_in_history(line);
+	xtputs(line->termcaps->cr, 1, my_outc);
+	xtputs(line->termcaps->clr_lines, 1, my_outc);
+	display_prompt(line);
+	ft_dprintf(STDIN_FILENO, "%s", line->buffer);
+	line->x += ft_strlen(line->buffer);
+	line->width = line->x;
+	line->x_index = line->x;
 }

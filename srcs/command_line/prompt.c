@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/26 16:34:45 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/26 17:14:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_read		*display_prompt(t_read *term)
 /*
 **	  Clear the last buffer/line inserted & Display current prompt
 **	  Launch line edition: read stdin until enter key is pressed
-**	  The current buffer is saved in a list history
+**	  The current buffer is saved in a history list
 */
 
 void		init_prompt(t_read *term)
@@ -72,7 +72,7 @@ void		init_prompt(t_read *term)
 	{
 		if (check_caps(buff, term) == TRUE)
 		{
-			ft_bzero(buff, READ_SIZE);
+			ft_bzero(buff, READ_SIZE + 1);
 			continue ;
 		}
 		else

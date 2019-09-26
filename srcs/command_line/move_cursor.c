@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/25 14:08:57 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/26 17:22:07 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void			move_key_up(t_read *line)
 
 void		move_right(char *buff, t_read *input)
 {
-	int	width;
-	int	buff_index;
+	int		width;
+	int		buff_index;
 
 	(void)buff;
 	width = get_width_current_line(input);
