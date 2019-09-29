@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   db_tools.c                                           :+:      :+:    :+:   */
+/*   db_tools.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/15 19:09:50 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/09/23 19:26:35 by mpivet-p         ###   ########.fr       */
+/*   Created: 2019/09/25 18:21:41 by mpivet-p          #+#    #+#             */
+/*   Updated: 2019/09/29 02:54:06 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ t_db	*modify_db(t_db	*db, char *new_value, u_int8_t new_type)
 **	to the t_db or create it if not existing. (variant of search_db function)
 */
 
-t_db	*get_or_create_db(t_core *core, char *key, u_int8_t var_type)
+t_db	*get_or_create_db(t_core *shell, char *key, u_int8_t var_type)
 {
 	t_db	*db;
 
-	db = search_db(core->env, key);
+	db = search_db(shell->env, key);
 	if (db == NULL)
 	{
-		ft_lstappend(&(core->env),
-			ft_lstnew(fetch_db(&(core->db), key, var_type), sizeof(t_db)));
-		db = search_db(core->env, key);
+		ft_lstappend(&(shell->env),
+			ft_lstnew(fetch_db(&(shell->db), key, var_type), sizeof(t_db)));
+		db = search_db(shell->env, key);
 	}
 	return (db);
 }
@@ -71,4 +71,34 @@ t_db	*search_db(t_lst *env, char *key)
 		env = env->next;
 	}
 	return (NULL);
+}
+
+/*
+**	Delete the variable corresponding to the key
+*/
+
+int8_t	del_db(t_core *shell, char *key)
+{
+	t_lst	*prev;
+	t_lst	*env;
+
+	prev = shell->env;
+	env = shell->env;
+	while (env != NULL && ft_strcmp(key, ((t_db*)env->content)->key) != 0)
+		env = env->next;
+	if (env != NULL)
+	{
+		while (prev != NULL && prev->next != env)
+			prev = prev->next;
+		if (prev == NULL)
+			shell->env = env->next;
+		else
+			prev->next = env->next;
+		ft_strdel(&(((t_db*)env->content)->key));
+		ft_strdel(&(((t_db*)env->content)->value));
+		ft_memdel(&env->content);
+		ft_memdel((void**)&env);
+		return (SUCCESS);
+	}
+	return (FAILURE);
 }

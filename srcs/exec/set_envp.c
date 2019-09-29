@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:32:46 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/23 22:18:42 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/09/28 03:11:10 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ char	**set_envp(t_core *shell)
 	{
 		if (((t_db*)env->content)->type & ENV_VAR)
 		{
-		envp[i] = ft_strjoinf(ft_strjoin(((t_db*)(env->content))->key, "="),
-						((t_db*)(env->content))->value, 1);
+			envp[i] = ft_strjoinf(ft_strjoin(((t_db*)(env->content))->key, "=")
+					, ((t_db*)(env->content))->value, 1);
+			i++;
 		}
 		env = env->next;
-		i++;
 	}
 	envp[i] = NULL;
 	return (envp);

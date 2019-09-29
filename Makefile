@@ -74,6 +74,8 @@ L_PATH = shared_libft/
 CORE	=	core/
 DB		=	db/
 EXEC	=	exec/
+BLTINS	=	builtins/
+MISC	=	misc/
 HASH	=	$(EXEC)hash_map/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
@@ -81,7 +83,9 @@ HASH	=	$(EXEC)hash_map/
 PATHS	+=	$(B_PATH)
 PATHS	+=	$(O_PATH)
 PATHS	+=	$(O_PATH)$(CORE)
+PATHS	+=	$(O_PATH)$(BLTINS)
 PATHS	+=	$(O_PATH)$(DB)
+PATHS	+=	$(O_PATH)$(MISC)
 PATHS	+=	$(O_PATH)$(EXEC)
 PATHS	+=	$(O_PATH)$(HASH)
 
@@ -102,6 +106,11 @@ SRC		+=	$(S_PATH)$(DB)set_updates.c
 SRC		+=	$(S_PATH)$(DB)db_tools.c
 SRC		+=	$(S_PATH)$(DB)history.c
 SRC		+=	$(S_PATH)$(DB)version.c
+
+SRC		+=	$(S_PATH)$(BLTINS)set.c
+SRC		+=	$(S_PATH)$(BLTINS)unset.c
+
+SRC		+=	$(S_PATH)$(MISC)usage.c
 
 SRC		+=	$(S_PATH)$(EXEC)exec_process.c
 SRC		+=	$(S_PATH)$(EXEC)exec_handler.c

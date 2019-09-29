@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/02 14:35:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/09/29 03:55:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ void			load_prompt(t_core *shell)
 		**	- Builtins ? (Maybe not accurate for now with futurs implementations)
 		**	- etc ...
 		*/
+
+		/*#################### SET BUILTIN TEST ####################*/
+		printf("\e[32;1m{\n");
+		builtin_set(0, NULL, shell);
+		printf("}\e[0m\n");
+		/*##########################################################*/
+
 		if (get_tokens(shell, line) != SUCCESS) /* ft_strsplit with for now tab and space charset */
 		{
 			free_prompt(shell, line);
