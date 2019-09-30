@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/30 18:53:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/30 19:43:07 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
 	if (input->x != 0 || (input->x == 0 && buff != NEW_LINE))
-		ft_putchar(buff);
+		ft_dprintf(STDIN_FILENO, "%c", buff);
 	if (buff == NEW_LINE)
 	{
 		(input->x == 0) ? input->y-- : 0;
