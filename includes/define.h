@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/25 18:28:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/30 12:30:23 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,40 +64,40 @@
 **	Command Line
 */
 
-# define S_USR_RW			(S_IRUSR | S_IWUSR)
+# define S_USR_RW		(S_IRUSR | S_IWUSR)
 # define S_GRP_OTH_R		(S_IRGRP | S_IROTH)
-# define MODE_WRITE			(O_CREAT | O_WRONLY | O_TRUNC)
-# define BUFF_SIZE			4096
-# define READ_SIZE			4
+# define MODE_WRITE		(O_CREAT | O_WRONLY | O_TRUNC)
+# define BUFF_SIZE		4096
+# define READ_SIZE		4
 # define HISTORY_FILE		"./.history"
-# define QUOTE				'\''
-# define DQUOTE				'\"'
-# define BQUOTE				'`'
-# define NEW_LINE			'\n'
+# define QUOTE			'\''
+# define DQUOTE			'\"'
+# define BQUOTE			'`'
+# define NEW_LINE		'\n'
 
 /*
 **		Action keys hex masks
 */
 
-# define ARROW_UP			0x1b5b410000000000
-# define ARROW_DOWN			0x1b5b420000000000
+# define ARROW_UP		0x1b5b410000000000
+# define ARROW_DOWN		0x1b5b420000000000
 # define ARROW_RIGHT		0x1b5b430000000000
-# define ARROW_LEFT			0x1b5b440000000000
-# define BS_KEY				0x7f00000000000000
-# define DEL_KEY			0x1b5b337e00000000
-# define HOME				0x1b5b480000000000
-# define END				0x1b5b460000000000
-# define TAB_KEY			0x0900000000000000
-# define RETURN_KEY			0x0a00000000000000
-# define CTRL_R				0x1200000000000000
-# define CTRL_L				0x0c00000000000000
-# define CTRL_K				0x0b00000000000000
-# define CTRL_A				0x0100000000000000
-# define CTRL_E				0x0500000000000000
-# define CTRL_B				0x0200000000000000
-# define CTRL_F				0x0600000000000000
-# define CTRL_D				0x0400000000000000
-# define ALT_AW_UP			0x1b1b5b4100000000
-# define ALT_AW_DO			0x1b1b5b4200000000
+# define ARROW_LEFT		0x1b5b440000000000
+# define BS_KEY			0x7f00000000000000
+# define DEL_KEY		0x1b5b337e00000000
+# define HOME			0x1b5b480000000000
+# define END			0x1b5b460000000000
+# define TAB_KEY		0x0900000000000000
+# define RETURN_KEY		0x0a00000000000000
+# define CTRL_R			0x1200000000000000
+# define CTRL_L			0x0c00000000000000
+# define CTRL_K			0x0b00000000000000
+# define CTRL_A			0x0100000000000000
+# define CTRL_E			0x0500000000000000
+# define CTRL_B			0x0200000000000000
+# define CTRL_F			0x0600000000000000
+# define CTRL_D			0x0400000000000000
+# define ALT_AW_UP		0x1b1b5b4100000000
+# define ALT_AW_DO		0x1b1b5b4200000000
 
 #endif

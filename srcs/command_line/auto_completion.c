@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/23 16:04:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/30 19:09:50 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,17 @@ void			delete_last_cmd(char *d_name, t_read *input)
 	xtputs(input->termcaps->clr_end, 1, my_outc);
 }
 
-uint8_t			split_cmd(char **last_buf, char **to_find, t_read *input)
+uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *input)
 {
 	if ((ft_strlen(input->buffer) == 0))
 		return (FALSE);
 	input->cmd = ft_strsplit(input->buffer, " ");
 	input->ac = ft_tablen(input->cmd);
-	*last_buf = input->cmd[ft_tablen(input->cmd) - 1];
-	if (*last_buf)
-		*to_find = ft_strdup(*last_buf);
+	*last_cmd = input->cmd[ft_tablen(input->cmd) - 1];
+	if (input->buffer[ft_strlen(input->buffer) - 1] == ' ')
+		input->ac += 1;
+	if (*last_cmd)
+		*to_find = ft_strdup(*last_cmd);
 	else
 		return (FALSE);
 	return (TRUE);
@@ -70,19 +72,21 @@ void			auto_complete_mode(char *buf, t_read *input)
 {
 	char		*last_buf;
 	char		*to_find;
+	int		i;
 
+	i = ft_strlen(input->buffer) - 1;
 	last_buf = NULL;
 	to_find = NULL;
 	input->found = 0;
 	if (split_cmd(&last_buf, &to_find, input) == FALSE)
 		return ;
-	if (!is_dot(to_find) && is_dir(to_find) == TRUE)
-		display_current_directory(buf, input, to_find);
-	if (input->buffer[ft_strlen(input->buffer) - 1] == ' '
-		|| (input->ac > 1 && !ft_strcmp(last_buf, "./")))
-		display_current_directory(buf, input, to_find);
-	else if (input->ac > 1)
-		to_complete_buffer(buf, last_buf, to_find, input);
+	if (input->ac > 1)
+	{
+		if (is_dir(to_find) || input->buffer[i] == ' ')
+			display_current_directory(buf, input, to_find);
+		else
+			to_complete_buffer(buf, last_buf, to_find, input);
+	}
 	else if (input->ac == 1)
 	{
 		if (!ft_strcmp(input->buffer, "./"))

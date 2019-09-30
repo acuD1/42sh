@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/24 13:47:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/30 12:26:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void		call_word(t_read *line, int i)
 	int		n;
 	t_lst	*w;
 
-	w = line->history;
 	j = -1;
+	w = line->history;
 	n = i + 1;
 	while (n < (int)ft_strlen(line->buffer) && !ft_isblank(line->buffer[n]))
 	{
@@ -142,12 +142,10 @@ void		call_number(t_read *line, int i)
 
 void		last_cmd_back(t_read *line, int i)
 {
-	int		j;
 	t_lst	*w;
 
 	w = line->history;
 	if (!line->history || ft_strlen(line->buffer) > BUFF_SIZE)
 		return ;
-	j = -1;
 	i = insert_content(2, i, line, (char *)w->content);
 }

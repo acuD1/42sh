@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:48:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/25 18:29:14 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/09/30 12:24:57 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,11 @@ char			**split_env_var(char **env)
 
 void			parse_env(char *buf, char *prev_b, char *to_find, t_read *input)
 {
-	char			**var;
-	int				i;
-	int				found;
+	char		**var;
+	int		i;
+	int		found;
 
+	(void)found;
 	i = -1;
 	var = split_env_var(input->env);
 	while (var[++i])
@@ -87,7 +88,7 @@ void			parse_env(char *buf, char *prev_b, char *to_find, t_read *input)
 }
 
 /*
-**		Reading data name of the current directory opened
+**		Reading data name off the current directory opened
 **		Return FAILURE(-1) to stop reading (an error occured or no tab key pressed)
 */
 
