@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/29 03:55:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/09/30 05:25:09 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,6 @@ void			load_prompt(t_core *shell)
 		**	- etc ...
 		*/
 
-		/*#################### SET BUILTIN TEST ####################*/
-		printf("\e[32;1m{\n");
-		builtin_set(0, NULL, shell);
-		printf("}\e[0m\n");
-		/*##########################################################*/
-
 		if (get_tokens(shell, line) != SUCCESS) /* ft_strsplit with for now tab and space charset */
 		{
 			free_prompt(shell, line);
@@ -66,7 +60,8 @@ void			load_prompt(t_core *shell)
 		print_tokens(shell);
 
 		/* Same here, mainly binary executions, need rework */
-		exec_process(shell, shell->env);
+		if (exec_builtin(shell) != SUCCESS)
+			exec_process(shell, shell->env);
 		free_prompt(shell, line);
 	}
 	ft_strdel(&line);

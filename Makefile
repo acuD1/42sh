@@ -109,10 +109,12 @@ SRC		+=	$(S_PATH)$(DB)version.c
 
 SRC		+=	$(S_PATH)$(BLTINS)set.c
 SRC		+=	$(S_PATH)$(BLTINS)unset.c
+SRC		+=	$(S_PATH)$(BLTINS)export.c
 
 SRC		+=	$(S_PATH)$(MISC)usage.c
 
 SRC		+=	$(S_PATH)$(EXEC)exec_process.c
+SRC		+=	$(S_PATH)$(EXEC)exec_builtin.c
 SRC		+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC		+=	$(S_PATH)$(EXEC)get_bin.c
 SRC		+=	$(S_PATH)$(EXEC)set_envp.c

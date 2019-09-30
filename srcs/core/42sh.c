@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/25 20:24:46 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/09/30 02:59:31 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int		main(int ac, char **av, char **environ)
 	*/
 	if (set_env(&shell, av, environ) != SUCCESS)
 		return (EXIT_FAILURE);
-//	del_db(&shell, "SHLVL");
-	del_db(&shell, "PISTASH_VERSION");
 	/* Options output */
 	print_opt(&shell);
 

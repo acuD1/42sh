@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/29 03:18:30 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/09/30 05:08:54 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,11 @@ int8_t		update_version(t_core *shell);
 **	===========================================================================
 */
 
-int8_t	builtin_set(int argc, char **argv, t_core *shell);
+int8_t		builtin_set(t_core *shell);
+int8_t		builtin_unset(t_core *shell);
+int8_t		builtin_export(t_core *shell);
+
+/* ###########################  TEMPORARY   #################################*/
+int8_t	exec_builtin(t_core *shell);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 22:37:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/09/29 04:32:04 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/09/30 01:22:07 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void	print_internal_vars(t_core *shell)
 	}
 }
 
-int8_t	builtin_set(int argc, char **argv, t_core *shell)
+int8_t	builtin_set(t_core *shell)
 {
 	int8_t	parsing_ret;
 
-	parsing_ret = parse_set(argc, argv);
+	parsing_ret = parse_set(ft_tablen(shell->tokens), shell->tokens);
 	if (parsing_ret > 0)
 		return (parsing_ret - 1);
 	print_internal_vars(shell);

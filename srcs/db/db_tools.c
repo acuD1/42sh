@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 18:21:41 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/09/29 02:54:06 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/09/30 03:52:28 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,18 @@ int8_t	del_db(t_core *shell, char *key)
 	prev = shell->env;
 	env = shell->env;
 	while (env != NULL && ft_strcmp(key, ((t_db*)env->content)->key) != 0)
+	{
+		prev = env;
 		env = env->next;
+	}
 	if (env != NULL)
 	{
-		while (prev != NULL && prev->next != env)
-			prev = prev->next;
-		if (prev == NULL)
+		/*
+		**	linking the previous link (or shell->env pointer) to the next link
+		*/
+		prev->next = env->next;
+		if (prev == env)
 			shell->env = env->next;
-		else
-			prev->next = env->next;
 		ft_strdel(&(((t_db*)env->content)->key));
 		ft_strdel(&(((t_db*)env->content)->value));
 		ft_memdel(&env->content);

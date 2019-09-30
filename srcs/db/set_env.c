@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/28 02:14:04 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/09/30 05:30:08 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ int8_t	init_env(t_core *shell)
 	}
 	return (SUCCESS);
 }
+
+/*
+**	Init the env at shell's lauch :
+**	- Create required variables (internals and env)
+**	- Modify Inherited vars from the parent shell
+*/
 
 int8_t	set_env(t_core *shell, char **argv, char **environ)
 {
