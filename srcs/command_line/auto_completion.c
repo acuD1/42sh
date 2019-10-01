@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/30 19:09:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/01 15:53:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,25 @@ uint8_t			is_dir(char *dir)
 {
 	struct stat 	buf;
 
-	lstat(dir, &buf);
+	if (lstat(dir, &buf) == FAILURE)
+		return (FALSE);
 	if (S_ISDIR(buf.st_mode))
 		return (TRUE);
 	return (FALSE);
 }
 
 /*
-**	Three auto_complete mode
-**	- complete bin for the first argument only
-**	- display all files of current dir
-**	- complete char inserted with matching file
+**		Three auto_complete mode
+**		- complete bin for the first argument only
+**		- display all files of current dir
+**		- complete char inserted with matching file
 */
 
 void			auto_complete_mode(char *buf, t_read *input)
 {
 	char		*last_buf;
 	char		*to_find;
-	int		i;
+	int			i;
 
 	i = ft_strlen(input->buffer) - 1;
 	last_buf = NULL;
@@ -89,8 +90,8 @@ void			auto_complete_mode(char *buf, t_read *input)
 	}
 	else if (input->ac == 1)
 	{
-		if (!ft_strcmp(input->buffer, "./"))
-			display_current_directory(buf, input, to_find);
+		if (isstart(input->buffer, "./"))
+			read_directories(buf, to_find, input);
 		else
 			walking_path_var(buf, to_find, input);
 		if (input->found == 0)

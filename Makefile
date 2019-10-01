@@ -102,6 +102,7 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)auto_completion.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_current_dir.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_buffer.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_bin.c
+SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_directories.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)term_config.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)check_quotes.c
@@ -144,7 +145,7 @@ HDR			+=	shared_libft.h
 # Objects
 
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
-LIB = $(L_PATH)$(LNAME) -ltermcap -no-pie
+LIB = $(L_PATH)$(LNAME) -ltermcap #-no-pie
 vpath %.h $(H_PATH)
 
 # Variables

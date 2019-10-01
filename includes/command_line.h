@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/26 17:28:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/01 15:30:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void			load_subprompt(char quote, t_read *line);
  */
 
 void			auto_complete_mode(char *buf, t_read *input);
+void			read_directories(char *buf, char *to_find, t_read *input);
 void			walking_path_var(char *buf, char *to_find, t_read *input);
 void			to_complete_buffer(char *buf, char *last_buf, char *to_find, t_read *input);
 void			display_current_directory(char *buf, t_read *input, char *dir);
@@ -112,6 +113,8 @@ uint8_t			newline_count(char *buffer);
 void			remove_newline(t_read *line);
 uint8_t			is_dot(char *d_name);
 uint64_t		get_mask(char *buff);
+uint8_t			is_dot(char *d_name);
+uint8_t			is_tab(char *buff, char *d_name, t_read *input);
 
 /*
  **		Functions safe

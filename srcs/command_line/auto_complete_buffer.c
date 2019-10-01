@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/26 13:48:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/30 12:24:57 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/01 15:05:07 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,6 @@ uint8_t			read_dir(char *buf, char **prev_b, char *to_find, t_read *input)
 
 	if (!getcwd(current_dir, BUFF_SIZE))
 		return (FAILURE);
-	/* if (ft_strchr(to_find, '/')) */
-	/* { */
-	/* 	char *tmp = ft_strchr(to_find, '/') + 1; */
-	/* 	ft_strcat(current_dir, "/"); */
-	/* 	ft_strncat(current_dir, to_find, strlen_to(to_find, '/')); */
-	/* 	to_find = tmp; */
-	/* 	prev_b = &tmp; */
-	/* } */
 	dir = opendir(current_dir);
 	while ((data = readdir(dir)) != NULL)
 	{
