@@ -85,7 +85,7 @@ typedef struct          s_graph
 
 typedef struct      s_parser
 {
-    // t_pars          parsing;
+    t_pars          parsing;
     t_graph         graph[NB_OF_TOKENS];
 
     // t_lst            *tok;

@@ -14,48 +14,48 @@
 
 // void ft_init_word_graph(t_parser)
 // {
-// 	parser->parsing[P_WORD][TOK_NEWLINE] = separator_parser;
-// 	parser->parsing[P_WORD][TOK_ANDIF] = redirect_parser;
-// 	parser->parsing[P_WORD][TOK_AND] = redirect_parser;
-// 	parser->parsing[P_WORD][TOK_ORIF] = redirect_parser;
-// 	parser->parsing[P_WORD][TOK_PIPE] = redirect_parser;
-// 	parser->parsing[P_WORD][TOK_DSEMI] = separator_parser;
-// 	parser->parsing[P_WORD][TOK_SEMICOLON] = separator_parser;
-// 	parser->parsing[P_WORD][TOK_DLESSDASH] = redirect_parser;
-// 	parser->parsing[P_WORD][TOK_DLESS] = redirect_parser;
-// 	parser->parsing[P_WORD][TOK_LESSGREAT] = redirect_parser;
-// 	parser->parsing[P_WORD][TOK_LESS] = redirect_parser;
-// 	parser->parsing[P_WORD][TOK_DGREAT] = redirect_parser;
-// 	parser->parsing[P_WORD][TOK_GREATAND] = redirect_parser;
-// 	parser->parsing[P_WORD][TOK_CLOBBER] = redirect_parser;
-// 	parser->parsing[P_WORD][TOK_GREAT] = redirect_parser;
-// 	parser->parsing[P_WORD][TOK_IONUMBER] = ionbr_parser;
-// 	parser->parsing[P_WORD][TOK_ASSIGN] = assign_parser;
-// 	parser->parsing[P_WORD][TOK_WORD] = word_parser;
-// 	parser->parsing[P_WORD][TOKEN] = end_parser;
+// 	parser->parsing[P_WORD][P_NEWLINE] = separator_parser;
+// 	parser->parsing[P_WORD][P_ANDIF] = redirect_parser;
+// 	parser->parsing[P_WORD][P_AND] = redirect_parser;
+// 	parser->parsing[P_WORD][P_ORIF] = redirect_parser;
+// 	parser->parsing[P_WORD][P_PIPE] = redirect_parser;
+// 	parser->parsing[P_WORD][P_DSEMI] = separator_parser;
+// 	parser->parsing[P_WORD][P_SEMICOLON] = separator_parser;
+// 	parser->parsing[P_WORD][P_DLESSDASH] = redirect_parser;
+// 	parser->parsing[P_WORD][P_DLESS] = redirect_parser;
+// 	parser->parsing[P_WORD][P_LESSGREAT] = redirect_parser;
+// 	parser->parsing[P_WORD][P_LESS] = redirect_parser;
+// 	parser->parsing[P_WORD][P_DGREAT] = redirect_parser;
+// 	parser->parsing[P_WORD][P_GREATAND] = redirect_parser;
+// 	parser->parsing[P_WORD][P_CLOBBER] = redirect_parser;
+// 	parser->parsing[P_WORD][P_GREAT] = redirect_parser;
+// 	parser->parsing[P_WORD][P_IONUMBER] = ionbr_parser;
+// 	parser->parsing[P_WORD][P_ASSIGN] = assign_parser;
+// 	parser->parsing[P_WORD][P_WORD] = word_parser;
+// 	parser->parsing[P_WORD][P_END] = end_parser;
 // }
 
 // void ft_init_end_graph(t_parser)
 // {
-// 	parser->parsing[P_END][TOK_NEWLINE] = separator_parser;
-// 	parser->parsing[P_END][TOK_ANDIF] = redirect_parser;
-// 	parser->parsing[P_END][TOK_AND] = redirect_parser;
-// 	parser->parsing[P_END][TOK_ORIF] = redirect_parser;
-// 	parser->parsing[P_END][TOK_PIPE] = redirect_parser;
-// 	parser->parsing[P_END][TOK_DSEMI] = separator_parser;
-// 	parser->parsing[P_END][TOK_SEMICOLON] = separator_parser;
-// 	parser->parsing[P_END][TOK_DLESSDASH] = redirect_parser;
-// 	parser->parsing[P_END][TOK_DLESS] = redirect_parser;
-// 	parser->parsing[P_END][TOK_LESSGREAT] = redirect_parser;
-// 	parser->parsing[P_END][TOK_LESS] = redirect_parser;
-// 	parser->parsing[P_END][TOK_DGREAT] = redirect_parser;
-// 	parser->parsing[P_END][TOK_GREATAND] = redirect_parser;
-// 	parser->parsing[P_END][TOK_CLOBBER] = redirect_parser;
-// 	parser->parsing[P_END][TOK_GREAT] = redirect_parser;
-// 	parser->parsing[P_END][TOK_IONUMBER] = ionbr_parser;
-// 	parser->parsing[P_EN7D][TOK_ASSIGN] = assign_parser;
-// 	parser->parsing[P_END][TOK_WORD] = word_parser;
-// 	parser->parsing[P_END][TOKEN] = end_parser;
+// 	parser->parsing[P_END][P_NEWLINE] = separator_parser;
+// 	parser->parsing[P_END][P_ANDIF] = redirect_parser;
+// 	parser->parsing[P_END][P_AND] = redirect_parser;
+// 	parser->parsing[P_END][P_ORIF] = redirect_parser;
+// 	parser->parsing[P_END][P_PIPE] = redirect_parser;
+// 	parser->parsing[P_END][P_DSEMI] = separator_parser;
+// 	parser->parsing[P_END][P_SEMICOLON] = separator_parser;
+// 	parser->parsing[P_END][P_DLESSDASH] = redirect_parser;
+// 	parser->parsing[P_END][P_DLESS] = redirect_parser;
+// 	parser->parsing[P_END][P_LESSGREAT] = redirect_parser;
+// 	parser->parsing[P_END][P_LESS] = redirect_parser;
+// 	parser->parsing[P_END][P_DGREAT] = redirect_parser;
+// 	parser->parsing[P_END][P_GREATAND] = redirect_parser;
+// 	parser->parsing[P_END][P_CLOBBER] = redirect_parser;
+// 	parser->parsing[P_END][P_GREAT] = redirect_parser;
+// 	parser->parsing[P_END][P_IONUMBER] = ionbr_parser;
+// 	parser->parsing[P_EN7D][P_ASSIGN] = assign_parser;
+// 	parser->parsing[P_END][P_WORD] = word_parser;
+// 	parser->parsing[P_END][P_END] = end_parser;
 // }
 
 void word_parser(t_parser *parser, t_lexer* lexer)
@@ -78,65 +78,66 @@ void error_parser(t_parser *parser, t_lexer* lexer)
 
 // void ft_init_start_graph(t_parsing *parser)
 // {
-// 	parser->parsing[P_START][TOK_NEWLINE] = separator_parser;
-// 	parser->parsing[P_START][TOK_ANDIF] = redirect_parser;
-// 	parser->parsing[P_START][TOK_AND] = redirect_parser;
-// 	parser->parsing[P_START][TOK_ORIF] = redirect_parser;
-// 	parser->parsing[P_START][TOK_PIPE] = redirect_parser;
-// 	parser->parsing[P_START][TOK_DSEMI] = separator_parser;
-// 	parser->parsing[P_START][TOK_SEMICOLON] = separator_parser;
-// 	parser->parsing[P_START][TOK_DLESSDASH] = redirect_parser;
-// 	parser->parsing[P_START][TOK_DLESS] = redirect_parser;
-// 	parser->parsing[P_START][TOK_LESSGREAT] = redirect_parser;
-// 	parser->parsing[P_START][TOK_LESS] = redirect_parser;
-// 	parser->parsing[P_START][TOK_DGREAT] = redirect_parser;
-// 	parser->parsing[P_START][TOK_GREATAND] = redirect_parser;
-// 	parser->parsing[P_START][TOK_CLOBBER] = redirect_parser;
-// 	parser->parsing[P_START][TOK_GREAT] = redirect_parser;
-// 	parser->parsing[P_START][TOK_IONUMBER] = ionbr_parser;
-// 	parser->parsing[P_START][TOK_ASSIGN] = assign_parser;
-	// parser->parsing[P_START][TOK_WORD] = word_parser;
-	// parser->parsing[P_START][TOKEN] = end_parser;
+// 	parser->parsing[P_START][P_NEWLINE] = separator_parser;
+// 	parser->parsing[P_START][P_ANDIF] = redirect_parser;
+// 	parser->parsing[P_START][P_AND] = redirect_parser;
+// 	parser->parsing[P_START][P_ORIF] = redirect_parser;
+// 	parser->parsing[P_START][P_PIPE] = redirect_parser;
+// 	parser->parsing[P_START][P_DSEMI] = separator_parser;
+// 	parser->parsing[P_START][P_SEMICOLON] = separator_parser;
+// 	parser->parsing[P_START][P_DLESSDASH] = redirect_parser;
+// 	parser->parsing[P_START][P_DLESS] = redirect_parser;
+// 	parser->parsing[P_START][P_LESSGREAT] = redirect_parser;
+// 	parser->parsing[P_START][P_LESS] = redirect_parser;
+// 	parser->parsing[P_START][P_DGREAT] = redirect_parser;
+// 	parser->parsing[P_START][P_GREATAND] = redirect_parser;
+// 	parser->parsing[P_START][P_CLOBBER] = redirect_parser;
+// 	parser->parsing[P_START][P_GREAT] = redirect_parser;
+// 	parser->parsing[P_START][P_IONUMBER] = ionbr_parser;
+// 	parser->parsing[P_START][P_ASSIGN] = assign_parser;
+	// parser->parsing[P_START][P_WORD] = word_parser;
+	// parser->parsing[P_START][P_END] = end_parser;
 // }
 
-// static void	bzero_parsing(t_pars parsing)
-// {
-// 	int		index;
-// 	int		state;
+static void	bzero_parsing(t_pars parsing)
+{
+	int		index;
+	int		state;
 
-// 	index = 0;
-// 	while (index < NB_PARSER_STATE)
-// 	{
-// 		state = 0;
-// 		while (state < NB_OF_TOKENS)
-// 			parsing[index][state++] = error_parser;
-// 		++index;
-// 	}
-// }
+	index = 0;
+	while (index < NB_PARSER_STATE)
+	{
+		state = 0;
+		while (state < NB_OF_TOKENS)
+			parsing[index][state++] = error_parser;
+		++index;
+	}
+}
 
 t_parser *ft_init_parser(t_parser *parser)
 {
 	if (!(parser = (t_parser*)malloc(sizeof(t_parser))))
 		return (NULL);
 	parser->state = P_START;
-	// bzero_parsing(parser->parsing);
-	// parser->parsing[P_START][TOK_WORD] = word_parser;
+	bzero_parsing(parser->parsing);
+	// parser->parsing[P_START][P_WORD] = word_parser;
 	parser = ft_init_graph(parser);
 	return (parser);
 }
 
-int check_lexer_tokens(e_parser_state current, e_parser_state needed, e_parser_state possible_state[])
+uint8_t check_lexer_tokens(e_parser_state *current, e_parser_state needed, e_parser_state possible_state[])
 {
-	int		i;
+	uint8_t		i;
 
 	i = 0;
 	if (possible_state == NULL)
 		return (0);
 	while (possible_state[i] != P_ERROR)
 	{
+		ft_printf("cu %u ne %u gd %u\n", *current, needed, possible_state[i]);
 		if (needed == possible_state[i])
 		{
-			current = needed;
+			*current = needed;
 			return (1);
 		}
 		i++;
@@ -152,10 +153,10 @@ void parser(t_core *shell, t_lexer *lexer)
 	if (!lexer || !shell)
 		return;
 	parser = ft_init_parser(parser);
-	while (((t_token*)lexer->tok->content)->id != P_TOKEN)
+	while (((t_token*)lexer->tok->content)->id != P_END)
 	{
-		// if (!(check_lexer_tokens(parser->state, ((t_token*)lexer->tok->content)->id, parser->graph[parser->state].good_type)))
-			ft_printf("%u       %s   %u\n", parser->state,((t_token*)lexer->tok->content)->data, ((t_token*)lexer->tok->content)->id);
+		if (!(check_lexer_tokens(&parser->state, ((t_token*)lexer->tok->content)->id, parser->graph[parser->state].good_type)))
+			ft_printf("eror %u       %s   %u\n", parser->state,((t_token*)lexer->tok->content)->data, ((t_token*)lexer->tok->content)->id);
 		// parser->parsing[parser->state][((t_token*)lexer->tok->content)->id](parser, lexer);
 		lexer->tok = lexer->tok->next;
 	}

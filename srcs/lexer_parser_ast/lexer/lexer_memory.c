@@ -18,7 +18,7 @@
 
 t_token		*lexer_token_set(t_token *token, e_parser_state opeid, char *data)
 {
-	if (token->id == TOK_WORD)
+	if (token->id == P_WORD)
 		free(token->data);
 	token->id = opeid;
 	if (!(token->data = ft_strdup(data))) //FREE LA DATA !!!!!!!!

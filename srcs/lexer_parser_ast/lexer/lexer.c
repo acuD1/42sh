@@ -21,7 +21,8 @@ void		start_lexer(t_lexer *lexer)
 {
 	if (lexer->buff[lexer->buf_pos] == '\0')
 	{
-		if (!(ft_add_token(&lexer->tok, P_TOKEN, "(null)")))
+		ft_add_token(&lexer->tok, P_NEWLINE, "\n"); //magouille en attendant
+		if (!(ft_add_token(&lexer->tok, P_END, "(null)")))
 			return;
 		lexer->ntok++;
 		lexer->status = END;

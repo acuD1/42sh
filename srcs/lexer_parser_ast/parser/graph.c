@@ -14,7 +14,7 @@
 
 void		init_word_graph(t_graph *graph)
 {
-	static e_parser_state tab_good_type[] = {P_WORD, ALL_REDIRECT, P_ASSIGN,
+	static e_parser_state tab_good_type[] = {P_NEWLINE, P_WORD, ALL_REDIRECT, P_ASSIGN,
 										P_IONUMBER, P_PIPE, P_END, P_ERROR};
 
 	graph[P_WORD].good_type = tab_good_type;

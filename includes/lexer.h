@@ -18,29 +18,29 @@
 typedef struct s_lexer t_lexer;
 typedef void (*t_lexing)(t_lexer*);
 
-typedef enum 	tokenid
-{
-	TOK_NEWLINE,    // \n
-	TOK_ANDIF,        // &&
-	TOK_AND,     // &
-	TOK_ORIF,     // ||
-	TOK_PIPE,       // |
-	TOK_DSEMI,      // ;;
-	TOK_SEMICOLON,        // ;
-	TOK_DLESSDASH,  // <<-
-	TOK_DLESS,      // <<
-	TOK_LESSGREAT,  // <>
-	TOK_LESSAND,    // <&
-	TOK_LESS,       // <
-	TOK_DGREAT,     // >>
-	TOK_GREATAND,   // >&
-	TOK_CLOBBER,    // >|
-	TOK_GREAT,      // >
-	TOKEN,          // NULL token
-	TOK_IONUMBER,   // number juste before '>' or '<'
-	TOK_ASSIGN,      // assignement_word stringwith an = final
-	TOK_WORD,      // all others
-} e_tokenid;
+// typedef enum 	tokenid
+// {
+// 	TOK_NEWLINE,    // \n
+// 	TOK_ANDIF,        // &&
+// 	TOK_AND,     // &
+// 	TOK_ORIF,     // ||
+// 	TOK_PIPE,       // |
+// 	TOK_DSEMI,      // ;;
+// 	TOK_SEMICOLON,        // ;
+// 	TOK_DLESSDASH,  // <<-
+// 	TOK_DLESS,      // <<
+// 	TOK_LESSGREAT,  // <>
+// 	TOK_LESSAND,    // <&
+// 	TOK_LESS,       // <
+// 	TOK_DGREAT,     // >>
+// 	TOK_GREATAND,   // >&
+// 	TOK_CLOBBER,    // >|
+// 	TOK_GREAT,      // >
+// 	TOKEN,          // NULL token
+// 	TOK_IONUMBER,   // number juste before '>' or '<'
+// 	TOK_ASSIGN,      // assignement_word stringwith an = final
+// 	TOK_WORD,      // all others
+// } e_tokenid;
 
 typedef enum    lexer_state {
 	START,

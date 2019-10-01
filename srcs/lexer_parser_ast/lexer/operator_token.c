@@ -63,7 +63,7 @@ void		operator_lexer(t_lexer *lexer)
 		lexer->status = END;
 	else
 	{
-		while (ope[i].id != TOKEN)
+		while (ope[i].id != P_TOKEN)
 		{
 			if (!strncmp(&lexer->buff[lexer->buf_pos], ope[i].data, ope[i].data_len))
 			{
