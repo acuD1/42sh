@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   auto_complete_current_dir.c                        :+:      :+:    :+:   */
+/*   ac_current_dir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 13:55:05 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/25 18:31:48 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/10/01 19:01:01 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,16 @@ uint8_t			is_tab(char *buff, char *d_name, t_read *input)
 	return (FALSE);
 }
 
-uint8_t			is_dot(char *d_name)
+int				is_dot(char *d_name)
 {
 	if (!ft_strcmp(d_name, "."))
 		return (TRUE);
 	else if (!ft_strcmp(d_name, ".."))
 		return (TRUE);
+	if (isstart(d_name, "./"))
+		return (FAILURE);
+	else if (isstart(d_name, "../"))
+		return (FAILURE);
 	return (FALSE);
 }
 

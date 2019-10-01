@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/01 15:53:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/01 19:27:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #include <sys/stat.h>
 
 /*
-**	Delete the last cmd in buffer if an another key tab is pressed
-**	Termcaps `ce' => clear from the cursor to the end of the current line
+**		Delete the last cmd in buffer if an another key tab is pressed
+**		Termcaps `clr_end' => clear from the cursor to the end of the current line
 */
 
 void			delete_last_cmd(char *d_name, t_read *input)
 {
-	int		i;
-	int		buff_index;
+	int			i;
+	int			buff_index;
 
 	i = ft_strlen(d_name);
 	buff_index = input->x_index - input->prompt_len - 1;
@@ -63,10 +63,11 @@ uint8_t			is_dir(char *dir)
 }
 
 /*
-**		Three auto_complete mode
+**		Four auto_complete mode
 **		- complete bin for the first argument only
 **		- display all files of current dir
 **		- complete char inserted with matching file
+**		- complete directories recursively
 */
 
 void			auto_complete_mode(char *buf, t_read *input)
@@ -90,10 +91,10 @@ void			auto_complete_mode(char *buf, t_read *input)
 	}
 	else if (input->ac == 1)
 	{
-		if (isstart(input->buffer, "./"))
+		if (is_dot(input->buffer) == FAILURE || isstart(input->buffer, "/"))
 			read_directories(buf, to_find, input);
 		else
-			walking_path_var(buf, to_find, input);
+			to_complete_bin(buf, to_find, input);
 		if (input->found == 0)
 			to_complete_buffer(buf, last_buf, to_find, input);
 	}

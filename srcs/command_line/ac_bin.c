@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   auto_complete_bin.c                                :+:      :+:    :+:   */
+/*   ac_bin.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 13:38:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/25 18:29:59 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/10/01 18:45:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
-** Split all bin/sbin directories in an array
+** 		Split all bin/sbin directories in an array
 */
 
 char			**split_path(char **env, char *str)
@@ -39,7 +39,7 @@ char			**split_path(char **env, char *str)
 }
 
 /*
-** Function to save in buffer the current bin found at buffer[0]
+** 		Function to save in buffer the current bin found at buffer[0]
 */
 
 void			insert_bin_in_buffer(char *d_name, t_read *input)
@@ -58,8 +58,8 @@ void			insert_bin_in_buffer(char *d_name, t_read *input)
 }
 
 /*
-** Check if the buffer match with the current bin
-** Return true if another tab key is pressed or no match found
+** 		Check if the buffer match with the current bin
+** 		Return true if another tab key is pressed or no match found
 */
 
 uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
@@ -84,16 +84,16 @@ uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 }
 
 /*
-** Open directories in the PATH variable
-** Check if an exe bin already exists with the curr buffer inserted
+** 		Open directories in the PATH variable
+** 		Check if an exe bin already exists with the curr buffer inserted
 */
 
-void			walking_path_var(char *buf, char *to_find, t_read *input)
+void				to_complete_bin(char *buf, char *to_find, t_read *input)
 {
 	struct dirent	*data;
-	DIR		*dir;
-	char		**path;
-	int		i;
+	DIR				*dir;
+	char			**path;
+	int				i;
 
 	i = -1;
 	path = split_path(input->env, "PATH");
@@ -113,5 +113,5 @@ void			walking_path_var(char *buf, char *to_find, t_read *input)
 		}
 		closedir(dir);
 	}
-	input->found == 1 ? walking_path_var(buf, to_find, input) : 0;
+	input->found == 1 ? to_complete_bin(buf, to_find, input) : 0;
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   auto_complete_buffer.c                             :+:      :+:    :+:   */
+/*   ac_buffer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 13:48:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/01 15:05:07 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/10/01 19:33:00 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,15 @@ uint8_t			read_dir(char *buf, char **prev_b, char *to_find, t_read *input)
 
 	if (!getcwd(current_dir, BUFF_SIZE))
 		return (FAILURE);
+	/* found = ft_strlen(*prev_b); */
+	/* while (*prev_b[found--]) */
+	/* { */
+	/* 	printf("%d [%c]\n", found, *prev_b[found]); */
+	/* 	if (*prev_b[found] == '/') */
+	/* 	{ */
+	/* 		//ft_strncpy(current_dir, *prev_b, found); */
+	/* 	} */
+	/* } */
 	dir = opendir(current_dir);
 	while ((data = readdir(dir)) != NULL)
 	{
