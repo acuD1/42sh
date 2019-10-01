@@ -13,6 +13,8 @@
 #ifndef LEXER_H
 # define LEXER_H
 
+#include "parser.h"
+
 typedef struct s_lexer t_lexer;
 typedef void (*t_lexing)(t_lexer*);
 
@@ -52,9 +54,10 @@ typedef enum    lexer_state {
 
 typedef struct 	s_token
 {
-	e_tokenid   id;
-	char        *data;
-	size_t      data_len;
+	// e_tokenid   	id;
+	e_parser_state 	id;
+	char        	*data;
+	size_t      	data_len;
 ;} 				t_token;
 
 typedef struct  s_lexer
@@ -82,9 +85,9 @@ void			number_lexer(t_lexer *lexer);
 void			assignement_word_lexer(t_lexer *lexer);
 void			operator_lexer(t_lexer *lexer);
 void			ft_printtoklist(t_lexer *lexer);
-t_lst			*ft_add_token(t_lst **curr, e_tokenid opeid, char *data);
+t_lst			*ft_add_token(t_lst **curr, e_parser_state opeid, char *data);
 t_lexer			*init_lexer(t_core *shell, char *line);
-t_token 		*lexer_token_set(t_token *token, e_tokenid opeid, char *data);
-t_lst			*ft_create_token(char *data, e_tokenid opeid);
+t_token 		*lexer_token_set(t_token *token, e_parser_state opeid, char *data);
+t_lst			*ft_create_token(char *data, e_parser_state opeid);
 #endif
 

@@ -16,7 +16,7 @@
 ** SET UN TOKEN LEXER /!\ FREE(DATA) /!\
 */
 
-t_token		*lexer_token_set(t_token *token, e_tokenid opeid, char *data)
+t_token		*lexer_token_set(t_token *token, e_parser_state opeid, char *data)
 {
 	if (token->id == TOK_WORD)
 		free(token->data);
@@ -30,7 +30,7 @@ t_token		*lexer_token_set(t_token *token, e_tokenid opeid, char *data)
 	return (token);
 }
 
-t_lst	*ft_create_token(char *data, e_tokenid opeid)
+t_lst	*ft_create_token(char *data, e_parser_state opeid)
 {
 	t_lst		*new;
 	t_token		*tok;
@@ -50,7 +50,7 @@ t_lst	*ft_create_token(char *data, e_tokenid opeid)
 ** CREE LES TOKENS LEXER 
 */
 
-t_lst			*ft_add_token(t_lst **curr, e_tokenid opeid, char *data)
+t_lst			*ft_add_token(t_lst **curr, e_parser_state opeid, char *data)
 {
 	t_lst		*tmp;
 	t_lst		*new;

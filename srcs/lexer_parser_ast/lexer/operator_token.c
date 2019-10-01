@@ -14,30 +14,30 @@
 
 static const t_token    ope[] =
 {
-	{TOK_NEWLINE, "\n", 1},
-	{TOK_ANDIF , "&&", 2},
-	{TOK_AND, "&", 1},
-	{TOK_ORIF, "||", 2},
-	{TOK_PIPE, "|", 1},
-	{TOK_DSEMI, ";;", 2},
-	{TOK_SEMICOLON, ";", 1},
-	{TOK_DLESSDASH, "<<-", 3},
-	{TOK_DLESS, "<<", 2},
-	{TOK_LESSGREAT, "<>", 2},
-	{TOK_LESSAND, "<&", 2},
-	{TOK_LESS, "<", 1},
-	{TOK_DGREAT, ">>", 2},
-	{TOK_GREATAND, ">&", 2},
-	{TOK_CLOBBER, ">|", 2},
-	{TOK_GREAT, ">", 1},
-	{TOKEN, NULL, 0}
+	{P_NEWLINE, "\n", 1},
+	{P_ANDIF , "&&", 2},
+	{P_AND, "&", 1},
+	{P_ORIF, "||", 2},
+	{P_PIPE, "|", 1},
+	{P_DSEMI, ";;", 2},
+	{P_SEMICOLON, ";", 1},
+	{P_DLESSDASH, "<<-", 3},
+	{P_DLESS, "<<", 2},
+	{P_LESSGREAT, "<>", 2},
+	{P_LESSAND, "<&", 2},
+	{P_LESS, "<", 1},
+	{P_DGREAT, ">>", 2},
+	{P_GREATAND, ">&", 2},
+	{P_CLOBBER, ">|", 2},
+	{P_GREAT, ">", 1},
+	{P_TOKEN, NULL, 0}
 };
 
 /*
 ** STATE CREANT LES TOKENS DE LA STRUCT OPE CI DESSUS
 */
 
-static int	create_operator_token(t_lexer *lexer, enum tokenid id, int len)
+static int	create_operator_token(t_lexer *lexer, e_parser_state id, int len)
 {
 	char 	*buf;
 

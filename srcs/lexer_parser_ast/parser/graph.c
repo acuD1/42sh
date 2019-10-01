@@ -69,7 +69,7 @@ void		init_start_graph(t_graph *graph)
 	graph[P_NEWLINE].good_type = tab_good_type;
 }
 
-void 		ft_init_graph(t_parser *parser)
+t_parser 	*ft_init_graph(t_parser *parser)
 {
 	init_start_graph(parser->graph);
 	init_redirect_graph(parser->graph);
@@ -77,4 +77,5 @@ void 		ft_init_graph(t_parser *parser)
 	init_pipe_graph(parser->graph);
 	init_ionumber_graph(parser->graph);
 	init_word_graph(parser->graph);
+	return (parser);
 }

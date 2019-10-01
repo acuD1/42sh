@@ -53,10 +53,11 @@
 // 	parser->parsing[P_END][TOK_CLOBBER] = redirect_parser;
 // 	parser->parsing[P_END][TOK_GREAT] = redirect_parser;
 // 	parser->parsing[P_END][TOK_IONUMBER] = ionbr_parser;
-// 	parser->parsing[P_END][TOK_ASSIGN] = assign_parser;
+// 	parser->parsing[P_EN7D][TOK_ASSIGN] = assign_parser;
 // 	parser->parsing[P_END][TOK_WORD] = word_parser;
 // 	parser->parsing[P_END][TOKEN] = end_parser;
 // }
+
 void word_parser(t_parser *parser, t_lexer* lexer)
 {
 	ft_printf("WOWOWORD   %u         %s\n", parser->state, ((t_token*)lexer->tok->content)->data);
@@ -65,9 +66,14 @@ void word_parser(t_parser *parser, t_lexer* lexer)
 	// PB Les tokens sont dans lexer*
 }
 
+// void pipe_parser(t_parser *parser, t_lexer* lexer)
+// {
+// 	init_prompt(t)
+// }
+
 void error_parser(t_parser *parser, t_lexer* lexer)
 {
-	ft_printf("EROOROROROR   %u         %s\n", parser->state, ((t_token*)lexer->tok->content)->data);
+	ft_printf("WOWOWORD   %u         %s\n", parser->state, ((t_token*)lexer->tok->content)->data);
 }
 
 // void ft_init_start_graph(t_parsing *parser)
@@ -93,33 +99,50 @@ void error_parser(t_parser *parser, t_lexer* lexer)
 	// parser->parsing[P_START][TOKEN] = end_parser;
 // }
 
-static void	bzero_parsing(t_pars parsing)
-{
-	int		index;
-	int		state;
+// static void	bzero_parsing(t_pars parsing)
+// {
+// 	int		index;
+// 	int		state;
 
-	index = 0;
-	while (index < NB_PARSER_STATE)
-	{
-		state = 0;
-		while (state < NB_OF_TOKENS)
-			parsing[index][state++] = error_parser;
-		++index;
-	}
-}
+// 	index = 0;
+// 	while (index < NB_PARSER_STATE)
+// 	{
+// 		state = 0;
+// 		while (state < NB_OF_TOKENS)
+// 			parsing[index][state++] = error_parser;
+// 		++index;
+// 	}
+// }
 
 t_parser *ft_init_parser(t_parser *parser)
 {
 	if (!(parser = (t_parser*)malloc(sizeof(t_parser))))
 		return (NULL);
 	parser->state = P_START;
-	bzero_parsing(parser->parsing);
-	parser->parsing[P_START][TOK_WORD] = word_parser;
-	ft_init_graph(parser);
+	// bzero_parsing(parser->parsing);
+	// parser->parsing[P_START][TOK_WORD] = word_parser;
+	parser = ft_init_graph(parser);
 	return (parser);
 }
 
-// int check_lexer_tokens(e_tokenid current, e_tokenid next, )
+int check_lexer_tokens(e_parser_state current, e_parser_state needed, e_parser_state possible_state[])
+{
+	int		i;
+
+	i = 0;
+	if (possible_state == NULL)
+		return (0);
+	while (possible_state[i] != P_ERROR)
+	{
+		if (needed == possible_state[i])
+		{
+			current = needed;
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 void parser(t_core *shell, t_lexer *lexer)
 {
@@ -129,10 +152,11 @@ void parser(t_core *shell, t_lexer *lexer)
 	if (!lexer || !shell)
 		return;
 	parser = ft_init_parser(parser);
-	while (((t_token*)lexer->tok->content)->id != TOKEN)
+	while (((t_token*)lexer->tok->content)->id != P_TOKEN)
 	{
-		ft_printf("%u       %s   %zu\n", parser->state,((t_token*)lexer->tok->content)->data, ((t_token*)lexer->tok->content)->id);
-		parser->parsing[parser->state][((t_token*)lexer->tok->content)->id](parser, lexer);
+		// if (!(check_lexer_tokens(parser->state, ((t_token*)lexer->tok->content)->id, parser->graph[parser->state].good_type)))
+			ft_printf("%u       %s   %u\n", parser->state,((t_token*)lexer->tok->content)->data, ((t_token*)lexer->tok->content)->id);
+		// parser->parsing[parser->state][((t_token*)lexer->tok->content)->id](parser, lexer);
 		lexer->tok = lexer->tok->next;
 	}
 }
