@@ -141,6 +141,7 @@ SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
 
 SRC		+=	$(S_PATH)$(PARSER)parser.c
 SRC		+=	$(S_PATH)$(PARSER)graph.c
+SRC		+=	$(S_PATH)$(PARSER)tree.c
 
 SRC		+=	$(S_PATH)dev.c
 # Headers
@@ -149,7 +150,7 @@ HDR			+=	sh42.h
 HDR			+=	define.h
 HDR			+=	struct.h
 HDR			+=	builtins.h
-HDR			+=	lexer.h
+HDR			+=	lexer_parser_ast.h
 HDR			+=	command_line.h
 HDR			+=	shared_libft.h
 ###############################################################################

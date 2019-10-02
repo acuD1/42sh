@@ -17,8 +17,7 @@
 # include "define.h"
 # include "struct.h"
 # include "command_line.h"
-# include "lexer.h"
-# include "parser.h"
+# include "lexer_parser_ast.h"
 # include <sys/wait.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>

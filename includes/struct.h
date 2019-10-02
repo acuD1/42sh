@@ -28,6 +28,16 @@ typedef struct	s_build
 }				t_build;
 
 /*
+** Lexer_parser_ast
+*/
+
+typedef struct s_lexer 	t_lexer;
+typedef struct s_parser	t_parser;
+typedef struct s_ast 	b_ast;
+typedef struct s_node 	b_node;
+
+
+/*
 **	t_db is formated to support environnement variables ; {key} and {value}
 */
 
@@ -48,6 +58,7 @@ typedef struct	s_core
 	/* structs */
 	t_build		build;
 	t_db		db;
+	b_ast		*ast;
 
 	/* init shell */
 	//struct termios	new_t;

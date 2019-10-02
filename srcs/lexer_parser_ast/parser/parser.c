@@ -148,16 +148,24 @@ uint8_t check_lexer_tokens(e_parser_state *current, e_parser_state needed, e_par
 void parser(t_core *shell, t_lexer *lexer)
 {
 	t_parser	*parser;
+	t_lst		**head;
 
 	parser = NULL;
+	head = &lexer->tok;
 	if (!lexer || !shell)
 		return;
 	parser = ft_init_parser(parser);
 	while (((t_token*)lexer->tok->content)->id != P_END)
 	{
 		if (!(check_lexer_tokens(&parser->state, ((t_token*)lexer->tok->content)->id, parser->graph[parser->state].good_type)))
+		{
 			ft_printf("eror %u       %s   %u\n", parser->state,((t_token*)lexer->tok->content)->data, ((t_token*)lexer->tok->content)->id);
+			break;
+		}
 		// parser->parsing[parser->state][((t_token*)lexer->tok->content)->id](parser, lexer);
 		lexer->tok = lexer->tok->next;
 	}
+	if (!lexer->tok)
+		lexer->tok = *head;
+	shell->ast = ast(lexer);
 }

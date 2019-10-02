@@ -1,21 +1,32 @@
 
+// typedef enum 	tokenid
+// {
+// 	TOK_NEWLINE,    // \n
+// 	TOK_ANDIF,        // &&
+// 	TOK_AND,     // &
+// 	TOK_ORIF,     // ||
+// 	TOK_PIPE,       // |
+// 	TOK_DSEMI,      // ;;
+// 	TOK_SEMICOLON,        // ;
+// 	TOK_DLESSDASH,  // <<-
+// 	TOK_DLESS,      // <<
+// 	TOK_LESSGREAT,  // <>
+// 	TOK_LESSAND,    // <&
+// 	TOK_LESS,       // <
+// 	TOK_DGREAT,     // >>
+// 	TOK_GREATAND,   // >&
+// 	TOK_CLOBBER,    // >|
+// 	TOK_GREAT,      // >
+// 	TOKEN,          // NULL token
+// 	TOK_IONUMBER,   // number juste before '>' or '<'
+// 	TOK_ASSIGN,      // assignement_word stringwith an = final
+// 	TOK_WORD,      // all others
+// } e_tokenid;
 
 // t_ast        *parser(t_core shell, t_parser *parser);
 
 
-// #define NODETYPE(a) (a & (~NODE_DATA))   // ge7t the type of the nodes
-// typedef struct b_ast
-// {
-//     int type;
-//     char *data;
-//     struct ast* left;
-//     struct ast* right;
-// } ast;
-
-// void astAttachBinaryBranch (ast *root , ast *leftNode , ast *rightNode);
-// void astSetType (ast *node , nodetype nodetype);
-// void astSetData (ast *node , char *data );
-// void astDelete (ast *node );
+// #define NODETYPE(a) (a & (~NODE_DATA))   // get the type of the nodes
 
 // typedef struct      quote
 // {
