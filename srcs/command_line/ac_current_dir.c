@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/01 19:01:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/02 16:25:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ uint8_t			is_tab(char *buff, char *d_name, t_read *input)
 			return (TRUE);
 		}
 		else
+		{
+			//check_caps(buff, input);
 			return (FALSE);
+		}
 	}
 	return (FALSE);
 }
@@ -41,10 +44,10 @@ int				is_dot(char *d_name)
 		return (TRUE);
 	else if (!ft_strcmp(d_name, ".."))
 		return (TRUE);
-	if (isstart(d_name, "./"))
-		return (FAILURE);
-	else if (isstart(d_name, "../"))
-		return (FAILURE);
+	/* if (isstart(d_name, "./")) */
+	/* 	return (FAILURE); */
+	/* else if (isstart(d_name, "../")) */
+	/* 	return (FAILURE); */
 	return (FALSE);
 }
 

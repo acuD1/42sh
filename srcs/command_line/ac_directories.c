@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:27:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/01 19:06:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/02 13:18:14 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ void				read_directories(char *buf, char *to_find, t_read *input)
 	}
 	else
 		return ;
-	read_directories(buf, to_find, input);
+	input->found == TRUE ? read_directories(buf, to_find, input) : 0;
 }

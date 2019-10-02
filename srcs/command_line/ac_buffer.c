@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/01 19:33:00 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/02 16:52:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ uint8_t			read_again(char **prev_b, char *buff, char *name, t_read *input)
 			return (TRUE);
 		}
 		else
+		{
+			check_caps(buff, input);
 			return (FALSE);
+		}
 	}
 	return (FALSE);
 }
@@ -101,15 +104,21 @@ uint8_t			read_dir(char *buf, char **prev_b, char *to_find, t_read *input)
 
 	if (!getcwd(current_dir, BUFF_SIZE))
 		return (FAILURE);
-	/* found = ft_strlen(*prev_b); */
-	/* while (*prev_b[found--]) */
+
+	/* found = ft_strlen(to_find); */
+	/* printf("[%s]\n", to_find, ft_strlen(to_find)); */
+	/* while (to_find[--found]) */
 	/* { */
-	/* 	printf("%d [%c]\n", found, *prev_b[found]); */
-	/* 	if (*prev_b[found] == '/') */
+	/* 	if (to_find[found] == '/') */
 	/* 	{ */
-	/* 		//ft_strncpy(current_dir, *prev_b, found); */
+	/* 		ft_bzero(current_dir, BUFF_SIZE); */
+	/* 		ft_strncpy(current_dir, prev_b, found + 1); */
+	/* 		to_find = ft_strrchr(to_find, '/') + 1; */
+	/* 		ft_bzero(prev_b, ft_strlen(prev_b)); */
+	/* 		ft_strcpy(prev_b, saved); */
 	/* 	} */
 	/* } */
+	/* printf("[%s]\n", current_dir); */
 	dir = opendir(current_dir);
 	while ((data = readdir(dir)) != NULL)
 	{
@@ -137,6 +146,9 @@ void			to_complete_buffer(char *buf, char *prev_b, char *to_find, t_read *input)
 	int				found;
 
 	found = FALSE;
+	/*
+	**		parse_env will be replace by intern_var list (2bcontinued)
+	*/
 	if (isstart(to_find, "$"))
 	{
 		parse_env(buf, prev_b, to_find, input);

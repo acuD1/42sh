@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/01 19:27:12 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/02 13:19:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void			auto_complete_mode(char *buf, t_read *input)
 	}
 	else if (input->ac == 1)
 	{
-		if (is_dot(input->buffer) == FAILURE || isstart(input->buffer, "/"))
+		if (is_dir(input->buffer) || isstart(input->buffer, "/"))
 			read_directories(buf, to_find, input);
 		else
 			to_complete_bin(buf, to_find, input);
