@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/09/30 05:26:02 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/02 04:32:04 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,60 +25,47 @@ int8_t	parse_export(int argc, char **argv)
 	return (SUCCESS);
 }
 
-int		check_export_arg(char *arg)
-{
-	int	i;
-
-	i = 0;
-	while (arg[i])
-	{
-		if (i > 0 && arg[i] == '=')
-			return (i);
-		if (ft_isalnum(arg[i]) != SUCCESS)
-			return (-1);
-		i++;
-	}
-	return (0);
-}
-
 int8_t	export(t_core *shell, char *arg)
 {
 	t_db	*db;
-	char	*key;
-	int		i;
+	char	*str;
+	int		len;
 
 	db = NULL;
-	key = NULL;
-	if ((i = check_export_arg(arg)) < 0)
-	{
-		dprintf(STDERR_FILENO, "pistash: export: `%s': not a valid identifier\n", arg);
-		return (FAILURE);
-	}
-	if (!(key = (i == 0) ? ft_strdup(arg) : ft_strsub(arg, 0, i)))
-		return (FAILURE);
-	db = get_or_create_db(shell, key, ENV_VAR);
-	ft_strdel(&key);
+	len = ft_strclen(arg, '=');
+	str = ft_strsub(arg, 0, len);
+	db = get_or_create_db(shell, str, ENV_VAR);
+	ft_strdel(&str);
 	if (!db)
 		return (FAILURE);
-	modify_db(db, (i != 0) ? ft_strdup(arg + i + 1) : NULL, ENV_VAR);
+	str = ((int)ft_strlen(arg) > len) ? ft_strdup(arg + len + 1) : NULL;
+	modify_db(db, str, ENV_VAR);
 	return (SUCCESS);
 }
 
 int8_t	builtin_export(t_core *shell)
 {
 	int		parsing_ret;
-	int		i;
 	int		argc;
+	int		ret;
+	int		i;
 
-	argc = ft_tablen(shell->tokens);
-	parsing_ret = parse_export(argc, shell->tokens);
 	i = 1;
-	if (parsing_ret > 0)
+	ret = 0;
+	argc = ft_tablen(shell->tokens);
+	if ((parsing_ret = parse_export(argc, shell->tokens)) != SUCCESS)
 		return (parsing_ret);
 	while (i < argc)
 	{
-		export(shell, shell->tokens[i]);
+		if (check_invalid_identifiers(shell->tokens[i], "=")
+				|| ft_isdigit(shell->tokens[i][0]) != SUCCESS)
+		{
+			ret = 1;
+			dprintf(STDERR_FILENO, "pistash: export: `%s': not a valid identifier\n", shell->tokens[i]);
+		}
+		else
+			export(shell, shell->tokens[i]);
 		i++;
 	}
-	return (SUCCESS);
+	return (ret);
 }

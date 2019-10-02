@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/30 05:25:09 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/02 02:55:42 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void			load_prompt(t_core *shell)
 		print_tokens(shell);
 
 		/* Same here, mainly binary executions, need rework */
-		if (exec_builtin(shell) != SUCCESS)
+		if (exec_builtin(shell) == FAILURE)
 			exec_process(shell, shell->env);
 		free_prompt(shell, line);
 	}

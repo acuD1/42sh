@@ -112,6 +112,8 @@ SRC		+=	$(S_PATH)$(BLTINS)unset.c
 SRC		+=	$(S_PATH)$(BLTINS)export.c
 
 SRC		+=	$(S_PATH)$(MISC)usage.c
+SRC		+=	$(S_PATH)$(MISC)recall.c
+SRC		+=	$(S_PATH)$(MISC)check_args.c
 
 SRC		+=	$(S_PATH)$(EXEC)exec_process.c
 SRC		+=	$(S_PATH)$(EXEC)exec_builtin.c

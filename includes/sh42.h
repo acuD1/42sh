@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/30 05:08:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/02 02:52:46 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void		print_hash_map(t_hash *hash);
 */
 
 void		print_usage(char *name, int c, char *usage);
+t_core		*get_core(t_core *core);
+int			check_invalid_identifiers(char *arg, char *exceptions);
 
 /*
 **	===========================================================================
