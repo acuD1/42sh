@@ -106,6 +106,7 @@ SRC		+=	$(S_PATH)$(DB)set_updates.c
 SRC		+=	$(S_PATH)$(DB)db_tools.c
 SRC		+=	$(S_PATH)$(DB)history.c
 SRC		+=	$(S_PATH)$(DB)version.c
+SRC		+=	$(S_PATH)$(DB)special_vars.c
 
 SRC		+=	$(S_PATH)$(BLTINS)set.c
 SRC		+=	$(S_PATH)$(BLTINS)unset.c

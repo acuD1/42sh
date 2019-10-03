@@ -15,6 +15,6 @@
 void	print_usage(char *name, int c, char *usage)
 {
 	if (c > 0)
-		dprintf(STDERR_FILENO, "pistash: %s: -%c: invalid option\n", name, c);
-	dprintf(STDERR_FILENO, "%s: usage: %s", name, usage);
+		dprintf(STDERR_FILENO, "42sh: %s: -%c: invalid option\n", name, c);
+	dprintf(STDERR_FILENO, "%s: usage: %s\n", name, usage);
 }

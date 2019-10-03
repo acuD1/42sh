@@ -1,0 +1,108 @@
+srcs/builtins/export.c:	argc = ft_tablen(shell->tokens);
+srcs/builtins/export.c:	if ((parsing_ret = parse_export(argc, shell->tokens)) != SUCCESS)
+srcs/builtins/export.c:		if (check_invalid_identifiers(shell->tokens[i], "=")
+srcs/builtins/export.c:				|| ft_isdigit(shell->tokens[i][0]) != SUCCESS)
+srcs/builtins/export.c:			dprintf(STDERR_FILENO, "pistash: export: `%s': not a valid identifier\n", shell->tokens[i]);
+srcs/builtins/export.c:		else if (export(shell, shell->tokens[i]) != SUCCESS)
+srcs/builtins/set.c:	ptr = shell->env;
+srcs/builtins/set.c:	shell->db.key = ft_itoa(count);
+srcs/builtins/set.c:	shell->db.value = ft_strdup(arg);
+srcs/builtins/set.c:	shell->db.type = SPECIAL_VAR;
+srcs/builtins/set.c:	if (!shell->db.key || !shell->db.value || ft_lstappend(&shell->pos_vars
+srcs/builtins/set.c:				, ft_lstnew(&shell->db, sizeof(t_db))) == NULL)
+srcs/builtins/set.c:		ft_strdel(&(shell->db.key));
+srcs/builtins/set.c:		ft_strdel(&(shell->db.value));
+srcs/builtins/set.c:	i = (shell->tokens[1][0] != '-') ? 1 : 2;
+srcs/builtins/set.c:	free_env(shell->pos_vars);
+srcs/builtins/set.c:	shell->pos_vars = NULL;
+srcs/builtins/set.c:		if (new_positional_var(shell, shell->tokens[i], i) != SUCCESS)
+srcs/builtins/set.c:	argc = ft_tablen(shell->tokens);
+srcs/builtins/set.c:	if ((parsing_ret = parse_set(argc, shell->tokens)) > 0)
+srcs/builtins/unset.c:	argc = ft_tablen(shell->tokens);
+srcs/builtins/unset.c:	if ((parsing_ret = parse_unset(argc, shell->tokens) > 0))
+srcs/builtins/unset.c:		if (check_invalid_identifiers(shell->tokens[i], "") != SUCCESS)
+srcs/builtins/unset.c:			dprintf(STDERR_FILENO, "pistash: export: `%s': not a valid identifier\n", shell->tokens[i]);
+srcs/builtins/unset.c:			del_db(shell, shell->tokens[i]);
+srcs/core/free_handler.c:	ft_strdel(&shell->bin);
+srcs/core/free_handler.c:	ft_tabdel(&shell->tokens);
+srcs/core/load_prompt.c:			exec_process(shell, shell->env);
+srcs/core/output.c:		shell->build.release, shell->build.version, shell->build.patch,
+srcs/core/output.c:	if (shell->opt & OPT_HELP)
+srcs/core/output.c:	if (shell->opt & OPT_VERS)
+srcs/core/output.c:			shell->build.release, shell->build.version,
+srcs/core/output.c:			shell->build.patch, shell->build.date);
+srcs/db/db_tools.c:	db = search_db(shell->env, key);
+srcs/db/db_tools.c:		ft_lstappend(&(shell->env),
+srcs/db/db_tools.c:			ft_lstnew(fetch_db(&(shell->db), key, var_type), sizeof(t_db)));
+srcs/db/db_tools.c:		db = search_db(shell->env, key);
+srcs/db/db_tools.c:	prev = shell->env;
+srcs/db/db_tools.c:	env = shell->env;
+srcs/db/db_tools.c:		**	linking the previous link (or shell->env pointer) to the next link
+srcs/db/db_tools.c:			shell->env = env->next;
+srcs/db/get_opt.c:**	[BETA] The get_opt fonction parses char **av in main. Fill shell->opt and
+srcs/db/get_opt.c:		shell->opt |= OPT_VERS;
+srcs/db/get_opt.c:		shell->opt |= OPT_HELP;
+srcs/db/get_tokens.c:	shell->tokens = ft_strsplit(line, " \t");
+srcs/db/get_tokens.c:	if (ft_tablen(shell->tokens) == 0)
+srcs/db/init_shell.c:	shell->build.release = BUILDR;
+srcs/db/init_shell.c:	shell->build.version = BUILDV;
+srcs/db/init_shell.c:	shell->build.patch = BUILDP + 1;
+srcs/db/init_shell.c:	shell->build.date = DATE;
+srcs/db/init_shell.c:	shell->hash.map = NULL;
+srcs/db/init_shell.c:	shell->hash.value = 0;
+srcs/db/init_shell.c:	shell->hash.size = HASH_SIZE;
+srcs/db/init_shell.c:	shell->hash.lenght = 0;
+srcs/db/init_shell.c:	shell->env = NULL;
+srcs/db/init_shell.c:	shell->tokens = NULL;
+srcs/db/init_shell.c:	shell->bin = NULL;
+srcs/db/init_shell.c:	shell->opt = 0;
+srcs/db/set_env.c:		ft_lstappend(&shell->env,
+srcs/db/set_env.c:			ft_lstnew(fetch_db(&shell->db, environ[i], ENV_VAR), sizeof(t_db)));
+srcs/db/set_env.c:	if (shell->env == NULL)
+srcs/db/set_updates.c:	if (shell != NULL && search_db(shell->env, "TERM") == NULL)
+srcs/db/set_updates.c:		if (ft_lstappend(&(shell->env), ft_lstnew(
+srcs/db/set_updates.c:				fetch_db(&(shell->db), "TERM=dumb", INTERNAL_VAR), sizeof(t_db))) != NULL)
+srcs/db/special_vars.c:		value = ft_itoa(ft_lstlen(shell->pos_vars));
+srcs/db/version.c:	ft_itoabuf(shell->build.release, version);
+srcs/db/version.c:	ft_itoabuf(shell->build.version, version);
+srcs/db/version.c:	ft_itoabuf(shell->build.patch, version);
+srcs/dev.c:	tokens = shell->tokens;
+srcs/dev.c:	env = shell->env;
+srcs/exec/exec_builtin.c:	if ((ret = ft_tabchr(blt_names, shell->tokens[0])) == NULL
+srcs/exec/exec_handler.c:	if (lstat(shell->tokens[0], &stat) == 0
+srcs/exec/exec_handler.c:		&& S_ISDIR(stat.st_mode) && shell->exp == 1)
+srcs/exec/exec_handler.c:			shell->tokens[0]);
+srcs/exec/exec_handler.c:	else if (shell->env_mode)
+srcs/exec/exec_handler.c:			shell->tokens[0]);
+srcs/exec/exec_handler.c:		shell->tokens[0]);
+srcs/exec/exec_handler.c:	if (access(shell->tokens[0], F_OK) == -1)
+srcs/exec/exec_handler.c:			"42sh: %s: No such file or directory\n", shell->tokens[0]);	/* /!\ */
+srcs/exec/exec_handler.c:			shell->tokens[0]);	/* /!\ */
+srcs/exec/exec_process.c:	shell->bin = get_bin(shell, env);
+srcs/exec/exec_process.c:	if (shell->bin == NULL)
+srcs/exec/exec_process.c:	if (access(shell->bin, X_OK) == FAILURE)
+srcs/exec/exec_process.c:	if (child == 0 && execve(shell->bin, shell->tokens, envp) < 0)
+srcs/exec/get_bin.c:	if ((lstat(shell->tokens[0], &stat) == 0 && S_ISDIR(stat.st_mode))
+srcs/exec/get_bin.c:		|| !shell->tokens[0]
+srcs/exec/get_bin.c:		|| (shell->tokens[0][0] == '.' && !shell->tokens[0][1]))
+srcs/exec/get_bin.c:	**	We set the shell->bin variable if tokens[0] is a local binary here
+srcs/exec/get_bin.c:	if ((shell->tokens[0][0] == '.'
+srcs/exec/get_bin.c:		|| shell->tokens[0][0] == '/') && shell->tokens[0][1])
+srcs/exec/get_bin.c:		return (shell->bin = ft_strdup(shell->tokens[0]));
+srcs/exec/get_bin.c:	//print_hash_map(&shell->hash);							//Shows error with valgrind ??
+srcs/exec/get_bin.c:	if (locate_hash(shell, &shell->hash) == SUCCESS)
+srcs/exec/get_bin.c:		return (shell->bin);
+srcs/exec/get_bin.c:			path = get_bin_path(split_path, shell->tokens[0]);
+srcs/exec/get_bin.c:			shell->bin = ft_strjoinf(path , ft_strjoin("/", shell->tokens[0]),
+srcs/exec/get_bin.c:			add_hash_map(shell, &shell->hash);
+srcs/exec/get_bin.c:	return (shell->bin);
+srcs/exec/hash_map/add_hash_map.c:	if (shell->bin == NULL)
+srcs/exec/hash_map/add_hash_map.c:	hash->value = get_hash(shell->tokens[0], hash->size);
+srcs/exec/hash_map/add_hash_map.c:		ft_lstnew(fetch_hash_db(&shell->db, shell->tokens[0],
+srcs/exec/hash_map/add_hash_map.c:						shell->bin), sizeof(t_db)));
+srcs/exec/hash_map/locate_hash.c:	hash->value = get_hash(shell->tokens[0], hash->size);
+srcs/exec/hash_map/locate_hash.c:		if (ft_strequ(shell->tokens[0], ((t_db*)(sub_map->content))->key))
+srcs/exec/hash_map/locate_hash.c:			shell->bin = ft_strdup(((t_db*)(sub_map->content))->value);
+srcs/exec/hash_map/resize_hash_map.c:				ft_lstnew(fetch_hash_db(&shell->db,
+srcs/exec/set_envp.c:	env = shell->env;
+srcs/exec/set_envp.c:	env = shell->env;

@@ -25,19 +25,28 @@ int8_t	parse_export(int argc, char **argv)
 	return (SUCCESS);
 }
 
-int8_t	export(t_core *shell, char *arg)
+int8_t	export(t_core *shell, char *arg, int *ret)
 {
 	t_db	*db;
 	char	*str;
 	int		len;
 
-	db = NULL;
 	len = ft_strclen(arg, '=');
 	str = ft_strsub(arg, 0, len);
-	db = get_or_create_db(shell, str, ENV_VAR);
-	ft_strdel(&str);
-	if (!db)
+	if (str && (check_invalid_identifiers(str, "=")
+			|| ft_isdigit(arg[0]) != SUCCESS))
+	{
+		*ret = 1;
+		dprintf(STDERR_FILENO, "42sh: export: `%s': not a valid identifier\n", arg);
+		ft_strdel(&str);
+		return (SUCCESS);
+	}
+	else if (!str || !(db = get_or_create_db(shell, str, ENV_VAR)))
+	{
+		ft_strdel(&str);
 		return (FAILURE);
+	}
+	ft_strdel(&str);
 	str = ((int)ft_strlen(arg) > len) ? ft_strdup(arg + len + 1) : NULL;
 	modify_db(db, str, ENV_VAR);
 	return (SUCCESS);
@@ -45,26 +54,19 @@ int8_t	export(t_core *shell, char *arg)
 
 int8_t	builtin_export(t_core *shell)
 {
-	int		parsing_ret;
 	int		argc;
 	int		ret;
 	int		i;
 
-	i = 1;
-	ret = 0;
 	argc = ft_tablen(shell->tokens);
-	if ((parsing_ret = parse_export(argc, shell->tokens)) != SUCCESS)
-		return (parsing_ret);
+	i = (argc > 1 && shell->tokens[1][0] != '-') ? 1 : 2;
+	if ((ret = parse_export(argc, shell->tokens)) != SUCCESS)
+		return (ret);
+	ret = 0;
 	while (i < argc)
 	{
-		if (check_invalid_identifiers(shell->tokens[i], "=")
-				|| ft_isdigit(shell->tokens[i][0]) != SUCCESS)
-		{
-			ret = 1;
-			dprintf(STDERR_FILENO, "pistash: export: `%s': not a valid identifier\n", shell->tokens[i]);
-		}
-		else
-			export(shell, shell->tokens[i]);
+		if (export(shell, shell->tokens[i], &ret) != SUCCESS)
+			return (FAILURE);
 		i++;
 	}
 	return (ret);

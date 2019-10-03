@@ -110,6 +110,11 @@ int8_t		update_histfile(t_core *shell);
 int8_t		update_hist_size(t_core *shell);
 int8_t		update_histfile_size(t_core *shell);
 int8_t		update_version(t_core *shell);
+int8_t		update_sharp_var(t_core *shell);
+int8_t		update_process_id(t_core *shell);
+int8_t		update_shell_name(t_core *shell);
+int8_t		update_shell_flags(t_core *shell);
+int8_t		update_exit_status(t_core *shell);
 
 /*
 **	===========================================================================

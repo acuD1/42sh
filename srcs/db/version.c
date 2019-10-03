@@ -31,7 +31,7 @@ int8_t	update_version(t_core *shell)
 	ft_strcat(version, ".");
 	ft_itoabuf(shell->build.patch, version);
 	ft_strcat(version, "-dev'");
-	if (shell && (db = get_or_create_db(shell, "PISTASH_VERSION", SET_VAR)) != NULL)
+	if (shell && (db = get_or_create_db(shell, "PISTASH_VERSION", INTERNAL_VAR)) != NULL)
 	{
 		if (modify_db(db, ft_strdup(version), 0) != NULL)
 			return (SUCCESS);

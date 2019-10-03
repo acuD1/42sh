@@ -32,9 +32,9 @@ int8_t	builtin_unset(t_core *shell)
 	int		ret;
 	int		i;
 
-	i = 1;
 	ret = 0;
 	argc = ft_tablen(shell->tokens);
+	i = (argc > 1 && shell->tokens[1][0] != '-') ? 1 : 2;
 	if ((parsing_ret = parse_unset(argc, shell->tokens) > 0))
 		return (parsing_ret);
 	while (i < argc)
@@ -42,7 +42,7 @@ int8_t	builtin_unset(t_core *shell)
 		if (check_invalid_identifiers(shell->tokens[i], "") != SUCCESS)
 		{
 			ret = 1;
-			dprintf(STDERR_FILENO, "pistash: export: `%s': not a valid identifier\n", shell->tokens[i]);
+			dprintf(STDERR_FILENO, "42sh: export: `%s': not a valid identifier\n", shell->tokens[i]);
 		}
 		else
 			del_db(shell, shell->tokens[i]);

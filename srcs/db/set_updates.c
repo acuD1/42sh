@@ -22,7 +22,7 @@ int8_t	update_ifs(t_core *shell)
 	t_db	*db;
 
 	db = NULL;
-	if (shell != NULL && (db = get_or_create_db(shell, "IFS", SET_VAR)) != NULL)
+	if (shell != NULL && (db = get_or_create_db(shell, "IFS", INTERNAL_VAR)) != NULL)
 	{
 		if (modify_db(db, ft_strdup("' \t\n'"), 0) != NULL)
 			return (SUCCESS);
@@ -39,7 +39,7 @@ int8_t	create_term(t_core *shell)
 	if (shell != NULL && search_db(shell->env, "TERM") == NULL)
 	{
 		if (ft_lstappend(&(shell->env), ft_lstnew(
-				fetch_db(&(shell->db), "TERM=dumb", SET_VAR), sizeof(t_db))) != NULL)
+				fetch_db(&(shell->db), "TERM=dumb", INTERNAL_VAR), sizeof(t_db))) != NULL)
 			return (SUCCESS);
 	}
 	return (SUCCESS);
@@ -55,12 +55,12 @@ int8_t	update_termsize(t_core *shell)
 	t_db			*db;
 
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &ws);
-	if (shell != NULL && (db = get_or_create_db(shell, "LINES", SET_VAR)) != NULL)
+	if (shell != NULL && (db = get_or_create_db(shell, "LINES", INTERNAL_VAR)) != NULL)
 	{
 		if (modify_db(db, ft_itoa(ws.ws_row), 0) == NULL)
 			return (FAILURE);
 	}
-	if (shell && (db = get_or_create_db(shell, "COLUMNS", SET_VAR)) != NULL)
+	if (shell && (db = get_or_create_db(shell, "COLUMNS", INTERNAL_VAR)) != NULL)
 	{
 		if (modify_db(db, ft_itoa(ws.ws_col), 0) == NULL)
 			return (FAILURE);

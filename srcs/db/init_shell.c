@@ -39,8 +39,10 @@ void	init_shell(t_core *shell)
 	**
 	*/
 	shell->env = NULL;
+	shell->pos_vars = NULL;
 	shell->tokens = NULL;
 	shell->bin = NULL;
+	shell->last_exit_status = 0;
 	shell->opt = 0;
 
 }

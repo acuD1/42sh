@@ -18,13 +18,15 @@
 
 int8_t	init_env(t_core *shell)
 {
-	static int8_t	(*inits[9])(t_core *shell) = {increment_shlvl, update_pwd
+	static int8_t	(*inits[14])(t_core *shell) = {increment_shlvl, update_pwd
 		, update_ifs, update_termsize, create_term, update_histfile
-			, update_hist_size, update_histfile_size, update_version};
+			, update_hist_size, update_histfile_size, update_version
+			, update_sharp_var, update_process_id, update_shell_name
+			, update_shell_flags, update_exit_status};
 	int				i;
 
 	i = 0;
-	while (i < 9)
+	while (i < 14)
 	{
 		inits[i](shell);
 		i++;
