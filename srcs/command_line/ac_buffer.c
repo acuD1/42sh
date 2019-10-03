@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/02 16:52:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/03 14:35:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@
 **		Read again buff if another tab key is pressed => return TRUE
 */
 
-uint8_t			read_again(char **prev_b, char *buff, char *name, t_read *input)
+uint8_t			read_again(char **prev_b, char *path, char *name, t_read *input)
 {
 	uint64_t	value;
+	char		buff[READ_SIZE + 1];
 
+	ft_bzero(buff, READ_SIZE);
 	delete_last_cmd(*prev_b, input);
-	if (is_dir(name) == TRUE)
+	if (is_dir(path) == TRUE)
 		ft_strcat(name, "/");
 	insert_str_in_buffer(name, input);
 	if (xread(0, buff, READ_SIZE) > 0)
@@ -63,7 +65,7 @@ char			**split_env_var(char **env)
 	return (var);
 }
 
-void			parse_env(char *buf, char *prev_b, char *to_find, t_read *input)
+void			parse_env(char *prev_b, char *to_find, t_read *input)
 {
 	char		**var;
 	int		i;
@@ -77,7 +79,7 @@ void			parse_env(char *buf, char *prev_b, char *to_find, t_read *input)
 		if (isstart(var[i], to_find))
 		{
 			found = TRUE;
-			if (read_again(&prev_b, buf, var[i], input) == TRUE)
+			if (read_again(&prev_b, NULL, var[i], input) == TRUE)
 				continue ;
 			else
 			{
@@ -90,50 +92,65 @@ void			parse_env(char *buf, char *prev_b, char *to_find, t_read *input)
 	}
 }
 
+uint8_t		get_dir(char *prev_b, char *to_find, char *current_dir)
+{
+	int	found;
+
+	found = ft_strlen(to_find);
+	while (to_find[--found])
+	{
+		if (to_find[found] == '/')
+		{
+			ft_bzero(current_dir, BUFF_SIZE);
+			ft_strncpy(current_dir, prev_b, found + 1);
+			to_find = ft_strrchr(to_find, '/') + 1;
+			ft_bzero(prev_b, ft_strlen(prev_b));
+			ft_strcpy(prev_b, to_find);
+			return (TRUE);
+		}
+	}
+	return (FALSE);
+}
+
 /*
 **		Reading data name off the current directory opened
 **		Return FAILURE(-1) to stop reading (an error occured or no tab key pressed)
 */
 
-uint8_t			read_dir(char *buf, char **prev_b, char *to_find, t_read *input)
+uint8_t			read_dir(char **prev_b, char *to_find, t_read *input)
 {
-	char			current_dir[BUFF_SIZE];
+	char		current_dir[BUFF_SIZE];
 	struct dirent	*data;
-	uint8_t			found;
-	DIR				*dir;
+	uint8_t		found;
+	DIR		*dir;
+	char		*path;
 
-	if (!getcwd(current_dir, BUFF_SIZE))
+	if (get_dir(*prev_b, to_find, current_dir))
+		ft_strcpy(to_find, *prev_b);
+	else if (getcwd(current_dir, BUFF_SIZE))
+		ft_strcat(current_dir, "/");
+	else
 		return (FAILURE);
-
-	/* found = ft_strlen(to_find); */
-	/* printf("[%s]\n", to_find, ft_strlen(to_find)); */
-	/* while (to_find[--found]) */
-	/* { */
-	/* 	if (to_find[found] == '/') */
-	/* 	{ */
-	/* 		ft_bzero(current_dir, BUFF_SIZE); */
-	/* 		ft_strncpy(current_dir, prev_b, found + 1); */
-	/* 		to_find = ft_strrchr(to_find, '/') + 1; */
-	/* 		ft_bzero(prev_b, ft_strlen(prev_b)); */
-	/* 		ft_strcpy(prev_b, saved); */
-	/* 	} */
-	/* } */
-	/* printf("[%s]\n", current_dir); */
 	dir = opendir(current_dir);
 	while ((data = readdir(dir)) != NULL)
 	{
 		if (isstart(data->d_name, to_find))
 		{
 			found = TRUE;
-			if (read_again(prev_b, buf, data->d_name, input) == TRUE)
+			path = ft_strjoin(current_dir, data->d_name);
+			if (read_again(prev_b, path, data->d_name, input) == TRUE)
+			{
 				continue ;
+			}
 			else
 			{
 				closedir(dir);
+				free(path);
 				return (FAILURE);
 			}
 		}
 	}
+	*prev_b = ft_strcat(current_dir, to_find);
 	return (found);
 }
 
@@ -141,7 +158,7 @@ uint8_t			read_dir(char *buf, char **prev_b, char *to_find, t_read *input)
 **		To complete files if char inserted match with any files in current dir
 */
 
-void			to_complete_buffer(char *buf, char *prev_b, char *to_find, t_read *input)
+void			to_complete_buffer(char *prev_b, char *to_find, t_read *input)
 {
 	int				found;
 
@@ -151,10 +168,10 @@ void			to_complete_buffer(char *buf, char *prev_b, char *to_find, t_read *input)
 	*/
 	if (isstart(to_find, "$"))
 	{
-		parse_env(buf, prev_b, to_find, input);
+		parse_env(prev_b, to_find, input);
 		return ;
 	}
-	if ((found = read_dir(buf, &prev_b, to_find, input)) == FAILURE)
+	if ((found = read_dir(&prev_b, to_find, input)) == FAILURE)
 		return ;
-	found == TRUE ? to_complete_buffer(buf, prev_b, to_find, input) : 0;
+	found == TRUE ? to_complete_buffer(prev_b, to_find, input) : 0;
 }

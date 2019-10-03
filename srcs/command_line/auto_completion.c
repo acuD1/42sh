@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/02 13:19:33 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/03 14:09:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void			auto_complete_mode(char *buf, t_read *input)
 		if (is_dir(to_find) || input->buffer[i] == ' ')
 			display_current_directory(buf, input, to_find);
 		else
-			to_complete_buffer(buf, last_buf, to_find, input);
+			to_complete_buffer(last_buf, to_find, input);
 	}
 	else if (input->ac == 1)
 	{
@@ -96,7 +96,7 @@ void			auto_complete_mode(char *buf, t_read *input)
 		else
 			to_complete_bin(buf, to_find, input);
 		if (input->found == 0)
-			to_complete_buffer(buf, last_buf, to_find, input);
+			to_complete_buffer(last_buf, to_find, input);
 	}
 	free(to_find);
 	ft_tabfree(input->cmd);

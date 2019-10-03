@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/01 19:01:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/03 14:09:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void			load_subprompt(char quote, t_read *line);
 void			auto_complete_mode(char *buf, t_read *input);
 void			read_directories(char *buf, char *to_find, t_read *input);
 void			to_complete_bin(char *buf, char *to_find, t_read *input);
-void			to_complete_buffer(char *buf, char *last_buf, char *to_find, t_read *input);
+void			to_complete_buffer(char *last_buf, char *to_find, t_read *input);
 void			display_current_directory(char *buf, t_read *input, char *dir);
 void			delete_last_cmd(char *d_name, t_read *input);
 uint8_t			is_dir(char *dir);
