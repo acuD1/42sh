@@ -49,3 +49,28 @@ avec `(char*)str: key=value` ou juste `str: key` (pour creer la variable sans lu
 et `(int)type: ENV_VAR, INTERNAL_VAR ou SPECIAL_VAR`. Il vaut mieux preferer la fonction `get_or_create_db` 
 pour creer une variable interne (voir la partie suivante).
 ## Mettre a jour ou creer une variable (Methode recommandee)
+```C
+char	*str;
+t_db	*db;
+
+str = NULL;
+db = NULL;
+if (shell != NULL && (db = get_or_create_db(shell, "NAME", ENV_VAR)) != NULL)
+{
+	str = ft_strdup("VALUE");
+	if (str && modify_db(db, str, 0))
+		return (SUCCESS);
+	ft_strdel(&str);
+}
+return (FAILURE);
+```
+Pas besoin de strdel `char *value` en cas de SUCCESS, `db->value` pointe vers elle.
+
+`get_or_create_db` return un pointeur vers une struct t_db dans la liste qui lui est passee. Si la variable existe elle return simplement la struct, sinon elle la cree et la return. Elle return NULL en cas d'echec de malloc et le program doit quitter.
+
+Pour la fonction `modify_db(t_db *db, char *value, int type)`, si `value == NULL`, elle ne sera pas assignee a `db`, pareil si `type == 0`. Il faut donc verifier que `str != NULL` avant et choisir une nouvelle valeur a `type` ou 0.
+## Detruire une variable
+```C
+del_db(shell, "NAME")
+```
+returnera `SUCCESS` ou `FAILURE` si la variable n'existe pas et/ou si `shell->env == NULL`
