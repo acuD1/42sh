@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:13:44 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/15 19:01:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/04 06:22:22 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,11 @@ t_db	*fetch_db(t_db *db, const char *s, const u_int8_t var_type)
 	db->key = ft_strsub(s, 0, len);
 	db->value = ft_strdup(s + len + 1);
 	db->type = var_type;
+	if (!db->value || !db->key)
+	{
+		ft_strdel(&(db->key));
+		ft_strdel(&(db->value));
+		return (NULL);
+	}
 	return (db);
 }

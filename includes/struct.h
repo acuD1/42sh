@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/02 08:14:18 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/04 05:09:41 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct	s_build
 }				t_build;
 
 /*
-**	t_db is formated to support environnement variables ; {key} and {value}
+**	t_db is formated to support environnement variables ; {key}, {value} and {type}
 */
 
 typedef struct	s_db
@@ -36,6 +36,18 @@ typedef struct	s_db
 	u_int8_t	type;
 	u_int32_t	hit;		// Only for hash_map
 }				t_db;
+
+/*
+**	t_process is formated to contain background processes
+*/
+
+typedef struct	s_process
+{
+	char		*name;
+	pid_t		pid;
+	u_int16_t	bck_order;	// Background place order (0 = last)
+	u_int16_t	bck_id;		// Background id
+}				t_process;
 
 /*
 **	t_hash and his db for hash table implementation
@@ -63,6 +75,7 @@ typedef struct	s_core
 	/* lists */
 	t_lst		*env;
 	t_lst		*pos_vars;
+	t_lst		*jobs;
 
 	/* variables */
 	char		*buff;

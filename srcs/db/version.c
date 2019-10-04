@@ -6,23 +6,26 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 01:59:58 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/09/29 02:56:43 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/04 08:28:01 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
-**	Update [SET] PISTASH_VERSION variable, containing the version informations
-**	of the current shell
+**	Update [INTERNAL_VAR] PISTASH_VERSION variable, containing the version
+**	informations of the current shell
+**		- Should only be executed at shell startup
 */
 
 int8_t	update_version(t_core *shell)
 {
 	t_db	*db;
 	char	version[32];
+	char	*value;
 
 	db = NULL;
+	value = NULL;
 	ft_bzero(version, 32);
 	ft_strcat(version, "'");
 	ft_itoabuf(shell->build.release, version);
@@ -33,8 +36,10 @@ int8_t	update_version(t_core *shell)
 	ft_strcat(version, "-dev'");
 	if (shell && (db = get_or_create_db(shell, "PISTASH_VERSION", INTERNAL_VAR)) != NULL)
 	{
-		if (modify_db(db, ft_strdup(version), 0) != NULL)
+		value = ft_strdup(version);
+		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);
+		ft_strdel(&value);
 	}
 	return (FAILURE);
 }

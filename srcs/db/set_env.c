@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/30 05:30:08 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/04 08:41:44 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int8_t	init_env(t_core *shell)
 	i = 0;
 	while (i < 14)
 	{
-		inits[i](shell);
+		if (inits[i](shell) != SUCCESS)
+			return (FAILURE);
 		i++;
 	}
 	return (SUCCESS);
@@ -42,7 +43,6 @@ int8_t	init_env(t_core *shell)
 
 int8_t	set_env(t_core *shell, char **argv, char **environ)
 {
-	(void)argv;
 	size_t	i;
 
 	i = 0;
@@ -53,8 +53,9 @@ int8_t	set_env(t_core *shell, char **argv, char **environ)
 			ft_lstnew(fetch_db(&shell->db, environ[i], ENV_VAR), sizeof(t_db)));
 		i++;
 	}
-	init_env(shell);
-	if (shell->env == NULL)
+	if (update_last_arg(shell, argv) != SUCCESS)
+		return (FAILURE);
+	if (init_env(shell) != SUCCESS)
 		return (FAILURE);
 	return (SUCCESS);
 }
