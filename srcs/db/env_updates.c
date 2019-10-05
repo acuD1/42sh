@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/04 08:43:11 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/04 11:06:39 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int8_t	increment_shlvl(t_core *shell)
 	if (shell != NULL && (db = get_or_create_db(shell, "SHLVL", ENV_VAR)) != NULL)
 	{
 		shlvl = ft_itoa(ft_atoi(db->value) + 1);
-		if (modify_db(db, shlvl, 0))
+		if (shlvl && modify_db(db, shlvl, 0))
 			return (SUCCESS);
 		ft_strdel(&shlvl);
 	}
@@ -53,7 +53,7 @@ int8_t	update_pwd(t_core *shell)
 	{
 		getcwd(buf, 1025);
 		value = ft_strdup(buf);
-		if (modify_db(db, value, 0) != NULL)
+		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);
 		ft_strdel(&value);
 	}
