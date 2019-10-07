@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/23 16:43:23 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/07 16:51:58 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ typedef struct	s_core
 	t_build		build;
 	t_db		db;
 
-	/* init shell */
-	//struct termios	new_t;
-
 	/* lists */
 	t_lst		*env;
 
@@ -86,20 +83,22 @@ typedef struct		s_termcaps
 typedef struct		s_read
 {
 	char			*prompt;
-	int				prompt_len;
-	int				x_index;
-	int				x;
-	int				y;
-	int				width;
-	int				ws_col;
-	int				ws_li;
-	int				ac;
-	int				new_line;
-	int				found;
-	int				sub_prompt;
+	int			prompt_len;
+	int			x_index;
+	int			x;
+	int			y;
+	int			width;
+	int			ws_col;
+	int			ws_li;
+	int			ac;
+	
+	int			new_line;
+	int			found;
+	int			sub_prompt;
+	
 	char			*buffer;
-	char			**env;
 	char			**cmd;
+
 	t_core			*shell;
 	t_termcaps		*termcaps;
 	t_lst			*history;

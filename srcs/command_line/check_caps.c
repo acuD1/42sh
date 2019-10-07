@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/26 17:26:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/07 17:36:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,13 +104,16 @@ uint8_t		check_caps(char *buff, t_read *line)
 	value = get_mask(buff);
 	if (is_print(*buff))
 		insert_in_buffer(buff, line);
-	else if (value == CTRL_R)
+	if (value == CTRL_R)
 		research_mode(line);
-	else if (value == TAB_KEY)
+	if (value == TAB_KEY)
+	{
 		auto_complete_mode(buff, line);
-	else if (cursor_motion(buff, line, value))
-		return (TRUE);
-	else if (value == RETURN_KEY)
+		value = get_mask(buff);
+	}
+	if (cursor_motion(buff, line, value))
+	   return (TRUE);
+	if (value == RETURN_KEY)
 	{
 		ft_putchar('\n');
 		return (FALSE);

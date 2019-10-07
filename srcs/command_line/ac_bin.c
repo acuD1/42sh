@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/01 18:45:49 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/07 17:17:23 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,21 @@
 ** 		Split all bin/sbin directories in an array
 */
 
-char			**split_path(char **env, char *str)
+char			**split_path(t_core *shell, char *str)
 {
 	char		**array;
-	int			i;
-	int			len;
+	t_lst		*env;
 
+	env = shell->env;
 	array = NULL;
-	i = -1;
-	while (env && env[++i])
+	while (env)
 	{
-		len = 0;
-		while (env[i][len] && env[i][len] != '=')
-			len++;
-		if (!ft_strncmp(str, env[i], len))
+		if (!ft_strcmp(str, ((t_db*)(env->content))->key))
 		{
-			array = ft_strsplit(env[i] + len + 1, ":");
+			array = ft_strsplit(((t_db*)(env->content))->value, ":");
 			break ;
 		}
+		env = env->next;
 	}
 	return (array);
 }
@@ -71,7 +68,7 @@ uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 		input->found = 1;
 		goto_prompt(input);
 		insert_bin_in_buffer(name, input);
-		if (read(0, buf, READ_SIZE) > 0)
+		if (xread(0, buf, READ_SIZE) > 0)
 		{
 			value = get_mask(buf);
 			if (value == TAB_KEY)
@@ -88,15 +85,15 @@ uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 ** 		Check if an exe bin already exists with the curr buffer inserted
 */
 
-void				to_complete_bin(char *buf, char *to_find, t_read *input)
+void			to_complete_bin(char *buf, char *to_find, t_read *input)
 {
 	struct dirent	*data;
-	DIR				*dir;
-	char			**path;
-	int				i;
+	DIR		*dir;
+	char		**path;
+	int		i;
 
 	i = -1;
-	path = split_path(input->env, "PATH");
+	path = split_path(input->shell, "PATH");
 	while (path && path[++i])
 	{
 		dir = opendir(path[i]);
