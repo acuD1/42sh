@@ -33,8 +33,8 @@ typedef struct	s_build
 
 typedef struct s_lexer 	t_lexer;
 typedef struct s_parser	t_parser;
-typedef struct s_ast 	b_ast;
-typedef struct s_node 	b_node;
+// typedef struct s_ast 	b_ast;
+// typedef struct s_node 	b_node;
 
 
 /*
@@ -58,7 +58,7 @@ typedef struct	s_core
 	/* structs */
 	t_build		build;
 	t_db		db;
-	b_ast		*ast;
+	// b_ast		*ast;
 
 	/* init shell */
 	//struct termios	new_t;
