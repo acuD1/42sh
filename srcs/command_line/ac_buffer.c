@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/07 16:46:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/08 13:02:21 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,33 +37,30 @@ uint8_t			read_again(char **prev_b, char *path, char *name, t_read *input)
 			return (TRUE);
 		}
 		else
-		{
-		//	check_caps(buff, input);
 			return (FALSE);
-		}
 	}
 	return (FALSE);
 }
 
-char			**split_env_var(char **env)
-{
-	char			**var;
-	int				i;
-	int				j;
-
-	i = -1;
-	var = ft_memalloc(sizeof(var) * ft_tablen(env));
-	while (env[++i])
-	{
-		j = 0;
-		while (env[i][j] && env[i][j] != '=')
-			j++;
-		var[i] = ft_strsub(env[i], 0, j);
-		var[i] = ft_strjoin("$", var[i]);
-	}
-	var[i] = 0;
-	return (var);
-}
+/* char			**split_env_var(char **env) */
+/* { */
+/* 	char			**var; */
+/* 	int				i; */
+/* 	int				j; */
+/*  */
+/* 	i = -1; */
+/* 	var = ft_memalloc(sizeof(var) * ft_tablen(env)); */
+/* 	while (env[++i]) */
+/* 	{ */
+/* 		j = 0; */
+/* 		while (env[i][j] && env[i][j] != '=') */
+/* 			j++; */
+/* 		var[i] = ft_strsub(env[i], 0, j); */
+/* 		var[i] = ft_strjoin("$", var[i]); */
+/* 	} */
+/* 	var[i] = 0; */
+/* 	return (var); */
+/* } */
 /*  */
 /* void			parse_env(char *prev_b, char *to_find, t_read *input) */
 /* { */
@@ -139,9 +136,7 @@ uint8_t             read_dir(char **prev_b, char *to_find, t_read *input)
 			found = TRUE;
 			path = ft_strjoin(current_dir, data->d_name);
 			if (read_again(prev_b, path, data->d_name, input) == TRUE)
-			{
 				continue ;
-			}
 			else
 			{
 				closedir(dir);

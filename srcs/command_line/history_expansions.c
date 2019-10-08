@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/30 12:26:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/08 15:13:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,12 @@ void		call_word(t_read *line, int i)
 		word[++j] = line->buffer[n];
 		n++;
 	}
+	word[j + 1] = '\0';
 	if (!w || n > (int)ft_lstlen(w) || n > 500)
 		return ;
 	while (w->next)
 	{
-		if (!ft_strncmp((char *)w->content, word, ft_strlen(word)))
+		if (isstart((char *)w->content, word))
 			break ;
 		w = w->next;
 	}
