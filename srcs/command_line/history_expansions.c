@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/08 15:13:45 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/08 16:06:21 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int			insert_content(int j, int i, t_read *line, char *content)
 {
-	char	*tmp;
+	char		*tmp;
 	int		len;
 
 	if (i >= BUFF_SIZE)
@@ -44,12 +44,12 @@ int			insert_content(int j, int i, t_read *line, char *content)
 **		"!word" expansion search the word to find from the end of hst lst
 */
 
-void		call_word(t_read *line, int i)
+void			call_word(t_read *line, int i)
 {
-	char	word[BUFF_SIZE];
+	char		word[BUFF_SIZE];
 	int		j;
 	int		n;
-	t_lst	*w;
+	t_lst		*w;
 
 	j = -1;
 	w = line->history;
@@ -77,11 +77,11 @@ void		call_word(t_read *line, int i)
 **		"!-number" expansion search from the end of hst lst
 */
 
-void		callback_number(t_read *line, int i)
+void			callback_number(t_read *line, int i)
 {
-	char	nb[BUFF_SIZE];
+	char		nb[BUFF_SIZE];
 	int		n;
-	t_lst	*w;
+	t_lst		*w;
 	int		j;
 
 	j = -1;
@@ -108,11 +108,11 @@ void		callback_number(t_read *line, int i)
 **		"!number" expansion search from the beggining of hst lst
 */
 
-void		call_number(t_read *line, int i)
+void			call_number(t_read *line, int i)
 {
-	char	nb[BUFF_SIZE];
+	char		nb[BUFF_SIZE];
 	int		n;
-	t_lst	*w;
+	t_lst		*w;
 	int		j;
 
 	j = -1;
@@ -141,12 +141,13 @@ void		call_number(t_read *line, int i)
 **		"!!" expansion search the last occurence of hst list
 */
 
-void		last_cmd_back(t_read *line, int i)
+void			last_cmd_back(t_read *line, int i)
 {
-	t_lst	*w;
+	t_lst		*w;
 
 	w = line->history;
 	if (!line->history || ft_strlen(line->buffer) > BUFF_SIZE)
 		return ;
-	i = insert_content(2, i, line, (char *)w->content);
+	if (w && w->content)
+		i = insert_content(2, i, line, (char *)w->content);
 }

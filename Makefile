@@ -47,11 +47,11 @@ LNAME = shared_libft.a
 
 BUILD_FILE			=	.build
 BUILD_DATE			=	$$(date +'%Y%m%d')
-BUILD_BRANCH		=	$$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
-BUILD_RELEASE		=	$$(awk 'NR==3 {print $$3}' $(BUILD_FILE))
-BUILD_VERSION		=	$$(awk 'NR==4 {print $$3}' $(BUILD_FILE))
+BUILD_BRANCH			=	$$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
+BUILD_RELEASE			=	$$(awk 'NR==3 {print $$3}' $(BUILD_FILE))
+BUILD_VERSION			=	$$(awk 'NR==4 {print $$3}' $(BUILD_FILE))
 BUILD_PATCH			=	$$(awk 'NR==5 {print $$3}' $(BUILD_FILE))
-DEFAULT_BUILD_FILE	=	"Build information, patch level is incremented at \
+DEFAULT_BUILD_FILE		=	"Build information, patch level is incremented at \
 compilation.\n\nRELEASE\t=\t0\nVERSION\t=\t0\nPATCH\t=\t0"
 
 # Dir/Files Path (Do not modify)
@@ -70,7 +70,7 @@ L_PATH = shared_libft/
 # Add custom dir for .o
 
 CORE		=	core/
-DB			=	db/
+DB		=	db/
 BUILTINS	=	builtins/
 COMMANDLINE	=	command_line/
 EXEC		=	exec/
