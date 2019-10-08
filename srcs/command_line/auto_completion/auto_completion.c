@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/08 13:48:44 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/08 17:15:18 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void			delete_last_cmd(char *d_name, t_read *input)
 		move_left(d_name, input);
 		buff_index--;
 	}
-	xtputs(input->termcaps->clr_end, 1, my_outc);
+	xtputs(input->tcaps[CLR_EOL], 1, my_outc);
 }
 
 uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *input)

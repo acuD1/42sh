@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/07 14:57:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/08 16:36:55 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,16 +103,16 @@ void			delete_last_cmd(char *d_name, t_read *input);
 uint8_t			is_dir(char *dir);
 
 /*
- **		Utils
+ **		Utils/Tools
  */
 
-int				my_outc(int c);
+int			my_outc(int c);
 uint8_t			get_width_last_line(t_read *input);
 uint8_t			get_width_current_line(t_read *input);
 uint8_t			newline_count(char *buffer);
 void			remove_newline(t_read *line);
 uint64_t		get_mask(char *buff);
-int				is_dot(char *d_name);
+int			is_dot(char *d_name);
 uint8_t			is_tab(char *buff, char *d_name, t_read *input);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/30 19:14:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/08 17:09:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 void		goto_prompt(t_read *line)
 {
 	while (line->y-- > 0)
-		xtputs(line->termcaps->up, 1, my_outc);
-	xtputs(line->termcaps->cr, 1, my_outc);
-	xtputs(line->termcaps->clr_lines, 1, my_outc);
+		xtputs(line->tcaps[KEY_UP], 1, my_outc);
+	xtputs(line->tcaps[LEFT_MARGIN], 1, my_outc);
+	xtputs(line->tcaps[CLR_LINES], 1, my_outc);
 	free(line->prompt);
 	display_prompt(line);
 }

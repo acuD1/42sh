@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/07 18:45:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/08 17:51:37 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ typedef struct	s_build
 **	t_db is formated to support environnement variables ; {key} and {value}
 */
 
-typedef struct	s_db
+typedef struct		s_db
 {
 	char		*key;
 	char		*value;
-}				t_db;
+}			t_db;
 
 /*
 **	t_core shares global variables
@@ -67,21 +67,22 @@ typedef struct	s_core
 **			COMMAND_LINE
 */
 
-typedef struct		s_termcaps
+enum			e_tcaps
 {
-	char			*save_cr;
-	char			*reset_cr;
-	char 			*del;
-	char			*clear;
-	char			*clr_end;
-	char			*clr_lines;
-	char			*right;
-	char			*left;
-	char			*down;
-	char			*up;
-	char			*ho;
-	char			*cr;
-}					t_termcaps;
+	DEL_CR,
+	SAVE_CR,
+	RESTORE_CR,
+	KEY_DOWN,
+	KEY_UP,
+	KEY_RIGHT,
+	KEY_LEFT,
+	LEFT_MARGIN,
+	UP_LEFT_CORNER,
+	CLEAR,
+	CLR_LINES,
+	CLR_EOL,
+	CAPS_NBR
+};
 
 typedef struct		s_read
 {
@@ -99,11 +100,11 @@ typedef struct		s_read
 	int		found;
 	int		sub_prompt;
 
+	char		*tcaps[CAPS_NBR];
 	char		*buffer;
 	char		**cmd;
 
 	t_core		*shell;
-	t_termcaps	*termcaps;
 	t_lst		*history;
 	t_lst		*history_index;
 }			t_read;

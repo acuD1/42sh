@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 15:35:22 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/08 17:01:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 
 void		clear_all_lines(t_read *input)
 {
-	xtputs(input->termcaps->del, 1, my_outc);
-	xtputs(input->termcaps->save_cr, 1, my_outc);
-	xtputs(input->termcaps->clr_lines, 1, my_outc);
-	xtputs(input->termcaps->reset_cr, 1, my_outc);
+	xtputs(input->tcaps[DEL_CR], 1, my_outc);
+	xtputs(input->tcaps[SAVE_CR], 1, my_outc);
+	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
+	xtputs(input->tcaps[RESTORE_CR], 1, my_outc);
 	goto_prompt(input);
 }
 
@@ -52,7 +52,7 @@ void		del_key(t_read *input)
 		input->x_index = i;
 		input->y = y;
 		input->width = w;
-		xtputs(xtgetstr("rc", NULL), 1, my_outc);
+		xtputs(input->tcaps[RESTORE_CR], 1, my_outc);
 	}
 }
 

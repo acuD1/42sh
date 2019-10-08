@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/07 18:45:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/08 18:15:52 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <sys/ioctl.h>
 
 /*
-** Store the number of line and column in struct
+**	Store datas of terminal's line/column
 */
 
 t_read			*get_size(t_read *data)
@@ -22,35 +22,56 @@ t_read			*get_size(t_read *data)
 	struct winsize	size;
 
 	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &size) == FAILURE)
+	{
 		ft_putstr("ioctl error"); //call an error fct
+		EXIT_FAILURE ;
+	}
 	data->ws_col = size.ws_col;
 	data->ws_li = size.ws_row;
 	return (data);
 }
 
-void			stock_termcaps(t_termcaps *termcaps)
+/*
+**	Stock termcaps capabilities in a static array
+*/
+
+int8_t			stock_termcaps(t_read *term)
 {
-	termcaps->del = xtgetstr("dc", NULL);
-	termcaps->save_cr = xtgetstr("sc", NULL);
-	termcaps->reset_cr = xtgetstr("rc", NULL);
-	termcaps->down = xtgetstr("do", NULL);
-	termcaps->up = xtgetstr("up", NULL);
-	termcaps->right = xtgetstr("nd", NULL);
-	termcaps->left = xtgetstr("le", NULL);
-	termcaps->cr = xtgetstr("cr", NULL);
-	termcaps->ho = xtgetstr("ho", NULL);
-	termcaps->clear = xtgetstr("cl", NULL);
-	termcaps->clr_lines = xtgetstr("cd", NULL);
-	termcaps->clr_end = xtgetstr("ce", NULL);
+	static char	*termcaps[CAPS_NBR];
+	int		i;
+
+	i = -1;
+	termcaps[0] = "dc";
+	termcaps[1] = "sc";
+	termcaps[2] = "rc";
+	termcaps[3] = "do";
+	termcaps[4] = "up";
+	termcaps[5] = "nd";
+	termcaps[6] = "le";
+	termcaps[7] = "cr";
+	termcaps[8] = "ho";
+	termcaps[9] = "cl";
+	termcaps[10] = "cd";
+	termcaps[11] = "ce";
+	while (++i < CAPS_NBR)
+	{
+		if (!(term->tcaps[i] = xtgetstr(termcaps[i], NULL)))
+			return (FAILURE);
+	}
+	return (SUCCESS);
 }
+
+/*
+**	Initialization of terminal's termcaps capabilities
+*/
 
 void			init_termcaps(t_read *term)
 {
 	char		*sh;
 	char		bp[1024];
 
-	term->termcaps = ft_memalloc(sizeof(t_termcaps));
-	stock_termcaps(term->termcaps);
+	if (stock_termcaps(term) == FAILURE)
+		EXIT_FAILURE ; // Display error msg
 	if (!(sh = getenv("TERM")))
 	{
 		// Display error msg
