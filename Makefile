@@ -73,6 +73,9 @@ CORE		=	core/
 DB		=	db/
 BUILTINS	=	builtins/
 COMMANDLINE	=	command_line/
+AC		=	command_line/auto_completion/
+AK		=	command_line/action_keys/
+HISTORY		=	command_line/history/
 EXEC		=	exec/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
@@ -81,55 +84,57 @@ PATHS		+=	$(B_PATH)
 PATHS		+=	$(O_PATH)
 PATHS		+=	$(O_PATH)$(BUILTINS)
 PATHS		+=	$(O_PATH)$(COMMANDLINE)
+PATHS		+=	$(O_PATH)$(AC)
+PATHS		+=	$(O_PATH)$(AK)
+PATHS		+=	$(O_PATH)$(HISTORY)
 PATHS		+=	$(O_PATH)$(CORE)
 PATHS		+=	$(O_PATH)$(DB)
 PATHS		+=	$(O_PATH)$(EXEC)
 
 # Files
 
-#SRC			+=	$(S_PATH)$(BUILTINS)check_builtins.c
-#SRC			+=	$(S_PATH)$(BUILTINS)exit.c
-#SRC			+=	$(S_PATH)$(BUILTINS)history.c
-
-SRC			+=	$(S_PATH)$(COMMANDLINE)check_caps.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)del_keys.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)insert_in_buffer.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)move_cursor.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)save_history.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)search_in_history.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)auto_completion.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)ac_current_dir.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)ac_buffer.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)ac_bin.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)ac_directories.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)term_config.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)check_quotes.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)sub_prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)utils.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)keys_comb.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)xfunctions.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)history_expansions.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)check_hst_expansions.c
 
-SRC		+=	$(S_PATH)$(CORE)42sh.c
-SRC		+=	$(S_PATH)$(CORE)load_prompt.c
-SRC		+=	$(S_PATH)$(CORE)output.c
-SRC		+=	$(S_PATH)$(CORE)free_handler.c
+SRC			+=	$(S_PATH)$(HISTORY)save_history.c
+SRC			+=	$(S_PATH)$(HISTORY)search_in_history.c
+SRC			+=	$(S_PATH)$(HISTORY)history_expansions.c
+SRC			+=	$(S_PATH)$(HISTORY)check_hst_expansions.c
 
-SRC		+=	$(S_PATH)$(DB)init_shell.c
-SRC		+=	$(S_PATH)$(DB)get_opt.c
-SRC		+=	$(S_PATH)$(DB)set_env.c
-SRC		+=	$(S_PATH)$(DB)fetch_db.c
-SRC		+=	$(S_PATH)$(DB)get_tokens.c
+SRC			+=	$(S_PATH)$(AC)auto_completion.c
+SRC			+=	$(S_PATH)$(AC)ac_current_dir.c
+SRC			+=	$(S_PATH)$(AC)ac_buffer.c
+SRC			+=	$(S_PATH)$(AC)ac_bin.c
+SRC			+=	$(S_PATH)$(AC)ac_directories.c
 
-SRC		+=	$(S_PATH)$(EXEC)exec_process.c
-SRC		+=	$(S_PATH)$(EXEC)exec_handler.c
-SRC		+=	$(S_PATH)$(EXEC)get_bin.c
-SRC		+=	$(S_PATH)$(EXEC)set_envp.c
+SRC			+=	$(S_PATH)$(AK)check_caps.c
+SRC			+=	$(S_PATH)$(AK)del_keys.c
+SRC			+=	$(S_PATH)$(AK)insert_in_buffer.c
+SRC			+=	$(S_PATH)$(AK)move_cursor.c
+SRC			+=	$(S_PATH)$(AK)keys_comb.c
 
-SRC		+=	$(S_PATH)dev.c
+SRC			+=	$(S_PATH)$(CORE)42sh.c
+SRC			+=	$(S_PATH)$(CORE)load_prompt.c
+SRC			+=	$(S_PATH)$(CORE)output.c
+SRC			+=	$(S_PATH)$(CORE)free_handler.c
+
+SRC			+=	$(S_PATH)$(DB)init_shell.c
+SRC			+=	$(S_PATH)$(DB)get_opt.c
+SRC			+=	$(S_PATH)$(DB)set_env.c
+SRC			+=	$(S_PATH)$(DB)fetch_db.c
+SRC			+=	$(S_PATH)$(DB)get_tokens.c
+
+SRC			+=	$(S_PATH)$(EXEC)exec_process.c
+SRC			+=	$(S_PATH)$(EXEC)exec_handler.c
+SRC			+=	$(S_PATH)$(EXEC)get_bin.c
+SRC			+=	$(S_PATH)$(EXEC)set_envp.c
+
+SRC			+=	$(S_PATH)dev.c
 # Headers
 
 HDR			+=	sh42.h
