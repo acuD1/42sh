@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/02 05:49:37 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:23:55 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@
 # define MODE_WRITE		(O_CREAT | O_WRONLY | O_TRUNC)
 # define BUFF_SIZE		4096
 # define READ_SIZE		4
-# define HISTORY_FILE		"./.history"
+# define HISTORY_FILE		"./.42sh_history"
 # define QUOTE			'\''
 # define DQUOTE			'\"'
 # define BQUOTE			'`'
@@ -114,10 +114,13 @@
 */
 
 # define ENV_VAR		0x001
-# define INTERNAL_VAR	0x002
-# define SPECIAL_VAR	0x004
+# define INTERNAL_VAR		0x002
+# define SPECIAL_VAR		0x004
 
 # define HIST_SIZE		500
-# define HISTFILE_SIZE	500
+# define HISTFILE_SIZE		500
+# define PS1			"<< 42sh >>"
+# define PS2			">"
+# define PS3			"heredoc>"
 
 #endif

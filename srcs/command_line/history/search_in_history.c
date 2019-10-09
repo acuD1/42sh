@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/08 17:11:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:06:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void			search_in_history(t_read *line)
 {
 	char		buff[READ_SIZE + 1];
 	char		buff_tmp[BUFF_SIZE];
-	int			i;
+	int		i;
 	t_lst		*history;
 	uint64_t 	value;
 

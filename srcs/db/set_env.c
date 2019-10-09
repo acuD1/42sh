@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/04 08:41:44 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/09 17:15:34 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int8_t	set_env(t_core *shell, char **argv, char **environ)
 	size_t	i;
 
 	i = 0;
-
 	while (*environ && environ[i])
 	{
 		ft_lstappend(&shell->env,

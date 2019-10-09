@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/26 14:39:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:14:04 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@
 #include "sh42.h"
 
 /*
-**	Open ".history" file to write history datas at the end of file
+**	Open ".42sh_history" file to write history datas at the end of file
 */
 
 void			write_history(t_read *line)
 {
-	int			fd;
+	int		fd;
+	int		i;
 	t_lst		*hst;
 
+	i = -1;
 	hst = line->history;
 	if (!hst)
 		return ;
@@ -31,7 +33,7 @@ void			write_history(t_read *line)
 		ft_dprintf(STDIN_FILENO, "can't open history file\n");
 	while (hst->next)
 		hst = hst->next;
-	while (hst)
+	while (hst && ++i < HISTFILE_SIZE)
 	{
 		if (write(fd, hst->content, ft_strlen(hst->content)) == FAILURE
 			|| write(fd, "\n", 1) == FAILURE)
@@ -78,7 +80,6 @@ void			init_history(t_read *term)
 	int			fd;
 	int			i;
 
-	//!\HIST SIZE INTERN VAR/!\/
 	i = -1;
 	line = NULL;
 	if ((fd = open(HISTORY_FILE, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)

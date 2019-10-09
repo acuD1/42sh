@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/08 16:06:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/09 18:08:57 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void			call_word(t_read *line, int i)
 		n++;
 	}
 	word[j + 1] = '\0';
-	if (!w || n > (int)ft_lstlen(w) || n > 500)
+	if (!w || n > (int)ft_lstlen(w) || n > HIST_SIZE)
 		return ;
 	while (w->next)
 	{
@@ -93,7 +93,7 @@ void			callback_number(t_read *line, int i)
 		n++;
 	}
 	n = ft_atoi(nb);
-	if (!w || n > (int)ft_lstlen(w) || n > 500 || n < 0)
+	if (!w || n > (int)ft_lstlen(w) || n > HIST_SIZE || n < 0)
 		return ; // call error fct
 	while (w && n != 0 && --n)
 	{
@@ -124,7 +124,7 @@ void			call_number(t_read *line, int i)
 		n++;
 	}
 	n = ft_atoi(nb);
-	if (!w || n > (int)ft_lstlen(w) || n > 500 || n < 0)
+	if (!w || n > (int)ft_lstlen(w) || n > HIST_SIZE || n < 0)
 		return ; //call error fct
 	while (w->next)
 		w = w->next;

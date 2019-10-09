@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/09 15:01:00 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/09 17:05:48 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_read   	         *get_size(t_read *data)
 		if ((data->ws_col = tgetnum("co")) < 0 || (data->ws_li = tgetnum("li")) < 0)
 		{
 			ft_dprintf(STDERR_FILENO, "IOCTL AND TGETNUM FAILURE");
-			return (NULL)
+			return (NULL);
 		}
 		return (data);
 	}

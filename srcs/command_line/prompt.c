@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/09 14:51:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/09 19:30:08 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_read		*display_prompt(t_read *term)
 
 	ft_bzero(path, BUFF_SIZE + 1);
 	if (!getcwd(path, BUFF_SIZE))
-		term->prompt = ft_strdup("undefined");
+		term->prompt = ft_strdup("<< 42sh >> ");
 	else
 		term->prompt = ft_strdup(ft_strrchr(path, '/'));
 	term->prompt_len = ft_strlen(term->prompt) + 7;

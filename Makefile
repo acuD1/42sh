@@ -77,10 +77,8 @@ AC		=	command_line/auto_completion/
 AK		=	command_line/action_keys/
 HISTORY		=	command_line/history/
 EXEC		=	exec/
-EXEC	=	exec/
-BLTINS	=	builtins/
-MISC	=	misc/
-HASH	=	$(EXEC)hash_map/
+MISC		=	misc/
+HASH		=	$(EXEC)hash_map/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -94,8 +92,8 @@ PATHS		+=	$(O_PATH)$(HISTORY)
 PATHS		+=	$(O_PATH)$(CORE)
 PATHS		+=	$(O_PATH)$(DB)
 PATHS		+=	$(O_PATH)$(EXEC)
-PATHS	+=	$(O_PATH)$(BLTINS)
-PATHS	+=	$(O_PATH)$(HASH)
+PATHS		+=	$(O_PATH)$(HASH)
+PATHS		+=	$(O_PATH)$(MISC)
 
 # Files
 
@@ -111,65 +109,59 @@ SRC			+=	$(S_PATH)$(HISTORY)save_history.c
 SRC			+=	$(S_PATH)$(HISTORY)search_in_history.c
 SRC			+=	$(S_PATH)$(HISTORY)history_expansions.c
 SRC			+=	$(S_PATH)$(HISTORY)check_hst_expansions.c
-SRC		+=	$(S_PATH)$(DB)init_shell.c
-SRC		+=	$(S_PATH)$(DB)get_opt.c
-SRC		+=	$(S_PATH)$(DB)set_env.c
-SRC		+=	$(S_PATH)$(DB)fetch_db.c
-SRC		+=	$(S_PATH)$(DB)get_tokens.c
-SRC		+=	$(S_PATH)$(DB)env_updates.c
-SRC		+=	$(S_PATH)$(DB)set_updates.c
-SRC		+=	$(S_PATH)$(DB)db_tools.c
-SRC		+=	$(S_PATH)$(DB)history.c
-SRC		+=	$(S_PATH)$(DB)version.c
-SRC		+=	$(S_PATH)$(DB)special_vars.c
-SRC		+=	$(S_PATH)$(DB)process_vars.c
-
-SRC			+=	$(S_PATH)$(AC)auto_completion.c
-SRC			+=	$(S_PATH)$(AC)ac_current_dir.c
-SRC			+=	$(S_PATH)$(AC)ac_buffer.c
-SRC			+=	$(S_PATH)$(AC)ac_bin.c
-SRC			+=	$(S_PATH)$(AC)ac_directories.c
-SRC		+=	$(S_PATH)$(BLTINS)set.c
-SRC		+=	$(S_PATH)$(BLTINS)unset.c
-SRC		+=	$(S_PATH)$(BLTINS)export.c
-
-SRC		+=	$(S_PATH)$(MISC)usage.c
-SRC		+=	$(S_PATH)$(MISC)recall.c
-SRC		+=	$(S_PATH)$(MISC)check_args.c
-
-SRC		+=	$(S_PATH)$(EXEC)exec_process.c
-SRC		+=	$(S_PATH)$(EXEC)exec_builtin.c
-SRC		+=	$(S_PATH)$(EXEC)exec_handler.c
-SRC		+=	$(S_PATH)$(EXEC)get_bin.c
-SRC		+=	$(S_PATH)$(EXEC)set_envp.c
 
 SRC			+=	$(S_PATH)$(AK)check_caps.c
 SRC			+=	$(S_PATH)$(AK)del_keys.c
 SRC			+=	$(S_PATH)$(AK)insert_in_buffer.c
 SRC			+=	$(S_PATH)$(AK)move_cursor.c
 SRC			+=	$(S_PATH)$(AK)keys_comb.c
-SRC		+=	$(S_PATH)$(HASH)add_hash_map.c
-SRC		+=	$(S_PATH)$(HASH)fetch_hash_db.c
-SRC		+=	$(S_PATH)$(HASH)get_hash.c
-SRC		+=	$(S_PATH)$(HASH)locate_hash.c
-SRC		+=	$(S_PATH)$(HASH)resize_hash_map.c
 
-
-SRC			+=	$(S_PATH)$(CORE)42sh.c
-SRC			+=	$(S_PATH)$(CORE)load_prompt.c
-SRC			+=	$(S_PATH)$(CORE)output.c
-SRC			+=	$(S_PATH)$(CORE)free_handler.c
+SRC			+=	$(S_PATH)$(AC)auto_completion.c
+SRC			+=	$(S_PATH)$(AC)ac_current_dir.c
+SRC			+=	$(S_PATH)$(AC)ac_buffer.c
+SRC			+=	$(S_PATH)$(AC)ac_bin.c
+SRC			+=	$(S_PATH)$(AC)ac_directories.c
 
 SRC			+=	$(S_PATH)$(DB)init_shell.c
 SRC			+=	$(S_PATH)$(DB)get_opt.c
 SRC			+=	$(S_PATH)$(DB)set_env.c
 SRC			+=	$(S_PATH)$(DB)fetch_db.c
 SRC			+=	$(S_PATH)$(DB)get_tokens.c
+SRC			+=	$(S_PATH)$(DB)env_updates.c
+SRC			+=	$(S_PATH)$(DB)set_updates.c
+SRC			+=	$(S_PATH)$(DB)db_tools.c
+SRC			+=	$(S_PATH)$(DB)history.c
+SRC			+=	$(S_PATH)$(DB)version.c
+SRC			+=	$(S_PATH)$(DB)special_vars.c
+SRC			+=	$(S_PATH)$(DB)process_vars.c
+
+
+SRC			+=	$(S_PATH)$(BUILTINS)set.c
+SRC			+=	$(S_PATH)$(BUILTINS)unset.c
+SRC			+=	$(S_PATH)$(BUILTINS)export.c
+
+SRC			+=	$(S_PATH)$(MISC)usage.c
+SRC			+=	$(S_PATH)$(MISC)recall.c
+SRC			+=	$(S_PATH)$(MISC)check_args.c
 
 SRC			+=	$(S_PATH)$(EXEC)exec_process.c
+SRC			+=	$(S_PATH)$(EXEC)exec_builtin.c
 SRC			+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC			+=	$(S_PATH)$(EXEC)get_bin.c
 SRC			+=	$(S_PATH)$(EXEC)set_envp.c
+
+
+SRC			+=	$(S_PATH)$(HASH)add_hash_map.c
+SRC			+=	$(S_PATH)$(HASH)fetch_hash_db.c
+SRC			+=	$(S_PATH)$(HASH)get_hash.c
+SRC			+=	$(S_PATH)$(HASH)locate_hash.c
+SRC			+=	$(S_PATH)$(HASH)resize_hash_map.c
+
+
+SRC			+=	$(S_PATH)$(CORE)42sh.c
+SRC			+=	$(S_PATH)$(CORE)load_prompt.c
+SRC			+=	$(S_PATH)$(CORE)output.c
+SRC			+=	$(S_PATH)$(CORE)free_handler.c
 
 SRC			+=	$(S_PATH)dev.c
 # Headers
