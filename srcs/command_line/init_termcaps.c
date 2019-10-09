@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/08 18:15:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/09 15:01:00 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,20 @@
 **	Store datas of terminal's line/column
 */
 
-t_read			*get_size(t_read *data)
+t_read   	         *get_size(t_read *data)
 {
-	struct winsize	size;
+	struct winsize    size;
 
-	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &size) == FAILURE)
+	ft_bzero(&size, sizeof(struct winsize));
+	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &size) != SUCCESS)
 	{
-		ft_putstr("ioctl error"); //call an error fct
-		EXIT_FAILURE ;
+		ft_dprintf(STDERR_FILENO, "IOCTL ERROR\n");
+		if ((data->ws_col = tgetnum("co")) < 0 || (data->ws_li = tgetnum("li")) < 0)
+		{
+			ft_dprintf(STDERR_FILENO, "IOCTL AND TGETNUM FAILURE");
+			return (NULL)
+		}
+		return (data);
 	}
 	data->ws_col = size.ws_col;
 	data->ws_li = size.ws_row;
