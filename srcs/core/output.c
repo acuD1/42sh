@@ -6,16 +6,16 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:20:07 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/21 13:14:08 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/08/02 12:59:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void	init_prompt(void)
-{
-	dprintf(STDOUT_FILENO, "> %s$%s ", C_G, C_X);
-}
+/* void	init_prompt(void) */
+/* { */
+/* 	dprintf(STDOUT_FILENO, "> %s$%s ", C_G, C_X); */
+/* } */
 
 void	credit(t_core *shell)
 {
