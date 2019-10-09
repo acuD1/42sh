@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/03 11:37:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/09/25 01:35:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	print_env(t_core *shell)
 	env = shell->env;
 	while (env)
 	{
-		dprintf(STDOUT_FILENO, "[KEY] = |%s|\n[VALUE] = |%s|\n",
-			((t_db*)(env->content))->key, ((t_db*)(env->content))->value);
+		dprintf(STDOUT_FILENO, "[KEY] = %-50s [VALUE] = %-40s [TYPE] = %i\n",
+			((t_db*)(env->content))->key, ((t_db*)(env->content))->value, ((t_db*)(env->content))->type);
 		env = env->next;
 	}
 }

@@ -67,6 +67,9 @@ void			load_prompt(t_core *shell)
 		/* Same here, mainly binary executions, need rework */
 		exec_process(shell, shell->env);
 //		free_prompt(shell, term.buffer);
+		if (exec_builtin(shell) == FAILURE)
+			exec_process(shell, shell->env);
+		free_prompt(shell, line);
 	}
 	ft_strdel(&term.buffer);
 }
