@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 18:21:41 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/04 07:44:26 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/09 14:53:15 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,19 @@ int8_t	del_db(t_core *shell, char *key)
 		ft_memdel((void**)&env);
 		return (SUCCESS);
 	}
+	return (FAILURE);
+}
+
+int8_t	edit_var(t_core *shell, char *name, char *value, u_int8_t var_type)
+{
+	t_db	*db;
+
+	db = NULL;
+	if (shell != NULL && (db = get_or_create_db(shell, name, var_type)) != NULL)
+	{
+		if (value && modify_db(db, value, 0) != NULL)
+			return (SUCCESS);
+	}
+	ft_strdel(&value);
 	return (FAILURE);
 }

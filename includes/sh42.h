@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/04 08:43:23 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/09 14:51:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ t_db		*fetch_db(t_db *db, const char *s, const u_int8_t var_type);
 t_db		*modify_db(t_db	*db, char *new_value, u_int8_t new_type);
 t_db		*get_or_create_db(t_core *shell, char *key, u_int8_t var_type);
 t_db		*search_db(t_lst *env, char *key);
+int8_t		edit_var(t_core *shell, char *name, char *value, u_int8_t var_type);
 
 /*
 **	===========================================================================
