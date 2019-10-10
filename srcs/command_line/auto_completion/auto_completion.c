@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/08 17:15:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:20:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,6 @@ void			delete_last_cmd(char *d_name, t_read *input)
 	}
 	xtputs(input->tcaps[CLR_EOL], 1, my_outc);
 }
-
-uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *input)
-{
-	if ((ft_strlen(input->buffer) == 0))
-		return (FALSE);
-	input->cmd = ft_strsplit(input->buffer, " ");
-	input->ac = ft_tablen(input->cmd);
-	*last_cmd = input->cmd[ft_tablen(input->cmd) - 1];
-	if (input->buffer[ft_strlen(input->buffer) - 1] == ' ')
-		input->ac += 1;
-	if (*last_cmd)
-		*to_find = ft_strdup(*last_cmd);
-	else
-		return (FALSE);
-	return (TRUE);
-}
-
 
 uint8_t			is_dir(char *dir)
 {

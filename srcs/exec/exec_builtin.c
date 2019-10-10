@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 00:24:24 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/09/30 05:06:37 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/10 16:06:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 
 int8_t	exec_builtin(t_core *shell)
 {
-	static char		*blt_names[4] = {"set", "unset", "export", NULL};
-	static int8_t	(*blt_call[3])(t_core *shell) = {builtin_set
-		, builtin_unset, builtin_export};
+	static char		*blt_names[5] = {"set", "unset", "export", "history", NULL};
+	static int8_t	(*blt_call[4])(t_core *shell) = {builtin_set
+		, builtin_unset, builtin_export, builtin_history};
 	char			**ret;
 	int				blt;
 

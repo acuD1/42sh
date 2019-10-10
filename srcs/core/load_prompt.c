@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/10 14:32:48 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/10 18:06:23 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,14 @@
 
 void			load_prompt(t_core *shell)
 {
-	char		*line;
 	int8_t		status;
 	t_read		term;
 
-	line = NULL;
 	status = 1;
 	credit(shell);
-	(void)line;
 	/* BETA */
 	term.history = NULL;
 	term.history_index = NULL;
-
 	term.shell = shell;
 	term.new_line = 0;
 	term.buffer = ft_memalloc(BUFF_SIZE);
@@ -45,8 +41,9 @@ void			load_prompt(t_core *shell)
 	while (status)
 	{
 		/* Base output for prompt */
+		shell->history = term.history;
 		init_prompt(&term);
-		line = ft_strdup(term.buffer);
+		shell->buff = ft_strdup(term.buffer);
 		/*
 		**	[NEED REWORK] A lot of stuff happening here :
 		**	- tokens parser (for now)
@@ -55,7 +52,7 @@ void			load_prompt(t_core *shell)
 		**	- etc ...
 		*/
 
-		if (get_tokens(shell, term.buffer) != SUCCESS) /* ft_strsplit with for now tab and space charset */
+		if (get_tokens(shell, shell->buff) != SUCCESS) /* ft_strsplit with for now tab and space charset */
 		{
 	//		free_prompt(shell, term.buffer);
 			continue ;
@@ -68,7 +65,7 @@ void			load_prompt(t_core *shell)
 //		free_prompt(shell, term.buffer);
 		if (exec_builtin(shell) == FAILURE)
 			exec_process(shell, shell->env);
-		free_prompt(shell, line);
+		free_prompt(shell, shell->buff);
 	}
 	ft_strdel(&term.buffer);
 }

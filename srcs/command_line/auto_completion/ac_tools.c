@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/10 15:14:45 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:20:16 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,20 @@ char			**split_path(t_core *shell, char *str)
 		env = env->next;
 	}
 	return (array);
+}
+
+uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *input)
+{
+	if ((ft_strlen(input->buffer) == 0))
+		return (FALSE);
+	input->cmd = ft_strsplit(input->buffer, " ");
+	input->ac = ft_tablen(input->cmd);
+	*last_cmd = input->cmd[ft_tablen(input->cmd) - 1];
+	if (input->buffer[ft_strlen(input->buffer) - 1] == ' ')
+		input->ac += 1;
+	if (*last_cmd)
+		*to_find = ft_strdup(*last_cmd);
+	else
+		return (FALSE);
+	return (TRUE);
 }

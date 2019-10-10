@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/09 18:23:55 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:27:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@
 # define DQUOTE			'\"'
 # define BQUOTE			'`'
 # define NEW_LINE		'\n'
+# define SPACE			" "
 
 /*
 **		Action keys hex masks
@@ -119,8 +120,5 @@
 
 # define HIST_SIZE		500
 # define HISTFILE_SIZE		500
-# define PS1			"<< 42sh >>"
-# define PS2			">"
-# define PS3			"heredoc>"
 
 #endif

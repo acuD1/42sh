@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/04 05:09:41 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:24:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct	s_core
 	t_lst		*env;
 	t_lst		*pos_vars;
 	t_lst		*jobs;
+	t_lst		*history;
 
 	/* variables */
 	char		*buff;

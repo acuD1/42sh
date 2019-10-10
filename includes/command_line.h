@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/10 15:15:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/10 17:20:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void			call_number(t_read *line, int i);
 void			last_cmd_back(t_read *line, int i);
 void			callback_number(t_read *line, int i);
 void			call_word(t_read *line, int i);
+int8_t			builtin_history(t_core *shell);
 
 /*
  **		Quotes and Subprompt/Multiline
@@ -125,5 +126,6 @@ uint8_t			is_tab(char *buff, char *d_name, t_read *input);
 void		xtputs(char *str, int i, int (*f)(int));
 char		*xtgetstr(char *id, char **area);
 size_t		xread(int fd, char *buff, int size);
+uint8_t		split_cmd(char **last_cmd, char **to_find, t_read *input);
 
 #endif

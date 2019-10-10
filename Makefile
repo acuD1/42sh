@@ -140,6 +140,7 @@ SRC			+=	$(S_PATH)$(DB)process_vars.c
 SRC			+=	$(S_PATH)$(BUILTINS)set.c
 SRC			+=	$(S_PATH)$(BUILTINS)unset.c
 SRC			+=	$(S_PATH)$(BUILTINS)export.c
+SRC			+=	$(S_PATH)$(BUILTINS)builtin_history.c
 
 SRC			+=	$(S_PATH)$(MISC)usage.c
 SRC			+=	$(S_PATH)$(MISC)recall.c
