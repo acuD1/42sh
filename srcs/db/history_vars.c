@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   history.c                                          :+:      :+:    :+:   */
+/*   history_vars.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/24 23:51:01 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/04 08:25:11 by mpivet-p         ###   ########.fr       */
+/*   Created: 2019/10/10 18:36:56 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/10/10 18:36:57 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int8_t	update_histfile(t_core *shell)
 	db = NULL;
 	ptr = getlogin();
 	value = NULL;
-	if (shell && ptr != NULL 
+	if (shell && ptr != NULL
 			&& (db = get_or_create_db(shell, "HISTFILE", INTERNAL_VAR)) != NULL)
 	{
 		value = ft_strjoinf(ft_strjoin("/Users/", ptr)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_history.c                                  :+:      :+:    :+:   */
+/*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/10 16:07:31 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/10 18:31:06 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/10/10 18:37:37 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/10/10 18:37:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int8_t			builtin_history(t_core *shell)
 	i = -1;
 	saved = shell->history;
 	cmd = ft_strsplit(shell->buff, SPACE);
-	/**  Just usage missing  **/
+	/**  Only usage missing  **/
 	if (cmd[1] && ft_isalpha(*cmd[1]))
 	{
 		ft_dprintf(STDOUT_FILENO, "42sh: history: %s: numeric argument required\n", cmd[1]);

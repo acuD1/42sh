@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/10 17:20:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/10 19:03:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
  */
 
 void			init_termcaps(t_read *term);
+void			init_cmd_line(t_read *term, t_core *shell);
 uint8_t			init_config(void);
 uint8_t			reset_config(t_read *input);
 t_read			*get_size(t_read *data);

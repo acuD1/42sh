@@ -6,14 +6,14 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/10 15:12:34 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/10 18:42:29 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
-** 		Function to save in buffer the current bin found at buffer[0]
+** 	Function to save in buffer the current bin found at buffer[0]
 */
 
 void			insert_bin_in_buffer(char *d_name, t_read *input)
@@ -32,8 +32,8 @@ void			insert_bin_in_buffer(char *d_name, t_read *input)
 }
 
 /*
-** 		Check if the buffer match with the current bin
-** 		Return true if another tab key is pressed or no match found
+** 	Check if the buffer match with the current bin
+** 	Return true if another tab key is pressed or no match found
 */
 
 uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
@@ -58,8 +58,9 @@ uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 }
 
 /*
-** 		Open directories in the PATH variable
-** 		Check if an exe bin already exists with the curr buffer inserted
+** 	Open directories in the PATH variable
+** 	Check if an exe bin already exists with the curr buffer inserted
+**	Todo: add fct to check if builtins matching
 */
 
 void			to_complete_bin(char *buf, char *to_find, t_read *input)
