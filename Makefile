@@ -121,6 +121,7 @@ SRC			+=	$(S_PATH)$(AC)ac_current_dir.c
 SRC			+=	$(S_PATH)$(AC)ac_buffer.c
 SRC			+=	$(S_PATH)$(AC)ac_bin.c
 SRC			+=	$(S_PATH)$(AC)ac_directories.c
+SRC			+=	$(S_PATH)$(AC)ac_tools.c
 
 SRC			+=	$(S_PATH)$(DB)init_shell.c
 SRC			+=	$(S_PATH)$(DB)get_opt.c

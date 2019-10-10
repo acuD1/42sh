@@ -6,34 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/07 17:17:23 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/10 15:12:34 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-/*
-** 		Split all bin/sbin directories in an array
-*/
-
-char			**split_path(t_core *shell, char *str)
-{
-	char		**array;
-	t_lst		*env;
-
-	env = shell->env;
-	array = NULL;
-	while (env)
-	{
-		if (!ft_strcmp(str, ((t_db*)(env->content))->key))
-		{
-			array = ft_strsplit(((t_db*)(env->content))->value, ":");
-			break ;
-		}
-		env = env->next;
-	}
-	return (array);
-}
 
 /*
 ** 		Function to save in buffer the current bin found at buffer[0]

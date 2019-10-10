@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/09 18:04:43 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/10 15:15:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,9 @@ void			to_complete_buffer(char *last_buf, char *to_find, t_read *input);
 void			display_current_directory(char *buf, t_read *input, char *dir);
 void			delete_last_cmd(char *d_name, t_read *input);
 uint8_t			is_dir(char *dir);
+void			parse_env(char *prev_b, char *to_find, t_read *input);
+char			**split_path(t_core *shell, char *str);
+uint8_t			read_again(char **prev_b, char *path, char *name, t_read *input);
 
 /*
  **		Utils/Tools

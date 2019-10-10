@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:56:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/09 18:44:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/10 13:11:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int8_t	create_term(t_core *shell)
 				, sizeof(t_db))) != NULL)
 			return (SUCCESS);
 	}
-	return (FAILURE);
+	return (SUCCESS);
 }
 
 /*
