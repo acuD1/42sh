@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:56:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/10 13:11:53 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/10 15:43:02 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ int8_t	update_ifs(t_core *shell)
 
 int8_t	create_term(t_core *shell)
 {
-	if (shell != NULL && search_db(shell->env, "TERM") == NULL)
+	if (!shell)
+		return (FAILURE);
+	if (search_db(shell->env, "TERM") == NULL)
 	{
 		if (ft_lstappend(&(shell->env), ft_lstnew(
 				fetch_db(&(shell->db), "TERM=dumb", INTERNAL_VAR)

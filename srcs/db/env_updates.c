@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/04 11:06:39 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/10/10 15:47:34 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int8_t	update_last_arg(t_core *shell, char **argv)
 	db = NULL;
 	value = NULL;
 	if ((tablen = ft_tablen(argv)) <= 0)
-		return (FAILURE);
+		return (SUCCESS);
 	if (shell != NULL && (db = get_or_create_db(shell, "_", ENV_VAR)) != NULL)
 	{
 		value = ft_strdup(argv[tablen - 1]);
