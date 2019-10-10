@@ -1,3 +1,178 @@
+/*
+** AST
+*/
+
+
+// b_node	*ast_add_node(b_node *root, b_node *left, b_node *right, e_ast_state nodetype, char *data);
+// b_node	*ast_attach_node(b_node *root, b_node *leftnode, b_node *rightnode);
+// void 	ast_delete(b_node *node);
+// void error_ast(t_lexer *lexer);
+// b_ast *init_ast(void);
+// b_ast *ast(t_lexer *lexer);
+// typedef struct s_ast 	b_ast;
+// typedef struct s_node 	b_node;
+
+// typedef void (*t_asting)(t_lexer*);
+// typedef t_asting 	t_ast[NB_AST_STATE];
+
+
+// typedef struct s_analyze
+// {
+// 	e_ast_state *machine;
+// }				t_analyze;
+
+// typedef struct s_ast
+// {
+// 	b_node 		*root;
+// 	t_analyze 	*analyze[NB_AST_STATE];
+// 	e_ast_state state;
+// }				b_ast;
+
+// typedef struct 	s_node
+// {
+// 	// b_node		*base;
+//    	e_ast_state type;
+//     char 		*data;
+//     size_t 		data_len;
+//     b_node		*left;
+//     b_node		*right;
+// } 				b_node;
+
+// typedef enum ast_state
+// {
+// 	B_PROGRAM,
+// 	B_COMPLETE_CMDS,
+// 	B_COMPLETE_CMD,
+// 	B_LIST,
+// 	B_AND_OR,
+// 	B_PIPE_SEQUENCE,
+// 	B_CMD,
+// 	// B_COMPOUND_CMD,
+// 	B_SUBSHELL,
+// 	// B_COMPOUND_LIST,
+// 	// B_TERM,
+// 	// B_FOR_CLAUSE,
+// 	B_NAME,
+// 	// B_IN,
+// 	B_WORDLIST,
+// 	// B_CASE_CLAUSE,
+// 	// B_CASE_LISTS,
+// 	// B_CASE_LIST,
+// 	// B_CASE_ITEMS,
+// 	// B_CASE_ITEM,
+// 	// B_PATTERN,
+// 	// B_IF_CLAUSE,
+// 	// B_ELSE_PART,
+// 	// B_WHILE_CLAUSE,
+// 	// B_UNTIL_CLAUSE,
+// 	// B_FCT_DEFINITION,
+// 	// B_FCT_BODY,	
+// 	// B_FNAME,
+// 	// B_BRACE_GROUP,
+// 	// B_DO_GROUP,
+// 	B_SIMPLE_CMD,
+// 	B_CMD_NAME,
+// 	B_CMD_WORD,
+// 	B_CMD_PREFIX,
+// 	B_CMD_SUFFIX,
+// 	B_REDIRECT_LIST,
+// 	B_IO_REDIRECT,
+// 	B_IO_FILE,
+// 	B_FILENAME,
+// 	B_IO_HERE,
+// 	B_HERE_END,
+// 	B_NEWLINE_LIST,
+// 	B_LINEBREAK,
+// 	B_SEPARATOR_OP,
+// 	B_SEPARATOR,
+// 	B_SEQUENTIAL_SEP,
+// 	B_NEW,
+// 	B_START,
+// 	B_END,
+// }			e_ast_state;
+
+
+
+// b_node	*ast_add_node(b_node *root, b_node *left, b_node *right, e_ast_state nodetype, char *data)
+// {
+// 	b_node *new;
+
+// 	if (!root)
+// 		return (root = NULL);
+// 	new = ast_attach_node(root, left, right);
+// 	new->type = nodetype;
+// 	new->data = ft_strdup(data);
+// 	new->data_len = ft_strlen(data);
+// 	return (new);
+// }
+
+// b_node	*ast_attach_node(b_node *root, b_node *leftnode, b_node *rightnode)
+// {
+// 	b_node *new;
+
+// 	if (!root)
+// 		return (NULL);
+// 	if (!(new = (b_node*)malloc(sizeof(b_node))))
+// 		return (NULL);
+// 	new->left = leftnode;
+// 	new->right = rightnode;
+// 	new->type = B_NEW;
+// 	new->data = NULL;
+// 	new->data_len = 0;
+// 	return (new);
+// }
+
+// void 	ast_delete(b_node *node)
+// {
+// 	if (node->data)
+// 		free(node->data);
+// 	if (node->right)
+// 		ast_delete(node->right);
+// 	if (node->left)
+// 		ast_delete(node->left);
+// }
+
+// void error_ast(t_lexer *lexer)
+// {
+// 	ft_printf("ASTSTS   %u         %s\n", ((t_token*)lexer->tok->content)->id, ((t_token*)lexer->tok->content)->data);
+// }
+
+
+// // static void	bzero_ast(t_asting analyze)
+// // {
+// // 	int		index;
+
+// // 	index = 0;
+// // 	while (index < NB_AST_STATE)
+// // 	{
+// // 		analyze[index] = error_ast;
+// // 		++index;
+// // 	}
+// // }
+
+// b_ast *init_ast(void)
+// {
+// 	b_ast *ast;
+
+// 	ast = NULL;
+// 	if (!(ast = (b_ast*)malloc(sizeof(b_ast))))
+// 		return (ast);
+// 	ast->state = B_START;
+// 	// bzero_ast(ast->analyze);
+// 	// ast->root = 
+// 	return (ast);
+// }
+
+// b_ast *ast(t_lexer *lexer)
+// {
+// 	b_ast *ast;
+
+// 	if (!lexer || !lexer->tok)
+// 		return (NULL);
+// 	ast = init_ast();
+// 	return (ast);
+// }
+
 
 // typedef enum 	tokenid
 // {

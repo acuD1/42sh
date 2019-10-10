@@ -28,5 +28,5 @@ void	init_shell(t_core *shell)
 	shell->bin = NULL;
 	shell->opt = 0;
 	shell->buf = NULL;
-	shell->ast = NULL;
+	// shell->ast = NULL;
 }

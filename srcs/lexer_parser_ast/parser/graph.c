@@ -1,6 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
 /*   graph.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
@@ -15,7 +12,7 @@
 void		init_word_graph(t_graph *graph)
 {
 	static e_parser_state tab_good_type[] = {P_NEWLINE, P_WORD, ALL_REDIRECT, P_ASSIGN,
-										P_IONUMBER, P_PIPE, P_END, P_ERROR};
+										P_IONUMBER, P_PIPE, P_END, P_SEMICOLON, P_ERROR};
 
 	graph[P_WORD].good_type = tab_good_type;
 	graph[P_SPSTRING].good_type = tab_good_type;
@@ -63,7 +60,7 @@ void		init_start_graph(t_graph *graph)
 {
 	static e_parser_state tab_good_type[] = {P_WORD, ALL_REDIRECT, P_ASSIGN,
 										P_IONUMBER, P_END, P_START, P_ERROR};
-
+										//P_SEMICOLON,
 	graph[P_START].good_type = tab_good_type;
 	graph[P_SEMICOLON].good_type = tab_good_type;
 	graph[P_NEWLINE].good_type = tab_good_type;
