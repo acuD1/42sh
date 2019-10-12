@@ -74,8 +74,9 @@ DB			=	db/
 BUILTINS	=	builtins/
 COMMANDLINE	=	command_line/
 EXEC		=	exec/
-LEXER		= 	lexer_parser_ast/lexer/
-PARSER		= 	lexer_parser_ast/parser/
+LEXER		= 	lexer_parser_analyzer/lexer/
+PARSER		= 	lexer_parser_analyzer/parser/
+ANALYZER	= 	lexer_parser_analyzer/analyzer/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -88,6 +89,7 @@ PATHS		+=	$(O_PATH)$(DB)
 PATHS		+=	$(O_PATH)$(EXEC)
 PATHS		+=	$(O_PATH)$(LEXER)
 PATHS		+=	$(O_PATH)$(PARSER)
+PATHS		+=	$(O_PATH)$(ANALYZER)
 
 # Files
 
@@ -141,7 +143,9 @@ SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
 
 SRC		+=	$(S_PATH)$(PARSER)parser.c
 SRC		+=	$(S_PATH)$(PARSER)graph.c
-# SRC		+=	$(S_PATH)$(PARSER)tree.c
+
+SRC		+=	$(S_PATH)$(ANALYZER)analyze.c
+SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
 
 SRC		+=	$(S_PATH)dev.c
 # Headers
@@ -150,7 +154,7 @@ HDR			+=	sh42.h
 HDR			+=	define.h
 HDR			+=	struct.h
 HDR			+=	builtins.h
-HDR			+=	lexer_parser_ast.h
+HDR			+=	lexer_parser_analyzer.h
 HDR			+=	command_line.h
 HDR			+=	shared_libft.h
 ###############################################################################

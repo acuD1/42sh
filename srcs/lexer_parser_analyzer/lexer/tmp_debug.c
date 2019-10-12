@@ -43,6 +43,8 @@ void			ft_printtoklist(t_lexer *lexer)
 	{
 		tmp = (t_token*)lexer->tok->content;
 		printf("RETOUR %s %u\n", tmp->data, tmp->id);
+		if (!lexer->tok->prev)
+			break;
 		lexer->tok = lexer->tok->prev;
 	}
 }

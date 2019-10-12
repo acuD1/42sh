@@ -28,11 +28,11 @@ static void		ft_init_lex(t_lexer *lexer)
 ** C MARKÉ DECU
 */
 
-t_lexer			*init_lexer(t_core *shell, char *line)
+t_lexer			*init_lexer(char *line)
 {
 	t_lexer		*new;
 
-	if (!line || !shell)
+	if (!line)
 		return (NULL);
 	if (!(new = (t_lexer*)malloc(sizeof(t_lexer))))
 		return (NULL);

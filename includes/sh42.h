@@ -17,7 +17,7 @@
 # include "define.h"
 # include "struct.h"
 # include "command_line.h"
-# include "lexer_parser_ast.h"
+# include "lexer_parser_analyzer.h"
 # include <sys/wait.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
@@ -64,12 +64,5 @@ char		**set_envp(t_core *shell);
 
 void		print_tokens(t_core *shell);
 void		print_env(t_core *shell);
-
-
-/*
-** Lexer
-*/
-
-void	lexer(t_core *shell, char *line);
 
 #endif

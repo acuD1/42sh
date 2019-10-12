@@ -58,23 +58,23 @@ void		end_lexer(t_lexer *lexer)
 *** LEXER IN = LINE EDITION    OUT = PARSER
 */
 
-void		lexer(t_core *shell, char *line)
+t_lexer		*lexer(char *line)
 {
 	t_lexer	*lexer;
-	// t_lst **head;
+	t_lst **head;
 
-	// head = NULL;
+	head = NULL;
 	if (line == NULL)
-		return ;
+		return (NULL);
 	while (*line == '\t' || *line == ' ')
 		line++;
 	if (*line == '\0')
-		return ;
-	lexer = init_lexer(shell, line);
-	// head = &lexer->tok;
+		return (NULL);
+	lexer = init_lexer(line);
+	head = &lexer->tok;
 	while (lexer->status != END)
 		lexer->lex[lexer->status](lexer);
-	// lexer->tok = *head;
 	// ft_printtoklist(lexer);
-	parser(shell, lexer);
+	lexer->tok = *head;
+	return (lexer);
 }

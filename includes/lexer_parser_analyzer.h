@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_parser_ast.h                                 :+:      :+:    :+:   */
+/*   lexer_parser_analyzer.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -17,13 +17,79 @@
 
 typedef struct s_lexer 	t_lexer;
 typedef struct s_parser	t_parser;
+typedef struct s_analyzer t_analyzer;
 
-typedef void    (*t_parsing)(t_parser*, t_lexer*);
-typedef t_parsing t_pars[NB_PARSER_STATE][NB_OF_TOKENS];
+typedef void    (*t_analyze)(t_analyzer*, t_lexer*, t_job*);
+typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_OF_TOKENS];
 
 typedef void (*t_lexing)(t_lexer*);
 
-typedef enum	parser_state
+/*
+** ANALYZER
+*/
+
+typedef enum analyzer_state
+{
+    A_START,
+    A_SEPARATOR,
+    A_REDIRECT,
+    A_IONUMBER,
+    A_ASSIGN,
+    A_WORD,
+    A_END,
+    // A_ERROR,
+}           e_analyzer_state;
+
+typedef struct  s_filedesc
+{
+    unsigned int        action;
+    int32_t             actual;
+    int32_t             wanted;
+}               t_filedesc;
+
+typedef struct            s_process
+{
+    t_lst                *fd;
+    char                **av;
+    char                **env;
+    uint8_t                completed;
+    uint8_t                stopped;
+    pid_t                pid;
+    int                    status;
+}                        t_process;
+
+typedef struct s_job
+{
+    pid_t       pid;
+    t_lst       *process_lst;
+    char        **cmd;
+    char        **env;
+    t_filedesc  fd;
+    int         status;
+    t_termcaps  *term_modes;
+}               t_job;
+
+typedef struct  s_analyzer
+{
+    t_anal              analyze;
+    e_analyzer_state    state;
+}               t_analyzer;
+
+t_job *analyzer(t_core *shell);
+t_analyzer *init_analyze(t_analyzer *analyzer);
+void word_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+void end_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+void separator_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+void redirect_analyze(t_analyzer *analyzer, t_lexer * lexer, t_job *job);
+void error_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+void ionbr_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+void assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+
+/*
+** PARSER
+*/
+
+typedef enum    parser_state
 {
     P_NEWLINE,
     P_ANDIF,
@@ -46,7 +112,7 @@ typedef enum	parser_state
     P_ASSIGN,
     P_WORD,
     P_START,
-	P_END,
+    P_END,
     P_ERROR,
     P_DBQUOTE,
     P_QUOTE,
@@ -77,65 +143,20 @@ typedef enum	parser_state
     // P_THEN,
     // P_UNTIL,
     // P_WHILE,
-}				e_parser_state;
-
-typedef enum    lexer_state {
-	START,
-	NAME,
-	NEWLINE, 
-	IO_NUMBER,  
-	ASSIGNEMENT_WORD,
-	OPERATOR,
-	END,
-}               e_lexer_state;
-
-typedef struct s_job
-{
-	pid_t 		pid;
-	char 		**cmd;
-	char 		**env;
-	t_lst 		fd;
-	int 		status;
-	t_termcaps	*term_modes;
-}				t_job;
+}               e_parser_state;
 
 typedef struct          s_graph
 {
     e_parser_state      *good_type;
 }                       t_graph;
 
-
 typedef struct      s_parser
 {
-    t_pars          parsing;
     t_graph         graph[NB_OF_TOKENS];
     e_parser_state  state;
 }                   t_parser;
 
-typedef struct 	s_token
-{
-	e_parser_state id;
-	char        	*data;
-	size_t      	data_len;
-;} 				t_token;
-
-typedef struct  s_lexer
-{
-	char			*buff;
-	e_lexer_state	status;
-	size_t			ntok;	
-	size_t          buf_pos;
-	t_lexing        lex[NB_LEXER_STATE];
-	size_t          io_here;
-	t_lst	        *tok;
-	t_token			token;
-} 				t_lexer;
-
-/*
-** PARSER
-*/
-
-void        parser(t_core *shell, t_lexer *lexer);
+uint8_t        parser(t_core *shell, t_lexer *lexer);
 // void        init_word_graph(t_graph *graph);
 // void        init_redirect_graph(t_graph *graph);
 // void        init_assign_graph(t_graph *graph);
@@ -148,6 +169,36 @@ t_parser    *ft_init_graph(t_parser *parser);
 ** LEXER
 */
 
+typedef enum    lexer_state {
+    START,
+    NAME,
+    NEWLINE, 
+    IO_NUMBER,  
+    ASSIGNEMENT_WORD,
+    OPERATOR,
+    END,
+}               e_lexer_state;
+
+typedef struct  s_token
+{
+    e_parser_state id;
+    char            *data;
+    size_t          data_len;
+;}              t_token;
+
+typedef struct  s_lexer
+{
+    char            *buff;
+    e_lexer_state   status;
+    size_t          ntok;   
+    size_t          buf_pos;
+    t_lexing        lex[NB_LEXER_STATE];
+    size_t          io_here;
+    t_lst           *tok;
+    t_token         token;
+}               t_lexer;
+
+t_lexer         *lexer(char *line);
 int				ft_isdigit(int c);
 int 			ft_isalpha(int c);
 void			start_lexer(t_lexer *lexer);
@@ -159,7 +210,7 @@ void			assignement_word_lexer(t_lexer *lexer);
 void			operator_lexer(t_lexer *lexer);
 void			ft_printtoklist(t_lexer *lexer);
 t_lst			*ft_add_token(t_lst **curr, e_parser_state opeid, char *data);
-t_lexer			*init_lexer(t_core *shell, char *line);
+t_lexer			*init_lexer(char *line);
 t_token 		*lexer_token_set(t_token *token, e_parser_state opeid, char *data);
 t_lst			*ft_create_token(char *data, e_parser_state opeid);
 

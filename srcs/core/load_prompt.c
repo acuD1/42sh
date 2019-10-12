@@ -115,14 +115,11 @@ void			load_prompt(t_core *shell)
 		**	- etc ...
 		// */
 		// if (check_brackets(line))
-			lexer(shell, line);
-		// else
-			// error_quotes_brackets(line);
-		// ast = parser(shell, parser);˚˚˚∫
+		shell->lexer = lexer(line);
+		shell->job = analyzer(shell);
+		// error_quotes_brackets(line);
 		// exec_process(shell, shell->env);
 		free_prompt(shell, line);
-		// exec_process(shell, shell->env);
-
 	}
 	ft_strdel(&term.buffer);
 }

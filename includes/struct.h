@@ -28,13 +28,13 @@ typedef struct	s_build
 }				t_build;
 
 /*
-** Lexer_parser_ast
+** Lexer_parser_analyzer
 */
 
-typedef struct s_lexer 	t_lexer;
-typedef struct s_parser	t_parser;
-// typedef struct s_ast 	b_ast;
-// typedef struct s_node 	b_node;
+typedef struct s_lexer 		t_lexer;
+typedef struct s_parser		t_parser;
+typedef struct s_analyzer	t_analyzer;
+typedef struct s_job		t_job;
 
 
 /*
@@ -58,7 +58,8 @@ typedef struct	s_core
 	/* structs */
 	t_build		build;
 	t_db		db;
-	// b_ast		*ast;
+	t_lexer		*lexer;
+	t_job		*job;
 
 	/* init shell */
 	//struct termios	new_t;
