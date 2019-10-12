@@ -23,7 +23,9 @@ else
 ifndef ECHO
 T := $(shell $(MAKE) $(MAKECMDGOALS) --no-print-directory \
 	  -nrRf $(firstword $(MAKEFILE_LIST)) \
-	  ECHO="OutputPrintable" | grep -c "OutputPrintable") N := x C = $(words $N)$(eval N := x $N)
+	  ECHO="OutputPrintable" | grep -c "OutputPrintable")
+N := x
+C = $(words $N)$(eval N := x $N)
 V = "`expr "   [\`expr $C '*' 100 / $T\`" : '.*\(....\)$$'`%]"
 ECHO = printf "\e[1A\r%s %s %s                        \n" $V
 endif
