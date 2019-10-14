@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/14 13:51:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:47:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void			move_key_up(t_read *line)
 **	Arrow right to move the cursor one char on the right
 */
 
-void		move_right(char *buff, t_read *input)
+void			move_right(char *buff, t_read *input)
 {
 	int		width;
 	int		buff_index;
