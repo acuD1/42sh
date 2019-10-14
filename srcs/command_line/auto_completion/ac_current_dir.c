@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/08 12:56:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/14 13:36:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,6 @@ int			is_dot(char *d_name)
 		return (TRUE);
 	else if (!ft_strcmp(d_name, ".."))
 		return (TRUE);
-	/* if (isstart(d_name, "./")) */
-	/* 	return (FAILURE); */
-	/* else if (isstart(d_name, "../")) */
-	/* 	return (FAILURE); */
 	return (FALSE);
 }
 
@@ -73,7 +69,8 @@ void			display_current_directory(char *buf, t_read *input, char *curr_dir)
 	char		current_dir[BUFF_SIZE];
 
 	get_current_dir(curr_dir, current_dir, input);
-	dir = opendir(current_dir);
+	if ((dir = opendir(current_dir)) == NULL)
+		return ;
 	ft_strcpy(tmp, current_dir);
 	while ((data = readdir(dir)) != NULL)
 	{
