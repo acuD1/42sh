@@ -43,11 +43,9 @@ uint8_t check_lexer_tokens(e_parser_state *current, e_parser_state needed, e_par
 uint8_t parser(t_core *shell, t_lexer *lexer)
 {
 	t_parser	*parser;
-	// t_lst 		**head;
 	t_lst 		*tok_lst;
 
 	parser = NULL;
-	// head = &lexer->tok;
 	tok_lst = lexer->tok;
 	if (!lexer || !shell)
 		return (FAILURE);
@@ -62,8 +60,6 @@ uint8_t parser(t_core *shell, t_lexer *lexer)
 		}
 		tok_lst = tok_lst->next;
 	}
-	// lexer->tok = *head;
 	// ft_printtoklist(lexer);
-	// lexer->tok = *head;
 	return (TRUE);
 }

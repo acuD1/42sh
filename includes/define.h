@@ -89,19 +89,17 @@
 # define MOVE_DO			66
 # define BS_KEY				127
 
-# define NB_OF_OPE 16
-# define CHAR_INTERRUPT 			" \t<>|;&\n"
-# define OPERATORS 					"&|;><-\n" 
-
 /*
-** LEXER 
+** LEXER_PARSER_ANALYZER
 */
 
-
+# define NB_OF_OPE 18
+# define CHAR_INTERRUPT 			" \t<>|;&\n"
+# define OPERATORS 					"&|;><-\n" 
 # define NB_LEXER_STATE 7
-# define NB_PARSER_STATE 36
-# define NB_ANALYZER_STATE 7
-# define NB_OF_TOKENS 37
+# define NB_PARSER_STATE 25
+# define NB_ANALYZER_STATE 8
+# define NB_OF_TOKENS 25
 # define REDIR                      P_GREAT, P_LESS
 # define REDIR_AND                  P_GREATAND, P_LESSAND, P_ANDGREAT
 # define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH, P_ANDDGREAT

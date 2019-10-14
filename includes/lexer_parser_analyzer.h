@@ -37,7 +37,7 @@ typedef enum analyzer_state
     A_ASSIGN,
     A_WORD,
     A_END,
-    // A_ERROR,
+    A_ERROR,
 }           e_analyzer_state;
 
 typedef struct  s_filedesc
@@ -64,7 +64,7 @@ typedef struct s_job
     t_lst       *process_lst;
     char        **cmd;
     char        **env;
-    t_filedesc  fd;
+    t_filedesc  *fd;
     int         status;
     t_termcaps  *term_modes;
 }               t_job;
@@ -73,6 +73,7 @@ typedef struct  s_analyzer
 {
     t_anal              analyze;
     e_analyzer_state    state;
+    int                fd_flags;
 }               t_analyzer;
 
 t_job *analyzer(t_core *shell);
@@ -92,7 +93,9 @@ void assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
 typedef enum    parser_state
 {
     P_NEWLINE,
+    P_ANDDGREAT,
     P_ANDIF,
+    P_ANDGREAT,
     P_AND,
     P_ORIF,
     P_PIPE,
@@ -114,20 +117,18 @@ typedef enum    parser_state
     P_START,
     P_END,
     P_ERROR,
-    P_DBQUOTE,
-    P_QUOTE,
-    P_PARENT_OPEN,
-    P_PARENT_CLOSE,
-    P_BACKQUOTE,
-    P_HOOK_OPEN,
-    P_HOOK_CLOSE,
-    P_BRACKET_OPEN,
-    P_BRACKET_CLOSE,
-    P_HASH,
-    P_PERCENT,
-    P_ANDDGREAT,
-    P_ANDGREAT,
-    P_SPSTRING,
+    // P_DBQUOTE,
+    // P_QUOTE,
+    // P_PARENT_OPEN,
+    // P_PARENT_CLOSE,
+    // P_BACKQUOTE,
+    // P_HOOK_OPEN,
+    // P_HOOK_CLOSE,
+    // P_BRACKET_OPEN,
+    // P_BRACKET_CLOSE,
+    // P_HASH,
+    // P_PERCENT,
+    // P_SPSTRING,
     // P_DEQ,
     // P_NOTEQ,
     // P_CASE,

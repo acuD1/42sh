@@ -15,8 +15,8 @@ void		init_word_graph(t_graph *graph)
 										P_IONUMBER, P_PIPE, P_END, P_SEMICOLON, P_ERROR};
 
 	graph[P_WORD].good_type = tab_good_type;
-	graph[P_SPSTRING].good_type = tab_good_type;
-	graph[P_DBQUOTE].good_type = tab_good_type;
+	// graph[P_SPSTRING].good_type = tab_good_type;
+	// graph[P_DBQUOTE].good_type = tab_good_type;
 }
 
 void		init_redirect_graph(t_graph *graph)

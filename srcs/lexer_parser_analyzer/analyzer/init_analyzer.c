@@ -46,28 +46,28 @@
 // 	analyze[A_IONUMBER][P_END] =
 // }
 
-// void init_redirect_analyze(t_anal analyze)
-// {
-// 	analyze[A_REDIRECT][P_NEWLINE] =
-// 	analyze[A_REDIRECT][P_ANDIF] =
-// 	analyze[A_REDIRECT][P_AND] =
-// 	analyze[A_REDIRECT][P_ORIF] =
-// 	analyze[A_REDIRECT][P_PIPE] =
-// 	analyze[A_REDIRECT][P_DSEMI] =
-// 	analyze[A_REDIRECT][P_SEMICOLON] =
-// 	analyze[A_REDIRECT][P_DLESSDASH] =
-// 	analyze[A_REDIRECT][P_DLESS] =
-// 	analyze[A_REDIRECT][P_LESSGREAT] =
-// 	analyze[A_REDIRECT][P_LESS] =
-// 	analyze[A_REDIRECT][P_DGREAT] =
-// 	analyze[A_REDIRECT][P_GREATAND] =
-// 	analyze[A_REDIRECT][P_CLOBBER] =
-// 	analyze[A_REDIRECT][P_GREAT] =
-// 	analyze[A_REDIRECT][P_IONUMBER] =
-// 	analyze[A_REDIRECT][P_ASSIGN] =
-// 	analyze[A_REDIRECT][P_WORD] =
-// 	analyze[A_REDIRECT][P_END] =
-// }
+void init_redirect_analyze(t_anal analyze)
+{
+	analyze[A_REDIRECT][P_NEWLINE] = end_analyze;
+	analyze[A_REDIRECT][P_ANDIF] = error_analyze;
+	analyze[A_REDIRECT][P_AND] = error_analyze;
+	analyze[A_REDIRECT][P_ORIF] = error_analyze;
+	analyze[A_REDIRECT][P_PIPE] = error_analyze;
+	analyze[A_REDIRECT][P_DSEMI] = error_analyze;
+	analyze[A_REDIRECT][P_SEMICOLON] =  end_analyze;
+	analyze[A_REDIRECT][P_DLESSDASH] = error_analyze;
+	analyze[A_REDIRECT][P_DLESS] = error_analyze;
+	analyze[A_REDIRECT][P_LESSGREAT] = error_analyze;
+	analyze[A_REDIRECT][P_LESS] = word_analyze;
+	analyze[A_REDIRECT][P_DGREAT] = error_analyze;
+	analyze[A_REDIRECT][P_GREATAND] = error_analyze;
+	analyze[A_REDIRECT][P_CLOBBER] = error_analyze;
+	analyze[A_REDIRECT][P_GREAT] =	error_analyze;
+	analyze[A_REDIRECT][P_IONUMBER] = ionbr_analyze;
+	analyze[A_REDIRECT][P_ASSIGN] = assign_analyze;
+	analyze[A_REDIRECT][P_WORD] = word_analyze;
+	analyze[A_REDIRECT][P_END] = end_analyze;
+}
 
 // void init_end_analyze(t_anal analyze)
 // {
