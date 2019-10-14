@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/14 13:45:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/14 15:03:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
 	if (input->x != 0 || (input->x == 0 && buff != NEW_LINE))
 		ft_dprintf(STDIN_FILENO, "%c", buff);
-	if (buff == NEW_LINE)
+	if (buff == NEW_LINE || input->x >= input->ws_col + 1)
 	{
 		(input->x == 0) ? input->y-- : 0;
 		input->x = 0;
@@ -31,15 +31,15 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 	input->width++;
 	input->buffer[buff_index] = buff;
 	input->x_index++;
-	if (input->x >= input->ws_col + 1)
-		insert_newline_in_buff(input);
+	/* if (input->x >= input->ws_col + 1) */
+	/* 	insert_newline_in_buff(input); */
 }
 
 /*
-**		To insert char in buffer if cursor is inline
-**		Termcaps : 	`save_cr' => save cursor position
-**				`reset_cr' => restore cursor position
-**				`clr_lines' => to clear all following lines from cursor
+**	To insert char in buffer if cursor is inline
+**	Termcaps : 	`save_cr' => save cursor position
+**			`reset_cr' => restore cursor position
+**			`clr_lines' => to clear all following lines from cursor
 */
 
 void		insert_inline_char(char *buff, t_read *input, int buff_index)
@@ -70,7 +70,7 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 }
 
 /*
-**		To insert a string in buffer at the end of line
+**	To insert a string in buffer at the end of line
 */
 
 void			insert_str_in_buffer(char *d_name, t_read *input)
