@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/08 17:12:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/14 13:45:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 /*
 **		To insert char in buffer if cursor is inline
 **		Termcaps : 	`save_cr' => save cursor position
-**					`reset_cr' => restore cursor position
-**					`clr_lines' => to clear all following lines from cursor
+**				`reset_cr' => restore cursor position
+**				`clr_lines' => to clear all following lines from cursor
 */
 
 void		insert_inline_char(char *buff, t_read *input, int buff_index)

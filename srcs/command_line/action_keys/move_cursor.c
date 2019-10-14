@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/08 17:07:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/14 13:51:46 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			move_key_down(t_read *line)
 	int		i;
 
 	i = -1;
-	if (line->history)
+	if (line->history && line->history_index)
 	{
 		goto_prompt(line);
 		memset(line->buffer, 0, strlen(line->buffer));
