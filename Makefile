@@ -144,7 +144,9 @@ SRC			+=	$(S_PATH)$(BUILTINS)unset.c
 SRC			+=	$(S_PATH)$(BUILTINS)export.c
 SRC			+=	$(S_PATH)$(BUILTINS)history.c
 
-SRC			+=	$(S_PATH)$(MISC)usage.c
+SRC			+=	$(S_PATH)$(MISC)errors.c
+SRC			+=	$(S_PATH)$(MISC)abs_path.c
+SRC			+=	$(S_PATH)$(MISC)ft_access.c
 SRC			+=	$(S_PATH)$(MISC)recall.c
 SRC			+=	$(S_PATH)$(MISC)check_args.c
 
