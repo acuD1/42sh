@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:20:26 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/03 11:29:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/10/15 12:25:43 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ int8_t	locate_hash(t_core *shell, t_hash *hash)
 {
 	t_lst		**map;
 	t_lst		*sub_map;
-	size_t		i;
 
-	i = 0;
 	if (hash->map == NULL)
 		return (FAILURE);
 	map = hash->map;
