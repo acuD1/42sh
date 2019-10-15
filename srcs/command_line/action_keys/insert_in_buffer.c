@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/15 14:34:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/15 17:54:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	}
 	input->buffer[buff_index] = *buff;
 	tmp = ft_strsub(input->buffer, buff_index, strlen_to(input->buffer, '\0'));
-	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
 	xtputs(input->tcaps[SAVE_CR], 1, my_outc);
+	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
 	ft_dprintf(STDOUT_FILENO, "%s", tmp);
 	xtputs(input->tcaps[RESTORE_CR], 1, my_outc);
 	move_right(buff, input);
