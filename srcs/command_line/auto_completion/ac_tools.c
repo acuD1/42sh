@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/10 17:20:16 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/15 13:59:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,14 @@ void			parse_env(char *prev_b, char *to_find, t_read *input)
 				ft_strdel(&tmp);
 				return ;
 			}
+			input->found = TRUE;
 		}
 		if (env->next)
 			env = env->next;
-		else
+		else if (input->found == TRUE)
 			env = head;
+		else
+			return ;
 	}
 }
 

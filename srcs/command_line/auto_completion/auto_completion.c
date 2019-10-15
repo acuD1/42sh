@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/14 13:34:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/15 14:12:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void			delete_last_cmd(char *d_name, t_read *input)
 	while (i--)
 	{
 		input->buffer[buff_index] = '\0';
+		input->width--;
 		move_left(d_name, input);
 		buff_index--;
 	}

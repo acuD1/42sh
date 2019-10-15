@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/14 15:48:59 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/15 14:33:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,14 @@ void		move_left(char *buff, t_read *input)
 	{
 		width = get_width_last_line(input);
 		input->x = width;
-		xtputs(input->tcaps[KEY_LEFT], 1, my_outc);
-		if (width < input->prompt_len)
+		if (width < input->prompt_len || input->x == input->ws_col)
 		{
 			while (width--)
 				xtputs(input->tcaps[KEY_RIGHT], 1, my_outc);
 			xtputs(input->tcaps[KEY_UP], 1, my_outc);
 		}
+		else
+			xtputs(input->tcaps[KEY_LEFT], 1, my_outc);
 		input->x_index--;
 		input->y--;
 	}

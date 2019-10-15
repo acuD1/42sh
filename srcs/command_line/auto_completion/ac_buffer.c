@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/14 13:32:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/15 14:38:21 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ DIR			*update_curr_dir(char *to_find, char *prev_b, char *curr_dir)
 **		Return FAILURE(-1) to stop reading (an error occured or no tab key pressed)
 */
 
-uint8_t			read_dir(char **prev_b, char *to_find, t_read *input)
+int8_t			read_dir(char **prev_b, char *to_find, t_read *input)
 {
 	char            current_dir[BUFF_SIZE];
 	struct dirent   *data;
