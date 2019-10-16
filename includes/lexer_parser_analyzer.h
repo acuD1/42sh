@@ -47,16 +47,16 @@ typedef struct  s_filedesc
     int32_t             wanted;
 }               t_filedesc;
 
-typedef struct            s_process
-{
-    t_lst                *fd;
-    char                **av;
-    char                **env;
-    uint8_t                completed;
-    uint8_t                stopped;
-    pid_t                pid;
-    int                    status;
-}                        t_process;
+// typedef struct            s_process
+// {
+//     t_lst                *fd;
+//     char                **av;
+//     char                **env;
+//     uint8_t                completed;
+//     uint8_t                stopped;
+//     pid_t                pid;
+//     int                    status;
+// }                        t_process;
 
 typedef struct s_job
 {
@@ -76,7 +76,7 @@ typedef struct  s_analyzer
     int                fd_flags;
 }               t_analyzer;
 
-t_job *analyzer(t_core *shell);
+t_lst *analyzer(t_core *shell);
 t_analyzer *init_analyze(t_analyzer *analyzer);
 void word_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
 void end_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);

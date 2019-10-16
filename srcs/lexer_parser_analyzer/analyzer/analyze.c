@@ -97,7 +97,7 @@ void assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
 // {
 // 	if (!(job = (t_job*)malloc(sizeof(t_job))))
 // 		return (NULL);
-// 	job->pid = 0;
+// 	job->pid = 1;
 // 	job->cmd = NULL;
 // 	job->env = NULL;
 // 	job->fd->action = 0;
@@ -108,7 +108,7 @@ void assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
 // 	return (job);
 // }
 
-t_job	*analyzer(t_core *shell)
+t_lst	*analyzer(t_core *shell)
 {
 	t_analyzer *analyzer;
 	t_lexer *lexer;

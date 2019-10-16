@@ -59,7 +59,7 @@ typedef struct	s_core
 	t_build		build;
 	t_db		db;
 	t_lexer		*lexer;
-	t_job		*job;
+	t_lst		*jobs;
 
 	/* init shell */
 	//struct termios	new_t;
