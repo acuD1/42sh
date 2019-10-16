@@ -46,28 +46,28 @@
 // 	analyze[A_IONUMBER][P_END] =
 // }
 
-void init_redirect_analyze(t_anal analyze)
-{
-	analyze[A_REDIRECT][P_NEWLINE] = end_analyze;
-	analyze[A_REDIRECT][P_ANDIF] = error_analyze;
-	analyze[A_REDIRECT][P_AND] = error_analyze;
-	analyze[A_REDIRECT][P_ORIF] = error_analyze;
-	analyze[A_REDIRECT][P_PIPE] = error_analyze;
-	analyze[A_REDIRECT][P_DSEMI] = error_analyze;
-	analyze[A_REDIRECT][P_SEMICOLON] =  end_analyze;
-	analyze[A_REDIRECT][P_DLESSDASH] = error_analyze;
-	analyze[A_REDIRECT][P_DLESS] = error_analyze;
-	analyze[A_REDIRECT][P_LESSGREAT] = error_analyze;
-	analyze[A_REDIRECT][P_LESS] = word_analyze;
-	analyze[A_REDIRECT][P_DGREAT] = error_analyze;
-	analyze[A_REDIRECT][P_GREATAND] = error_analyze;
-	analyze[A_REDIRECT][P_CLOBBER] = error_analyze;
-	analyze[A_REDIRECT][P_GREAT] =	error_analyze;
-	analyze[A_REDIRECT][P_IONUMBER] = ionbr_analyze;
-	analyze[A_REDIRECT][P_ASSIGN] = assign_analyze;
-	analyze[A_REDIRECT][P_WORD] = word_analyze;
-	analyze[A_REDIRECT][P_END] = end_analyze;
-}
+// void init_redirect_analyze(t_anal analyze)
+// {
+// 	analyze[A_REDIRECT][P_NEWLINE] = end_analyze;
+// 	analyze[A_REDIRECT][P_ANDIF] = error_analyze;
+// 	analyze[A_REDIRECT][P_AND] = error_analyze;
+// 	analyze[A_REDIRECT][P_ORIF] = error_analyze;
+// 	analyze[A_REDIRECT][P_PIPE] = error_analyze;
+// 	analyze[A_REDIRECT][P_DSEMI] = error_analyze;
+// 	analyze[A_REDIRECT][P_SEMICOLON] =  end_analyze;
+// 	analyze[A_REDIRECT][P_DLESSDASH] = error_analyze;
+// 	analyze[A_REDIRECT][P_DLESS] = error_analyze;
+// 	analyze[A_REDIRECT][P_LESSGREAT] = error_analyze;
+// 	analyze[A_REDIRECT][P_LESS] = cmd_analyze;
+// 	analyze[A_REDIRECT][P_DGREAT] = error_analyze;
+// 	analyze[A_REDIRECT][P_GREATAND] = error_analyze;
+// 	analyze[A_REDIRECT][P_CLOBBER] = error_analyze;
+// 	analyze[A_REDIRECT][P_GREAT] =	error_analyze;
+// 	analyze[A_REDIRECT][P_IONUMBER] = ionbr_analyze;
+// 	analyze[A_REDIRECT][P_ASSIGN] = assign_analyze;
+// 	analyze[A_REDIRECT][P_WORD] = cmd_analyze;
+// 	analyze[A_REDIRECT][P_END] = end_analyze;
+// }
 
 // void init_end_analyze(t_anal analyze)
 // {
@@ -88,7 +88,7 @@ void init_redirect_analyze(t_anal analyze)
 // 	analyze[A_END][P_GREAT] = redirect_analyze;
 // 	analyze[A_END][P_IONUMBER] = ionbr_analyze;
 // 	analyze[A_END][P_ASSIGN] = assign_analyze;
-// 	analyze[A_END][P_WORD] = word_analyze;
+// 	analyze[A_END][P_WORD] = cmd_analyze;
 // 	analyze[A_END][P_END] = end_analyze;
 // }
 
@@ -128,7 +128,7 @@ void init_start_analyze(t_anal analyze)
 	analyze[A_START][P_GREAT] = redirect_analyze;
 	analyze[A_START][P_IONUMBER] = ionbr_analyze;
 	analyze[A_START][P_ASSIGN] = assign_analyze;
-	analyze[A_START][P_WORD] = word_analyze;
+	analyze[A_START][P_WORD] = cmd_analyze;
 	analyze[A_START][P_END] = end_analyze;
 }
 
@@ -151,9 +151,55 @@ void init_word_analyze(t_anal analyze)
 	analyze[A_WORD][P_GREAT] = redirect_analyze;
 	analyze[A_WORD][P_IONUMBER] = ionbr_analyze;
 	analyze[A_WORD][P_ASSIGN] = assign_analyze;
-	analyze[A_WORD][P_WORD] = word_analyze;
+	analyze[A_WORD][P_WORD] = cmd_analyze;
 	analyze[A_WORD][P_END] = end_analyze;
 }
+
+// void init_cmd_analyze(t_anal analyze)
+// {
+// 	analyze[A_CMD][P_NEWLINE] = separator_analyze;
+// 	analyze[A_CMD][P_ANDIF] = redirect_analyze;
+// 	analyze[A_CMD][P_AND] = redirect_analyze;
+// 	analyze[A_CMD][P_ORIF] = redirect_analyze;
+// 	analyze[A_CMD][P_PIPE] = redirect_analyze;
+// 	analyze[A_CMD][P_DSEMI] = separator_analyze;
+// 	analyze[A_CMD][P_SEMICOLON] = separator_analyze;
+// 	analyze[A_CMD][P_DLESSDASH] = redirect_analyze;
+// 	analyze[A_CMD][P_DLESS] = redirect_analyze;
+// 	analyze[A_CMD][P_LESSGREAT] = redirect_analyze;
+// 	analyze[A_CMD][P_LESS] = redirect_analyze;
+// 	analyze[A_CMD][P_DGREAT] = redirect_analyze;
+// 	analyze[A_CMD][P_GREATAND] = redirect_analyze;
+// 	analyze[A_CMD][P_CLOBBER] = redirect_analyze;
+// 	analyze[A_CMD][P_GREAT] = redirect_analyze;
+// 	analyze[A_CMD][P_IONUMBER] = ionbr_analyze;
+// 	analyze[A_CMD][P_ASSIGN] = assign_analyze;
+// 	analyze[A_CMD][P_WORD] = cmd_analyze;
+// 	analyze[A_CMD][P_END] = end_analyze;
+// }
+
+// void init_cmd_arg_analyze(t_anal analyze)
+// {
+// 	analyze[A_CMD_ARG][P_NEWLINE] = separator_analyze;
+// 	analyze[A_CMD_ARG][P_ANDIF] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_AND] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_ORIF] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_PIPE] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_DSEMI] = separator_analyze;
+// 	analyze[A_CMD_ARG][P_SEMICOLON] = separator_analyze;
+// 	analyze[A_CMD_ARG][P_DLESSDASH] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_DLESS] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_LESSGREAT] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_LESS] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_DGREAT] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_GREATAND] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_CLOBBER] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_GREAT] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_IONUMBER] = ionbr_analyze;
+// 	analyze[A_CMD_ARG][P_ASSIGN] = assign_analyze;
+// 	analyze[A_CMD_ARG][P_WORD] = cmd_analyze;
+// 	analyze[A_CMD_ARG][P_END] = end_analyze;
+// }
 
 static void	bzero_analyze(t_anal parsing)
 {
@@ -179,6 +225,8 @@ t_analyzer *init_analyze(t_analyzer *analyzer)
 	// init_ionumber_analyze(analyzer->analyze);
 	// init_assign_analyze(analyzer->analyze);
 	init_word_analyze(analyzer->analyze);
+	// init_cmd_analyze(analyzer->analyze);
+	// init_cmd_arg_analyze(analyzer->analyze);
 	// init_separator_analyze(analyzer->analyze);
 	// init_redirect_analyze(analyzer->analyze);
 	// init_end_analyze(analyzer->analyze);

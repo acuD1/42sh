@@ -1,10 +1,60 @@
 #include "sh42.h"
 
-void word_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
+int ft_tablen(char **tb)
+{
+	int i;
+
+	i = 0;
+	if (!tb)
+		return (0);
+	while (tb[i])
+		i++;
+	return (i);
+}
+
+char **fill_cmd_job(char *str, t_job *job)
+{
+	if (!job->cmd)
+	{
+		if (!(job->cmd = (char**)malloc(sizeof(char*) + 1)))
+			return (NULL);
+		job->cmd[0] = ft_strdup(str);
+		job->cmd[1] = NULL;
+	}
+	return (job->cmd);
+}
+
+char **ft_add_arg_cmd_job(char **tablo, char *str)
+{
+	char **tb;
+	int j;
+
+	j = 0;
+	tb = NULL;
+	if (!str || !tablo)
+		return (NULL);
+	if (!(tb = (char**)malloc(sizeof(char*) * (ft_tablen(tablo) + 2))))
+		return (NULL);
+	while (tablo[j])
+	{
+		tb[j] = ft_strdup(tablo[j]);
+		free(tablo[j]);
+		j++;
+	}
+	tb[j] = ft_strdup(str);
+	tb[j + 1] = NULL;
+	free(tablo);
+	return (tb);
+}
+
+
+void cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
 {
 	// ft_printf("WOWOWORD   %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
-	(void)job;
-	(void)lexer;
+	if (analyzer->state != A_WORD)
+		job->cmd = fill_cmd_job(((t_token*)lexer->tok->content)->data, job);
+	else if (analyzer->state == A_WORD)
+		job->cmd = ft_add_arg_cmd_job(job->cmd, ((t_token*)lexer->tok->content)->data);
 	analyzer->state = A_WORD;
 	//check les prochain token pour savoir si ils sont conforme a la grammaire
 	// TANT QUE token word 
@@ -93,20 +143,49 @@ void assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
 // 	analyzer->state = A_START;
 // }
 
-// t_job *init_job(t_job *job)
-// {
-// 	if (!(job = (t_job*)malloc(sizeof(t_job))))
-// 		return (NULL);
-// 	job->pid = 1;
-// 	job->cmd = NULL;
-// 	job->env = NULL;
-// 	job->fd->action = 0;
-// 	job->fd->actual = 1;
-// 	job->fd->wanted = 1;
-// 	job->status = 1; // 1 = running | 0 = stopped
-// 	job->term_modes = NULL;
-// 	return (job);
-// }
+t_job *init_job(t_job *job)
+{
+	if (!(job = (t_job*)malloc(sizeof(t_job))))
+		return (NULL);
+	// job->pid = 1;
+	job->cmd = NULL;
+	// job->env = NULL;
+	// job->fd->action = 0;
+	// job->fd->actual = 1;
+	// job->fd->wanted = 1;
+	// job->status = 1;
+	// job->type = A_START;
+	// job->term_modes = NULL;
+	return (job);
+}
+
+void ft_printjobcmd(t_job *job)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	if (!job)
+		return;
+	else
+	{
+		if (job->cmd)
+		{
+			j = ft_tablen(job->cmd);
+			while(job->cmd[i])
+			{
+				ft_printf("cmd %s ", job->cmd[i]);
+				i++;
+			}
+		}
+		// ft_printf("%u\n", job->type);
+	}
+}
+
+
+	// ft_lstappend(&shell->jobs, ft_lstnew(job, sizeof(t_job)));
+
 
 t_lst	*analyzer(t_core *shell)
 {
@@ -121,11 +200,11 @@ t_lst	*analyzer(t_core *shell)
 	head = &lexer->tok;
 	analyzer = init_analyze(analyzer);
 	analyzer->state = A_START;
-	// job = init_job(job);
+	job = init_job(job);
 	if (parser(shell, lexer) != TRUE)
 	{
 		//erreur
-		return (job); //shell->job = NULL;
+		return (shell->jobs); //shell->job = NULL;
 	}
 	// while (analyzer->state != A_END)
 	while (analyzer->state != A_END && ft_strcmp("(null)", ((t_token*)lexer->tok->next->content)->data))
@@ -135,5 +214,6 @@ t_lst	*analyzer(t_core *shell)
 		lexer->tok = lexer->tok->next; // faire une fct get_token qui passe au token suivant ??
 	}
 	lexer->tok = *head;
-	return (job);
+	ft_printjobcmd(job);
+	return (shell->jobs);
 }

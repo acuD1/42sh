@@ -1,3 +1,34 @@
+
+// void cmd_arg_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
+// {
+// 	char **arg;
+// 	int i;
+// 	int j;
+
+// 	arg = NULL;
+// 	i = 0;
+// 	j = 0;
+// 	if (!job->cmd[0])
+// 		return;
+// 	else
+// 	{
+// 		i = ft_tablen(job->cmd);
+// 		printf("I %d\n", i);
+// 		if (!(arg = (char**)malloc(sizeof(char*) * i + 1)))
+// 			return;
+// 		while (j < i)
+// 		{
+// 			printf("J %s %d\n", job->cmd[j] ,j);
+// 			arg[j] = ft_strcpy(arg[j], job->cmd[j]);
+// 			j++;
+// 		}
+// 		// arg[j] = ft_strdup(((t_token*)lexer->tok->content)->data);
+// 	}
+// 	(void)analyzer;
+// 	(void)lexer;
+// }
+
+
 /*
 ** AST
 */

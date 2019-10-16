@@ -29,5 +29,5 @@ void	init_shell(t_core *shell)
 	shell->opt = 0;
 	shell->buf = NULL;
 	shell->lexer = NULL;
-	shell->job = NULL;
+	shell->jobs = NULL;
 }

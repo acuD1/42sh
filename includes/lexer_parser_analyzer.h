@@ -35,6 +35,8 @@ typedef enum analyzer_state
     A_REDIRECT,
     A_IONUMBER,
     A_ASSIGN,
+    // A_CMD,
+    // A_CMD_ARG,
     A_WORD,
     A_END,
     A_ERROR,
@@ -60,13 +62,14 @@ typedef struct  s_filedesc
 
 typedef struct s_job
 {
-    pid_t       pid;
-    t_lst       *process_lst;
+    // pid_t       pid;
+    // t_lst       *process_lst;
     char        **cmd;
-    char        **env;
-    t_filedesc  *fd;
-    int         status;
-    t_termcaps  *term_modes;
+    // char        **env;
+    // t_filedesc  *fd;
+    // int         status; // 1 = running | 0 = stopped par exemple
+    e_analyzer_state type;
+    // t_termcaps  *term_modes;
 }               t_job;
 
 typedef struct  s_analyzer
@@ -78,7 +81,7 @@ typedef struct  s_analyzer
 
 t_lst *analyzer(t_core *shell);
 t_analyzer *init_analyze(t_analyzer *analyzer);
-void word_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+void cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
 void end_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
 void separator_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
 void redirect_analyze(t_analyzer *analyzer, t_lexer * lexer, t_job *job);
