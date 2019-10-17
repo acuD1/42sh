@@ -131,6 +131,7 @@ void assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
 	(void)lexer;
 	(void)job;
 	analyzer->state = A_ASSIGN;
+
 	// delimite la list de token en token ASSIGN
 	// cree la struct job en consequence
 	// CAD cree un token dans la list assign pour pouvoir check ensuite si les tokens word suivant correspondent a un assign
@@ -196,6 +197,8 @@ t_lst	*analyzer(t_core *shell)
 
 	job = NULL;
 	analyzer = NULL;
+	if (!shell->lexer)
+		return (NULL);
 	lexer = shell->lexer;
 	head = &lexer->tok;
 	analyzer = init_analyze(analyzer);
@@ -209,11 +212,11 @@ t_lst	*analyzer(t_core *shell)
 	// while (analyzer->state != A_END)
 	while (analyzer->state != A_END && ft_strcmp("(null)", ((t_token*)lexer->tok->next->content)->data))
 	{
-		ft_printf("analyzer state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)lexer->tok->content)->id ,((t_token*)lexer->tok->content)->data);
+		// ft_printf("analyzer state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)lexer->tok->content)->id ,((t_token*)lexer->tok->content)->data);
 		analyzer->analyze[analyzer->state][((t_token*)lexer->tok->content)->id](analyzer, lexer, job);
 		lexer->tok = lexer->tok->next; // faire une fct get_token qui passe au token suivant ??
 	}
 	lexer->tok = *head;
-	ft_printjobcmd(job);
+	// ft_printjobcmd(job);
 	return (shell->jobs);
 }
