@@ -29,6 +29,21 @@
 // }
 
 
+// void fill_opzero_job(t_analyzer *analyzer, t_lexer * lexer, t_job *job)
+// {
+// 	if (((t_token*)lexer->tok->content)->id == P_IONUMBER)
+// 	{
+// 		job->redir->op[0] = ft_jointab(job->cmd);
+// 		printf("JOBI JOBA '%s'\n", job->redir->op[0]);
+// 	}
+// 	(void)analyzer;
+// 	(void)lexer;
+	// else if (analyzer->state == IOHERE)
+	// {
+
+	// }
+// }
+
 /*
 ** AST
 */

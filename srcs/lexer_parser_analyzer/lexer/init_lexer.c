@@ -41,7 +41,6 @@ t_lexer			*init_lexer(char *line)
 	new->ntok = 0;
 	new->buf_pos = 0;
 	new->tok = NULL;
-	new->io_here = 0;
 	ft_init_lex(new);
 	// ft_init_machine(new->machina);
 	return (new);

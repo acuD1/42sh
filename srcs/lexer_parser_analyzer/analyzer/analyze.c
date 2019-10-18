@@ -1,16 +1,16 @@
 #include "sh42.h"
 
-int ft_tablen(char **tb)
-{
-	int i;
+// int ft_tablen(char **tb)
+// {
+// 	int i;
 
-	i = 0;
-	if (!tb)
-		return (0);
-	while (tb[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	if (!tb)
+// 		return (0);
+// 	while (tb[i])
+// 		i++;
+// 	return (i);
+// }
 
 char **fill_cmd_job(char *str, t_job *job)
 {
@@ -47,6 +47,25 @@ char **ft_add_arg_cmd_job(char **tablo, char *str)
 	return (tb);
 }
 
+char *ft_jointab(char **tablo)
+{
+	char *str;
+	int j;
+	int i;
+
+	j = 0;
+	i = ft_tablen(tablo);
+	if (!(str = ft_strnew(0)) || !tablo)
+		return (NULL);
+	while (tablo[j] && j < i)
+	{
+		str = ft_strjoinf(str, tablo[j], 1);
+		if (tablo[j + 1])
+			str = ft_strjoinf(str, " ", 1);
+		j++;
+	}
+	return(str);
+}
 
 void cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
 {
@@ -55,6 +74,8 @@ void cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
 		job->cmd = fill_cmd_job(((t_token*)lexer->tok->content)->data, job);
 	else if (analyzer->state == A_WORD)
 		job->cmd = ft_add_arg_cmd_job(job->cmd, ((t_token*)lexer->tok->content)->data);
+	if (analyzer->state == A_REDIRECT)
+		job->redir->op[1] = ft_strdup(((t_token*)lexer->tok->content)->data);
 	analyzer->state = A_WORD;
 	//check les prochain token pour savoir si ils sont conforme a la grammaire
 	// TANT QUE token word 
@@ -86,9 +107,12 @@ void separator_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
 void redirect_analyze(t_analyzer *analyzer, t_lexer * lexer, t_job *job)
 {
 	// ft_printf("REDIDIDIRECT   %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
-	(void)lexer;
+	(void)analyzer;
 	(void)job;
+	job->redir->op[0] = ft_jointab(job->cmd);
+	job->redir->type = ((t_token*)lexer->tok->content)->id;
 	analyzer->state = A_REDIRECT;
+	// analyzer->state = A_REDIRECT;
 	// if (((t_token*)lexer->tok->content)->id == P_GREAT)
 	// 	analyzer->fd_flags = O_RDWR + O_CREAT + O_TRUNC;
 	// else if (((t_token*)lexer->tok->content)->id == P_DGREAT || ((t_token*)lexer->tok->content)->id == P_ANDDGREAT)
@@ -119,7 +143,10 @@ void ionbr_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
 	// ft_printf("IOOOOOOONBR  %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
 	(void)lexer;
 	(void)job;
-	analyzer->state = A_IONUMBER;
+	if (analyzer->state == A_WORD)
+		job->redir->op[0] = ft_jointab(job->cmd);
+	job->redir->ionumber = ft_atoi(((t_token*)lexer->tok->content)->data);
+	// analyzer->state = A_REDIRECT;
 	// delimite la list de token en token IONBR
 	// cree la struct job en consequence
 	// CAD attribue l'IONBR au fd et dermine la redirection en fct de loperateur
@@ -150,6 +177,9 @@ t_job *init_job(t_job *job)
 		return (NULL);
 	// job->pid = 1;
 	job->cmd = NULL;
+	job->type = A_START;
+	if (!(job->redir = (t_redir*)malloc(sizeof(t_redir))))
+		return (NULL);
 	// job->env = NULL;
 	// job->fd->action = 0;
 	// job->fd->actual = 1;
@@ -174,13 +204,21 @@ void ft_printjobcmd(t_job *job)
 		if (job->cmd)
 		{
 			j = ft_tablen(job->cmd);
+			ft_printf("cmd ");
 			while(job->cmd[i])
 			{
-				ft_printf("cmd %s ", job->cmd[i]);
+				ft_printf("%s ", job->cmd[i]);
 				i++;
 			}
+			ft_printf("\n");
 		}
-		// ft_printf("%u\n", job->type);
+		if (job->redir->op[0])
+			ft_printf("op[0] %s\n", job->redir->op[0]);
+		if (job->redir->op[1])
+			ft_printf("op[1] %s\n", job->redir->op[1]);
+		ft_printf("type %u ", job->redir->type);
+		if (job->redir->ionumber)
+			ft_printf("IONUMBER %d\n", job->redir->ionumber);
 	}
 }
 
@@ -202,13 +240,13 @@ t_lst	*analyzer(t_core *shell)
 	lexer = shell->lexer;
 	head = &lexer->tok;
 	analyzer = init_analyze(analyzer);
-	analyzer->state = A_START;
 	job = init_job(job);
 	if (parser(shell, lexer) != TRUE)
 	{
 		//erreur
 		return (shell->jobs); //shell->job = NULL;
 	}
+	//clean parser struct
 	// while (analyzer->state != A_END)
 	while (analyzer->state != A_END && ft_strcmp("(null)", ((t_token*)lexer->tok->next->content)->data))
 	{
@@ -217,6 +255,7 @@ t_lst	*analyzer(t_core *shell)
 		lexer->tok = lexer->tok->next; // faire une fct get_token qui passe au token suivant ??
 	}
 	lexer->tok = *head;
-	// ft_printjobcmd(job);
+	ft_printjobcmd(job);
+	//flush lexer
 	return (shell->jobs);
 }

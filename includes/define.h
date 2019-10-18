@@ -104,4 +104,6 @@
 # define REDIR_AND                  P_GREATAND, P_LESSAND, P_ANDGREAT
 # define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH, P_ANDDGREAT
 # define ALL_REDIRECT               REDIR, REDIR_DB, REDIR_AND
+# define IOFILE                     P_GREAT, P_GREATAND, P_LESS, P_LESSAND, P_DGREAT, P_LESSGREAT, P_CLOBBER
+# define IOHERE                     P_DLESS, P_DLESSDASH,
 #endif

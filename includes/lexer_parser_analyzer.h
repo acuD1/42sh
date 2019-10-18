@@ -25,7 +25,7 @@ typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_OF_TOKENS];
 typedef void (*t_lexing)(t_lexer*);
 
 /*
-** ANALYZER
+** ENUM
 */
 
 typedef enum analyzer_state
@@ -33,6 +33,8 @@ typedef enum analyzer_state
     A_START,
     A_SEPARATOR,
     A_REDIRECT,
+    // A_IOFILE,
+    // A_IO_HERE,
     A_IONUMBER,
     A_ASSIGN,
     // A_CMD,
@@ -41,57 +43,6 @@ typedef enum analyzer_state
     A_END,
     A_ERROR,
 }           e_analyzer_state;
-
-typedef struct  s_filedesc
-{
-    unsigned int        action;
-    int32_t             actual;
-    int32_t             wanted;
-}               t_filedesc;
-
-// typedef struct            s_process
-// {
-//     t_lst                *fd;
-//     char                **av;
-//     char                **env;
-//     uint8_t                completed;
-//     uint8_t                stopped;
-//     pid_t                pid;
-//     int                    status;
-// }                        t_process;
-
-typedef struct s_job
-{
-    // pid_t       pid;
-    // t_lst       *process_lst;
-    char        **cmd;
-    // char        **env;
-    // t_filedesc  *fd;
-    // int         status; // 1 = running | 0 = stopped par exemple
-    e_analyzer_state type;
-    // t_termcaps  *term_modes;
-}               t_job;
-
-typedef struct  s_analyzer
-{
-    t_anal              analyze;
-    e_analyzer_state    state;
-    int                fd_flags;
-}               t_analyzer;
-
-t_lst *analyzer(t_core *shell);
-t_analyzer *init_analyze(t_analyzer *analyzer);
-void cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
-void end_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
-void separator_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
-void redirect_analyze(t_analyzer *analyzer, t_lexer * lexer, t_job *job);
-void error_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
-void ionbr_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
-void assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
-
-/*
-** PARSER
-*/
 
 typedef enum    parser_state
 {
@@ -149,6 +100,81 @@ typedef enum    parser_state
     // P_WHILE,
 }               e_parser_state;
 
+typedef enum    lexer_state {
+    START,
+    NAME,
+    NEWLINE, 
+    IO_NUMBER,  
+    ASSIGNEMENT_WORD,
+    OPERATOR,
+    END,
+}               e_lexer_state;
+
+/*
+** ANALYZER
+*/
+
+typedef struct  s_filedesc
+{
+    unsigned int        action;
+    int32_t             actual;
+    int32_t             wanted;
+}               t_filedesc;
+
+// typedef struct            s_process
+// {
+//     t_lst                *fd;
+//     char                **av;
+//     char                **env;
+//     uint8_t                completed;
+//     uint8_t                stopped;
+//     pid_t                pid;
+//     int                    status;
+// }                        t_process;
+
+typedef struct s_redir
+{
+    char            *op[2];
+    int             fds[2];
+    enum parser_state  type;
+    // int             fd_flags; // flags O_RDWR O_CREAT .. 
+    int             ionumber;
+}               t_redir;
+
+typedef struct s_job
+{
+    // pid_t       pid;
+    // t_lst       *process_lst;
+    char        **cmd;
+    // char        **env;
+    // t_filedesc  *fd;
+    // int         status; // 1 = running | 0 = stopped par exemple
+    e_analyzer_state type;
+    t_redir             *redir;
+
+    // t_termcaps  *term_modes;
+}               t_job;
+
+typedef struct  s_analyzer
+{
+    t_anal              analyze;
+    e_analyzer_state    state;
+}               t_analyzer;
+
+t_lst *analyzer(t_core *shell);
+t_analyzer *init_analyze(t_analyzer *analyzer);
+void cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+void end_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+void separator_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+void redirect_analyze(t_analyzer *analyzer, t_lexer * lexer, t_job *job);
+void error_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+void ionbr_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+void assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+
+/*
+** PARSER
+*/
+
 typedef struct          s_graph
 {
     e_parser_state      *good_type;
@@ -172,16 +198,6 @@ t_parser    *ft_init_graph(t_parser *parser);
 /*
 ** LEXER
 */
-
-typedef enum    lexer_state {
-    START,
-    NAME,
-    NEWLINE, 
-    IO_NUMBER,  
-    ASSIGNEMENT_WORD,
-    OPERATOR,
-    END,
-}               e_lexer_state;
 
 typedef struct  s_token
 {
