@@ -138,7 +138,7 @@ typedef struct s_redir
     int             fds[2];
     enum parser_state  type;
     // int             fd_flags; // flags O_RDWR O_CREAT .. 
-    int             ionumber;
+    // int             ionumber;
 }               t_redir;
 
 typedef struct s_job

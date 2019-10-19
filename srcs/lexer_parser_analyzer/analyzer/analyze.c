@@ -109,7 +109,7 @@ void redirect_analyze(t_analyzer *analyzer, t_lexer * lexer, t_job *job)
 	// ft_printf("REDIDIDIRECT   %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
 	(void)analyzer;
 	(void)job;
-	job->redir->op[0] = ft_jointab(job->cmd);
+	// job->redir->op[0] = ft_jointab(job->cmd);
 	job->redir->type = ((t_token*)lexer->tok->content)->id;
 	analyzer->state = A_REDIRECT;
 	// analyzer->state = A_REDIRECT;
@@ -143,9 +143,11 @@ void ionbr_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
 	// ft_printf("IOOOOOOONBR  %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
 	(void)lexer;
 	(void)job;
-	if (analyzer->state == A_WORD)
-		job->redir->op[0] = ft_jointab(job->cmd);
-	job->redir->ionumber = ft_atoi(((t_token*)lexer->tok->content)->data);
+	(void)analyzer;
+	// if (analyzer->state == A_WORD)
+		// job->redir->op[0] = ft_jointab(job->cmd);
+	job->redir->op[0] = ft_strdup(((t_token*)lexer->tok->content)->data);
+	// job->redir->ionumber = ft_atoi(((t_token*)lexer->tok->content)->data);
 	// analyzer->state = A_REDIRECT;
 	// delimite la list de token en token IONBR
 	// cree la struct job en consequence
@@ -180,6 +182,7 @@ t_job *init_job(t_job *job)
 	job->type = A_START;
 	if (!(job->redir = (t_redir*)malloc(sizeof(t_redir))))
 		return (NULL);
+	job->redir->op[0] = NULL;
 	// job->env = NULL;
 	// job->fd->action = 0;
 	// job->fd->actual = 1;
@@ -212,13 +215,13 @@ void ft_printjobcmd(t_job *job)
 			}
 			ft_printf("\n");
 		}
-		if (job->redir->op[0])
+		// if (job->redir->op[0])
 			ft_printf("op[0] %s\n", job->redir->op[0]);
 		if (job->redir->op[1])
 			ft_printf("op[1] %s\n", job->redir->op[1]);
 		ft_printf("type %u ", job->redir->type);
-		if (job->redir->ionumber)
-			ft_printf("IONUMBER %d\n", job->redir->ionumber);
+		// if (job->redir->ionumber)
+			// ft_printf("IONUMBER %d\n", job->redir->ionumber);
 	}
 }
 
