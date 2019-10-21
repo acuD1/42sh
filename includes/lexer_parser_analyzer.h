@@ -19,7 +19,7 @@ typedef struct s_lexer 	t_lexer;
 typedef struct s_parser	t_parser;
 typedef struct s_analyzer t_analyzer;
 
-typedef void    (*t_analyze)(t_analyzer*, t_lexer*, t_job*);
+typedef void    (*t_analyze)(t_analyzer*, t_lexer*, t_job*, t_core*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_OF_TOKENS];
 
 typedef void (*t_lexing)(t_lexer*);
@@ -161,15 +161,16 @@ typedef struct  s_analyzer
     e_analyzer_state    state;
 }               t_analyzer;
 
+void init_job(t_job *job);
 t_lst *analyzer(t_core *shell);
 t_analyzer *init_analyze(t_analyzer *analyzer);
-void cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
-void end_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
-void separator_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
-void redirect_analyze(t_analyzer *analyzer, t_lexer * lexer, t_job *job);
-void error_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
-void ionbr_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
-void assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job);
+void cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell);
+void end_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell);
+void separator_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell);
+void redirect_analyze(t_analyzer *analyzer, t_lexer * lexer, t_job *job, t_core *shell);
+void error_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell);
+void ionbr_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell);
+void assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell);
 
 /*
 ** PARSER
@@ -204,7 +205,7 @@ typedef struct  s_token
     e_parser_state id;
     char            *data;
     size_t          data_len;
-;}              t_token;
+}              t_token;
 
 typedef struct  s_lexer
 {

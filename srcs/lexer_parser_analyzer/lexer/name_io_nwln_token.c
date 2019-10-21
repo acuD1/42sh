@@ -38,6 +38,7 @@ void		name_lexer(t_lexer *lexer)
 		lexer->ntok++;
 		lexer->buf_pos = i;
 		lexer->status = START;
+		// free(buf);
 	}
 }
 
