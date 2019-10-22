@@ -42,6 +42,7 @@ typedef enum analyzer_state
     A_WORD,
     A_END,
     A_ERROR,
+    A_STOP,
 }           e_analyzer_state;
 
 typedef enum    parser_state

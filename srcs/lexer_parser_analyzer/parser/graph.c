@@ -44,7 +44,7 @@ void		init_assign_graph(t_graph *graph)
 void		init_pipe_graph(t_graph *graph)
 {
 	static e_parser_state tab_good_type[] = {P_WORD, ALL_REDIRECT, P_ASSIGN,
-										P_IONUMBER, P_ERROR};
+										P_IONUMBER, P_NEWLINE, P_ERROR};
 
 	graph[P_PIPE].good_type = tab_good_type;
 }

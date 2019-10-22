@@ -70,7 +70,7 @@ char *ft_jointab(char **tablo)
 void cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell)
 {
 	// ft_printf("WOWOWORD   %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
-	if (analyzer->state != A_WORD)
+	if (!job->cmd)
 		job->cmd = fill_cmd_job(((t_token*)lexer->tok->content)->data, job);
 	else if (analyzer->state == A_WORD)
 		job->cmd = ft_add_arg_cmd_job(job->cmd, ((t_token*)lexer->tok->content)->data);
@@ -87,9 +87,9 @@ void cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell
 
 void end_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell)
 {
-	// ft_printf("ENNNNNND   %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
+	ft_printf("ENNNNNND   %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
 	(void)lexer;
-	analyzer->state = A_END;
+	analyzer->state = A_STOP;
 	(void)job;
 	(void)shell;
 
@@ -107,17 +107,19 @@ t_job *fetch_job(t_job *job)
 
 void separator_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell)
 {
-	ft_printf("SEPARARARTOR   %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
+	// ft_printf("SEPARARARTOR   %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
 	// analyzer->state = A_SEPARATOR;
 	(void)job;
 	if (analyzer->state == A_WORD)
 	{
 		ft_lstappend(&shell->jobs, ft_lstnew(fetch_job(job), sizeof(t_job)));
+		// ft_printf("gmreangj  %s %s \n", ((t_job*)(shell->jobs->content))->cmd[0], job->redir->op[1]);
 		init_job(job);
-		ft_printf("BKABKAAJ  %s\n", ((t_job*)(shell->jobs->content))->cmd[0]);
+		// ft_printf("BKABKAAJ  %s %s \n", ((t_job*)(shell->jobs->content))->cmd[0], job->redir->op[1]);
+		// shell->jobs = shell->jobs->next;
 	}
 	if (lexer->tok->next && !ft_strcmp("(null)", ((t_token*)lexer->tok->next->content)->data))
-		analyzer->state = A_END;
+		analyzer->state = A_STOP;
 	// delimite le list de token en une list ou un job
 	(void)shell;
 
@@ -149,13 +151,13 @@ void redirect_analyze(t_analyzer *analyzer, t_lexer * lexer, t_job *job, t_core 
 
 void error_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell)
 {
-	// ft_printf("EROROORRR  %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
+	ft_printf("EROROORRR  %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
 	(void)lexer;
 	(void)shell;
 	(void)job;
 	analyzer->state = A_ERROR;
 	if (lexer->tok->next && !ft_strcmp("(null)", ((t_token*)lexer->tok->next->content)->data))
-		analyzer->state = A_END;
+		analyzer->state = A_STOP;
 	// en theorie doit devalider la list de token et la flush
 }
 
@@ -198,16 +200,27 @@ void assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *sh
 
 void init_job(t_job *job)
 {
+	// ft_bezro(job);
+	// if (job->cmd || *job->cmd)
+		// freetab(job->cmd);
 	// if (!(job = (t_job*)malloc(sizeof(t_job))))
 		// return;
 	// job->pid = 1;
+	// if (job->cmd)
+		// ft_printf("%s\n", job->cmd[0]);
 	job->cmd = NULL;
 	job->type = A_START;
 	// if (!(job->redir = (t_redir*)malloc(sizeof(t_redir))))
-		// return;
+	// 	// return;
+	// if (*job->redir->op)
+	// {
+		// free(job->redir->op);
+		// free(job->redir->op[1]);
+	// }
 	job->redir->op[0] = NULL;
 	job->redir->op[1] = NULL;
 	job->redir->type = 0;
+	// job->redir = NULL;
 	// job->env = NULL;
 	// job->fd->action = 0;
 	// job->fd->actual = 1;
@@ -217,7 +230,7 @@ void init_job(t_job *job)
 	// job->term_modes = NULL;
 }
 
-void ft_printjobcmd(t_job *job)
+void ft_printjobcmd(t_job *job, int x)
 {
 	int i;
 	int j;
@@ -228,6 +241,7 @@ void ft_printjobcmd(t_job *job)
 		return;
 	else
 	{
+		ft_printf("JOB N: %d\n",x);
 		if (job->cmd)
 		{
 			j = ft_tablen(job->cmd);
@@ -243,12 +257,29 @@ void ft_printjobcmd(t_job *job)
 			ft_printf("op[0] %s\n", job->redir->op[0]);
 		if (job->redir->op[1])
 			ft_printf("op[1] %s\n", job->redir->op[1]);
-		ft_printf("type %u ", job->redir->type);
+		ft_printf("type %u \n", job->redir->type);
 		// if (job->redir->ionumber)
 			// ft_printf("IONUMBER %d\n", job->redir->ionumber);
 	}
 }
 
+void printlstjob(t_lst *lst)
+{
+	t_job *tmp;
+	int x;
+
+	x = 1;
+	tmp = NULL;
+	if (!lst)
+		return;
+	while (lst)
+	{
+		tmp = (t_job*)lst->content;
+		ft_printjobcmd(tmp, x);
+		x++;
+		lst = lst->next;
+	}
+}
 
 	// ft_lstappend(&shell->jobs, ft_lstnew(job, sizeof(t_job)));
 
@@ -258,13 +289,11 @@ t_lst	*analyzer(t_core *shell)
 	t_analyzer *analyzer;
 	t_lexer *lexer;
 	t_job job;
-	t_lst **head;
 
 	analyzer = NULL;
 	if (!shell->lexer)
 		return (NULL);
 	lexer = shell->lexer;
-	head = &lexer->tok;
 	analyzer = init_analyze(analyzer);
 	init_job(&job);
 	if (parser(shell, lexer) != TRUE)
@@ -274,14 +303,14 @@ t_lst	*analyzer(t_core *shell)
 	}
 	//clean parser struct
 	// while (analyzer->state != A_END)
-	while (analyzer->state != A_END && ft_strcmp("(null)", ((t_token*)lexer->tok->next->content)->data))
+	while (analyzer->state != A_STOP && (((t_token*)lexer->tok->next->content)->id != 24))
 	{
 		ft_printf("analyzer state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)lexer->tok->content)->id ,((t_token*)lexer->tok->content)->data);
 		analyzer->analyze[analyzer->state][((t_token*)lexer->tok->content)->id](analyzer, lexer, &job, shell);
 		lexer->tok = lexer->tok->next; // faire une fct get_token qui passe au token suivant ??
 	}
-	lexer->tok = *head;
-	ft_printjobcmd(&job);
+	// ft_lstappend(&shell->jobs, ft_lstnew(fetch_job(&job), sizeof(t_job))); // a mettre dans end et /n
+	printlstjob(shell->jobs);
 	//flush lexer
 	return (shell->jobs);
 }
