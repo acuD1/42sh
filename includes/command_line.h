@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/10 19:03:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/22 15:05:40 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void			call_number(t_read *line, int i);
 void			last_cmd_back(t_read *line, int i);
 void			callback_number(t_read *line, int i);
 void			call_word(t_read *line, int i);
-int8_t			builtin_history(t_core *shell);
 
 /*
  **		Quotes and Subprompt/Multiline

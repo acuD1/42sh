@@ -133,7 +133,7 @@ SRC			+=	$(S_PATH)$(DB)get_tokens.c
 SRC			+=	$(S_PATH)$(DB)env_updates.c
 SRC			+=	$(S_PATH)$(DB)set_updates.c
 SRC			+=	$(S_PATH)$(DB)db_tools.c
-SRC			+=	$(S_PATH)$(DB)history_vars.c
+SRC			+=	$(S_PATH)$(DB)history.c
 SRC			+=	$(S_PATH)$(DB)version.c
 SRC			+=	$(S_PATH)$(DB)special_vars.c
 SRC			+=	$(S_PATH)$(DB)process_vars.c
@@ -142,7 +142,7 @@ SRC			+=	$(S_PATH)$(DB)process_vars.c
 SRC			+=	$(S_PATH)$(BUILTINS)set.c
 SRC			+=	$(S_PATH)$(BUILTINS)unset.c
 SRC			+=	$(S_PATH)$(BUILTINS)export.c
-SRC			+=	$(S_PATH)$(BUILTINS)history.c
+SRC			+=	$(S_PATH)$(BUILTINS)fc.c
 
 SRC			+=	$(S_PATH)$(MISC)errors.c
 SRC			+=	$(S_PATH)$(MISC)abs_path.c
@@ -187,7 +187,7 @@ HDR			+=	shared_libft.h
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
 
 # Comment -no-pie flag if an error occured
-LIB = $(L_PATH)$(LNAME) -ltermcap -no-pie
+LIB = $(L_PATH)$(LNAME) -ltermcap #-no-pie
 vpath %.h $(H_PATH)
 
 # Variables
