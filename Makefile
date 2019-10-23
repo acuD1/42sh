@@ -187,7 +187,7 @@ HDR			+=	shared_libft.h
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
 
 # Comment -no-pie flag if an error occured
-LIB = $(L_PATH)$(LNAME) -ltermcap -no-pie
+LIB = $(L_PATH)$(LNAME) -ltermcap #-no-pie
 vpath %.h $(H_PATH)
 
 # Variables
