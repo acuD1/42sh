@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 15:04:32 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/22 18:42:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/23 14:44:44 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,30 @@ void		select_history(t_lst *history, char *cmd)
 /* } */
 
 /*
+**	[fc -s [old=new] [specifier]]
+**		=> select specifier in history to reenter
+**		=> if new is specified history lst and file will b edit
+*/
+
+void			select_specifier(t_core *shell, t_lst *w, char **cmd)
+{
+	if (cmd[2] && !ft_strchr(cmd[2], '='))
+	{
+		while (w)
+		{
+			if (isstart((char *)w->content, cmd[2]))
+				break ;
+			w = w->next;
+		}
+	}
+	ft_bzero(shell->buff, ft_strlen(shell->buff));
+	shell->buff = ft_strdup(w->content);
+	get_tokens(shell, shell->buff);
+	ft_printf("%s\n", shell->buff);
+	exec_process(shell, shell->env);
+}
+
+/*
 **	Fix Command builtin have 2 modes :
 **		Editing (default) & Listing (-l option)
 */
@@ -121,6 +145,10 @@ int8_t			builtin_fc(t_core *shell)
 	opt = get_options(ft_tablen(cmd), cmd, "elnrs");
 	/* if (history_errors(cmd) == FAILURE) */
 	/* 	return (FAILURE); */
+	if (saved && (opt & (1ULL << 18)))
+	{
+		select_specifier(shell, saved, cmd);
+	}
 	if (cmd[1] && ft_isdigit(*cmd[1]))
 	{
 		select_history(saved, cmd[1]);
