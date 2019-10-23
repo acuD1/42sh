@@ -1,4 +1,25 @@
 
+// int ft_tablen(char **tb)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	if (!tb)
+// 		return (0);
+// 	while (tb[i])
+// 		i++;
+// 	return (i);
+// }
+
+// void start_analyze(t_analyzer *analyzer, t_job *job, t_lst *lst, t_lexer *lexer)
+// {
+// 	ft_printf("ASSSSSIIIIIGN  %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
+// 	(void)job;
+// 	analyzer->state = A_START;
+// }
+
+
+
 // void cmd_arg_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
 // {
 // 	char **arg;

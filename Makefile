@@ -147,7 +147,11 @@ SRC		+=	$(S_PATH)$(PARSER)parser.c
 SRC		+=	$(S_PATH)$(PARSER)graph.c
 
 SRC		+=	$(S_PATH)$(ANALYZER)analyze.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_name.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_ionumber.c
 SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
+
 
 SRC		+=	$(S_PATH)dev.c
 # Headers

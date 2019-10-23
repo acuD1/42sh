@@ -19,7 +19,7 @@ typedef struct s_lexer 	t_lexer;
 typedef struct s_parser	t_parser;
 typedef struct s_analyzer t_analyzer;
 
-typedef void    (*t_analyze)(t_analyzer*, t_lexer*, t_job*, t_core*);
+typedef t_lst    *(*t_analyze)(t_analyzer*, t_lexer*, t_job*, t_lst*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_OF_TOKENS];
 
 typedef void (*t_lexing)(t_lexer*);
@@ -33,16 +33,16 @@ typedef enum analyzer_state
     A_START,
     A_SEPARATOR,
     A_REDIRECT,
-    // A_IOFILE,
-    // A_IO_HERE,
     A_IONUMBER,
     A_ASSIGN,
-    // A_CMD,
-    // A_CMD_ARG,
     A_WORD,
     A_END,
     A_ERROR,
     A_STOP,
+    // A_CMD,
+    // A_CMD_ARG,
+    // A_IOFILE,
+    // A_IO_HERE,
 }           e_analyzer_state;
 
 typedef enum    parser_state
@@ -151,8 +151,7 @@ typedef struct s_job
     // t_filedesc  *fd;
     // int         status; // 1 = running | 0 = stopped par exemple
     e_analyzer_state type;
-    t_redir             *redir;
-
+    t_lst           *ection;
     // t_termcaps  *term_modes;
 }               t_job;
 
@@ -160,18 +159,28 @@ typedef struct  s_analyzer
 {
     t_anal              analyze;
     e_analyzer_state    state;
+    t_lst               *ninjutsu; // dedicace a cedric le S
 }               t_analyzer;
 
-void init_job(t_job *job);
+t_job *init_job(void);
 t_lst *analyzer(t_core *shell);
 t_analyzer *init_analyze(t_analyzer *analyzer);
-void cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell);
-void end_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell);
-void separator_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell);
-void redirect_analyze(t_analyzer *analyzer, t_lexer * lexer, t_job *job, t_core *shell);
-void error_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell);
-void ionbr_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell);
-void assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_core *shell);
+t_lst *cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_lst *lst);
+t_lst *end_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_lst *lst);
+t_lst *separator_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_lst *lst);
+t_lst *redirect_analyze(t_analyzer *analyzer, t_lexer * lexer, t_job *job, t_lst *lst);
+t_lst *error_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_lst *lst);
+t_lst *ionbr_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_lst *lst);
+t_lst *assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_lst *lst);
+
+
+t_job *fetch_job(t_job *job);
+char *ft_jointab(char **tablo);
+void ft_printjobcmd(t_job *job, int x);
+void printlstjob(t_lst *lst);
+
+
+
 
 /*
 ** PARSER

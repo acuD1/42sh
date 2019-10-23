@@ -52,7 +52,7 @@ uint8_t parser(t_core *shell, t_lexer *lexer)
 	parser = ft_init_parser(parser);
 	while (((t_token*)tok_lst->content)->id != P_END)
 	{
-		// ft_printf("parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
+		ft_printf("parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
 		if (!(check_lexer_tokens(&parser->state, ((t_token*)tok_lst->content)->id, parser->graph[parser->state].good_type)))
 		{
 			ft_printf("error parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);

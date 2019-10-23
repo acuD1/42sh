@@ -72,13 +72,13 @@ void init_redirect_analyze(t_anal analyze)
 
 void init_end_analyze(t_anal analyze)
 {
-	analyze[A_END][P_NEWLINE] = separator_analyze;
+	analyze[A_END][P_NEWLINE] = end_analyze;
 	analyze[A_END][P_ANDIF] = redirect_analyze;
-	analyze[A_END][P_AND] = redirect_analyze;
+	analyze[A_END][P_AND] = end_analyze;
 	analyze[A_END][P_ORIF] = redirect_analyze;
 	analyze[A_END][P_PIPE] = redirect_analyze;
 	analyze[A_END][P_DSEMI] = separator_analyze;
-	analyze[A_END][P_SEMICOLON] = separator_analyze;
+	analyze[A_END][P_SEMICOLON] = end_analyze;
 	analyze[A_END][P_DLESSDASH] = redirect_analyze;
 	analyze[A_END][P_DLESS] = redirect_analyze;
 	analyze[A_END][P_LESSGREAT] = redirect_analyze;
@@ -93,21 +93,21 @@ void init_end_analyze(t_anal analyze)
 	analyze[A_END][P_END] = end_analyze;
 }
 
-// void	init_separator_analyze(t_anal analyze)
-// {
-// 	analyze[A_SEPARATOR][P_WORD] = cmd_analyze;
-// 	analyze[A_SEPARATOR][P_GREAT] = end_analyze;
-// 	analyze[A_SEPARATOR][P_GREATAND] = end_analyze;
-// 	analyze[A_SEPARATOR][P_LESS] = end_analyze;
-// 	analyze[A_SEPARATOR][P_LESSAND] = end_analyze;
-// 	analyze[A_SEPARATOR][P_DGREAT] = end_analyze;
-// 	analyze[A_SEPARATOR][P_DLESS] = end_analyze;
-// 	analyze[A_SEPARATOR][P_DLESSDASH] = end_analyze;
-// 	analyze[A_SEPARATOR][P_ANDDGREAT] = end_analyze;
-// 	analyze[A_SEPARATOR][P_SEMICOLON] = end_analyze;
-// 	analyze[A_SEPARATOR][P_NEWLINE] = end_analyze;
-// 	analyze[A_SEPARATOR][P_END] = end_analyze;
-// }
+void	init_separator_analyze(t_anal analyze)
+{
+	analyze[A_SEPARATOR][P_WORD] = cmd_analyze;
+	analyze[A_SEPARATOR][P_GREAT] = end_analyze;
+	analyze[A_SEPARATOR][P_GREATAND] = end_analyze;
+	analyze[A_SEPARATOR][P_LESS] = end_analyze;
+	analyze[A_SEPARATOR][P_LESSAND] = end_analyze;
+	analyze[A_SEPARATOR][P_DGREAT] = end_analyze;
+	analyze[A_SEPARATOR][P_DLESS] = end_analyze;
+	analyze[A_SEPARATOR][P_DLESSDASH] = end_analyze;
+	analyze[A_SEPARATOR][P_ANDDGREAT] = end_analyze;
+	analyze[A_SEPARATOR][P_SEMICOLON] = end_analyze;
+	analyze[A_SEPARATOR][P_NEWLINE] = end_analyze;
+	analyze[A_SEPARATOR][P_END] = end_analyze;
+}
 
 void init_start_analyze(t_anal analyze)
 {
@@ -231,7 +231,7 @@ t_analyzer *init_analyze(t_analyzer *analyzer)
 	init_word_analyze(analyzer->analyze);
 	// init_cmd_analyze(analyzer->analyze);
 	// init_cmd_arg_analyze(analyzer->analyze);
-	// init_separator_analyze(analyzer->analyze);
+	init_separator_analyze(analyzer->analyze);
 	init_redirect_analyze(analyzer->analyze);
 	init_end_analyze(analyzer->analyze);
 	analyzer->state = A_START;

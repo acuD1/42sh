@@ -74,7 +74,7 @@ t_lexer		*lexer(char *line)
 	head = &lexer->tok;
 	while (lexer->status != END)
 		lexer->lex[lexer->status](lexer);
-	// ft_printtoklist(lexer);
+	ft_printtoklist(lexer);
 	lexer->tok = *head;
 	return (lexer);
 }
