@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 15:04:32 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/23 20:43:12 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/24 22:25:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ void		select_history(t_lst *history, char *cmd)
 	}
 }
 
-u_int8_t	set_padding(t_lst **w, u_int64_t opt)
+u_int8_t	set_padding(t_lst **w, u_int64_t opt, int16_t len)
 {
-	u_int8_t	n;
 	u_int8_t	decade;
 	int		i;
 
 	decade = 0;
-	n = 0;
 	i = ft_lstlen(*w);
-	while (!(opt & (1ULL << 17)) && (*w)->next && n++ < 15)
+	if (len < 0 || len > i)
+		len = 0;
+	while (!(opt & (1ULL << 17)) && (*w)->next && --len > 0)
 	{
 		i--;
 		if (decade < ft_decade(i))
@@ -52,25 +52,27 @@ u_int8_t	set_padding(t_lst **w, u_int64_t opt)
 	return (decade);
 }
 
-void		listing_mode(t_lst *saved, u_int64_t opt)
+
+
+void		listing_mode(t_lst *saved, u_int64_t opt, char **range)
 {
-	int		i;
-//	int		len;
-	u_int8_t	n;
+	int16_t	len;
+	u_int16_t	n;
 	u_int8_t	decade;
 
-//	len = (range[0]) ? ft_lstlen(saved) - ft_atoi(range[0]) : 15;
-	n = 15;
-	decade = set_padding(&saved, opt);
-	i = ft_lstlen(saved);
-	while (saved && --n)
+	len = (range[0]) ? ft_lstlen(saved) - ft_atoi(range[0]) : 17;
+	n = (range[0]) ? ft_lstlen(saved) : 17;
+	decade = set_padding(&saved, opt, len);
+	while (saved && n-- && (int)saved->content_size != ft_atoi(range[1]) + 1)
 	{
-		(opt & (1ULL << 17)) ? i-- : i++;
 		if ((opt & (1ULL << 13)))
 			ft_dprintf(STDOUT_FILENO, "\t%s\n", saved->content);
 		else
-			ft_dprintf(STDOUT_FILENO, "%-*d\t%s\n", decade, i, saved->content);
+			ft_dprintf(STDOUT_FILENO, "%-*d\t%s\n", decade, saved->content_size, saved->content);
 		saved = ((opt & (1ULL << 17)) ? saved->next : saved->prev);
+		// To be continued....
+		if ((opt & (1ULL << 17) && range[0] && ft_atoi(range[0]) == ((int)saved->content_size + 1)))
+			break ;
 	}
 }
 
@@ -132,6 +134,7 @@ char			**get_range(char **cmd, char **range)
 
 	i = 0;
 	j = -1;
+	ft_bzero(range, sizeof(range));
 	while (cmd && cmd[++i] && j < 2)
 	{
 		if (ft_strchr(cmd[i], '-'))
@@ -168,6 +171,6 @@ int8_t			builtin_fc(t_core *shell)
 	/* 	return (SUCCESS); */
 	/* } */
 	else if (saved && (opt & (1ULL << 11)))
-		listing_mode(saved, opt);
+		listing_mode(saved, opt, range);
 	return (SUCCESS);
 }

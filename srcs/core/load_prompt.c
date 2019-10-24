@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/10 19:02:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/24 21:28:15 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void			load_prompt(t_core *shell)
 //		free_prompt(shell, term.buffer);
 		if (exec_builtin(shell) == FAILURE)
 			exec_process(shell, shell->env);
+		save_history(&term);
 		free_prompt(shell, shell->buff);
 	}
 	ft_strdel(&term.buffer);

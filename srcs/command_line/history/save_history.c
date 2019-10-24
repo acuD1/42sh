@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/23 14:17:04 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/24 21:19:40 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void			save_history(t_read *term)
 			term->history->prev = saved;
 		term->history = saved;
 		term->history_index = NULL;
+		if (term->history->next)
+			term->history->content_size = term->history->next->content_size + 1;
 	}
 }
 
@@ -77,9 +79,11 @@ void			save_history(t_read *term)
 void			init_history(t_read *term)
 {
 	char		*line;
-	int			fd;
-	int			i;
+	int		fd;
+	int		i;
+	int		j;
 
+	j = -1;
 	i = -1;
 	line = NULL;
 	if ((fd = open(HISTORY_FILE, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)
@@ -89,6 +93,7 @@ void			init_history(t_read *term)
 		while (++i < (int)ft_strlen(line))
 			term->buffer[i] = line[i];
 		save_history(term);
+		term->history->content_size = ++j;
 		free(line);
 		ft_bzero(term->buffer, ft_strlen(term->buffer));
 		i = -1;
