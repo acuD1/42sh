@@ -136,7 +136,7 @@ void init_start_analyze(t_anal analyze)
 
 void init_word_analyze(t_anal analyze)
 {
-	analyze[A_WORD][P_NEWLINE] = separator_analyze;
+	analyze[A_WORD][P_NEWLINE] = end_analyze;
 	analyze[A_WORD][P_ANDIF] = redirect_analyze;
 	analyze[A_WORD][P_AND] = redirect_analyze;
 	analyze[A_WORD][P_ORIF] = redirect_analyze;
@@ -220,7 +220,7 @@ static void	bzero_analyze(t_anal parsing)
 	}
 }
 
-t_analyzer *init_analyze(t_analyzer *analyzer)
+t_analyzer *init_analyze(t_analyzer *analyzer, t_core *shell)
 {
 	if (!(analyzer = (t_analyzer*)malloc(sizeof(t_analyzer))))
 		return (NULL);
@@ -235,5 +235,10 @@ t_analyzer *init_analyze(t_analyzer *analyzer)
 	init_redirect_analyze(analyzer->analyze);
 	init_end_analyze(analyzer->analyze);
 	analyzer->state = A_START;
+	analyzer->lexer = shell->lexer;
+	init_process(&analyzer->process);
+	analyzer->job_list = NULL;
+	init_job(&analyzer->job);
+	init_redir(&analyzer->redir);
 	return (analyzer);
 }

@@ -1,4 +1,33 @@
 
+// if (analyzer->state == A_WORD)
+	// {
+		// ft_lstappend(&lst, ft_lstnew(fetch_job(job), sizeof(t_job)));
+	// 	// ft_printf("gmreangj  %s %s \n", ((t_job*)(lst->jobs->content))->cmd[0], job->redir->op[1]);
+	// 	job = init_job();
+	// 	// ft_printf("BKABKAAJ  %s %s \n", ((t_job*)(lst->jobs->content))->cmd[0], job->redir->op[1]);
+	// 	// lst->jobs = lst->jobs->next;
+	// }
+	// if (analyzer->lexer->tok->next && !ft_strcmp("(null)", ((t_token*)lexer->tok->next->content)->data))
+	// {
+	// 	lst = ft_lstappend(&lst, ft_lstnew(fetch_job(job), sizeof(t_job)));
+	// 	job = init_job();
+	// 	analyzer->state = A_STOP;
+	// 	lst = lst->next;
+	// 	printf("NIDSQFNIN\n");
+	// }
+	// if (((t_token*)lexer->tok->content)->id == 4 || ((t_token*)lexer->tok->content)->id == 8)
+	// {
+	// 	lst = ft_lstappend(&lst, ft_lstnew(fetch_job(job), sizeof(t_job)));
+	// 	printf("gfgrehwgerg\n");
+	// 	job = init_job();
+	// 	lst = lst->next;
+	// 	analyzer->state = A_END;
+	// 	// job = init_job();
+	// if (!analyzer->lexer->tok->next->next)
+		// analyzer->state = A_STOP;
+		// lst = lst->next;
+	// }
+
 // int ft_tablen(char **tb)
 // {
 // 	int i;
@@ -68,6 +97,14 @@
 /*
 ** AST
 */
+
+
+// typedef struct  s_filedesc
+// {
+//     unsigned int        action;
+//     int32_t             actual;
+//     int32_t             wanted;
+// }               t_filedesc; // RIP TOI
 
 
 // b_node	*ast_add_node(b_node *root, b_node *left, b_node *right, e_ast_state nodetype, char *data);

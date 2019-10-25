@@ -98,7 +98,7 @@
 # define OPERATORS 					"&|;><-\n" 
 # define NB_LEXER_STATE 7
 # define NB_PARSER_STATE 25
-# define NB_ANALYZER_STATE 8
+# define NB_ANALYZER_STATE 9
 # define NB_OF_TOKENS 25
 # define REDIR                      P_GREAT, P_LESS
 # define REDIR_AND                  P_GREATAND, P_LESSAND, P_ANDGREAT

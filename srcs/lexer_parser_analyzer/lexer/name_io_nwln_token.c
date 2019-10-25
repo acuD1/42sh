@@ -69,6 +69,8 @@ static int	isvalid_ionumber(t_lexer *lexer)
 		lexer->ntok++;
 		free(buf);
 	}
+	else
+		return (0);
 	return (1);
 }
 

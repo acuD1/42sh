@@ -117,6 +117,7 @@ void			load_prompt(t_core *shell)
 		// if (check_brackets(line))
 		shell->lexer = lexer(line);
 		analyzer(shell);
+		// t_lst->content->abre_programme = ast(line);
 		// error_quotes_brackets(line);
 		// exec_process(shell, shell->env);
 		free_prompt(shell, line);

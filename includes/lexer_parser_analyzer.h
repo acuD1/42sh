@@ -19,7 +19,7 @@ typedef struct s_lexer 	t_lexer;
 typedef struct s_parser	t_parser;
 typedef struct s_analyzer t_analyzer;
 
-typedef t_lst    *(*t_analyze)(t_analyzer*, t_lexer*, t_job*, t_lst*);
+typedef void    (*t_analyze)(t_analyzer*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_OF_TOKENS];
 
 typedef void (*t_lexing)(t_lexer*);
@@ -39,6 +39,7 @@ typedef enum analyzer_state
     A_END,
     A_ERROR,
     A_STOP,
+    A_CREATE_JOB,
     // A_CMD,
     // A_CMD_ARG,
     // A_IOFILE,
@@ -115,70 +116,77 @@ typedef enum    lexer_state {
 ** ANALYZER
 */
 
-typedef struct  s_filedesc
-{
-    unsigned int        action;
-    int32_t             actual;
-    int32_t             wanted;
-}               t_filedesc;
-
-// typedef struct            s_process
-// {
-//     t_lst                *fd;
-//     char                **av;
-//     char                **env;
-//     uint8_t                completed;
-//     uint8_t                stopped;
-//     pid_t                pid;
-//     int                    status;
-// }                        t_process;
-
 typedef struct s_redir
 {
     char            *op[2];
-    int             fds[2];
+    // int             fds[2];
     enum parser_state  type;
     // int             fd_flags; // flags O_RDWR O_CREAT .. 
     // int             ionumber;
 }               t_redir;
 
+typedef struct            s_process
+{
+    t_redir             redir;
+    t_lst               *ection;
+    char                **av;
+    enum parser_state  type;
+
+    // char                **env;
+    // uint8_t                completed;
+    // uint8_t                stopped;
+    // pid_t                pid;
+    // int                    status;
+}                        t_process;
+
 typedef struct s_job
 {
-    // pid_t       pid;
-    // t_lst       *process_lst;
-    char        **cmd;
-    // char        **env;
-    // t_filedesc  *fd;
+    char                *command;
+    char                **cmd; // ancien op[0]
+    t_lst              *process_list;
+    t_process           process;
+    // struct termios      *term_modes;
+    // pid_t               pgid;
+    // t_filedesc          fd;
     // int         status; // 1 = running | 0 = stopped par exemple
     e_analyzer_state type;
-    t_lst           *ection;
-    // t_termcaps  *term_modes;
 }               t_job;
 
 typedef struct  s_analyzer
 {
     t_anal              analyze;
     e_analyzer_state    state;
-    t_lst               *ninjutsu; // dedicace a cedric le S
+    // t_lst               *ninjutsu; // dedicace a cedric le S
+    t_lexer             *lexer;
+    t_process           process;
+    t_lst               *job_list;
+    t_job               job;
+    t_redir             redir;
 }               t_analyzer;
 
-t_job *init_job(void);
+void init_redir(t_redir *new);
+void init_process(t_process *new);
+void init_job(t_job *new);
 t_lst *analyzer(t_core *shell);
-t_analyzer *init_analyze(t_analyzer *analyzer);
-t_lst *cmd_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_lst *lst);
-t_lst *end_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_lst *lst);
-t_lst *separator_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_lst *lst);
-t_lst *redirect_analyze(t_analyzer *analyzer, t_lexer * lexer, t_job *job, t_lst *lst);
-t_lst *error_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_lst *lst);
-t_lst *ionbr_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_lst *lst);
-t_lst *assign_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job, t_lst *lst);
+t_analyzer *init_analyze(t_analyzer *analyzer, t_core *shell);
+void cmd_analyze(t_analyzer *analyzer);
+void end_analyze(t_analyzer *analyzer);
+void separator_analyze(t_analyzer *analyzer);
+void redirect_analyze(t_analyzer *analyzer);
+void error_analyze(t_analyzer *analyzer);
+void ionbr_analyze(t_analyzer *analyzer);
+void assign_analyze(t_analyzer *analyzer);
 
-
+void    get_token(t_analyzer *analyzer);
+t_redir *fetch_redir(t_redir *redir);
+t_process *fetch_process(t_process *process);
 t_job *fetch_job(t_job *job);
 char *ft_jointab(char **tablo);
-void ft_printjobcmd(t_job *job, int x);
-void printlstjob(t_lst *lst);
-
+void ft_printjobcmd(char **cmd, int x);
+void printanalyzer(t_analyzer *analyzer);
+void ft_printredir(t_redir *redir);
+void ft_printprocess(t_process *process);
+void ft_printjob(t_job *job);
 
 
 
