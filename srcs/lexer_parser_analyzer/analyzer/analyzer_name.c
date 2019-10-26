@@ -58,7 +58,7 @@ char **ft_add_arg_cmd_job(char **tablo, char *str)
 void cmd_analyze(t_analyzer *analyzer)
 {
 	// ft_printf("WOWOWORD   %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
-	ft_printf("CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
+	// ft_printf("CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
 	if (analyzer->state == A_START)
 		analyzer->job.cmd = fill_cmd_job(((t_token*)analyzer->lexer->tok->content)->data, &analyzer->job);
 	else if (analyzer->state == A_WORD)
@@ -72,7 +72,7 @@ void cmd_analyze(t_analyzer *analyzer)
 
 void end_analyze(t_analyzer *analyzer)
 {
-	ft_printf("END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
+	// ft_printf("END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
 	if (((t_token*)analyzer->lexer->tok->content)->id == 0)
 		analyzer->state = A_CREATE_JOB;
 	else

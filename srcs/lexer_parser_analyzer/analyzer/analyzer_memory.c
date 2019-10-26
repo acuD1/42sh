@@ -70,7 +70,8 @@ void ft_printjobcmd(char **cmd, int x)
 
 	i = 0;
 	j = 0;
-		ft_printf("JOB N: %d\n",x);
+	(void)x;
+	// ft_printf("JOB N: %d\n",x);
 		if (cmd)
 		{
 			j = ft_tablen(cmd);

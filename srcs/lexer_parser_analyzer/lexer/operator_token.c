@@ -30,7 +30,7 @@ static const t_token    ope[] =
 	{P_LESS, "<", 1},
 	{P_DGREAT, ">>", 2},
 	{P_GREATAND, ">&", 2},
-	// {P_CLOBBER, ">|", 2},
+	{P_CLOBBER, ">|", 2},
 	{P_GREAT, ">", 1},
 	{P_TOKEN, NULL, 0}
 };

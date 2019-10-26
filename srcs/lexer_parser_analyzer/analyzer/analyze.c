@@ -2,7 +2,7 @@
 
 void separator_analyze(t_analyzer *analyzer)
 {
-	ft_printf("SEPARATOR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
+	// ft_printf("SEPARATOR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
 	if ((((t_token*)analyzer->lexer->tok->content)->id == 8)
 		|| (((t_token*)analyzer->lexer->tok->content)->id == 4))
 		analyzer->state = A_CREATE_JOB;
@@ -54,10 +54,10 @@ t_lst	*analyzer(t_core *shell)
 		if (analyzer->state == A_CREATE_JOB)
 		{
 			// printanalyzer(analyzer);
-			analyzer->job_list = ft_lstappend(&analyzer->job_list, ft_lstnew(fetch_job(&analyzer->job), sizeof(t_job)));
+			ft_lstappend(&analyzer->job_list, ft_lstnew(fetch_job(&analyzer->job), sizeof(t_job)));
 			// ((t_process*)analyzer->job_list->content)->process_list = ft_lstappend(&analyzer->job_list->content->process_list, ft_lstnew(fetch_process(&analyzer->process), sizeof(t_process)));
 			// ((t_redir*)analyzer->job_list->content->process_list->content)->ection = ft_lstappend(&analyzer->job_list->content->process_list->content->ection, ft_lstnew(fetch_redir(&analyzer->redir), sizeof(t_redir)));
-			ft_printjob(((t_job*)analyzer->job_list->content));
+			// ft_printjob(((t_job*)analyzer->job_list->content));
 			// ft_printprocess(((t_process*)&analyzer->job_list->content->process_list->content));
 			// ft_printredir(((t_redir*)&analyzer->process_list->content->ection->content));
 			init_job(&analyzer->job);

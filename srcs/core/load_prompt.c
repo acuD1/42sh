@@ -82,6 +82,7 @@ void			load_prompt(t_core *shell)
 	char		*line;
 	int8_t		status;
 	t_read		term;
+	t_lst *tmp;
 
 	// t_parser *parser;
 	// t_ast	*ast;
@@ -116,7 +117,16 @@ void			load_prompt(t_core *shell)
 		// */
 		// if (check_brackets(line))
 		shell->lexer = lexer(line);
-		analyzer(shell);
+		shell->job_list = analyzer(shell);
+		if (shell->job_list)
+		{
+			tmp = shell->job_list;
+			while (tmp)
+			{
+				ft_printjob(((t_job*)tmp->content));
+				tmp = tmp->next;
+			}
+		}
 		// t_lst->content->abre_programme = ast(line);
 		// error_quotes_brackets(line);
 		// exec_process(shell, shell->env);
