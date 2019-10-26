@@ -33,3 +33,30 @@ void	free_prompt(t_core *shell, char *line)
 	ft_tabdel(&shell->tokens);
 	ft_strdel(&line);
 }
+
+void	free_hash_map(t_hash *hash)
+{
+	t_lst	*tmp;
+	size_t	i;
+
+	i = 0;
+	while (i < hash->size)
+	{
+		if (ft_lstlen(hash->map[i]) > 0)
+		{
+			tmp = NULL;
+			while (hash->map[i])
+			{
+				ft_strdel(&((t_db*)(hash->map[i]->content))->key);
+				ft_strdel(&((t_db*)(hash->map[i]->content))->value);
+				free(hash->map[i]->content);
+				tmp = hash->map[i];
+				hash->map[i] = hash->map[i]->next;
+				free(tmp);
+			}
+		}
+		i++;
+	}
+	free(hash->map);
+	return;
+}

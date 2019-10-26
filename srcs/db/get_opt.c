@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 16:34:39 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/20 17:33:27 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/10/26 15:39:00 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static int8_t	usage(const char *av, int i)
 	{
 		if (!(ft_strchr("-vh", av[i])))
 		{
-			dprintf(STDERR_FILENO, "42sh: illegal option -%c\n", av[i]); /* /!\ */
-			dprintf(STDERR_FILENO, "usage : ./42sh [-vh]");
+			dprintf(STDERR_FILENO, "42sh: illegal option -%c\n", av[i]);
+			ft_putendl_fd("usage : ./42sh [-vh]", STDERR_FILENO);
 			break ;
 		}
 		i++;

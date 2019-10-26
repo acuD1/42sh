@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/19 16:47:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/26 15:49:48 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@
 
 void			load_prompt(t_core *shell)
 {
-	char		*line;
 	int8_t		status;
 	t_read		term;
 	t_lst *tmp;
@@ -87,27 +86,17 @@ void			load_prompt(t_core *shell)
 	// t_parser *parser;
 	// t_ast	*ast;
 
-	line = NULL;
 	status = 1;
 	credit(shell);
-
 	/* BETA */
-	term.history = NULL;
-	term.history_index = NULL;
-	term.env = set_envp(shell);
-	term.new_line = 0;
-
-	term.buffer = ft_memalloc(BUFF_SIZE);
-	init_history(&term);
+	init_cmd_line(&term, shell);
 	/* Loop for prompt */
 	while (status)
 	{
 		/* Base output for prompt */
-		// line = ft_strdup(init_prompt(&term));
-
-		/* GNL */
+		shell->history = term.history;
 		init_prompt(&term);
-		line = ft_strdup(term.buffer);
+		shell->buff = ft_strdup(term.buffer);
 		/*
 		**	[NEED REWORK] A lot of stuff happening here :
 		**	- tokens parser (for now)
@@ -116,7 +105,7 @@ void			load_prompt(t_core *shell)
 		**	- etc ...
 		// */
 		// if (check_brackets(line))
-		shell->lexer = lexer(line);
+		shell->lexer = lexer(shell->buff);
 		shell->job_list = analyzer(shell);
 		if (shell->job_list)
 		{
@@ -127,10 +116,17 @@ void			load_prompt(t_core *shell)
 				tmp = tmp->next;
 			}
 		}
-		// t_lst->content->abre_programme = ast(line);
-		// error_quotes_brackets(line);
-		// exec_process(shell, shell->env);
-		free_prompt(shell, line);
+
+		/* DEBUG */
+		//print_tokens(shell);
+
+		/* Same here, mainly binary executions, need rework */
+		//free_prompt(shell, term.buffer);
+		//if (exec_builtin(shell) == FAILURE)
+		//	exec_process(shell, shell->env);
+
+		save_history(&term);
+		free_prompt(shell, shell->buff);
 	}
 	ft_strdel(&term.buffer);
 }

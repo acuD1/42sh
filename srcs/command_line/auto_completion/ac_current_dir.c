@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   auto_complete_current_dir.c                        :+:      :+:    :+:   */
+/*   ac_current_dir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/26 13:55:05 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/09 15:14:32 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/10/14 13:36:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,15 @@
 ** Return only TRUE if tab key is pressed
 */
 
-uint8_t			is_tab(char *buf, char *d_name, t_read *input)
+uint8_t			is_tab(char *buff, char *d_name, t_read *input)
 {
-	ft_bzero(buf, READ_SIZE + 1);
-	if (xread(0, buf, READ_SIZE) > 0)
+	uint64_t	value;
+
+	ft_bzero(buff, READ_SIZE + 1);
+	if (xread(0, buff, READ_SIZE) > 0)
 	{
-		if (buf[0] == TAB_KEY)
+		value = get_mask(buff);
+		if (value == TAB_KEY)
 		{
 			delete_last_cmd(d_name, input);
 			return (TRUE);
@@ -32,7 +35,7 @@ uint8_t			is_tab(char *buf, char *d_name, t_read *input)
 	return (FALSE);
 }
 
-uint8_t			is_dot(char *d_name)
+int			is_dot(char *d_name)
 {
 	if (!ft_strcmp(d_name, "."))
 		return (TRUE);
@@ -61,12 +64,13 @@ char			*get_current_dir(char *curr_dir, char *tmp_curr, t_read *input)
 void			display_current_directory(char *buf, t_read *input, char *curr_dir)
 {
 	struct dirent	*data;
-	DIR				*dir;
-	char			tmp[BUFF_SIZE];
-	char			current_dir[BUFF_SIZE];
+	DIR		*dir;
+	char		tmp[BUFF_SIZE];
+	char		current_dir[BUFF_SIZE];
 
 	get_current_dir(curr_dir, current_dir, input);
-	dir = opendir(current_dir);
+	if ((dir = opendir(current_dir)) == NULL)
+		return ;
 	ft_strcpy(tmp, current_dir);
 	while ((data = readdir(dir)) != NULL)
 	{

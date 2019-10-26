@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 13:38:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/08 17:13:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void		clr_screen(t_read *line)
 	int		i;
 
 	i = line->x;
-	xtputs(line->termcaps->clear, 1, my_outc);
+	xtputs(line->tcaps[CLEAR], 1, my_outc);
 	dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, line->prompt + 1, C_X);
 	ft_putstr(line->buffer);
-	xtputs(line->termcaps->ho, 1, my_outc);
+	xtputs(line->tcaps[UP_LEFT_CORNER], 1, my_outc);
 	while (--i)
-		xtputs(line->termcaps->right, 1, my_outc);
+		xtputs(line->tcaps[KEY_RIGHT], 1, my_outc);
 }
 
 /*
@@ -36,11 +36,11 @@ void		move_col_up(t_read *line)
 {
 	int		width;
 
-	xtputs(line->termcaps->up, 1, my_outc);
+	xtputs(line->tcaps[KEY_UP], 1, my_outc);
 	if (line->x < line->prompt_len && line->y == 1)
 	{
 		while (++(line->x) < line->prompt_len)
-			xtputs(line->termcaps->right, 1, my_outc);
+			xtputs(line->tcaps[KEY_RIGHT], 1, my_outc);
 		line->x_index = line->x;
 	}
 	else
@@ -55,9 +55,9 @@ void		move_col_up(t_read *line)
 }
 
 /*
-**	CTRL/SHIFT + ARROW_DOWN to move down one line in same column
-**	Termcaps capabilities : `do' to move cursor down at beginning of line
-**							`nd' to move cursor on the right
+**	CTRL/ALT + ARROW_DOWN to move down one line in same column
+**	Termcaps capabilities : `down' to move cursor down at beginning of line
+**							`right' to move cursor on the right
 **
 */
 
@@ -73,7 +73,7 @@ void		move_col_down(t_read *line)
 	nb_ofline = newline_count(line->buffer);
 	if (line->y < nb_ofline)
 	{
-		xtputs(line->termcaps->down, 1, my_outc);
+		xtputs(line->tcaps[KEY_DOWN], 1, my_outc);
 		x2 = line->x_index + 1;
 		line->x_index = line->x_index * 2 + width;
 		if (line->x_index > line->width)
@@ -83,16 +83,16 @@ void		move_col_down(t_read *line)
 		}
 		else
 			while (--x)
-				xtputs(line->termcaps->right, 1, my_outc);
+				xtputs(line->tcaps[KEY_RIGHT], 1, my_outc);
 		line->y++;
 	}
 }
 
-void		move_in_column(char *buff, t_read *line)
+void		move_in_column(uint64_t value, t_read *line)
 {
-	if (buff[5] == MOVE_UP && line->y != 0)
+	if (value & ALT_AW_UP && line->y != 0)
 		move_col_up(line);
-	else if (buff[5] == MOVE_DO)
+	else if (value &  ALT_AW_DO)
 		move_col_down(line);
 }
 
@@ -101,9 +101,9 @@ void		move_in_column(char *buff, t_read *line)
 **	(ALT+B | CTRL+B) to jump one word backward
 */
 
-void			jump_words(char *buff, t_read *line)
+void			jump_words(char *buff, t_read *line, uint64_t value)
 {
-	if (buff[0] == ONE_WORD_LEFT)
+	if (value == CTRL_F)
 	{
 		if (line->buffer[line->x_index - line->prompt_len] != ' ')
 			move_left(buff, line);
@@ -114,7 +114,7 @@ void			jump_words(char *buff, t_read *line)
 			&& line->buffer[line->x_index - line->prompt_len - 1] != ' ')
 			move_left(buff, line);
 	}
-	else if (buff[0] == ONE_WORD_RIGHT)
+	else if (value == CTRL_B)
 	{
 		if (line->buffer[line->x_index - line->prompt_len] != ' ')
 			move_right(buff, line);
@@ -125,6 +125,6 @@ void			jump_words(char *buff, t_read *line)
 			&& line->buffer[line->x_index - line->prompt_len] != ' ')
 			move_right(buff, line);
 	}
-	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 49)
-		move_in_column(buff, line);
+	else if (value == ALT_AW_UP || value == ALT_AW_DO)
+		move_in_column(value, line);
 }

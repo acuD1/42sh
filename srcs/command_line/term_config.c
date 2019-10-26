@@ -6,11 +6,21 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/04 13:57:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/24 20:58:48 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+void			init_cmd_line(t_read *term, t_core *shell)
+{
+	term->history = NULL;
+	term->history_index = NULL;
+	term->shell = shell;
+	term->new_line = 0;
+	term->buffer = ft_memalloc(BUFF_SIZE);
+	init_history(term);
+}
 
 /*
 **	Store current config in a globale var

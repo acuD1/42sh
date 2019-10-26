@@ -27,14 +27,14 @@ T := $(shell $(MAKE) $(MAKECMDGOALS) --no-print-directory \
 N := x
 C = $(words $N)$(eval N := x $N)
 V = "`expr "   [\`expr $C '*' 100 / $T\`" : '.*\(....\)$$'`%]"
-ECHO = printf "\e[1A\r%s %s %s                        \n" $V
+ECHO = printf "\e[1A\r%s %s %s                                     \n" $V
 endif
 
 # Color
 
 RESET_C = \033[m
-B_C = \033[0;34m 
-Y_C = \033[0;33m 
+B_C = \033[0;34m
+Y_C = \033[0;33m
 G_C = \033[0;32m
 R_C = \033[0;31m
 M_C = \033[0;35m
@@ -49,11 +49,11 @@ LNAME = shared_libft.a
 
 BUILD_FILE			=	.build
 BUILD_DATE			=	$$(date +'%Y%m%d')
-BUILD_BRANCH		=	$$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
-BUILD_RELEASE		=	$$(awk 'NR==3 {print $$3}' $(BUILD_FILE))
-BUILD_VERSION		=	$$(awk 'NR==4 {print $$3}' $(BUILD_FILE))
+BUILD_BRANCH			=	$$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
+BUILD_RELEASE			=	$$(awk 'NR==3 {print $$3}' $(BUILD_FILE))
+BUILD_VERSION			=	$$(awk 'NR==4 {print $$3}' $(BUILD_FILE))
 BUILD_PATCH			=	$$(awk 'NR==5 {print $$3}' $(BUILD_FILE))
-DEFAULT_BUILD_FILE	=	"Build information, patch level is incremented at \
+DEFAULT_BUILD_FILE		=	"Build information, patch level is incremented at \
 compilation.\n\nRELEASE\t=\t0\nVERSION\t=\t0\nPATCH\t=\t0"
 
 # Dir/Files Path (Do not modify)
@@ -72,13 +72,18 @@ L_PATH = shared_libft/
 # Add custom dir for .o
 
 CORE		=	core/
-DB			=	db/
+DB		=	db/
 BUILTINS	=	builtins/
 COMMANDLINE	=	command_line/
+AC		=	command_line/auto_completion/
+AK		=	command_line/action_keys/
+HISTORY		=	command_line/history/
 EXEC		=	exec/
 LEXER		= 	lexer_parser_analyzer/lexer/
 PARSER		= 	lexer_parser_analyzer/parser/
 ANALYZER	= 	lexer_parser_analyzer/analyzer/
+MISC		=	misc/
+HASH		=	$(EXEC)hash_map/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -86,54 +91,27 @@ PATHS		+=	$(B_PATH)
 PATHS		+=	$(O_PATH)
 PATHS		+=	$(O_PATH)$(BUILTINS)
 PATHS		+=	$(O_PATH)$(COMMANDLINE)
+PATHS		+=	$(O_PATH)$(AC)
+PATHS		+=	$(O_PATH)$(AK)
+PATHS		+=	$(O_PATH)$(HISTORY)
 PATHS		+=	$(O_PATH)$(CORE)
 PATHS		+=	$(O_PATH)$(DB)
 PATHS		+=	$(O_PATH)$(EXEC)
 PATHS		+=	$(O_PATH)$(LEXER)
 PATHS		+=	$(O_PATH)$(PARSER)
 PATHS		+=	$(O_PATH)$(ANALYZER)
+PATHS		+=	$(O_PATH)$(HASH)
+PATHS		+=	$(O_PATH)$(MISC)
 
 # Files
 
-#SRC			+=	$(S_PATH)$(BUILTINS)check_builtins.c
-#SRC			+=	$(S_PATH)$(BUILTINS)exit.c
-#SRC			+=	$(S_PATH)$(BUILTINS)history.c
-
-SRC			+=	$(S_PATH)$(COMMANDLINE)check_caps.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)del_keys.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)insert_in_buffer.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)move_cursor.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)save_history.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)search_in_history.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)auto_completion.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_current_dir.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_buffer.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)auto_complete_bin.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)term_config.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)check_quotes.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)sub_prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)utils.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)keys_comb.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)xfunctions.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)history_expansions.c
-
-SRC		+=	$(S_PATH)$(CORE)42sh.c
-SRC		+=	$(S_PATH)$(CORE)load_prompt.c
-SRC		+=	$(S_PATH)$(CORE)output.c
-SRC		+=	$(S_PATH)$(CORE)free_handler.c
-
-SRC		+=	$(S_PATH)$(DB)init_shell.c
-SRC		+=	$(S_PATH)$(DB)get_opt.c
-SRC		+=	$(S_PATH)$(DB)set_env.c
-SRC		+=	$(S_PATH)$(DB)fetch_db.c
-SRC		+=	$(S_PATH)$(DB)get_tokens.c
-
-SRC		+=	$(S_PATH)$(EXEC)exec_process.c
-SRC		+=	$(S_PATH)$(EXEC)exec_handler.c
-SRC		+=	$(S_PATH)$(EXEC)get_bin.c
-SRC		+=	$(S_PATH)$(EXEC)set_envp.c
 
 SRC		+=	$(S_PATH)$(LEXER)assign_token.c
 SRC		+=	$(S_PATH)$(LEXER)init_lexer.c
@@ -154,6 +132,68 @@ SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
 
 
 SRC		+=	$(S_PATH)dev.c
+SRC			+=	$(S_PATH)$(HISTORY)save_history.c
+SRC			+=	$(S_PATH)$(HISTORY)search_in_history.c
+SRC			+=	$(S_PATH)$(HISTORY)history_expansions.c
+SRC			+=	$(S_PATH)$(HISTORY)check_hst_expansions.c
+
+SRC			+=	$(S_PATH)$(AK)check_caps.c
+SRC			+=	$(S_PATH)$(AK)del_keys.c
+SRC			+=	$(S_PATH)$(AK)insert_in_buffer.c
+SRC			+=	$(S_PATH)$(AK)move_cursor.c
+SRC			+=	$(S_PATH)$(AK)keys_comb.c
+
+SRC			+=	$(S_PATH)$(AC)auto_completion.c
+SRC			+=	$(S_PATH)$(AC)ac_current_dir.c
+SRC			+=	$(S_PATH)$(AC)ac_buffer.c
+SRC			+=	$(S_PATH)$(AC)ac_bin.c
+SRC			+=	$(S_PATH)$(AC)ac_directories.c
+SRC			+=	$(S_PATH)$(AC)ac_tools.c
+
+SRC			+=	$(S_PATH)$(DB)init_shell.c
+SRC			+=	$(S_PATH)$(DB)get_opt.c
+SRC			+=	$(S_PATH)$(DB)set_env.c
+SRC			+=	$(S_PATH)$(DB)fetch_db.c
+SRC			+=	$(S_PATH)$(DB)get_tokens.c
+SRC			+=	$(S_PATH)$(DB)env_updates.c
+SRC			+=	$(S_PATH)$(DB)set_updates.c
+SRC			+=	$(S_PATH)$(DB)db_tools.c
+SRC			+=	$(S_PATH)$(DB)history.c
+SRC			+=	$(S_PATH)$(DB)version.c
+SRC			+=	$(S_PATH)$(DB)special_vars.c
+SRC			+=	$(S_PATH)$(DB)process_vars.c
+
+
+SRC			+=	$(S_PATH)$(BUILTINS)set.c
+SRC			+=	$(S_PATH)$(BUILTINS)unset.c
+SRC			+=	$(S_PATH)$(BUILTINS)export.c
+SRC			+=	$(S_PATH)$(BUILTINS)fc.c
+
+SRC			+=	$(S_PATH)$(MISC)errors.c
+SRC			+=	$(S_PATH)$(MISC)abs_path.c
+SRC			+=	$(S_PATH)$(MISC)ft_access.c
+SRC			+=	$(S_PATH)$(MISC)recall.c
+SRC			+=	$(S_PATH)$(MISC)check_args.c
+
+SRC			+=	$(S_PATH)$(EXEC)exec_process.c
+SRC			+=	$(S_PATH)$(EXEC)exec_builtin.c
+SRC			+=	$(S_PATH)$(EXEC)exec_handler.c
+SRC			+=	$(S_PATH)$(EXEC)get_bin.c
+SRC			+=	$(S_PATH)$(EXEC)set_envp.c
+
+
+SRC			+=	$(S_PATH)$(HASH)add_hash_map.c
+SRC			+=	$(S_PATH)$(HASH)fetch_hash_db.c
+SRC			+=	$(S_PATH)$(HASH)get_hash.c
+SRC			+=	$(S_PATH)$(HASH)locate_hash.c
+SRC			+=	$(S_PATH)$(HASH)resize_hash_map.c
+
+
+SRC			+=	$(S_PATH)$(CORE)42sh.c
+SRC			+=	$(S_PATH)$(CORE)load_prompt.c
+SRC			+=	$(S_PATH)$(CORE)output.c
+SRC			+=	$(S_PATH)$(CORE)free_handler.c
+
 # Headers
 
 HDR			+=	sh42.h
@@ -170,6 +210,8 @@ HDR			+=	shared_libft.h
 # Objects
 
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
+
+# Comment -no-pie flag if an error occured
 LIB = $(L_PATH)$(LNAME) -ltermcap #-no-pie
 vpath %.h $(H_PATH)
 

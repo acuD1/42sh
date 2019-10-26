@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_tokens.c                                       :+:      :+:    :+:   */
+/*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/21 13:05:26 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/26 15:47:04 by arsciand         ###   ########.fr       */
+/*   Created: 2019/10/01 03:57:59 by mpivet-p          #+#    #+#             */
+/*   Updated: 2019/10/02 02:52:28 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t		get_tokens(t_core *shell, char *line)
+int		check_invalid_identifiers(char *arg, char *exceptions)
 {
-	shell->tokens = ft_strsplit(line, " \t");
-	if (ft_tablen(shell->tokens) == 0)
+	int	i;
+
+	i = 0;
+	if (!(arg[0]))
 		return (FAILURE);
+	while (arg[i])
+	{
+		if (ft_isalnum(arg[i]) != SUCCESS && ft_strchr(exceptions, arg[i]) == NULL)
+			return (FAILURE);
+		i++;
+	}
 	return (SUCCESS);
 }

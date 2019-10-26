@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 13:39:33 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/15 14:33:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			move_key_down(t_read *line)
 	int		i;
 
 	i = -1;
-	if (line->history)
+	if (line->history && line->history_index)
 	{
 		goto_prompt(line);
 		memset(line->buffer, 0, strlen(line->buffer));
@@ -34,6 +34,7 @@ void			move_key_down(t_read *line)
 		else
 		{
 			line->history_index = line->history->prev;
+			//replace current buffer inserted
 			return ;
 		}
 		while (w->content && ((char*)w->content)[++i])
@@ -62,6 +63,7 @@ void			move_key_up(t_read *line)
 		}
 		else
 		{
+			//stock current buffer inserted in prev
 			line->history_index = line->history;
 			w = line->history;
 		}
@@ -76,25 +78,25 @@ void			move_key_up(t_read *line)
 **	Arrow right to move the cursor one char on the right
 */
 
-void		move_right(char *buff, t_read *input)
+void			move_right(char *buff, t_read *input)
 {
-	int	width;
-	int	buff_index;
+	int		width;
+	int		buff_index;
 
 	(void)buff;
 	width = get_width_current_line(input);
 	buff_index = input->x_index - input->prompt_len;
 	if (input->x < width)
 	{
-		xtputs(input->termcaps->right, 1, my_outc);
+		xtputs(input->tcaps[KEY_RIGHT], 1, my_outc);
 		input->x_index++;
 		input->x++;
 	}
 	else if (input->x == input->ws_col || *buff == NEW_LINE
 			|| input->buffer[buff_index] == NEW_LINE)
 	{
-		xtputs(input->termcaps->cr, 1, my_outc);
-		xtputs(input->termcaps->down, 1, my_outc);
+		xtputs(input->tcaps[LEFT_MARGIN], 1, my_outc);
+		xtputs(input->tcaps[KEY_DOWN], 1, my_outc);
 		input->x_index++;
 		input->x = 0;
 		input->y++;
@@ -113,18 +115,22 @@ void		move_left(char *buff, t_read *input)
 	if ((input->x > input->prompt_len && input->y == 0)
 		|| (input->x > 0 && input->y > 0))
 	{
-		xtputs(input->termcaps->left, 1, my_outc);
+		xtputs(input->tcaps[KEY_LEFT], 1, my_outc);
 		input->x_index--;
 		input->x--;
 	}
 	else if (input->y > 0 && input->x == 0)
 	{
-
 		width = get_width_last_line(input);
-		(input->x == 0) ? input->x = width : 0;
-		while (width--)
-			xtputs(input->termcaps->right, 1, my_outc);
-		xtputs(input->termcaps->up, 1, my_outc);
+		input->x = width;
+		if (width < input->prompt_len || input->x == input->ws_col)
+		{
+			while (width--)
+				xtputs(input->tcaps[KEY_RIGHT], 1, my_outc);
+			xtputs(input->tcaps[KEY_UP], 1, my_outc);
+		}
+		else
+			xtputs(input->tcaps[KEY_LEFT], 1, my_outc);
 		input->x_index--;
 		input->y--;
 	}

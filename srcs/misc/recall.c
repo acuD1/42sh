@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_tokens.c                                       :+:      :+:    :+:   */
+/*   recall.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/21 13:05:26 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/26 15:47:04 by arsciand         ###   ########.fr       */
+/*   Created: 2019/10/01 01:37:25 by mpivet-p          #+#    #+#             */
+/*   Updated: 2019/10/01 01:37:27 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t		get_tokens(t_core *shell, char *line)
+t_core	*get_core(t_core *core)
 {
-	shell->tokens = ft_strsplit(line, " \t");
-	if (ft_tablen(shell->tokens) == 0)
-		return (FAILURE);
-	return (SUCCESS);
+	static t_core	*mem = NULL;
+
+	if (core != NULL && mem == NULL)
+		mem = core;
+	return (mem);
 }

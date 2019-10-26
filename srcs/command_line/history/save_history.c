@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 17:02:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/24 21:19:40 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,29 @@
 #include "sh42.h"
 
 /*
-**	Open ".history" file to write history datas at the end of file
+**	Open "~/.42sh_history" file to write history datas at the end of file
 */
 
 void			write_history(t_read *line)
 {
-	int			fd;
+	int		fd;
+	int		i;
 	t_lst		*hst;
 
+	i = -1;
 	hst = line->history;
 	if (!hst)
 		return ;
 	if ((fd = open(HISTORY_FILE, MODE_WRITE, S_USR_RW | S_GRP_OTH_R)) == -1)
-		dprintf(STDIN_FILENO, "can't open history file\n");
+		ft_dprintf(STDIN_FILENO, "can't open history file\n");
 	while (hst->next)
 		hst = hst->next;
-	while (hst)
+	while (hst && ++i < HISTFILE_SIZE)
 	{
 		if (write(fd, hst->content, ft_strlen(hst->content)) == FAILURE
 			|| write(fd, "\n", 1) == FAILURE)
 		{
-			dprintf(2, "write failure\n");
+			ft_dprintf(2, "write failure\n");
 			close(fd);
 			return ;
 		}
@@ -65,6 +67,8 @@ void			save_history(t_read *term)
 			term->history->prev = saved;
 		term->history = saved;
 		term->history_index = NULL;
+		if (term->history->next)
+			term->history->content_size = term->history->next->content_size + 1;
 	}
 }
 
@@ -75,10 +79,11 @@ void			save_history(t_read *term)
 void			init_history(t_read *term)
 {
 	char		*line;
-	int			fd;
-	int			i;
+	int		fd;
+	int		i;
+	int		j;
 
-	//!\HIST SIZE INTERN VAR/!\/
+	j = -1;
 	i = -1;
 	line = NULL;
 	if ((fd = open(HISTORY_FILE, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)
@@ -88,9 +93,11 @@ void			init_history(t_read *term)
 		while (++i < (int)ft_strlen(line))
 			term->buffer[i] = line[i];
 		save_history(term);
+		term->history->content_size = ++j;
 		free(line);
 		ft_bzero(term->buffer, ft_strlen(term->buffer));
 		i = -1;
 	}
+	free(line);
 	close(fd);
 }

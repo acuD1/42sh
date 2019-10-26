@@ -25,7 +25,7 @@ void		exec_process(t_core *shell, t_lst *env)
 
 	envp = NULL;
 
-	/* get_bin check if is a local binary or find the binary in PATH */
+	/* get_bin check if is a local binary or find the binary in PATH or hash table*/
 	shell->bin = get_bin(shell, env);
 
 	/*

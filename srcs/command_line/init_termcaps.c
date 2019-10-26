@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 15:32:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/15 15:17:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,43 +14,70 @@
 #include <sys/ioctl.h>
 
 /*
-** Store the number of line and column in struct
+**	Store datas of terminal's line/column
 */
 
-t_read			*get_size(t_read *data)
+t_read   	         *get_size(t_read *data)
 {
-	struct winsize	size;
+	struct winsize    size;
 
-	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &size) == FAILURE)
-		ft_putstr("ioctl error"); //call an error fct
+	ft_bzero(&size, sizeof(struct winsize));
+	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &size) != SUCCESS)
+	{
+		ft_dprintf(STDERR_FILENO, "IOCTL ERROR\n");
+		if ((data->ws_col = tgetnum("co")) < 0 || (data->ws_li = tgetnum("li")) < 0)
+		{
+			ft_dprintf(STDERR_FILENO, "IOCTL AND TGETNUM FAILURE");
+			return (NULL);
+		}
+		return (data);
+	}
 	data->ws_col = size.ws_col;
 	data->ws_li = size.ws_row;
 	return (data);
 }
 
-void			stock_termcaps(t_termcaps *termcaps)
+/*
+**	Stock termcaps capabilities in a static array
+*/
+
+int8_t			stock_termcaps(t_read *term)
 {
-	termcaps->del = ft_strdup(xtgetstr("dc", NULL));
-	termcaps->save_cr = ft_strdup(xtgetstr("sc", NULL));
-	termcaps->reset_cr = ft_strdup(xtgetstr("rc", NULL));
-	termcaps->down = ft_strdup(xtgetstr("do", NULL));
-	termcaps->up = ft_strdup(xtgetstr("up", NULL));
-	termcaps->right = ft_strdup(xtgetstr("nd", NULL));
-	termcaps->left = ft_strdup(xtgetstr("le", NULL));
-	termcaps->cr = ft_strdup(xtgetstr("cr", NULL));
-	termcaps->ho = ft_strdup(xtgetstr("ho", NULL));
-	termcaps->clear = ft_strdup(xtgetstr("cl", NULL));
-	termcaps->clr_lines = ft_strdup(xtgetstr("cd", NULL));
-	termcaps->clr_end = ft_strdup(xtgetstr("ce", NULL));
+	static char	*termcaps[CAPS_NBR];
+	int		i;
+
+	i = -1;
+	termcaps[0] = "dc";
+	termcaps[1] = "sc";
+	termcaps[2] = "rc";
+	termcaps[3] = "do";
+	termcaps[4] = "up";
+	termcaps[5] = "nd";
+	termcaps[6] = "le";
+	termcaps[7] = "cr";
+	termcaps[8] = "ho";
+	termcaps[9] = "cl";
+	termcaps[10] = "cd";
+	termcaps[11] = "ce";
+	while (++i < CAPS_NBR)
+	{
+		if (!(term->tcaps[i] = xtgetstr(termcaps[i], NULL)))
+			return (FAILURE);
+	}
+	return (SUCCESS);
 }
+
+/*
+**	Initialization of terminal's termcaps capabilities
+*/
 
 void			init_termcaps(t_read *term)
 {
 	char		*sh;
 	char		bp[1024];
 
-	term->termcaps = ft_memalloc(sizeof(t_termcaps));
-	stock_termcaps(term->termcaps);
+	if (stock_termcaps(term) == FAILURE)
+		EXIT_FAILURE ; // Display error msg
 	if (!(sh = getenv("TERM")))
 	{
 		// Display error msg

@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fetch_db.c                                         :+:      :+:    :+:   */
+/*   get_hash.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/20 17:13:44 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/04 06:22:22 by mpivet-p         ###   ########.fr       */
+/*   Created: 2019/08/02 15:01:50 by arsciand          #+#    #+#             */
+/*   Updated: 2019/08/02 15:02:05 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-/*
-**	fetch_db format char **environ into {key}, {value}
-**	and {var_type} (env, set or intern)
-*/
-
-t_db	*fetch_db(t_db *db, const char *s, const u_int8_t var_type)
+u_int32_t	get_hash(char *line, u_int32_t size)
 {
-	size_t	len;
+	size_t		i;
+	u_int32_t	hash;
 
-	len = ft_strclen(s, '=');
-	db->key = ft_strsub(s, 0, len);
-	db->value = ft_strdup(s + len + 1);
-	db->type = var_type;
-	if (!db->value || !db->key)
+	i = 0;
+	hash = 0;
+	while (i < ft_strlen(line))
 	{
-		ft_strdel(&(db->key));
-		ft_strdel(&(db->value));
-		return (NULL);
+		hash = ((hash << 8) + line[i]) % size;
+		i++;
 	}
-	return (db);
+	return (hash);
 }

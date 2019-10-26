@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_builtins.c                                   :+:      :+:    :+:   */
+/*   fetch_hash_db.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/09 14:35:43 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/07/31 11:49:51 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/08/02 14:57:11 by arsciand          #+#    #+#             */
+/*   Updated: 2019/08/03 11:23:01 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "twenty_one.h"
+#include "sh42.h"
 
-int	check_builtins(char **cmd, char **env, t_read *term)
+t_db	*fetch_hash_db(t_db *db, const char *key, const char *value)
 {
-	(void)env;
-	if (!ft_strcmp(term->buffer, "exit"))
-		return (exit_sh(term));
-	else if (!ft_strcmp(cmd[0], "history"))
-		return (history(term, cmd));
-	return (0);
+	db->key = ft_strdup(key);
+	db->value = ft_strdup(value);
+	db->hit = 1;
+	return (db);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 17:02:57 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/26 15:38:46 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,10 @@
 
 void		goto_prompt(t_read *line)
 {
-	/* if (line->sub_prompt != FALSE) */
-	/* { */
-	/* 	while (line->sub_prompt-- >= 0) */
-	/* 		xtputs(line->termcaps->up, 1, my_outc); */
-	/* 	return ; */
-	/* } */
 	while (line->y-- > 0)
-		xtputs(line->termcaps->up, 1, my_outc);
-	xtputs(line->termcaps->cr, 1, my_outc);
-	xtputs(line->termcaps->clr_lines, 1, my_outc);
+		xtputs(line->tcaps[KEY_UP], 1, my_outc);
+	xtputs(line->tcaps[LEFT_MARGIN], 1, my_outc);
+	xtputs(line->tcaps[CLR_LINES], 1, my_outc);
 	free(line->prompt);
 	display_prompt(line);
 }
@@ -46,7 +40,7 @@ t_read		*display_prompt(t_read *term)
 
 	ft_bzero(path, BUFF_SIZE + 1);
 	if (!getcwd(path, BUFF_SIZE))
-		term->prompt = ft_strdup("undefined");
+		term->prompt = ft_strdup("<< 42sh >> ");
 	else
 		term->prompt = ft_strdup(ft_strrchr(path, '/'));
 	term->prompt_len = ft_strlen(term->prompt) + 7;
@@ -55,14 +49,14 @@ t_read		*display_prompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term = get_size(term);
-	dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, term->prompt + 1, C_X);
+	ft_dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, term->prompt + 1, C_X);
 	return (term);
 }
 
 /*
 **	  Clear the last buffer/line inserted & Display current prompt
 **	  Launch line edition: read stdin until enter key is pressed
-**	  The current buffer is saved in a list history
+**	  The current buffer is saved in a history list
 */
 
 void		init_prompt(t_read *term)
@@ -78,7 +72,7 @@ void		init_prompt(t_read *term)
 	{
 		if (check_caps(buff, term) == TRUE)
 		{
-			ft_bzero(buff, READ_SIZE);
+			ft_bzero(buff, READ_SIZE + 1);
 			continue ;
 		}
 		else
@@ -86,9 +80,9 @@ void		init_prompt(t_read *term)
 	}
 	if (check_quotes(term) == FALSE)
 	{
-		// remove_newline(term); // useless enleve le \n de lhisto
-		// check_expansions(term);
-		save_history(term);
+		remove_newline(term);
+		check_expansions(term);
+	//	save_history(term);
 	}
 	reset_config(term);
 }
