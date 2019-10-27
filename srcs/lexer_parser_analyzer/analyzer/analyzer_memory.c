@@ -7,7 +7,7 @@ t_job *fetch_job(t_job *job)
 
 	job_data = job;
 	job_data->type = job->type;
-	job_data->cmd = job->cmd;
+	// job_data->cmd = job->cmd;
 	job_data->command = job->command;
 	job_data->process_list = job->process_list;
 	job_data->process = *fetch_process(&job->process);
@@ -50,46 +50,37 @@ void init_redir(t_redir *new)
 void init_process(t_process *new)
 {
 	new->av = NULL;
-	init_redir(& new->redir);
+	init_redir(&new->redir);
 	new->ection = NULL;
 }
 
 void init_job(t_job *new)
 {
 	new->command = NULL;
-	new->cmd = NULL;
+	// new->cmd = NULL;
 	new->type = A_START;
 	init_process(&new->process);
 	new->process_list = NULL;
 }
 
-void ft_printjobcmd(char **cmd, int x)
+void ft_printtab(char **cmd)
 {
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	(void)x;
-	// ft_printf("JOB N: %d\n",x);
-		if (cmd)
+	if (cmd)
+	{
+		j = ft_tablen(cmd);
+		ft_printf("cmd ");
+		while(cmd[i])
 		{
-			j = ft_tablen(cmd);
-			ft_printf("cmd ");
-			while(cmd[i])
-			{
-				ft_printf("%s ", cmd[i]);
-				i++;
-			}
-			ft_printf("\n");
+			ft_printf("%s ", cmd[i]);
+			i++;
 		}
-		// if (job->redir->op[0])
-			// ft_printf("op[0] %s\n", job->redir->op[0]);
-		// if (job->redir->op[1])
-			// ft_printf("op[1] %s\n", job->redir->op[1]);
-		// ft_printf("type %u \n", job->redir->type);
-		// if (job->redir->ionumber)
-			// ft_printf("IONUMBER %d\n", job->redir->ionumber);
+		ft_printf("\n");
+	}
 }
 
 void	get_token(t_analyzer *analyzer)
@@ -164,7 +155,7 @@ void ft_printprocess(t_process *process)
 		ft_printf("\n====process====\n");
 		ft_printf("state %u\n", tmp->type);
 		if (tmp->av)
-			ft_printjobcmd(tmp->av, 0);
+			ft_printtab(tmp->av);
 	}
 }
 
@@ -181,13 +172,21 @@ void ft_printjob(t_job *job)
 		ft_printf("state %u\n", tmp->type);
 		if (tmp->command)
 			ft_printf("job command %s\n", tmp->command);
-		if (tmp->cmd)
-			ft_printjobcmd(tmp->cmd, 0);
+		// if (tmp->cmd)
+			// ft_printjobcmd(tmp->cmd, 0);
 		// if (tmp->process != NULL)
 		// {
 		// 	ft_printf("\n====JOB PROCESS====\n");
 		// 	ft_printprocess(&tmp->process);
 		// }
+
+		// if (job->redir->op[0])
+			// ft_printf("op[0] %s\n", job->redir->op[0]);
+		// if (job->redir->op[1])
+			// ft_printf("op[1] %s\n", job->redir->op[1]);
+		// ft_printf("type %u \n", job->redir->type);
+		// if (job->redir->ionumber)
+			// ft_printf("IONUMBER %d\n", job->redir->ionumber);
 	}
 
 }

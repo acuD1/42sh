@@ -22,14 +22,14 @@ char *ft_jointab(char **tablo)
 
 char **fill_cmd_job(char *str, t_job *job)
 {
-	if (!job->cmd)
+	if (!job->process.av)
 	{
-		if (!(job->cmd = (char**)malloc(sizeof(char*) + 1)))
+		if (!(job->process.av = (char**)malloc(sizeof(char*) + 1)))
 			return (NULL);
-		job->cmd[0] = ft_strdup(str);
-		job->cmd[1] = NULL;
+		job->process.av[0] = ft_strdup(str);
+		job->process.av[1] = NULL;
 	}
-	return (job->cmd);
+	return (job->process.av);
 }
 
 char **ft_add_arg_cmd_job(char **tablo, char *str)
@@ -60,21 +60,59 @@ void cmd_analyze(t_analyzer *analyzer)
 	// ft_printf("WOWOWORD   %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
 	// ft_printf("CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
 	if (analyzer->state == A_START)
-		analyzer->job.cmd = fill_cmd_job(((t_token*)analyzer->lexer->tok->content)->data, &analyzer->job);
+		analyzer->process.av = fill_cmd_job(((t_token*)analyzer->lexer->tok->content)->data, &analyzer->job);
 	else if (analyzer->state == A_WORD)
-		analyzer->job.cmd = ft_add_arg_cmd_job(analyzer->job.cmd, ((t_token*)analyzer->lexer->tok->content)->data);
+		analyzer->process.av = ft_add_arg_cmd_job(analyzer->job.process.av, ((t_token*)analyzer->lexer->tok->content)->data);
 	else if (analyzer->state == A_REDIRECT)
+	{
 		analyzer->redir.op[1] = ft_strdup(((t_token*)analyzer->lexer->tok->content)->data);
+		redir_analyze(analyzer);
+	}
 	if (analyzer->lexer->tok->next && (((t_token*)analyzer->lexer->tok->next->content)->id == 24))
 		analyzer->state = A_STOP;
-	analyzer->state = A_WORD;
+	else
+		analyzer->state = A_WORD;
+}
+
+char *getjoblistcmdtab(t_lst *list)
+{
+	t_lst *tmp;
+	char *str;
+
+	tmp = list;
+	str = ft_strnew(0);
+	if (!tmp)
+		return (NULL);
+	else
+	{
+		// if (tmp->next)
+		printf("toto\n");
+		while (tmp)
+		{
+			if (((t_process*)tmp->content)->av)
+			{
+				str = ft_jointab(((t_process*)tmp->content)->av);
+				str = ft_strjoin(str, " ");
+			}
+			if (tmp->next)
+				tmp = tmp->next;
+			else
+				break;
+		}
+		return (str);
+	}
 }
 
 void end_analyze(t_analyzer *analyzer)
 {
-	// ft_printf("END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
+	ft_printf("END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
 	if (((t_token*)analyzer->lexer->tok->content)->id == 0)
-		analyzer->state = A_CREATE_JOB;
+	{
+		// analyzer->job.command = getjoblistcmdtab(analyzer->job.process_list);
+		// ft_printf("strp %s\n", analyzer->job.command);
+		job_analyze(analyzer);
+		return;
+	}
 	else
 		analyzer->state = A_STOP;
 	//NE PASSERA PEUT ETRE PAS DEDANS CF P_END DU LEXER

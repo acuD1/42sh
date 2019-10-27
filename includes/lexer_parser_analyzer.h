@@ -40,6 +40,8 @@ typedef enum analyzer_state
     A_ERROR,
     A_STOP,
     A_CREATE_JOB,
+    A_CREATE_REDIR,
+    A_CREATE_PROCESS,
     // A_CMD,
     // A_CMD_ARG,
     // A_IOFILE,
@@ -48,27 +50,27 @@ typedef enum analyzer_state
 
 typedef enum    parser_state
 {
-    P_NEWLINE,
-    P_ANDDGREAT,
-    P_ANDIF,
-    P_ANDGREAT,
-    P_AND,
-    P_ORIF,
-    P_PIPE,
-    P_DSEMI,
-    P_SEMICOLON,
-    P_DLESSDASH,
-    P_DLESS,
-    P_LESSGREAT,
-    P_LESSAND,
-    P_LESS,
-    P_DGREAT,
-    P_GREATAND,
-    P_CLOBBER,
-    P_GREAT,
+    P_NEWLINE, // si tok->next = 23 job sinon process si condition ok
+    P_ANDDGREAT, // redir
+    P_ANDIF, // job
+    P_ANDGREAT, // redir
+    P_AND, // process deamon
+    P_ORIF, // job
+    P_PIPE, // redir qui att un newline SUBSHELL
+    P_DSEMI, // FOR CASE
+    P_SEMICOLON, // process
+    P_DLESSDASH, // redir
+    P_DLESS, // redir
+    P_LESSGREAT, // redir
+    P_LESSAND, // redir
+    P_LESS, // redir
+    P_DGREAT, // redir
+    P_GREATAND, // redir
+    P_CLOBBER, // redir
+    P_GREAT, // redir
     P_TOKEN,
-    P_IONUMBER,
-    P_ASSIGN,
+    P_IONUMBER, 
+    P_ASSIGN, // stock dans shell->assign une lst key=value;
     P_WORD,
     P_START,
     P_END,
@@ -142,7 +144,7 @@ typedef struct            s_process
 typedef struct s_job
 {
     char                *command;
-    char                **cmd; // ancien op[0]
+    // char                **cmd; // ancien op[0]
     t_lst              *process_list;
     t_process           process;
     // struct termios      *term_modes;
@@ -176,13 +178,16 @@ void redirect_analyze(t_analyzer *analyzer);
 void error_analyze(t_analyzer *analyzer);
 void ionbr_analyze(t_analyzer *analyzer);
 void assign_analyze(t_analyzer *analyzer);
+void redir_analyze(t_analyzer *analyzer);
+void process_analyze(t_analyzer *analyzer);
+void job_analyze(t_analyzer *analyzer);
 
 void    get_token(t_analyzer *analyzer);
 t_redir *fetch_redir(t_redir *redir);
 t_process *fetch_process(t_process *process);
 t_job *fetch_job(t_job *job);
 char *ft_jointab(char **tablo);
-void ft_printjobcmd(char **cmd, int x);
+void ft_printtab(char **cmd);
 void printanalyzer(t_analyzer *analyzer);
 void ft_printredir(t_redir *redir);
 void ft_printprocess(t_process *process);

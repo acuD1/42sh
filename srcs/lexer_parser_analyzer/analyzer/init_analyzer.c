@@ -23,6 +23,75 @@
 // 	analyze[A_ASSIGN][P_END] =
 // }
 
+void init_create_redir_analyze(t_anal analyze)
+{
+	analyze[A_CREATE_REDIR][P_NEWLINE] = error_analyze;
+	analyze[A_CREATE_REDIR][P_ANDIF] = error_analyze;
+	analyze[A_CREATE_REDIR][P_AND] = error_analyze;
+	analyze[A_CREATE_REDIR][P_ORIF] = error_analyze;
+	analyze[A_CREATE_REDIR][P_PIPE] = error_analyze;
+	analyze[A_CREATE_REDIR][P_DSEMI] = error_analyze;
+	analyze[A_CREATE_REDIR][P_SEMICOLON] =  error_analyze;
+	analyze[A_CREATE_REDIR][P_DLESSDASH] = redir_analyze;
+	analyze[A_CREATE_REDIR][P_DLESS] = redir_analyze;
+	analyze[A_CREATE_REDIR][P_LESSGREAT] = redir_analyze;
+	analyze[A_CREATE_REDIR][P_LESS] = redir_analyze;
+	analyze[A_CREATE_REDIR][P_DGREAT] = redir_analyze;
+	analyze[A_CREATE_REDIR][P_GREATAND] = redir_analyze;
+	analyze[A_CREATE_REDIR][P_CLOBBER] = redir_analyze;
+	analyze[A_CREATE_REDIR][P_GREAT] =	redir_analyze;
+	analyze[A_CREATE_REDIR][P_IONUMBER] = error_analyze;
+	analyze[A_CREATE_REDIR][P_ASSIGN] = assign_analyze;
+	analyze[A_CREATE_REDIR][P_WORD] = cmd_analyze;
+	analyze[A_CREATE_REDIR][P_END] = end_analyze;
+}
+
+void init_create_process_analyze(t_anal analyze)
+{
+	analyze[A_CREATE_PROCESS][P_NEWLINE] = process_analyze;
+	analyze[A_CREATE_PROCESS][P_ANDIF] = error_analyze;
+	analyze[A_CREATE_PROCESS][P_AND] = process_analyze;
+	analyze[A_CREATE_PROCESS][P_ORIF] = error_analyze;
+	analyze[A_CREATE_PROCESS][P_PIPE] = error_analyze;
+	analyze[A_CREATE_PROCESS][P_DSEMI] = redirect_analyze;
+	analyze[A_CREATE_PROCESS][P_SEMICOLON] =  process_analyze;
+	analyze[A_CREATE_PROCESS][P_DLESSDASH] = redirect_analyze;
+	analyze[A_CREATE_PROCESS][P_DLESS] = redirect_analyze;
+	analyze[A_CREATE_PROCESS][P_LESSGREAT] = redirect_analyze;
+	analyze[A_CREATE_PROCESS][P_LESS] = cmd_analyze;
+	analyze[A_CREATE_PROCESS][P_DGREAT] = redirect_analyze;
+	analyze[A_CREATE_PROCESS][P_GREATAND] = redirect_analyze;
+	analyze[A_CREATE_PROCESS][P_CLOBBER] = redirect_analyze;
+	analyze[A_CREATE_PROCESS][P_GREAT] =	redirect_analyze;
+	analyze[A_CREATE_PROCESS][P_IONUMBER] = error_analyze;
+	analyze[A_CREATE_PROCESS][P_ASSIGN] = error_analyze;
+	analyze[A_CREATE_PROCESS][P_WORD] = cmd_analyze;
+	analyze[A_CREATE_PROCESS][P_END] = end_analyze;
+}
+
+void init_create_job_analyze(t_anal analyze)
+{
+	analyze[A_CREATE_JOB][P_NEWLINE] = job_analyze;
+	analyze[A_CREATE_JOB][P_ANDIF] = job_analyze;
+	analyze[A_CREATE_JOB][P_AND] = process_analyze;
+	analyze[A_CREATE_JOB][P_ORIF] = job_analyze;
+	analyze[A_CREATE_JOB][P_PIPE] = redirect_analyze;
+	analyze[A_CREATE_JOB][P_DSEMI] = redirect_analyze;
+	analyze[A_CREATE_JOB][P_SEMICOLON] =  job_analyze;
+	analyze[A_CREATE_JOB][P_DLESSDASH] = redirect_analyze;
+	analyze[A_CREATE_JOB][P_DLESS] = redirect_analyze;
+	analyze[A_CREATE_JOB][P_LESSGREAT] = redirect_analyze;
+	analyze[A_CREATE_JOB][P_LESS] = cmd_analyze;
+	analyze[A_CREATE_JOB][P_DGREAT] = redirect_analyze;
+	analyze[A_CREATE_JOB][P_GREATAND] = redirect_analyze;
+	analyze[A_CREATE_JOB][P_CLOBBER] = redirect_analyze;
+	analyze[A_CREATE_JOB][P_GREAT] =	redirect_analyze;
+	analyze[A_CREATE_JOB][P_IONUMBER] = error_analyze;
+	analyze[A_CREATE_JOB][P_ASSIGN] = assign_analyze;
+	analyze[A_CREATE_JOB][P_WORD] = cmd_analyze;
+	analyze[A_CREATE_JOB][P_END] = end_analyze;
+}
+
 void init_ionumber_analyze(t_anal analyze)
 {
 	analyze[A_IONUMBER][P_NEWLINE] = end_analyze;
@@ -112,9 +181,9 @@ void	init_separator_analyze(t_anal analyze)
 void init_start_analyze(t_anal analyze)
 {
 	analyze[A_START][P_NEWLINE] = separator_analyze;
-	analyze[A_START][P_ANDIF] = redirect_analyze;
+	analyze[A_START][P_ANDIF] = job_analyze;
 	analyze[A_START][P_AND] = redirect_analyze;
-	analyze[A_START][P_ORIF] = redirect_analyze;
+	analyze[A_START][P_ORIF] = job_analyze;
 	analyze[A_START][P_PIPE] = redirect_analyze;
 	analyze[A_START][P_DSEMI] = separator_analyze;
 	analyze[A_START][P_SEMICOLON] = separator_analyze;
@@ -136,13 +205,13 @@ void init_start_analyze(t_anal analyze)
 
 void init_word_analyze(t_anal analyze)
 {
-	analyze[A_WORD][P_NEWLINE] = end_analyze;
-	analyze[A_WORD][P_ANDIF] = redirect_analyze;
-	analyze[A_WORD][P_AND] = redirect_analyze;
-	analyze[A_WORD][P_ORIF] = redirect_analyze;
+	analyze[A_WORD][P_NEWLINE] = job_analyze;
+	analyze[A_WORD][P_ANDIF] = job_analyze;
+	analyze[A_WORD][P_AND] = process_analyze;
+	analyze[A_WORD][P_ORIF] = job_analyze;
 	analyze[A_WORD][P_PIPE] = redirect_analyze;
-	analyze[A_WORD][P_DSEMI] = separator_analyze;
-	analyze[A_WORD][P_SEMICOLON] = separator_analyze;
+	analyze[A_WORD][P_DSEMI] = error_analyze;
+	analyze[A_WORD][P_SEMICOLON] = process_analyze;
 	analyze[A_WORD][P_DLESSDASH] = redirect_analyze;
 	analyze[A_WORD][P_DLESS] = redirect_analyze;
 	analyze[A_WORD][P_LESSGREAT] = redirect_analyze;
@@ -226,6 +295,9 @@ t_analyzer *init_analyze(t_analyzer *analyzer, t_core *shell)
 		return (NULL);
 	bzero_analyze(analyzer->analyze);
 	init_start_analyze(analyzer->analyze);
+	// init_create_job_analyze(analyzer->analyze);
+	// init_create_job_analyze(analyzer->analyze);
+	// init_create_job_analyze(analyzer->analyze)
 	init_ionumber_analyze(analyzer->analyze);
 	// init_assign_analyze(analyzer->analyze);
 	init_word_analyze(analyzer->analyze);
