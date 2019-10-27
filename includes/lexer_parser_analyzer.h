@@ -51,9 +51,7 @@ typedef enum analyzer_state
 typedef enum    parser_state
 {
     P_NEWLINE, // si tok->next = 23 job sinon process si condition ok
-    P_ANDDGREAT, // redir
     P_ANDIF, // job
-    P_ANDGREAT, // redir
     P_AND, // process deamon
     P_ORIF, // job
     P_PIPE, // redir qui att un newline SUBSHELL
@@ -66,7 +64,6 @@ typedef enum    parser_state
     P_LESS, // redir
     P_DGREAT, // redir
     P_GREATAND, // redir
-    P_CLOBBER, // redir
     P_GREAT, // redir
     P_TOKEN,
     P_IONUMBER, 

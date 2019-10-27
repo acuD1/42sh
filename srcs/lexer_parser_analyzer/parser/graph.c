@@ -30,9 +30,7 @@ void		init_redirect_graph(t_graph *graph)
 	graph[P_DLESS].good_type = tab_good_type;
 	graph[P_GREATAND].good_type = tab_good_type;
 	graph[P_LESSAND].good_type = tab_good_type;
-	graph[P_ANDGREAT].good_type = tab_good_type;
 	graph[P_DLESSDASH].good_type = tab_good_type;
-	graph[P_ANDDGREAT].good_type = tab_good_type;
 }
 
 void		init_assign_graph(t_graph *graph)
