@@ -46,12 +46,12 @@ char **ft_add_arg_cmd_job(char **tablo, char *str)
 	while (tablo[j])
 	{
 		tb[j] = ft_strdup(tablo[j]);
-		free(tablo[j]);
+		// free(tablo[j]);
 		j++;
 	}
 	tb[j] = ft_strdup(str);
 	tb[j + 1] = NULL;
-	free(tablo);
+	// free(tablo);
 	return (tb);
 }
 
@@ -62,7 +62,10 @@ void cmd_analyze(t_analyzer *analyzer)
 	if (analyzer->state == A_START)
 		analyzer->process.av = fill_cmd_job(((t_token*)analyzer->lexer->tok->content)->data, &analyzer->job);
 	else if (analyzer->state == A_WORD)
+	{
 		analyzer->process.av = ft_add_arg_cmd_job(analyzer->job.process.av, ((t_token*)analyzer->lexer->tok->content)->data);
+		//Va y avoir du leak je sais pas comment ce comporte les char** alloué dans une stack
+	}
 	else if (analyzer->state == A_REDIRECT)
 	{
 		analyzer->redir.op[1] = ft_strdup(((t_token*)analyzer->lexer->tok->content)->data);

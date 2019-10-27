@@ -31,7 +31,9 @@ void job_analyze(t_analyzer *analyzer)
 {
 	if (analyzer->process.av)
 		process_analyze(analyzer);
-	init_job(&analyzer->job);
+	// analyzer->job.command = getjoblistcmdtab(analyzer->job.process_list);
+	// ft_printf("strp %s\n", analyzer->job.command);
+	// init_job(&analyzer->job);
 	ft_printf("CREATE JOB state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
 	analyzer->state = A_START;
 }
