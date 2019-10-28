@@ -6,30 +6,30 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 15:04:32 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/24 22:25:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/28 18:09:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		select_history(t_lst *history, char *cmd)
+void		select_range(t_lst **w, char **range)
 {
-	int	i;
 	size_t	number;
 
-	i = ft_lstlen(history);
-	if ((number = ft_atoi(cmd)) > ft_lstlen(history))
-		number = ft_lstlen(history);
-	while (history && --number)
+	number = 0;
+	if (ft_tablen(range) != 2)
+		return ;
+	if (ft_atoi(range[0]) > ft_atoi(range[1]))
+		number = ft_atoi(range[0]);
+	else
+		number = ft_atoi(range[1]);
+	while ((*w)->next && number != (*w)->content_size)
+		*w = (*w)->next;
+	if (ft_atoi(range[0]) < ft_atoi(range[1]))
 	{
-		history = history->next;
-		i--;
-	}
-		history = history->prev;
-	while (history)
-	{
-		ft_dprintf(STDOUT_FILENO, " %d %s\n", i++, history->content);
-		history = history->prev;
+		number = ft_atoi(range[1]);
+		range[1] = range[0];
+		range[0] = ft_itoa(number);
 	}
 }
 
@@ -52,27 +52,26 @@ u_int8_t	set_padding(t_lst **w, u_int64_t opt, int16_t len)
 	return (decade);
 }
 
-
-
 void		listing_mode(t_lst *saved, u_int64_t opt, char **range)
 {
-	int16_t	len;
+	int16_t		len;
 	u_int16_t	n;
 	u_int8_t	decade;
 
-	len = (range[0]) ? ft_lstlen(saved) - ft_atoi(range[0]) : 17;
-	n = (range[0]) ? ft_lstlen(saved) : 17;
+	len = range[0] ? ft_lstlen(saved) - ft_atoi(range[0]) : 17;
 	decade = set_padding(&saved, opt, len);
-	while (saved && n-- && (int)saved->content_size != ft_atoi(range[1]) + 1)
+	if (opt & (1ULL << 17))
+		select_range(&saved, range);
+	n = (range[0]) ? ft_lstlen(saved) : 17;
+	while (saved && n--)
 	{
 		if ((opt & (1ULL << 13)))
 			ft_dprintf(STDOUT_FILENO, "\t%s\n", saved->content);
 		else
 			ft_dprintf(STDOUT_FILENO, "%-*d\t%s\n", decade, saved->content_size, saved->content);
-		saved = ((opt & (1ULL << 17)) ? saved->next : saved->prev);
-		// To be continued....
-		if ((opt & (1ULL << 17) && range[0] && ft_atoi(range[0]) == ((int)saved->content_size + 1)))
+		if (range[1] && (int)saved->content_size == ft_atoi(range[1]))
 			break ;
+		saved = ((opt & (1ULL << 17)) ? saved->next : saved->prev);
 	}
 }
 
@@ -134,13 +133,22 @@ char			**get_range(char **cmd, char **range)
 
 	i = 0;
 	j = -1;
+	range[0] = NULL;
 	ft_bzero(range, sizeof(range));
+	ft_bzero(range[1], sizeof(range[1]));
 	while (cmd && cmd[++i] && j < 2)
 	{
 		if (ft_strchr(cmd[i], '-'))
 			continue ;
 		else
 			range[++j] = cmd[i];
+	}
+	range[j + 1] = 0;
+	if (ft_tablen(range) == 2 && ft_atoi(range[0]) > ft_atoi(range[1]))
+	{
+		j = ft_atoi(range[1]);
+		range[1] = range[0];
+		range[0] = ft_itoa(j);
 	}
 	return (range);
 }
@@ -163,13 +171,8 @@ int8_t			builtin_fc(t_core *shell)
 	get_range(cmd, range);
 	if (opt & (1ULL << 63))
 		return (FAILURE);
-	if (saved && (opt & (1ULL << 18)))
+	else if (saved && (opt & (1ULL << 18)))
 		return (select_specifier(shell, saved, cmd));
-	/* if (cmd[1] && ft_isdigit(*cmd[1])) */
-	/* { */
-	/* 	select_history(saved, cmd[1]); */
-	/* 	return (SUCCESS); */
-	/* } */
 	else if (saved && (opt & (1ULL << 11)))
 		listing_mode(saved, opt, range);
 	return (SUCCESS);
