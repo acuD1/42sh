@@ -6,26 +6,26 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 15:04:32 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/28 18:09:53 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/29 17:01:48 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		select_range(t_lst **w, char **range)
+void		reverse_range(t_lst **w, char **range)
 {
 	size_t	number;
 
 	number = 0;
 	if (ft_tablen(range) != 2)
 		return ;
-	if (ft_atoi(range[0]) > ft_atoi(range[1]))
+	else if (range[1] && ft_atoi(range[0]) > ft_atoi(range[1]))
 		number = ft_atoi(range[0]);
-	else
+	else if (range[1])
 		number = ft_atoi(range[1]);
 	while ((*w)->next && number != (*w)->content_size)
 		*w = (*w)->next;
-	if (ft_atoi(range[0]) < ft_atoi(range[1]))
+	if (range[1] && ft_atoi(range[0]) < ft_atoi(range[1]))
 	{
 		number = ft_atoi(range[1]);
 		range[1] = range[0];
@@ -33,42 +33,39 @@ void		select_range(t_lst **w, char **range)
 	}
 }
 
-u_int8_t	set_padding(t_lst **w, u_int64_t opt, int16_t len)
+void		set_range(t_lst **w, char **range)
 {
-	u_int8_t	decade;
-	int		i;
+	int16_t		len;
 
-	decade = 0;
-	i = ft_lstlen(*w);
-	if (len < 0 || len > i)
+	if (range[0] && ft_atoi(range[0]) < 0)
+		len = ft_atoi(range[0]) * (-1);
+	else if (range[0] && ft_atoi(range[0]) > 0)
+		len = ft_lstlen(*w) - ft_atoi(range[0]);
+	else
+		len = 17;
+	if (len < 0 || (size_t)len > ft_lstlen(*w))
 		len = 0;
-	while (!(opt & (1ULL << 17)) && (*w)->next && --len > 0)
-	{
-		i--;
-		if (decade < ft_decade(i))
-			decade = ft_decade(i);
+	while ((*w)->next && --len > 0)
 		*w = (*w)->next;
-	}
-	return (decade);
 }
 
 void		listing_mode(t_lst *saved, u_int64_t opt, char **range)
 {
-	int16_t		len;
 	u_int16_t	n;
-	u_int8_t	decade;
 
-	len = range[0] ? ft_lstlen(saved) - ft_atoi(range[0]) : 17;
-	decade = set_padding(&saved, opt, len);
-	if (opt & (1ULL << 17))
-		select_range(&saved, range);
 	n = (range[0]) ? ft_lstlen(saved) : 17;
+	if (range[0] && (opt & (1ULL << 17)))
+		n = ft_lstlen(saved) - ft_atoi(range[0]);
+	if (opt & (1ULL << 17))
+		reverse_range(&saved, range);
+	else
+		set_range(&saved, range);
 	while (saved && n--)
 	{
 		if ((opt & (1ULL << 13)))
 			ft_dprintf(STDOUT_FILENO, "\t%s\n", saved->content);
 		else
-			ft_dprintf(STDOUT_FILENO, "%-*d\t%s\n", decade, saved->content_size, saved->content);
+			ft_dprintf(STDOUT_FILENO, "%d\t%s\n", saved->content_size, saved->content);
 		if (range[1] && (int)saved->content_size == ft_atoi(range[1]))
 			break ;
 		saved = ((opt & (1ULL << 17)) ? saved->next : saved->prev);
@@ -102,21 +99,20 @@ void		listing_mode(t_lst *saved, u_int64_t opt, char **range)
 
 u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd)
 {
-	int	len;
-
-	len = ft_lstlen(w);
-	if (cmd[2] && !ft_strchr(cmd[2], '='))
+	if (cmd[0] && !ft_strchr(cmd[0], '='))
 	{
-		if (ft_atoi(cmd[2]) > 0)
-			len -= ft_atoi(cmd[2]);
-		while (w->next && len--)
+		if (ft_atoi(cmd[0]) < 0)
+			cmd[0] = ft_itoa(ft_lstlen(w) + ft_atoi(cmd[0]));
+		while (ft_atoi(cmd[0]) != 0 && w->next)
 		{
-			if (!ft_isdigit(*cmd[2]) && isstart((char *)w->content, cmd[2]))
+			if (!ft_isdigit(*cmd[0]) && isstart((char *)w->content, cmd[0]))
+				break ;
+			else if (ft_atoi(cmd[0]) == (int)w->content_size)
 				break ;
 			w = w->next;
 		}
 	}
-	if (cmd[2] && !ft_isdigit(*cmd[2]) && len == 1)
+	if (cmd[0] && !ft_isdigit(*cmd[0]) && !(w->next))
 		return (FAILURE);
 	ft_bzero(shell->buff, ft_strlen(shell->buff));
 	shell->buff = ft_strdup(w->content);
@@ -126,7 +122,7 @@ u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd)
 	return (SUCCESS);
 }
 
-char			**get_range(char **cmd, char **range)
+void			get_range(char **cmd, char **range)
 {
 	int		i;
 	int		j;
@@ -136,9 +132,10 @@ char			**get_range(char **cmd, char **range)
 	range[0] = NULL;
 	ft_bzero(range, sizeof(range));
 	ft_bzero(range[1], sizeof(range[1]));
-	while (cmd && cmd[++i] && j < 2)
+	while (j < 2 && cmd && cmd[++i])
 	{
-		if (ft_strchr(cmd[i], '-'))
+		if (isstart(cmd[i], "-l") || isstart(cmd[i], "-r")
+			|| isstart(cmd[i], "-n") || isstart(cmd[i], "-s"))
 			continue ;
 		else
 			range[++j] = cmd[i];
@@ -150,12 +147,11 @@ char			**get_range(char **cmd, char **range)
 		range[1] = range[0];
 		range[0] = ft_itoa(j);
 	}
-	return (range);
 }
 
 /*
 **	Fix Command builtin have 2 modes :
-**		Editing (default) & Listing (-l option)
+**		Editing (default) & Listing (-lnr options)
 */
 
 int8_t			builtin_fc(t_core *shell)
@@ -167,12 +163,12 @@ int8_t			builtin_fc(t_core *shell)
 
 	saved = shell->history;
 	cmd = ft_strsplit(shell->buff, SPACE);
-	opt = get_options(ft_tablen(cmd), cmd, "elnrs");
+	opt = get_options(ft_tablen(cmd), cmd, "elnrs0123456789");
 	get_range(cmd, range);
 	if (opt & (1ULL << 63))
 		return (FAILURE);
 	else if (saved && (opt & (1ULL << 18)))
-		return (select_specifier(shell, saved, cmd));
+		return (select_specifier(shell, saved, range));
 	else if (saved && (opt & (1ULL << 11)))
 		listing_mode(saved, opt, range);
 	return (SUCCESS);
