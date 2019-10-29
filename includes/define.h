@@ -97,9 +97,9 @@
 # define CHAR_INTERRUPT 			" \t<>|;&\n"
 # define OPERATORS 					"&|;><-\n" 
 # define NB_LEXER_STATE 7
-# define NB_PARSER_STATE 23
-# define NB_ANALYZER_STATE 12
-# define NB_OF_TOKENS 23
+# define NB_PARSER_STATE 22
+# define NB_ANALYZER_STATE 11
+# define NB_OF_TOKENS 22
 # define REDIR                      P_GREAT, P_LESS
 # define REDIR_AND                  P_GREATAND, P_LESSAND
 # define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH

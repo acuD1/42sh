@@ -32,9 +32,9 @@ void		name_lexer(t_lexer *lexer)
 			i++;
 		if(!(buf = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
 			return;
-		if(!(ft_add_token(&lexer->tok, P_WORD, buf)))
-			return;
-		// ft_lstappend(&lexer->tok, ft_lstnew(lexer_token_set(&lexer->token, TOK_WORD, buf), sizeof(t_token)));
+		// if(!(ft_add_token(&lexer->tok, P_WORD, buf)))
+			// return;
+		ft_lstadd(&lexer->tok, ft_create_token(buf, P_WORD));
 		lexer->ntok++;
 		lexer->buf_pos = i;
 		lexer->status = START;
@@ -61,9 +61,10 @@ static int	isvalid_ionumber(t_lexer *lexer)
 	{
 		if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
 			return (0);
-		if(!(ft_add_token(&lexer->tok, P_IONUMBER, buf)))
-			return (0);
-		// ft_lstappend(&lexer->tok, ft_lstnew(lexer_token_set(&lexer->token, TOK_IONUMBER, buf), sizeof(t_token)));
+		// if(!(ft_add_token(&lexer->tok, P_IONUMBER, buf)))
+			// return (0);
+		// ft_lstadd(&lexer->tok, ft_lstnew(lexer_token_set(&lexer->token, P_IONUMBER, buf), sizeof(t_token)));
+		ft_lstadd(&lexer->tok, ft_create_token(buf, P_IONUMBER));
 		lexer->io_here = ft_atoi(buf);
 		lexer->buf_pos = i;
 		lexer->ntok++;
@@ -106,9 +107,10 @@ void		newline_lexer(t_lexer *lexer)
 		{
 			if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, 1)))
 				return;
-			if (!(ft_add_token(&lexer->tok, P_NEWLINE, buf)))
-				return;
-			// ft_lstappend(&lexer->tok, ft_lstnew(lexer_token_set(&lexer->token, TOK_NEWLINE, buf), sizeof(t_token)));
+			// if (!(ft_add_token(&lexer->tok, P_NEWLINE, buf)))
+				// return;
+			// ft_lstadd(&lexer->tok, ft_lstnew(lexer_token_set(&lexer->token, P_NEWLINE, buf), sizeof(t_token)));
+			ft_lstadd(&lexer->tok, ft_create_token(buf, P_NEWLINE));
 			lexer->ntok++;
 			lexer->buf_pos++;
 			free(buf);

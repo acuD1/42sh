@@ -19,7 +19,7 @@ typedef struct s_lexer 	t_lexer;
 typedef struct s_parser	t_parser;
 typedef struct s_analyzer t_analyzer;
 
-typedef void    (*t_analyze)(t_analyzer*);
+typedef void    (*t_analyze)(t_analyzer*, t_job *job);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_OF_TOKENS];
 
 typedef void (*t_lexing)(t_lexer*);
@@ -51,12 +51,12 @@ typedef enum analyzer_state
 typedef enum    parser_state
 {
     P_NEWLINE, // si tok->next = 23 job sinon process si condition ok
-    P_ANDIF, // job
-    P_AND, // process deamon
-    P_ORIF, // job
+    P_ANDIF, // process
+    P_AND, // job deamon
+    P_ORIF, // process
     P_PIPE, // redir qui att un newline SUBSHELL
     P_DSEMI, // FOR CASE
-    P_SEMICOLON, // process
+    P_SEMICOLON, // job
     P_DLESSDASH, // redir
     P_DLESS, // redir
     P_LESSGREAT, // redir
@@ -66,9 +66,9 @@ typedef enum    parser_state
     P_GREATAND, // redir
     P_GREAT, // redir
     P_TOKEN,
-    P_IONUMBER, 
+    P_IONUMBER, //ionumber
     P_ASSIGN, // stock dans shell->assign une lst key=value;
-    P_WORD,
+    P_WORD, // 
     P_START,
     P_END,
     P_ERROR,
@@ -126,8 +126,7 @@ typedef struct s_redir
 
 typedef struct            s_process
 {
-    t_redir             redir;
-    t_lst               *ection;
+    t_lst               *redir_list;
     char                **av;
     enum parser_state  type;
 
@@ -141,26 +140,32 @@ typedef struct            s_process
 typedef struct s_job
 {
     char                *command;
-    // char                **cmd; // ancien op[0]
     t_lst              *process_list;
-    t_process           process;
     // struct termios      *term_modes;
     // pid_t               pgid;
     // t_filedesc          fd;
     // int         status; // 1 = running | 0 = stopped par exemple
-    e_analyzer_state type;
+    e_parser_state type;
 }               t_job;
 
 typedef struct  s_analyzer
 {
     t_anal              analyze;
     e_analyzer_state    state;
-    // t_lst               *ninjutsu; // dedicace a cedric le S
+    e_parser_state      tok_state;
     t_lexer             *lexer;
-    t_process           process;
-    t_lst               *job_list;
     t_job               job;
-    t_redir             redir;
+    t_lst               *job_list;
+
+    // t_lst               *process_list;
+    // t_lst               *redir_list;
+    // e_parser_state      job_type;
+    // char                *job_cmd;
+    
+    // char                **process_cmd;
+    // e_parser_state      process_type;
+    // char                *op[2];
+    // e_parser_state      redir_type;
 }               t_analyzer;
 
 void init_redir(t_redir *new);
@@ -168,29 +173,30 @@ void init_process(t_process *new);
 void init_job(t_job *new);
 t_lst *analyzer(t_core *shell);
 t_analyzer *init_analyze(t_analyzer *analyzer, t_core *shell);
-void cmd_analyze(t_analyzer *analyzer);
-void end_analyze(t_analyzer *analyzer);
-void separator_analyze(t_analyzer *analyzer);
-void redirect_analyze(t_analyzer *analyzer);
-void error_analyze(t_analyzer *analyzer);
-void ionbr_analyze(t_analyzer *analyzer);
-void assign_analyze(t_analyzer *analyzer);
-void redir_analyze(t_analyzer *analyzer);
-void process_analyze(t_analyzer *analyzer);
-void job_analyze(t_analyzer *analyzer);
-
+void cmd_analyze(t_analyzer *analyzer, t_job *job);
+void end_analyze(t_analyzer *analyzer, t_job *job);
+void separator_analyze(t_analyzer *analyzer, t_job *job);
+void redirect_analyze(t_analyzer *analyzer, t_job *job);
+void error_analyze(t_analyzer *analyzer, t_job *job);
+void ionbr_analyze(t_analyzer *analyzer, t_job *job);
+void assign_analyze(t_analyzer *analyzer, t_job *job);
+void redir_analyze(t_analyzer *analyzer, t_job *job);
+void process_analyze(t_analyzer *analyzer, t_job *job);
+void job_analyze(t_analyzer *analyzer, t_job *job);
 void    get_token(t_analyzer *analyzer);
-t_redir *fetch_redir(t_redir *redir);
-t_process *fetch_process(t_process *process);
-t_job *fetch_job(t_job *job);
+
+t_job *fetch_job(t_job *job, e_parser_state type, char *command, t_lst *head);
+t_redir *fetch_redir(t_redir *redir, char *op[2], e_parser_state type);
+t_process *fetch_process(t_process *process, char **av, e_parser_state type, t_lst *ection);
 char *ft_jointab(char **tablo);
 void ft_printtab(char **cmd);
 void printanalyzer(t_analyzer *analyzer);
 void ft_printredir(t_redir *redir);
 void ft_printprocess(t_process *process);
 void ft_printjob(t_job *job);
-
-
+void ft_free_processlist(t_lst **head);
+void ft_free_redir(t_redir *redir); ///t_process *process)
+void ft_printjoblst(t_lst *list);
 
 /*
 ** PARSER
@@ -239,6 +245,7 @@ typedef struct  s_lexer
     t_token         token;
 }               t_lexer;
 
+t_lst           *ft_lstadd(t_lst **curr, t_lst *new);
 t_lexer         *lexer(char *line);
 int				ft_isdigit(int c);
 int 			ft_isalpha(int c);
