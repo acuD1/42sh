@@ -3,24 +3,36 @@
 void init_process(t_process *new)
 {
 	new->av = NULL;
-	// init_redir(&new->redir);
+	new->type = P_START;
 	new->redir_list = NULL;
+}
+
+void ft_free_redirlist(t_lst **head)
+{
+	t_lst *curr;
+	t_lst *next;
+
+	curr = *head;
+	next = NULL;
+	while (curr)
+	{
+		if (curr->content)
+			ft_free_redir((t_redir*)curr->content);
+		next = curr;
+		curr = curr->next;
+		free(next);
+	}
 }
 
 void ft_free_processlist(t_lst **head) ///t_process *process)
 {
 	t_lst *tmp;
-	t_lst *tmpp;
 	t_lst *process;
-	// t_lst *redir;
 	t_process *pro;
-	t_redir		*red;
 
 	process = NULL;
 	pro = NULL;
-	red = NULL;
 	tmp = NULL;
-	tmpp = NULL;
 	if (!*head)
 		return;
 	process = *head;
@@ -29,55 +41,39 @@ void ft_free_processlist(t_lst **head) ///t_process *process)
 		if (process->content)
 		{
 			pro = (t_process*)process->content;
-			// if (pro->redir_list->content)
-			// {
-			// 	redir = pro->redir_list;
-			// 	while (redir)
-			// 	{
-			// 		red = (t_redir*)redir->content;
-			// 		ft_free_redir(red);
-			// 		tmp = redir;
-			// 		redir = redir->next;
-			// 		free(tmp);
-			// 	}
-			// }
-			if (*pro->av)
+			ft_free_redirlist(&pro->redir_list);
+			if (pro->av)
 				ft_tabfree(pro->av);
 		}
-		tmpp = process;
+		tmp = process;
 		process = process->next;
-		free(tmpp);
+		free(tmp);
 	}
-
-	// }
-	// if (process->redir_list)
-	// {
-	// 	tmp = process->redir_list;
-	// 	while (tmp)
-	// 	{
-	// 		tmp = process->redir_list->next;
-	// 		ft_free_redir((t_redir*)tmp->content);
-	// 		free(process->redir_list);
-	// 	}
-	// }
 }
 
-t_process *fetch_process(t_process *process, char **av, e_parser_state type, t_lst *redir_list)
+t_process *fetch_process(t_process *process)
 {
-	//free ancien av
-	if (*av)
-		process->av = ft_tabcopy(process->av, av);
+	t_process *new;
+
+	new = process;
+	if (!process)
+		return (NULL);
+	if (process->av)
+	{
+		ft_printf("totot\n");
+		new->av = ft_tabcopy(process->av, new->av);
+	}
 	else
-		process->av = NULL;
-	if (type)
-		process->type = type;
+		new->av = NULL;
+	if (process->type)
+		new->type = process->type;
 	else
-		process->type = P_START;
-	if (redir_list)
-		process->redir_list = redir_list;
+		new->type = P_START;
+	if (process->redir_list)
+		new->redir_list = process->redir_list;
 	else
-		process->redir_list = NULL;
-	return (process);
+		new->redir_list = NULL;
+	return (new);
 }
 
 
@@ -92,21 +88,27 @@ t_lst *ft_create_process(char **cmd, e_parser_state id, t_lst *list)
 	new->prev = NULL;
 	if (!(process = (t_process*)malloc(sizeof(t_process))))
 		return (NULL);
-	new->content = (void*)fetch_process(process, cmd, id, list);
+	process->av = cmd;
+	process->type = id;
+	process->redir_list = list;
+	new->content = (void*)fetch_process(process);
 	return (new);
 }
 
-void process_analyze(t_analyzer *analyzer, t_job *job)
+void process_analyze(t_analyzer *analyzer)
 {
-
 	ft_printf("CREATE PROCESS state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
-	// redir_analyze(analyzer);
+	analyzer->process.redir_list = analyzer->redir_list;
+	ft_lstappend(&analyzer->process_list, ft_lstnew(fetch_process(&analyzer->process), sizeof(t_process)));
+	// ((t_process*)analyzer->process_list->content)->redir_list = &*analyzer->redir_list;
+	// ft_free_redirlist(&analyzer->redir_list);
+	init_process(&analyzer->process);
 	// process->av = analyzer->process_cmd;
 	// process->type = ((t_token*)analyzer->lexer->tok->content)->id;
 	// process->redir_list = analyzer->redir_list;
 	// ft_lstappend(&analyzer->process_list, ft_lstnew(&process, sizeof(t_process)));
-	// ft_printtab(analyzer->process_cmd);
-	// ft_lstadd(&analyzer->process_list, ft_create_process(analyzer->process_cmd, ((t_token*)analyzer->lexer->tok->content)->id, analyzer->redir_list));
+	// if (job->process_list)// ft_printtab(analyzer->process_cmd);
+		// ft_lstadd(&job->process_list, ft_create_process(NULL, ((t_token*)analyzer->lexer->tok->content)->id, NULL));
 	// ft_tabfree(analyzer->process_cmd);
 	// ft_printprocess((t_process*)analyzer->process_list->content);
 	// init_process(analyzer->process);
@@ -114,7 +116,6 @@ void process_analyze(t_analyzer *analyzer, t_job *job)
 	// {
 	// 	job_analyze(analyzer);
 	// 	analyzer->state = A_STOP;
-		(void)job;
 	// }
 	// else
 		analyzer->state = A_START;

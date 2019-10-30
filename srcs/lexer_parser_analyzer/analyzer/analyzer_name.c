@@ -20,7 +20,7 @@ char *ft_jointab(char **tablo)
 	return(str);
 }
 
-char **fill_cmd_job(char *str)
+char **fill_cmd_process(char *str)
 {
 	char **tablo;
 
@@ -34,7 +34,7 @@ char **fill_cmd_job(char *str)
 	return (tablo);
 }
 
-char **ft_add_arg_cmd_job(char **tablo, char *str)
+char **ft_add_arg_cmd_process(char **tablo, char *str)
 {
 	char **tb;
 	int j;
@@ -57,33 +57,38 @@ char **ft_add_arg_cmd_job(char **tablo, char *str)
 	return (tb);
 }
 
-void cmd_analyze(t_analyzer *analyzer, t_job *job)
+char *fill_cmd_job(t_analyzer *analyzer)
 {
-	// char *str;
+	char *str;
 
-	// str = NULL;
+	str = NULL;
+	if (((t_token*)analyzer->lexer->tok->next->content)->id != 20)
+		str = ft_strjoin(((t_token*)analyzer->lexer->tok->content)->data, " ");
+	else
+		str = ft_strdup(((t_token*)analyzer->lexer->tok->content)->data);
+	((t_job*)analyzer->job_list->content)->command = ft_strjoinf(((t_job*)analyzer->job_list->content)->command, str, 1);
+	free(str);
+	return (((t_job*)analyzer->job_list->content)->command);
+}
+
+void cmd_analyze(t_analyzer *analyzer)
+{
+
 	// ft_printf("WOWOWORD   %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
 	ft_printf("CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
-		(void)job;
-	// if (analyzer->state == A_START)
-	// {
-	// 	(t_process*)(analyzer.job.process_list->content)->av = fill_cmd_job(((t_token*)analyzer->lexer->tok->content)->data);
-	// 	str = ft_strjoin(((t_token*)analyzer->lexer->tok->content)->data , " ");
-	// 	analyzer->job_cmd = ft_strjoinf(analyzer->job_cmd, str, 2);
-	// }
-	// else if (analyzer->state == A_WORD)
-	// {
-	// 	analyzer->process_cmd = ft_add_arg_cmd_job(analyzer->process_cmd, ((t_token*)analyzer->lexer->tok->content)->data);
-	// 	//Va y avoir du leak je sais pas comment ce comporte les char** alloué dans une stack
-	// }
-	// else if (analyzer->state == A_REDIRECT)
-	// {
-	// 	analyzer->op[1] = ft_strdup(((t_token*)analyzer->lexer->tok->content)->data);
-	// 	redir_analyze(analyzer);
-	// }
-	// if (analyzer->lexer->tok->next && (((t_token*)analyzer->lexer->tok->next->content)->id == 24))
-	// 	analyzer->state = A_STOP;
-	// else
+	if (analyzer->state == A_START)
+		analyzer->process.av = fill_cmd_process(((t_token*)analyzer->lexer->tok->content)->data);
+	else if (analyzer->state == A_WORD)
+		analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->tok->content)->data);
+	else if (analyzer->state == A_REDIRECT)
+	{
+		analyzer->redir.op[1] = ft_strdup(((t_token*)analyzer->lexer->tok->content)->data);
+		redir_analyze(analyzer);
+	}
+	// analyzer->job.command = fill_cmd_job(analyzer);
+	if (analyzer->lexer->tok->next && (((t_token*)analyzer->lexer->tok->next->content)->id == 20))
+		analyzer->state = A_STOP;
+	else
 		analyzer->state = A_WORD;
 }
 
@@ -116,7 +121,7 @@ char *getjoblistcmdtab(t_lst *list)
 	}
 }
 
-void end_analyze(t_analyzer *analyzer, t_job *job)
+void end_analyze(t_analyzer *analyzer)
 {
 	ft_printf("END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
 	// if (((t_token*)analyzer->lexer->tok->content)->id == 0)
@@ -125,7 +130,7 @@ void end_analyze(t_analyzer *analyzer, t_job *job)
 		// ft_printf("strp %s\n", analyzer->job.command);
 		// analyzer->job_type = P_NEWLINE;
 		// job_analyze(analyzer);
-		(void)job;
+
 		// return;
 	// }
 	// else

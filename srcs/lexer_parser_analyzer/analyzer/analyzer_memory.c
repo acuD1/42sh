@@ -6,6 +6,7 @@ void	get_token(t_analyzer *analyzer)
 {
 	if (!analyzer->lexer->tok)
 		return ;
+	analyzer->tok_state = ((t_token*)analyzer->lexer->tok->content)->id;
 	analyzer->lexer->tok = analyzer->lexer->tok->next;
 	//free(analyzer->lexer->tok);
 }
@@ -79,7 +80,7 @@ void ft_printjob(t_job *job)
 	ft_printf("\n====JOB====\n");
 	ft_printf("state %u\n", tmp->type);
 	if (tmp->command)
-		ft_printf("job command %s\n", tmp->command);
+		ft_printf("job command [%s]\n", tmp->command);
 	// if (tmp->cmd)
 		// ft_printjobcmd(tmp->cmd, 0);
 	// if (tmp->process != NULL)

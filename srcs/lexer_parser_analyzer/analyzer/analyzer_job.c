@@ -3,24 +3,27 @@
 void init_job(t_job *new)
 {
 	new->command = NULL;
-	// new->cmd = NULL;
 	new->type = P_START;
-	// init_process(&new->process);
 	new->process_list = NULL;
 }
 
-t_job *fetch_job(t_job *job, e_parser_state type, char *command, t_lst *head)
+t_job *fetch_job(t_job *job)
 {
-	job->type = type;
-	if (command)
-		job->command = command;
+	t_job *new;
+
+	if (!job)
+		return (NULL);
+	new = job;
+	new->type = job->type;
+	if (job->command)
+		new->command = job->command;
 	else
-		job->command = NULL;
-	if (head)
-		job->process_list = head;
+		new->command = NULL;
+	if (job->process_list)
+		new->process_list = job->process_list;
 	else
-		job->process_list = NULL;
-	return (job);
+		new->process_list = NULL;
+	return (new);
 }
 
 t_lst *ft_create_job(char *cmd, e_parser_state id, t_lst *list)
@@ -35,18 +38,21 @@ t_lst *ft_create_job(char *cmd, e_parser_state id, t_lst *list)
 	new->prev = NULL;
 	if (!(job = (t_job*)malloc(sizeof(t_job))))
 		return (NULL);
-	new->content = (void*)fetch_job(job, id, cmd, list);
+	job->type = id;
+	job->process_list = list;
+	job->command = cmd;
+	new->content = (void*)fetch_job(job);
 	return (new);
 }
 
-void job_analyze(t_analyzer *analyzer, t_job *job)
+void job_analyze(t_analyzer *analyzer)
 {
-
+	process_analyze(analyzer);	
 	ft_printf("CREATE JOB state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
-	// if (analyzer->process_cmd)
-		(void)job;
-	// redir_analyze(analyzer);
-	// process_analyze(analyzer);
+	analyzer->job.process_list = analyzer->process_list;
+	ft_lstappend(&analyzer->job_list ,ft_lstnew(fetch_job(&analyzer->job), sizeof(t_job)));
+	init_job(&analyzer->job);
+	// ft_free_processlist(&analyzer->process_list);
 	// ft_lstappend(&analyzer->job_list, ft_create_job(analyzer.job->cmd, ((t_token*)analyzer->lexer->tok->content)->id, &analyzer->job->content->process_list));
 
 	// ft_lstadd(&analyzer->job_list, ft_create_job(analyzer->job_cmd, ((t_token*)analyzer->lexer->tok->content)->id, analyzer->process_list));
@@ -57,7 +63,7 @@ void job_analyze(t_analyzer *analyzer, t_job *job)
 	if (analyzer->lexer->tok->next && !ft_strcmp("(null)", ((t_token*)analyzer->lexer->tok->next->content)->data))
 		analyzer->state = A_STOP;
 	else
-		analyzer->state = A_START;
+		analyzer->state = A_STOP;
 	// free(job);
 }
 

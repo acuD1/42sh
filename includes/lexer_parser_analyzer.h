@@ -19,7 +19,7 @@ typedef struct s_lexer 	t_lexer;
 typedef struct s_parser	t_parser;
 typedef struct s_analyzer t_analyzer;
 
-typedef void    (*t_analyze)(t_analyzer*, t_job *job);
+typedef void    (*t_analyze)(t_analyzer*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_OF_TOKENS];
 
 typedef void (*t_lexing)(t_lexer*);
@@ -155,10 +155,12 @@ typedef struct  s_analyzer
     e_parser_state      tok_state;
     t_lexer             *lexer;
     t_job               job;
+    t_process           process;
+    t_redir             redir;
     t_lst               *job_list;
 
-    // t_lst               *process_list;
-    // t_lst               *redir_list;
+    t_lst               *process_list;
+    t_lst               *redir_list;
     // e_parser_state      job_type;
     // char                *job_cmd;
     
@@ -173,21 +175,22 @@ void init_process(t_process *new);
 void init_job(t_job *new);
 t_lst *analyzer(t_core *shell);
 t_analyzer *init_analyze(t_analyzer *analyzer, t_core *shell);
-void cmd_analyze(t_analyzer *analyzer, t_job *job);
-void end_analyze(t_analyzer *analyzer, t_job *job);
-void separator_analyze(t_analyzer *analyzer, t_job *job);
-void redirect_analyze(t_analyzer *analyzer, t_job *job);
-void error_analyze(t_analyzer *analyzer, t_job *job);
-void ionbr_analyze(t_analyzer *analyzer, t_job *job);
-void assign_analyze(t_analyzer *analyzer, t_job *job);
-void redir_analyze(t_analyzer *analyzer, t_job *job);
-void process_analyze(t_analyzer *analyzer, t_job *job);
-void job_analyze(t_analyzer *analyzer, t_job *job);
+void cmd_analyze(t_analyzer *analyzer);
+void end_analyze(t_analyzer *analyzer);
+void separator_analyze(t_analyzer *analyzer);
+void redirect_analyze(t_analyzer *analyzer);
+void error_analyze(t_analyzer *analyzer);
+void ionbr_analyze(t_analyzer *analyzer);
+void assign_analyze(t_analyzer *analyzer);
+void redir_analyze(t_analyzer *analyzer);
+void process_analyze(t_analyzer *analyzer);
+void job_analyze(t_analyzer *analyzer);
 void    get_token(t_analyzer *analyzer);
-
-t_job *fetch_job(t_job *job, e_parser_state type, char *command, t_lst *head);
-t_redir *fetch_redir(t_redir *redir, char *op[2], e_parser_state type);
-t_process *fetch_process(t_process *process, char **av, e_parser_state type, t_lst *ection);
+t_lst *ft_create_job(char *cmd, e_parser_state id, t_lst *list);
+t_lst *ft_create_process(char **cmd, e_parser_state id, t_lst *list);
+t_job *fetch_job(t_job *job);
+t_redir *fetch_redir(t_redir *redir);
+t_process *fetch_process(t_process *process);
 char *ft_jointab(char **tablo);
 void ft_printtab(char **cmd);
 void printanalyzer(t_analyzer *analyzer);
@@ -195,8 +198,11 @@ void ft_printredir(t_redir *redir);
 void ft_printprocess(t_process *process);
 void ft_printjob(t_job *job);
 void ft_free_processlist(t_lst **head);
+void ft_free_redirlist(t_lst **head);
 void ft_free_redir(t_redir *redir); ///t_process *process)
 void ft_printjoblst(t_lst *list);
+t_lst *ft_create_redir(char *op[2], e_parser_state id);
+char *fill_cmd_job(t_analyzer *analyzer);
 
 /*
 ** PARSER
