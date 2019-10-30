@@ -16,6 +16,7 @@ void		init_word_graph(t_graph *graph)
 										P_ANDIF, P_ORIF, P_ERROR};
 
 	graph[P_WORD].good_type = tab_good_type;
+	graph[P_NEWLINE].good_type = tab_good_type;
 	// graph[P_SPSTRING].good_type = tab_good_type;
 	// graph[P_DBQUOTE].good_type = tab_good_type;
 }

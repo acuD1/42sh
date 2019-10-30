@@ -32,12 +32,12 @@ t_process *fetch_process(t_process *process)
 
 void process_analyze(t_analyzer *analyzer)
 {
-	// ft_printf("CREATE PROCESS state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
+	// ft_printf("CREATE PROCESS state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	analyzer->process.redir_list = analyzer->redir_list;
 	ft_lstappend(&analyzer->process_list, ft_lstnew(fetch_process(&analyzer->process), sizeof(t_process)));
 	analyzer->redir_list = NULL;
 	init_process(&analyzer->process);
-	if (((t_token*)analyzer->lexer->tok->next->content)->id == 20) //&& !ft_strcmp("(null)", ((t_token*)analyzer->lexer->tok->next->content)->data))
+	if (((t_token*)analyzer->lexer->next->content)->id == 20) //&& !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
 		analyzer->state = A_STOP;
 	else
 		analyzer->state = A_SEPARATOR;

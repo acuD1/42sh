@@ -68,6 +68,7 @@ t_analyzer *init_analyze(t_analyzer *analyzer, t_core *shell)
 	init_process(&analyzer->process);
 	init_redir(&analyzer->redir);
 	init_job(&analyzer->job);
+	init_assign(&analyzer->db);
 	init_start_analyze(analyzer->analyze);
 	init_ionumber_analyze(analyzer->analyze);
 	init_assign_analyze(analyzer->analyze);

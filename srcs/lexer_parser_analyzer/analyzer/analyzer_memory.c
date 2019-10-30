@@ -2,10 +2,10 @@
 
 void	get_token(t_analyzer *analyzer)
 {
-	if (!analyzer->lexer->tok)
+	if (!analyzer->lexer)
 		return ;
-	analyzer->lexer->tok = analyzer->lexer->tok->next;
-	//free(analyzer->lexer->tok);
+	analyzer->lexer = analyzer->lexer->next;
+	//free(analyzer->lexer);
 }
 
 void ft_free_redir(t_redir *redir)

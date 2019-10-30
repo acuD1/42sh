@@ -23,6 +23,7 @@ t_analyzer  *init_analyze(t_analyzer *analyzer, t_core *shell);
 void        init_redir(t_redir *new);
 void        init_process(t_process *new);
 void        init_job(t_job *new);
+void 		init_assign(t_db *db);
 void        init_start_analyze(t_anal analyze);
 void        init_word_analyze(t_anal analyze);
 void        init_assign_analyze(t_anal analyze);
@@ -42,7 +43,10 @@ void        assign_analyze(t_analyzer *analyzer);
 void        redir_analyze(t_analyzer *analyzer);
 void        process_analyze(t_analyzer *analyzer);
 void        job_analyze(t_analyzer *analyzer);
+void 		ass_analyze(t_analyzer *analyzer);
 
+
+t_db 		*fetch_assign(t_db *assign);
 t_job       *fetch_job(t_job *job);
 t_redir     *fetch_redir(t_redir *redir);
 t_process   *fetch_process(t_process *process);
@@ -63,7 +67,7 @@ void        ft_printjoblst(t_lst *list);
 **  PARSER
 */
 
-uint8_t     parser(t_core *shell, t_lexer *lexer);
+uint8_t     parser(t_lst *lexer);
 void        init_word_graph(t_graph *graph);
 void        init_redirect_graph(t_graph *graph);
 void        init_process_graph(t_graph *graph);
@@ -77,7 +81,7 @@ t_parser    *ft_init_graph(t_parser *parser);
 */
 
 t_lst           *ft_lstadd(t_lst **curr, t_lst *new);
-t_lexer         *lexer(char *line);
+t_lst 			*lexer(char *line);
 int				ft_isdigit(int c);
 int 			ft_isalpha(int c);
 void			start_lexer(t_lexer *lexer);

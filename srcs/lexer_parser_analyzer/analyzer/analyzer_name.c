@@ -42,28 +42,35 @@ char *fill_cmd_job(t_analyzer *analyzer)
 	char *str;
 
 	str = NULL;
-	if (((t_token*)analyzer->lexer->tok->next->content)->id != 0 && analyzer->state != A_REDIRECT && analyzer->state != A_IONUMBER)
-		str = ft_strjoin(((t_token*)analyzer->lexer->tok->content)->data, " ");
+	if (((t_token*)analyzer->lexer->next->content)->id != 0 && analyzer->state != A_REDIRECT 
+		&& ((t_token*)analyzer->lexer->next->content)->id != 17 && analyzer->state != A_ASSIGN 
+		&& analyzer->state != A_IONUMBER)
+		str = ft_strjoin(((t_token*)analyzer->lexer->content)->data, " ");
 	else
-		str = ft_strdup(((t_token*)analyzer->lexer->tok->content)->data);
+		str = ft_strdup(((t_token*)analyzer->lexer->content)->data);
 	analyzer->job.command = ft_strjoinf(analyzer->job.command, str, 4);
 	return (analyzer->job.command);
 }
 
 void cmd_analyze(t_analyzer *analyzer)
 {
-	// ft_printf("CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
+	ft_printf("CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	if (analyzer->state == A_START || analyzer->state == A_SEPARATOR)
-		analyzer->process.av = fill_cmd_process(((t_token*)analyzer->lexer->tok->content)->data);
+		analyzer->process.av = fill_cmd_process(((t_token*)analyzer->lexer->content)->data);
 	else if (analyzer->state == A_WORD)
-		analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->tok->content)->data);
+		analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->content)->data);
 	else if (analyzer->state == A_REDIRECT)
 	{
-		analyzer->redir.op[1] = ft_strdup(((t_token*)analyzer->lexer->tok->content)->data);
+		analyzer->redir.op[1] = ft_strdup(((t_token*)analyzer->lexer->content)->data);
 		redir_analyze(analyzer);
 	}
+	else if (analyzer->state == A_ASSIGN)
+	{
+		analyzer->db.value = ft_strdup(((t_token*)analyzer->lexer->content)->data);
+		ass_analyze(analyzer);
+	}
 	analyzer->job.command = fill_cmd_job(analyzer);
-	if (analyzer->lexer->tok->next && (((t_token*)analyzer->lexer->tok->next->content)->id == 20))
+	if (analyzer->lexer->next && (((t_token*)analyzer->lexer->next->content)->id == 20))
 		analyzer->state = A_STOP;
 	else
 		analyzer->state = A_WORD;
@@ -71,6 +78,6 @@ void cmd_analyze(t_analyzer *analyzer)
 
 void end_analyze(t_analyzer *analyzer)
 {
-	ft_printf("END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
+	ft_printf("END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	analyzer->state = A_STOP;
 }

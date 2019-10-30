@@ -63,22 +63,22 @@ uint8_t check_lexer_tokens(e_parser_state *current, e_parser_state needed, e_par
 	return (0);
 }
 
-uint8_t parser(t_core *shell, t_lexer *lexer)
+uint8_t parser(t_lst *lexer)
 {
 	t_parser	*parser;
 	t_lst 		*tok_lst;
 
 	parser = NULL;
-	tok_lst = lexer->tok;
-	if (!lexer || !shell)
-		return (FAILURE);
+	if (!lexer)
+		return (FALSE);
+	tok_lst = lexer;
 	parser = ft_init_parser(parser);
 	while (((t_token*)tok_lst->content)->id != P_END)
 	{
 		// ft_printf("parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
 		if (!(check_lexer_tokens(&parser->state, ((t_token*)tok_lst->content)->id, parser->graph[parser->state].good_type)))
 		{
-			ft_printf("error parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
+			// ft_printf("error parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
 			return (FALSE);
 			// GESTION DE LERREUR ET SUBPROMPT ET SIGNAUX
 		}

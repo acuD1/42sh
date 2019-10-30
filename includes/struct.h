@@ -63,7 +63,7 @@ typedef struct	s_core
 	/* structs */
 	t_build		build;
 	t_db		db;
-	t_lexer		*lexer;
+	t_lst		*lexer;
 	t_lst		*job_list;
 	t_lst		*assign_list;
 
@@ -162,7 +162,7 @@ typedef struct  s_analyzer
 {
     t_anal              analyze;
     e_analyzer_state    state;
-    t_lexer             *lexer;
+    t_lst	            *lexer;
     t_job               job;
     t_process           process;
     t_redir             redir;
