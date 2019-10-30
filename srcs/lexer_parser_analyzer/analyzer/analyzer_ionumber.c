@@ -3,7 +3,8 @@
 void ionbr_analyze(t_analyzer *analyzer)
 {
 	ft_printf("IONBR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
-	// analyzer->job.command = fill_cmd_job(analyzer);
+	analyzer->state = A_IONUMBER;
+	analyzer->job.command = fill_cmd_job(analyzer);
 	analyzer->redir.op[0] = ft_strdup(((t_token*)analyzer->lexer->tok->content)->data);
 	analyzer->redir.type = ((t_token*)analyzer->lexer->tok->content)->id;
 	// 	analyzer->process_type = P_IONUMBER;
@@ -13,7 +14,6 @@ void ionbr_analyze(t_analyzer *analyzer)
 	// delimite la list de token en token IONBR
 	// cree la struct job en consequence
 	// CAD attribue l'IONBR au fd et dermine la redirection en fct de loperateur
-	analyzer->state = A_IONUMBER;
 }
 
 void error_analyze(t_analyzer *analyzer)

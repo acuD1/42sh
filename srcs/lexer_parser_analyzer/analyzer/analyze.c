@@ -8,13 +8,13 @@ void separator_analyze(t_analyzer *analyzer)
 	ft_printf("SEPARATOR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
 	if (state == P_SEMICOLON || state == P_AND) //jjob
 	{
-		// analyzer->job.command = fill_cmd_job(analyzer);
+		analyzer->job.command = fill_cmd_job(analyzer);
 		analyzer->job.type = state;
 		job_analyze(analyzer);
 	}
 	else if (state == P_ORIF || state == P_ANDIF)
 	{
-		// analyzer->job.command = fill_cmd_job(analyzer);
+		analyzer->job.command = fill_cmd_job(analyzer);
 		analyzer->process.type = state;
 		process_analyze(analyzer);
 	}

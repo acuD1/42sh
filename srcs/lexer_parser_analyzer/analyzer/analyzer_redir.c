@@ -72,7 +72,7 @@ void redirect_analyze(t_analyzer *analyzer)
 {
 
 	ft_printf("REDIRECT state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
-	// analyzer->job.command = fill_cmd_job(analyzer);
+	analyzer->job.command = fill_cmd_job(analyzer);
 	analyzer->redir.type = ((t_token*)analyzer->lexer->tok->content)->id;
 	analyzer->state = A_REDIRECT;
 	// analyzer->state = A_REDIRECT;

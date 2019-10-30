@@ -12,6 +12,8 @@ void ft_free_redirlist(t_lst **head)
 	t_lst *curr;
 	t_lst *next;
 
+	if (!*head)
+		return;
 	curr = *head;
 	next = NULL;
 	while (curr)
@@ -61,7 +63,8 @@ t_process *fetch_process(t_process *process)
 	if (process->av)
 	{
 		ft_printf("totot\n");
-		new->av = ft_tabcopy(process->av, new->av);
+		new->av = ft_tabcopy(new->av, process->av);
+		// ft_tabfree(process->av);
 	}
 	else
 		new->av = NULL;
@@ -102,6 +105,7 @@ void process_analyze(t_analyzer *analyzer)
 	ft_lstappend(&analyzer->process_list, ft_lstnew(fetch_process(&analyzer->process), sizeof(t_process)));
 	// ((t_process*)analyzer->process_list->content)->redir_list = &*analyzer->redir_list;
 	// ft_free_redirlist(&analyzer->redir_list);
+	analyzer->redir_list = NULL;
 	init_process(&analyzer->process);
 	// process->av = analyzer->process_cmd;
 	// process->type = ((t_token*)analyzer->lexer->tok->content)->id;
@@ -118,7 +122,7 @@ void process_analyze(t_analyzer *analyzer)
 	// 	analyzer->state = A_STOP;
 	// }
 	// else
-		analyzer->state = A_START;
+	analyzer->state = A_START;
 	// free(process);
 }
 

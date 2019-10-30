@@ -300,7 +300,7 @@ t_analyzer *init_analyze(t_analyzer *analyzer, t_core *shell)
 	analyzer->lexer = shell->lexer;
 	analyzer->job_list = NULL;
 	// analyzer->job_list = NULL;
-	// ft_lstadd(&analyzer->job_list ,ft_lstnew(fetch_job(&analyzer->job), sizeof(t_job)));
+	// ft_lstappend(&analyzer->job_list ,ft_lstnew(fetch_job(&analyzer->job), sizeof(t_job)));
 	// ft_lstadd(&((t_job*)analyzer->job_list->content)->process_list, ft_lstnew(fetch_process(&analyzer->process), sizeof(t_process)));
 	// ft_lstadd(&(((t_process*)((t_job*)analyzer->job_list->content)->process_list->content)->redir_list), ft_lstnew(fetch_redir(&analyzer->redir), sizeof(t_redir)));
 	return (analyzer);

@@ -62,13 +62,12 @@ char *fill_cmd_job(t_analyzer *analyzer)
 	char *str;
 
 	str = NULL;
-	if (((t_token*)analyzer->lexer->tok->next->content)->id != 20)
+	if (((t_token*)analyzer->lexer->tok->next->content)->id != 0 && analyzer->state != A_SEPARATOR && analyzer->state != A_IONUMBER)
 		str = ft_strjoin(((t_token*)analyzer->lexer->tok->content)->data, " ");
 	else
 		str = ft_strdup(((t_token*)analyzer->lexer->tok->content)->data);
-	((t_job*)analyzer->job_list->content)->command = ft_strjoinf(((t_job*)analyzer->job_list->content)->command, str, 1);
-	free(str);
-	return (((t_job*)analyzer->job_list->content)->command);
+	analyzer->job.command = ft_strjoinf(analyzer->job.command, str, 2);
+	return (analyzer->job.command);
 }
 
 void cmd_analyze(t_analyzer *analyzer)
@@ -76,7 +75,7 @@ void cmd_analyze(t_analyzer *analyzer)
 
 	// ft_printf("WOWOWORD   %u         %s\n", analyzer->state, ((t_token*)lexer->tok->content)->data);
 	ft_printf("CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
-	if (analyzer->state == A_START)
+	if (analyzer->state == A_START || analyzer->state == A_SEPARATOR)
 		analyzer->process.av = fill_cmd_process(((t_token*)analyzer->lexer->tok->content)->data);
 	else if (analyzer->state == A_WORD)
 		analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->tok->content)->data);
@@ -85,7 +84,7 @@ void cmd_analyze(t_analyzer *analyzer)
 		analyzer->redir.op[1] = ft_strdup(((t_token*)analyzer->lexer->tok->content)->data);
 		redir_analyze(analyzer);
 	}
-	// analyzer->job.command = fill_cmd_job(analyzer);
+	analyzer->job.command = fill_cmd_job(analyzer);
 	if (analyzer->lexer->tok->next && (((t_token*)analyzer->lexer->tok->next->content)->id == 20))
 		analyzer->state = A_STOP;
 	else

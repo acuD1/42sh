@@ -2,7 +2,7 @@
 
 void init_job(t_job *new)
 {
-	new->command = NULL;
+	new->command  = ft_strnew(0);
 	new->type = P_START;
 	new->process_list = NULL;
 }
@@ -51,6 +51,7 @@ void job_analyze(t_analyzer *analyzer)
 	ft_printf("CREATE JOB state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
 	analyzer->job.process_list = analyzer->process_list;
 	ft_lstappend(&analyzer->job_list ,ft_lstnew(fetch_job(&analyzer->job), sizeof(t_job)));
+	analyzer->process_list = NULL;
 	init_job(&analyzer->job);
 	// ft_free_processlist(&analyzer->process_list);
 	// ft_lstappend(&analyzer->job_list, ft_create_job(analyzer.job->cmd, ((t_token*)analyzer->lexer->tok->content)->id, &analyzer->job->content->process_list));
