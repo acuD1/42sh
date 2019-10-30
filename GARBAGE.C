@@ -1,3 +1,196 @@
+// char *ft_jointab(char **tablo)
+// {
+// 	char *str;
+// 	int j;
+// 	int i;
+
+// 	j = 0;
+// 	i = ft_tablen(tablo);
+// 	if (!(str = ft_strnew(0)) || !tablo)
+// 		return (NULL);
+// 	while (tablo[j] && j < i)
+// 	{
+// 		str = ft_strjoinf(str, tablo[j], 1);
+// 		if (tablo[j + 1])
+// 			str = ft_strjoinf(str, " ", 1);
+// 		j++;
+// 	}
+// 	return(str);
+// }
+
+	// analyzer->state = A_REDIRECT;
+	// if (((t_token*)lexer->tok->content)->id == P_GREAT)
+	// 	analyzer->fd_flags = O_RDWR + O_CREAT + O_TRUNC;
+	// else if (((t_token*)lexer->tok->content)->id == P_DGREAT || ((t_token*)lexer->tok->content)->id == P_ANDDGREAT)
+	// 	analyzer->fd_flags = O_RDWR + O_CREAT + O_APPEND;
+
+	// else if (((t_token*)lexer->tok->content)->id == P_LESS)
+	// 	analyzer->fd_flags = O_RDONLY;
+	// else if (((t_token*)lexer->tok->content)->id == P_DLESSDASH || ((t_token*)lexer->tok->content)->id == P_DLESS)
+		// analyzer->state = P_HEREDOC_REDIRECT;
+
+	// delimite une list et determine la redirection IN ou OUT ou HERE_DOC
+	// met dans la struct t_filedesc l'action IN OUT HERE_DOC...
+	// depuis l'actual FD vers le wanted FD
+
+	// ft_lstappend(&analyzer->job_list ,ft_lstnew(fetch_job(&analyzer->job), sizeof(t_job)));
+
+	// ft_lstadd(&((t_job*)analyzer->job_list->content)->process_list, ft_lstnew(fetch_process(&analyzer->process), sizeof(t_process)));
+
+	// ft_lstadd(&(((t_process*)((t_job*)analyzer->job_list->content)->process_list->content)->redir_list), ft_lstnew(fetch_redir(&analyzer->redir), sizeof(t_redir)));
+// ft_lstadd(&((t_process*)((t_job*)analyzer->job_list->content)->process_list->content)->redir_list ,
+	// analyzer->process_list = NULL;
+	// analyzer->redir_list = NULL;
+	// analyzer->job_cmd = NULL;
+	// analyzer->process_cmd = NULL;
+	// analyzer->op[0] = NULL;
+	// analyzer->op[1] = NULL;
+	// analyzer->job_type = P_END;
+	// analyzer->process_type = P_END;
+	// init_create_job_analyze(analyzer->analyze);
+	// analyzer->redir_type = P_END;
+	// init_create_job_analyze(analyzer->analyze);
+	// init_cmd_analyze(analyzer->analyze);
+	// init_cmd_arg_analyze(analyzer->analyze);
+	// init_create_job_analyze(analyzer->analyze)
+
+// t_lst *ft_create_job(char *cmd, e_parser_state id, t_lst *list);
+// t_lst *ft_create_redir(char *op[2], e_parser_state id)
+// {
+// 	t_lst		*new;
+// 	t_redir 	*redir;
+
+// 	if (!(new = (t_lst*)malloc(sizeof(t_lst))))
+// 		return (NULL);
+// 	new->next = NULL;
+// 	new->prev = NULL;
+// 	if (!(redir = (t_redir*)malloc(sizeof(t_redir))))
+// 		return (NULL);
+// 	redir->op[0] = op[0];
+// 	redir->op[1] = op[1];
+// 	redir->type = id;
+// 	new->content = (void*)fetch_redir(redir);
+// 	return (new);
+// }
+// t_lst *ft_create_process(char **cmd, e_parser_state id, t_lst *list);
+
+// t_lst *ft_create_redir(char *op[2], e_parser_state id);
+
+
+// void init_cmd_analyze(t_anal analyze)
+// {
+// 	analyze[A_CMD][P_NEWLINE] = separator_analyze;
+// 	analyze[A_CMD][P_ANDIF] = redirect_analyze;
+// 	analyze[A_CMD][P_AND] = redirect_analyze;
+// 	analyze[A_CMD][P_ORIF] = redirect_analyze;
+// 	analyze[A_CMD][P_PIPE] = redirect_analyze;
+// 	analyze[A_CMD][P_DSEMI] = separator_analyze;
+// 	analyze[A_CMD][P_SEMICOLON] = separator_analyze;
+// 	analyze[A_CMD][P_DLESSDASH] = redirect_analyze;
+// 	analyze[A_CMD][P_DLESS] = redirect_analyze;
+// 	analyze[A_CMD][P_LESSGREAT] = redirect_analyze;
+// 	analyze[A_CMD][P_LESS] = redirect_analyze;
+// 	analyze[A_CMD][P_DGREAT] = redirect_analyze;
+// 	analyze[A_CMD][P_GREATAND] = redirect_analyze;
+// 	analyze[A_CMD][P_GREAT] = redirect_analyze;
+// 	analyze[A_CMD][P_IONUMBER] = ionbr_analyze;
+// 	analyze[A_CMD][P_ASSIGN] = assign_analyze;
+// 	analyze[A_CMD][P_WORD] = cmd_analyze;
+// 	analyze[A_CMD][P_END] = end_analyze;
+// }
+
+// void init_cmd_arg_analyze(t_anal analyze)
+// {
+// 	analyze[A_CMD_ARG][P_NEWLINE] = separator_analyze;
+// 	analyze[A_CMD_ARG][P_ANDIF] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_AND] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_ORIF] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_PIPE] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_DSEMI] = separator_analyze;
+// 	analyze[A_CMD_ARG][P_SEMICOLON] = separator_analyze;
+// 	analyze[A_CMD_ARG][P_DLESSDASH] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_DLESS] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_LESSGREAT] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_LESS] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_DGREAT] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_GREATAND] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_GREAT] = redirect_analyze;
+// 	analyze[A_CMD_ARG][P_IONUMBER] = ionbr_analyze;
+// 	analyze[A_CMD_ARG][P_ASSIGN] = assign_analyze;
+// 	analyze[A_CMD_ARG][P_WORD] = cmd_analyze;
+// 	analyze[A_CMD_ARG][P_END] = end_analyze;
+// }
+
+
+
+// void init_create_redir_analyze(t_anal analyze)
+// {
+// 	analyze[A_CREATE_REDIR][P_NEWLINE] = redir_analyze;
+// 	analyze[A_CREATE_REDIR][P_ANDIF] = error_analyze;
+// 	analyze[A_CREATE_REDIR][P_AND] = error_analyze;
+// 	analyze[A_CREATE_REDIR][P_ORIF] = error_analyze;
+// 	analyze[A_CREATE_REDIR][P_PIPE] = error_analyze;
+// 	analyze[A_CREATE_REDIR][P_DSEMI] = error_analyze;
+// 	analyze[A_CREATE_REDIR][P_SEMICOLON] =  error_analyze;
+// 	analyze[A_CREATE_REDIR][P_DLESSDASH] = redir_analyze;
+// 	analyze[A_CREATE_REDIR][P_DLESS] = redir_analyze;
+// 	analyze[A_CREATE_REDIR][P_LESSGREAT] = redir_analyze;
+// 	analyze[A_CREATE_REDIR][P_LESS] = redir_analyze;
+// 	analyze[A_CREATE_REDIR][P_DGREAT] = redir_analyze;
+// 	analyze[A_CREATE_REDIR][P_GREATAND] = redir_analyze;
+// 	analyze[A_CREATE_REDIR][P_GREAT] =	redir_analyze;
+// 	analyze[A_CREATE_REDIR][P_IONUMBER] = error_analyze;
+// 	analyze[A_CREATE_REDIR][P_ASSIGN] = assign_analyze;
+// 	analyze[A_CREATE_REDIR][P_WORD] = cmd_analyze;
+// 	analyze[A_CREATE_REDIR][P_END] = separator_analyze;
+// }
+
+// void init_create_separator_analyze(t_anal analyze)
+// {
+// 	analyze[A_CREATE_PROCESS][P_NEWLINE] = separator_analyze;
+// 	analyze[A_CREATE_PROCESS][P_ANDIF] = separator_analyze;
+// 	analyze[A_CREATE_PROCESS][P_AND] = separator_analyze;
+// 	analyze[A_CREATE_PROCESS][P_ORIF] = separator_analyze;
+// 	analyze[A_CREATE_PROCESS][P_PIPE] = separator_analyze;
+// 	analyze[A_CREATE_PROCESS][P_DSEMI] = redirect_analyze;
+// 	analyze[A_CREATE_PROCESS][P_SEMICOLON] =  separator_analyze;
+// 	analyze[A_CREATE_PROCESS][P_DLESSDASH] = redirect_analyze;
+// 	analyze[A_CREATE_PROCESS][P_DLESS] = redirect_analyze;
+// 	analyze[A_CREATE_PROCESS][P_LESSGREAT] = redirect_analyze;
+// 	analyze[A_CREATE_PROCESS][P_LESS] = redirect_analyze;
+// 	analyze[A_CREATE_PROCESS][P_DGREAT] = redirect_analyze;
+// 	analyze[A_CREATE_PROCESS][P_GREATAND] = redirect_analyze;
+// 	analyze[A_CREATE_PROCESS][P_GREAT] =	redirect_analyze;
+// 	analyze[A_CREATE_PROCESS][P_IONUMBER] = error_analyze;
+// 	analyze[A_CREATE_PROCESS][P_ASSIGN] = assign_analyze;
+// 	analyze[A_CREATE_PROCESS][P_WORD] = cmd_analyze;
+// 	analyze[A_CREATE_PROCESS][P_END] = separator_analyze;
+// }
+
+// void init_create_job_analyze(t_anal analyze)
+// {
+// 	analyze[A_CREATE_JOB][P_NEWLINE] = separator_analyze;
+// 	analyze[A_CREATE_JOB][P_ANDIF] = separator_analyze;
+// 	analyze[A_CREATE_JOB][P_AND] = separator_analyze;
+// 	analyze[A_CREATE_JOB][P_ORIF] = separator_analyze;
+// 	analyze[A_CREATE_JOB][P_PIPE] = separator_analyze;
+// 	analyze[A_CREATE_JOB][P_DSEMI] = redirect_analyze;
+// 	analyze[A_CREATE_JOB][P_SEMICOLON] =  separator_analyze;
+// 	analyze[A_CREATE_JOB][P_DLESSDASH] = redirect_analyze;
+// 	analyze[A_CREATE_JOB][P_DLESS] = redirect_analyze;
+// 	analyze[A_CREATE_JOB][P_LESSGREAT] = redirect_analyze;
+// 	analyze[A_CREATE_JOB][P_LESS] = redirect_analyze;
+// 	analyze[A_CREATE_JOB][P_DGREAT] = redirect_analyze;
+// 	analyze[A_CREATE_JOB][P_GREATAND] = redirect_analyze;
+// 	analyze[A_CREATE_JOB][P_GREAT] =	redirect_analyze;
+// 	analyze[A_CREATE_JOB][P_IONUMBER] = error_analyze;
+// 	analyze[A_CREATE_JOB][P_ASSIGN] = assign_analyze;
+// 	analyze[A_CREATE_JOB][P_WORD] = cmd_analyze;
+// 	analyze[A_CREATE_JOB][P_END] = end_analyze;
+// }
+
+
+
 
 // if (analyzer->state == A_WORD)
 	// {
@@ -28,6 +221,76 @@
 		// lst = lst->next;
 	// }
 
+// printf("DEBUG\n");
+	// ft_printjob(&analyzer->job);
+	// ft_printprocess(&analyzer->process);
+	// ft_printredir(&analyzer->redir);
+	// ft_lstappend(&ret, ft_lstnew(fetch_job(job), sizeof(t_job)));
+	// printlstjob(ret);
+	// ft_printjobcmd(job, 0);
+	//flush lexer
+			// printanalyzer(analyzer);
+			// ((t_process*)analyzer->job_list->content)->process_list = ft_lstappend(&analyzer->job_list->content->process_list, ft_lstnew(fetch_process(&analyzer->process), sizeof(t_process)));
+			// ((t_redir*)analyzer->job_list->content->process_list->content)->ection = ft_lstappend(&analyzer->job_list->content->process_list->content->ection, ft_lstnew(fetch_redir(&analyzer->redir), sizeof(t_redir)));
+			// ft_printjob(((t_job*)analyzer->job_list->content));
+			// ft_printprocess(((t_process*)&analyzer->job_list->content->process_list->content));
+			// ft_printredir(((t_redir*)&analyzer->process_list->content->ection->content));
+
+
+	// if (analyzer->process.av)
+	// analyzer->job.command = getjoblistcmdtab(analyzer->job.process_list);
+	// ft_printf("strp %s\n", analyzer->job.command);
+	// init_job(&analyzer->job);
+		// process_analyze(analyzer);
+
+// t_lst *ft_create_process(char **cmd, e_parser_state id, t_lst *list)
+// {
+// 	t_lst		*new;
+// 	t_process *process;
+
+// 	if (!(new = (t_lst*)malloc(sizeof(t_lst))))
+// 		return (NULL);
+// 	new->next = NULL;
+// 	new->prev = NULL;
+// 	if (!(process = (t_process*)malloc(sizeof(t_process))))
+// 		return (NULL);
+// 	process->av = cmd;
+// 	process->type = id;
+// 	process->redir_list = list;
+// 	new->content = (void*)fetch_process(process);
+// 	return (new);
+// }
+
+
+// void free_analyze(t_analyzer *analyzer)
+// {
+// 	t_lst *tmp;
+
+// 	tmp = analyzer->redir_list;
+// 	while (tmp)
+// 	{
+// 		tmp = analyzer->redir_list->next;
+// 		ft_free_redir((t_redir*)analyzer->redir_list->content);
+// 		free(analyzer->redir_list);
+// 	}
+// 	tmp = analyzer->process_list;
+// 	while (tmp)
+// 	{
+// 		tmp = analyzer->process_list->next;
+// 		ft_free_processlist(&analyzer->process_list);
+// 		free(analyzer->process_list);
+// 	}
+// 	if (analyzer->job_cmd)
+// 		free(analyzer->job_cmd);
+// 	if (*analyzer->process_cmd)
+// 		ft_tabfree(analyzer->process_cmd);
+// 	if (*analyzer->op)
+// 	{
+// 		free(&analyzer->op[0]);
+// 		free(&analyzer->op[1]);
+// 	}
+// }
+
 // int ft_tablen(char **tb)
 // {
 // 	int i;
@@ -48,7 +311,24 @@
 // }
 
 
+// t_lst *ft_create_job(char *cmd, e_parser_state id, t_lst *list)
+// {
+// 	t_lst		*new;
+// 	t_job *job;
 
+// 	job = NULL;
+// 	if (!(new = (t_lst*)malloc(sizeof(t_lst))))
+// 		return (NULL);
+// 	new->next = NULL;
+// 	new->prev = NULL;
+// 	if (!(job = (t_job*)malloc(sizeof(t_job))))
+// 		return (NULL);
+// 	job->type = id;
+// 	job->process_list = list;
+// 	job->command = cmd;
+// 	new->content = (void*)fetch_job(job);
+// 	return (new);
+// }
 // void cmd_arg_analyze(t_analyzer *analyzer, t_lexer *lexer, t_job *job)
 // {
 // 	char **arg;

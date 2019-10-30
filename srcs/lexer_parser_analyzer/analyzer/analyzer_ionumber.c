@@ -2,12 +2,11 @@
 
 void ionbr_analyze(t_analyzer *analyzer)
 {
-	ft_printf("IONBR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
+	// ft_printf("IONBR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
 	analyzer->state = A_IONUMBER;
 	analyzer->job.command = fill_cmd_job(analyzer);
 	analyzer->redir.op[0] = ft_strdup(((t_token*)analyzer->lexer->tok->content)->data);
 	analyzer->redir.type = ((t_token*)analyzer->lexer->tok->content)->id;
-	// 	analyzer->process_type = P_IONUMBER;
 	// 	// analyzer->redir->ionumber = ft_atoi(((t_token*)lexer->tok->content)->data);
 	// }
 	// analyzer->state = A_REDIRECT;
@@ -18,16 +17,18 @@ void ionbr_analyze(t_analyzer *analyzer)
 
 void error_analyze(t_analyzer *analyzer)
 {
-	ft_printf("ERROR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
+	// ft_printf("ERROR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
 	analyzer->state = A_STOP;
 	if (analyzer->lexer->tok->next && !ft_strcmp("(null)", ((t_token*)analyzer->lexer->tok->next->content)->data))
 		analyzer->state = A_STOP;
 	// en theorie doit devalider la list de token et la flush
 }
 
+
+
 void assign_analyze(t_analyzer *analyzer)
 {
-	ft_printf("ASSIGN state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
+	// ft_printf("ASSIGN state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->tok->content)->id ,((t_token*)analyzer->lexer->tok->content)->data);
 	analyzer->state = A_ASSIGN;
 	// delimite la list de token en token ASSIGN
 	// cree la struct job en consequence

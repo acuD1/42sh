@@ -30,4 +30,5 @@ void	init_shell(t_core *shell)
 	shell->buf = NULL;
 	shell->lexer = NULL;
 	shell->job_list = NULL;
+	shell->assign_list = NULL;
 }

@@ -117,8 +117,9 @@ void			load_prompt(t_core *shell)
 		// */
 		// if (check_brackets(line))
 		shell->lexer = lexer(line);
-		shell->job_list = analyzer(shell);
-		// ft_printjoblst(shell->job_list);
+		if (parser(shell, shell->lexer))
+			analyzer(shell);
+		ft_printjoblst(shell->job_list);
 		// if (shell->job_list)
 		// {
 		// 	tmp = shell->job_list;

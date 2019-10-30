@@ -155,6 +155,7 @@ SRC		+=	$(S_PATH)$(ANALYZER)analyzer_process.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
 SRC		+=	$(S_PATH)$(ANALYZER)printanalyze.c
 SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
+SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
 
 
 SRC		+=	$(S_PATH)dev.c
