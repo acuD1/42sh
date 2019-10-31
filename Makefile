@@ -127,8 +127,13 @@ SRC		+=	$(S_PATH)$(PARSER)graph.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyze.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_name.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
-SRC		+=	$(S_PATH)$(ANALYZER)analyzer_ionumber.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_assign.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_job.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_process.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
+SRC		+=	$(S_PATH)$(ANALYZER)printanalyze.c
 SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
+SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
 
 
 SRC		+=	$(S_PATH)dev.c
@@ -217,7 +222,7 @@ vpath %.h $(H_PATH)
 
 # Variables
 
-C_GCC = gcc $(CFLAG)
+C_GCC = clang $(CFLAG)
 IFLAGS += $(addprefix -I, $(H_PATH))
 CMPLC = $(C_GCC) -c $(IFLAGS)
 CMPLO = $(C_GCC) -o

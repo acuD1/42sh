@@ -127,17 +127,16 @@
 ** LEXER_PARSER_ANALYZER
 */
 
-# define NB_OF_OPE 18
+# define NB_OF_OPE 15
 # define CHAR_INTERRUPT 			" \t<>|;&\n"
 # define OPERATORS 					"&|;><-\n"
 # define NB_LEXER_STATE 7
-# define NB_PARSER_STATE 25
+# define NB_PARSER_STATE 22
 # define NB_ANALYZER_STATE 9
-# define NB_OF_TOKENS 25
 # define REDIR                      P_GREAT, P_LESS
-# define REDIR_AND                  P_GREATAND, P_LESSAND, P_ANDGREAT
-# define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH, P_ANDDGREAT
+# define REDIR_AND                  P_GREATAND, P_LESSAND
+# define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH
 # define ALL_REDIRECT               REDIR, REDIR_DB, REDIR_AND
-# define IOFILE                     P_GREAT, P_GREATAND, P_LESS, P_LESSAND, P_DGREAT, P_LESSGREAT, P_CLOBBER
+# define IOFILE                     P_GREAT, P_GREATAND, P_LESS, P_LESSAND, P_DGREAT, P_LESSGREAT
 # define IOHERE                     P_DLESS, P_DLESSDASH,
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_prompt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aspro <aspro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/26 15:49:48 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/10/31 10:11:23 by aspro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void			load_prompt(t_core *shell)
 {
 	int8_t		status;
 	t_read		term;
-	t_lst *tmp;
+	// t_lst *tmp;
 
 	// t_parser *parser;
 	// t_ast	*ast;
@@ -106,15 +106,11 @@ void			load_prompt(t_core *shell)
 		// */
 		// if (check_brackets(line))
 		shell->lexer = lexer(shell->buff);
-		shell->job_list = analyzer(shell);
-		if (shell->job_list)
+		if (parser(shell->lexer) == TRUE)
 		{
-			tmp = shell->job_list;
-			while (tmp)
-			{
-				ft_printjob(((t_job*)tmp->content));
-				tmp = tmp->next;
-			}
+
+			analyzer(shell);
+			ft_printjoblst(shell->job_list);
 		}
 
 		/* DEBUG */

@@ -45,9 +45,10 @@ static int create_assign_token(t_lexer *lexer, int len)
 	buf =  NULL;
 	if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, len + 1)))
 		return (0);
-	if (!(ft_add_token(&lexer->tok, P_ASSIGN, buf)))
+	// if (!(ft_add_token(&lexer->tok, P_ASSIGN, buf)))
+		// return (0);
+	if (!(ft_lstadd(&lexer->tok, ft_create_token(buf, P_ASSIGN))))
 		return (0);
-	// ft_lstappend(&lexer->tok, ft_lstnew(lexer_token_set(&lexer->token, TOK_ASSIGN, buf), sizeof(t_token)));
 	lexer->ntok++;
 	lexer->buf_pos += len + 1;
 	free(buf);

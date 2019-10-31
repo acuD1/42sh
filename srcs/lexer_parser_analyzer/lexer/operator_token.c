@@ -15,9 +15,7 @@
 static const t_token    ope[] =
 {
 	{P_NEWLINE, "\n", 1},
-	{P_ANDDGREAT, "&>>", 3},
 	{P_ANDIF , "&&", 2},
-	{P_ANDGREAT, "&>", 2},
 	{P_AND, "&", 1},
 	{P_ORIF, "||", 2},
 	{P_PIPE, "|", 1},
@@ -30,7 +28,6 @@ static const t_token    ope[] =
 	{P_LESS, "<", 1},
 	{P_DGREAT, ">>", 2},
 	{P_GREATAND, ">&", 2},
-	{P_CLOBBER, ">|", 2},
 	{P_GREAT, ">", 1},
 	{P_TOKEN, NULL, 0}
 };
@@ -46,9 +43,10 @@ static int	create_operator_token(t_lexer *lexer, e_parser_state id, int len)
 	buf =  NULL;
 	if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, len)))
 		return (0);
-	if (!(ft_add_token(&lexer->tok, id, buf)))
-		return (0);
-	// ft_lstappend(&lexer->tok, ft_lstnew(lexer_token_set(&lexer->token, id, buf), sizeof(t_token)));
+	// if (!(ft_add_token(&lexer->tok, id, buf)))
+		// return (0);
+	// ft_lstadd(&lexer->tok, ft_lstnew(lexer_token_set(&lexer->token, id, buf), sizeof(t_token)));
+	ft_lstadd(&lexer->tok, ft_create_token(buf, id));
 	lexer->ntok++;
 	lexer->buf_pos += len;
 	lexer->status = START;

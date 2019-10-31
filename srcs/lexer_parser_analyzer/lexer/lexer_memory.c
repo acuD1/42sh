@@ -75,3 +75,29 @@ t_lst			*ft_add_token(t_lst **curr, e_parser_state opeid, char *data)
 	}
 	return (*curr);
 }
+
+t_lst			*ft_lstadd(t_lst **curr, t_lst *new)
+{
+	t_lst		*tmp;
+
+	if (!(*curr))
+		return (*curr = new);
+	if ((*curr)->next)
+	{
+		tmp = (*curr);
+		while (tmp->next)
+			tmp = tmp->next;
+		new->prev = tmp;
+		new->next = NULL;
+		tmp->next = new;
+	}
+	else
+	{
+		tmp = *curr;
+		tmp->next = new;
+		new->prev = tmp;
+		new->next = NULL;
+
+	}
+	return (*curr);
+}

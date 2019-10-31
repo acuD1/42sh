@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aspro <aspro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/26 15:39:01 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/10/31 10:10:48 by aspro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,7 @@ void	init_shell(t_core *shell)
 	shell->last_exit_status = 0;
 	shell->opt = 0;
 	shell->buff = NULL;
+	shell->lexer = NULL;
+	shell->job_list = NULL;
+	shell->assign_list = NULL;
 }

@@ -21,9 +21,12 @@ void		start_lexer(t_lexer *lexer)
 {
 	if (lexer->buff[lexer->buf_pos] == '\0')
 	{
-		ft_add_token(&lexer->tok, P_NEWLINE, "\n"); //magouille en attendant
-		if (!(ft_add_token(&lexer->tok, P_END, "(null)")))
-			return;
+		// ft_add_token(&lexer->tok, P_NEWLINE, "\n"); //magouille en attendant
+		ft_lstadd(&lexer->tok, ft_create_token("\n", P_NEWLINE));
+		if (!(ft_lstadd(&lexer->tok, ft_create_token("(null)", P_END))))
+			return ;
+		// if (!(ft_add_token(&lexer->tok, P_END, "(null)")))
+			// return;
 		lexer->ntok++;
 		lexer->status = END;
 	}
@@ -40,7 +43,10 @@ void		start_lexer(t_lexer *lexer)
 	else if (!ft_strcmp(&lexer->buff[lexer->buf_pos], "\n"))
 		lexer->status = NEWLINE;
 	else if (ft_strchr(&lexer->buff[lexer->buf_pos], '='))
+	{
+		ft_printf("{%d}  [%s]\n", lexer->buf_pos,&lexer->buff[lexer->buf_pos] );
 		lexer->status = ASSIGNEMENT_WORD;
+	}
 	else
 		lexer->status = NAME;
 }
@@ -58,7 +64,7 @@ void		end_lexer(t_lexer *lexer)
 *** LEXER IN = LINE EDITION    OUT = PARSER
 */
 
-t_lexer		*lexer(char *line)
+t_lst		*lexer(char *line)
 {
 	t_lexer	*lexer;
 	t_lst **head;
@@ -76,5 +82,5 @@ t_lexer		*lexer(char *line)
 		lexer->lex[lexer->status](lexer);
 	// ft_printtoklist(lexer);
 	lexer->tok = *head;
-	return (lexer);
+	return (lexer->tok);
 }
