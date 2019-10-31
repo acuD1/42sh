@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/22 15:05:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/30 17:37:06 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,10 @@ int8_t		builtin_set(t_core *shell);
 int8_t		builtin_unset(t_core *shell);
 int8_t		builtin_export(t_core *shell);
 int8_t		builtin_fc(t_core *shell);
+int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
+void		set_range(t_lst **w, char **range);
 
 /* ###########################  TEMPORARY   #################################*/
-int8_t	exec_builtin(t_core *shell);
+int8_t		exec_builtin(t_core *shell);
 
 #endif

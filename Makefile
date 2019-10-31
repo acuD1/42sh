@@ -143,6 +143,7 @@ SRC			+=	$(S_PATH)$(BUILTINS)set.c
 SRC			+=	$(S_PATH)$(BUILTINS)unset.c
 SRC			+=	$(S_PATH)$(BUILTINS)export.c
 SRC			+=	$(S_PATH)$(BUILTINS)fc.c
+SRC			+=	$(S_PATH)$(BUILTINS)fc_edit.c
 
 SRC			+=	$(S_PATH)$(MISC)errors.c
 SRC			+=	$(S_PATH)$(MISC)abs_path.c
@@ -175,7 +176,6 @@ SRC			+=	$(S_PATH)dev.c
 HDR			+=	sh42.h
 HDR			+=	define.h
 HDR			+=	struct.h
-HDR			+=	builtins.h
 HDR			+=	command_line.h
 HDR			+=	shared_libft.h
 ###############################################################################
@@ -187,7 +187,7 @@ HDR			+=	shared_libft.h
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
 
 # Comment -no-pie flag if an error occured
-LIB = $(L_PATH)$(LNAME) -ltermcap -no-pie
+LIB = $(L_PATH)$(LNAME) -ltermcap #-no-pie
 vpath %.h $(H_PATH)
 
 # Variables
