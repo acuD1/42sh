@@ -5,33 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 15:04:32 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/31 00:10:43 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/10/31 20:00:16 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-void		reverse_range(t_lst **w, char **range)
-{
-	size_t  number;
-
-	number = 0;
-	if (ft_tablen(range) != 2)
-		return ;
-	else if (range[1] && ft_atoi(range[0]) > ft_atoi(range[1]))
-		number = ft_atoi(range[0]);
-	else if (range[1])
-		number = ft_atoi(range[1]);
-	while ((*w)->next && number != (*w)->content_size)
-		*w = (*w)->next;
-	if (range[1] && ft_atoi(range[0]) < ft_atoi(range[1]))
-	{
-		number = ft_atoi(range[1]);
-		range[1] = range[0];
-		range[0] = ft_itoa(number);
-	}
-}
 
 void		set_range(t_lst **w, char **range)
 {
@@ -58,7 +37,10 @@ void		listing_mode(t_lst *saved, u_int64_t opt, char **range)
 	if (range[0] && (opt & (1ULL << 17)))
 		n = ft_lstlen(saved) - ft_atoi(range[0]);
 	if (opt & (1ULL << 17))
-		reverse_range(&saved, range);
+	{
+		display_reverse(saved, opt, range);
+		return ; //SUCCESS
+	}
 	else
 		set_range(&saved, range);
 	while (saved && n--)
@@ -72,15 +54,15 @@ void		listing_mode(t_lst *saved, u_int64_t opt, char **range)
 		if (range[0] && range[1] && ft_atoi(range[0]) > ft_atoi(range[1]))
 			saved = saved->next;
 		else
-			saved = ((opt & (1ULL << 17)) ? saved->next : saved->prev);
+			saved = saved->prev;
 	}
 }
 
 /*
- **	[fc -s [old=new] [specifier]]
- **		=> select specifier in history to reenter
- **		=> if new is specified history lst and file will b edit
- */
+**	[fc -s [old=new] [specifier]]
+**		=> select specifier in history to reenter
+**		=> if new is specified history lst and file will b edit
+*/
 
 u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd)
 {
@@ -114,7 +96,6 @@ void			get_range(char **cmd, char **range)
 
 	i = 0;
 	j = -1;
-	range[0] = NULL;
 	ft_bzero(range, sizeof(range));
 	ft_bzero(range[1], sizeof(range[1]));
 	while (j < 2 && cmd && cmd[++i])
@@ -126,13 +107,15 @@ void			get_range(char **cmd, char **range)
 		else
 			range[++j] = cmd[i];
 	}
+	if (j == 2)
+		j--;
 	range[j + 1] = 0;
 }
 
 /*
- **	Fix Command builtin have 2 modes :
- **		Editing (default) & Listing (-lnr options)
- */
+**	Fix Command builtin have 2 modes :
+**		Editing (default) & Listing (-lnr options)
+*/
 
 int8_t			builtin_fc(t_core *shell)
 {
