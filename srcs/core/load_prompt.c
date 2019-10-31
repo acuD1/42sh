@@ -116,16 +116,7 @@ void			load_prompt(t_core *shell)
 		**	- etc ...
 		// */
 		// if (check_brackets(line))
-		shell->lexer = lexer(line);
-		if (parser(shell->lexer) == TRUE)
-		{
-
-			analyzer(shell);
-			if (shell->job_list)
-				ft_printjoblst(shell->job_list);
-			if (shell->assign_list)
-				ft_printassignlist(shell->assign_list);
-		}
+		lexer_parser_analyzer(shell, line);
 		// }
 		// if (shell->job_list)
 		// {

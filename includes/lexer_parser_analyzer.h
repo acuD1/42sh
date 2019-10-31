@@ -15,6 +15,8 @@
 
 # include "sh42.h"
 
+void lexer_parser_analyzer(t_core *shell, char *line);
+
 /*
 **  ANALYZER
 */

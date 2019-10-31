@@ -135,6 +135,8 @@ SRC		+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC		+=	$(S_PATH)$(EXEC)get_bin.c
 SRC		+=	$(S_PATH)$(EXEC)set_envp.c
 
+SRC		+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
+
 SRC		+=	$(S_PATH)$(LEXER)assign_token.c
 SRC		+=	$(S_PATH)$(LEXER)init_lexer.c
 SRC		+=	$(S_PATH)$(LEXER)lexer.c
