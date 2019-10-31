@@ -35,7 +35,7 @@ void ass_analyze(t_analyzer *analyzer)
 void assign_analyze(t_analyzer *analyzer)
 {
 	// ft_printf("ASSIGN state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
-	analyzer->job.command = fill_cmd_job(analyzer);
+	analyzer->job.command = fill_cmd_job(analyzer, 0);
 	analyzer->db.key = ft_strdup(((t_token*)analyzer->lexer->content)->data);
 	analyzer->process.type = ((t_token*)analyzer->lexer->content)->id;
 	analyzer->state = A_ASSIGN;

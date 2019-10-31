@@ -55,7 +55,7 @@ void        ft_free_processlist(t_lst **head);
 void        ft_free_redirlist(t_lst **head);
 void        ft_free_redir(t_redir *redir);
 
-char        *fill_cmd_job(t_analyzer *analyzer);
+char        *fill_cmd_job(t_analyzer *analyzer, int flag);
 
 void        ft_printtab(char **cmd);
 void        ft_printredir(t_redir *redir);
