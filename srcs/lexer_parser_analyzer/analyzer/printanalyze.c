@@ -20,6 +20,24 @@ void ft_printtab(char **cmd)
 	}
 }
 
+void ft_printassignlist(t_lst *lst)
+{
+	t_lst *assign;
+	int x = 0;
+
+	if (!lst)
+		return;
+	assign = lst;
+
+	while (assign)
+	{
+		ft_printf("\n==== ASSIGN %d ====\n", x);
+		ft_printf("[%s%s]\n", ((t_db*)assign->content)->key, ((t_db*)assign->content)->value);
+		assign = assign->next;
+		x++;
+	}
+}
+
 void ft_printredir(t_redir *redir)
 {
 	t_redir *tmp;

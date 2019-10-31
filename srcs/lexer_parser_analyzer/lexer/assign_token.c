@@ -31,7 +31,9 @@ static	int isvalid_assignement_word(char *str, size_t index)
 		else
 			return (0);
 	}
-	return (i);
+	if (str[i + 1] && str[i + 1] == '=')
+		return (0);
+	return (i + 1);
 }
 
 /*
@@ -43,14 +45,14 @@ static int create_assign_token(t_lexer *lexer, int len)
 	char 	*buf;
 
 	buf =  NULL;
-	if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, len + 1)))
+	if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, len - lexer->buf_pos)))
 		return (0);
 	// if (!(ft_add_token(&lexer->tok, P_ASSIGN, buf)))
 		// return (0);
 	if (!(ft_lstadd(&lexer->tok, ft_create_token(buf, P_ASSIGN))))
 		return (0);
 	lexer->ntok++;
-	lexer->buf_pos += len + 1;
+	lexer->buf_pos = len;
 	free(buf);
 	return (1);
 }

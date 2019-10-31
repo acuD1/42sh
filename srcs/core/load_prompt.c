@@ -121,7 +121,10 @@ void			load_prompt(t_core *shell)
 		{
 
 			analyzer(shell);
-			ft_printjoblst(shell->job_list);
+			if (shell->job_list)
+				ft_printjoblst(shell->job_list);
+			if (shell->assign_list)
+				ft_printassignlist(shell->assign_list);
 		}
 		// }
 		// if (shell->job_list)

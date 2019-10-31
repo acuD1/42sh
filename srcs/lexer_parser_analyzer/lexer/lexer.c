@@ -43,10 +43,7 @@ void		start_lexer(t_lexer *lexer)
 	else if (!ft_strcmp(&lexer->buff[lexer->buf_pos], "\n"))
 		lexer->status = NEWLINE;
 	else if (ft_strchr(&lexer->buff[lexer->buf_pos], '='))
-	{
-		ft_printf("{%d}  [%s]\n", lexer->buf_pos,&lexer->buff[lexer->buf_pos] );
 		lexer->status = ASSIGNEMENT_WORD;
-	}
 	else
 		lexer->status = NAME;
 }

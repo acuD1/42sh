@@ -62,6 +62,7 @@ void        ft_printredir(t_redir *redir);
 void        ft_printprocess(t_process *process);
 void        ft_printjob(t_job *job);
 void        ft_printjoblst(t_lst *list);
+void 		ft_printassignlist(t_lst *lst);
 
 /*
 **  PARSER
