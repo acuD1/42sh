@@ -38,19 +38,18 @@ static const t_token    ope[] =
 
 static int	create_operator_token(t_lexer *lexer, e_parser_state id, int len)
 {
-	char 	*buf;
+	char *str;
 
-	buf =  NULL;
-	if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, len)))
+	str = NULL;
+	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, len)))
 		return (0);
-	// if (!(ft_add_token(&lexer->tok, id, buf)))
-		// return (0);
-	// ft_lstadd(&lexer->tok, ft_lstnew(lexer_token_set(&lexer->token, id, buf), sizeof(t_token)));
-	ft_lstadd(&lexer->tok, ft_create_token(buf, id));
+	if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
+		return (0);
+	free(str);
+	init_token(&lexer->token);
 	lexer->ntok++;
 	lexer->buf_pos += len;
 	lexer->status = START;
-	free(buf);
 	return (1);
 }
 

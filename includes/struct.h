@@ -200,7 +200,6 @@ typedef struct  s_lexer
     size_t          ntok;   
     size_t          buf_pos;
     t_lexing        lex[NB_LEXER_STATE];
-    size_t          io_here;
     t_lst           *tok;
     t_token         token;
 }               t_lexer;

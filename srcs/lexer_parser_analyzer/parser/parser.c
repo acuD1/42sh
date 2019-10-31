@@ -84,6 +84,6 @@ uint8_t parser(t_lst *lexer)
 		}
 		tok_lst = tok_lst->next;
 	}
-	// ft_printtoklist(lexer);
+	free(parser);
 	return (TRUE);
 }

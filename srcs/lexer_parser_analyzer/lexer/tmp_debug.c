@@ -33,18 +33,26 @@ void			ft_printtoklist(t_lexer *lexer)
 	while (lexer->tok)
 	{
 		tmp = (t_token*)lexer->tok->content;
-		printf("ALLER %s %u\n", tmp->data, tmp->id);
+		ft_printf("[%s] {%d} \n", tmp->data, tmp->id);
 		if (!lexer->tok->next)
 			break;
 		lexer->tok = lexer->tok->next;
 	}
-	printf("====  =====\n");
-	while (lexer->tok)
+}
+
+void ft_freelexerlist(t_lst **lst)
+{
+	t_lst *tmp;
+	t_lst *node;
+
+	if (!*lst)
+		return;
+	tmp = *lst;
+	while (tmp)
 	{
-		tmp = (t_token*)lexer->tok->content;
-		printf("RETOUR %s %u\n", tmp->data, tmp->id);
-		if (!lexer->tok->prev)
-			break;
-		lexer->tok = lexer->tok->prev;
+		free(((t_token*)tmp->content)->data);
+		node = tmp;
+		tmp = tmp->next;
+		free(node);
 	}
 }

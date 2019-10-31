@@ -21,18 +21,17 @@ void		start_lexer(t_lexer *lexer)
 {
 	if (lexer->buff[lexer->buf_pos] == '\0')
 	{
-		// ft_add_token(&lexer->tok, P_NEWLINE, "\n"); //magouille en attendant
-		ft_lstadd(&lexer->tok, ft_create_token("\n", P_NEWLINE));
-		if (!(ft_lstadd(&lexer->tok, ft_create_token("(null)", P_END))))
-			return ;
-		// if (!(ft_add_token(&lexer->tok, P_END, "(null)")))
-			// return;
+		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, P_NEWLINE, "\n"), sizeof(t_token)))))
+			return;
+		init_token(&lexer->token);
+		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, P_END, "(null)"), sizeof(t_token)))))
+			return;
+		init_token(&lexer->token);
 		lexer->ntok++;
 		lexer->status = END;
 	}
 	else if (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 	{
-		lexer->io_here = 0;
 		while (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 			lexer->buf_pos++;
 	}
@@ -61,7 +60,7 @@ void		end_lexer(t_lexer *lexer)
 *** LEXER IN = LINE EDITION    OUT = PARSER
 */
 
-t_lst		*lexer(char *line)
+t_lst *lexer(char *line)
 {
 	t_lexer	*lexer;
 	t_lst **head;
@@ -77,7 +76,8 @@ t_lst		*lexer(char *line)
 	head = &lexer->tok;
 	while (lexer->status != END)
 		lexer->lex[lexer->status](lexer);
-	// ft_printtoklist(lexer);
 	lexer->tok = *head;
-	return (lexer->tok);
+	// ft_printtoklist(lexer);
+	// free(lexer);
+	return (*head);
 }
