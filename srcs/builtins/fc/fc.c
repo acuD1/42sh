@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/31 20:00:16 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/31 22:07:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		set_range(t_lst **w, char **range)
 		len = ft_lstlen(*w) - ft_atoi(range[0]);
 	else if (len < 0 || ft_atoi(range[0]) == 0)
 		len = 0;
-	while ((*w)->next && --len > 0)
+	while ((*w)->next && len-- > 0)
 		*w = (*w)->next;
 }
 
@@ -39,7 +39,7 @@ void		listing_mode(t_lst *saved, u_int64_t opt, char **range)
 	if (opt & (1ULL << 17))
 	{
 		display_reverse(saved, opt, range);
-		return ; //SUCCESS
+		return ;
 	}
 	else
 		set_range(&saved, range);
@@ -124,7 +124,11 @@ int8_t			builtin_fc(t_core *shell)
 	char		*range[2];
 	u_int64_t	opt;
 
-	saved = shell->history;
+	if ((saved = shell->history) == NULL)
+	{
+		ft_dprintf(2, "42sh: fc: history specification out of range\n");
+		return (FAILURE);
+	}
 	cmd = ft_strsplit(shell->buff, SPACE);
 	opt = get_options(ft_tablen(cmd), cmd, "elnrs0123456789");
 	get_range(cmd, range);

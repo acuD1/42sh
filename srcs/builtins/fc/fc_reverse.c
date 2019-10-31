@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:55:43 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/31 19:58:55 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/10/31 22:31:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ u_int16_t	reverse_range(t_lst **w, char **range)
 	size_t  	number;
 	int		ret;
 
-	number = 0;
+	number = 1;
 	ret = 0;
 	if (ft_tablen(range) == 1)
 		if (ft_atoi(range[0]) <= 0)
@@ -77,14 +77,14 @@ void		display_reverse(t_lst *w, u_int64_t opt, char **range)
 {
 	u_int16_t	n;
 
-	n = reverse_range(&w, range);
-	while (w && n != w->content_size + 1)
+	if ((n = reverse_range(&w, range)) > ft_lstlen(w))
+		n = 1;
+	while (w && n <= w->content_size)
 	{
 		if ((opt & (1ULL << 13)))
 			ft_dprintf(STDOUT_FILENO, "\t%s\n", w->content);
 		else
 			ft_dprintf(STDOUT_FILENO, "%d\t%s\n", w->content_size, w->content);
-		if (w->next)
-			w = w->next;
+		w = w->next;
 	}
 }
