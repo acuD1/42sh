@@ -58,6 +58,8 @@ void        ft_free_redirlist(t_lst **head);
 void        ft_free_redir(t_redir *redir);
 
 char        *fill_cmd_job(t_analyzer *analyzer, int flag);
+char 		**fill_cmd_process(char *str);
+char 		**ft_add_arg_cmd_process(char **tablo, char *str);
 
 void        ft_printtab(char **cmd);
 void        ft_printredir(t_redir *redir);

@@ -43,9 +43,10 @@ void		init_assign_graph(t_graph *graph)
 
 void		init_process_graph(t_graph *graph)
 {
-	static e_parser_state tab_good_type[] = {P_WORD, ALL_REDIRECT, P_ASSIGN,
-											 P_IONUMBER, P_NEWLINE, P_ERROR};
-	graph[P_PIPE].good_type = tab_good_type;
+	static e_parser_state tab_good_type[] = {P_WORD, ALL_REDIRECT, P_ASSIGN, P_NEWLINE, P_ERROR};
+	static e_parser_state tab_type[] = {P_WORD, ALL_REDIRECT, P_ASSIGN, P_ERROR};
+
+	graph[P_PIPE].good_type = tab_type;
 	graph[P_AND].good_type = tab_good_type;
 	graph[P_SEMICOLON].good_type = tab_good_type;
 }

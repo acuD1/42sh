@@ -106,6 +106,7 @@ void ft_printjoblst(t_lst *list)
 				z++;
 				redir = redir->next;
 			}
+			ft_printassignlist(((t_process*)process->content)->assign_list);
 			y++;
 			process = process->next;
 		}

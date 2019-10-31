@@ -36,7 +36,7 @@ void separator_analyze(t_analyzer *analyzer)
 		analyzer->job.type = state;
 		job_analyze(analyzer);
 	}
-	else if (state == P_ORIF || state == P_ANDIF)
+	else if (state == P_ORIF || state == P_ANDIF || state == P_PIPE)
 	{
 		analyzer->job.command = fill_cmd_job(analyzer, 1);
 		analyzer->process.type = state;
@@ -70,5 +70,5 @@ void analyzer(t_core *shell)
 		get_token(analyzer);
 	}
 	shell->job_list = *head;
-	shell->assign_list = analyzer->assign_list;
+	shell->assign_list = analyzer->tmp_list;
 }

@@ -9,7 +9,10 @@ void lexer_parser_analyzer(t_core *shell, char *line)
 			if (shell->job_list)
 				ft_printjoblst(shell->job_list);
 			if (shell->assign_list)
+			{
+				ft_printf("============= ASSIGN ============\n");
 				ft_printassignlist(shell->assign_list);
+			}
 		}
 		else
 			ft_printf("error parser, va savoir pourquoi...\n");

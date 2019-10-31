@@ -145,6 +145,7 @@ typedef struct            s_process
     // uint8_t                stopped;
     // pid_t                pid;
     // int                    status;
+    t_lst 				*assign_list;
 }                        t_process;
 
 typedef struct s_job
@@ -171,6 +172,7 @@ typedef struct  s_analyzer
     t_lst               *process_list;
     t_lst               *redir_list;
     t_lst               *assign_list;
+    t_lst               *tmp_list; 
 }               t_analyzer;
 
 typedef struct          s_graph

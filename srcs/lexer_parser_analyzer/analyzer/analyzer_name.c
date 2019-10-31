@@ -70,6 +70,8 @@ void cmd_analyze(t_analyzer *analyzer)
 	analyzer->job.command = fill_cmd_job(analyzer, 1);
 	if (analyzer->lexer->next && (((t_token*)analyzer->lexer->next->content)->id == 20))
 		analyzer->state = A_STOP;
+	else if (analyzer->state == A_ASSIGN)
+		analyzer->state = A_START;
 	else
 		analyzer->state = A_WORD;
 }
