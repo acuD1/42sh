@@ -41,7 +41,7 @@ int		main(int ac, char **av, char **environ)
 	print_opt(&shell);
 
 	/* DEBUG */
-	print_env(&shell);
+	// print_env(&shell);
 
 	/* Everything else will happen here */
 	load_prompt(&shell);

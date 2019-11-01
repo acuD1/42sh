@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/31 15:47:30 by guvillat         ###   ########.fr       */
+/*   Updated: 2019/09/17 16:27:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 /*
 **	Color
 */
+
 # define C_R			"\x1b[31m"
 # define C_G			"\x1b[32m"
 # define C_Y			"\x1b[33m"
@@ -32,6 +33,7 @@
 # define C_M			"\x1b[35m"
 # define C_C			"\x1b[36m"
 # define C_X			"\x1b[0m"
+# define C_BOLD			"\x1b[1m"
 
 /*
 **	Free
@@ -52,7 +54,7 @@
 **	Exec handler
 */
 
-# define BITOK_ERROR		0x001
+# define BITOK_ERROR	0x001
 # define PATH_ERROR		0x002
 # define FORK_ERROR		0x004
 # define BIN_ERROR		0x006
@@ -60,60 +62,47 @@
 # define EXEC_ERROR		0x010
 
 /*
-**  Lexer Token
+**	Command Line
 */
 
-# define TOK_ESCSEQ					"\\"
-# define TOK_EOF					"EOF"
-# define TOK_DB_QUOTE				"\""
-# define TOK_PIPE					"|"
-# define TOK_PARENT_OPEN			"("
-# define TOK_PARENT_CLOSE			")"
-# define TOK_GREAT					">"
-# define TOK_LESS					"<"
-# define TOK_SEMICOLON				";"
-# define TOK_BACKQUOTE				"`"
-# define TOK_AND					"&"
-# define TOK_HOOK_OPEN				"{"
-# define TOK_HOOK_CLOSE				"}"
-# define TOK_BRACKET_OPEN			"["
-# define TOK_BRACKET_CLOSE			"]"
-# define TOK_HASH					"#"
-# define TOK_PERCENT				"%"
-# define TOK_NEWLINE				"\\n"
-# define TOK_DAND					"&&"
-# define TOK_OR						"||"
-# define TOK_DSEMI					";;"
-# define TOK_DLESS					"<<"
-# define TOK_DGREAT					">>"
-# define TOK_LESSAND				"<&"
-# define TOK_GREATAND				">&"
-# define TOK_LESSGREAT				"<>"
-# define TOK_ANDDGREAT				"&>>"
-# define TOK_ANDGREAT				"&>"
-# define TOK_DLESSDASH				"<<-"
-# define TOK_CLOBBER				">|"
-# define TOK_DEQ					"=="
-# define TOK_NOTEQ					"!="
-# define TOK_CASE					"case"
-# define TOK_DO						"do"
-# define TOK_DONE					"done"
-# define TOK_ELIF					"elif"
-# define TOK_ELSE					"else"
-# define TOK_ESAC					"esac"
-# define TOK_FI						"fi"
-# define TOK_FOR					"for"
-# define TOK_IF						"if"
-# define TOK_IN						"in"
-# define TOK_THEN					"then"
-# define TOK_UNTIL					"until"
-# define TOK_WHILE					"while"
-# define TOK_IO_NUMBER				"IO number"
-# define TOK_ASSIGN					"assign (=)"
-# define TOK_STRING					"word"
-# define TOK_SPSTRING				"spword"
-# define TOK_END					"end"
-# define TOK_ERROR					"ERROR"
-# define TOK_START					"START"
+# define S_USR_RW			(S_IRUSR | S_IWUSR)
+# define S_GRP_OTH_R		(S_IRGRP | S_IROTH)
+# define MODE_WRITE			(O_CREAT | O_WRONLY | O_TRUNC)
+# define BUFF_SIZE			4096
+# define READ_SIZE			4
+# define HISTORY_FILE		"./.history"
+# define QUOTE				'\''
+# define DQUOTE				'\"'
+# define BQUOTE				'`'
+# define NEW_LINE			'\n'
+# define BEGINNING_LINE		1
+# define END_OF_FILE		4
+# define END_LINE			5
+# define ONE_WORD_LEFT		2
+# define ONE_WORD_RIGHT		6
+# define TAB_KEY			9
+# define RETURN_KEY			10
+# define CLEAR_LINE			11
+# define CLEAR_SCREEN		12
+# define CTRL_R				18
+# define MOVE_UP			65
+# define MOVE_DO			66
+# define BS_KEY				127
 
+/*
+** LEXER_PARSER_ANALYZER
+*/
+
+# define NB_OF_OPE 15
+# define CHAR_INTERRUPT 			" \t<>|;&\n"
+# define OPERATORS 					"&|;><-\n" 
+# define NB_LEXER_STATE 7
+# define NB_PARSER_STATE 22
+# define NB_ANALYZER_STATE 9
+# define REDIR                      P_GREAT, P_LESS
+# define REDIR_AND                  P_GREATAND, P_LESSAND
+# define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH
+# define ALL_REDIRECT               REDIR, REDIR_DB, REDIR_AND
+# define IOFILE                     P_GREAT, P_GREATAND, P_LESS, P_LESSAND, P_DGREAT, P_LESSGREAT
+# define IOHERE                     P_DLESS, P_DLESSDASH,
 #endif

@@ -57,7 +57,7 @@ void			load_prompt(t_core *shell)
 		// 	free_prompt(shell, line);
 		// 	continue ;
 		// }
-		lexer(shell, line);
+		lexer_parser_analyzer(shell, line);
 		// ast = parser(shell, parser);˚˚˚∫
 		/* DEBUG */
 		// print_tokens(shell);

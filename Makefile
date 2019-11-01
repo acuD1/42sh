@@ -71,10 +71,12 @@ L_PATH = shared_libft/
 
 # Add custom dir for .o
 
-CORE	=	core/
-DB		=	db/
-EXEC	=	exec/
-LEXER	= 	lexer_parser_ast/
+CORE		=	core/
+DB			=	db/
+EXEC		=	exec/
+LEXER		= 	lexer_parser_analyzer/lexer/
+PARSER		= 	lexer_parser_analyzer/parser/
+ANALYZER	= 	lexer_parser_analyzer/analyzer/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -84,6 +86,8 @@ PATHS	+=	$(O_PATH)$(CORE)
 PATHS	+=	$(O_PATH)$(DB)
 PATHS	+=	$(O_PATH)$(EXEC)
 PATHS	+=	$(O_PATH)$(LEXER)
+PATHS	+=	$(O_PATH)$(PARSER)
+PATHS	+=	$(O_PATH)$(ANALYZER)
 
 # Files
 
@@ -103,17 +107,46 @@ SRC		+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC		+=	$(S_PATH)$(EXEC)get_bin.c
 SRC		+=	$(S_PATH)$(EXEC)set_envp.c
 
+
+
+SRC		+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
+
+SRC		+=	$(S_PATH)$(LEXER)assign_token.c
+SRC		+=	$(S_PATH)$(LEXER)init_lexer.c
+SRC		+=	$(S_PATH)$(LEXER)lexer.c
+SRC		+=	$(S_PATH)$(LEXER)name_io_nwln_token.c
+SRC		+=	$(S_PATH)$(LEXER)operator_token.c
+SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
+
+SRC		+=	$(S_PATH)$(PARSER)parser.c
+SRC		+=	$(S_PATH)$(PARSER)graph.c
+
+SRC		+=	$(S_PATH)$(ANALYZER)analyze.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_name.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_assign.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_job.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_process.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
+SRC		+=	$(S_PATH)$(ANALYZER)printanalyze.c
+SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
+SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
+
+
+
+
+
 SRC		+=	$(S_PATH)dev.c
 
-SRC		+=	$(S_PATH)$(LEXER)lexer.c
 
 
 # Headers
 
 HDR		+=	sh42.h
 HDR		+=	define.h
-HDR		+=	lexer.h
 HDR		+=	struct.h
+HDR		+=	enum.h
+HDR		+=	lexer_parser_analyzer.h
 HDR		+=	shared_libft.h
 
 ###############################################################################
