@@ -186,6 +186,7 @@ SRC			+=	$(S_PATH)$(EXEC)exec_builtin.c
 SRC			+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC			+=	$(S_PATH)$(EXEC)get_bin.c
 SRC			+=	$(S_PATH)$(EXEC)set_envp.c
+SRC			+=	$(S_PATH)$(EXEC)pipes.c
 
 
 SRC			+=	$(S_PATH)$(HASH)add_hash_map.c
