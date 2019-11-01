@@ -47,7 +47,7 @@ void process_analyze(t_analyzer *analyzer)
 	analyzer->redir_list = NULL;
 	analyzer->assign_list = NULL;
 	init_process(&analyzer->process);
-	if (((t_token*)analyzer->lexer->next->content)->id == 20) //&& !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
+	if (analyzer->lexer->next && !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
 		analyzer->state = A_STOP;
 	else
 		analyzer->state = A_SEPARATOR;

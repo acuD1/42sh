@@ -10,153 +10,15 @@ static const t_token    quotes[] =
 	{P_EXP_INTERRUPT, NULL, 0}
 };
 
-// {P_DBPARENT_CLOSE, "))", 2},
-	// {P_PARENT_CLOSE, ")", 1},
-	// {P_BRACKET_CLOSE, "}", 1},
-
-	// else if (id = P_DBPARENT_CLOSE)
-	// else if (id = P_PARENT_OPEN)
-	// else if (id = P_PARENT_CLOSE)
-	// else if (id = P_BRACKET_CLOSE)
-	// else if (id = P_BRACKET_CLOSE)
-	// else if (id = P_TILDE)
-
-
-int exp_dbparen(t_lexer *lexer, e_parser_state id, int len)
-{
-	char *str;
-	int index;
-
-	str = NULL;
-	index = 0;
-	if (!ft_strncmp(&lexer->buff[lexer->buf_pos], "$((", len))
-	{
-		index = lexer->buf_pos;
-		while (ft_strncmp(&lexer->buff[index], "))", 2))
-			index++;
-		index += 2;
-		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
-			return (0);
-		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
-			return (0);
-		init_token(&lexer->token);
-		free(str);
-		lexer->ntok++;
-		lexer->buf_pos = index;
-	}
-	return (index);
-}
-
-int exp_paren(t_lexer *lexer, e_parser_state id, int len)
-{
-	char *str;
-	int index;
-
-	str = NULL;
-	index = 0;
-	if (!ft_strncmp(&lexer->buff[lexer->buf_pos], "$(", len))
-	{
-		index = lexer->buf_pos;
-		while (ft_strncmp(&lexer->buff[index], ")", 1))
-			index++;
-		index++;
-		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
-			return (0);
-		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
-			return (0);
-		init_token(&lexer->token);
-		free(str);
-		lexer->ntok++;
-		lexer->buf_pos = index;
-	}
-	return (index);
-}
-
-int exp_bracket(t_lexer *lexer, e_parser_state id, int len)
-{
-	char *str;
-	int index;
-
-	index = 0;
-	str = NULL;
-	if (!ft_strncmp(&lexer->buff[lexer->buf_pos], "${", len))
-	{
-		index = lexer->buf_pos;
-		while (ft_strncmp(&lexer->buff[index], "}", 1))
-			index++;
-		index++;
-		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
-			return (0);
-		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
-			return (0);
-		init_token(&lexer->token);
-		free(str);
-		lexer->ntok++;
-		lexer->buf_pos = index;
-	}
-	return (index);
-}
-
-int exp_dollar(t_lexer *lexer, e_parser_state id, int len)
-{
-	char *str;
-	int index;
-
-	index = lexer->buf_pos + len;
-	str = NULL;
-	(void)len;
-	if (lexer->buff[lexer->buf_pos] == '$')
-	{
-		while (!ft_strchr(CHAR_INTERRUPT, lexer->buff[index]) && lexer->buff[index])
-		{
-			if (lexer->buff[index] == '_' || ft_isdigit(lexer->buff[index]) || ft_isalpha(lexer->buff[index]))
-				index++;
-			else
-			{
-				break;
-				return (index);
-			}
-		}
-		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
-			return (0);
-		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
-			return (0);
-		init_token(&lexer->token);
-		free(str);
-		lexer->ntok++;
-		lexer->buf_pos = index;
-	}
-	return (index);
-}
-
-int exp_tilde(t_lexer *lexer, e_parser_state id, int len)
-{
-	char *str;
-
-	str = NULL;
-	if (lexer->buff[lexer->buf_pos] == '~')
-	{
-		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, len)))
-			return (0);
-		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
-			return (0);
-		init_token(&lexer->token);
-		free(str);
-		lexer->ntok++;
-		lexer->buf_pos += len;
-	}
-	return (len);
-}
-
 static int	create_expansions_token(t_lexer *lexer, e_parser_state id)
 {	
 	int i;
 	t_expansion expansions[] = {
-								{exp_tilde, P_TILDE, 1},
-								{exp_dbparen, P_DBPARENT, 3},
-								{exp_paren, P_PARENT, 2},
-								{exp_bracket, P_BRACKET, 2},
-								{exp_dollar, P_DOLLAR, 1},
+								{exp_tilde_lexer, P_TILDE, 1},
+								{exp_dbparen_lexer, P_DBPARENT, 3},
+								{exp_paren_lexer, P_PARENT, 2},
+								{exp_bracket_lexer, P_BRACKET, 2},
+								{exp_dollar_lexer, P_DOLLAR, 1},
 								};
 
 	i = 0;

@@ -92,6 +92,12 @@ int				ft_isdigit(int c);
 int 			ft_isalpha(int c);
 
 void			expansion_lexer(t_lexer *lexer);
+int 			exp_dbparen_lexer(t_lexer *lexer, e_parser_state id, int len);
+int 			exp_paren_lexer(t_lexer *lexer, e_parser_state id, int len);
+int 			exp_bracket_lexer(t_lexer *lexer, e_parser_state id, int len);
+int 			exp_dollar_lexer(t_lexer *lexer, e_parser_state id, int len);
+int 			exp_tilde_lexer(t_lexer *lexer, e_parser_state id, int len);
+
 void			start_lexer(t_lexer *lexer);
 void			end_lexer(t_lexer *lexer);
 void			name_lexer(t_lexer *lexer);

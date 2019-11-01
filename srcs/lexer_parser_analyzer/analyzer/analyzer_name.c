@@ -68,7 +68,7 @@ void cmd_analyze(t_analyzer *analyzer)
 		ass_analyze(analyzer);
 	}
 	analyzer->job.command = fill_cmd_job(analyzer, 1);
-	if (analyzer->lexer->next && (((t_token*)analyzer->lexer->next->content)->id == 20))
+	if (analyzer->lexer->next && !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
 		analyzer->state = A_STOP;
 	else if (analyzer->state == A_ASSIGN)
 		analyzer->state = A_START;
@@ -78,6 +78,6 @@ void cmd_analyze(t_analyzer *analyzer)
 
 void end_analyze(t_analyzer *analyzer)
 {
-	// ft_printf("END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	ft_printf("END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	analyzer->state = A_STOP;
 }

@@ -41,7 +41,7 @@ void		init_redirect_graph(t_graph *graph)
 
 void		init_assign_graph(t_graph *graph)
 {
-	static e_parser_state tab_good_type[] = {P_WORD, P_ERROR};
+	static e_parser_state tab_good_type[] = {P_WORD, ALL_EXPANSION, P_ERROR};
 
 	graph[P_ASSIGN].good_type = tab_good_type;
 }
