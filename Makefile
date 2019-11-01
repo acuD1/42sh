@@ -120,10 +120,12 @@ SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
 
 SRC		+=	$(S_PATH)$(PARSER)parser.c
 SRC		+=	$(S_PATH)$(PARSER)graph.c
+SRC		+=	$(S_PATH)$(PARSER)graph_bis.c
 
 SRC		+=	$(S_PATH)$(ANALYZER)analyze.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_name.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_assign.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_expansion.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_job.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_process.c

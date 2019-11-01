@@ -16,12 +16,12 @@
 ** STATE CREANT LES TOKENS WORD
 */
 
-void word_token(t_lexer *lexer)
+void word_lexer(t_lexer *lexer)
 {
 	int i;
 	char *str;
 
-	i = 0;
+	i = lexer->buf_pos;
 	str = NULL;
 	while (!ft_strchr(CHAR_INTERRUPT, lexer->buff[i]) && lexer->buff[i])
 		i++;
@@ -46,7 +46,7 @@ void		name_lexer(t_lexer *lexer)
 	if (ft_strchr(EXPANSION, lexer->buff[lexer->buf_pos]))
 		expansion_lexer(lexer);
 	else
-		word_token(lexer);
+		word_lexer(lexer);
 	lexer->status = L_START;
 }
 

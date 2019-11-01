@@ -73,6 +73,6 @@ void		operator_lexer(t_lexer *lexer)
 		i++;
 	}
 	if (i == NB_OF_OPE)
-		name_lexer(lexer);
+		word_lexer(lexer);
 	lexer->status = L_START;
 }

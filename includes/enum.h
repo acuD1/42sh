@@ -27,7 +27,7 @@ typedef enum    parser_state
     P_AND, // job deamon
     P_ORIF, // process
     P_PIPE, // redir qui att un newline SUBSHELL
-    P_DSEMI, // FOR CASE
+    P_DSEMI, // FOR CASE ?
     P_SEMICOLON, // job
     P_DLESSDASH, // redir
     P_DLESS, // redir
@@ -41,15 +41,11 @@ typedef enum    parser_state
     P_IONUMBER, //ionumber
     P_ASSIGN, // stock dans shell->assign une lst key=value;
     P_WORD, //
-    P_EXPANSION, 
-    P_DBPARENT_OPEN,
-    P_PARENT_OPEN,
-    P_BRACKET_OPEN,
-    P_DOLLAR,
     P_TILDE,
-    P_DBPARENT_CLOSE,
-    P_PARENT_CLOSE,
-    P_BRACKET_CLOSE,
+    P_DBPARENT,
+    P_PARENT,
+    P_BRACKET,
+    P_DOLLAR,
     P_EXP_INTERRUPT,
     P_START,
     P_END,

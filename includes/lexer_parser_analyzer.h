@@ -37,6 +37,7 @@ void        init_separator_analyze(t_anal analyze);
 void        analyzer(t_core *shell);
 void        cmd_analyze(t_analyzer *analyzer);
 void        end_analyze(t_analyzer *analyzer);
+void 		expansion_analyze(t_analyzer *analyzer);
 void        separator_analyze(t_analyzer *analyzer);
 void        redirect_analyze(t_analyzer *analyzer);
 void        error_analyze(t_analyzer *analyzer);
@@ -98,7 +99,7 @@ void			newline_lexer(t_lexer *lexer);
 void			number_lexer(t_lexer *lexer);
 void			assignement_word_lexer(t_lexer *lexer);
 void			operator_lexer(t_lexer *lexer);
-
+void 			word_lexer(t_lexer *lexer);
 t_lexer			*init_lexer(char *line);
 void 			init_token(t_token *token);
 t_token			*fetch_lexer_token(t_token *token, e_parser_state type, char *data);

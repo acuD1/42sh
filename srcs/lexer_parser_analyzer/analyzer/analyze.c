@@ -65,7 +65,7 @@ void analyzer(t_core *shell)
 	head = &analyzer->job_list;
 	while (analyzer->state != A_STOP)// && (analyzer_state != 20))
 	{
-		// ft_printf("analyzer state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+		ft_printf("analyzer state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 		analyzer->analyze[analyzer->state][((t_token*)analyzer->lexer->content)->id](analyzer);
 		get_token(analyzer);
 	}
