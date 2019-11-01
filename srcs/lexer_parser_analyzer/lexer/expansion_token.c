@@ -5,6 +5,7 @@ static const t_token    quotes[] =
 	{P_DBPARENT_OPEN, "$((", 3},
 	{P_PARENT_OPEN, "$(", 2},
 	{P_BRACKET_OPEN, "${", 2},
+	{P_DOLLAR, "$", 1},
 	{P_TILDE, "~", 1},
 	{P_EXP_INTERRUPT, NULL, 0}
 };
@@ -96,6 +97,29 @@ int exp_bracket(t_lexer *lexer, e_parser_state id, int len)
 	return (index);
 }
 
+int exp_dollar(t_lexer *lexer, e_parser_state id, int len)
+{
+	char *str;
+	int index;
+
+	index = lexer->buf_pos + len;
+	str = NULL;
+	if (lexer->buff[lexer->buf_pos] == '$')
+	{
+		while ((lexer->buff[index]) && (lexer->buff[index] == '_' || ft_isdigit(lexer->buff[index]) || ft_isalpha(lexer->buff[index])))
+			index++;
+		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
+			return (0);
+		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
+			return (0);
+		init_token(&lexer->token);
+		free(str);
+		lexer->ntok++;
+		lexer->buf_pos = index;
+	}
+	return (index);
+}
+
 int exp_tilde(t_lexer *lexer, e_parser_state id, int len)
 {
 	char *str;
@@ -122,11 +146,12 @@ static int	create_expansions_token(t_lexer *lexer, e_parser_state id, int len)
 								{exp_dbparen, P_DBPARENT_OPEN, 3},
 								{exp_paren, P_PARENT_OPEN, 2},
 								{exp_bracket, P_BRACKET_OPEN, 2},
+								{exp_dollar, P_DOLLAR, 1},
 								{exp_tilde, P_TILDE, 1},
 								};
 
 	i = 0;
-	while (i < 4)
+	while (i < 5)
 	{
 		if (id == expansions[i].id && len == expansions[i].len)
 		{
