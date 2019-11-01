@@ -33,6 +33,7 @@
 void		credit(t_core *shell);
 
 // char		*init_prompt(t_read *term);
+void		init_prompt(void);
 
 void		print_opt(t_core *shell);
 void		load_prompt(t_core *shell);

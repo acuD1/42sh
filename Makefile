@@ -108,7 +108,6 @@ SRC		+=	$(S_PATH)$(EXEC)get_bin.c
 SRC		+=	$(S_PATH)$(EXEC)set_envp.c
 
 
-
 SRC		+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
 
 SRC		+=	$(S_PATH)$(LEXER)assign_token.c
@@ -134,11 +133,7 @@ SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
 
 
 
-
-
 SRC		+=	$(S_PATH)dev.c
-
-
 
 # Headers
 

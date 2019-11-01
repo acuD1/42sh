@@ -28,6 +28,7 @@ void			load_prompt(t_core *shell)
 {
 	char	*line;
 	int8_t	status;
+
 	// t_parser *parser;
 	// t_ast	*ast;
 
@@ -44,7 +45,6 @@ void			load_prompt(t_core *shell)
 		/* GNL */
 		if (!(status = ft_getnextline(STDIN_FILENO, &line)))
 			break ;
-
 		/*
 		**	[NEED REWORK] A lot of stuff happening here :
 		**	- tokens parser (for now)
