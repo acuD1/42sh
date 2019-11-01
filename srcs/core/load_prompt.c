@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/01 14:01:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/01 14:18:12 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void			load_prompt(t_core *shell)
 {
 	int8_t		status;
 	t_read		term;
-	// t_lst *tmp;
+	//t_lst *tmp;
 
 	// t_parser *parser;
 	// t_ast	*ast;
@@ -52,20 +52,9 @@ void			load_prompt(t_core *shell)
 		**	- etc ...
 		// */
 		// if (check_brackets(line))
+
 		lexer_parser_analyzer(shell, shell->buff);
-		// }
-		// if (shell->job_list)
-		// {
-		// 	tmp = shell->job_list;
-		// 	while (tmp)
-		// 	{
-		// 		ft_printjob(((t_job*)tmp->content));
-		// 		tmp = tmp->next;
-		// 	}
-		// }
-		// t_lst->content->abre_programme = ast(line);
-		// error_quotes_brackets(line);
-		// exec_process(shell, shell->env);
+		debug_analyzer(shell);
 		free_prompt(shell, shell->buff);
 	}
 	ft_strdel(&term.buffer);

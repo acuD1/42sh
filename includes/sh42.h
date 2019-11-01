@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/22 15:05:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/01 14:12:40 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,6 @@ int8_t		builtin_fc(t_core *shell);
 
 /* ###########################  TEMPORARY   #################################*/
 int8_t	exec_builtin(t_core *shell);
+void	debug_analyzer(t_core *shell);
 
 #endif

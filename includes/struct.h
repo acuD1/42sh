@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/26 15:39:48 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/01 14:11:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ typedef struct s_redir
     char            *op[2];
     // int             fds[2];
     enum parser_state  type;
-    // int             fd_flags; // flags O_RDWR O_CREAT .. 
+    // int             fd_flags; // flags O_RDWR O_CREAT ..
 }               t_redir;
 
 typedef struct            s_process
@@ -208,7 +208,7 @@ typedef struct  s_analyzer
     t_lst               *process_list;
     t_lst               *redir_list;
     t_lst               *assign_list;
-    t_lst               *tmp_list; 
+    t_lst               *tmp_list;
 }               t_analyzer;
 
 typedef struct          s_graph
@@ -233,7 +233,7 @@ typedef struct  s_lexer
 {
     char            *buff;
     e_lexer_state   status;
-    size_t          ntok;   
+    size_t          ntok;
     size_t          buf_pos;
     t_lexing        lex[NB_LEXER_STATE];
     t_lst           *tok;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2019/09/19 11:47:17 by guvillat         ###   ########.fr       */
+/*   Updated: 2019/11/01 14:34:41 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ uint8_t parser(t_lst *lexer)
 		return (FALSE);
 	tok_lst = lexer;
 	parser = ft_init_parser(parser);
+	int i = 0;
 	while (((t_token*)tok_lst->content)->id != P_END)
 	{
 		// ft_printf("parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
@@ -82,8 +83,11 @@ uint8_t parser(t_lst *lexer)
 			return (FALSE);
 			// GESTION DE LERREUR ET SUBPROMPT ET SIGNAUX
 		}
+		printf("step |%d|\n", i);
+		i++;
 		tok_lst = tok_lst->next;
 	}
-	free(parser);
+	printf("step |%d|\n", i);
+	//free(parser);
 	return (TRUE);
 }
