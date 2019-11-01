@@ -191,6 +191,13 @@ typedef struct  s_token
     size_t          data_len;
 }              t_token;
 
+typedef struct		s_expansion
+{
+	int 			(*func)(t_lexer *, e_parser_state id, int len);
+	e_parser_state 	id;
+	int 			len;
+}					t_expansion;
+
 typedef struct  s_lexer
 {
     char            *buff;

@@ -62,7 +62,7 @@ void		assignement_word_lexer(t_lexer *lexer)
 
 	i = 0;
 	if (!lexer->buff)
-		lexer->status = END;
+		lexer->status = L_END;
 	else
 	{
 		if ((i = isvalid_assignement_word(lexer->buff, lexer->buf_pos)))
@@ -70,5 +70,5 @@ void		assignement_word_lexer(t_lexer *lexer)
 		else
 			name_lexer(lexer);
 	}
-	lexer->status = START;
+	lexer->status = L_START;
 }

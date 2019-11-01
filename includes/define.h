@@ -65,12 +65,14 @@
 ** LEXER_PARSER_ANALYZER
 */
 
-# define NB_OF_OPE 15
+# define NB_OF_OPE 14
+# define NB_OF_EXP 14
 # define CHAR_INTERRUPT 			" \t<>|;&\n"
-# define OPERATORS 					"&|;><-\n" 
-# define NB_LEXER_STATE 7
-# define NB_PARSER_STATE 22
-# define NB_ANALYZER_STATE 9
+# define OPERATORS 					"&|;><-\n"
+# define EXPANSION 					"$~" // \" \'
+# define NB_LEXER_STATE 8
+# define NB_PARSER_STATE 31
+# define NB_ANALYZER_STATE 10
 # define REDIR                      P_GREAT, P_LESS
 # define REDIR_AND                  P_GREATAND, P_LESSAND
 # define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH

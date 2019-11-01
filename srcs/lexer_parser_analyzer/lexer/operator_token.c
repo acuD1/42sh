@@ -29,7 +29,7 @@ static const t_token    ope[] =
 	{P_DGREAT, ">>", 2},
 	{P_GREATAND, ">&", 2},
 	{P_GREAT, ">", 1},
-	{P_TOKEN, NULL, 0}
+	{P_OPE_INTERRUPT, NULL, 0}
 };
 
 /*
@@ -49,7 +49,7 @@ static int	create_operator_token(t_lexer *lexer, e_parser_state id, int len)
 	init_token(&lexer->token);
 	lexer->ntok++;
 	lexer->buf_pos += len;
-	lexer->status = START;
+	lexer->status = L_START;
 	return (1);
 }
 
@@ -59,20 +59,20 @@ void		operator_lexer(t_lexer *lexer)
 
 	i = 0;
 	if (!lexer->buff)
-		lexer->status = END;
-	else
 	{
-		while (ope[i].id != P_TOKEN)
-		{
-			if (!strncmp(&lexer->buff[lexer->buf_pos], ope[i].data, ope[i].data_len))
-			{
-				if (create_operator_token(lexer, ope[i].id, ope[i].data_len))
-					break;
-			}
-			i++;
-		}
-		if (i == NB_OF_OPE)
-			name_lexer(lexer);
+		lexer->status = L_END;
+		return ;
 	}
-	lexer->status = START;
+	while (ope[i].id != P_OPE_INTERRUPT)
+	{
+		if (!ft_strncmp(&lexer->buff[lexer->buf_pos], ope[i].data, ope[i].data_len))
+		{
+			if (create_operator_token(lexer, ope[i].id, ope[i].data_len))
+				break;
+		}
+		i++;
+	}
+	if (i == NB_OF_OPE)
+		name_lexer(lexer);
+	lexer->status = L_START;
 }

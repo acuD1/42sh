@@ -21,14 +21,12 @@ void		start_lexer(t_lexer *lexer)
 {
 	if (lexer->buff[lexer->buf_pos] == '\0')
 	{
-		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, P_NEWLINE, "\n"), sizeof(t_token)))))
-			return;
+		ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, P_NEWLINE, "\n"), sizeof(t_token)));
 		init_token(&lexer->token);
-		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, P_END, "(null)"), sizeof(t_token)))))
-			return;
+		ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, P_END, "(null)"), sizeof(t_token)));
 		init_token(&lexer->token);
 		lexer->ntok++;
-		lexer->status = END;
+		lexer->status = L_END;
 	}
 	else if (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 	{
@@ -36,15 +34,15 @@ void		start_lexer(t_lexer *lexer)
 			lexer->buf_pos++;
 	}
 	else if (ft_strchr(OPERATORS, lexer->buff[lexer->buf_pos]))
-		lexer->status = OPERATOR;
+		lexer->status = L_OPERATOR;
 	else if (ft_isdigit(lexer->buff[lexer->buf_pos]))
-		lexer->status = IO_NUMBER;
+		lexer->status = L_IO_NUMBER;
 	else if (!ft_strcmp(&lexer->buff[lexer->buf_pos], "\n"))
-		lexer->status = NEWLINE;
+		lexer->status = L_NEWLINE;
 	else if (ft_strchr(&lexer->buff[lexer->buf_pos], '='))
-		lexer->status = ASSIGNEMENT_WORD;
+		lexer->status = L_ASSIGNEMENT_WORD;
 	else
-		lexer->status = NAME;
+		lexer->status = L_NAME;
 }
 
 /*
@@ -53,7 +51,7 @@ void		start_lexer(t_lexer *lexer)
 
 void		end_lexer(t_lexer *lexer)
 {
-	lexer->status = END;
+	lexer->status = L_END;
 }
 
 /*
@@ -74,10 +72,10 @@ t_lst *lexer(char *line)
 		return (NULL);
 	lexer = init_lexer(line);
 	head = &lexer->tok;
-	while (lexer->status != END)
+	while (lexer->status != L_END)
 		lexer->lex[lexer->status](lexer);
 	lexer->tok = *head;
-	// ft_printtoklist(lexer);
+	ft_printtoklist(lexer);
 	// free(lexer);
 	return (*head);
 }

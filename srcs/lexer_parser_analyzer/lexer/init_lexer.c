@@ -14,13 +14,14 @@
 
 static void		ft_init_lex(t_lexer *lexer)
 {
-	lexer->lex[START] = start_lexer;
-	lexer->lex[OPERATOR] = operator_lexer;
-	lexer->lex[NAME] = name_lexer;
-	lexer->lex[IO_NUMBER] = number_lexer;
-	lexer->lex[NEWLINE] = newline_lexer;
-	lexer->lex[ASSIGNEMENT_WORD] = assignement_word_lexer;
-	lexer->lex[END] = end_lexer;
+	lexer->lex[L_START] = start_lexer;
+	lexer->lex[L_OPERATOR] = operator_lexer;
+	lexer->lex[L_NAME] = name_lexer;
+	lexer->lex[L_IO_NUMBER] = number_lexer;
+	lexer->lex[L_NEWLINE] = newline_lexer;
+	lexer->lex[L_ASSIGNEMENT_WORD] = assignement_word_lexer;
+	lexer->lex[L_EXPANSION] = expansion_lexer;
+	lexer->lex[L_END] = end_lexer;
 }
 
 /*
@@ -37,7 +38,7 @@ t_lexer			*init_lexer(char *line)
 	if (!(new = (t_lexer*)malloc(sizeof(t_lexer))))
 		return (NULL);
 	new->buff = line; //FREE LINE et dup le buff
-	new->status = START;
+	new->status = L_START;
 	new->ntok = 0;
 	new->buf_pos = 0;
 	new->tok = NULL;
