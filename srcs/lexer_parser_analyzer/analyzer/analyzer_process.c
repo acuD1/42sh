@@ -6,6 +6,7 @@ void init_process(t_process *new)
 	new->av = NULL;
 	new->type = P_START;
 	new->redir_list = NULL;
+	new->assign_list = NULL;
 }
 
 t_process *fetch_process(t_process *process)
@@ -27,15 +28,24 @@ t_process *fetch_process(t_process *process)
 		new->redir_list = process->redir_list;
 	else
 		new->redir_list = NULL;
+	if (process->assign_list)
+		new->assign_list = process->assign_list;
+	else
+		new->assign_list = NULL;
 	return (new);
 }
 
 void process_analyze(t_analyzer *analyzer)
 {
 	// ft_printf("CREATE PROCESS state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	if (&analyzer->process.av[0] && analyzer->assign_list)
+		ft_lstappend(&analyzer->process.assign_list, analyzer->assign_list);
+	else
+		ft_lstappend(&analyzer->tmp_list, analyzer->assign_list);
 	analyzer->process.redir_list = analyzer->redir_list;
 	ft_lstappend(&analyzer->process_list, ft_lstnew(fetch_process(&analyzer->process), sizeof(t_process)));
 	analyzer->redir_list = NULL;
+	analyzer->assign_list = NULL;
 	init_process(&analyzer->process);
 	if (((t_token*)analyzer->lexer->next->content)->id == 20) //&& !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
 		analyzer->state = A_STOP;

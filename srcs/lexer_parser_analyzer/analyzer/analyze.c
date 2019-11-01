@@ -4,7 +4,7 @@ void ionbr_analyze(t_analyzer *analyzer)
 {
 	// ft_printf("IONBR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	analyzer->state = A_IONUMBER;
-	analyzer->job.command = fill_cmd_job(analyzer);
+	analyzer->job.command = fill_cmd_job(analyzer, 0);
 	analyzer->redir.op[0] = ft_strdup(((t_token*)analyzer->lexer->content)->data);
 	analyzer->redir.type = ((t_token*)analyzer->lexer->content)->id;
 	// 	// analyzer->redir->ionumber = ft_atoi(((t_token*)lexer->content)->data);
@@ -32,13 +32,13 @@ void separator_analyze(t_analyzer *analyzer)
 	// ft_printf("SEPARATOR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	if (state == P_SEMICOLON || state == P_AND) //jjob
 	{
-		analyzer->job.command = fill_cmd_job(analyzer);
+		analyzer->job.command = fill_cmd_job(analyzer, 0);
 		analyzer->job.type = state;
 		job_analyze(analyzer);
 	}
-	else if (state == P_ORIF || state == P_ANDIF)
+	else if (state == P_ORIF || state == P_ANDIF || state == P_PIPE)
 	{
-		analyzer->job.command = fill_cmd_job(analyzer);
+		analyzer->job.command = fill_cmd_job(analyzer, 1);
 		analyzer->process.type = state;
 		process_analyze(analyzer);
 	}
@@ -70,5 +70,5 @@ void analyzer(t_core *shell)
 		get_token(analyzer);
 	}
 	shell->job_list = *head;
-	shell->assign_list = analyzer->assign_list;
+	shell->assign_list = analyzer->tmp_list;
 }

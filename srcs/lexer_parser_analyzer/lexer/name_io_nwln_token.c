@@ -19,10 +19,10 @@
 void		name_lexer(t_lexer *lexer)
 {
 	int		i;
-	char	*buf;
+	char 	*str;
 
 	i = 0;
-	buf = NULL;
+	str = NULL;
 	if (lexer->buff == '\0')
 		lexer->status = END;
 	else
@@ -30,15 +30,15 @@ void		name_lexer(t_lexer *lexer)
 		i = lexer->buf_pos;
 		while (!ft_strchr(CHAR_INTERRUPT, lexer->buff[i]) && lexer->buff[i])
 			i++;
-		if(!(buf = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
+		if(!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
 			return;
-		// if(!(ft_add_token(&lexer->tok, P_WORD, buf)))
-			// return;
-		ft_lstadd(&lexer->tok, ft_create_token(buf, P_WORD));
+		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, P_WORD, str), sizeof(t_token)))))
+			return ;
+		free(str);
+		init_token(&lexer->token);
 		lexer->ntok++;
 		lexer->buf_pos = i;
 		lexer->status = START;
-		free(buf);
 	}
 }
 
@@ -49,26 +49,24 @@ void		name_lexer(t_lexer *lexer)
 static int	isvalid_ionumber(t_lexer *lexer)
 {
 	int 	i;
-	char	*buf;
+	char 	*str;
 
+	str = NULL;
 	i = lexer->buf_pos;
-	buf = NULL;
 	if (!lexer->buff[i] || !ft_isdigit(lexer->buff[i]))
 		return (0);
 	while (ft_isdigit(lexer->buff[i]) && lexer->buff[i])
 			i++;
 	if ((lexer->buff[i] == '<' || lexer->buff[i] == '>'))
 	{
-		if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
+		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
 			return (0);
-		// if(!(ft_add_token(&lexer->tok, P_IONUMBER, buf)))
-			// return (0);
-		// ft_lstadd(&lexer->tok, ft_lstnew(lexer_token_set(&lexer->token, P_IONUMBER, buf), sizeof(t_token)));
-		ft_lstadd(&lexer->tok, ft_create_token(buf, P_IONUMBER));
-		lexer->io_here = ft_atoi(buf);
+		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, P_IONUMBER, str), sizeof(t_token)))))
+			return (0);
+		free(str);
+		init_token(&lexer->token);
 		lexer->buf_pos = i;
 		lexer->ntok++;
-		free(buf);
 	}
 	else
 		return (0);
@@ -96,24 +94,23 @@ void		number_lexer(t_lexer *lexer)
 
 void		newline_lexer(t_lexer *lexer)
 {
-	char	*buf;
+	char *str;
 
-	buf = NULL;
+	str = NULL;
 	if (!lexer->buff[lexer->buf_pos])
 		lexer->status = END;
 	else
 	{
 		if (lexer->buff[lexer->buf_pos] == '\n')
 		{
-			if (!(buf = ft_strsub(lexer->buff, lexer->buf_pos, 1)))
+			if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, 1)))
 				return;
-			// if (!(ft_add_token(&lexer->tok, P_NEWLINE, buf)))
-				// return;
-			// ft_lstadd(&lexer->tok, ft_lstnew(lexer_token_set(&lexer->token, P_NEWLINE, buf), sizeof(t_token)));
-			ft_lstadd(&lexer->tok, ft_create_token(buf, P_NEWLINE));
+			if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, P_NEWLINE, str), sizeof(t_token)))))
+				return ;
+			free(str);
+			init_token(&lexer->token);
 			lexer->ntok++;
 			lexer->buf_pos++;
-			free(buf);
 		}
 	}
 	lexer->status = END;

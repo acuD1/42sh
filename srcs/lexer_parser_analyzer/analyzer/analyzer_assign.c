@@ -27,16 +27,25 @@ t_db *fetch_assign(t_db *assign)
 
 void ass_analyze(t_analyzer *analyzer)
 {
+	// if (!analyzer->.av)
 	ft_lstappend(&analyzer->assign_list, ft_lstnew(fetch_assign(&analyzer->db), sizeof(t_db)));
+	// else
+		// ft_lstappend(&analyzer.process->assign_list, ft_lstnew(fetch_assign(&analyzer->db), sizeof(t_db)));
+	// if (((t_kone*)analyzer->lexer->next->content)->id == P_WORD)
+	//module assign qui check si existe et possible
 	init_assign(&analyzer->db);
-	// process_analyze(analyzer); // ou discard ?
 }
 
 void assign_analyze(t_analyzer *analyzer)
 {
-	ft_printf("ASSIGN state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
-	analyzer->job.command = fill_cmd_job(analyzer);
-	analyzer->db.key = ft_strdup(((t_token*)analyzer->lexer->content)->data);
-	analyzer->process.type = ((t_token*)analyzer->lexer->content)->id;
-	analyzer->state = A_ASSIGN;
+	// ft_printf("ASSIGN state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	analyzer->job.command = fill_cmd_job(analyzer, 0);
+	if (analyzer->state != A_WORD && ((t_token*)analyzer->lexer->next->content)->id == P_WORD)
+	{
+		analyzer->db.key = ft_strdup(((t_token*)analyzer->lexer->content)->data);
+		analyzer->process.type = ((t_token*)analyzer->lexer->content)->id;
+		analyzer->state = A_ASSIGN;
+	}
+	else
+		analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->content)->data);
 }

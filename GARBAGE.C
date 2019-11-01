@@ -17,7 +17,78 @@
 // 	}
 // 	return(str);
 // }
+// t_lst	*ft_create_token(char *data, e_parser_state opeid)
+// {
+// 	t_lst		*new;
+// 	t_token		*tok;
 
+// 	tok = NULL;
+// 	if (!(new = (t_lst*)malloc(sizeof(t_lst))))
+// 		return (NULL);
+// 	new->next = NULL;
+// 	new->prev = NULL;
+// 	if (!(tok = (t_token*)malloc(sizeof(t_token))))
+// 		return (NULL);
+// 	new->content = (void*)fetch_lexer_token(tok, opeid, data);
+// 	return (new);
+// }
+
+
+/*
+** CREE LES TOKENS LEXER 
+*/
+
+// t_lst			*ft_add_token(t_lst **curr, e_parser_state opeid, char *data)
+// {
+// 	t_lst		*tmp;
+// 	t_lst		*new;
+
+// 	if (!(*curr))
+// 		return (*curr = ft_create_token(data, opeid));
+// 	if ((*curr)->next)
+// 	{
+// 		new = (*curr);
+// 		while (new->next)
+// 			new = new->next;
+// 		tmp = ft_create_token(data, opeid);
+// 		tmp->prev = new;
+// 		tmp->next = NULL;
+// 		new->next = tmp;
+// 	}
+// 	else
+// 	{
+// 		tmp = *curr;
+// 		tmp->next = ft_create_token(data, opeid);
+// 		tmp->next->prev = tmp;
+// 	}
+// 	return (*curr);
+// }
+
+// t_lst			*ft_lstadd(t_lst **curr, t_lst *new)
+// {
+// 	t_lst		*tmp;
+
+// 	if (!(*curr))
+// 		return (*curr = new);
+// 	if ((*curr)->next)
+// 	{
+// 		tmp = (*curr);
+// 		while (tmp->next)
+// 			tmp = tmp->next;
+// 		new->prev = tmp;
+// 		new->next = NULL;
+// 		tmp->next = new;
+// 	}
+// 	else
+// 	{
+// 		tmp = *curr;
+// 		tmp->next = new;
+// 		new->prev = tmp;
+// 		new->next = NULL;
+
+// 	}
+// 	return (*curr);
+// }
 	// analyzer->state = A_REDIRECT;
 	// if (((t_token*)lexer->tok->content)->id == P_GREAT)
 	// 	analyzer->fd_flags = O_RDWR + O_CREAT + O_TRUNC;

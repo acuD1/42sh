@@ -15,6 +15,8 @@
 
 # include "sh42.h"
 
+void lexer_parser_analyzer(t_core *shell, char *line);
+
 /*
 **  ANALYZER
 */
@@ -55,13 +57,16 @@ void        ft_free_processlist(t_lst **head);
 void        ft_free_redirlist(t_lst **head);
 void        ft_free_redir(t_redir *redir);
 
-char        *fill_cmd_job(t_analyzer *analyzer);
+char        *fill_cmd_job(t_analyzer *analyzer, int flag);
+char 		**fill_cmd_process(char *str);
+char 		**ft_add_arg_cmd_process(char **tablo, char *str);
 
 void        ft_printtab(char **cmd);
 void        ft_printredir(t_redir *redir);
 void        ft_printprocess(t_process *process);
 void        ft_printjob(t_job *job);
 void        ft_printjoblst(t_lst *list);
+void 		ft_printassignlist(t_lst *lst);
 
 /*
 **  PARSER
@@ -80,8 +85,10 @@ t_parser    *ft_init_graph(t_parser *parser);
 **  LEXER
 */
 
+void 			init_token(t_token *token);
+void 			ft_freelexerlist(t_lst **lst);
 t_lst           *ft_lstadd(t_lst **curr, t_lst *new);
-t_lst 			*lexer(char *line);
+t_lst	 		*lexer(char *line);
 int				ft_isdigit(int c);
 int 			ft_isalpha(int c);
 void			start_lexer(t_lexer *lexer);
@@ -94,7 +101,7 @@ void			operator_lexer(t_lexer *lexer);
 void			ft_printtoklist(t_lexer *lexer);
 t_lst			*ft_add_token(t_lst **curr, e_parser_state opeid, char *data);
 t_lexer			*init_lexer(char *line);
-t_token 		*lexer_token_set(t_token *token, e_parser_state opeid, char *data);
+t_token			*fetch_lexer_token(t_token *token, e_parser_state type, char *data);
 t_lst			*ft_create_token(char *data, e_parser_state opeid);
 
 #endif
