@@ -50,10 +50,12 @@ void		expansion_lexer(t_lexer *lexer)
 	{
 		if (!ft_strncmp(&lexer->buff[lexer->buf_pos], quotes[i].data, quotes[i].data_len))
 		{
-			// ft_printf("[%s] {%u   %s| %d} \n", &lexer->buff[lexer->buf_pos], quotes[i].id, quotes[i].data, i);
 			if (create_expansions_token(lexer, quotes[i].id))
 				return;
 		}
 		i++;
 	}
+	if (i == NB_OF_EXP)
+		word_lexer(lexer);
+	lexer->status = L_START;
 }

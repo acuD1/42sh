@@ -65,8 +65,8 @@
 ** LEXER_PARSER_ANALYZER
 */
 
-# define NB_OF_OPE 14
-# define NB_OF_EXP 14
+# define NB_OF_OPE 15
+# define NB_OF_EXP 5
 # define CHAR_INTERRUPT 			" \t<$>|;&\n"
 # define OPERATORS 					"&|;><-\n"
 # define EXPANSION 					"$~" // \" \'

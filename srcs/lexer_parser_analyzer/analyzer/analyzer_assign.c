@@ -38,14 +38,20 @@ void ass_analyze(t_analyzer *analyzer)
 
 void assign_analyze(t_analyzer *analyzer)
 {
-	// ft_printf("ASSIGN state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	ft_printf("ASSIGN state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	analyzer->job.command = fill_cmd_job(analyzer, 0);
-	if (analyzer->state != A_WORD && ((t_token*)analyzer->lexer->next->content)->id == P_WORD)
+	if (((t_token*)analyzer->lexer->content)->id == P_ASSIGN && analyzer->state != A_WORD)
 	{
-		analyzer->db.key = ft_strdup(((t_token*)analyzer->lexer->content)->data);
+		// if (!analyzer->db.key)
+			analyzer->db.key = ft_strdup(((t_token*)analyzer->lexer->content)->data);
+		// else
+			// analyzer->db.key = ft_strjoinf(analyzer->db.key ,((t_token*)analyzer->lexer->content)->data, 1);
 		analyzer->process.type = ((t_token*)analyzer->lexer->content)->id;
 		analyzer->state = A_ASSIGN;
 	}
 	else
+	{
 		analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->content)->data);
+		analyzer->state = A_WORD;
+	}
 }
