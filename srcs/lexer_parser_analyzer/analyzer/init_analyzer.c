@@ -118,6 +118,8 @@ t_analyzer *init_analyze(t_analyzer *analyzer, t_core *shell)
 	analyzer->lexer = shell->lexer;
 	analyzer->job_list = NULL;
 	analyzer->assign_list = NULL;
+	analyzer->redir_list = NULL;
+	analyzer->process_list = NULL;
 	analyzer->tmp_list = NULL;
 	return (analyzer);
 }

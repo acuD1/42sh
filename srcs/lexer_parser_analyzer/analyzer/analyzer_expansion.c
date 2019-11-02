@@ -1,6 +1,6 @@
 #include "sh42.h"
 
-void expansion_analyze(t_analyzer *analyzer)
+t_analyzer *expansion_analyze(t_analyzer *analyzer)
 {
 	char *tmp;
 
@@ -40,5 +40,5 @@ void expansion_analyze(t_analyzer *analyzer)
 
 	}
 	// cmd_analyze(analyzer);
-
+	return (analyzer);
 }

@@ -36,24 +36,23 @@ static const t_token    ope[] =
 ** STATE CREANT LES TOKENS DE LA STRUCT OPE CI DESSUS
 */
 
-static int	create_operator_token(t_lexer *lexer, e_parser_state id, int len)
+static int	create_operator_token(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token)
 {
 	char *str;
 
 	str = NULL;
 	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, len)))
 		return (0);
-	if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
+	if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
 		return (0);
 	free(str);
-	init_token(&lexer->token);
 	lexer->ntok++;
 	lexer->buf_pos += len;
 	lexer->status = L_START;
 	return (1);
 }
 
-void		operator_lexer(t_lexer *lexer)
+t_lst		*operator_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	int 	i;
 
@@ -61,18 +60,19 @@ void		operator_lexer(t_lexer *lexer)
 	if (!lexer->buff)
 	{
 		lexer->status = L_END;
-		return ;
+		return(lexer_token);
 	}
 	while (ope[i].id != P_OPE_INTERRUPT)
 	{
 		if (!ft_strncmp(&lexer->buff[lexer->buf_pos], ope[i].data, ope[i].data_len))
 		{
-			if (create_operator_token(lexer, ope[i].id, ope[i].data_len))
+			if (create_operator_token(lexer, ope[i].id, ope[i].data_len, lexer_token))
 				break;
 		}
 		i++;
 	}
 	if (i == NB_OF_OPE)
-		word_lexer(lexer);
+		lexer_token = word_lexer(lexer, lexer_token);
 	lexer->status = L_START;
+	return(lexer_token);
 }

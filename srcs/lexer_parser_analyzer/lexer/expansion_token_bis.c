@@ -1,6 +1,6 @@
 #include "sh42.h"
 
-int exp_dbparen_lexer(t_lexer *lexer, e_parser_state id, int len)
+int exp_dbparen_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token)
 {
 	char *str;
 	int index;
@@ -15,9 +15,8 @@ int exp_dbparen_lexer(t_lexer *lexer, e_parser_state id, int len)
 		index += 2;
 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
 			return (0);
-		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
+		if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token ,id, str), sizeof(t_token)))))
 			return (0);
-		init_token(&lexer->token);
 		free(str);
 		lexer->ntok++;
 		lexer->buf_pos = index;
@@ -25,7 +24,7 @@ int exp_dbparen_lexer(t_lexer *lexer, e_parser_state id, int len)
 	return (index);
 }
 
-int exp_paren_lexer(t_lexer *lexer, e_parser_state id, int len)
+int exp_paren_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token)
 {
 	char *str;
 	int index;
@@ -40,9 +39,8 @@ int exp_paren_lexer(t_lexer *lexer, e_parser_state id, int len)
 		index++;
 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
 			return (0);
-		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
+		if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token ,id, str), sizeof(t_token)))))
 			return (0);
-		init_token(&lexer->token);
 		free(str);
 		lexer->ntok++;
 		lexer->buf_pos = index;
@@ -50,7 +48,7 @@ int exp_paren_lexer(t_lexer *lexer, e_parser_state id, int len)
 	return (index);
 }
 
-int exp_bracket_lexer(t_lexer *lexer, e_parser_state id, int len)
+int exp_bracket_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token)
 {
 	char *str;
 	int index;
@@ -65,9 +63,8 @@ int exp_bracket_lexer(t_lexer *lexer, e_parser_state id, int len)
 		index++;
 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
 			return (0);
-		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
+		if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token ,id, str), sizeof(t_token)))))
 			return (0);
-		init_token(&lexer->token);
 		free(str);
 		lexer->ntok++;
 		lexer->buf_pos = index;
@@ -75,7 +72,7 @@ int exp_bracket_lexer(t_lexer *lexer, e_parser_state id, int len)
 	return (index);
 }
 
-int exp_dollar_lexer(t_lexer *lexer, e_parser_state id, int len)
+int exp_dollar_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token)
 {
 	char *str;
 	int index;
@@ -97,9 +94,8 @@ int exp_dollar_lexer(t_lexer *lexer, e_parser_state id, int len)
 		}
 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
 			return (0);
-		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
+		if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token ,id, str), sizeof(t_token)))))
 			return (0);
-		init_token(&lexer->token);
 		free(str);
 		lexer->ntok++;
 		lexer->buf_pos = index;
@@ -107,7 +103,7 @@ int exp_dollar_lexer(t_lexer *lexer, e_parser_state id, int len)
 	return (index);
 }
 
-int exp_tilde_lexer(t_lexer *lexer, e_parser_state id, int len)
+int exp_tilde_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token)
 {
 	char *str;
 
@@ -116,9 +112,8 @@ int exp_tilde_lexer(t_lexer *lexer, e_parser_state id, int len)
 	{
 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, len)))
 			return (0);
-		if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
+		if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token ,id, str), sizeof(t_token)))))
 			return (0);
-		init_token(&lexer->token);
 		free(str);
 		lexer->ntok++;
 		lexer->buf_pos += len;

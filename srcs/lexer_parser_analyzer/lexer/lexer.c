@@ -17,14 +17,12 @@
 ** CHANGE LE STATUS DE LA MACHINE EN FONCTION DU CHAR IDENTIFIÉ
 */
 
-void		start_lexer(t_lexer *lexer)
+t_lst		*start_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	if (lexer->buff[lexer->buf_pos] == '\0')
 	{
-		ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, P_NEWLINE, "\n"), sizeof(t_token)));
-		init_token(&lexer->token);
-		ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, P_END, "(null)"), sizeof(t_token)));
-		init_token(&lexer->token);
+		ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_NEWLINE, "\n"), sizeof(t_token)));
+		ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_END, "(null)"), sizeof(t_token)));
 		lexer->ntok++;
 		lexer->status = L_END;
 	}
@@ -43,15 +41,17 @@ void		start_lexer(t_lexer *lexer)
 		lexer->status = L_ASSIGNEMENT_WORD;
 	else
 		lexer->status = L_NAME;
+	return(lexer_token);
 }
 
 /*
 ** ETAT DE TRANSITION VERS LE PARSER ?
 */
 
-void		end_lexer(t_lexer *lexer)
+t_lst		*end_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	lexer->status = L_END;
+	return(lexer_token);
 }
 
 /*
@@ -60,22 +60,24 @@ void		end_lexer(t_lexer *lexer)
 
 t_lst *lexer(char *line)
 {
-	t_lexer	*lexer;
+	t_lexer	lexer;
 	t_lst **head;
+	t_lst *lexer_token;
 
 	head = NULL;
+	lexer_token = NULL;
 	if (line == NULL)
 		return (NULL);
 	while (*line == '\t' || *line == ' ')
 		line++;
 	if (*line == '\0')
 		return (NULL);
-	lexer = init_lexer(line);
-	head = &lexer->tok;
-	while (lexer->status != L_END)
-		lexer->lex[lexer->status](lexer);
-	lexer->tok = *head;
-	// ft_printtoklist(lexer);
-	// free(lexer);
+	init_lexer(line, &lexer);
+	head = &lexer_token;
+	while (lexer.status != L_END)
+		lexer_token = lexer.lex[lexer.status](&lexer, *head);
+	lexer_token = *head;
+	// ft_printtoklist(lexer_token);
+	init_lexer(NULL, &lexer);
 	return (*head);
 }

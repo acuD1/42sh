@@ -44,11 +44,13 @@ uint8_t parser(t_lst *lexer)
 {
 	t_parser	*parser;
 	t_lst 		*tok_lst;
+	t_lst 		**head;
 
 	parser = NULL;
 	if (!lexer)
 		return (FALSE);
 	tok_lst = lexer;
+	head = &lexer;
 	parser = ft_init_parser(parser);
 	while (((t_token*)tok_lst->content)->id != P_END)
 	{
@@ -61,6 +63,7 @@ uint8_t parser(t_lst *lexer)
 		}
 		tok_lst = tok_lst->next;
 	}
+	lexer = *head;
 	free(parser);
 	return (TRUE);
 }

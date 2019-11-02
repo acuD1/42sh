@@ -26,7 +26,7 @@ t_redir *fetch_redir(t_redir *redir)
 	return (new);
 }
 
-void redir_analyze(t_analyzer *analyzer)
+t_analyzer *redir_analyze(t_analyzer *analyzer)
 {
 	// ft_printf("CREATE REDIR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	ft_lstappend(&analyzer->redir_list, ft_lstnew(fetch_redir(&analyzer->redir), sizeof(t_redir)));
@@ -35,12 +35,14 @@ void redir_analyze(t_analyzer *analyzer)
 		analyzer->state = A_STOP;
 	else
 		analyzer->state = A_WORD;
+	return (analyzer);
 }
 
-void redirect_analyze(t_analyzer *analyzer)
+t_analyzer *redirect_analyze(t_analyzer *analyzer)
 {
 	// ft_printf("REDIRECT state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	analyzer->job.command = fill_cmd_job(analyzer, 1);
 	analyzer->redir.type = ((t_token*)analyzer->lexer->content)->id;
 	analyzer->state = A_REDIRECT;
+	return (analyzer);
 }

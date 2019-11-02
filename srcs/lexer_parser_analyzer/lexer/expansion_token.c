@@ -10,7 +10,7 @@ static const t_token    quotes[] =
 	{P_EXP_INTERRUPT, NULL, 0}
 };
 
-static int	create_expansions_token(t_lexer *lexer, e_parser_state id)
+static int	create_expansions_token(t_lexer *lexer, e_parser_state id, t_lst *lexer_token)
 {	
 	int i;
 	t_expansion expansions[] = {
@@ -26,17 +26,17 @@ static int	create_expansions_token(t_lexer *lexer, e_parser_state id)
 	{
 		if (id == expansions[i].id)
 		{
-			if ((expansions[i].func(lexer, id, expansions[i].len)))
+			if ((expansions[i].func(lexer, id, expansions[i].len, lexer_token)))
 				return (1);
 			else
-				word_lexer(lexer);
+				lexer_token = word_lexer(lexer, lexer_token);
 		}
 		i++;
 	}
 	return (0);
 }
 
-void		expansion_lexer(t_lexer *lexer)
+t_lst		*expansion_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	int 	i;
 
@@ -44,18 +44,19 @@ void		expansion_lexer(t_lexer *lexer)
 	if (!lexer->buff)
 	{
 		lexer->status = L_END;
-		return ;
+		return(lexer_token);
 	}
 	while (quotes[i].id != P_EXP_INTERRUPT)
 	{
 		if (!ft_strncmp(&lexer->buff[lexer->buf_pos], quotes[i].data, quotes[i].data_len))
 		{
-			if (create_expansions_token(lexer, quotes[i].id))
-				return;
+			if (create_expansions_token(lexer, quotes[i].id, lexer_token))
+				return (lexer_token);
 		}
 		i++;
 	}
 	if (i == NB_OF_EXP)
-		word_lexer(lexer);
+		lexer_token = word_lexer(lexer, lexer_token);
 	lexer->status = L_START;
+	return(lexer_token);
 }

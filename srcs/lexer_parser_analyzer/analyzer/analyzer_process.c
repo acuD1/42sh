@@ -17,7 +17,7 @@ t_process *fetch_process(t_process *process)
 	if (!process)
 		return (NULL);
 	if (process->av)
-		new->av = ft_tabcopy(new->av, process->av);
+		new->av = process->av;
 	else
 		new->av = NULL;
 	if (process->type)
@@ -35,10 +35,10 @@ t_process *fetch_process(t_process *process)
 	return (new);
 }
 
-void process_analyze(t_analyzer *analyzer)
+t_analyzer *process_analyze(t_analyzer *analyzer)
 {
 	// ft_printf("CREATE PROCESS state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
-	if (&analyzer->process.av[0] && analyzer->assign_list)
+	if (analyzer->assign_list)
 		ft_lstappend(&analyzer->process.assign_list, analyzer->assign_list);
 	else
 		ft_lstappend(&analyzer->tmp_list, analyzer->assign_list);
@@ -51,4 +51,5 @@ void process_analyze(t_analyzer *analyzer)
 		analyzer->state = A_STOP;
 	else
 		analyzer->state = A_SEPARATOR;
+	return (analyzer);
 }

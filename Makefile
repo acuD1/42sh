@@ -160,7 +160,7 @@ vpath %.h $(H_PATH)
 
 # Variables
 
-C_GCC = gcc $(CFLAG)
+C_GCC = gcc -g $(CFLAG)
 IFLAGS = $(addprefix -I, $(H_PATH))
 CMPLC = $(C_GCC) -c $(IFLAGS)
 CMPLO = $(C_GCC) -o

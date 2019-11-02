@@ -29,29 +29,18 @@ static void		ft_init_lex(t_lexer *lexer)
 ** C MARKÉ DECU
 */
 
-t_lexer			*init_lexer(char *line)
+void init_lexer(char *line, t_lexer *new)
 {
-	t_lexer		*new;
-
 	if (!line)
-		return (NULL);
-	if (!(new = (t_lexer*)malloc(sizeof(t_lexer))))
-		return (NULL);
+		return ;
 	new->buff = line; //FREE LINE et dup le buff
 	new->status = L_START;
 	new->ntok = 0;
 	new->buf_pos = 0;
-	new->tok = NULL;
+	new->token.data = NULL;
+	new->token.id = P_ERROR;
 	ft_init_lex(new);
-	init_token(&new->token);
 	// ft_init_machine(new->machina);
-	return (new);
-}
-
-void 			init_token(t_token *token)
-{
-	token->data = NULL;
-	token->id = P_ERROR;
 }
 
 t_token			*fetch_lexer_token(t_token *token, e_parser_state type, char *data)
@@ -60,9 +49,7 @@ t_token			*fetch_lexer_token(t_token *token, e_parser_state type, char *data)
 
 	new = token;
 	new->id = type;
-	if (data)
-		new->data = ft_strdup(data);
-	else
+	if (!(new->data = ft_strdup(data)))
 		new->data = NULL;
 	if (new->data)
 		new->data_len = ft_strlen(new->data);
