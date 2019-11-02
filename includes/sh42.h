@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/01 14:12:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/02 21:26:23 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int8_t		edit_var(t_core *shell, char *name, char *value, u_int8_t var_type);
 
 void		exec_process(t_core *shell, t_lst *env);
 void		exec_handler(t_core *shell, u_int8_t handler);
-char		*get_bin(t_core *shell, t_lst *env);
+char		*get_bin(t_core *shell, t_lst *process);
 char		**set_envp(t_core *shell);
 
 /*
@@ -77,7 +77,7 @@ char		**set_envp(t_core *shell);
 */
 
 u_int32_t	get_hash(char *line, u_int32_t size);
-int8_t		locate_hash(t_core *shell, t_hash *hash);
+int8_t		locate_hash(t_core *shell, t_lst *process);
 int8_t		add_hash_map(t_core *shell, t_hash *hash);
 int8_t		resize_hash_map(t_core *shell, t_hash *hash);
 void		free_hash_map(t_hash *hash);
@@ -99,12 +99,13 @@ void		print_hash_map(t_hash *hash);
 **	===========================================================================
 */
 
-void		print_usage(char *name, int c, char *usage);
 t_core		*get_core(t_core *core);
-int			check_invalid_identifiers(char *arg, char *exceptions);
-char		*get_abs_path(char *path);
-void		ft_perror(const char *s, const int errnum);
 int8_t		ft_access(char *path, int mode);
+int8_t		is_a_dir(char *path)
+void		print_usage(char *name, int c, char *usage);
+void		ft_perror(const char *s, const int errnum);
+char		*get_abs_path(char *path);
+int			check_invalid_identifiers(char *arg, char *exceptions);
 
 /*
 **	===========================================================================

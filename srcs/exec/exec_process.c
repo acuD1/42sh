@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/14 14:48:45 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/01 19:46:38 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,30 @@
 **	a temporary environnement if we use the env builtin.
 */
 
+int8_t	exec_process(t_core *shell, t_lst *process)
+{
+	pid_t	pid;
+
+	if (access(shell->bin, X_OK) == FAILURE)
+		return (exec_handler(shell, PERM_ERROR));
+	if ((child = fork()) < 0)
+		return (exec_handler(shell, FORK_ERROR));
+	
+}
+
+int8_t	call_bin(t_core *shell, t_lst *process)
+{
+	int		accessibility;
+
+	accessibility = 0;
+	//REDIRECTIONS
+	if ((accessibility = ft_access(process->))
+	
+}
+
 void		exec_process(t_core *shell, t_lst *env)
 {
 	char	**envp; // envp formated for excve
-	pid_t	child;	// child pid after fork
 	int		status;	// status for waitpid
 
 	envp = NULL;
@@ -36,10 +56,6 @@ void		exec_process(t_core *shell, t_lst *env)
 	*/
 	if (shell->bin == NULL)
 		return (exec_handler(shell, BIN_ERROR));
-	if (access(shell->bin, X_OK) == FAILURE)
-		return (exec_handler(shell, PERM_ERROR));
-	if ((child = fork()) < 0)
-		return (exec_handler(shell, FORK_ERROR));
 
 	/*
 	**	set_envp format a table of environement for execve.

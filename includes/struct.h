@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/01 14:11:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/02 16:02:13 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,15 +173,16 @@ typedef struct s_redir
 
 typedef struct            s_process
 {
-    t_lst               *redir_list;
-    char                **av;
-    enum parser_state  type;
+    enum parser_state	type;
+    t_lst				*redir_list;
+    char				**av;
+	char				*bin;
     // char                **env;
     // uint8_t                completed;
     // uint8_t                stopped;
     // pid_t                pid;
     // int                    status;
-    t_lst 				*assign_list;
+    t_lst				*assign_list;
 }                        t_process;
 
 typedef struct s_job
