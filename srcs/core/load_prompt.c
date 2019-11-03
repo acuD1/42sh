@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/03 15:11:00 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/03 15:16:47 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void			load_prompt(t_core *shell)
 		/* DEBUG */
 		// print_tokens(shell);
 
-		lexer_parser_analyzer(shell, shell->buff);
 		//debug_analyzer(shell);
 		free_prompt(shell, shell->buff);
 	}
