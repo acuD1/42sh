@@ -117,6 +117,8 @@ SRC		+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
 
 SRC		+=	$(S_PATH)$(LEXER)assign_token.c
 SRC		+=	$(S_PATH)$(LEXER)init_lexer.c
+SRC		+=	$(S_PATH)$(LEXER)expansion_token.c
+SRC		+=	$(S_PATH)$(LEXER)expansion_token_bis.c
 SRC		+=	$(S_PATH)$(LEXER)lexer.c
 SRC		+=	$(S_PATH)$(LEXER)name_io_nwln_token.c
 SRC		+=	$(S_PATH)$(LEXER)operator_token.c
@@ -124,10 +126,12 @@ SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
 
 SRC		+=	$(S_PATH)$(PARSER)parser.c
 SRC		+=	$(S_PATH)$(PARSER)graph.c
+SRC		+=	$(S_PATH)$(PARSER)graph_bis.c
 
 SRC		+=	$(S_PATH)$(ANALYZER)analyze.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_name.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_assign.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_expansion.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_job.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_process.c

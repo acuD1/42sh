@@ -6,34 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/01 14:34:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/03 14:43:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-
-void		init_start_graph(t_graph *graph)
-{
-	static e_parser_state tab_good_type[] = {P_WORD, ALL_REDIRECT, P_ASSIGN,
-										P_IONUMBER, P_END, P_START, P_ERROR};
-										//P_SEMICOLON,
-	graph[P_START].good_type = tab_good_type;
-	graph[P_NEWLINE].good_type = tab_good_type;
-	graph[P_ORIF].good_type = tab_good_type;
-	graph[P_ANDIF].good_type = tab_good_type;
-}
-
-t_parser 	*ft_init_graph(t_parser *parser)
-{
-	init_start_graph(parser->graph);
-	init_redirect_graph(parser->graph);
-	init_assign_graph(parser->graph);
-	init_process_graph(parser->graph);
-	init_ionumber_graph(parser->graph);
-	init_word_graph(parser->graph);
-	return (parser);
-}
 
 t_parser *ft_init_parser(t_parser *parser)
 {
@@ -67,13 +44,14 @@ uint8_t parser(t_lst *lexer)
 {
 	t_parser	*parser;
 	t_lst 		*tok_lst;
+	t_lst 		**head;
 
 	parser = NULL;
 	if (!lexer)
 		return (FALSE);
 	tok_lst = lexer;
+	head = &lexer;
 	parser = ft_init_parser(parser);
-	int i = 0;
 	while (((t_token*)tok_lst->content)->id != P_END)
 	{
 		// ft_printf("parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
@@ -83,11 +61,9 @@ uint8_t parser(t_lst *lexer)
 			return (FALSE);
 			// GESTION DE LERREUR ET SUBPROMPT ET SIGNAUX
 		}
-		printf("step |%d|\n", i);
-		i++;
 		tok_lst = tok_lst->next;
 	}
-	printf("step |%d|\n", i);
-	//free(parser);
+	lexer = *head;
+	free(parser);
 	return (TRUE);
 }

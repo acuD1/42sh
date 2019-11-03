@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:46:41 by guvillat          #+#    #+#             */
-/*   Updated: 2019/09/19 11:46:45 by guvillat         ###   ########.fr       */
+/*   Updated: 2019/11/03 14:43:41 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,50 +29,50 @@ static const t_token    ope[] =
 	{P_DGREAT, ">>", 2},
 	{P_GREATAND, ">&", 2},
 	{P_GREAT, ">", 1},
-	{P_TOKEN, NULL, 0}
+	{P_OPE_INTERRUPT, NULL, 0}
 };
 
 /*
 ** STATE CREANT LES TOKENS DE LA STRUCT OPE CI DESSUS
 */
 
-static int	create_operator_token(t_lexer *lexer, e_parser_state id, int len)
+static int	create_operator_token(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token)
 {
 	char *str;
 
 	str = NULL;
 	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, len)))
 		return (0);
-	if (!(ft_lstappend(&lexer->tok, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
+	if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
 		return (0);
 	free(str);
-	init_token(&lexer->token);
 	lexer->ntok++;
 	lexer->buf_pos += len;
-	lexer->status = START;
+	lexer->status = L_START;
 	return (1);
 }
 
-void		operator_lexer(t_lexer *lexer)
+t_lst		*operator_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	int 	i;
 
 	i = 0;
 	if (!lexer->buff)
-		lexer->status = END;
-	else
 	{
-		while (ope[i].id != P_TOKEN)
-		{
-			if (!strncmp(&lexer->buff[lexer->buf_pos], ope[i].data, ope[i].data_len))
-			{
-				if (create_operator_token(lexer, ope[i].id, ope[i].data_len))
-					break;
-			}
-			i++;
-		}
-		if (i == NB_OF_OPE)
-			name_lexer(lexer);
+		lexer->status = L_END;
+		return(lexer_token);
 	}
-	lexer->status = START;
+	while (ope[i].id != P_OPE_INTERRUPT)
+	{
+		if (!ft_strncmp(&lexer->buff[lexer->buf_pos], ope[i].data, ope[i].data_len))
+		{
+			if (create_operator_token(lexer, ope[i].id, ope[i].data_len, lexer_token))
+				break;
+		}
+		i++;
+	}
+	if (i == NB_OF_OPE)
+		lexer_token = word_lexer(lexer, lexer_token);
+	lexer->status = L_START;
+	return(lexer_token);
 }

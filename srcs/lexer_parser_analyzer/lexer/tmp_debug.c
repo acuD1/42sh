@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tmp_debug.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:46:53 by guvillat          #+#    #+#             */
-/*   Updated: 2019/09/19 11:46:55 by guvillat         ###   ########.fr       */
+/*   Updated: 2019/11/03 14:43:42 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,20 @@ int	ft_isdigit(int c)
 	return ((c >= '0' && c <= '9') ? 1 : 0);
 }
 
-void			ft_printtoklist(t_lexer *lexer)
+void			ft_printtoklist(t_lst *lexer)
 {
 	t_token		*tmp;
 
 	tmp = NULL;
-	if (!lexer->tok)
+	if (!lexer)
 		return;
-	printf("list avec %zu node \nAc en data        '%s' status '%u'\n", lexer->ntok, lexer->buff, lexer->status);
-	while (lexer->tok)
+	while (lexer)
 	{
-		tmp = (t_token*)lexer->tok->content;
-		ft_printf("[%s] {%d} \n", tmp->data, tmp->id);
-		if (!lexer->tok->next)
+		tmp = (t_token*)lexer->content;
+		printf("[%s] {%d} \n", tmp->data, tmp->id);
+		if (!lexer->next)
 			break;
-		lexer->tok = lexer->tok->next;
+		lexer = lexer->next;
 	}
 }
 
@@ -50,8 +49,17 @@ void ft_freelexerlist(t_lst **lst)
 	tmp = *lst;
 	while (tmp)
 	{
-		free(((t_token*)tmp->content)->data);
 		node = tmp;
+		if (tmp->content)
+		{
+			free(((t_token*)tmp->content)->data);
+			free((t_token*)tmp->content);
+		}
+		if (!tmp->next)
+		{
+			free(tmp);
+			break;
+		}
 		tmp = tmp->next;
 		free(node);
 	}

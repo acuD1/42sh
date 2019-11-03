@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/01 16:39:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/03 15:11:00 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,19 @@ void			load_prompt(t_core *shell)
 		**	- Exp handling
 		**	- Builtins ? (Maybe not accurate for now with futurs implementations)
 		**	- etc ...
-		// */
-		// if (check_brackets(line))
+		*/
+		// if (get_tokens(shell, line) != SUCCESS) //// ft_strsplit with for now tab and space charset
+		// {
+		// 	free_prompt(shell, line);
+		// 	continue ;
+		// }
+		lexer_parser_analyzer(shell, shell->buff);
+		// ast = parser(shell, parser);˚˚˚∫
+		/* DEBUG */
+		// print_tokens(shell);
 
 		lexer_parser_analyzer(shell, shell->buff);
-		debug_analyzer(shell);
+		//debug_analyzer(shell);
 		free_prompt(shell, shell->buff);
 	}
 	ft_strdel(&term.buffer);

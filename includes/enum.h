@@ -14,6 +14,7 @@ typedef enum analyzer_state
     A_IONUMBER,
     A_ASSIGN,
     A_WORD,
+    A_EXPANSION,
     A_END,
     A_ERROR,
     A_STOP,
@@ -26,7 +27,7 @@ typedef enum    parser_state
     P_AND, // job deamon
     P_ORIF, // process
     P_PIPE, // redir qui att un newline SUBSHELL
-    P_DSEMI, // FOR CASE
+    P_DSEMI, // FOR CASE ?
     P_SEMICOLON, // job
     P_DLESSDASH, // redir
     P_DLESS, // redir
@@ -36,22 +37,26 @@ typedef enum    parser_state
     P_DGREAT, // redir
     P_GREATAND, // redir
     P_GREAT, // redir
-    P_TOKEN,
+    P_OPE_INTERRUPT,
     P_IONUMBER, //ionumber
     P_ASSIGN, // stock dans shell->assign une lst key=value;
-    P_WORD, // 
+    P_WORD, //
+    P_TILDE,
+    P_DBPARENT,
+    P_PARENT,
+    P_BRACKET,
+    P_DOLLAR,
+    P_EXP_INTERRUPT,
     P_START,
     P_END,
     P_ERROR,
+
+    // P_HOOK_CLOSE,
+    // P_HOOK_OPEN,
     // P_DBQUOTE,
     // P_QUOTE,
-    // P_PARENT_OPEN,
-    // P_PARENT_CLOSE,
     // P_BACKQUOTE,
-    // P_HOOK_OPEN,
-    // P_HOOK_CLOSE,
-    // P_BRACKET_OPEN,
-    // P_BRACKET_CLOSE,
+    // P_QUESTIONMARK
     // P_HASH,
     // P_PERCENT,
     // P_SPSTRING,
@@ -73,13 +78,14 @@ typedef enum    parser_state
 }               e_parser_state;
 
 typedef enum    lexer_state {
-    START,
-    NAME,
-    NEWLINE, 
-    IO_NUMBER,  
-    ASSIGNEMENT_WORD,
-    OPERATOR,
-    END,
+    L_START,
+    L_NAME,
+    L_NEWLINE,
+    L_IO_NUMBER,
+    L_ASSIGNEMENT_WORD,
+    L_EXPANSION,
+    L_OPERATOR,
+    L_END,
 }               e_lexer_state;
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_parser_analyzer.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:07:16 by guvillat          #+#    #+#             */
-/*   Updated: 2019/10/02 18:07:21 by guvillat         ###   ########.fr       */
+/*   Updated: 2019/11/03 14:46:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void lexer_parser_analyzer(t_core *shell, char *line);
 **  ANALYZER
 */
 
-t_analyzer  *init_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer	*init_analyze(t_analyzer *analyzer, t_core *shell);
 void        init_redir(t_redir *new);
 void        init_process(t_process *new);
 void        init_job(t_job *new);
@@ -35,17 +35,18 @@ void        init_end_analyze(t_anal analyze);
 void        init_separator_analyze(t_anal analyze);
 
 void        analyzer(t_core *shell);
-void        cmd_analyze(t_analyzer *analyzer);
-void        end_analyze(t_analyzer *analyzer);
-void        separator_analyze(t_analyzer *analyzer);
-void        redirect_analyze(t_analyzer *analyzer);
-void        error_analyze(t_analyzer *analyzer);
-void        ionbr_analyze(t_analyzer *analyzer);
-void        assign_analyze(t_analyzer *analyzer);
-void        redir_analyze(t_analyzer *analyzer);
-void        process_analyze(t_analyzer *analyzer);
-void        job_analyze(t_analyzer *analyzer);
-void 		ass_analyze(t_analyzer *analyzer);
+t_analyzer  *cmd_analyze(t_analyzer *analyzer);
+t_analyzer  *end_analyze(t_analyzer *analyzer);
+t_analyzer 	*expansion_analyze(t_analyzer *analyzer);
+t_analyzer  *separator_analyze(t_analyzer *analyzer);
+t_analyzer  *redirect_analyze(t_analyzer *analyzer);
+t_analyzer  *error_analyze(t_analyzer *analyzer);
+t_analyzer  *ionbr_analyze(t_analyzer *analyzer);
+t_analyzer  *assign_analyze(t_analyzer *analyzer);
+t_analyzer 	*redir_analyze(t_analyzer *analyzer);
+t_analyzer  *process_analyze(t_analyzer *analyzer);
+t_analyzer  *job_analyze(t_analyzer *analyzer);
+t_analyzer 	*ass_analyze(t_analyzer *analyzer);
 
 
 t_db 		*fetch_assign(t_db *assign);
@@ -85,23 +86,35 @@ t_parser    *ft_init_graph(t_parser *parser);
 **  LEXER
 */
 
-void 			init_token(t_token *token);
-void 			ft_freelexerlist(t_lst **lst);
-t_lst           *ft_lstadd(t_lst **curr, t_lst *new);
 t_lst	 		*lexer(char *line);
+
 int				ft_isdigit(int c);
 int 			ft_isalpha(int c);
-void			start_lexer(t_lexer *lexer);
-void			end_lexer(t_lexer *lexer);
-void			name_lexer(t_lexer *lexer);
-void			newline_lexer(t_lexer *lexer);
-void			number_lexer(t_lexer *lexer);
-void			assignement_word_lexer(t_lexer *lexer);
-void			operator_lexer(t_lexer *lexer);
-void			ft_printtoklist(t_lexer *lexer);
-t_lst			*ft_add_token(t_lst **curr, e_parser_state opeid, char *data);
-t_lexer			*init_lexer(char *line);
+
+t_lst			*expansion_lexer(t_lexer *lexer, t_lst *lexer_token);
+int 			exp_dbparen_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
+int 			exp_paren_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
+int 			exp_bracket_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
+int 			exp_dollar_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
+int 			exp_tilde_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
+
+t_lst			*start_lexer(t_lexer *lexer, t_lst *lexer_token);
+t_lst			*end_lexer(t_lexer *lexer, t_lst *lexer_token);
+t_lst			*name_lexer(t_lexer *lexer, t_lst *lexer_token);
+t_lst			*newline_lexer(t_lexer *lexer, t_lst *lexer_token);
+t_lst			*number_lexer(t_lexer *lexer, t_lst *lexer_token);
+t_lst			*assignement_word_lexer(t_lexer *lexer, t_lst *lexer_token);
+t_lst			*operator_lexer(t_lexer *lexer, t_lst *lexer_token);
+t_lst 			*word_lexer(t_lexer *lexer, t_lst *lexer_token);
+
+void 			init_lexer(char *line ,t_lexer *new);
+void 			init_token(t_token *token);
 t_token			*fetch_lexer_token(t_token *token, e_parser_state type, char *data);
-t_lst			*ft_create_token(char *data, e_parser_state opeid);
+
+void			ft_printtoklist(t_lst *lexer);
+
+void ft_freejoblist(t_lst **lst);
+void ft_freetokenlist(t_lst **lst);
+void ft_freedblist(t_lst **lst);
 
 #endif

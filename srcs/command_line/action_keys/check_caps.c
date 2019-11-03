@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_caps.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/07 17:36:45 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/03 14:59:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		check_keys_comb(char *buff, t_read *line, uint64_t value)
 	else if (value == CTRL_A || value == HOME)
 		while (line->x_index > line->prompt_len)
 			move_left(buff, line);
-	else if (value == CTRL_E || value == END)
+	else if (value == CTRL_E || value == END_LE)
 		while (line->x_index < line->width)
 			move_right(buff, line);
 	else if (value == CTRL_K)

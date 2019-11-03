@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/01 14:12:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/03 14:45:12 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		print_opt(t_core *shell);
 void		load_prompt(t_core *shell);
 void		free_env(t_lst *env);
 void		free_prompt(t_core *shell, char *line);
-
+//oid		init_prompt(void);
 /*
 **	===========================================================================
 **	DB.........................................................................

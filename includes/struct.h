@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/01 14:11:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/03 15:03:31 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ typedef struct s_lexer 	t_lexer;
 typedef struct s_parser	t_parser;
 typedef struct s_analyzer t_analyzer;
 
-typedef void    (*t_analyze)(t_analyzer*);
+typedef t_analyzer    *(*t_analyze)(t_analyzer*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_PARSER_STATE];
 
-typedef void (*t_lexing)(t_lexer*);
+typedef t_lst *(*t_lexing)(t_lexer*, t_lst *);
 
 
 /*
@@ -107,10 +107,11 @@ typedef struct	s_core
 
 	/* variables */
 	char		*buff;
-	char		**tokens;			//	ft_strplit of char *line from GNL [BETA]
-	char		*bin;				//	dup of the binary found or located [BETA]
+	char		**tokens;		//	ft_strplit of char *line from GNL [BETA]
+	char		*bin;			//	dup of the binary found or located [BETA]
 	int32_t		last_exit_status;	//	last exit status value (echo $?)
-	u_int8_t	opt;				//	Option
+	u_int8_t	opt;			//	Options
+
 }				t_core;
 
 /*
@@ -229,6 +230,13 @@ typedef struct  s_token
     size_t          data_len;
 }              t_token;
 
+typedef struct		s_expansion
+{
+	int 			(*func)(t_lexer *, e_parser_state id, int len, t_lst *lexer_token);
+	e_parser_state 	id;
+	int 			len;
+}					t_expansion;
+
 typedef struct  s_lexer
 {
     char            *buff;
@@ -236,8 +244,7 @@ typedef struct  s_lexer
     size_t          ntok;
     size_t          buf_pos;
     t_lexing        lex[NB_LEXER_STATE];
-    t_lst           *tok;
-    t_token         token;
+    t_token 		token;
 }               t_lexer;
 
 #endif
