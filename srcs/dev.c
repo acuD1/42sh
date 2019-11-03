@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/01 14:19:04 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/03 16:09:28 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ void	debug_analyzer(t_core *shell)
 {
 	t_lst *tmp;
 
-	tmp = shell->job_list;
+	tmp = NULL;
+	if (shell->job_list)
+		tmp = shell->job_list;
 	printf("LST LEN = |%zu|\n", ft_lstlen(tmp));
+	tmp = NULL;
 }

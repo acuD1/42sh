@@ -89,20 +89,20 @@ void lexer_parser_analyzer(t_core *shell, char *line)
 	{
 		shell->lexer = lxr_tok;
 		analyzer(shell);
-		if (shell->job_list)
+	/*	if (shell->job_list)
 		{
-			ft_printjoblst(shell->job_list);
-			ft_freejoblist(&shell->job_list);
+			//ft_printjoblst(shell->job_list);
+			//ft_freejoblist(&shell->job_list);
 		}
 		if (shell->assign_list)
 		{
-			ft_printf("============= ASSIGN ============\n");
-			ft_printassignlist(shell->assign_list);
-			ft_freedblist(&shell->assign_list);
-		}
+			//ft_printf("============= ASSIGN ============\n");
+			//ft_printassignlist(shell->assign_list);
+			//ft_freedblist(&shell->assign_list);
+		}*/
 
 	}
 	else
 		ft_printf("error parser, va savoir pourquoi...\n");
-	ft_freetokenlist(&lxr_tok);
+	//ft_freetokenlist(&lxr_tok);
 }
