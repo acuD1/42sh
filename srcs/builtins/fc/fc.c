@@ -6,51 +6,86 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/31 22:07:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/04 22:14:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		set_range(t_lst **w, char **range)
+void		sort_range(t_lst *w, int16_t *len, u_int16_t *n, char **range)
+{
+	if (ft_atoi(range[0]) > 0 && ft_atoi(range[1]) > 0)
+	{
+		*len = ft_lstlen(w) - ft_atoi(range[0]);
+		*n = ft_atoi(range[1]) + 1;
+		if (ft_atoi(range[0]) > ft_atoi(range[1]))
+			(*n) -= 2;
+	}
+	else if (ft_atoi(range[0]) < 0 || ft_atoi(range[1]) < 0)
+	{
+		if (ft_atoi(range[1]) > 0)
+		{
+			*n = ft_atoi(range[1]) - 1;
+			*len = ft_atoi(range[0]) * (-1);
+		}
+		else
+		{
+			*n = ft_lstlen(w) + ft_atoi(range[1]) - 1;
+			if (ft_atoi(range[0]) < 0)
+				*len = ft_atoi(range[0]) * (-1);
+			else
+				*len = ft_lstlen(w) - ft_atoi(range[0]);
+		}
+	}
+}
+
+u_int16_t	set_range(t_lst **w, char **range)
 {
 	int16_t		len;
+	u_int16_t	n;
 
 	len = 0;
-	if (!range[0])
+	n = ft_lstlen(*w);
+	if (ft_tablen(range) == 0)
 		len = 17;
+	else if (ft_atoi(range[0]) > n)
+		return (ft_lstlen(*w) - 1);
+	else if (ft_tablen(range) >= 2)
+	{
+		sort_range(*w, &len, &n, range);
+		if ((ft_atoi(range[0]) < 0 && ft_atoi(range[1]) > 0)
+			|| (ft_atoi(range[0]) > 0 && ft_atoi(range[1]) < 0))
+			swap_range(&range[0], &range[1]);
+	}
 	else if (ft_atoi(range[0]) < 0)
 		len = ft_atoi(range[0]) * (-1);
 	else if (ft_atoi(range[0]) > 0)
 		len = ft_lstlen(*w) - ft_atoi(range[0]);
 	else if (len < 0 || ft_atoi(range[0]) == 0)
-		len = 0;
+		len = 1;
 	while ((*w)->next && len-- > 0)
 		*w = (*w)->next;
+	return (n);
 }
 
 void		listing_mode(t_lst *saved, u_int64_t opt, char **range)
 {
 	u_int16_t	n;
 
-	n = (range[0]) ? ft_lstlen(saved) : 17;
-	if (range[0] && (opt & (1ULL << 17)))
-		n = ft_lstlen(saved) - ft_atoi(range[0]);
-	if (opt & (1ULL << 17))
+	n = 0;
+	if (opt & (1ULL << 17)) // -r option
 	{
 		display_reverse(saved, opt, range);
 		return ;
 	}
 	else
-		set_range(&saved, range);
-	while (saved && n--)
+		n = set_range(&saved, range);
+	while (saved && n != saved->content_size)
 	{
 		if ((opt & (1ULL << 13)))
 			ft_dprintf(STDOUT_FILENO, "\t%s\n", saved->content);
 		else
 			ft_dprintf(STDOUT_FILENO, "%d\t%s\n", saved->content_size, saved->content);
-		if (range[1] && (int)saved->content_size == ft_atoi(range[1]))
-			break ;
 		if (range[0] && range[1] && ft_atoi(range[0]) > ft_atoi(range[1]))
 			saved = saved->next;
 		else
@@ -96,8 +131,8 @@ void			get_range(char **cmd, char **range)
 
 	i = 0;
 	j = -1;
-	ft_bzero(range, sizeof(range));
-	ft_bzero(range[1], sizeof(range[1]));
+//	ft_bzero(range, sizeof(range));
+//	ft_bzero(range[1], sizeof(range[1]));
 	while (j < 2 && cmd && cmd[++i])
 	{
 		if (isstart(cmd[i], "-l") || isstart(cmd[i], "-r")

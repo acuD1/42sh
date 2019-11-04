@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:55:43 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/31 22:31:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/04 14:26:14 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		swap_range(char **r1, char **r2)
 	*r2 = tmp;
 }
 
-void		sort_range(t_lst *w, int *ret, size_t *num, char **range)
+void		sort_rrange(t_lst *w, int *ret, size_t *num, char **range)
 {
 	if (ft_atoi(range[0]) > ft_atoi(range[1]))
 		swap_range(&range[0], &range[1]);
@@ -62,7 +62,7 @@ u_int16_t	reverse_range(t_lst **w, char **range)
 			return (ret = ft_atoi(range[0]));
 	else if (ft_tablen(range) >= 2)
 	{
-		sort_range(*w, &ret, &number, range);
+		sort_rrange(*w, &ret, &number, range);
 		if (ft_atoi(range[0]) == 0)
 			number = ft_lstlen(*w);
 	}
