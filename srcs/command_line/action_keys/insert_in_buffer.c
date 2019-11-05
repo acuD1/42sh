@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/21 13:37:14 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/05 15:39:23 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 void		insert_inline_char(char *buff, t_read *input, int buff_index)
 {
 	int 	j;
-	char	*tmp;
+	int	i;
 
-	tmp = NULL;
 	input->width += 1;
 	j = ft_strlen(input->buffer) + 1;
+	i = input->width - input->prompt_len;
 	while (--j > buff_index)
 	{
 		if (input->buffer[j - 1] == NEW_LINE)
@@ -59,13 +59,10 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 		input->buffer[j] = input->buffer[j - 1];
 	}
 	input->buffer[buff_index] = *buff;
-	tmp = ft_strsub(input->buffer, buff_index, strlen_to(input->buffer, '\0'));
-	xtputs(input->tcaps[SAVE_CR], 1, my_outc);
-	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
-	ft_dprintf(STDOUT_FILENO, "%s", tmp);
-	xtputs(input->tcaps[RESTORE_CR], 1, my_outc);
-	move_right(buff, input);
-	ft_strdel(&tmp);
+	goto_prompt(input);
+	insert_str_in_buffer(input->buffer, input);
+	while (--i > buff_index)
+		move_left(buff, input);
 }
 
 /*
