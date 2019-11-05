@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/02 21:26:23 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/05 02:53:43 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void		print_opt(t_core *shell);
 void		load_prompt(t_core *shell);
 void		free_env(t_lst *env);
 void		free_prompt(t_core *shell, char *line);
+int8_t		dispatcher(t_core *shell, t_lst *jobs);
 
 /*
 **	===========================================================================
@@ -65,8 +66,12 @@ int8_t		edit_var(t_core *shell, char *name, char *value, u_int8_t var_type);
 **	===========================================================================
 */
 
-void		exec_process(t_core *shell, t_lst *env);
-void		exec_handler(t_core *shell, u_int8_t handler);
+int8_t		is_a_blt(char *cmd);
+int8_t		call_builtin(t_core *shell, t_lst *process, int blt);
+int32_t		exec_piped_process(t_core *shell, t_lst *process);
+int8_t		exec_handler(t_core *shell, u_int8_t handler);
+int8_t		exec_process(t_core *shell, t_lst *env);
+int8_t		call_bin(t_core *shell, t_lst *process);
 char		*get_bin(t_core *shell, t_lst *process);
 char		**set_envp(t_core *shell);
 
@@ -101,7 +106,7 @@ void		print_hash_map(t_hash *hash);
 
 t_core		*get_core(t_core *core);
 int8_t		ft_access(char *path, int mode);
-int8_t		is_a_dir(char *path)
+int8_t		is_a_dir(char *path);
 void		print_usage(char *name, int c, char *usage);
 void		ft_perror(const char *s, const int errnum);
 char		*get_abs_path(char *path);
@@ -143,7 +148,6 @@ int8_t		builtin_export(t_core *shell);
 int8_t		builtin_fc(t_core *shell);
 
 /* ###########################  TEMPORARY   #################################*/
-int8_t	exec_builtin(t_core *shell);
 void	debug_analyzer(t_core *shell);
 
 #endif

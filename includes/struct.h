@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/02 16:02:13 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/05 01:33:27 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ typedef struct	s_core
 	char		*buff;
 	char		**tokens;			//	ft_strplit of char *line from GNL [BETA]
 	char		*bin;				//	dup of the binary found or located [BETA]
-	int32_t		last_exit_status;	//	last exit status value (echo $?)
+	int32_t		status;				//	last exit status value (echo $?)
 	u_int8_t	opt;				//	Option
 }				t_core;
 

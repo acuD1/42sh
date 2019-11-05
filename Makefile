@@ -169,7 +169,6 @@ SRC			+=	$(S_PATH)$(DB)version.c
 SRC			+=	$(S_PATH)$(DB)special_vars.c
 SRC			+=	$(S_PATH)$(DB)process_vars.c
 
-
 SRC			+=	$(S_PATH)$(BUILTINS)set.c
 SRC			+=	$(S_PATH)$(BUILTINS)unset.c
 SRC			+=	$(S_PATH)$(BUILTINS)export.c
@@ -183,7 +182,10 @@ SRC			+=	$(S_PATH)$(MISC)check_args.c
 SRC			+=	$(S_PATH)$(MISC)is_a_dir.c
 
 SRC			+=	$(S_PATH)$(EXEC)exec_process.c
-SRC			+=	$(S_PATH)$(EXEC)exec_builtin.c
+SRC			+=	$(S_PATH)$(EXEC)exec_piped_process.c
+SRC			+=	$(S_PATH)$(EXEC)dispatcher.c
+SRC			+=	$(S_PATH)$(EXEC)call_bin.c
+SRC			+=	$(S_PATH)$(EXEC)call_builtin.c
 SRC			+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC			+=	$(S_PATH)$(EXEC)get_bin.c
 SRC			+=	$(S_PATH)$(EXEC)set_envp.c

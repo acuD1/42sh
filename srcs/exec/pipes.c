@@ -6,13 +6,13 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 11:06:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/01 17:20:27 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/05 02:45:35 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int32_t	get_pipeline_len(t_lst *process)
+static int32_t	get_pipeline_len(t_lst *process)
 {
 	int i;
 
@@ -22,7 +22,7 @@ int32_t	get_pipeline_len(t_lst *process)
 	return (i);
 }
 
-int8_t	pipeline_start(t_core *shell, t_lst **process, int *pipes)
+static int8_t	pipeline_start(t_core *shell, t_lst **process, int *pipes)
 {
 	pid_t	pid;
 
@@ -32,11 +32,11 @@ int8_t	pipeline_start(t_core *shell, t_lst **process, int *pipes)
 		if (dup2(pipes[1], 1) < 0)
 		{
 			dprintf(STDERR_FILENO, "42sh: dup2 error.\n");
-			exit(1);//dup2 ERROR HANDLING
+			exit(1);
 		}
 		close(pipes[0]);
 		close(pipes[1]);
-		//EXEC
+		exec_piped_process(shell, process);
 	}
 	process = process->next;
 	return ((pid < 0) ? FAILURE : SUCCESS);
@@ -49,7 +49,7 @@ void	redir_and_close(t_lst *process, int *pipes)
 			&& dup2(pipes[3], 1) < 0))
 	{
 		dprintf(STDERR_FILENO, "42sh: dup2 error.\n");
-		exit(-1);//ERROR HANDLING
+		exit(-1);
 	}
 	close(pipes[0]);
 	close(pipes[2]);
@@ -64,7 +64,7 @@ int8_t	pipeline_fork_error(int *pipes)
 	return (FAILURE);
 }
 
-int8_t	pipeline_loop(t_core *shell, t_lst **process, int *pipes)
+static int8_t	pipeline_loop(t_core *shell, t_lst **process, int *pipes)
 {
 	pid_t	pid;
 
@@ -78,7 +78,7 @@ int8_t	pipeline_loop(t_core *shell, t_lst **process, int *pipes)
 	if ((pid = fork()) == 0)
 	{
 		redir_and_close(*process, pipes);
-		exit(0);//EXEC
+		exec_piped_process(shell, process);
 	}
 	close(pipes[0]);
 	if (pid < 0)
@@ -93,9 +93,9 @@ int8_t	pipeline_loop(t_core *shell, t_lst **process, int *pipes)
 
 int8_t	exec_pipeline(t_core *shell, t_lst **process)
 {
-	int	*pipes;
-	int	p_len;
-	int	ret;
+	int		*pipes;
+	int		p_len;
+	int		ret;
 
 	ret = SUCCESS;
 	p_len = get_pipeline_len(process);
@@ -104,6 +104,8 @@ int8_t	exec_pipeline(t_core *shell, t_lst **process)
 	if (pipeline_start(shell, process, pipes) != SUCCESS
 		|| pipeline_loop(shell, process, pipes) != SUCCESS)
 		ret = FAILURE;
+	while (p_len--)
+		wait(&(shell->status));
 	free(pipes);
 	return (ret);
 }

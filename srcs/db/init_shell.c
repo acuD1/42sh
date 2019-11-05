@@ -6,7 +6,7 @@
 /*   By: aspro <aspro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/31 10:10:48 by aspro            ###   ########.fr       */
+/*   Updated: 2019/11/05 01:42:06 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	init_shell(t_core *shell)
 	shell->jobs = NULL;
 	shell->tokens = NULL;
 	shell->bin = NULL;
-	shell->last_exit_status = 0;
+	shell->status = 0;
 	shell->opt = 0;
 	shell->buff = NULL;
 	shell->lexer = NULL;

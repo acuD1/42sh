@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/02 21:29:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/05 00:47:59 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,19 +90,21 @@ int8_t	get_bin(t_core *shell, t_lst *process)
 	else
 	{
 		/*
-		**	HASH_TABLE : Locate process->contntav[0] in the hash_map first, if found retourn the path found !
-		** NEED TO  CHECK THAT THE FILE IS STILL EXECUTABLE (existing + x etc)
-		*/
+		**	HASH_TABLE : Locate process->contntav[0] in the hash_map first,
+		**	if found retourn the path found !
+		**	NEED TO  CHECK THAT THE FILE IS STILL EXECUTABLE (existing + x etc)
+		**	DISABLED TILL HASHMAP REWORK
 		if (locate_hash(shell, process) == SUCCESS && check_filepath(shell, process) == SUCCESS)
 			return (SUCCESS);
+		*/
 		if ((ret = get_bin_path(shell, process)) == 1)
-			return (1);
+			return (FAILURE);
 	}
-	/*
-	** NEED TO RETURN PROPER VALUE (-1 FAILURE | 0 command found  | 1 command not found)
-	*/
-	ret = check_filepath(shell, process);
+	if ((ret = check_filepath(shell, process)) != SUCCESS)
+	{
+		ft_perror("bash", ret);
+		exit(127)
+	}
 	//update_hashmap(...);
-	ft_perror("bash", ret);
-	return ()
+	return ();
 }
