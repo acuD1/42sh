@@ -1,6 +1,19 @@
 #include "sh42.h"
 
-t_analyzer *expansion_analyze(t_analyzer *analyzer)
+char *param_expansion(char *str, t_core *shell)
+{
+	t_db *db_tmp;
+
+	db_tmp = NULL;
+	(void)shell;
+	db_tmp = search_db(shell->env, &str[1]);
+	if (!db_tmp->value)
+		db_tmp->value = "(NULL)";
+	// ft_printf("PARAM EXP state %s    %s %s\n", str , &str[1], db_tmp->value);
+	return (str);
+}
+
+t_analyzer *expansion_analyze(t_analyzer *analyzer, t_core *shell)
 {
 	char *tmp;
 
@@ -11,25 +24,16 @@ t_analyzer *expansion_analyze(t_analyzer *analyzer)
 	// if (((t_token*)analyzer->lexer->content)->id == P_DBPARENT)
 	// 	tmp = arithmetique_expansion(analyzer);
 	// else if (((t_token*)analyzer->lexer->content)->id == P_PARENT)
-	// 	tmp = cmd_substitution_expansion(analyzer);
-	// else if (((t_token*)analyzer->lexer->content)->id == P_BRACKET || ((t_token*)analyzer->lexer->content)->id == P_DOLLAR)
-	// 	tmp = param_expansion(analyzer);
+		// tmp = cmd_substitution_expansion(analyzer);
+	if (((t_token*)analyzer->lexer->content)->id == P_BRACKET || ((t_token*)analyzer->lexer->content)->id == P_DOLLAR)
+		tmp = param_expansion(((t_token*)analyzer->lexer->content)->data, shell);
 	// else if (((t_token*)analyzer->lexer->content)->id == P_TILDE)
-	// 	tmp = path_expansion(analyzer);
-	// analyzer->state = A_WORD;
-	// if (analyzer->state == A_START || analyzer->state == A_SEPARATOR)
-	// 	analyzer->process.av = fill_cmd_process(tmp);
-	// else if (analyzer->state == A_WORD)
-	// 	analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, tmp);
-	// if (analyzer->lexer->next && !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
-	// 	analyzer->state = A_STOP;
-	// else
-		// analyzer->state = A_EXPANSION;
-	// free(tmp);
+		// tmp = path_expansion(analyzer);
 	if (analyzer->state == A_ASSIGN)
 	{
 		analyzer->db.value = ft_strdup(((t_token*)analyzer->lexer->content)->data);
-		ass_analyze(analyzer);
+		ass_analyze(analyzer, shell);
+		analyzer->state = A_START;
 	}
 	if (((t_token*)analyzer->lexer->next->content)->id == P_ASSIGN && analyzer->state != A_WORD)
 	{

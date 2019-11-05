@@ -96,7 +96,7 @@ void lexer_parser_analyzer(t_core *shell, char *line)
 		}
 		if (shell->assign_list)
 		{
-			ft_printf("============= ASSIGN ============\n");
+			ft_printf("============= ASSIGNATION LST ============\n");
 			ft_printassignlist(shell->assign_list);
 			ft_freedblist(&shell->assign_list);
 		}
@@ -105,4 +105,5 @@ void lexer_parser_analyzer(t_core *shell, char *line)
 	else
 		ft_printf("error parser, va savoir pourquoi...\n");
 	ft_freetokenlist(&lxr_tok);
+	shell->lexer = NULL;
 }

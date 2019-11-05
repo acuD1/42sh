@@ -41,7 +41,7 @@ t_lst		*name_lexer(t_lexer *lexer, t_lst *lexer_token)
 		lexer->status = L_END;
 		return(lexer_token);
 	}
-	// printf("[%s] {%d} \n", &lexer->buff[lexer->buf_pos], lexer->buf_pos);
+	// printf("[%s] {%zu} %u\n", &lexer->buff[lexer->buf_pos], lexer->buf_pos, lexer->status);
 	if (ft_strchr(EXPANSION, lexer->buff[lexer->buf_pos]))
 		lexer_token = expansion_lexer(lexer, lexer_token);
 	else
