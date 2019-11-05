@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/24 20:58:48 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/05 18:05:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void			init_cmd_line(t_read *term, t_core *shell)
 	term->history_index = NULL;
 	term->shell = shell;
 	term->new_line = 0;
+	term->found = 0;
 	term->buffer = ft_memalloc(BUFF_SIZE);
+	term->tmp_buff = NULL;
 	init_history(term);
 }
 
@@ -69,5 +71,6 @@ uint8_t			reset_config(t_read *input)
 	}
 	old_t.c_lflag |= (ICANON | ECHO);
 	free(input->prompt);
+	(input->tmp_buff) ? ft_strdel(&input->tmp_buff) : 0;
 	return (SUCCESS);
 }
