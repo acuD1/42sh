@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/31 21:52:53 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/05 18:46:57 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "sh42.h"
 
 /*
-**	Open "~/.42sh_history" file to write history datas at the end of file
+**	Open "./.42sh_history" file to write history datas at the end of file
 */
 
 void			write_history(t_read *line)
@@ -57,7 +57,7 @@ void			save_history(t_read *term)
 	t_lst		*saved;
 
 	saved = NULL;
-	if (ft_strcmp(term->buffer, ""))
+	if ((*term).buffer && ft_strlen(term->buffer) > 0)
 	{
 		saved = ft_memalloc(sizeof(*saved));
 		saved->prev = NULL;

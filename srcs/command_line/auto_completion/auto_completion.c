@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/15 14:12:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/05 21:29:50 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void			auto_complete_mode(char *buf, t_read *input)
 		return ;
 	if (input->ac > 1)
 	{
-		if (is_dir(to_find) || input->buffer[i] == ' ')
+		if (/* is_dir(to_find) ||  */input->buffer[i] == ' ')
 			display_current_directory(buf, input, to_find);
 		else
 			to_complete_buffer(last_buf, to_find, input);

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/05 15:58:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/05 20:59:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 	input->width++;
 	input->buffer[buff_index] = buff;
 	input->x_index++;
+//	move_right(&buff, input);
 	/* if (input->x >= input->ws_col + 1) */
 	/* 	insert_newline_in_buff(input); */
 }

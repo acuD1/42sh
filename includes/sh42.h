@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/04 14:31:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/05 19:13:03 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,13 @@ int8_t		builtin_set(t_core *shell);
 int8_t		builtin_unset(t_core *shell);
 int8_t		builtin_export(t_core *shell);
 int8_t		builtin_fc(t_core *shell);
+
 int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
+void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
 void		display_reverse(t_lst *w, u_int64_t opt, char **range);
-u_int16_t	set_range(t_lst **w, char **range);
+u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd);
 void		swap_range(char **r1, char **r2);
-void		sort_rrange(t_lst *w, int *ret, size_t *num, char **range);
+u_int16_t	set_range(t_lst **w, char **range);
 
 /* ###########################  TEMPORARY   #################################*/
 int8_t		exec_builtin(t_core *shell);
