@@ -181,6 +181,7 @@ SRC			+=	$(S_PATH)$(MISC)recall.c
 SRC			+=	$(S_PATH)$(MISC)check_args.c
 SRC			+=	$(S_PATH)$(MISC)is_a_dir.c
 
+SRC			+=	$(S_PATH)$(EXEC)task_master.c
 SRC			+=	$(S_PATH)$(EXEC)exec_process.c
 SRC			+=	$(S_PATH)$(EXEC)exec_piped_process.c
 SRC			+=	$(S_PATH)$(EXEC)dispatcher.c

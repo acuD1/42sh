@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dispatcher.c                                       :+:      :+:    :+:   */
+/*   task_master.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/05 22:52:22 by mpivet-p         ###   ########.fr       */
+/*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
+/*   Updated: 2019/11/05 20:04:26 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t	dispatcher(t_core *shell, t_lst *jobs)
+int8_t	task_master(t_core *shell)
 {
-	t_lst	*ptr;
-	int		status;
+	t_lst *job_ptr;
 
-	ptr = ((t_job*)jobs->content)->process_list;
-	status = 0;
-	while (ptr != NULL)
+	job_ptr = shell->job_list;
+	while (job_ptr)
 	{
-		if (((t_process*)ptr->content)->type == P_PIPE && exec_pipeline(shell, &ptr) != SUCCESS)
+		if (dispatcher(shell, job_ptr) != SUCCESS)
 			return (FAILURE);
-		else
-		{
-			//EXPANSION
-			exec_process(shell, ptr);
-			ptr = ptr->next;
-		}
-		//CONDITIONS
+		job_ptr = job_ptr->next;
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:39:28 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/05 02:03:01 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/05 20:11:56 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int8_t	exec_handler_bin_error(t_core *shell)
 	/* If not a directory then the binary is not found at all */
 	dprintf(STDERR_FILENO, "42sh: %s: command not found\n",
 		shell->tokens[0]);
+	return (FAILURE);
 }
 
 static int8_t	exec_handler_perm_error(t_core *shell)

@@ -6,24 +6,25 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/05 00:47:59 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/07 00:42:34 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
 #include "sh42.h"
 
-static int8_t	check_filepath(t_core *shell, t_lst *process)
+static int8_t	check_filepath(char *filepath)
 {
 	int			ret;
 
-	if ((ret = ft_access(((t_process*)process->content)->av[0], F_OK | X_OK)) != SUCCESS)
+	if ((ret = ft_access(filepath, F_OK | X_OK)) != SUCCESS)
 		return (ret);
-	if (is_dir(((t_process*)process->content)->av[0]))
+	if (is_dir(filepath))
 		return (EISDIR);
 	return (SUCCESS);
 }
 
-statis int8_t	format_path(char *path, char *filename, char **result)
+static int8_t	format_path(char *path, char *filename, char **result)
 {
 	char	*tmp;
 	int		i;
@@ -43,26 +44,26 @@ statis int8_t	format_path(char *path, char *filename, char **result)
 	return ((*result == NULL) ? FAILURE : SUCCESS);
 }
 
-static int8_t	get_bin_path(t_core *shell, t_lst *process)
+static int8_t	get_bin_path(t_core *shell, t_process *process)
 {
-	t_lst	*db;
+	t_db	*db;
 	char	**split_path;
 	char	*bin_path;
 	int		i;
 
 	i = 0;
 	bin_path = NULL;
-	if (!(db = search_db(shell, "PATH")))
+	if (!(db = search_db(shell->env, "PATH")))
 		return (1);
-	if (!(split_path = ft_strsplit(((t_db*)(env->content))->value, ":")))
+	if (!(split_path = ft_strsplit(db->value, ":")))
 		return (FAILURE);
 	while (split_path[i] != NULL)
 	{
-		if (format_path(split_path[i], ((t_process*)process->content)->av[0], &bin_path) != SUCCESS)
+		if (format_path(split_path[i], process->av[0], &bin_path) != SUCCESS)
 			return (FAILURE);
-		if (ft_access(bin_path, F_OK | X_OK) == SUCCESS && is_a_dir(bin_path) != SUCCESS)
+		if (check_filepath(bin_path) == SUCCESS)
 		{
-			((t_process*)process->content)->bin = bin_path;
+			process->bin = bin_path;
 			ft_tabdel(&split_path);
 			return (SUCCESS);
 		}
@@ -73,7 +74,7 @@ static int8_t	get_bin_path(t_core *shell, t_lst *process)
 	return (1);
 }
 
-int8_t	get_bin(t_core *shell, t_lst *process)
+int8_t	get_bin(t_core *shell, t_process *process)
 {
 	int		ret;
 
@@ -81,12 +82,12 @@ int8_t	get_bin(t_core *shell, t_lst *process)
 	/*
 	**	We set the shell->bin variable if process->content->av[0] is a local binary here
 	*/
-	if ((((t_process*)process->content)->av[0][0] == '.'
-			&& ((t_process*)process->content)->av[0][1] == '/'
-			&& ((t_process*)process->content)->av[0][2] != 0)
-		|| (((t_process*)process->content)->av[0][0] == '/'
-			&& ((t_process*)process->content)->av[0][1]))
-		process->bin = ft_strdup(shell->tokens[0]);
+	if ((process->av[0][0] == '.'
+			&& process->av[0][1] == '/'
+			&& process->av[0][2] != 0)
+		|| (process->av[0][0] == '/'
+			&& process->av[0][1]))
+		process->bin = ft_strdup(process->av[0]);
 	else
 	{
 		/*
@@ -100,11 +101,11 @@ int8_t	get_bin(t_core *shell, t_lst *process)
 		if ((ret = get_bin_path(shell, process)) == 1)
 			return (FAILURE);
 	}
-	if ((ret = check_filepath(shell, process)) != SUCCESS)
+	if (process->bin && (ret = check_filepath(process->bin)) != SUCCESS)
 	{
-		ft_perror("bash", ret);
-		exit(127)
+		ft_perror(process->av[0], ret);
+		exit(127);
 	}
 	//update_hashmap(...);
-	return ();
+	return (SUCCESS);
 }

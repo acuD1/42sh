@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/05 02:53:43 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/07 00:35:42 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,15 @@ int8_t		edit_var(t_core *shell, char *name, char *value, u_int8_t var_type);
 **	===========================================================================
 */
 
-int8_t		is_a_blt(char *cmd);
-int8_t		call_builtin(t_core *shell, t_lst *process, int blt);
 int32_t		exec_piped_process(t_core *shell, t_lst *process);
+int8_t		call_builtin(t_core *shell, t_lst *process, int blt);
+int8_t		exec_pipeline(t_core *shell, t_lst **process);
 int8_t		exec_handler(t_core *shell, u_int8_t handler);
 int8_t		exec_process(t_core *shell, t_lst *env);
 int8_t		call_bin(t_core *shell, t_lst *process);
-char		*get_bin(t_core *shell, t_lst *process);
+int8_t		task_master(t_core *shell);
+int8_t		is_a_blt(char *cmd);
+int8_t		get_bin(t_core *shell, t_process *process);
 char		**set_envp(t_core *shell);
 
 /*
