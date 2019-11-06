@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/06 17:00:59 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/06 20:11:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,13 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	input->buffer[buff_index] = *buff;
 	goto_prompt(input);
 	insert_str_in_buffer(input->buffer, input);
+	if (i + input->prompt_len == input->ws_col + 1)
+		i--;
 	while (--i > buff_index)
 		move_left(buff, input);
+
+	/* debug("/dev/ttys001", input->x, input->x_index, input->y, input->width); */
+	/* win_size("/dev/ttys001", input->ws_col, input->ws_li); */
 }
 
 /*

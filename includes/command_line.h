@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/06 16:55:04 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/06 17:09:35 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 */
 
 int8_t		 debug(const char *path, int x, int x2, int width, int y);
+int8_t		 win_size(const char *path, int x, int x2);
 
 /*
  **		Configuration
