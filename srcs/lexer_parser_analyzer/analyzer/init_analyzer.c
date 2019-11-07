@@ -114,6 +114,7 @@ t_analyzer *init_analyze(t_analyzer *analyzer, t_core *shell)
 	init_separator_analyze(analyzer->analyze);
 	init_redirect_analyze(analyzer->analyze);
 	init_end_analyze(analyzer->analyze);
+	init_expansion_analyze(analyzer->analyze);
 	analyzer->state = A_START;
 	analyzer->lexer = shell->lexer;
 	analyzer->job_list = NULL;
