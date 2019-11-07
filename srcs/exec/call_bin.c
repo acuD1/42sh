@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/07 00:35:30 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/07 02:21:57 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int8_t	call_bin(t_core *shell, t_lst *process)
 		dprintf(STDERR_FILENO, "42sh: %s: command not found\n", ptr->av[0]);
 		exit(126);
 	}
-	printf("%s\n", ptr->bin);
 	ret = execve(ptr->bin, ptr->av, envp);
 	dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);
 	ft_tabdel(&envp);

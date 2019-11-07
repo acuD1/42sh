@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 11:06:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/05 22:31:09 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/07 02:22:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static int32_t	get_pipeline_len(t_lst *process)
 
 	i = 0;
 	while (process != NULL && ((t_process*)process->content)->type == P_PIPE)
+	{
+		process = process->next;
 		i++;
+	}
 	return (i);
 }
 
@@ -26,7 +29,6 @@ static int8_t	pipeline_start(t_core *shell, t_lst **process, int *pipes)
 {
 	pid_t	pid;
 
-	(void)shell;
 	if ((pid = fork()) == 0)
 	{
 		if (dup2(pipes[1], 1) < 0)
@@ -69,7 +71,7 @@ static int8_t	pipeline_loop(t_core *shell, t_lst **process, int *pipes)
 	pid_t	pid;
 
 	close(pipes[1]);
-	if (pipe(pipes + 2) < 0)
+	if (((t_process*)(*process)->content)->type == P_PIPE && pipe(pipes + 2) < 0)
 	{
 		close(pipes[0]);
 		dprintf(STDERR_FILENO, "42sh: pipe error.\n");
@@ -101,11 +103,14 @@ int8_t	exec_pipeline(t_core *shell, t_lst **process)
 	p_len = get_pipeline_len(*process);
 	if ((pipes = (int*)malloc(sizeof(int) * (2 * p_len))) == NULL)
 		return (FAILURE);
+	if (pipe(pipes) < 0)
+		return (FAILURE);
 	if (pipeline_start(shell, process, pipes) != SUCCESS
 		|| pipeline_loop(shell, process, pipes) != SUCCESS)
 		ret = FAILURE;
-	while (p_len--)
+	while (p_len-- > 0)
 		wait(&(shell->status));
+	printf("pipeline status = %i\n", shell->status);
 	free(pipes);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/05 20:03:34 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/07 01:04:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void			load_prompt(t_core *shell)
 		// if (check_brackets(line))
 
 		lexer_parser_analyzer(shell, shell->buff);
-		debug_analyzer(shell);
+		//debug_analyzer(shell);
 		if (task_master(shell) != SUCCESS)
 			exit(1);
 		free_prompt(shell, shell->buff);
