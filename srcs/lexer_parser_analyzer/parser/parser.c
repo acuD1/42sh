@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/01 14:34:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/07 21:15:27 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ uint8_t parser(t_lst *lexer)
 			return (FALSE);
 			// GESTION DE LERREUR ET SUBPROMPT ET SIGNAUX
 		}
-		printf("step |%d|\n", i);
+		//printf("step |%d|\n", i);
 		i++;
 		tok_lst = tok_lst->next;
 	}
-	printf("step |%d|\n", i);
+	//printf("step |%d|\n", i);
 	//free(parser);
 	return (TRUE);
 }
