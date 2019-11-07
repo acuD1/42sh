@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/07 00:35:42 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/07 03:32:41 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,21 @@ int8_t		builtin_set(t_core *shell);
 int8_t		builtin_unset(t_core *shell);
 int8_t		builtin_export(t_core *shell);
 int8_t		builtin_fc(t_core *shell);
+
+/*
+**	===========================================================================
+**	REDIRECTIONS...............................................................
+**	===========================================================================
+*/
+
+int8_t			exec_redirs(t_lst *redirs);
+int8_t			dup_output(int fd, t_redir *ptr);
+int8_t			dup_input(int fd, t_redir *ptr);
+int8_t			append_output(t_redir *ptr);
+int8_t			redir_output(t_redir *ptr);
+int8_t			redir_input(t_redir *ptr);
+int8_t			dup_ifd(t_redir *ptr);
+int8_t			dup_ofd(t_redir *ptr);
 
 /* ###########################  TEMPORARY   #################################*/
 void	debug_analyzer(t_core *shell);

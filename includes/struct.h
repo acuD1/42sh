@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/05 20:05:06 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/07 02:42:23 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,13 +163,13 @@ typedef struct		s_read
 ** LEXER_PARSER_ANALYZER
 */
 
-typedef struct s_redir
+typedef struct	s_redir
 {
-    char            *op[2];
-    // int             fds[2];
-    enum parser_state  type;
-    // int             fd_flags; // flags O_RDWR O_CREAT ..
-}               t_redir;
+	char				*op[2];
+	int					io_num[2];
+	int					dup_fd;
+	enum parser_state	type;
+}				t_redir;
 
 typedef struct            s_process
 {

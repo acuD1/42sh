@@ -72,11 +72,12 @@ L_PATH = shared_libft/
 # Add custom dir for .o
 
 CORE		=	core/
-DB		=	db/
+DB			=	db/
 BUILTINS	=	builtins/
 COMMANDLINE	=	command_line/
-AC		=	command_line/auto_completion/
-AK		=	command_line/action_keys/
+REDIRS		=	redirections/
+AC			=	command_line/auto_completion/
+AK			=	command_line/action_keys/
 HISTORY		=	command_line/history/
 EXEC		=	exec/
 LEXER		= 	lexer_parser_analyzer/lexer/
@@ -97,6 +98,7 @@ PATHS		+=	$(O_PATH)$(HISTORY)
 PATHS		+=	$(O_PATH)$(CORE)
 PATHS		+=	$(O_PATH)$(DB)
 PATHS		+=	$(O_PATH)$(EXEC)
+PATHS		+=	$(O_PATH)$(EXEC)$(REDIRS)
 PATHS		+=	$(O_PATH)$(LEXER)
 PATHS		+=	$(O_PATH)$(PARSER)
 PATHS		+=	$(O_PATH)$(ANALYZER)
@@ -191,6 +193,9 @@ SRC			+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC			+=	$(S_PATH)$(EXEC)get_bin.c
 SRC			+=	$(S_PATH)$(EXEC)set_envp.c
 SRC			+=	$(S_PATH)$(EXEC)pipes.c
+SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)exec_redirs.c
+SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs.c
+SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs_tools.c
 
 
 SRC			+=	$(S_PATH)$(HASH)add_hash_map.c
