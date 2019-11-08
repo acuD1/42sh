@@ -47,7 +47,7 @@ t_analyzer *separator_analyze(t_analyzer *analyzer, t_core *shell)
 		analyzer->process.type = state;
 		analyzer = process_analyze(analyzer, shell);
 	}
-	else if (state == P_NEWLINE)
+	else if (state == P_NEWLINE || state == P_END)
 	{
 		analyzer->job.type = P_END;
 		analyzer = job_analyze(analyzer, shell);
@@ -59,13 +59,13 @@ t_analyzer *separator_analyze(t_analyzer *analyzer, t_core *shell)
 	return (analyzer);
 }
 
-void analyzer(t_core *shell)
+t_lst *analyzer(t_core *shell)
 {
 	t_analyzer *analyzer;
 
 	analyzer = NULL;
 	if (!shell->lexer)
-		return;
+		return (NULL);
 	analyzer = init_analyze(analyzer, shell);
 	while (analyzer->state != A_STOP)// && (analyzer_state != 20))
 	{
@@ -77,4 +77,5 @@ void analyzer(t_core *shell)
 	shell->job_list = analyzer->job_list;
 	shell->assign_list = analyzer->tmp_list;
 	free(analyzer);
+	return (analyzer->job_list);
 }
