@@ -6,18 +6,18 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/06 18:16:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/08 20:20:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
-**	  Termcaps capabilities:
-**	  - `up' => to move the cursor vertically up one line
-**	  - `cr' => to move the cursor to the beginning of the line it is on
-**	  - `clr_lines' => to clear line from the cursor and following lines
-*/
+ **	  Termcaps capabilities:
+ **	  - `up' => to move the cursor vertically up one line
+ **	  - `cr' => to move the cursor to the beginning of the line it is on
+ **	  - `clr_lines' => to clear line from the cursor and following lines
+ */
 
 void		goto_prompt(t_read *line)
 {
@@ -30,9 +30,9 @@ void		goto_prompt(t_read *line)
 }
 
 /*
-**	  Display prompt as the current directory
-**	  Store some datas for pressed keys
-*/
+ **	  Display prompt as the current directory
+ **	  Store some datas for pressed keys
+ */
 
 t_read		*display_prompt(t_read *term)
 {
@@ -58,11 +58,35 @@ t_read		*display_prompt(t_read *term)
 	return (term);
 }
 
+uint8_t		get_cursor_pos(t_read *input)
+{
+	char	buf[16];
+	int	i;
+	char	ch;
+	char	*tmp;
+
+	i = 0;
+	ch = 0;
+	ft_bzero(buf, 16);
+	write(1, "\033[6n", 4);
+	while (ch != 'R')
+	{
+		xread(0, &ch, 1);
+		buf[i] = ch;
+		i++;
+	}
+	tmp = ft_strsub(buf, 2, 2);
+	input->y_li = atoi(tmp);
+	free(tmp);
+	goto_prompt(input);
+	return (1);
+}
+
 /*
-**	  Clear the last buffer/line inserted & Display current prompt
-**	  Launch line edition: read stdin until enter key is pressed
-**	  The current buffer is saved in a history list
-*/
+ **	  Clear the last buffer/line inserted & Display current prompt
+ **	  Launch line edition: read stdin until enter key is pressed
+ **	  The current buffer is saved in a history list
+ */
 
 void		init_prompt(t_read *term)
 {
@@ -75,6 +99,7 @@ void		init_prompt(t_read *term)
 	display_prompt(term);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
+		get_cursor_pos(term);
 		if (check_caps(buff, term) == TRUE)
 		{
 			ft_bzero(buff, READ_SIZE + 1);
@@ -87,7 +112,7 @@ void		init_prompt(t_read *term)
 	{
 		remove_newline(term);
 		check_expansions(term);
-//		save_history(term);
+		//		save_history(term);
 	}
 	reset_config(term);
 }
