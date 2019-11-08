@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 00:24:24 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/05 02:05:43 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/08 02:22:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,12 @@ int8_t	is_a_blt(char *cmd)
 
 int8_t	call_builtin(t_core *shell, t_lst *process, int blt)
 {
-	static int8_t	(*blt_call[4])(t_core *shell) = {builtin_set
-		, builtin_unset, builtin_export, builtin_fc};
+	static int8_t	(*blt_call[4])(t_core *shell, t_process *process) = {
+		builtin_set, builtin_unset, builtin_export, builtin_fc};
 	int				ret;
 
-	//redir
-	(void)process;
-	ret = blt_call[blt](shell);
-	//fd restoration
+	exec_redirs(((t_process*)process->content)->redir_list);
+	ret = blt_call[blt](shell, ((t_process*)process->content));
+	close_fds(((t_process*)process->content)->redir_list);
 	return (ret);
 }

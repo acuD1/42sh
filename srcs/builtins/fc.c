@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 15:04:32 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/24 22:25:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/08 02:21:55 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,13 +150,14 @@ char			**get_range(char **cmd, char **range)
 **		Editing (default) & Listing (-l option)
 */
 
-int8_t			builtin_fc(t_core *shell)
+int8_t			builtin_fc(t_core *shell, t_process *process)
 {
 	t_lst		*saved;
 	char		**cmd;
 	char		*range[2];
 	u_int64_t	opt;
 
+	(void)process;
 	saved = shell->history;
 	cmd = ft_strsplit(shell->buff, SPACE);
 	opt = get_options(ft_tablen(cmd), cmd, "elnrs");

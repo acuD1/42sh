@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/07 02:21:57 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/08 00:59:58 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int8_t	call_bin(t_core *shell, t_lst *process)
 
 	envp = set_envp(shell);
 	ptr = process->content;
-	//REDIRECTIONS
+	exec_redirs(((t_process*)process->content)->redir_list);
 	if (get_bin(shell, ((t_process*)process->content)) != SUCCESS)
 	{
 		dprintf(STDERR_FILENO, "42sh: %s: command not found\n", ptr->av[0]);

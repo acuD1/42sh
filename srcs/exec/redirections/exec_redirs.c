@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:01 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/07 03:38:37 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/08 01:24:17 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static void	get_io_number(t_redir *ptr)
 	}
 }
 
-
-static void	close_fds(t_lst *ptr)
+void			close_fds(t_lst *ptr)
 {
 	while (ptr)
 	{
