@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/08 19:30:07 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/08 21:10:08 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,11 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	xtputs(input->tcaps[RESTORE_CR], 1, my_outc);
 	move_right(buff, input);
 	ft_strdel(&tmp);
-		/*  */
-		/* goto_prompt(input); */
-		/* insert_str_in_buffer(input->buffer, input); */
-		/* while (--i > buff_index) */
-		/* 	move_left(buff, input); */
-		/*  */
-		debug("/dev/ttys001", input->x, input->x_index, input->y, input->width);
-	win_size("/dev/ttys001", input->ws_col, input->ws_li);
+
+	win_size("/dev/ttys001", input->width, input->width % input->ws_col);
+//	win_size("/dev/ttys002", input->y_li, input->ws_li);
+	if (input->y_li == input->ws_li && input->width % input->ws_col == 2)
+		xtputs(input->tcaps[KEY_UP], 1, my_outc);
 }
 
 /*

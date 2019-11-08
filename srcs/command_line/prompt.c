@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/08 20:20:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/08 20:35:35 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_read		*display_prompt(t_read *term)
 	return (term);
 }
 
-uint8_t		get_cursor_pos(t_read *input)
+void		get_y(t_read *input)
 {
 	char	buf[16];
 	int	i;
@@ -77,9 +77,7 @@ uint8_t		get_cursor_pos(t_read *input)
 	}
 	tmp = ft_strsub(buf, 2, 2);
 	input->y_li = atoi(tmp);
-	free(tmp);
-	goto_prompt(input);
-	return (1);
+	ft_strdel(&tmp);
 }
 
 /*
@@ -99,7 +97,7 @@ void		init_prompt(t_read *term)
 	display_prompt(term);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
-		get_cursor_pos(term);
+		get_y(term);
 		if (check_caps(buff, term) == TRUE)
 		{
 			ft_bzero(buff, READ_SIZE + 1);
