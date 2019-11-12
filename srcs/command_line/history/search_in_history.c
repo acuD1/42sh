@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/12 20:30:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/12 20:46:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void		walking_history(char *buff_tmp, t_read *input, t_lst **history)
 		{
 			goto_reverse(input, buff_tmp, SUCCESS);
 			ft_bzero(input->buffer, ft_strlen(input->buffer));
+			input->x = ft_strlen(buff_tmp) + 23;
 			insert_str_in_buffer((*history)->content, input);
 			if ((*history)->next)
 				(*history) = (*history)->next;
@@ -95,4 +96,5 @@ void		research_mode(t_read *input)
 	input->x += ft_strlen(input->buffer);
 	input->width = input->x;
 	input->x_index = input->x;
+	input->y = input->width / input->ws_col;
 }
