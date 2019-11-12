@@ -136,6 +136,7 @@ SRC		+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_job.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_process.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
+SRC		+=	$(S_PATH)$(ANALYZER)command_subs.c
 SRC		+=	$(S_PATH)$(ANALYZER)printanalyze.c
 SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
 SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
@@ -186,6 +187,7 @@ SRC			+=	$(S_PATH)$(MISC)recall.c
 SRC			+=	$(S_PATH)$(MISC)check_args.c
 
 SRC			+=	$(S_PATH)$(EXEC)exec_process.c
+SRC			+=	$(S_PATH)$(EXEC)exec_from.c
 SRC			+=	$(S_PATH)$(EXEC)exec_builtin.c
 SRC			+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC			+=	$(S_PATH)$(EXEC)get_bin.c

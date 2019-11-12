@@ -35,31 +35,12 @@ char *param_expansion(t_token *token, t_core *shell)
 	// ft_printf("PARAM EXP state %s    %s %s\n", str , &str[1], db_tmp->value);
 }
 
-char *cmd_substitution_expansion(t_token *token, t_core *shell)
-{
-	t_lst *lst_job;
-	char *str;
-	char *ret;
-	int i;
-
-	ret =  NULL;
-	lst_job = NULL;
-	i = ft_strlen(token->data);
-	str = ft_strsub(token->data, 2, i - 3);
-	lst_job = lexer_parser_analyzer(shell, str);
-	//module exec
-	if (lst_job && ((t_job*)lst_job->content)->command)
-		printf("%s\n", ((t_job*)lst_job->content)->command);
-	// 
-	return (((t_job*)lst_job->content)->command);
-}
-
 t_analyzer *expansion_analyze(t_analyzer *analyzer, t_core *shell)
 {
 	char *tmp;
 
-	ft_printf("EXPANSION state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	tmp = NULL;
+	ft_printf("EXPANSION state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	// if (((t_token*)analyzer->lexer->content)->id == P_DBPARENT)
 	// {
 		// tmp = arithmetique_expansion(analyzer);

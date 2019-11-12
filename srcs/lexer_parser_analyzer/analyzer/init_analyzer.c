@@ -23,6 +23,7 @@ void init_expansion_analyze(t_anal analyze)
 	analyze[A_EXPANSION][P_DBPARENT] = expansion_analyze;
 	analyze[A_EXPANSION][P_PARENT] = expansion_analyze;
 	analyze[A_EXPANSION][P_BRACKET] = expansion_analyze;
+	analyze[A_EXPANSION][P_HOOK] = expansion_analyze;
 	analyze[A_EXPANSION][P_DOLLAR] = expansion_analyze;
 	analyze[A_EXPANSION][P_TILDE] = expansion_analyze;
 	analyze[A_EXPANSION][P_END] = end_analyze;
@@ -51,6 +52,7 @@ void init_start_analyze(t_anal analyze)
 	analyze[A_START][P_DBPARENT] = expansion_analyze;
 	analyze[A_START][P_PARENT] = expansion_analyze;
 	analyze[A_START][P_BRACKET] = expansion_analyze;
+	analyze[A_START][P_HOOK] = expansion_analyze;
 	analyze[A_START][P_DOLLAR] = expansion_analyze;
 	analyze[A_START][P_TILDE] = expansion_analyze;
 	analyze[A_START][P_END] = end_analyze;
@@ -78,6 +80,7 @@ void init_word_analyze(t_anal analyze)
 	analyze[A_WORD][P_DBPARENT] = expansion_analyze;
 	analyze[A_WORD][P_PARENT] = expansion_analyze;
 	analyze[A_WORD][P_BRACKET] = expansion_analyze;
+	analyze[A_WORD][P_HOOK] = expansion_analyze;
 	analyze[A_WORD][P_DOLLAR] = expansion_analyze;
 	analyze[A_WORD][P_TILDE] = expansion_analyze;
 	analyze[A_WORD][P_END] = end_analyze;

@@ -16,6 +16,11 @@
 # include "sh42.h"
 
 t_lst *lexer_parser_analyzer(t_core *shell, char *line);
+uint8_t	exec_from_shell_job_list(t_lst *job_list, t_core *shell);
+
+
+char *cmd_substitution_expansion(t_token *token, t_core *shell);
+
 
 /*
 **  ANALYZER

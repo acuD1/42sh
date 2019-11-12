@@ -45,6 +45,7 @@ typedef enum    parser_state
     P_DBPARENT,
     P_PARENT,
     P_BRACKET,
+    P_HOOK,
     P_DOLLAR,
     P_EXP_INTERRUPT,
     P_START,
