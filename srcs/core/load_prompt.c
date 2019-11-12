@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/03 17:16:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/12 09:52:41 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			load_prompt(t_core *shell)
 
 		debug_analyzer(shell);
 		free_prompt(shell, shell->buff);
-		break;
+		//break;
 	}
 	//free_history(shell);
 	ft_strdel(&shell->buff);

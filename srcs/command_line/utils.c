@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/09 14:53:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/07 21:09:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int			my_outc(int c)
 
 void		remove_newline(t_read *line)
 {
-	char	*tmp;
+	char		*tmp;
 	int		i;
 	int		j;
 
@@ -43,13 +43,18 @@ uint8_t		get_width_last_line(t_read *input)
 {
 	int		buff_index;
 	int		width;
+	int		x;
 
 	width = 0;
+	x = input->x + 1;
 	buff_index = input->x_index - input->prompt_len - 1;
 	while (--buff_index)
 	{
 		if (input->buffer[buff_index] == '\n')
 			break ;
+		else if (x == 0)
+			return (input->ws_col);
+		x--;
 		width++;
 	}
 	if (input->y == 1 && width != input->ws_col - input->prompt_len)

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/15 14:38:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/06 15:52:16 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,12 @@ uint8_t			read_again(char **prev_b, char *path, char *name, t_read *input)
 			return (TRUE);
 		}
 		else
+		{
+			xtputs(input->tcaps[SAVE_CR], 1, my_outc);
+			if (check_caps(buff, input) == FALSE)
+				xtputs(input->tcaps[RESTORE_CR], 1, my_outc);
 			return (FALSE);
+		}
 	}
 	return (FALSE);
 }

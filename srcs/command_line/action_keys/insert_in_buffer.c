@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   insert_in_buffer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/21 13:37:14 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/12 09:52:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
 	if (input->x != 0 || (input->x == 0 && buff != NEW_LINE))
 		ft_dprintf(STDIN_FILENO, "%c", buff);
-	if (buff == NEW_LINE || input->x >= input->ws_col + 1)
+	if (buff == NEW_LINE || input->x > input->ws_col)
 	{
-		(input->x == 0) ? input->y-- : 0;
+		//	(input->x == 0) ? input->y-- : 0;
 		input->x = 0;
 		input->y++;
 	}
@@ -31,7 +31,8 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 	input->width++;
 	input->buffer[buff_index] = buff;
 	input->x_index++;
-	/* if (input->x >= input->ws_col + 1) */
+	//	move_right(&buff, input);
+	/* if (input->x >= input->ws_col) */
 	/* 	insert_newline_in_buff(input); */
 }
 
@@ -41,14 +42,17 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 **			`reset_cr' => restore cursor position
 **			`clr_lines' => to clear all following lines from cursor
 */
+
 void		insert_inline_char(char *buff, t_read *input, int buff_index)
 {
 	int 	j;
+	int	i;
 	char	*tmp;
 
 	tmp = NULL;
 	input->width += 1;
 	j = ft_strlen(input->buffer) + 1;
+	i = input->width - input->prompt_len;
 	while (--j > buff_index)
 	{
 		if (input->buffer[j - 1] == NEW_LINE)
@@ -66,11 +70,16 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	xtputs(input->tcaps[RESTORE_CR], 1, my_outc);
 	move_right(buff, input);
 	ft_strdel(&tmp);
+
+//	win_size("/dev/ttys001", input->width, input->width % input->ws_col);
+//	win_size("/dev/ttys002", input->y_li, input->ws_li);
+	if (input->y_li == input->ws_li && input->width % input->ws_col == 2)
+		xtputs(input->tcaps[KEY_UP], 1, my_outc);
 }
 
 /*
-**	To insert a string in buffer at the end of line
-*/
+ **	To insert a string in buffer at the end of line
+ */
 
 void			insert_str_in_buffer(char *d_name, t_read *input)
 {
@@ -90,10 +99,10 @@ void			insert_str_in_buffer(char *d_name, t_read *input)
 }
 
 /*
-**	Insert one char if size of buff is equal to 1
-**	Otherwise (size greater than 1) paste the string in buffer
-**	If cursor position is under the width of line => insert inline
-*/
+ **	Insert one char if size of buff is equal to 1
+ **	Otherwise (size greater than 1) paste the string in buffer
+ **	If cursor position is under the width of line => insert inline
+ */
 
 void		insert_in_buffer(char *buff, t_read *input)
 {

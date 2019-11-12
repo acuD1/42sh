@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/14 13:36:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/05 21:07:23 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ uint8_t			is_tab(char *buff, char *d_name, t_read *input)
 			return (TRUE);
 		}
 		else
+		{
+			if (check_caps(buff, input) == FALSE)
+				xtputs(input->tcaps[KEY_UP], 1, my_outc);
 			return (FALSE);
+		}
 	}
 	return (FALSE);
 }

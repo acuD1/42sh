@@ -6,11 +6,23 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/15 14:33:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/07 19:53:30 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+void			check_tmp_buffer(t_read *line)
+{
+	goto_prompt(line);
+	if (line->tmp_buff && ft_strlen(line->tmp_buff) > 0)
+	{
+		memset(line->buffer, 0, strlen(line->buffer));
+		insert_str_in_buffer(line->tmp_buff, line);
+		ft_strdel(&(line->tmp_buff));
+		line->history_index = NULL;
+	}
+}
 
 /*
 **	Arrow down print the prev saved in history from history index
@@ -22,10 +34,9 @@ void			move_key_down(t_read *line)
 	int		i;
 
 	i = -1;
+	w = NULL;
 	if (line->history && line->history_index)
 	{
-		goto_prompt(line);
-		memset(line->buffer, 0, strlen(line->buffer));
 		if (line->history_index && line->history_index->prev)
 		{
 			w = line->history_index->prev;
@@ -33,10 +44,11 @@ void			move_key_down(t_read *line)
 		}
 		else
 		{
-			line->history_index = line->history->prev;
-			//replace current buffer inserted
+			check_tmp_buffer(line);
 			return ;
 		}
+		goto_prompt(line);
+		memset(line->buffer, 0, strlen(line->buffer));
 		while (w->content && ((char*)w->content)[++i])
 			insert_char_in_buffer(((char*)w->content)[i], line, i);
 	}
@@ -63,7 +75,8 @@ void			move_key_up(t_read *line)
 		}
 		else
 		{
-			//stock current buffer inserted in prev
+			if ((*line).buffer)
+				line->tmp_buff = ft_strdup(line->buffer);
 			line->history_index = line->history;
 			w = line->history;
 		}

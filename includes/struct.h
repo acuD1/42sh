@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/03 15:03:31 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/12 09:41:11 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ typedef struct		s_read
 	int		x_index;
 	int		x;
 	int		y;
+	int		y_li;
 	int		width;
 	int		ws_col;
 	int		ws_li;
@@ -153,6 +154,7 @@ typedef struct		s_read
 
 	char		*tcaps[CAPS_NBR];
 	char		*buffer;
+	char		*tmp_buff;
 	char		**cmd;
 
 	t_core		*shell;

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/03 14:45:12 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/12 09:41:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void		print_hash_map(t_hash *hash);
 
 void		print_usage(char *name, int c, char *usage);
 t_core		*get_core(t_core *core);
-int			check_invalid_identifiers(char *arg, char *exceptions);
+int		check_invalid_identifiers(char *arg, char *exceptions);
 char		*get_abs_path(char *path);
 void		ft_perror(const char *s, const int errnum);
 int8_t		ft_access(char *path, int mode);
@@ -140,6 +140,13 @@ int8_t		builtin_set(t_core *shell);
 int8_t		builtin_unset(t_core *shell);
 int8_t		builtin_export(t_core *shell);
 int8_t		builtin_fc(t_core *shell);
+
+int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
+void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
+void		display_reverse(t_lst *w, u_int64_t opt, char **range);
+u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd);
+void		swap_range(char **r1, char **r2);
+u_int16_t	set_range(t_lst **w, char **range);
 
 /* ###########################  TEMPORARY   #################################*/
 int8_t	exec_builtin(t_core *shell);
