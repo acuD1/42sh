@@ -6,13 +6,13 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 22:37:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/02 11:24:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/08 02:20:42 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t	parse_set(int argc, char **argv)
+static int8_t	parse_set(int argc, char **argv)
 {
 	u_int64_t	options;
 
@@ -25,7 +25,7 @@ int8_t	parse_set(int argc, char **argv)
 	return (SUCCESS);
 }
 
-void	print_internal_vars(t_core *shell)
+static void		print_internal_vars(t_core *shell)
 {
 	t_lst	*ptr;
 
@@ -42,7 +42,7 @@ void	print_internal_vars(t_core *shell)
 	}
 }
 
-int8_t	new_positional_var(t_core *shell, char *arg, int count)
+static int8_t	new_positional_var(t_core *shell, char *arg, int count)
 {
 	shell->db.key = ft_itoa(count);
 	shell->db.value = ft_strdup(arg);
@@ -57,16 +57,16 @@ int8_t	new_positional_var(t_core *shell, char *arg, int count)
 	return (SUCCESS);
 }
 
-int8_t	get_positional_vars(t_core *shell, int argc)
+static int8_t	get_positional_vars(t_core *shell, t_process *process, int argc)
 {
 	int		i;
 
-	i = (shell->tokens[1][0] != '-') ? 1 : 2;
+	i = (process->av[1][0] != '-') ? 1 : 2;
 	free_env(shell->pos_vars);
 	shell->pos_vars = NULL;
 	while (i < argc)
 	{
-		if (new_positional_var(shell, shell->tokens[i], i) != SUCCESS)
+		if (new_positional_var(shell, process->av[i], i) != SUCCESS)
 			return (FAILURE);
 		i++;
 	}
@@ -75,19 +75,19 @@ int8_t	get_positional_vars(t_core *shell, int argc)
 	return (SUCCESS);
 }
 
-int8_t	builtin_set(t_core *shell)
+int8_t			builtin_set(t_core *shell, t_process *process)
 {
 	int8_t	parsing_ret;
 	int		argc;
 
-	argc = ft_tablen(shell->tokens);
-	if ((parsing_ret = parse_set(argc, shell->tokens)) > 0)
+	argc = ft_tablen(process->av);
+	if ((parsing_ret = parse_set(argc, process->av)) > 0)
 		return (parsing_ret);
 	if (argc == 1)
 	{
 		print_internal_vars(shell);
 	}
-	else if (get_positional_vars(shell, argc) != SUCCESS)
+	else if (get_positional_vars(shell, process, argc) != SUCCESS)
 	{
 		return (FAILURE);
 	}

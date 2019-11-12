@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 01:28:05 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/15 00:27:06 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/05 23:18:03 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	print_usage(char *name, int c, char *usage)
 void	ft_perror(const char *s, const int errnum)
 {
 	static char	*error[] = {0, 0, "No such file or directory", 0, 0, 0, 0, 0
-		, 0, 0, 0, 0, 0, "Permission denied"};
-	dprintf(STDERR_FILENO, "%s: %s\n", s, error[errnum]);
+		, 0, 0, 0, 0, 0, "Permission denied", 0, 0, 0, 0, 0, 0
+		, "Not a directory", "Is a directory"};
+	dprintf(STDERR_FILENO, "42sh: %s: %s\n", s, error[errnum]);
 }

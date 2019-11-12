@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/12 09:41:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/12 09:56:37 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,10 @@ typedef struct	s_core
 
 	/* variables */
 	char		*buff;
-	char		**tokens;		//	ft_strplit of char *line from GNL [BETA]
-	char		*bin;			//	dup of the binary found or located [BETA]
-	int32_t		last_exit_status;	//	last exit status value (echo $?)
-	u_int8_t	opt;			//	Options
-
+	char		**tokens;			//	ft_strplit of char *line from GNL [BETA]
+	char		*bin;				//	dup of the binary found or located [BETA]
+	int32_t		status;				//	last exit status value (echo $?)
+	u_int8_t	opt;				//	Option
 }				t_core;
 
 /*
@@ -166,25 +165,26 @@ typedef struct		s_read
 ** LEXER_PARSER_ANALYZER
 */
 
-typedef struct s_redir
+typedef struct	s_redir
 {
-    char            *op[2];
-    // int             fds[2];
-    enum parser_state  type;
-    // int             fd_flags; // flags O_RDWR O_CREAT ..
-}               t_redir;
+	char				*op[2];
+	int					io_num[2];
+	int					dup_fd;
+	enum parser_state	type;
+}				t_redir;
 
 typedef struct            s_process
 {
-    t_lst               *redir_list;
-    char                **av;
-    enum parser_state  type;
+    enum parser_state	type;
+    t_lst				*assign_list;
+    t_lst				*redir_list;
+    char				**av;
+	char				*bin;
     // char                **env;
     // uint8_t                completed;
     // uint8_t                stopped;
     // pid_t                pid;
     // int                    status;
-    t_lst 				*assign_list;
 }                        t_process;
 
 typedef struct s_job

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:39:28 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/27 14:39:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/05 20:11:56 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 **	- set expansion variables
 */
 
-static void	exec_handler_bin_error(t_core *shell)
+static int8_t	exec_handler_bin_error(t_core *shell)
 {
 	//struct stat stat;
 
@@ -45,9 +45,10 @@ static void	exec_handler_bin_error(t_core *shell)
 	/* If not a directory then the binary is not found at all */
 	dprintf(STDERR_FILENO, "42sh: %s: command not found\n",
 		shell->tokens[0]);
+	return (FAILURE);
 }
 
-static void	exec_handler_perm_error(t_core *shell)
+static int8_t	exec_handler_perm_error(t_core *shell)
 {
 	/* Check if file exist, if not permission denied*/
 	if (access(shell->tokens[0], F_OK) == -1)
@@ -56,9 +57,10 @@ static void	exec_handler_perm_error(t_core *shell)
 	else
 		dprintf(STDERR_FILENO, "42sh: %s: Permission denied\n",
 			shell->tokens[0]);	/* /!\ */
+	return (FAILURE);
 }
 
-void		exec_handler(t_core *shell, u_int8_t handler)
+int8_t	exec_handler(t_core *shell, u_int8_t handler)
 {
 	if (handler & BIN_ERROR)
 		return (exec_handler_bin_error(shell));
@@ -66,11 +68,5 @@ void		exec_handler(t_core *shell, u_int8_t handler)
 		return (exec_handler_perm_error(shell));
 	if (handler & FORK_ERROR)
 		dprintf(STDERR_FILENO, "%sFork failed !\n%s", C_R, C_X);	/* /!\ */
-
-	/*	If execve failed, the shell exit(1) */
-	if (handler & EXEC_ERROR)
-	{
-		dprintf(STDERR_FILENO, "%sExecve failed !\n%s", C_R, C_X);	/* /!\ */
-		exit(1);
-	}
+	return (FAILURE);
 }

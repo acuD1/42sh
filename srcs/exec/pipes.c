@@ -6,101 +6,113 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 11:06:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/31 20:32:56 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/08 00:16:04 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int32_t	get_pipeline_len(t_lst *process)
+static int32_t	get_pipeline_len(t_lst *process)
 {
 	int i;
 
-	i = 0;
+	i = 1;
 	while (process != NULL && ((t_process*)process->content)->type == P_PIPE)
+	{
+		process = process->next;
 		i++;
+	}
 	return (i);
 }
 
-int8_t	pipeline_start(t_core *shell, t_lst *process, int *pipes)
+static int8_t	pipeline_start(t_core *shell, t_lst **process, int *pipes)
 {
 	pid_t	pid;
 
-	(void)process;
-	(void)shell;
 	if ((pid = fork()) == 0)
 	{
-		if (dup2(pipes[1], 1) < 0)
-			;//ERRROR HANDLING
+		if (dup2(pipes[1], STDOUT_FILENO) < 0)
+		{
+			dprintf(STDERR_FILENO, "42sh: dup2 error.\n");
+			exit(1);
+		}
 		close(pipes[0]);
-		close(pipes[1]);
-		//EXEC
+		exec_piped_process(shell, *process);
 	}
+	*process = (*process)->next;
 	return ((pid < 0) ? FAILURE : SUCCESS);
 }
 
 void	redir_and_close(t_lst *process, int *pipes)
 {
-	if (dup2(pipes[0], 0) < 0
+	int dbg;
+
+	dbg = 0;
+	if (dup2(pipes[0], STDIN_FILENO) < 0
 		|| (((t_process*)process->content)->type == P_PIPE
-			&& dup2(pipes[3], 1) < 0))
+			&& (dbg = dup2(pipes[3], STDOUT_FILENO)) < 0))
 	{
-		dprintf(STDERR_FILENO, "42sh: dup2 error\n");
-		exit(-1);//ERROR HANDLING
+		dprintf(STDERR_FILENO, "42sh: dup2 error.\n");
+		exit(-1);
 	}
-	close(pipes[0]);
-	close(pipes[2]);
-	close(pipes[3]);
+	close(pipes[1]);
+	if (((t_process*)process->content)->type == P_PIPE)
+		close(pipes[2]);
 }
 
 int8_t	pipeline_fork_error(int *pipes)
 {
 	close(pipes[2]);
 	close(pipes[3]);
-	dprintf(STDERR_FILENO, "42sh: fork error\n");
+	dprintf(STDERR_FILENO, "42sh: fork error.\n");
 	return (FAILURE);
 }
 
-int8_t	pipeline_loop(t_core *shell, t_lst *process, int *pipes)
+static int8_t	pipeline_loop(t_core *shell, t_lst **process, int *pipes)
 {
 	pid_t	pid;
 
-	close(pipes[1]);
-	if (pipe(pipes + 2) < 0)
+	if (((t_process*)(*process)->content)->type == P_PIPE && pipe(pipes + 2) < 0)
 	{
 		close(pipes[0]);
-		dprintf(STDERR_FILENO, "42sh: pipe error\n");
+		close(pipes[1]);
+		dprintf(STDERR_FILENO, "42sh: pipe error.\n");
 		return (FAILURE);
 	}
 	if ((pid = fork()) == 0)
 	{
-		redir_and_close(process, pipes);
-		exit(0);//EXEC
+		redir_and_close(*process, pipes);
+		exec_piped_process(shell, *process);
 	}
-	close(pipes[0]);
 	if (pid < 0)
 		return(pipeline_fork_error(pipes));
-	if (((t_process*)process->content)->type == P_PIPE)
-	{
-		if (pipeline_loop(shell, process, pipes + 2) != SUCCESS)
+	close(pipes[0]);
+	close(pipes[1]);
+	if (((t_process*)(*process)->content)->type == P_PIPE)
+		if (pipeline_loop(shell, &((*process)->next), pipes + 2) != SUCCESS)
 			return (FAILURE);
-	}
+	*process = (*process)->next;
 	return (SUCCESS);
 }
 
-int8_t	exec_pipeline(t_core *shell, t_lst *process)
+int8_t	exec_pipeline(t_core *shell, t_lst **process)
 {
-	int	*pipes;
-	int	p_len;
-	int	ret;
+	int		*pipes;
+	int		p_len;
+	int		ret;
 
 	ret = SUCCESS;
-	p_len = get_pipeline_len(process);
+	p_len = get_pipeline_len(*process);
 	if ((pipes = (int*)malloc(sizeof(int) * (2 * p_len))) == NULL)
+		return (FAILURE);
+	if (pipe(pipes) < 0)
 		return (FAILURE);
 	if (pipeline_start(shell, process, pipes) != SUCCESS
 		|| pipeline_loop(shell, process, pipes) != SUCCESS)
 		ret = FAILURE;
+	while (p_len-- > 0)
+		wait(&(shell->status));
+	printf("pipeline status = %i\n", shell->status);
 	free(pipes);
 	return (ret);
 }
