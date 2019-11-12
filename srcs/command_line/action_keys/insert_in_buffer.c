@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/08 21:10:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:47:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 
 void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
-	if (input->x != 0 || (input->x == 0 && buff != NEW_LINE))
+	if (input->x != 1 || (input->x == 1 && buff != NEW_LINE))
 		ft_dprintf(STDIN_FILENO, "%c", buff);
 	if (buff == NEW_LINE || input->x > input->ws_col)
 	{
 		//	(input->x == 0) ? input->y-- : 0;
-		input->x = 0;
+		input->x = 1;
 		input->y++;
 	}
 	else
@@ -36,6 +36,16 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 	/* 	insert_newline_in_buff(input); */
 }
 
+int8_t		debug(char  *path, int a, int b)
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    dprintf(fd, "width %d  modulo %d\n", a, b);
+    return (SUCCESS);
+}
+
 /*
 **	To insert char in buffer if cursor is inline
 **	Termcaps : 	`save_cr' => save cursor position
@@ -46,13 +56,11 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 void		insert_inline_char(char *buff, t_read *input, int buff_index)
 {
 	int 	j;
-	int	i;
 	char	*tmp;
 
 	tmp = NULL;
 	input->width += 1;
 	j = ft_strlen(input->buffer) + 1;
-	i = input->width - input->prompt_len;
 	while (--j > buff_index)
 	{
 		if (input->buffer[j - 1] == NEW_LINE)
@@ -71,8 +79,7 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	move_right(buff, input);
 	ft_strdel(&tmp);
 
-	win_size("/dev/ttys001", input->width, input->width % input->ws_col);
-//	win_size("/dev/ttys002", input->y_li, input->ws_li);
+	debug("/dev/pts/3", input->x, input->ws_col);
 	if (input->y_li == input->ws_li && input->width % input->ws_col == 2)
 		xtputs(input->tcaps[KEY_UP], 1, my_outc);
 }

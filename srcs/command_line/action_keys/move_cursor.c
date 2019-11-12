@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/07 19:53:30 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:42:44 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void			move_right(char *buff, t_read *input)
 		xtputs(input->tcaps[LEFT_MARGIN], 1, my_outc);
 		xtputs(input->tcaps[KEY_DOWN], 1, my_outc);
 		input->x_index++;
-		input->x = 0;
+		input->x = 1;
 		input->y++;
 	}
 }
@@ -126,13 +126,13 @@ void		move_left(char *buff, t_read *input)
 
 	(void)buff;
 	if ((input->x > input->prompt_len && input->y == 0)
-		|| (input->x > 0 && input->y > 0))
+		|| (input->x > 1 && input->y > 0))
 	{
 		xtputs(input->tcaps[KEY_LEFT], 1, my_outc);
 		input->x_index--;
 		input->x--;
 	}
-	else if (input->y > 0 && input->x == 0)
+	else if (input->y > 0 && input->x == 1)
 	{
 		width = get_width_last_line(input);
 		input->x = width;
