@@ -35,8 +35,9 @@ typedef struct	s_build
 typedef struct s_lexer 	t_lexer;
 typedef struct s_parser	t_parser;
 typedef struct s_analyzer t_analyzer;
+typedef struct s_core t_core;
 
-typedef t_analyzer    *(*t_analyze)(t_analyzer*);
+typedef t_analyzer    *(*t_analyze)(t_analyzer*, t_core*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_PARSER_STATE];
 
 typedef t_lst *(*t_lexing)(t_lexer*, t_lst *);
@@ -234,7 +235,7 @@ typedef struct  s_token
 
 typedef struct		s_expansion
 {
-	int 			(*func)(t_lexer *, e_parser_state id, int len, t_lst *lexer_token);
+	t_lst 			*(*func)(t_lexer *, e_parser_state id, int len, t_lst *lexer_token);
 	e_parser_state 	id;
 	int 			len;
 }					t_expansion;

@@ -46,33 +46,40 @@ char *fill_cmd_job(t_analyzer *analyzer, int flag)
 
 
 
-t_analyzer *cmd_analyze(t_analyzer *analyzer)
+t_analyzer *cmd_analyze(t_analyzer *analyzer, t_core *shell)
 {
-	// ft_printf("CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
-	analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->content)->data);
+	ft_printf("CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	analyzer->job.command = fill_cmd_job(analyzer, 1);
 	if (analyzer->state == A_REDIRECT)
 	{
 		analyzer->redir.op[1] = ft_strdup(((t_token*)analyzer->lexer->content)->data);
-		analyzer = redir_analyze(analyzer);
+		analyzer->state = A_WORD;
+		return (analyzer = redir_analyze(analyzer, shell));
 	}
 	else if (analyzer->state == A_ASSIGN)
 	{
 		analyzer->db.value = ft_strdup(((t_token*)analyzer->lexer->content)->data);
-		analyzer = ass_analyze(analyzer);
-	}
-	analyzer->job.command = fill_cmd_job(analyzer, 1);
-	if (analyzer->lexer->next && !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
-		analyzer->state = A_STOP;
-	else if (analyzer->state == A_ASSIGN)
 		analyzer->state = A_START;
+		return (analyzer = ass_analyze(analyzer, shell));
+	}
 	else
-		analyzer->state = A_WORD;
+	{
+			analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->content)->data);
+			analyzer->state = A_WORD;
+	}
+	// if (analyzer->lexer->next && !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
+		// analyzer->state = A_STOP;
+	// else if (analyzer->state == A_ASSIGN)
+		// analyzer->state = A_START;
+	// else
+	(void)shell;
 	return (analyzer);
 }
 
-t_analyzer *end_analyze(t_analyzer *analyzer)
+t_analyzer *end_analyze(t_analyzer *analyzer, t_core *shell)
 {
 	ft_printf("END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	separator_analyze(analyzer, shell);
 	analyzer->state = A_STOP;
 	return (analyzer);
 }

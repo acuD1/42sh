@@ -15,7 +15,7 @@
 
 # include "sh42.h"
 
-void lexer_parser_analyzer(t_core *shell, char *line);
+t_lst *lexer_parser_analyzer(t_core *shell, char *line);
 
 /*
 **  ANALYZER
@@ -34,19 +34,19 @@ void        init_redirect_analyze(t_anal analyze);
 void        init_end_analyze(t_anal analyze);
 void        init_separator_analyze(t_anal analyze);
 
-void        analyzer(t_core *shell);
-t_analyzer  *cmd_analyze(t_analyzer *analyzer);
-t_analyzer  *end_analyze(t_analyzer *analyzer);
-t_analyzer 	*expansion_analyze(t_analyzer *analyzer);
-t_analyzer  *separator_analyze(t_analyzer *analyzer);
-t_analyzer  *redirect_analyze(t_analyzer *analyzer);
-t_analyzer  *error_analyze(t_analyzer *analyzer);
-t_analyzer  *ionbr_analyze(t_analyzer *analyzer);
-t_analyzer  *assign_analyze(t_analyzer *analyzer);
-t_analyzer 	*redir_analyze(t_analyzer *analyzer);
-t_analyzer  *process_analyze(t_analyzer *analyzer);
-t_analyzer  *job_analyze(t_analyzer *analyzer);
-t_analyzer 	*ass_analyze(t_analyzer *analyzer);
+t_lst       *analyzer(t_core *shell);
+t_analyzer  *cmd_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer  *end_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer 	*expansion_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer  *separator_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer  *redirect_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer  *error_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer  *ionbr_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer  *assign_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer 	*redir_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer  *process_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer  *job_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer 	*ass_analyze(t_analyzer *analyzer, t_core *shell);
 
 
 t_db 		*fetch_assign(t_db *assign);
@@ -92,11 +92,11 @@ int				ft_isdigit(int c);
 int 			ft_isalpha(int c);
 
 t_lst			*expansion_lexer(t_lexer *lexer, t_lst *lexer_token);
-int 			exp_dbparen_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
-int 			exp_paren_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
-int 			exp_bracket_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
-int 			exp_dollar_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
-int 			exp_tilde_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
+t_lst 			*exp_dbparen_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
+t_lst 			*exp_paren_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
+t_lst 			*exp_bracket_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
+t_lst 			*exp_dollar_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
+t_lst 			*exp_tilde_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
 
 t_lst			*start_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*end_lexer(t_lexer *lexer, t_lst *lexer_token);

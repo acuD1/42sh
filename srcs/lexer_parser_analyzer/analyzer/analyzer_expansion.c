@@ -1,35 +1,109 @@
 #include "sh42.h"
 
-t_analyzer *expansion_analyze(t_analyzer *analyzer)
+char *tilde_expansion(char *str, t_core *shell)
+{
+	t_db *db_tmp;
+
+	db_tmp = NULL;
+	if (ft_strcmp(str, "~"))
+		return (NULL);
+	if (!(db_tmp = search_db(shell->env, "HOME")))
+		return (NULL);
+	else
+		return (db_tmp->value);
+	// ft_printf("PARAM EXP state %s    %s %s\n", str , &str[1], db_tmp->value);
+}
+
+char *param_expansion(t_token *token, t_core *shell)
+{
+	t_db *db_tmp;
+	char *tmp;
+	int i;
+
+	i = ft_strlen(token->data);
+	tmp = NULL;
+	db_tmp = NULL;
+	if (token->id == P_BRACKET)
+		tmp = ft_strsub(token->data, 2, i - 3);
+	else if (token->id == P_DOLLAR)
+		tmp = ft_strsub(token->data, 1, i - 1);
+	if (!(db_tmp = search_db(shell->env, tmp)))
+		return (NULL);
+	else
+		return (db_tmp->value);
+
+	// ft_printf("PARAM EXP state %s    %s %s\n", str , &str[1], db_tmp->value);
+}
+
+char *cmd_substitution_expansion(t_token *token, t_core *shell)
+{
+	t_lst *lst_job;
+	char *str;
+	char *ret;
+	int i;
+
+	ret =  NULL;
+	lst_job = NULL;
+	i = ft_strlen(token->data);
+	str = ft_strsub(token->data, 2, i - 3);
+	lst_job = lexer_parser_analyzer(shell, str);
+	//module exec
+	if (lst_job && ((t_job*)lst_job->content)->command)
+		printf("%s\n", ((t_job*)lst_job->content)->command);
+	// 
+	return (((t_job*)lst_job->content)->command);
+}
+
+t_analyzer *expansion_analyze(t_analyzer *analyzer, t_core *shell)
 {
 	char *tmp;
 
 	ft_printf("EXPANSION state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	tmp = NULL;
-	tmp = ft_strdup(((t_token*)analyzer->lexer->content)->data);
-	analyzer->job.command = fill_cmd_job(analyzer, 0);
 	// if (((t_token*)analyzer->lexer->content)->id == P_DBPARENT)
-	// 	tmp = arithmetique_expansion(analyzer);
-	// else if (((t_token*)analyzer->lexer->content)->id == P_PARENT)
-	// 	tmp = cmd_substitution_expansion(analyzer);
-	// else if (((t_token*)analyzer->lexer->content)->id == P_BRACKET || ((t_token*)analyzer->lexer->content)->id == P_DOLLAR)
-	// 	tmp = param_expansion(analyzer);
-	// else if (((t_token*)analyzer->lexer->content)->id == P_TILDE)
-	// 	tmp = path_expansion(analyzer);
-	// analyzer->state = A_WORD;
-	// if (analyzer->state == A_START || analyzer->state == A_SEPARATOR)
-	// 	analyzer->process.av = fill_cmd_process(tmp);
-	// else if (analyzer->state == A_WORD)
-	// 	analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, tmp);
-	// if (analyzer->lexer->next && !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
-	// 	analyzer->state = A_STOP;
-	// else
-		// analyzer->state = A_EXPANSION;
-	// free(tmp);
+	// {
+		// tmp = arithmetique_expansion(analyzer);
+	// }
+	if (((t_token*)analyzer->lexer->content)->id == P_PARENT)
+	{
+		if ((tmp = cmd_substitution_expansion(((t_token*)analyzer->lexer->content), shell)))
+		{
+			// free(((t_token*)analyzer->lexer->content)->data);
+			// ((t_token*)analyzer->lexer->content)->data = ft_strdup(tmp);
+			(void)shell;
+		}
+		else
+			return (analyzer);
+	}
+	else if (((t_token*)analyzer->lexer->content)->id == P_BRACKET || ((t_token*)analyzer->lexer->content)->id == P_DOLLAR)
+	{
+		if ((tmp = param_expansion(((t_token*)analyzer->lexer->content), shell)))
+		{
+			free(((t_token*)analyzer->lexer->content)->data);
+			((t_token*)analyzer->lexer->content)->data = ft_strdup(tmp);
+		}
+		else
+			return (analyzer);
+		analyzer->state = A_EXPANSION;
+	}
+	else if (((t_token*)analyzer->lexer->content)->id == P_TILDE)
+	{
+		if ((tmp = tilde_expansion(((t_token*)analyzer->lexer->content)->data, shell)))
+		{
+			free(((t_token*)analyzer->lexer->content)->data);
+			((t_token*)analyzer->lexer->content)->data = ft_strdup(tmp);
+		}
+		else
+			return (analyzer);
+		analyzer->state = A_EXPANSION;
+	}
+	analyzer->job.command = fill_cmd_job(analyzer, 1);
+	// analyzer->state = A_EXPANSION;
 	if (analyzer->state == A_ASSIGN)
 	{
 		analyzer->db.value = ft_strdup(((t_token*)analyzer->lexer->content)->data);
-		ass_analyze(analyzer);
+		ass_analyze(analyzer, shell);
+		analyzer->state = A_START;
 	}
 	if (((t_token*)analyzer->lexer->next->content)->id == P_ASSIGN && analyzer->state != A_WORD)
 	{
@@ -37,7 +111,6 @@ t_analyzer *expansion_analyze(t_analyzer *analyzer)
 		analyzer->process.type = ((t_token*)analyzer->lexer->content)->id;
 		analyzer->state = A_ASSIGN;
 		get_token(analyzer);
-
 	}
 	// cmd_analyze(analyzer);
 	return (analyzer);

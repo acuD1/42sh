@@ -35,10 +35,10 @@ t_process *fetch_process(t_process *process)
 	return (new);
 }
 
-t_analyzer *process_analyze(t_analyzer *analyzer)
+t_analyzer *process_analyze(t_analyzer *analyzer, t_core *shell)
 {
 	// ft_printf("CREATE PROCESS state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
-	if (analyzer->assign_list)
+	if (analyzer->process.av)
 		ft_lstappend(&analyzer->process.assign_list, analyzer->assign_list);
 	else
 		ft_lstappend(&analyzer->tmp_list, analyzer->assign_list);
@@ -51,5 +51,6 @@ t_analyzer *process_analyze(t_analyzer *analyzer)
 		analyzer->state = A_STOP;
 	else
 		analyzer->state = A_SEPARATOR;
+	(void)shell;
 	return (analyzer);
 }
