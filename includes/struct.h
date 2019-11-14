@@ -248,6 +248,7 @@ typedef struct  s_lexer
     size_t          buf_pos;
     t_lexing        lex[NB_LEXER_STATE];
     t_token 		token;
+    u_int8_t 		quote;
 }               t_lexer;
 
 #endif

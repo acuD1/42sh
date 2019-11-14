@@ -76,7 +76,7 @@ void		get_y(t_read *input)
 		i++;
 	}
 	tmp = ft_strsub(buf, 2, 2);
-	input->y_li = atoi(tmp);
+	input->y_li = ft_atoi(tmp);
 	ft_strdel(&tmp);
 }
 
@@ -112,5 +112,5 @@ void		init_prompt(t_read *term)
 		check_expansions(term);
 		//		save_history(term);
 	}
-	reset_config(term);
+	// reset_config(term);
 }

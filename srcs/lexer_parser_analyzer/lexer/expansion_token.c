@@ -31,7 +31,7 @@ t_lst *exp_hook_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_t
 				index++;
 			if (!lexer->buff[index + 1])
 			{
-				ft_printf("mathsubst>\n" );
+				ft_dprintf(2, "mathsubst>\n" );
 				// lexer->buf_pos = index;
 				break;
 				// subprompt("braceparam>");

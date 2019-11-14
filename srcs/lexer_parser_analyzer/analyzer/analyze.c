@@ -2,7 +2,7 @@
 
 t_analyzer *ionbr_analyze(t_analyzer *analyzer, t_core *shell)
 {
-	// ft_printf("IONBR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	// ft_dprintf(2, "IONBR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	analyzer->state = A_IONUMBER;
 	analyzer->job.command = fill_cmd_job(analyzer, 0);
 	analyzer->redir.op[0] = ft_strdup(((t_token*)analyzer->lexer->content)->data);
@@ -19,7 +19,7 @@ t_analyzer *ionbr_analyze(t_analyzer *analyzer, t_core *shell)
 
 t_analyzer *error_analyze(t_analyzer *analyzer, t_core *shell)
 {
-	// ft_printf("ERROR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	// ft_dprintf(2, "ERROR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	analyzer->state = A_STOP;
 	if (analyzer->lexer->next && !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
 		analyzer->state = A_STOP;
@@ -34,7 +34,7 @@ t_analyzer *separator_analyze(t_analyzer *analyzer, t_core *shell)
 
 	state = P_ERROR;
 	state = ((t_token*)analyzer->lexer->content)->id;
-	// ft_printf("SEPARATOR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	// ft_dprintf(2, "SEPARATOR state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	if (state == P_SEMICOLON || state == P_AND) //jjob
 	{
 		analyzer->job.command = fill_cmd_job(analyzer, 0);
@@ -59,23 +59,22 @@ t_analyzer *separator_analyze(t_analyzer *analyzer, t_core *shell)
 	return (analyzer);
 }
 
-t_lst *analyzer(t_core *shell)
+void analyzer(t_core *shell)
 {
 	t_analyzer *analyzer;
 
 	analyzer = NULL;
 	if (!shell->lexer)
-		return (NULL);
+		return ;
 	analyzer = init_analyze(analyzer, shell);
 	while (analyzer->state != A_STOP)// && (analyzer_state != 20))
 	{
-		// ft_printf("analyzer state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+		// ft_dprintf(2, "analyzer state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 		analyzer = analyzer->analyze[analyzer->state][((t_token*)analyzer->lexer->content)->id](analyzer, shell);
 		get_token(analyzer);
 	}
 	free(analyzer->job.command);
 	shell->job_list = analyzer->job_list;
 	shell->assign_list = analyzer->tmp_list;
-	free(analyzer);
-	return (analyzer->job_list);
+	// free(analyzer);
 }

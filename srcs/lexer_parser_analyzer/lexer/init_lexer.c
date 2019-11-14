@@ -39,6 +39,7 @@ void init_lexer(char *line, t_lexer *new)
 	new->buf_pos = 0;
 	new->token.data = NULL;
 	new->token.id = P_ERROR;
+	new->quote = 0;
 	ft_init_lex(new);
 	// ft_init_machine(new->machina);
 }

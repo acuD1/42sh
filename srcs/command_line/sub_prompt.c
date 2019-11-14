@@ -86,7 +86,7 @@ void		load_subprompt(char quote, t_read *line)
 			else
 			{
 				line->sub_prompt++;
-				// insert_newline_in_buff(line);
+				insert_newline_in_buff(line);
 				break ;
 			}
 		}

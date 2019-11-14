@@ -15,7 +15,7 @@
 
 # include "sh42.h"
 
-t_lst *lexer_parser_analyzer(t_core *shell, char *line);
+void 	lexer_parser_analyzer(t_core *shell, char *line);
 
 
 char *cmd_substitution_expansion(t_token *token, t_core *shell);
@@ -38,7 +38,7 @@ void        init_redirect_analyze(t_anal analyze);
 void        init_end_analyze(t_anal analyze);
 void        init_separator_analyze(t_anal analyze);
 
-t_lst       *analyzer(t_core *shell);
+void 		analyzer(t_core *shell);
 t_analyzer  *cmd_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer  *end_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer 	*expansion_analyze(t_analyzer *analyzer, t_core *shell);

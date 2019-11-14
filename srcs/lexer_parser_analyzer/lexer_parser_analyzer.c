@@ -5,7 +5,7 @@ void ft_freejoblist(t_lst **lst)
 	t_lst *tmp;
 	t_lst *node;
 
-	if (!*lst)
+	if (!lst)
 		return;
 	tmp = *lst;
 	while (tmp)
@@ -90,30 +90,29 @@ void printjobbijobba(t_core *shell)
 	}
 	if (shell->assign_list)
 	{
-		ft_printf("============= ASSIGNATION LST ============\n");
+		ft_dprintf(2, "============= ASSIGNATION LST ============\n");
 		ft_printassignlist(shell->assign_list);
 		// ft_freedblist(&shell->assign_list);
 	}
 }
 
-t_lst *lexer_parser_analyzer(t_core *shell, char *line)
+void lexer_parser_analyzer(t_core *shell, char *line)
 {
 	t_lst *lxr_tok;
 	t_lst *lst_job;
 
 	lxr_tok = lexer(line);
 	lst_job = NULL;
+	shell->job_list = NULL;
 	if (parser(lxr_tok) == TRUE)
 	{
 		shell->lexer = lxr_tok;
-		lst_job = analyzer(shell);
-		shell->job_list = lst_job;
+		analyzer(shell);
 		// printjobbijobba(shell);
 	}
 	else
-		ft_printf("error parser, va savoir pourquoi...\n");
+		ft_dprintf(2, "error parser, va savoir pourquoi...\n");
 	// ft_freetokenlist(&lxr_tok);
 	// shell->lexer = NULL;
-	return (lst_job);
 }
 

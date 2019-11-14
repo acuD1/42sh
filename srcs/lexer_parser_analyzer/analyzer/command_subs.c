@@ -22,12 +22,17 @@ static char	*read_subcmd_file(int fd)
 	return (output);
 }
 
-static char	*fork_subcmd(char *tempfile_path, char *cmd)
+static char	*fork_subcmd(char *tempfile_path, char *cmd, t_core *shell)
 {
 	char	*value;
 	pid_t	child;
 	int		fd;
+	char 	**env;
+	char 	**av;
 
+	// (void)shell;
+	av = ft_strsplit(cmd, " \t");
+	env = set_envp(shell);
 	value = NULL;
 	if ((child = fork()) == 0)
 	{
@@ -43,22 +48,29 @@ static char	*fork_subcmd(char *tempfile_path, char *cmd)
 		fd = open(tempfile_path, O_RDONLY);
 		if (fd == -1)
 			return (NULL);
+		execve(cmd, av, env);
+		if (waitpid(child, &shell->status, WCONTINUED) != child)
+		{
+			dprintf(STDERR_FILENO, "42sh: waitpid error\n");
+			return (NULL);
+		}
 		value = read_subcmd_file(fd);
 		close(fd);
 	}
 	return (value);
 }
 
-char		*subcmd_exec(char *cmd)
+char		*subcmd_exec(char *cmd, t_core *shell)
 {
 	char	*tempfile_path;
 	char	*value;
 
-	tempfile_path = ft_strdup("~/.cmds_subs");
+	tempfile_path = ft_strdup("/USERS/guvillat/42/AST/.cmds_subs");
 	// tempfile_path = get_tempfile_path(".cmds_subs");
 	if (tempfile_path == NULL)
 		return (NULL);
-	value = fork_subcmd(tempfile_path, cmd);
+	value = fork_subcmd(tempfile_path, cmd, shell);
+	dprintf(2, "%s\n", value);
 	// unlink(tempfile_path);
 	free(tempfile_path);
 	return (value);
@@ -76,10 +88,11 @@ char *cmd_substitution_expansion(t_token *token, t_core *shell)
 	lst_job = NULL;
 	i = ft_strlen(token->data);
 	str = ft_strsub(token->data, 2, i - 3);
-	ft_printf("%s\n", str);
-	// ret = subcmd_exec(str);
+	ret = subcmd_exec(str, shell);
+	dprintf(2, "RET {%s} AVEC LA FCT [%s]\n", ret, str);
 	(void)shell;
-	lst_job = lexer_parser_analyzer(shell, str);
+	free(str);
+	// lst_job = lexer_parser_analyzer(shell, str);
 	// tmp_lst = shell->job_list;
 	// shell->job_list = lst_job;
 	// if (lst_job && ((t_job*)lst_job->content)->command)

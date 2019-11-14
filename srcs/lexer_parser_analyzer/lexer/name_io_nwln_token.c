@@ -16,6 +16,30 @@
 ** STATE CREANT LES TOKENS WORD
 */
 
+t_lst *dquote_lexer(t_lexer *lexer, t_lst *lexer_token)
+{
+	int i;
+	char *str;
+
+
+	i = lexer->buf_pos + 1;
+	str = NULL;
+	while (lexer->buff[i] && lexer->buff[i] != '\"')
+		i++;
+	i++;
+	if(!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
+		return(lexer_token);
+	if (str[0] == '$')
+		ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_EXPANSION, str), sizeof(t_token)));
+	else
+		ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_WORD, str), sizeof(t_token)));
+	free(str);
+	lexer->ntok++;
+	lexer->buf_pos = i;
+	return(lexer_token);
+}
+
+
 t_lst *word_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	int i;
@@ -41,7 +65,8 @@ t_lst		*name_lexer(t_lexer *lexer, t_lst *lexer_token)
 		lexer->status = L_END;
 		return(lexer_token);
 	}
-	// printf("[%s] {%zu} %u\n", &lexer->buff[lexer->buf_pos], lexer->buf_pos, lexer->status);
+	if (lexer->buff[lexer->buf_pos] == '\"')
+		lexer_token = dquote_lexer(lexer, lexer_token);
 	if (ft_strchr(EXPANSION, lexer->buff[lexer->buf_pos]))
 		lexer_token = expansion_lexer(lexer, lexer_token);
 	else

@@ -71,16 +71,16 @@ void			load_prompt(t_core *shell)
 		// 	free_prompt(shell, line);
 		// 	continue ;
 		// }
-		shell->job_list = lexer_parser_analyzer(shell, shell->buff);
+		// shell->job_list = lexer_parser_analyzer(shell, shell->buff);
 		// print_tokens(shell);
-		save_history(&term);
 		//debug_analyzer(shell);
-
-		// lexer_parser_analyzer(shell, shell->buff);
-
+		lexer_parser_analyzer(shell, term.buffer);
+		ft_dprintf(2, "CEST PLUS MA PARTIE QUI BUG\n");
 		if (task_master(shell) != SUCCESS)
 			exit(1);
 		free_prompt(shell, shell->buff);
+		save_history(&term);
+		// ft_freejoblist(&shell->job_list);
 		//break;
 	}
 	//free_history(shell);

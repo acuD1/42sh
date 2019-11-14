@@ -21,7 +21,7 @@ t_lst *exp_dbparen_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexe
 				index++;
 			if (!&lexer->buff[index + 1])
 			{
-				ft_printf("mathsubst>\n" );
+				ft_dprintf(2, "mathsubst>\n" );
 				break;
 				// lexer->buf_pos = index;
 				// return (lexer_token);
@@ -60,7 +60,7 @@ t_lst *exp_paren_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_
 				index++;
 			if (!lexer->buff[index + 1])
 			{
-				ft_printf("cmdsubst>\n" );
+				ft_dprintf(2, "cmdsubst>\n" );
 				break;
 				// lexer->buf_pos = index;
 				// return (lexer_token);
@@ -100,7 +100,7 @@ t_lst *exp_bracket_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexe
 				index++;
 			if (!lexer->buff[index + 1])
 			{
-				ft_printf("braceparam>\n" );
+				ft_dprintf(2, "braceparam>\n" );
 				// lexer->buf_pos = index;
 				// return (lexer_token);
 				break;
