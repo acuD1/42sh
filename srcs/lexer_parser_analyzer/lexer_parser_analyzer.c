@@ -80,23 +80,23 @@ void ft_freedblist(t_lst **lst)
 	}
 }
 
-t_lst *lexer_parser_analyzer(t_core *shell, char *line)
+void	lexer_parser_analyzer(t_core *shell, char *line)
 {
 	t_lst *lxr_tok;
-	t_lst *lst_job;
+	//t_lst *lst_job;
 
 	lxr_tok = lexer(line);
-	lst_job = NULL;
+//	lst_job = NULL;
 	if (parser(lxr_tok) == TRUE)
 	{
 		shell->lexer = lxr_tok;
-		lst_job = analyzer(shell);
+		analyzer(shell);
 	}
 	else
 		ft_printf("error parser, va savoir pourquoi...\n");
 	ft_freetokenlist(&lxr_tok);
 	shell->lexer = NULL;
-	return (lst_job);
+//	return (lst_job);
 }
 
 		// if (shell->job_list)

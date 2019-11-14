@@ -41,77 +41,80 @@ char *cmd_substitution_expansion(t_token *token, t_core *shell)
 	char *str;
 	char *ret;
 	int i;
+	(void)shell;
 
 	ret =  NULL;
 	lst_job = NULL;
 	i = ft_strlen(token->data);
 	str = ft_strsub(token->data, 2, i - 3);
-	lst_job = lexer_parser_analyzer(shell, str);
+	//lst_job = lexer_parser_analyzer(shell, str);
 	//module exec
 	if (lst_job && ((t_job*)lst_job->content)->command)
 		printf("%s\n", ((t_job*)lst_job->content)->command);
-	// 
+	//
 	return (((t_job*)lst_job->content)->command);
 }
 
 t_analyzer *expansion_analyze(t_analyzer *analyzer, t_core *shell)
 {
 	char *tmp;
+	(void)shell;
 
 	ft_printf("EXPANSION state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	tmp = NULL;
-	// if (((t_token*)analyzer->lexer->content)->id == P_DBPARENT)
+	analyzer->state = A_EXPANSION;
+	// // if (((t_token*)analyzer->lexer->content)->id == P_DBPARENT)
+	// // {
+	// 	// tmp = arithmetique_expansion(analyzer);
+	// // }
+	// if (((t_token*)analyzer->lexer->content)->id == P_PARENT)
 	// {
-		// tmp = arithmetique_expansion(analyzer);
+	// 	if ((tmp = cmd_substitution_expansion(((t_token*)analyzer->lexer->content), shell)))
+	// 	{
+	// 		// free(((t_token*)analyzer->lexer->content)->data);
+	// 		// ((t_token*)analyzer->lexer->content)->data = ft_strdup(tmp);
+	// 		(void)shell;
+	// 	}
+	// 	else
+	// 		return (analyzer);
 	// }
-	if (((t_token*)analyzer->lexer->content)->id == P_PARENT)
-	{
-		if ((tmp = cmd_substitution_expansion(((t_token*)analyzer->lexer->content), shell)))
-		{
-			// free(((t_token*)analyzer->lexer->content)->data);
-			// ((t_token*)analyzer->lexer->content)->data = ft_strdup(tmp);
-			(void)shell;
-		}
-		else
-			return (analyzer);
-	}
-	else if (((t_token*)analyzer->lexer->content)->id == P_BRACKET || ((t_token*)analyzer->lexer->content)->id == P_DOLLAR)
-	{
-		if ((tmp = param_expansion(((t_token*)analyzer->lexer->content), shell)))
-		{
-			free(((t_token*)analyzer->lexer->content)->data);
-			((t_token*)analyzer->lexer->content)->data = ft_strdup(tmp);
-		}
-		else
-			return (analyzer);
-		analyzer->state = A_EXPANSION;
-	}
-	else if (((t_token*)analyzer->lexer->content)->id == P_TILDE)
-	{
-		if ((tmp = tilde_expansion(((t_token*)analyzer->lexer->content)->data, shell)))
-		{
-			free(((t_token*)analyzer->lexer->content)->data);
-			((t_token*)analyzer->lexer->content)->data = ft_strdup(tmp);
-		}
-		else
-			return (analyzer);
-		analyzer->state = A_EXPANSION;
-	}
-	analyzer->job.command = fill_cmd_job(analyzer, 1);
-	// analyzer->state = A_EXPANSION;
-	if (analyzer->state == A_ASSIGN)
-	{
-		analyzer->db.value = ft_strdup(((t_token*)analyzer->lexer->content)->data);
-		ass_analyze(analyzer, shell);
-		analyzer->state = A_START;
-	}
-	if (((t_token*)analyzer->lexer->next->content)->id == P_ASSIGN && analyzer->state != A_WORD)
-	{
-		analyzer->db.key = ft_strjoinf(tmp, "=", 1);
-		analyzer->process.type = ((t_token*)analyzer->lexer->content)->id;
-		analyzer->state = A_ASSIGN;
-		get_token(analyzer);
-	}
+	// else if (((t_token*)analyzer->lexer->content)->id == P_BRACKET || ((t_token*)analyzer->lexer->content)->id == P_DOLLAR)
+	// {
+	// 	if ((tmp = param_expansion(((t_token*)analyzer->lexer->content), shell)))
+	// 	{
+	// 		free(((t_token*)analyzer->lexer->content)->data);
+	// 		((t_token*)analyzer->lexer->content)->data = ft_strdup(tmp);
+	// 	}
+	// 	else
+	// 		return (analyzer);
+	// 	analyzer->state = A_EXPANSION;
+	// }
+	// else if (((t_token*)analyzer->lexer->content)->id == P_TILDE)
+	// {
+	// 	if ((tmp = tilde_expansion(((t_token*)analyzer->lexer->content)->data, shell)))
+	// 	{
+	// 		free(((t_token*)analyzer->lexer->content)->data);
+	// 		((t_token*)analyzer->lexer->content)->data = ft_strdup(tmp);
+	// 	}
+	// 	else
+	// 		return (analyzer);
+	// 	analyzer->state = A_EXPANSION;
+	// }
+	// analyzer->job.command = fill_cmd_job(analyzer, 1);
+	// // analyzer->state = A_EXPANSION;
+	// if (analyzer->state == A_ASSIGN)
+	// {
+	// 	analyzer->db.value = ft_strdup(((t_token*)analyzer->lexer->content)->data);
+	// 	ass_analyze(analyzer, shell);
+	// 	analyzer->state = A_START;
+	// }
+	// if (((t_token*)analyzer->lexer->next->content)->id == P_ASSIGN && analyzer->state != A_WORD)
+	// {
+	// 	analyzer->db.key = ft_strjoinf(tmp, "=", 1);
+	// 	analyzer->process.type = ((t_token*)analyzer->lexer->content)->id;
+	// 	analyzer->state = A_ASSIGN;
+	// 	get_token(analyzer);
+	// }
 	// cmd_analyze(analyzer);
 	return (analyzer);
 }

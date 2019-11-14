@@ -59,13 +59,13 @@ t_analyzer *separator_analyze(t_analyzer *analyzer, t_core *shell)
 	return (analyzer);
 }
 
-t_lst *analyzer(t_core *shell)
+void	analyzer(t_core *shell)
 {
 	t_analyzer *analyzer;
 
 	analyzer = NULL;
 	if (!shell->lexer)
-		return (NULL);
+		return; // (NULL);
 	analyzer = init_analyze(analyzer, shell);
 	while (analyzer->state != A_STOP)// && (analyzer_state != 20))
 	{
@@ -77,5 +77,5 @@ t_lst *analyzer(t_core *shell)
 	shell->job_list = analyzer->job_list;
 	shell->assign_list = analyzer->tmp_list;
 	free(analyzer);
-	return (analyzer->job_list);
+//	return (analyzer->job_list);
 }

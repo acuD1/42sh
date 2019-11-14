@@ -27,7 +27,7 @@ T := $(shell $(MAKE) $(MAKECMDGOALS) --no-print-directory \
 N := x
 C = $(words $N)$(eval N := x $N)
 V = "`expr "   [\`expr $C '*' 100 / $T\`" : '.*\(....\)$$'`%]"
-ECHO = printf "\e[1A\r%s %s %s                                     \n" $V
+ECHO = printf "\e[1A\r%s %s %s                                          \n" $V
 endif
 
 # Color

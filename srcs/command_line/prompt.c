@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/12 09:43:12 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/14 13:35:20 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void		init_prompt(t_read *term)
 	{
 		remove_newline(term);
 		check_expansions(term);
-		//		save_history(term);
+		save_history(term);
 	}
 	reset_config(term);
 }

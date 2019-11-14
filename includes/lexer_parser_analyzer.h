@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:07:16 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/03 14:46:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/14 14:03:28 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "sh42.h"
 
-t_lst *lexer_parser_analyzer(t_core *shell, char *line);
+void		lexer_parser_analyzer(t_core *shell, char *line);
 
 /*
 **  ANALYZER
@@ -34,7 +34,7 @@ void        init_redirect_analyze(t_anal analyze);
 void        init_end_analyze(t_anal analyze);
 void        init_separator_analyze(t_anal analyze);
 
-t_lst       *analyzer(t_core *shell);
+void       analyzer(t_core *shell);
 t_analyzer  *cmd_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer  *end_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer 	*expansion_analyze(t_analyzer *analyzer, t_core *shell);
