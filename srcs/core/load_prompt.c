@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/05 18:51:36 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/14 16:18:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void			load_prompt(t_core *shell)
 		**	- Builtins ? (Maybe not accurate for now with futurs implementations)
 		**	- etc ...
 		*/
-
 		if (get_tokens(shell, shell->buff) != SUCCESS) /* ft_strsplit with for now tab and space charset */
 		{
 //			free_prompt(shell, term.buffer);

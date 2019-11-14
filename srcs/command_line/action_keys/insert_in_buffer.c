@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/12 20:45:35 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/14 18:55:08 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 	/* 	insert_newline_in_buff(input); */
 }
 
-int8_t		debug(char  *path, int a, int b)
+int8_t		fdebug(char  *path, t_read *in)
 {
     int fd;
 
     if ((fd = open(path, O_WRONLY)) < 0)
         return (FAILURE);
-    dprintf(fd, "width %d  modulo %d\n", a, b);
+    dprintf(fd, "width %d  \n", in->width - in->prompt_len);
     return (SUCCESS);
 }
 
@@ -79,7 +79,6 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	move_right(buff, input);
 	ft_strdel(&tmp);
 
-	debug("/dev/pts/3", input->x, input->ws_col);
 	if (input->y_li == input->ws_li && input->width % input->ws_col == 2)
 		xtputs(input->tcaps[KEY_UP], 1, my_outc);
 }

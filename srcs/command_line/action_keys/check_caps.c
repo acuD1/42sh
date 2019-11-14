@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/05 21:04:41 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/14 19:10:43 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,16 @@ uint8_t		cursor_motion(char *buff, t_read *line, uint64_t value)
 	return (TRUE);
 }
 
+int8_t		debug(char  *path, t_read *input)
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    dprintf(fd, "w [%d] ple [%d] bi [%d]\n", input->width, input->x_index, input->width - input->prompt_len);
+    return (SUCCESS);
+}
+
 /*
 **		Interpret and insert char in bufffer
 **		CTRL+R to launch history research
@@ -116,6 +126,13 @@ uint8_t		check_caps(char *buff, t_read *line)
 	if (value == RETURN_KEY)
 	{
 		ft_putchar('\n');
+		//ESCAPE SEQUENCE NEED TO CREATE FCT TO MANAGE ALL SUBPROMPT
+		if (line->buffer[ft_strlen(line->buffer) - 1] == '\\')
+		{
+			line->buffer[ft_strlen(line->buffer) - 1] = '\0';
+			display_subprompt(line, PS2);
+			return (TRUE);
+		}
 		return (FALSE);
 	}
 	else
