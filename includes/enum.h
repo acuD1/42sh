@@ -31,7 +31,6 @@ typedef enum    parser_state
     P_SEMICOLON, // job
     P_DLESSDASH, // redir
     P_DLESS, // redir
-    P_LESSGREAT, // redir
     P_LESSAND, // redir
     P_LESS, // redir
     P_DGREAT, // redir

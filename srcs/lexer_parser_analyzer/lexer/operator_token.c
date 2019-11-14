@@ -23,7 +23,6 @@ static const t_token    ope[] =
 	{P_SEMICOLON, ";", 1},
 	{P_DLESSDASH, "<<-", 3},
 	{P_DLESS, "<<", 2},
-	{P_LESSGREAT, "<>", 2},
 	{P_LESSAND, "<&", 2},
 	{P_LESS, "<", 1},
 	{P_DGREAT, ">>", 2},

@@ -12,7 +12,6 @@ void init_expansion_analyze(t_anal analyze)
 	analyze[A_EXPANSION][P_SEMICOLON] = separator_analyze;
 	analyze[A_EXPANSION][P_DLESSDASH] = redirect_analyze;
 	analyze[A_EXPANSION][P_DLESS] = redirect_analyze;
-	analyze[A_EXPANSION][P_LESSGREAT] = redirect_analyze;
 	analyze[A_EXPANSION][P_LESS] = redirect_analyze;
 	analyze[A_EXPANSION][P_DGREAT] = redirect_analyze;
 	analyze[A_EXPANSION][P_GREATAND] = redirect_analyze;
@@ -41,7 +40,6 @@ void init_start_analyze(t_anal analyze)
 	analyze[A_START][P_SEMICOLON] = separator_analyze;
 	analyze[A_START][P_DLESSDASH] = redirect_analyze;
 	analyze[A_START][P_DLESS] = redirect_analyze;
-	analyze[A_START][P_LESSGREAT] = redirect_analyze;
 	analyze[A_START][P_LESS] = redirect_analyze;
 	analyze[A_START][P_DGREAT] = redirect_analyze;
 	analyze[A_START][P_GREATAND] = redirect_analyze;
@@ -69,7 +67,6 @@ void init_word_analyze(t_anal analyze)
 	analyze[A_WORD][P_SEMICOLON] = separator_analyze;
 	analyze[A_WORD][P_DLESSDASH] = redirect_analyze;
 	analyze[A_WORD][P_DLESS] = redirect_analyze;
-	analyze[A_WORD][P_LESSGREAT] = redirect_analyze;
 	analyze[A_WORD][P_LESS] = redirect_analyze;
 	analyze[A_WORD][P_DGREAT] = redirect_analyze;
 	analyze[A_WORD][P_GREATAND] = redirect_analyze;
