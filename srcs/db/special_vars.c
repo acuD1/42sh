@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 11:28:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/04 08:22:16 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/05 01:42:48 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int8_t	update_shell_flags(t_core *shell)
 }
 
 /*
-**	Update the $? special variable containing the last pipeline exit status
+**	Update the $? special variable containing the last process exit status
 **		- initialized at shell startup and updated each time a pipeline exits
 */
 
@@ -92,7 +92,7 @@ int8_t	update_exit_status(t_core *shell)
 	value = NULL;
 	if (shell != NULL && (db = get_or_create_db(shell, "?", SPECIAL_VAR)) != NULL)
 	{
-		value = ft_itoa(shell->last_exit_status);
+		value = ft_itoa(shell->status);
 		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);
 		ft_strdel(&value);

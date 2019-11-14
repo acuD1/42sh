@@ -116,4 +116,4 @@ t_lst *lexer_parser_analyzer(t_core *shell, char *line)
 	// shell->lexer = NULL;
 	return (lst_job);
 }
-	
+

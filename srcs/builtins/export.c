@@ -6,13 +6,13 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/02 04:32:04 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/08 02:20:29 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t	parse_export(int argc, char **argv)
+static int8_t	parse_export(int argc, char **argv)
 {
 	u_int64_t	options;
 
@@ -25,7 +25,7 @@ int8_t	parse_export(int argc, char **argv)
 	return (SUCCESS);
 }
 
-int8_t	export(t_core *shell, char *arg, int *ret)
+static int8_t	export(t_core *shell, char *arg, int *ret)
 {
 	t_db	*db;
 	char	*str;
@@ -52,20 +52,20 @@ int8_t	export(t_core *shell, char *arg, int *ret)
 	return (SUCCESS);
 }
 
-int8_t	builtin_export(t_core *shell)
+int8_t	builtin_export(t_core *shell, t_process *process)
 {
 	int		argc;
 	int		ret;
 	int		i;
 
-	argc = ft_tablen(shell->tokens);
-	i = (argc > 1 && shell->tokens[1][0] != '-') ? 1 : 2;
-	if ((ret = parse_export(argc, shell->tokens)) != SUCCESS)
+	argc = ft_tablen(process->av);
+	i = (argc > 1 && process->av[1][0] != '-') ? 1 : 2;
+	if ((ret = parse_export(argc, process->av)) != SUCCESS)
 		return (ret);
 	ret = 0;
 	while (i < argc)
 	{
-		if (export(shell, shell->tokens[i], &ret) != SUCCESS)
+		if (export(shell, process->av[i], &ret) != SUCCESS)
 			return (FAILURE);
 		i++;
 	}

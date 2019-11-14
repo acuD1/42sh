@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/03 14:55:16 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/12 09:56:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@
 # define MAX_PATH		8192
 
 /*
-**	Exec handler
+**	Exec
 */
 
+# define BLT_NUMBER		0x004
 # define BITOK_ERROR	0x001
 # define PATH_ERROR		0x002
 # define FORK_ERROR		0x004
@@ -71,7 +72,7 @@
 # define MODE_WRITE		(O_CREAT | O_WRONLY | O_TRUNC)
 # define BUFF_SIZE		4096
 # define READ_SIZE		4
-# define HISTORY_FILE		".42sh_history"
+# define HISTORY_FILE		"./.42sh_history"
 # define QUOTE			'\''
 # define DQUOTE			'\"'
 # define BQUOTE			'`'

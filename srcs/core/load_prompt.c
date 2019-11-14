@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/03 15:16:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/12 10:06:36 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@
 /*
 **	TO DO:
 */
+
+void			free_history(t_core *shell)
+{	t_lst *tmp;
+
+	while (shell->history)
+	{
+		free(shell->history->content);
+		tmp = shell->history;
+		shell->history = shell->history->next;
+		free(tmp);
+		free(shell->history);
+	}
+}
 
 void			load_prompt(t_core *shell)
 {
@@ -43,7 +56,8 @@ void			load_prompt(t_core *shell)
 		/* Base output for prompt */
 		shell->history = term.history;
 		init_prompt(&term);
-		shell->buff = ft_strdup(term.buffer);
+		shell->buff = term.buffer;
+
 		/*
 		**	[NEED REWORK] A lot of stuff happening here :
 		**	- tokens parser (for now)
@@ -51,6 +65,7 @@ void			load_prompt(t_core *shell)
 		**	- Builtins ? (Maybe not accurate for now with futurs implementations)
 		**	- etc ...
 		*/
+		
 		// if (get_tokens(shell, line) != SUCCESS) //// ft_strsplit with for now tab and space charset
 		// {
 		// 	free_prompt(shell, line);
@@ -60,7 +75,14 @@ void			load_prompt(t_core *shell)
 		// print_tokens(shell);
 		save_history(&term);
 		//debug_analyzer(shell);
+
+		// lexer_parser_analyzer(shell, shell->buff);
+
+		if (task_master(shell) != SUCCESS)
+			exit(1);
 		free_prompt(shell, shell->buff);
+		//break;
 	}
-	ft_strdel(&term.buffer);
+	//free_history(shell);
+	ft_strdel(&shell->buff);
 }

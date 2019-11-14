@@ -72,11 +72,13 @@ L_PATH = shared_libft/
 # Add custom dir for .o
 
 CORE		=	core/
-DB		=	db/
+DB			=	db/
 BUILTINS	=	builtins/
+BLT_FC		=	builtins/fc/
 COMMANDLINE	=	command_line/
-AC		=	command_line/auto_completion/
-AK		=	command_line/action_keys/
+REDIRS		=	redirections/
+AC			=	command_line/auto_completion/
+AK			=	command_line/action_keys/
 HISTORY		=	command_line/history/
 EXEC		=	exec/
 LEXER		= 	lexer_parser_analyzer/lexer/
@@ -90,6 +92,7 @@ HASH		=	$(EXEC)hash_map/
 PATHS		+=	$(B_PATH)
 PATHS		+=	$(O_PATH)
 PATHS		+=	$(O_PATH)$(BUILTINS)
+PATHS		+=	$(O_PATH)$(BLT_FC)
 PATHS		+=	$(O_PATH)$(COMMANDLINE)
 PATHS		+=	$(O_PATH)$(AC)
 PATHS		+=	$(O_PATH)$(AK)
@@ -97,6 +100,7 @@ PATHS		+=	$(O_PATH)$(HISTORY)
 PATHS		+=	$(O_PATH)$(CORE)
 PATHS		+=	$(O_PATH)$(DB)
 PATHS		+=	$(O_PATH)$(EXEC)
+PATHS		+=	$(O_PATH)$(EXEC)$(REDIRS)
 PATHS		+=	$(O_PATH)$(LEXER)
 PATHS		+=	$(O_PATH)$(PARSER)
 PATHS		+=	$(O_PATH)$(ANALYZER)
@@ -104,6 +108,8 @@ PATHS		+=	$(O_PATH)$(HASH)
 PATHS		+=	$(O_PATH)$(MISC)
 
 # Files
+
+#SRC			+=	$(S_PATH)debug.c
 
 SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
@@ -174,24 +180,37 @@ SRC			+=	$(S_PATH)$(DB)version.c
 SRC			+=	$(S_PATH)$(DB)special_vars.c
 SRC			+=	$(S_PATH)$(DB)process_vars.c
 
-
 SRC			+=	$(S_PATH)$(BUILTINS)set.c
 SRC			+=	$(S_PATH)$(BUILTINS)unset.c
 SRC			+=	$(S_PATH)$(BUILTINS)export.c
-SRC			+=	$(S_PATH)$(BUILTINS)fc.c
+
+# Need final FC
+#SRC			+=	$(S_PATH)$(BLT_FC)fc.c
+#SRC			+=	$(S_PATH)$(BLT_FC)fc_edit.c
+#SRC			+=	$(S_PATH)$(BLT_FC)fc_reverse.c
+#SRC			+=	$(S_PATH)$(BLT_FC)fc_specifier.c
+#SRC			+=	$(S_PATH)$(BLT_FC)fc_listing.c
 
 SRC			+=	$(S_PATH)$(MISC)errors.c
 SRC			+=	$(S_PATH)$(MISC)abs_path.c
 SRC			+=	$(S_PATH)$(MISC)ft_access.c
 SRC			+=	$(S_PATH)$(MISC)recall.c
 SRC			+=	$(S_PATH)$(MISC)check_args.c
+SRC			+=	$(S_PATH)$(MISC)is_a_dir.c
 
+SRC			+=	$(S_PATH)$(EXEC)task_master.c
 SRC			+=	$(S_PATH)$(EXEC)exec_process.c
-SRC			+=	$(S_PATH)$(EXEC)exec_builtin.c
+SRC			+=	$(S_PATH)$(EXEC)exec_piped_process.c
+SRC			+=	$(S_PATH)$(EXEC)dispatcher.c
+SRC			+=	$(S_PATH)$(EXEC)call_bin.c
+SRC			+=	$(S_PATH)$(EXEC)call_builtin.c
 SRC			+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC			+=	$(S_PATH)$(EXEC)get_bin.c
 SRC			+=	$(S_PATH)$(EXEC)set_envp.c
 SRC			+=	$(S_PATH)$(EXEC)pipes.c
+SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)exec_redirs.c
+SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs.c
+SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs_tools.c
 
 
 SRC			+=	$(S_PATH)$(HASH)add_hash_map.c
@@ -211,7 +230,6 @@ SRC			+=	$(S_PATH)$(CORE)free_handler.c
 HDR			+=	sh42.h
 HDR			+=	define.h
 HDR			+=	struct.h
-HDR			+=	builtins.h
 HDR			+=	lexer_parser_analyzer.h
 HDR			+=	command_line.h
 HDR			+=	shared_libft.h

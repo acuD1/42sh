@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/08 17:01:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/06 17:01:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void		del_key(t_read *input)
 		x = input->x;
 		i = input->x_index;
 		y = input->y;
-		w = input->width--;
+		w = input->width - 1;
 		clear_all_lines(input);
 		ft_putstr(input->buffer);
 		input->x = x;
