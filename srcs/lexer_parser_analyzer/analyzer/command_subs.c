@@ -81,7 +81,6 @@ char *cmd_substitution_expansion(t_token *token, t_core *shell)
 	// lst_job = lexer_parser_analyzer(shell, str);
 	// tmp_lst = shell->job_list;
 	// shell->job_list = lst_job;
-	// exec_from_shell_job_list(lst_job, shell);
 	// if (lst_job && ((t_job*)lst_job->content)->command)
 		// printf("%s\n", ((t_job*)lst_job->conddtent)->command);
 	return (ret);

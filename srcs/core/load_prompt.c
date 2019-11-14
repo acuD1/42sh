@@ -57,11 +57,6 @@ void			load_prompt(t_core *shell)
 		// 	continue ;
 		// }
 		shell->job_list = lexer_parser_analyzer(shell, shell->buff);
-		if (shell->job_list)
-		{
-			exec_from_shell_job_list(shell->job_list, shell);
-			// ft_freejoblist(&shell->job_list);
-		}
 		// print_tokens(shell);
 		save_history(&term);
 		//debug_analyzer(shell);
