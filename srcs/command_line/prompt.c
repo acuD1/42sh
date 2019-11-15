@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/12 14:44:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/14 19:02:06 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void		goto_prompt(t_read *line)
 		xtputs(line->tcaps[KEY_UP], 1, my_outc);
 	xtputs(line->tcaps[LEFT_MARGIN], 1, my_outc);
 	xtputs(line->tcaps[CLR_LINES], 1, my_outc);
-	free(line->prompt);
-	display_prompt(line);
+	if (line->sub_prompt == TRUE)
+		display_subprompt(line, line->prompt);
+	else
+		display_prompt(line);
 }
 
 /*
@@ -34,28 +36,28 @@ void		goto_prompt(t_read *line)
  **	  Store some datas for pressed keys
  */
 
-t_read		*display_prompt(t_read *term)
+void		display_prompt(t_read *term)
 {
 	char	path[BUFF_SIZE + 1];
 
 	ft_bzero(path, BUFF_SIZE + 1);
 	if (!getcwd(path, BUFF_SIZE))
 	{
-		term->prompt = ft_strdup("<< 42sh >> ");
+		term->prompt = ft_strdup(PS1);
 		term->prompt_len = ft_strlen(term->prompt);
 	}
 	else
 	{
 		term->prompt = ft_strdup(ft_strrchr(path, '/'));
-		term->prompt_len = ft_strlen(term->prompt) + 7;
+		term->prompt_len = ft_strlen(term->prompt) + 2;
 	}
 	term->x = term->prompt_len;
 	term->x_index = term->x;
 	term->y = 0;
 	term->width = term->x;
-	term = get_size(term);
-	ft_dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, term->prompt + 1, C_X);
-	return (term);
+	term->sub_prompt = 0;
+	//term = get_size(term);
+	ft_dprintf(STDOUT_FILENO, "%s%s%s$ %s", C_BOLD, C_Y, term->prompt + 1, C_X);
 }
 
 void		get_y(t_read *input)
@@ -81,10 +83,10 @@ void		get_y(t_read *input)
 }
 
 /*
- **	  Clear the last buffer/line inserted & Display current prompt
- **	  Launch line edition: read stdin until enter key is pressed
- **	  The current buffer is saved in a history list
- */
+**	  Clear the last buffer/line inserted & Display current prompt
+**	  Launch line edition: read stdin until enter key is pressed
+**	  The current buffer is saved in a history list
+*/
 
 void		init_prompt(t_read *term)
 {
@@ -95,14 +97,11 @@ void		init_prompt(t_read *term)
 	init_config();
 	init_termcaps(term);
 	display_prompt(term);
-	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+	while (xread(STDIN_FILENO, buff, READ_SIZE + 1) > 0)
 	{
 		get_y(term);
 		if (check_caps(buff, term) == TRUE)
-		{
 			ft_bzero(buff, READ_SIZE + 1);
-			continue ;
-		}
 		else
 			break ;
 	}

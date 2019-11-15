@@ -19,6 +19,7 @@
 **	wiches are globals variables, such as tokens, env list etc...
 */
 
+// https://linuxconfig.org/bash-prompt-basics
 
 /*
 **	TO DO:
@@ -41,10 +42,6 @@ void			load_prompt(t_core *shell)
 {
 	int8_t		status;
 	t_read		term;
-	//t_lst *tmp;
-
-	// t_parser *parser;
-	// t_ast	*ast;
 
 	status = 1;
 	credit(shell);
@@ -65,15 +62,8 @@ void			load_prompt(t_core *shell)
 		**	- Builtins ? (Maybe not accurate for now with futurs implementations)
 		**	- etc ...
 		*/
-		
-		// if (get_tokens(shell, line) != SUCCESS) //// ft_strsplit with for now tab and space charset
-		// {
-		// 	free_prompt(shell, line);
-		// 	continue ;
-		// }
-		// shell->job_list = lexer_parser_analyzer(shell, shell->buff);
-		// print_tokens(shell);
-		//debug_analyzer(shell);
+
+		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "BUFF           %s\n", shell->buff);
 		lexer_parser_analyzer(shell, term.buffer);
 		debug_ailleurs("/dev/ttys002", "CE N'EST PLUS MA PARTIE");
 		if (task_master(shell) != SUCCESS)
@@ -81,7 +71,6 @@ void			load_prompt(t_core *shell)
 		free_prompt(shell, shell->buff);
 		save_history(&term);
 		// ft_freejoblist(&shell->job_list);
-		//break;
 	}
 	//free_history(shell);
 	ft_strdel(&shell->buff);

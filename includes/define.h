@@ -70,9 +70,11 @@
 # define S_USR_RW		(S_IRUSR | S_IWUSR)
 # define S_GRP_OTH_R		(S_IRGRP | S_IROTH)
 # define MODE_WRITE		(O_CREAT | O_WRONLY | O_TRUNC)
+# define PS1			"42sh$ "
+# define PS2			"> "
 # define BUFF_SIZE		4096
 # define READ_SIZE		4
-# define HISTORY_FILE		"./.42sh_history"
+# define HISTORY_FILE	"./.42sh_history"
 # define QUOTE			'\''
 # define DQUOTE			'\"'
 # define BQUOTE			'`'

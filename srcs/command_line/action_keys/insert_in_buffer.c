@@ -20,7 +20,7 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
 	if (input->x != 1 || (input->x == 1 && buff != NEW_LINE))
 		ft_dprintf(STDIN_FILENO, "%c", buff);
-	if (buff == NEW_LINE || input->x > input->ws_col)
+	if (buff == NEW_LINE || input->x >= input->ws_col)
 	{
 		//	(input->x == 0) ? input->y-- : 0;
 		input->x = 1;

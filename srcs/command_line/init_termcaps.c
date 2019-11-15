@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/15 15:17:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/14 19:03:03 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,5 @@ void			init_termcaps(t_read *term)
 		// Display error msg
 		EXIT_FAILURE ;
 	}
+	term = get_size(term);
 }

@@ -6,67 +6,95 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/09 18:06:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/14 18:31:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char		*walking_history(char buff_tmp[BUFF_SIZE], t_read *line, t_lst **history)
+void		goto_reverse(t_read *input, char *buff_tmp, int8_t mode)
+{
+	goto_prompt(input);
+	xtputs(input->tcaps[LEFT_MARGIN], 1, my_outc);
+	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
+	if (mode == SUCCESS)
+		ft_dprintf(STDIN_FILENO, "(reverse-i-search)`%s': ", buff_tmp);
+	else if (mode == FAILURE)
+		ft_dprintf(STDIN_FILENO, "(failed reverse-i-search)`%s': ", buff_tmp);
+}
+
+void		walking_history(char *buff_tmp, t_read *input, t_lst **history)
 {
 	while ((*history)->next)
 	{
 		if (ft_strstr((*history)->content, buff_tmp))
 		{
-			xtputs(line->tcaps[LEFT_MARGIN], 1, my_outc);
-			xtputs(line->tcaps[CLR_LINES], 1, my_outc);
-			dprintf(STDIN_FILENO, "(reverse-i-search)`%s':", buff_tmp);
-			dprintf(STDIN_FILENO, " %s", (char *)(*history)->content);
-			ft_strcpy(line->buffer, (*history)->content);
+			goto_reverse(input, buff_tmp, SUCCESS);
+			ft_bzero(input->buffer, ft_strlen(input->buffer));
+			input->x = ft_strlen(buff_tmp) + 23;
+			insert_str_in_buffer((*history)->content, input);
 			if ((*history)->next)
 				(*history) = (*history)->next;
-			return ((*history)->content);
+			return ;
 		}
 		(*history) = (*history)->next;
 	}
-	return (NULL);
+	goto_reverse(input, buff_tmp, FAILURE);
 }
 
-void			search_in_history(t_read *line)
+int8_t			insert_in_search(t_read *input, int *i, char buff[])
 {
-	char		buff[READ_SIZE + 1];
-	char		buff_tmp[BUFF_SIZE];
-	int		i;
-	t_lst		*history;
 	uint64_t 	value;
 
-	history = line->history;
+	value = get_mask(buff);
+	if (is_print(*buff))
+	{
+		input->tmp_buff[++(*i)] = *buff;
+		goto_reverse(input, input->tmp_buff, SUCCESS);
+	}
+	else if (value == BS_KEY)
+	{
+		input->tmp_buff[*i] = 0;
+		if (*i <= -1)
+			return (SUCCESS);
+		(*i)--;
+	}
+	else if (value != CTRL_R)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+void			search_in_history(t_read *input)
+{
+	char		buff[READ_SIZE + 1];
+	int		i;
+	t_lst		*history;
+
 	i = -1;
-	ft_bzero(buff_tmp, BUFF_SIZE);
+	input->tmp_buff = ft_memalloc(BUFF_SIZE);
 	ft_bzero(buff, READ_SIZE + 1);
+	history = input->history;
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
-		value = get_mask(buff);
-		if (!is_print(*buff) && value != CTRL_R)
+		if (insert_in_search(input, &i, buff) == FAILURE)
+		{
+			ft_strdel(&input->tmp_buff);
 			return ;
-		else if (is_print(*buff))
-			buff_tmp[++i] = *buff;
-		walking_history(buff_tmp, line, &history);
+		}
+		walking_history(input->tmp_buff, input, &history);
 	}
 }
 
-void		research_mode(t_read *line)
+void		research_mode(t_read *input)
 {
-	goto_prompt(line);
-	xtputs(line->tcaps[LEFT_MARGIN], 1, my_outc);
-	xtputs(line->tcaps[CLR_LINES], 1, my_outc);
-	dprintf(STDIN_FILENO, "(reverse-i-search)`':");
-	search_in_history(line);
-	xtputs(line->tcaps[LEFT_MARGIN], 1, my_outc);
-	xtputs(line->tcaps[CLR_LINES], 1, my_outc);
-	display_prompt(line);
-	ft_dprintf(STDIN_FILENO, "%s", line->buffer);
-	line->x += ft_strlen(line->buffer);
-	line->width = line->x;
-	line->x_index = line->x;
+	goto_reverse(input, "", SUCCESS);
+	search_in_history(input);
+	xtputs(input->tcaps[LEFT_MARGIN], 1, my_outc);
+	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
+	display_prompt(input);
+	ft_dprintf(STDIN_FILENO, "%s", input->buffer);
+	input->x += ft_strlen(input->buffer);
+	input->width = input->x;
+	input->x_index = input->x;
+	input->y = input->width / input->ws_col;
 }

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/12 14:45:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/14 16:03:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		clr_screen(t_read *line)
 
 	i = line->x;
 	xtputs(line->tcaps[CLEAR], 1, my_outc);
-	dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, line->prompt + 1, C_X);
+	dprintf(STDOUT_FILENO, "%s%s%s%s ", C_BOLD, C_Y, line->prompt, C_X);
 	ft_putstr(line->buffer);
 	xtputs(line->tcaps[UP_LEFT_CORNER], 1, my_outc);
 	while (--i)
@@ -97,8 +97,8 @@ void		move_in_column(uint64_t value, t_read *line)
 }
 
 /*
-**	(ALT+F | CTRL+F) to jump one word forward
-**	(ALT+B | CTRL+B) to jump one word backward
+**	(CTRL+F) to jump one word forward
+**	(CTRL+B) to jump one word backward
 */
 
 void			jump_words(char *buff, t_read *line, uint64_t value)
