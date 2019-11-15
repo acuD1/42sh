@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/06 17:09:35 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:24:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,6 @@
 # include <term.h>
 # include <termcap.h>
 # include <dirent.h>
-
-// typedef struct		s_read
-// {
-// 	char			*prompt;
-// 	int				prompt_len;
-// 	int				x_index;
-// 	int				x;
-// 	int				y;
-// 	int				width;
-// 	int				ws_col;
-// 	int				ws_li;
-// 	int				ac;
-// 	int				new_line;
-// 	int				found;
-// 	int				sub_prompt;
-// 	char			buffer[BUFF_SIZE];
-// 	char			**env;
-// 	char			**cmd;
-// 	t_lst			*history;
-// 	t_lst			*history_index;
-// 	char			*line;
-// }					t_read;
-
-/*
-**		DEBUG
-*/
-
-int8_t		 debug(const char *path, int x, int x2, int width, int y);
-int8_t		 win_size(const char *path, int x, int x2);
 
 /*
  **		Configuration

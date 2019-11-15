@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/08 17:13:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:45:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void		move_col_down(t_read *line)
 		if (line->x_index > line->width)
 		{
 			line->x_index = x2 + width;
-			line->x = 0;
+			line->x = 1;
 		}
 		else
 			while (--x)

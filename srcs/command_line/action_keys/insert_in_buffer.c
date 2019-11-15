@@ -18,12 +18,12 @@
 
 void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
-	if (input->x != 0 || (input->x == 0 && buff != NEW_LINE))
+	if (input->x != 1 || (input->x == 1 && buff != NEW_LINE))
 		ft_dprintf(STDIN_FILENO, "%c", buff);
 	if (buff == NEW_LINE || input->x > input->ws_col)
 	{
 		//	(input->x == 0) ? input->y-- : 0;
-		input->x = 0;
+		input->x = 1;
 		input->y++;
 	}
 	else
@@ -46,13 +46,11 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 void		insert_inline_char(char *buff, t_read *input, int buff_index)
 {
 	int 	j;
-	int	i;
 	char	*tmp;
 
 	tmp = NULL;
 	input->width += 1;
 	j = ft_strlen(input->buffer) + 1;
-	i = input->width - input->prompt_len;
 	while (--j > buff_index)
 	{
 		if (input->buffer[j - 1] == NEW_LINE)
@@ -70,9 +68,6 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	xtputs(input->tcaps[RESTORE_CR], 1, my_outc);
 	move_right(buff, input);
 	ft_strdel(&tmp);
-
-//	win_size("/dev/ttys001", input->width, input->width % input->ws_col);
-//	win_size("/dev/ttys002", input->y_li, input->ws_li);
 	if (input->y_li == input->ws_li && input->width % input->ws_col == 2)
 		xtputs(input->tcaps[KEY_UP], 1, my_outc);
 }

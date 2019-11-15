@@ -109,7 +109,6 @@ PATHS		+=	$(O_PATH)$(MISC)
 
 # Files
 
-#SRC			+=	$(S_PATH)debug.c
 
 SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
