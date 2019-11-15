@@ -21,7 +21,6 @@
 # include <termcap.h>
 # include <dirent.h>
 
-
 /*
  **		Configuration
  */

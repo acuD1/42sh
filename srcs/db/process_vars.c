@@ -41,15 +41,15 @@ int8_t	update_process_id(t_core *shell)
 **	TMP function to get last process placed in background (asynchronous or bg)
 */
 
-t_process	*get_last_job(t_core *shell)
+t_process_var	*get_last_job(t_core *shell)
 {
 	t_lst	*ptr;
-	
+
 	ptr = shell->jobs;
 	while (ptr)
 	{
-		if (((t_process*)ptr->content)->bck_order == 0)
-			return ((t_process*)ptr->content);
+		if (((t_process_var*)ptr->content)->bck_order == 0)
+			return ((t_process_var*)ptr->content);
 		ptr = ptr->next;
 	}
 	return (NULL);
@@ -65,7 +65,7 @@ int8_t	update_backgroud_pid(t_core *shell)
 {
 	char		*value;
 	t_db		*db;
-	t_process	*ptr;
+	t_process_var *ptr;
 
 	db = NULL;
 	value = NULL;

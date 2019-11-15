@@ -1,0 +1,15 @@
+//USELESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
+// 	if (analyzer->state == A_ASSIGN)
+// 	{
+// 		analyzer->db.value = ft_strdup(((t_token*)analyzer->lexer->content)->data);
+// 		ass_analyze(analyzer, shell);
+// 		analyzer->state = A_START;
+// 	}
+// 	if (((t_token*)analyzer->lexer->next->content)->id == P_ASSIGN && analyzer->state != A_WORD)
+// 	{
+// 		analyzer->db.key = ft_strjoinf(tmp, "=", 1);
+// 		analyzer->process.type = ((t_token*)analyzer->lexer->content)->id;
+// 		analyzer->state = A_ASSIGN;
+// 		get_token(analyzer);
+// 	}

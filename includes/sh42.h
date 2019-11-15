@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/05 19:13:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/12 10:04:57 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@
 # include "define.h"
 # include "struct.h"
 # include "command_line.h"
-
+# include "enum.h"
+# include "lexer_parser_analyzer.h"
 # include <sys/wait.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <stdint.h>
+# include <unistd.h>
 # include <stdio.h> // /!\ For debug only !
 
 /*
@@ -34,12 +36,13 @@
 int8_t		get_opt(int ac, char **av, t_core *shell);
 void		credit(t_core *shell);
 
-//void		init_prompt(void);
+// char		*init_prompt(t_read *term);
 
 void		print_opt(t_core *shell);
 void		load_prompt(t_core *shell);
 void		free_env(t_lst *env);
 void		free_prompt(t_core *shell, char *line);
+int8_t		dispatcher(t_core *shell, t_lst *jobs);
 
 /*
 **	===========================================================================
@@ -63,9 +66,15 @@ int8_t		edit_var(t_core *shell, char *name, char *value, u_int8_t var_type);
 **	===========================================================================
 */
 
-void		exec_process(t_core *shell, t_lst *env);
-void		exec_handler(t_core *shell, u_int8_t handler);
-char		*get_bin(t_core *shell, t_lst *env);
+int32_t		exec_piped_process(t_core *shell, t_lst *process);
+int8_t		call_builtin(t_core *shell, t_lst *process, int blt);
+int8_t		exec_pipeline(t_core *shell, t_lst **process);
+int8_t		exec_handler(t_core *shell, u_int8_t handler);
+int8_t		exec_process(t_core *shell, t_lst *env);
+int8_t		call_bin(t_core *shell, t_lst *process);
+int8_t		task_master(t_core *shell);
+int8_t		is_a_blt(char *cmd);
+int8_t		get_bin(t_core *shell, t_process *process);
 char		**set_envp(t_core *shell);
 
 /*
@@ -75,7 +84,7 @@ char		**set_envp(t_core *shell);
 */
 
 u_int32_t	get_hash(char *line, u_int32_t size);
-int8_t		locate_hash(t_core *shell, t_hash *hash);
+int8_t		locate_hash(t_core *shell, t_lst *process);
 int8_t		add_hash_map(t_core *shell, t_hash *hash);
 int8_t		resize_hash_map(t_core *shell, t_hash *hash);
 void		free_hash_map(t_hash *hash);
@@ -97,12 +106,16 @@ void		print_hash_map(t_hash *hash);
 **	===========================================================================
 */
 
-void		print_usage(char *name, int c, char *usage);
 t_core		*get_core(t_core *core);
 int		check_invalid_identifiers(char *arg, char *exceptions);
 char		*get_abs_path(char *path);
 void		ft_perror(const char *s, const int errnum);
 int8_t		ft_access(char *path, int mode);
+int8_t		is_a_dir(char *path);
+void		print_usage(char *name, int c, char *usage);
+void		ft_perror(const char *s, const int errnum);
+char		*get_abs_path(char *path);
+int			check_invalid_identifiers(char *arg, char *exceptions);
 
 /*
 **	===========================================================================
@@ -134,10 +147,26 @@ int8_t		update_last_arg(t_core *shell, char **argv);
 **	===========================================================================
 */
 
-int8_t		builtin_set(t_core *shell);
-int8_t		builtin_unset(t_core *shell);
-int8_t		builtin_export(t_core *shell);
-int8_t		builtin_fc(t_core *shell);
+int8_t		builtin_set(t_core *shell, t_process *process);
+int8_t		builtin_unset(t_core *shell, t_process *process);
+int8_t		builtin_export(t_core *shell, t_process *process);
+int8_t		builtin_fc(t_core *shell, t_process *process);
+
+/*
+**	===========================================================================
+**	REDIRECTIONS...............................................................
+**	===========================================================================
+*/
+
+int8_t			exec_redirs(t_lst *redirs);
+int8_t			dup_output(int fd, t_redir *ptr);
+int8_t			dup_input(int fd, t_redir *ptr);
+int8_t			append_output(t_redir *ptr);
+int8_t			redir_output(t_redir *ptr);
+int8_t			redir_input(t_redir *ptr);
+int8_t			dup_ifd(t_redir *ptr);
+int8_t			dup_ofd(t_redir *ptr);
+void			close_fds(t_lst *ptr);
 
 int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
 void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
@@ -147,6 +176,7 @@ void		swap_range(char **r1, char **r2);
 u_int16_t	set_range(t_lst **w, char **range);
 
 /* ###########################  TEMPORARY   #################################*/
-int8_t		exec_builtin(t_core *shell);
+void	debug_analyzer(t_core *shell);
 
+int8_t	is_number(const char *s);
 #endif

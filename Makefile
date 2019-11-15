@@ -33,8 +33,8 @@ endif
 # Color
 
 RESET_C = \033[m
-B_C = \033[0;34m 
-Y_C = \033[0;33m 
+B_C = \033[0;34m
+Y_C = \033[0;33m
 G_C = \033[0;32m
 R_C = \033[0;31m
 M_C = \033[0;35m
@@ -72,14 +72,18 @@ L_PATH = shared_libft/
 # Add custom dir for .o
 
 CORE		=	core/
-DB		=	db/
+DB			=	db/
 BUILTINS	=	builtins/
 BLT_FC		=	builtins/fc/
 COMMANDLINE	=	command_line/
-AC		=	command_line/auto_completion/
-AK		=	command_line/action_keys/
+REDIRS		=	redirections/
+AC			=	command_line/auto_completion/
+AK			=	command_line/action_keys/
 HISTORY		=	command_line/history/
 EXEC		=	exec/
+LEXER		= 	lexer_parser_analyzer/lexer/
+PARSER		= 	lexer_parser_analyzer/parser/
+ANALYZER	= 	lexer_parser_analyzer/analyzer/
 MISC		=	misc/
 HASH		=	$(EXEC)hash_map/
 
@@ -96,10 +100,15 @@ PATHS		+=	$(O_PATH)$(HISTORY)
 PATHS		+=	$(O_PATH)$(CORE)
 PATHS		+=	$(O_PATH)$(DB)
 PATHS		+=	$(O_PATH)$(EXEC)
+PATHS		+=	$(O_PATH)$(EXEC)$(REDIRS)
+PATHS		+=	$(O_PATH)$(LEXER)
+PATHS		+=	$(O_PATH)$(PARSER)
+PATHS		+=	$(O_PATH)$(ANALYZER)
 PATHS		+=	$(O_PATH)$(HASH)
 PATHS		+=	$(O_PATH)$(MISC)
 
 # Files
+
 
 SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
@@ -109,6 +118,36 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)sub_prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)utils.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)xfunctions.c
 
+SRC		+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
+
+SRC		+=	$(S_PATH)$(LEXER)assign_token.c
+SRC		+=	$(S_PATH)$(LEXER)init_lexer.c
+SRC		+=	$(S_PATH)$(LEXER)expansion_token.c
+SRC		+=	$(S_PATH)$(LEXER)expansion_token_bis.c
+SRC		+=	$(S_PATH)$(LEXER)lexer.c
+SRC		+=	$(S_PATH)$(LEXER)name_io_nwln_token.c
+SRC		+=	$(S_PATH)$(LEXER)operator_token.c
+SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
+
+SRC		+=	$(S_PATH)$(PARSER)parser.c
+SRC		+=	$(S_PATH)$(PARSER)graph.c
+SRC		+=	$(S_PATH)$(PARSER)graph_bis.c
+
+SRC		+=	$(S_PATH)$(ANALYZER)analyze.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_name.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_assign.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_expansion.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_job.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_process.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
+SRC		+=	$(S_PATH)$(ANALYZER)command_subs.c
+SRC		+=	$(S_PATH)$(ANALYZER)printanalyze.c
+SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
+SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
+
+
+SRC		+=	$(S_PATH)dev.c
 SRC			+=	$(S_PATH)$(HISTORY)save_history.c
 SRC			+=	$(S_PATH)$(HISTORY)search_in_history.c
 SRC			+=	$(S_PATH)$(HISTORY)history_expansions.c
@@ -140,10 +179,10 @@ SRC			+=	$(S_PATH)$(DB)version.c
 SRC			+=	$(S_PATH)$(DB)special_vars.c
 SRC			+=	$(S_PATH)$(DB)process_vars.c
 
-
 SRC			+=	$(S_PATH)$(BUILTINS)set.c
 SRC			+=	$(S_PATH)$(BUILTINS)unset.c
 SRC			+=	$(S_PATH)$(BUILTINS)export.c
+
 SRC			+=	$(S_PATH)$(BLT_FC)fc.c
 SRC			+=	$(S_PATH)$(BLT_FC)fc_edit.c
 SRC			+=	$(S_PATH)$(BLT_FC)fc_reverse.c
@@ -155,12 +194,21 @@ SRC			+=	$(S_PATH)$(MISC)abs_path.c
 SRC			+=	$(S_PATH)$(MISC)ft_access.c
 SRC			+=	$(S_PATH)$(MISC)recall.c
 SRC			+=	$(S_PATH)$(MISC)check_args.c
+SRC			+=	$(S_PATH)$(MISC)is_a_dir.c
 
+SRC			+=	$(S_PATH)$(EXEC)task_master.c
 SRC			+=	$(S_PATH)$(EXEC)exec_process.c
-SRC			+=	$(S_PATH)$(EXEC)exec_builtin.c
+SRC			+=	$(S_PATH)$(EXEC)exec_piped_process.c
+SRC			+=	$(S_PATH)$(EXEC)dispatcher.c
+SRC			+=	$(S_PATH)$(EXEC)call_bin.c
+SRC			+=	$(S_PATH)$(EXEC)call_builtin.c
 SRC			+=	$(S_PATH)$(EXEC)exec_handler.c
 SRC			+=	$(S_PATH)$(EXEC)get_bin.c
 SRC			+=	$(S_PATH)$(EXEC)set_envp.c
+SRC			+=	$(S_PATH)$(EXEC)pipes.c
+SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)exec_redirs.c
+SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs.c
+SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs_tools.c
 
 
 SRC			+=	$(S_PATH)$(HASH)add_hash_map.c
@@ -175,12 +223,12 @@ SRC			+=	$(S_PATH)$(CORE)load_prompt.c
 SRC			+=	$(S_PATH)$(CORE)output.c
 SRC			+=	$(S_PATH)$(CORE)free_handler.c
 
-SRC			+=	$(S_PATH)dev.c
 # Headers
 
 HDR			+=	sh42.h
 HDR			+=	define.h
 HDR			+=	struct.h
+HDR			+=	lexer_parser_analyzer.h
 HDR			+=	command_line.h
 HDR			+=	shared_libft.h
 ###############################################################################
@@ -197,7 +245,7 @@ vpath %.h $(H_PATH)
 
 # Variables
 
-C_GCC = gcc $(CFLAG)
+C_GCC = clang $(CFLAG)
 IFLAGS += $(addprefix -I, $(H_PATH))
 CMPLC = $(C_GCC) -c $(IFLAGS)
 CMPLO = $(C_GCC) -o

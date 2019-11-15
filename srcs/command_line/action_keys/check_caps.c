@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_caps.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/15 15:35:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/15 18:13:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		check_keys_comb(char *buff, t_read *input, uint64_t value)
 	else if (value == CTRL_A || value == HOME)
 		while (input->x_index > input->prompt_len)
 			move_left(buff, input);
-	else if (value == CTRL_E || value == END)
+	else if (value == CTRL_E || value == END_LE)
 		while (input->x_index < input->width)
 			move_right(buff, input);
 	else if (value == CTRL_K)
@@ -93,7 +93,7 @@ int8_t		debug(char  *path, t_read *input)
 
     if ((fd = open(path, O_WRONLY)) < 0)
         return (FAILURE);
-    dprintf(fd, "w [%d] ple [%d] bi [%d]\n", input->width, input->x_index, input->width - input->prompt_len);
+    dprintf(fd, "w [%d]\n", input->sub_prompt );
     return (SUCCESS);
 }
 
@@ -141,18 +141,14 @@ uint8_t		check_caps(char *buff, t_read *input)
 	if (value == RETURN_KEY)
 	{
 		ft_putchar('\n');
-		//ESCAPE SEQUENCE NEED TO CREATE FCT TO MANAGE ALL SUBPROMPT
-		if (input->buffer[ft_strlen(input->buffer) - 1] == '\\')
+		debug("/dev/ttys005", input);
+		if (charset_count(input, '\\') % 2 != 0 && input->sub_prompt == FALSE)
 		{
-			if (charset_count(input, '\\') % 2 != 0)
-			{
-				input->buffer[ft_strlen(input->buffer) - 1] = '\0';
-				display_subprompt(input, PS2);
-				return (TRUE);
-			}
-			else
-				return (FALSE);
+			input->sub_prompt = TRUE;
+			display_subprompt(input, PS2);
+			return (TRUE);
 		}
+		input->sub_prompt = FALSE;
 		return (FALSE);
 	}
 	else

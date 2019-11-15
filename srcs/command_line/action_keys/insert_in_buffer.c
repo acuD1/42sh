@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   insert_in_buffer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/14 18:55:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/15 17:03:48 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	xtputs(input->tcaps[RESTORE_CR], 1, my_outc);
 	move_right(buff, input);
 	ft_strdel(&tmp);
-
 	if (input->y_li == input->ws_li && input->width % input->ws_col == 2)
 		xtputs(input->tcaps[KEY_UP], 1, my_outc);
 }

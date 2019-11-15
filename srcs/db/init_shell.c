@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/10 16:23:40 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/12 09:56:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void	init_shell(t_core *shell)
 	shell->jobs = NULL;
 	shell->tokens = NULL;
 	shell->bin = NULL;
-	shell->last_exit_status = 0;
+	shell->status = 0;
 	shell->opt = 0;
 	shell->buff = NULL;
+	shell->lexer = NULL;
+	shell->job_list = NULL;
+	shell->assign_list = NULL;
 }

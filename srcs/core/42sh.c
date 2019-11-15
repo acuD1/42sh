@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/09 18:36:57 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/03 17:15:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ int		main(int ac, char **av, char **environ)
 
 	/* Everything else will happen here */
 	load_prompt(&shell);
+
+	/* FREE */
 	free_env(shell.env);
+	//free_env(shell.pos_vars);
 	free_hash_map(&shell.hash);			// For now here ..
+
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2019/07/31 17:14:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/03 17:16:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ void	free_env(t_lst *env)
 
 void	free_prompt(t_core *shell, char *line)
 {
+	(void)line;
 	ft_strdel(&shell->bin);
 	ft_tabdel(&shell->tokens);
-	ft_strdel(&line);
+	//ft_strdel(&line); (No need if bzero)
 }
 
 void	free_hash_map(t_hash *hash)
@@ -40,6 +41,8 @@ void	free_hash_map(t_hash *hash)
 	size_t	i;
 
 	i = 0;
+	if (!hash->map)
+		return ;
 	while (i < hash->size)
 	{
 		if (ft_lstlen(hash->map[i]) > 0)

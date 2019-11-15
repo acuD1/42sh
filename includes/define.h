@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/14 16:26:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/15 17:02:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,14 @@
 # define MAX_PATH		8192
 
 /*
-**	Exec handler
+**	Exec
 */
 
-# define BIN_ERROR		0x001
+# define BLT_NUMBER		0x004
+# define BITOK_ERROR	0x001
 # define PATH_ERROR		0x002
 # define FORK_ERROR		0x004
+# define BIN_ERROR		0x006
 # define PERM_ERROR		0x008
 # define EXEC_ERROR		0x010
 
@@ -90,7 +92,7 @@
 # define BS_KEY			0x7f00000000000000
 # define DEL_KEY		0x1b5b337e00000000
 # define HOME			0x1b5b480000000000
-# define END			0x1b5b460000000000
+# define END_LE			0x1b5b460000000000
 # define TAB_KEY		0x0900000000000000
 # define RETURN_KEY		0x0a00000000000000
 # define CTRL_R			0x1200000000000000
@@ -111,7 +113,7 @@
 # define HASH_SIZE		4096
 # define MAX_LOAD_F		0.75
 
-/*	
+/*
 **	===========================================================================
 **	INTERN SHELL VARIABLES.....................................................
 **	===========================================================================
@@ -124,4 +126,24 @@
 # define HIST_SIZE		500
 # define HISTFILE_SIZE		500
 
+/*
+** LEXER_PARSER_ANALYZER
+*/
+
+# define NB_OF_OPE 14
+# define NB_OF_EXP 6
+# define CHAR_INTERRUPT 			" \t<$>|;&\n"
+# define OPERATORS 					"&|;><-\n"
+# define EXPANSION 					"$~"
+# define NB_LEXER_STATE 9
+# define NB_PARSER_STATE 29
+# define NB_ANALYZER_STATE 10
+# define REDIR                      P_GREAT, P_LESS
+# define REDIR_AND                  P_GREATAND, P_LESSAND
+# define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH
+# define ALL_REDIRECT               REDIR, REDIR_DB, REDIR_AND
+# define ALL_EXPANSION              P_PARENT, P_BRACKET, P_DBPARENT, P_DOLLAR, P_TILDE
+
+# define IOFILE                     P_GREAT, P_GREATAND, P_LESS, P_LESSAND, P_DGREAT
+# define IOHERE                     P_DLESS, P_DLESSDASH
 #endif

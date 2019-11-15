@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
 /*   Updated: 2019/11/14 19:02:06 by fcatusse         ###   ########.fr       */
@@ -78,7 +78,7 @@ void		get_y(t_read *input)
 		i++;
 	}
 	tmp = ft_strsub(buf, 2, 2);
-	input->y_li = atoi(tmp);
+	input->y_li = ft_atoi(tmp);
 	ft_strdel(&tmp);
 }
 
@@ -111,5 +111,5 @@ void		init_prompt(t_read *term)
 		check_expansions(term);
 		//		save_history(term);
 	}
-	reset_config(term);
+	// reset_config(term);
 }

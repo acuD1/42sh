@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/14 16:18:59 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/15 17:50:52 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,32 @@
 **	wiches are globals variables, such as tokens, env list etc...
 */
 
+
 /*
 **	TO DO:
 */
+
+void			free_history(t_core *shell)
+{	t_lst *tmp;
+
+	while (shell->history)
+	{
+		free(shell->history->content);
+		tmp = shell->history;
+		shell->history = shell->history->next;
+		free(tmp);
+		free(shell->history);
+	}
+}
 
 void			load_prompt(t_core *shell)
 {
 	int8_t		status;
 	t_read		term;
+	//t_lst *tmp;
+
+	// t_parser *parser;
+	// t_ast	*ast;
 
 	status = 1;
 	credit(shell);
@@ -38,7 +56,7 @@ void			load_prompt(t_core *shell)
 		/* Base output for prompt */
 		shell->history = term.history;
 		init_prompt(&term);
-		shell->buff = ft_strdup(term.buffer);
+		shell->buff = term.buffer;
 		/*
 		**	[NEED REWORK] A lot of stuff happening here :
 		**	- tokens parser (for now)
@@ -46,21 +64,16 @@ void			load_prompt(t_core *shell)
 		**	- Builtins ? (Maybe not accurate for now with futurs implementations)
 		**	- etc ...
 		*/
-		if (get_tokens(shell, shell->buff) != SUCCESS) /* ft_strsplit with for now tab and space charset */
-		{
-//			free_prompt(shell, term.buffer);
-			continue ;
-		}
-
-		/* DEBUG */
-		//print_tokens(shell);
-
-		/* Same here, mainly binary executions, need rework */
-//		free_prompt(shell, term.buffer);
-		if (exec_builtin(shell) == FAILURE)
-			exec_process(shell, shell->env);
-		save_history(&term);
+		//debug_analyzer(shell);
+		lexer_parser_analyzer(shell, term.buffer);
+	//	debug_ailleurs("/dev/ttys002", "CE N'EST PLUS MA PARTIE");
+		if (task_master(shell) != SUCCESS)
+			exit(1);
 		free_prompt(shell, shell->buff);
+		save_history(&term);
+		// ft_freejoblist(&shell->job_list);
+		//break;
 	}
-	ft_strdel(&term.buffer);
+	//free_history(shell);
+	ft_strdel(&shell->buff);
 }

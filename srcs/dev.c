@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
-/*   Updated: 2019/09/25 01:35:30 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/12 09:48:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,15 @@ void	print_hash_map(t_hash *hash)
 		}
 		i++;
 	}
+}
+
+void	debug_analyzer(t_core *shell)
+{
+	t_lst *tmp;
+
+	tmp = NULL;
+	if (shell->job_list)
+		tmp = shell->job_list;
+	printf("LST LEN = |%zu|\n", ft_lstlen(tmp));
+	tmp = NULL;
 }
