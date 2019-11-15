@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/14 19:10:43 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/15 15:29:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,21 @@ int8_t		debug(char  *path, t_read *input)
     return (SUCCESS);
 }
 
+uint8_t		charset_count(t_read *input, char charset)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	count = 0;
+	while (input->buffer[++i])
+	{
+		if (input->buffer[i] == charset)
+			count++;
+	}
+	return (count);
+}
+
 /*
 **		Interpret and insert char in bufffer
 **		CTRL+R to launch history research
@@ -129,9 +144,14 @@ uint8_t		check_caps(char *buff, t_read *line)
 		//ESCAPE SEQUENCE NEED TO CREATE FCT TO MANAGE ALL SUBPROMPT
 		if (line->buffer[ft_strlen(line->buffer) - 1] == '\\')
 		{
-			line->buffer[ft_strlen(line->buffer) - 1] = '\0';
-			display_subprompt(line, PS2);
-			return (TRUE);
+			if (charset_count(line, '\\') % 2 != 0)
+			{
+				line->buffer[ft_strlen(line->buffer) - 1] = '\0';
+				display_subprompt(line, PS2);
+				return (TRUE);
+			}
+			else
+				return (FALSE);
 		}
 		return (FALSE);
 	}
