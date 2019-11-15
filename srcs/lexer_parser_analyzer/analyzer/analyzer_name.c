@@ -36,6 +36,7 @@ char *fill_cmd_job(t_analyzer *analyzer, int flag)
 	char *str;
 
 	str = NULL;
+	// (void)flag;
 	if (((t_token*)analyzer->lexer->next->content)->id == 0 || !flag)
 		str = ft_strdup(((t_token*)analyzer->lexer->content)->data);
 	else
@@ -44,11 +45,50 @@ char *fill_cmd_job(t_analyzer *analyzer, int flag)
 	return (analyzer->job.command);
 }
 
+int8_t debug_ailleurs(const char *path, const char *str)
+{
+    int fd;
 
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    dprintf(fd,"{%s}\n", str);
+    return (SUCCESS);
+}
+
+int getlefdpour_debug_ailleurs(const char *path)
+{
+	int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    return (fd);
+}
+
+t_analyzer *escape_sequence_analyzer(t_analyzer *analyzer)
+{
+	char *str;
+
+	str = NULL;	
+	// str = ft_strdup(((t_token*)analyzer->lexer->content)->data); // dans le cas ou ya un \ tout seul mais normalement subprompt donc ca existe pas
+	str = ft_strnew(0);
+	while (((t_token*)analyzer->lexer->content)->id == P_ESCSEQ && ((t_token*)analyzer->lexer->next->content)->id != P_END)
+	{
+		get_token(analyzer);
+		str = ft_strjoinf(str, ((t_token*)analyzer->lexer->content)->data, 1);
+		analyzer->job.command = fill_cmd_job(analyzer, 1);
+	}
+	free(((t_token*)analyzer->lexer->content)->data);
+	((t_token*)analyzer->lexer->content)->data = ft_strdup(str);
+	free(str);
+	analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->content)->data);
+	((t_token*)analyzer->lexer->content)->id = P_WORD;
+	return (analyzer);
+}
 
 t_analyzer *cmd_analyze(t_analyzer *analyzer, t_core *shell)
 {
-	// ft_dprintf(2, "CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+
+	ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	analyzer->job.command = fill_cmd_job(analyzer, 1);
 	if (analyzer->state == A_REDIRECT)
 	{
@@ -62,23 +102,19 @@ t_analyzer *cmd_analyze(t_analyzer *analyzer, t_core *shell)
 		analyzer->state = A_START;
 		return (analyzer = ass_analyze(analyzer, shell));
 	}
+	else if (((t_token*)analyzer->lexer->content)->id == P_ESCSEQ)
+		escape_sequence_analyzer(analyzer);
 	else
 	{
-			analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->content)->data);
-			analyzer->state = A_WORD;
+		analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->content)->data);
+		analyzer->state = A_WORD;
 	}
-	// if (analyzer->lexer->next && !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
-		// analyzer->state = A_STOP;
-	// else if (analyzer->state == A_ASSIGN)
-		// analyzer->state = A_START;
-	// else
-	(void)shell;
 	return (analyzer);
 }
 
 t_analyzer *end_analyze(t_analyzer *analyzer, t_core *shell)
 {
-	ft_dprintf(2, "END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	separator_analyze(analyzer, shell);
 	analyzer->state = A_STOP;
 	return (analyzer);

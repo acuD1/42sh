@@ -75,7 +75,7 @@ void			load_prompt(t_core *shell)
 		// print_tokens(shell);
 		//debug_analyzer(shell);
 		lexer_parser_analyzer(shell, term.buffer);
-		ft_dprintf(2, "CEST PLUS MA PARTIE QUI BUG\n");
+		debug_ailleurs("/dev/ttys002", "CE N'EST PLUS MA PARTIE");
 		if (task_master(shell) != SUCCESS)
 			exit(1);
 		free_prompt(shell, shell->buff);

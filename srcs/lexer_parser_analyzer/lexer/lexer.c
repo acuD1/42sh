@@ -17,19 +17,49 @@
 ** CHANGE LE STATUS DE LA MACHINE EN FONCTION DU CHAR IDENTIFIÉ
 */
 
+t_lst		*backslash_lexer(t_lexer *lexer, t_lst *lexer_token)
+{
+	char *str;
+
+	str = NULL;
+	if (!lexer->buff)
+	{
+		lexer->status = L_END;
+		return(lexer_token);
+	}
+	if (lexer->buff[lexer->buf_pos] == '\\')
+	{
+		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, 1)))
+			return(lexer_token);
+		if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_ESCSEQ, str), sizeof(t_token)))))
+			return(lexer_token);
+		free(str);
+		lexer->ntok++;
+		lexer->buf_pos++;
+	}
+	lexer->status = L_START;
+	return(lexer_token);
+}
+
 t_lst		*start_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	if (lexer->buff[lexer->buf_pos] == '\0')
 	{
+		// ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_NEWLINE, "\n"), sizeof(t_token)));
 		ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_END, "(null)"), sizeof(t_token)));
 		lexer->ntok++;
 		lexer->status = L_END;
 	}
 	else if (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 	{
+		if (lexer->buff[lexer->buf_pos - 1] == '\\')
+			ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_WORD, " "), sizeof(t_token)));
 		while (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 			lexer->buf_pos++;
+		// ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_WORD, " "), sizeof(t_token)));
 	}
+	else if (lexer->buff[lexer->buf_pos] == '\\')
+		lexer->status = L_ESCSEQ;
 	else if (ft_strchr(OPERATORS, lexer->buff[lexer->buf_pos]))
 		lexer->status = L_OPERATOR;
 	else if (ft_isdigit(lexer->buff[lexer->buf_pos]))

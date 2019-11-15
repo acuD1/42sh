@@ -132,9 +132,9 @@
 # define NB_OF_EXP 6
 # define CHAR_INTERRUPT 			" \t<$>|;&\n"
 # define OPERATORS 					"&|;><-\n"
-# define EXPANSION 					"$~" // \" \'
-# define NB_LEXER_STATE 8
-# define NB_PARSER_STATE 28
+# define EXPANSION 					"$~"
+# define NB_LEXER_STATE 9
+# define NB_PARSER_STATE 29
 # define NB_ANALYZER_STATE 10
 # define REDIR                      P_GREAT, P_LESS
 # define REDIR_AND                  P_GREATAND, P_LESSAND

@@ -49,8 +49,8 @@ t_analyzer *expansion_analyze(t_analyzer *analyzer, t_core *shell)
 	char *tmp;
 
 	tmp = NULL;
-	analyzer->job.command = fill_cmd_job(analyzer, 1);
-	ft_dprintf(2, "EXPANSION state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	// analyzer->job.command = fill_cmd_job(analyzer, 1);
+	ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "EXPANSION state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	// if (((t_token*)analyzer->lexer->content)->id == P_DBPARENT || ((t_token*)analyzer->lexer->content)->id == P_HOOK)
 	// {
 	// 	if ((tmp = arithmetique_expansion(((t_token*)analyzer->lexer->content), shell)))

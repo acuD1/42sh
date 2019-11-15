@@ -15,6 +15,9 @@
 
 # include "sh42.h"
 
+int8_t debug_ailleurs(const char *path, const char *str);
+int getlefdpour_debug_ailleurs(const char *path);
+
 void 	lexer_parser_analyzer(t_core *shell, char *line);
 
 
@@ -106,6 +109,7 @@ t_lst			*start_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*end_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*name_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*newline_lexer(t_lexer *lexer, t_lst *lexer_token);
+t_lst			*backslash_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*number_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*assignement_word_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*operator_lexer(t_lexer *lexer, t_lst *lexer_token);

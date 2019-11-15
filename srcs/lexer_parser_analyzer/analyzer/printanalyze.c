@@ -10,13 +10,13 @@ void ft_printtab(char **cmd)
 	if (cmd)
 	{
 		j = ft_tablen(cmd);
-		printf("			cmd ");
+		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"cmd ");
 		while(cmd[i])
 		{
-			printf("%s ", cmd[i]);
+			dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"%s", cmd[i]);
 			i++;
 		}
-		printf("\n");
+		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"\n");
 	}
 }
 
@@ -31,8 +31,9 @@ void ft_printassignlist(t_lst *lst)
 
 	while (assign)
 	{
-		printf("\n==== ASSIGN %d ====\n", x);
-		printf("[%s%s]\n", ((t_db*)assign->content)->key, ((t_db*)assign->content)->value);
+		debug_ailleurs("/dev/ttys002", "============= ASSIGN ============\n");
+		debug_ailleurs("/dev/ttys002", ((t_db*)assign->content)->key);
+		debug_ailleurs("/dev/ttys002", ((t_db*)assign->content)->value);
 		assign = assign->next;
 		x++;
 	}
@@ -45,11 +46,11 @@ void ft_printredir(t_redir *redir)
 	if (!redir)
 		return;
 	tmp = redir;
-	printf("redir state %u\n", tmp->type);
+	dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"redir state %u\n", tmp->type);
 	if (tmp->op[0])
-		printf("redir op[0] %s\n", tmp->op[0]);
+		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "redir op[0] %s\n", tmp->op[0]);
 	if (tmp->op[1])
-		printf("redir op[1] %s\n", tmp->op[1]);
+		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "redir op[1] %s\n", tmp->op[1]);
 }
 
 void ft_printprocess(t_process *process)
@@ -59,7 +60,7 @@ void ft_printprocess(t_process *process)
 	if (!process)
 		return;
 	tmp = process;
-	printf("process state %u\n", tmp->type);
+	dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"process state %u\n", tmp->type);
 	if (tmp->av)
 		ft_printtab(tmp->av);
 }
@@ -71,9 +72,9 @@ void ft_printjob(t_job *job)
 	if (!job)
 		return;
 	tmp = job;
-	printf("job state %u\n", tmp->type);
+	dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"job state %u\n", tmp->type);
 	if (tmp->command)
-		printf("job command [%s]\n", tmp->command);
+		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"job command [%s]\n", tmp->command);
 }
 
 void ft_printjoblst(t_lst *list)
@@ -89,19 +90,19 @@ void ft_printjoblst(t_lst *list)
 	x = 1;
 	while (job)
 	{
-		printf("\n==== JOB %d ====\n", x);
+		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "\n==== JOB %d ====\n", x);
 		ft_printjob((t_job*)job->content);
 		process = ((t_job*)job->content)->process_list;
 		y = 1;
 		while (process)
 		{
-			printf("\n==== PROCESS %d ====\n", y);
+			dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "\n==== PROCESS %d ====\n", y);
 			ft_printprocess((t_process*)process->content);
 			redir = ((t_process*)process->content)->redir_list;
 			z = 1;
 			while (redir)
 			{
-				printf("\n==== REDIR %d ====\n", z);
+				dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"\n==== REDIR %d ====\n", z);
 				ft_printredir((t_redir*)redir->content);
 				z++;
 				redir = redir->next;

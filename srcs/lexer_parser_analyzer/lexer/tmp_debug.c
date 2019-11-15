@@ -32,7 +32,7 @@ void			ft_printtoklist(t_lst *lexer)
 	while (lexer)
 	{
 		tmp = (t_token*)lexer->content;
-		printf("[%s] {%d} \n", tmp->data, tmp->id);
+		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "[%s] {%d} \n", tmp->data, tmp->id);
 		if (!lexer->next)
 			break;
 		lexer = lexer->next;

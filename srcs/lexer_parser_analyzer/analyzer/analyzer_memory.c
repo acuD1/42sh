@@ -2,10 +2,14 @@
 
 void	get_token(t_analyzer *analyzer)
 {
+	t_token *tmp;
+
 	if (!analyzer->lexer)
 		return ;
+	tmp = analyzer->lexer->content;
+	free(tmp->data);
+	free(tmp);
 	analyzer->lexer = analyzer->lexer->next;
-	//free(analyzer->lexer);
 }
 
 void ft_free_redir(t_redir *redir)

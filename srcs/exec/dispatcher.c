@@ -50,12 +50,17 @@ int8_t	dispatcher(t_core *shell, t_lst *jobs)
 				return (FAILURE);
 			}
 		}
-		else
+		else if (((t_process*)ptr->content)->type == P_ASSIGN)// || ((t_process*)ptr->content)->type == P_EXPANSION
 		{
 			//EXPANSION
+			ptr = ptr->next;
+		}
+		else
+		{
 			exec_process(shell, ptr);
 			ptr = ptr->next;
 		}
+
 		//CONDITIONS
 	}
 	return (SUCCESS);

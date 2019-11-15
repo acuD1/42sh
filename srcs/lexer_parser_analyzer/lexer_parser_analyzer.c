@@ -90,7 +90,7 @@ void printjobbijobba(t_core *shell)
 	}
 	if (shell->assign_list)
 	{
-		ft_dprintf(2, "============= ASSIGNATION LST ============\n");
+		debug_ailleurs("/dev/ttys002", "============= ASSIGNATION LST ============\n");
 		ft_printassignlist(shell->assign_list);
 		// ft_freedblist(&shell->assign_list);
 	}
@@ -108,10 +108,10 @@ void lexer_parser_analyzer(t_core *shell, char *line)
 	{
 		shell->lexer = lxr_tok;
 		analyzer(shell);
-		// printjobbijobba(shell);
+		printjobbijobba(shell);
 	}
 	else
-		ft_dprintf(2, "error parser, va savoir pourquoi...\n");
+		debug_ailleurs("/dev/ttys002", "le parser t'as dis que t'avais pas le droit de faire cette commande, gros force pas...\n");
 	// ft_freetokenlist(&lxr_tok);
 	// shell->lexer = NULL;
 }
