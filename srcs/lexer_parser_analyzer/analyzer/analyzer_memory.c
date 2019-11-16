@@ -39,7 +39,6 @@ void ft_free_processlist(t_lst **head) ///t_process *process)
 	t_lst *tmp;
 	t_lst *process;
 	t_process *pro;
-	int i;
 
 	process = NULL;
 	pro = NULL;
@@ -54,16 +53,9 @@ void ft_free_processlist(t_lst **head) ///t_process *process)
 			pro = (t_process*)process->content;
 			ft_free_redirlist(&pro->redir_list);
 			ft_freedblist(&pro->assign_list);
-			if (pro->av)
-			{
-				i = 0;
-				while (pro->av[i])
-				{
-					free(pro->av[i]);
-					i++;
-				}
-			}
+			ft_tabdel(&(pro->av));
 		}
+		free(process->content);
 		tmp = process;
 		process = process->next;
 		free(tmp);
