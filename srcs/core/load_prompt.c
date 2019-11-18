@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/15 17:50:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/18 18:24:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ void			load_prompt(t_core *shell)
 		// ft_freejoblist(&shell->job_list);
 		//break;
 	}
-	//free_history(shell);
+	free_history(shell);
 	ft_strdel(&shell->buff);
 }

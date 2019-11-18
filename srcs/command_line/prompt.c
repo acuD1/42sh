@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/14 19:02:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/18 21:07:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		display_prompt(t_read *term)
 	}
 	else
 	{
-		term->prompt = ft_strdup(ft_strrchr(path, '/'));
+		term->prompt = ft_strdup(ft_strrchr(path, '/') + 1);
 		term->prompt_len = ft_strlen(term->prompt) + 2;
 	}
 	term->x = term->prompt_len;
@@ -57,7 +57,7 @@ void		display_prompt(t_read *term)
 	term->width = term->x;
 	term->sub_prompt = 0;
 	//term = get_size(term);
-	ft_dprintf(STDOUT_FILENO, "%s%s%s$ %s", C_BOLD, C_Y, term->prompt + 1, C_X);
+	ft_dprintf(STDOUT_FILENO, "%s%s%s$ %s", C_BOLD, C_Y, term->prompt, C_X);
 }
 
 void		get_y(t_read *input)
@@ -92,16 +92,16 @@ void		init_prompt(t_read *term)
 {
 	char	buff[READ_SIZE + 1];
 
-	ft_bzero(buff, READ_SIZE + 1);
+	ft_bzero(buff, READ_SIZE);
 	ft_bzero(term->buffer, BUFF_SIZE);
 	init_config();
 	init_termcaps(term);
 	display_prompt(term);
-	while (xread(STDIN_FILENO, buff, READ_SIZE + 1) > 0)
+	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		get_y(term);
 		if (check_caps(buff, term) == TRUE)
-			ft_bzero(buff, READ_SIZE + 1);
+			ft_bzero(buff, READ_SIZE);
 		else
 			break ;
 	}
@@ -109,7 +109,7 @@ void		init_prompt(t_read *term)
 	{
 		remove_newline(term);
 		check_expansions(term);
-		//		save_history(term);
+		//save_history(term);
 	}
-	// reset_config(term);
+	reset_config(term);
 }

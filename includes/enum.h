@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enum.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/18 15:28:30 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/11/18 15:28:34 by fcatusse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef ENUM_H
 # define ENUM_H
 
 /*
-** LEXER_PARSER_ANALYZER
+** 	LEXER_PARSER_ANALYZER
 */
 
 typedef enum analyzer_state
@@ -89,5 +100,26 @@ typedef enum    lexer_state {
     L_OPERATOR,
     L_END,
 }               e_lexer_state;
+
+/*
+** 	TERMCAPS STRINGS
+*/
+
+enum			e_tcaps
+{
+	DEL_CR,
+	SAVE_CR,
+	RESTORE_CR,
+	KEY_DOWN,
+	KEY_UP,
+	KEY_RIGHT,
+	KEY_LEFT,
+	LEFT_MARGIN,
+	UP_LEFT_CORNER,
+	CLEAR,
+	CLR_LINES,
+	CLR_EOL,
+	CAPS_NBR
+};
 
 #endif

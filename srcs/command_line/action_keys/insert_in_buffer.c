@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/15 17:03:48 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/18 20:44:43 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 		ft_dprintf(STDIN_FILENO, "%c", buff);
 	if (buff == NEW_LINE || input->x >= input->ws_col)
 	{
-		//	(input->x == 0) ? input->y-- : 0;
+		//(input->x == 0) ? input->y-- : 0;
 		input->x = 1;
 		input->y++;
 	}
@@ -115,7 +115,7 @@ void		insert_in_buffer(char *buff, t_read *input)
 
 	buff_index = input->x_index - input->prompt_len;
 	if (input->x_index >= BUFF_SIZE)
-		input->buffer = realloc(input->buffer, ft_strlen(input->buffer) + 1);
+		input->buffer = realloc(input->buffer, ft_strlen(input->buffer) + READ_SIZE);
 	if (ft_strlen(buff) > 1)
 	{
 		insert_str_in_buffer(buff, input);

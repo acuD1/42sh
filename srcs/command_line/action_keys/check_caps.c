@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/15 18:13:33 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/18 18:53:06 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void		check_keys_comb(char *buff, t_read *input, uint64_t value)
 
 void		end_of_file(t_read *input, uint64_t value)
 {
-	if (!ft_strcmp(input->buffer, "") && value == CTRL_D)
+	if (!ft_strlen(input->buffer) && value == CTRL_D)
 	{
 		ft_putstr("exit\n");
 		reset_config(input);
@@ -93,7 +93,7 @@ int8_t		debug(char  *path, t_read *input)
 
     if ((fd = open(path, O_WRONLY)) < 0)
         return (FAILURE);
-    dprintf(fd, "w [%d]\n", input->sub_prompt );
+    dprintf(fd, "w [%d] [%s]\n", input->sub_prompt , input->tmp_buff);
     return (SUCCESS);
 }
 
@@ -109,6 +109,8 @@ uint8_t		charset_count(t_read *input, char charset)
 		if (input->buffer[i] == charset)
 			count++;
 	}
+	if (input->buffer[i - 1] != charset)
+		return (FALSE);
 	return (count);
 }
 
@@ -141,9 +143,10 @@ uint8_t		check_caps(char *buff, t_read *input)
 	if (value == RETURN_KEY)
 	{
 		ft_putchar('\n');
-		debug("/dev/ttys005", input);
+		// NOT FINISH YET I HAVE TO TALK WITH GUI_LUCKYWORLDD
 		if (charset_count(input, '\\') % 2 != 0 && input->sub_prompt == FALSE)
 		{
+			debug("/dev/ttys005", input);
 			input->sub_prompt = TRUE;
 			display_subprompt(input, PS2);
 			return (TRUE);

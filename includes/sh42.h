@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/12 10:04:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:04:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,13 @@ int8_t		builtin_unset(t_core *shell, t_process *process);
 int8_t		builtin_export(t_core *shell, t_process *process);
 int8_t		builtin_fc(t_core *shell, t_process *process);
 
+int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
+void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
+void		display_reverse(t_lst *w, u_int64_t opt, char **range);
+u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd);
+void		swap_range(char **r1, char **r2);
+u_int16_t	set_range(t_lst **w, char **range);
+
 /*
 **	===========================================================================
 **	REDIRECTIONS...............................................................
@@ -167,13 +174,6 @@ int8_t			redir_input(t_redir *ptr);
 int8_t			dup_ifd(t_redir *ptr);
 int8_t			dup_ofd(t_redir *ptr);
 void			close_fds(t_lst *ptr);
-
-int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
-void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
-void		display_reverse(t_lst *w, u_int64_t opt, char **range);
-u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd);
-void		swap_range(char **r1, char **r2);
-u_int16_t	set_range(t_lst **w, char **range);
 
 /* ###########################  TEMPORARY   #################################*/
 void	debug_analyzer(t_core *shell);

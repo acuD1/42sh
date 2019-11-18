@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/15 17:36:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:37:52 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int8_t			builtin_fc(t_core *shell, t_process *process)
 	cmd = ft_strsplit(shell->buff, SPACE);
 	opt = get_options(ft_tablen(cmd), cmd, "elnrs0123456789");
 	get_range(cmd, range);
-	if (opt & (1ULL << 63) || opt == 0)
+	if (opt & (1ULL << 63))
 	{
 		print_usage("fc", opt % 128, "fc: usage: fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]");
 		return (FAILURE);
