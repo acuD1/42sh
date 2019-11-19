@@ -105,6 +105,7 @@
 # define CTRL_D			0x0400000000000000
 # define ALT_AW_UP		0x1b1b5b4100000000
 # define ALT_AW_DO		0x1b1b5b4200000000
+# define ESC_SEQ		0x5C00000000000000
 
 /*
 **	Hash table
@@ -133,7 +134,7 @@
 # define NB_OF_OPE 14
 # define NB_OF_EXP 6
 # define CHAR_INTERRUPT 			" \t<$>|;&\n"
-# define OPERATORS 					"&|;><-\n"
+# define OPERATORS 					"&|;><-"
 # define EXPANSION 					"$~"
 # define NB_LEXER_STATE 9
 # define NB_PARSER_STATE 29

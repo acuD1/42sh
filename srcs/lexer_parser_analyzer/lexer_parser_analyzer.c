@@ -111,7 +111,7 @@ void lexer_parser_analyzer(t_core *shell, char *line)
 		printjobbijobba(shell);
 	}
 	else
-		debug_ailleurs("/dev/ttys002", "le parser t'as dis que t'avais pas le droit de faire cette commande, gros force pas...\n");
+		debug_ailleurs("/dev/ttys002", "le parser t'as dis que t'avais pas le droit de faire cette commande, gros force pas..\n");
 	// ft_freetokenlist(&lxr_tok);
 	// shell->lexer = NULL;
 }

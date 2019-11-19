@@ -50,7 +50,8 @@ void		check_keys_comb(char *buff, t_read *input, uint64_t value)
 
 void		end_of_file(t_read *input, uint64_t value)
 {
-	if (!ft_strcmp(input->buffer, "") && value == CTRL_D)
+	// if (!ft_strcmp(input->buffer, "") && value == CTRL_D)
+	if (!*input->buffer && value == CTRL_D)
 	{
 		ft_putstr("exit\n");
 		reset_config(input);
@@ -102,6 +103,25 @@ uint8_t		charset_count(t_read *input, char charset)
 	return (count);
 }
 
+
+uint8_t backslash_prompt(t_read *input)
+{
+	ft_putchar('\n');
+	if (charset_count(input, '\\') % 2 != 0)
+	{
+		insert_str_in_buffer(";", input);
+		// input->buffer[ft_strlen(input->buffer)] = '\n';
+		display_subprompt(input, PS2);
+		return (TRUE);
+	}
+	else
+		return (FALSE);
+}
+
+
+
+
+
 /*
 **		Interpret and insert char in bufffer
 **		CTRL+R to launch history research
@@ -117,6 +137,15 @@ uint8_t		check_caps(char *buff, t_read *input)
 	uint64_t	value;
 
 	value = get_mask(buff);
+	if (value == RETURN_KEY)
+	{
+		// if (buff[] == '\\')
+			// return (backslash_prompt(input));
+		// insert_str_in_buffer("\n", input);
+		ft_putchar('\n');
+		//ESCAPE SEQUENCE NEED TO CREATE FCT TO MANAGE ALL SUBPROMPT
+		return (FALSE);
+	}
 	if (is_print(*buff))
 		insert_in_buffer(buff, input);
 	if (value == CTRL_R)
@@ -128,23 +157,6 @@ uint8_t		check_caps(char *buff, t_read *input)
 	}
 	if (cursor_motion(buff, input, value))
 	   return (TRUE);
-	if (value == RETURN_KEY)
-	{
-		ft_putchar('\n');
-		//ESCAPE SEQUENCE NEED TO CREATE FCT TO MANAGE ALL SUBPROMPT
-		if (input->buffer[ft_strlen(input->buffer) - 1] == '\\')
-		{
-			if (charset_count(input, '\\') % 2 != 0)
-			{
-				input->buffer[ft_strlen(input->buffer) - 1] = '\0';
-				display_subprompt(input, PS2);
-				return (TRUE);
-			}
-			else
-				return (FALSE);
-		}
-		return (FALSE);
-	}
 	else
 		check_keys_comb(buff, input, value);
 	end_of_file(input, value);

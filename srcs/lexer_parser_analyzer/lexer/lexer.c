@@ -58,14 +58,14 @@ t_lst		*start_lexer(t_lexer *lexer, t_lst *lexer_token)
 			lexer->buf_pos++;
 		// ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_WORD, " "), sizeof(t_token)));
 	}
+	else if (!ft_strcmp(&lexer->buff[lexer->buf_pos], "\n")    )
+		lexer->status = L_NEWLINE;
 	else if (lexer->buff[lexer->buf_pos] == '\\')
 		lexer->status = L_ESCSEQ;
 	else if (ft_strchr(OPERATORS, lexer->buff[lexer->buf_pos]))
 		lexer->status = L_OPERATOR;
 	else if (ft_isdigit(lexer->buff[lexer->buf_pos]))
 		lexer->status = L_IO_NUMBER;
-	else if (!ft_strcmp(&lexer->buff[lexer->buf_pos], "\n") && !lexer->quote)
-		lexer->status = L_NEWLINE;
 	else if (ft_strchr(&lexer->buff[lexer->buf_pos], '='))
 		lexer->status = L_ASSIGNEMENT_WORD;
 	else
@@ -107,6 +107,7 @@ t_lst *lexer(char *line)
 		lexer_token = lexer.lex[lexer.status](&lexer, *head);
 	lexer_token = *head;
 	ft_printtoklist(lexer_token);
+	lexer_token = *head;
 	init_lexer(NULL, &lexer);
 	return (*head);
 }

@@ -35,20 +35,19 @@ static const t_token    ope[] =
 ** STATE CREANT LES TOKENS DE LA STRUCT OPE CI DESSUS
 */
 
-static int	create_operator_token(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token)
+static t_lst	*create_operator_token(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token)
 {
 	char *str;
 
 	str = NULL;
 	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, len)))
-		return (0);
-	if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)))))
-		return (0);
+		return (NULL);
+	ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)));
 	free(str);
 	lexer->ntok++;
 	lexer->buf_pos += len;
 	lexer->status = L_START;
-	return (1);
+	return (lexer_token);
 }
 
 t_lst		*operator_lexer(t_lexer *lexer, t_lst *lexer_token)
@@ -65,7 +64,7 @@ t_lst		*operator_lexer(t_lexer *lexer, t_lst *lexer_token)
 	{
 		if (!ft_strncmp(&lexer->buff[lexer->buf_pos], ope[i].data, ope[i].data_len))
 		{
-			if (create_operator_token(lexer, ope[i].id, ope[i].data_len, lexer_token))
+			if ((lexer_token = create_operator_token(lexer, ope[i].id, ope[i].data_len, lexer_token)))
 				break;
 		}
 		i++;

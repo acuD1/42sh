@@ -10,13 +10,13 @@ void ft_printtab(char **cmd)
 	if (cmd)
 	{
 		j = ft_tablen(cmd);
-		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"cmd ");
+		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"cmd {");
 		while(cmd[i])
 		{
-			dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"%s", cmd[i]);
+			dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"%s ", cmd[i]);
 			i++;
 		}
-		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"\n");
+		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002") ,"}\n");
 	}
 }
 

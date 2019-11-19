@@ -63,7 +63,7 @@ void			load_prompt(t_core *shell)
 		**	- etc ...
 		*/
 
-		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "BUFF           %s\n", shell->buff);
+		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "BUFF           [%s]\n", shell->buff);
 		lexer_parser_analyzer(shell, term.buffer);
 		debug_ailleurs("/dev/ttys002", "CE N'EST PLUS MA PARTIE");
 		if (task_master(shell) != SUCCESS)

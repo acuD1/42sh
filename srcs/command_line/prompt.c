@@ -107,7 +107,7 @@ void		init_prompt(t_read *term)
 	}
 	if (check_quotes(term) == FALSE)
 	{
-		remove_newline(term);
+		// remove_newline(term);
 		check_expansions(term);
 		//		save_history(term);
 	}
