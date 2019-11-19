@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/07 21:09:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/19 18:38:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ uint8_t		get_width_last_line(t_read *input)
 		if (input->buffer[buff_index] == '\n')
 			break ;
 		else if (x == 0)
-			return (input->ws_col);
+			return (input->ws_col - 1);
 		x--;
 		width++;
 	}
@@ -69,9 +69,9 @@ uint8_t		get_width_last_line(t_read *input)
 
 uint8_t		get_width_current_line(t_read *input)
 {
-	int		buff_index;
-	int		width;
-	int		x;
+	int	buff_index;
+	int	width;
+	int	x;
 
 	width = 0;
 	x = input->x;

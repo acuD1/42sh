@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/18 18:53:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/19 20:03:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void		check_keys_comb(char *buff, t_read *input, uint64_t value)
 {
 	int	i;
 
+	i = input->width - input->x_index;
 	if (value == CTRL_L)
 		clr_screen(input);
 	else if (value == CTRL_A || value == HOME)
@@ -35,11 +36,8 @@ void		check_keys_comb(char *buff, t_read *input, uint64_t value)
 		while (input->x_index < input->width)
 			move_right(buff, input);
 	else if (value == CTRL_K)
-	{
-		i = input->x_index;
-		while (i++ < input->width)
+		while (i--)
 			del_key(input);
-	}
 	else
 		jump_words(buff, input, value);
 }
@@ -50,7 +48,7 @@ void		check_keys_comb(char *buff, t_read *input, uint64_t value)
 
 void		end_of_file(t_read *input, uint64_t value)
 {
-	if (!ft_strlen(input->buffer) && value == CTRL_D)
+	if (!*input->buffer && value == CTRL_D)
 	{
 		ft_putstr("exit\n");
 		reset_config(input);
