@@ -90,18 +90,18 @@ void		get_y(t_read *input)
 
 void		init_prompt(t_read *term)
 {
-	char	buff[READ_SIZE + 1];
+	char	buff[READ_SIZE];
 
-	ft_bzero(buff, READ_SIZE + 1);
+	ft_bzero(buff, READ_SIZE);
 	ft_bzero(term->buffer, BUFF_SIZE);
 	init_config();
 	init_termcaps(term);
 	display_prompt(term);
-	while (xread(STDIN_FILENO, buff, READ_SIZE + 1) > 0)
+	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
-		get_y(term);
+		// get_y(term);
 		if (check_caps(buff, term) == TRUE)
-			ft_bzero(buff, READ_SIZE + 1);
+			ft_bzero(buff, READ_SIZE);
 		else
 			break ;
 	}
@@ -111,5 +111,5 @@ void		init_prompt(t_read *term)
 		check_expansions(term);
 		//		save_history(term);
 	}
-	// reset_config(term);
+	reset_config(term);
 }

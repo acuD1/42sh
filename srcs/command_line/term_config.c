@@ -22,6 +22,7 @@ void			init_cmd_line(t_read *term, t_core *shell)
 	term->sub_prompt = 0;
 	term->buffer = ft_memalloc(BUFF_SIZE);
 	term->tmp_buff = NULL;
+	term->cptflag = 0;
 	init_history(term);
 }
 

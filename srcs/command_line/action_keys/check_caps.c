@@ -88,34 +88,44 @@ uint8_t		cursor_motion(char *buff, t_read *input, uint64_t value)
 	return (TRUE);
 }
 
-uint8_t		charset_count(t_read *input, char charset)
+uint8_t		charset_count(char *str, char charset, int index)
 {
 	int	i;
 	int	count;
 
-	i = -1;
+	i = index - 1;
+	// i = -1;
 	count = 0;
-	while (input->buffer[++i])
+	while (str[++i])
 	{
-		if (input->buffer[i] == charset)
+		if (str[i] == charset)
 			count++;
+		// if (str[i] == ';')
+			// return (count);
 	}
 	return (count);
+
 }
 
 
-uint8_t backslash_prompt(t_read *input)
+uint8_t backslash_prompt(t_read *input, int index)
 {
+
+	printf("INDEX %d\n", index);
 	ft_putchar('\n');
-	if (charset_count(input, '\\') % 2 != 0)
+	// printf("%d\n", charset_count(input->buffer, '\\', 0));
+	if (charset_count(input->buffer, '\\', index - 1) % 2 != 0)
 	{
-		insert_str_in_buffer(";", input);
-		// input->buffer[ft_strlen(input->buffer)] = '\n';
+		input->buffer[ft_strlen(input->buffer)] = ';';
 		display_subprompt(input, PS2);
+		input->cptflag = 1;
 		return (TRUE);
 	}
 	else
+	{
+		input->cptflag = 0;
 		return (FALSE);
+	}
 }
 
 
@@ -139,9 +149,10 @@ uint8_t		check_caps(char *buff, t_read *input)
 	value = get_mask(buff);
 	if (value == RETURN_KEY)
 	{
-		// if (buff[] == '\\')
-			// return (backslash_prompt(input));
-		// insert_str_in_buffer("\n", input);
+		printf("[%s cpt %d]\n", input->buffer, input->x_index - input->prompt_len);
+		if (input->buffer[input->x_index - input->prompt_len - 1] == '\\')
+			return (backslash_prompt(input, input->x_index - input->prompt_len));
+		insert_newline_in_buff(input);
 		ft_putchar('\n');
 		//ESCAPE SEQUENCE NEED TO CREATE FCT TO MANAGE ALL SUBPROMPT
 		return (FALSE);

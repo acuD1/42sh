@@ -73,7 +73,7 @@
 # define PS1			"42sh$ "
 # define PS2			"> "
 # define BUFF_SIZE		4096
-# define READ_SIZE		4
+# define READ_SIZE		8
 # define HISTORY_FILE	"./.42sh_history"
 # define QUOTE			'\''
 # define DQUOTE			'\"'

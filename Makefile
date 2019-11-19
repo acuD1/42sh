@@ -253,7 +253,7 @@ CMPLO = $(C_GCC) -o
 BUILD = $(PATHS)
 AR_RC = ar rc
 RANLI = ranlib
-CFLAG = -Wall -Wextra -Werror
+CFLAG = -Wall -Wextra -Werror -g
 RM_RF = /bin/rm -rf
 MKDIR = mkdir -p
 NORME = norminette
@@ -276,7 +276,7 @@ else ifeq ($(DEBUG), fsanitize)
 else ifeq ($(DEBUG), dev)
 	CFLAG =
 else
-	CFLAG = -Wall -Wextra -Werror
+	CFLAG = -Wall -Wextra -Werror -g
 endif
 
 # Rules

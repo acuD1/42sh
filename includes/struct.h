@@ -147,6 +147,7 @@ typedef struct		s_read
 	int		ws_col;
 	int		ws_li;
 	int		ac;
+	int		cptflag;
 
 	int		new_line;
 	int		found;

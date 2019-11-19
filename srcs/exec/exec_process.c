@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/05 23:40:49 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/19 16:21:11 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 		return (exec_handler(shell, FORK_ERROR)); //NEED REWORK
 	else if (pid == 0)
 		call_bin(shell, process);
-	if (waitpid(pid, &shell->status, WCONTINUED) != pid)
+	if (waitpid(pid, &shell->status, WUNTRACED | WCONTINUED) != pid)
 	{
 		dprintf(STDERR_FILENO, "42sh: waitpid error\n");
 		return (FAILURE);
 	}
+	shell->status /= 256;
 	return (SUCCESS);
 }
