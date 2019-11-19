@@ -6,11 +6,12 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:42 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/07 03:36:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/19 17:33:37 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include "errno.h"
 
 int8_t	append_output(t_redir *ptr)
 {
@@ -20,7 +21,10 @@ int8_t	append_output(t_redir *ptr)
 		ptr->io_num[0] = 1;
 	if ((fd = open(ptr->op[1], O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR)) < 0)
 	{
-		ft_perror("test", ft_access(ptr->op[1], W_OK));
+		if (is_a_dir(ptr->op[1]) == EISDIR)
+			ft_perror(ptr->op[1], EISDIR);
+		else
+			ft_perror(ptr->op[1], ft_access(ptr->op[1], W_OK));
 		return (FAILURE);
 	}
 	return (dup_output(fd, ptr));
@@ -34,7 +38,10 @@ int8_t	redir_output(t_redir *ptr)
 		ptr->io_num[0] = 1;
 	if ((fd = open(ptr->op[1], O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR)) < 0)
 	{
-		ft_perror("test", ft_access(ptr->op[1], W_OK));
+		if (is_a_dir(ptr->op[1]) == EISDIR)
+			ft_perror(ptr->op[1], EISDIR);
+		else
+			ft_perror(ptr->op[1], ft_access(ptr->op[1], W_OK));
 		return (FAILURE);
 	}
 	return (dup_output(fd, ptr));
@@ -48,7 +55,10 @@ int8_t	redir_input(t_redir *ptr)
 		ptr->io_num[0] = 0;
 	if ((fd = open(ptr->op[1], O_RDONLY)) < 0)
 	{
-		ft_perror("test", ft_access(ptr->op[1], R_OK));
+		if (is_a_dir(ptr->op[1]) == EISDIR)
+			ft_perror(ptr->op[1], EISDIR);
+		else
+			ft_perror(ptr->op[1], ft_access(ptr->op[1], R_OK));
 		return (FAILURE);
 	}
 	return (dup_input(fd, ptr));
