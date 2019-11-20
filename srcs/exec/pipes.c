@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 11:06:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/08 00:16:04 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/20 15:45:17 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int8_t	exec_pipeline(t_core *shell, t_lst **process)
 		ret = FAILURE;
 	while (p_len-- > 0)
 		wait(&(shell->status));
-	printf("pipeline status = %i\n", shell->status);
-	free(pipes);
+	status_handler(shell, shell->status);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/19 16:21:11 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/20 15:43:48 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 		dprintf(STDERR_FILENO, "42sh: waitpid error\n");
 		return (FAILURE);
 	}
-	shell->status /= 256;
+	status_handler(shell, shell->status);
 	return (SUCCESS);
 }
