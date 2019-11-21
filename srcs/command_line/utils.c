@@ -6,11 +6,21 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/19 18:38:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/21 16:25:50 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+int8_t		debugi(char  *path, int i, int d, char c, int w)
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    dprintf(fd, " x[%d] bufi[%d] char[%c] w[%d]\n\n", i, d, c ,w);
+    return (SUCCESS);
+}
 
 int			my_outc(int c)
 {
@@ -52,17 +62,15 @@ uint8_t		get_width_last_line(t_read *input)
 	{
 		if (input->buffer[buff_index] == '\n')
 			break ;
-		else if (x == 0)
+		else if (x == 0 && !ft_strchr(input->buffer, '\n'))
 			return (input->ws_col - 1);
 		x--;
 		width++;
 	}
-	if (input->y == 1 && width != input->ws_col - input->prompt_len)
-	{
-		input->x = width + input->prompt_len - 1;
-		width += input->prompt_len - 2;
-	}
-	else if (input->y == 1)
+	debugi("/dev/ttys002", x, buff_index, input->buffer[buff_index], width);
+	if (width > input->ws_col)
+		width -= input->ws_col;
+	if (input->y == 1)
 		width += input->prompt_len;
 	return (width);
 }
