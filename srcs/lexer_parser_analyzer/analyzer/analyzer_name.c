@@ -64,7 +64,7 @@ int getlefdpour_debug_ailleurs(const char *path)
     return (fd);
 }
 
-t_analyzer *escape_sequence_analyzer(t_analyzer *analyzer)
+t_analyzer *escape_sequence_analyzer(t_analyzer *analyzer, t_core *shell)
 {
 	char *str;
 
@@ -74,6 +74,12 @@ t_analyzer *escape_sequence_analyzer(t_analyzer *analyzer)
 	while (((t_token*)analyzer->lexer->content)->id == P_ESCSEQ && ((t_token*)analyzer->lexer->next->content)->id != P_END)
 	{
 		get_token(analyzer);
+		(void)shell;
+		if (((t_token*)analyzer->lexer->content)->id == P_SEMICOLON)
+		{
+			free(str);
+			return (analyzer = separator_analyze(analyzer, shell));
+		}
 		str = ft_strjoinf(str, ((t_token*)analyzer->lexer->content)->data, 1);
 		analyzer->job.command = fill_cmd_job(analyzer, 1);
 	}
@@ -103,7 +109,7 @@ t_analyzer *cmd_analyze(t_analyzer *analyzer, t_core *shell)
 		return (analyzer = ass_analyze(analyzer, shell));
 	}
 	else if (((t_token*)analyzer->lexer->content)->id == P_ESCSEQ)
-		escape_sequence_analyzer(analyzer);
+		escape_sequence_analyzer(analyzer, shell);
 	else
 	{
 		analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->content)->data);
