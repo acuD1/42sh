@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/19 19:33:14 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/21 13:45:57 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void		init_prompt(t_read *term)
 	char	buff[READ_SIZE + 1];
 
 	ft_bzero(buff, READ_SIZE);
-//	ft_bzero(term->buffer, BUFF_SIZE);
+	term->buffer = ft_memalloc(BUFF_SIZE);
 	init_config();
 	init_termcaps(term);
 	display_prompt(term);

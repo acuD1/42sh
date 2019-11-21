@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/19 20:03:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/21 14:18:35 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,31 +85,49 @@ uint8_t		cursor_motion(char *buff, t_read *input, uint64_t value)
 	return (TRUE);
 }
 
-int8_t		debug(char  *path, t_read *input)
+int8_t		debug(char  *path, t_read *input, int i)
 {
     int fd;
 
     if ((fd = open(path, O_WRONLY)) < 0)
         return (FAILURE);
-    dprintf(fd, "w [%d] [%s]\n", input->sub_prompt , input->tmp_buff);
+    dprintf(fd, "w [%d] [%s] [%d]\n", input->sub_prompt , input->tmp_buff, i);
     return (SUCCESS);
 }
 
-uint8_t		charset_count(t_read *input, char charset)
+uint8_t		charset_count(t_read *input, char charset, int *i)
 {
-	int	i;
 	int	count;
 
-	i = -1;
 	count = 0;
-	while (input->buffer[++i])
+	while (input->buffer[*i])
 	{
-		if (input->buffer[i] == charset)
+		if (input->buffer[*i] == charset)
 			count++;
+		(*i)++;
 	}
-	if (input->buffer[i - 1] != charset)
+	if (input->buffer[*i - 1] != charset)
 		return (FALSE);
 	return (count);
+}
+
+uint8_t		check_backslash(t_read *input)
+{
+	int	buff_i;
+
+	buff_i = input->x_index - input->prompt_len - 1;
+	if (input->buffer[ft_strlen(input->buffer) - 1] == '\\')
+	{
+		if (charset_count(input, '\\', &buff_i) % 2 != 0)
+		{
+			insert_char_in_buffer(';', input, input->x_index - input->prompt_len);
+			xtputs(input->tcaps[KEY_LEFT], 1, my_outc);
+			xtputs(input->tcaps[DEL_CR], 1, my_outc);
+			display_subprompt(input, PS2);
+			return (TRUE);
+		}
+	}
+	return (FALSE);
 }
 
 /*
@@ -141,16 +159,10 @@ uint8_t		check_caps(char *buff, t_read *input)
 	if (value == RETURN_KEY)
 	{
 		ft_putchar('\n');
-		// NOT FINISH YET I HAVE TO TALK WITH GUI_LUCKYWORLDD
-		if (charset_count(input, '\\') % 2 != 0 && input->sub_prompt == FALSE)
-		{
-			debug("/dev/ttys005", input);
-			input->sub_prompt = TRUE;
-			display_subprompt(input, PS2);
+		if (check_backslash(input) == TRUE)
 			return (TRUE);
-		}
-		input->sub_prompt = FALSE;
-		return (FALSE);
+		else
+			return (FALSE);
 	}
 	else
 		check_keys_comb(buff, input, value);
