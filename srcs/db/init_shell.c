@@ -6,7 +6,7 @@
 /*   By: aspro <aspro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/05 01:42:06 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/21 22:38:13 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	init_shell(t_core *shell)
 	/*	global
 	**
 	*/
+	shell->last_process = NULL;
 	shell->env = NULL;
 	shell->pos_vars = NULL;
 	shell->jobs = NULL;

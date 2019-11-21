@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/07 21:30:17 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/21 23:50:13 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,33 +30,45 @@ static void	debug_process(t_lst *process)
 		process = process->next;
 	}
 	dprintf(STDERR_FILENO, "}\n");
-} */
+}*/
+
+int8_t	condition_fulfilled(t_core *shell, int cond)
+{
+	if (cond != P_ANDIF && cond != P_ORIF)
+		return (SUCCESS);
+	else if (cond == P_ANDIF && shell->status == 0)
+		return (SUCCESS);
+	else if (cond == P_ORIF && shell->status != 0)
+		return (SUCCESS);
+	return (FAILURE);
+}
 
 int8_t	dispatcher(t_core *shell, t_lst *jobs)
 {
 	t_lst	*ptr;
 	int		status;
+	int		cond;
 
 	ptr = ((t_job*)jobs->content)->process_list;
 	status = 0;
+	cond = 0;
 	//debug_process(ptr);
 	while (ptr != NULL)
 	{
 		if (((t_process*)ptr->content)->type == P_PIPE)
 		{
 			if (exec_pipeline(shell, &ptr) != SUCCESS)
-			{
-				printf("ERROR\n");
 				return (FAILURE);
-			}
 		}
-		else
+		else if (condition_fulfilled(shell, cond) == SUCCESS)
 		{
 			//EXPANSION
 			exec_process(shell, ptr);
-			ptr = ptr->next;
 		}
-		//CONDITIONS
+		else
+			return (SUCCESS);
+		cond = ((t_process*)ptr->content)->type;
+		ptr = ptr->next;
 	}
 	return (SUCCESS);
 }

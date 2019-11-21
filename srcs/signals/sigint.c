@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   recall.c                                           :+:      :+:    :+:   */
+/*   sigint.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/01 01:37:25 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/21 22:13:21 by mpivet-p         ###   ########.fr       */
+/*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
+/*   Updated: 2019/11/21 22:47:19 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <signal.h>
 
-t_core	*get_core(t_core *core)
+void	sigint_handler(int sig_num)
 {
-	static t_core	*mem = NULL;
+	t_core	*shell;
 
-	if (core != NULL && mem == NULL)
-		mem = core;
-	return (mem);
+	(void)sig_num;
+	shell = get_core(NULL);
+	if (shell->last_process != NULL)
+	{
+		kill(shell->last_process->pid, SIGINT);
+		write(1, "\n", 1);
+	}
 }

@@ -6,12 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/09 18:36:57 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/21 22:44:04 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <unistd.h>
+#include <signal.h>
 
 /*
 **	TO_DO :
@@ -43,6 +44,9 @@ int		main(int ac, char **av, char **environ)
 	/* Options output */
 	print_opt(&shell);
 
+	/* Saving t_core struct */
+	get_core(&shell);
+	signal(SIGINT, sigint_handler);
 	/* DEBUG */
 	//print_env(&shell);
 

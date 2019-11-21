@@ -72,6 +72,7 @@ L_PATH = shared_libft/
 # Add custom dir for .o
 
 CORE		=	core/
+SIGNALS		=	signals/
 DB			=	db/
 BUILTINS	=	builtins/
 COMMANDLINE	=	command_line/
@@ -90,6 +91,7 @@ HASH		=	$(EXEC)hash_map/
 
 PATHS		+=	$(B_PATH)
 PATHS		+=	$(O_PATH)
+PATHS		+=	$(O_PATH)$(SIGNALS)
 PATHS		+=	$(O_PATH)$(BUILTINS)
 PATHS		+=	$(O_PATH)$(COMMANDLINE)
 PATHS		+=	$(O_PATH)$(AC)
@@ -182,6 +184,8 @@ SRC			+=	$(S_PATH)$(MISC)ft_access.c
 SRC			+=	$(S_PATH)$(MISC)recall.c
 SRC			+=	$(S_PATH)$(MISC)check_args.c
 SRC			+=	$(S_PATH)$(MISC)is_a_dir.c
+
+SRC			+=	$(S_PATH)$(SIGNALS)sigint.c
 
 SRC			+=	$(S_PATH)$(EXEC)task_master.c
 SRC			+=	$(S_PATH)$(EXEC)status_handler.c
