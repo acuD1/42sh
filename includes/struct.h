@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/12 09:56:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/18 15:32:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,23 +118,6 @@ typedef struct	s_core
 **			COMMAND_LINE
 */
 
-enum			e_tcaps
-{
-	DEL_CR,
-	SAVE_CR,
-	RESTORE_CR,
-	KEY_DOWN,
-	KEY_UP,
-	KEY_RIGHT,
-	KEY_LEFT,
-	LEFT_MARGIN,
-	UP_LEFT_CORNER,
-	CLEAR,
-	CLR_LINES,
-	CLR_EOL,
-	CAPS_NBR
-};
-
 typedef struct		s_read
 {
 	char		*prompt;
@@ -164,47 +147,47 @@ typedef struct		s_read
 }			t_read;
 
 /*
-** LEXER_PARSER_ANALYZER
+** 			LEXER_PARSER_ANALYZER
 */
 
-typedef struct	s_redir
+typedef struct		s_redir
 {
-	char				*op[2];
-	int					io_num[2];
-	int					dup_fd;
+	char			*op[2];
+	int			io_num[2];
+	int			dup_fd;
 	enum parser_state	type;
-}				t_redir;
+}			t_redir;
 
-typedef struct            s_process
+typedef struct		s_process
 {
-    enum parser_state	type;
-    t_lst				*assign_list;
-    t_lst				*redir_list;
-    char				**av;
-	char				*bin;
+	enum parser_state	type;
+	t_lst			*assign_list;
+	t_lst			*redir_list;
+	char			**av;
+	char			*bin;
     // char                **env;
     // uint8_t                completed;
     // uint8_t                stopped;
     // pid_t                pid;
     // int                    status;
-}                        t_process;
+}			t_process;
 
-typedef struct s_job
+typedef struct		s_job
 {
-    char                *command;
-    t_lst              *process_list;
+    char			*command;
+    t_lst			*process_list;
     // struct termios      *term_modes;
     // pid_t               pgid;
     // t_filedesc          fd;
     // int         status; // 1 = running | 0 = stopped par exemple
     e_parser_state type;
-}               t_job;
+}			t_job;
 
-typedef struct  s_analyzer
+typedef struct		s_analyzer
 {
-    t_anal              analyze;
-    e_analyzer_state    state;
-    t_lst	            *lexer;
+    t_anal		analyze;
+    e_analyzer_state	state;
+    t_lst		*lexer;
     t_job               job;
     t_process           process;
     t_redir             redir;
@@ -214,9 +197,9 @@ typedef struct  s_analyzer
     t_lst               *redir_list;
     t_lst               *assign_list;
     t_lst               *tmp_list;
-}               t_analyzer;
+}			t_analyzer;
 
-typedef struct          s_graph
+typedef struct		s_graph
 {
     e_parser_state      *good_type;
 }                       t_graph;

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/30 18:20:45 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/18 18:06:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 void		launch_editor(t_core *shell, char *ed, char *cmd)
 {
 	ft_printf("%d\n", ft_strlen(cmd) + 1);
-	get_tokens(shell, ed);
-	exec_process(shell, shell->env);
+	ft_strcpy(shell->buff, ed);
+	lexer_parser_analyzer(shell, ed);
+	if (task_master(shell) != SUCCESS)
+		exit(1);
+
+
+
 	ft_printf("%s\n", cmd);
-	get_tokens(shell, cmd);
-	exec_process(shell, shell->env);
+	lexer_parser_analyzer(shell, cmd);
+	if (task_master(shell) != SUCCESS)
+		exit(1);
 }
 
 int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range)
@@ -31,10 +37,13 @@ int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range)
 	if (opt & (1ULL << 4))
 	{
 		if (range[0])
+		{
+			ft_bzero(ed, BUFF_SIZE);
 			ft_strcpy(ed, range[0]);
+		}
 		else
 		{
-			print_usage("fc", 1, "fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]");
+			print_usage("fc", 0, "fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]");
 			return (FAILURE);
 		}
 	}

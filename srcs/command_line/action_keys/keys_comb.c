@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/14 16:03:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/19 19:19:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void		clr_screen(t_read *line)
 
 	i = line->x;
 	xtputs(line->tcaps[CLEAR], 1, my_outc);
-	dprintf(STDOUT_FILENO, "%s%s%s%s ", C_BOLD, C_Y, line->prompt, C_X);
+	ft_dprintf(STDOUT_FILENO, "%s%s%s$ %s", C_BOLD, C_Y, line->prompt, C_X);
 	ft_putstr(line->buffer);
 	xtputs(line->tcaps[UP_LEFT_CORNER], 1, my_outc);
-	while (--i)
+	while (i--)
 		xtputs(line->tcaps[KEY_RIGHT], 1, my_outc);
 }
 

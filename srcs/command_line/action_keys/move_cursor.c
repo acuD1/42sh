@@ -6,11 +6,21 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/12 14:42:44 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/19 17:56:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+int8_t		debug_out(char  *path, t_read *in)
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    dprintf(fd, " %d x[%d] xi [%d] y[%d]\n", in->prompt_len , in->x, in->x_index, in->y);
+    return (SUCCESS);
+}
 
 void			check_tmp_buffer(t_read *line)
 {
@@ -111,7 +121,7 @@ void			move_right(char *buff, t_read *input)
 		xtputs(input->tcaps[LEFT_MARGIN], 1, my_outc);
 		xtputs(input->tcaps[KEY_DOWN], 1, my_outc);
 		input->x_index++;
-		input->x = 1;
+		input->x = 0;
 		input->y++;
 	}
 }
@@ -126,13 +136,13 @@ void		move_left(char *buff, t_read *input)
 
 	(void)buff;
 	if ((input->x > input->prompt_len && input->y == 0)
-		|| (input->x > 1 && input->y > 0))
+		|| (input->x > 0 && input->y > 0))
 	{
 		xtputs(input->tcaps[KEY_LEFT], 1, my_outc);
 		input->x_index--;
 		input->x--;
 	}
-	else if (input->y > 0 && input->x == 1)
+	else if (input->y > 0 && input->x == 0)
 	{
 		width = get_width_last_line(input);
 		input->x = width;
@@ -147,4 +157,5 @@ void		move_left(char *buff, t_read *input)
 		input->x_index--;
 		input->y--;
 	}
+	debug_out("/dev/ttys003", input);
 }

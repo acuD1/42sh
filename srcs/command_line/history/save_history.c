@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/12 09:47:36 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/21 13:45:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,13 @@ void			init_history(t_read *term)
 		return ;
 	while (ft_getnextline(fd, &line) > 0)
 	{
+		term->buffer = ft_memalloc(BUFF_SIZE);
 		while (++i < (int)ft_strlen(line))
 			term->buffer[i] = line[i];
 		save_history(term);
 		term->history->content_size = ++j;
 		free(line);
-		ft_bzero(term->buffer, ft_strlen(term->buffer));
+		free(term->buffer);
 		i = -1;
 	}
 	free(line);

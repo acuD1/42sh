@@ -26,6 +26,7 @@ void		check_keys_comb(char *buff, t_read *input, uint64_t value)
 {
 	int	i;
 
+	i = input->width - input->x_index;
 	if (value == CTRL_L)
 		clr_screen(input);
 	else if (value == CTRL_A || value == HOME)
@@ -35,11 +36,8 @@ void		check_keys_comb(char *buff, t_read *input, uint64_t value)
 		while (input->x_index < input->width)
 			move_right(buff, input);
 	else if (value == CTRL_K)
-	{
-		i = input->x_index;
-		while (i++ < input->width)
+		while (i--)
 			del_key(input);
-	}
 	else
 		jump_words(buff, input, value);
 }
@@ -50,7 +48,6 @@ void		check_keys_comb(char *buff, t_read *input, uint64_t value)
 
 void		end_of_file(t_read *input, uint64_t value)
 {
-	// if (!ft_strcmp(input->buffer, "") && value == CTRL_D)
 	if (!*input->buffer && value == CTRL_D)
 	{
 		ft_putstr("exit\n");
@@ -88,49 +85,42 @@ uint8_t		cursor_motion(char *buff, t_read *input, uint64_t value)
 	return (TRUE);
 }
 
-uint8_t		charset_count(char *str, char charset, int index)
+uint8_t		charset_count(t_read *input, char charset, int *i)
 {
-	int	i;
 	int	count;
 
-	i = index - 1;
-	// i = -1;
 	count = 0;
-	while (str[++i])
+	while (input->buffer[*i])
 	{
-		if (str[i] == charset)
+		if (input->buffer[*i] == charset)
 			count++;
-		// if (str[i] == ';')
-			// return (count);
+		(*i)++;
 	}
+	if (input->buffer[*i - 1] != charset)
+		return (FALSE);
 	return (count);
 
 }
 
 
-uint8_t backslash_prompt(t_read *input, int index)
+uint8_t		check_backslash(t_read *input)
 {
+	int	buff_i;
 
-	printf("INDEX %d\n", index);
-	ft_putchar('\n');
-	// printf("%d\n", charset_count(input->buffer, '\\', 0));
-	if (charset_count(input->buffer, '\\', index - 1) % 2 != 0)
+	buff_i = input->x_index - input->prompt_len - 1;
+	if (input->buffer[ft_strlen(input->buffer) - 1] == '\\')
 	{
-		input->buffer[ft_strlen(input->buffer)] = ';';
-		display_subprompt(input, PS2);
-		input->cptflag = 1;
-		return (TRUE);
+		if (charset_count(input, '\\', &buff_i) % 2 != 0)
+		{
+			insert_char_in_buffer(';', input, input->x_index - input->prompt_len);
+			xtputs(input->tcaps[KEY_LEFT], 1, my_outc);
+			xtputs(input->tcaps[DEL_CR], 1, my_outc);
+			display_subprompt(input, PS2);
+			return (TRUE);
+		}
 	}
-	else
-	{
-		input->cptflag = 0;
-		return (FALSE);
-	}
+	return (FALSE);
 }
-
-
-
-
 
 /*
 **		Interpret and insert char in bufffer
@@ -147,16 +137,6 @@ uint8_t		check_caps(char *buff, t_read *input)
 	uint64_t	value;
 
 	value = get_mask(buff);
-	if (value == RETURN_KEY)
-	{
-		printf("[%s cpt %d]\n", input->buffer, input->x_index - input->prompt_len);
-		if (input->buffer[input->x_index - input->prompt_len - 1] == '\\')
-			return (backslash_prompt(input, input->x_index - input->prompt_len));
-		insert_newline_in_buff(input);
-		ft_putchar('\n');
-		//ESCAPE SEQUENCE NEED TO CREATE FCT TO MANAGE ALL SUBPROMPT
-		return (FALSE);
-	}
 	if (is_print(*buff))
 		insert_in_buffer(buff, input);
 	if (value == CTRL_R)
@@ -168,6 +148,14 @@ uint8_t		check_caps(char *buff, t_read *input)
 	}
 	if (cursor_motion(buff, input, value))
 	   return (TRUE);
+	if (value == RETURN_KEY)
+	{
+		ft_putchar('\n');
+		if (check_backslash(input) == TRUE)
+			return (TRUE);
+		else
+			return (FALSE);
+	}
 	else
 		check_keys_comb(buff, input, value);
 	end_of_file(input, value);

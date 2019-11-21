@@ -12,18 +12,29 @@
 
 #include "sh42.h"
 
+
+int8_t		fdebug(char  *path, t_read *in, int j )
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    dprintf(fd, " x[%d] xi [%d] y[%d] w[%d] j[%d]\n", in->x, in->x_index, in->y, in->width, j);
+    return (SUCCESS);
+}
+
 /*
 **	To insert a char in buffer at the end of line
 */
 
 void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
-	if (input->x != 1 || (input->x == 1 && buff != NEW_LINE))
+	if (input->x != 0 || (input->x == 0 && buff != NEW_LINE))
 		ft_dprintf(STDIN_FILENO, "%c", buff);
-	if (buff == NEW_LINE || input->x >= input->ws_col)
+	if (buff == NEW_LINE || input->x == input->ws_col - 1)
 	{
-		//	(input->x == 0) ? input->y-- : 0;
-		input->x = 1;
+		//(input->x == 0) ? input->y-- : 0;
+		input->x = 0;
 		input->y++;
 	}
 	else
@@ -36,20 +47,10 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 	/* 	insert_newline_in_buff(input); */
 }
 
-/*
-**	To insert char in buffer if cursor is inline
-**	Termcaps : 	`save_cr' => save cursor position
-**			`reset_cr' => restore cursor position
-**			`clr_lines' => to clear all following lines from cursor
-*/
-
-void		insert_inline_char(char *buff, t_read *input, int buff_index)
+void		insert_at_index(t_read *input, int buff_index, char *buff)
 {
-	int 	j;
-	char	*tmp;
+	int	j;
 
-	tmp = NULL;
-	input->width += 1;
 	j = ft_strlen(input->buffer) + 1;
 	while (--j > buff_index)
 	{
@@ -61,12 +62,30 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 		input->buffer[j] = input->buffer[j - 1];
 	}
 	input->buffer[buff_index] = *buff;
-	tmp = ft_strsub(input->buffer, buff_index, strlen_to(input->buffer, '\0'));
-	xtputs(input->tcaps[SAVE_CR], 1, my_outc);
-	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
-	ft_dprintf(STDOUT_FILENO, "%s", tmp);
-	xtputs(input->tcaps[RESTORE_CR], 1, my_outc);
-	move_right(buff, input);
+}
+
+/*
+**	To insert char in buffer if cursor is inline
+**	Termcaps : 	`save_cr' => save cursor position
+**			`reset_cr' => restore cursor position
+**			`clr_lines' => to clear all following lines from cursor
+*/
+
+void		insert_inline_char(char *buff, t_read *input, int buff_index)
+{
+	char	*tmp;
+	int 	x;
+
+	insert_at_index(input, buff_index, buff);
+	tmp = ft_strdup(input->buffer);
+	goto_prompt(input);
+	ft_strdel(&input->buffer);
+	input->buffer = ft_memalloc(BUFF_SIZE);
+	insert_str_in_buffer(tmp, input);
+	x = buff_index + input->prompt_len;
+	fdebug("/dev/ttys003", input ,x);
+	while (++x < input->width)
+		move_left(buff, input);
 	ft_strdel(&tmp);
 	if (input->y_li == input->ws_li && input->width % input->ws_col == 2)
 		xtputs(input->tcaps[KEY_UP], 1, my_outc);
@@ -105,7 +124,7 @@ void		insert_in_buffer(char *buff, t_read *input)
 
 	buff_index = input->x_index - input->prompt_len;
 	if (input->x_index >= BUFF_SIZE)
-		input->buffer = realloc(input->buffer, ft_strlen(input->buffer) + 1);
+		input->buffer = realloc(input->buffer, ft_strlen(input->buffer) + READ_SIZE);
 	if (ft_strlen(buff) > 1)
 	{
 		insert_str_in_buffer(buff, input);
