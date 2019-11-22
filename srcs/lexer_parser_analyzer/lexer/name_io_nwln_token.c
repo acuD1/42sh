@@ -95,8 +95,8 @@ t_lst		*name_lexer(t_lexer *lexer, t_lst *lexer_token)
 		lexer_token = dquote_lexer(lexer, lexer_token);
 	else if (lexer->buff[lexer->buf_pos] == '\'')
 		lexer_token = quote_lexer(lexer, lexer_token);
-	// else if (ft_strchr(EXPANSION, lexer->buff[lexer->buf_pos]))
-	// 	lexer_token = expansion_lexer(lexer, lexer_token);
+	else if (ft_strchr(EXPANSION, lexer->buff[lexer->buf_pos]))
+		lexer_token = expansion_lexer(lexer, lexer_token);
 	else
 		lexer_token = word_lexer(lexer, lexer_token);
 	lexer->status = L_START;

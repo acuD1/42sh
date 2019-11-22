@@ -69,7 +69,7 @@ void analyzer(t_core *shell)
 	analyzer = init_analyze(analyzer, shell);
 	while (analyzer->state != A_STOP)// && (analyzer_state != 20))
 	{
-		// ft_dprintf(2, "analyzer state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+		ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "analyzer state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 		analyzer = analyzer->analyze[analyzer->state][((t_token*)analyzer->lexer->content)->id](analyzer, shell);
 		get_token(analyzer);
 	}

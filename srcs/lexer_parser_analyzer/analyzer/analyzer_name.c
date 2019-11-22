@@ -113,6 +113,7 @@ t_analyzer *cmd_analyze(t_analyzer *analyzer, t_core *shell)
 	else
 	{
 		analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->content)->data);
+		if (is_expansion(((t_token*)analyzer->lexer->content)->))
 		analyzer->state = A_WORD;
 	}
 	return (analyzer);

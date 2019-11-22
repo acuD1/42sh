@@ -218,7 +218,8 @@ typedef struct  s_token
 
 typedef struct		s_expansion
 {
-	char 			*(*func)(t_token*, char* , t_core*);
+	// char 			*(*func)(t_token*, char* , t_core*);
+	t_lst 			*(*func)(t_lexer *, e_parser_state id, int len, t_lst *lexer_token);
 	e_parser_state 	id;
 	int 			len;
 }					t_expansion;

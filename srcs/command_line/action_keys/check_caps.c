@@ -163,7 +163,7 @@ uint8_t		check_caps(char *buff, t_read *input)
 			return (TRUE);
 		else
 		{
-			insert_newline_in_buff(input);
+			// insert_newline_in_buff(input);
 			ft_putchar('\n');
 			return (FALSE);
 		}
