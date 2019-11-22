@@ -6,18 +6,18 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/22 21:18:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/22 23:01:03 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
- **	  Termcaps capabilities:
- **	  - `up' => to move the cursor vertically up one input
- **	  - `cr' => to move the cursor to the beginning of the input it is on
- **	  - `clr_inputs' => to clear input from the cursor and following inputs
- */
+**	  Termcaps capabilities:
+**	  - `up' => to move the cursor vertically up one input
+**	  - `cr' => to move the cursor to the beginning of the input it is on
+**	  - `clr_inputs' => to clear input from the cursor and following inputs
+*/
 
 void		goto_prompt(t_read *input)
 {
@@ -78,6 +78,7 @@ void		display_prompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term->sub_prompt = 0;
+	term->new_line = 0;
 	ft_dprintf(STDOUT_FILENO, "%s%s%s$ %s", C_BOLD, C_Y, term->prompt, C_X);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 }

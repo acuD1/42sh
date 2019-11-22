@@ -6,11 +6,21 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/21 15:54:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/22 23:11:35 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+int8_t		debug(char  *path, t_read *in)
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    dprintf(fd, " bff[%s] tmp[%s]\n", in->buffer, in->tmp_buff);
+    return (SUCCESS);
+}
 
 /*
 **	Combination of Keys :
@@ -85,16 +95,6 @@ uint8_t		cursor_motion(char *buff, t_read *input, uint64_t value)
 	return (TRUE);
 }
 
-int8_t		debug(char  *path, t_read *input, int i)
-{
-    int fd;
-
-    if ((fd = open(path, O_WRONLY)) < 0)
-        return (FAILURE);
-    dprintf(fd, "w [%d] [%s] [%d]\n", input->sub_prompt , input->tmp_buff, i);
-    return (SUCCESS);
-}
-
 uint8_t		charset_count(t_read *input, char charset, int *i)
 {
 	int	count;
@@ -120,13 +120,19 @@ uint8_t		check_backslash(t_read *input)
 	{
 		if (charset_count(input, '\\', &buff_i) % 2 != 0)
 		{
-			insert_char_in_buffer(';', input, input->x_index - input->prompt_len);
-			xtputs(input->tcaps[KEY_LEFT], 1, my_outc);
-			xtputs(input->tcaps[DEL_CR], 1, my_outc);
+			if (buff_i > 1)
+				input->buffer = ft_strjoin(input->buffer, ";");
+			input->new_line = TRUE;
+			/* insert_char_in_buffer(';', input, input->x_index - input->prompt_len); */
+			/* xtputs(input->tcaps[KEY_LEFT], 1, my_outc); */
+			/* xtputs(input->tcaps[DEL_CR], 1, my_outc); */
 			display_subprompt(input, PS2);
 			return (TRUE);
 		}
 	}
+	debug("/dev/ttys004", input);
+	if (input->new_line == TRUE)
+		input->buffer = ft_strjoin(input->tmp_buff, input->buffer);
 	return (FALSE);
 }
 
@@ -159,9 +165,9 @@ uint8_t		check_caps(char *buff, t_read *input)
 	if (value == RETURN_KEY)
 	{
 		ft_putchar('\n');
-		if (check_backslash(input) == TRUE)
-			return (TRUE);
-		else
+		/* if (check_backslash(input) == TRUE) */
+		/* 	return (TRUE); */
+		/* else */
 			return (FALSE);
 	}
 	else
