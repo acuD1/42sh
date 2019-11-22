@@ -16,6 +16,8 @@
 # include "sh42.h"
 # include "enum.h"
 
+
+
 /*
 **	Some build data
 */
@@ -39,7 +41,8 @@ typedef struct s_core t_core;
 
 typedef t_analyzer    *(*t_analyze)(t_analyzer*, t_core*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_PARSER_STATE];
-
+typedef char *(*t_exp)(char*, t_core*, e_parser_state);
+typedef t_exp 	t_expan[NB_OF_EXP];
 typedef t_lst *(*t_lexing)(t_lexer*, t_lst *);
 
 
@@ -113,6 +116,26 @@ typedef struct	s_core
 	int32_t		status;				//	last exit status value (echo $?)
 	u_int8_t	opt;				//	Option
 }				t_core;
+
+/*
+**			EXPANSIONS
+*/
+
+typedef struct s_lex_exp
+{
+	t_lst 	*(*func)(t_lexer *, e_parser_state id, int len, t_lst *lexer_token);
+	e_parser_state id;
+	int len;
+}		t_lex_exp;
+
+typedef struct		s_expansion
+{
+	t_exp 			machine[NB_OF_EXP];
+	char 			**av;
+	char 			*result;
+	e_parser_state 	id;
+	int 			len;
+}					t_expansion;
 
 /*
 **			COMMAND_LINE
@@ -215,14 +238,6 @@ typedef struct  s_token
     char            *data;
     size_t          data_len;
 }              t_token;
-
-typedef struct		s_expansion
-{
-	// char 			*(*func)(t_token*, char* , t_core*);
-	t_lst 			*(*func)(t_lexer *, e_parser_state id, int len, t_lst *lexer_token);
-	e_parser_state 	id;
-	int 			len;
-}					t_expansion;
 
 typedef struct  s_lexer
 {

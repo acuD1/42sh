@@ -21,7 +21,7 @@ static void		ft_init_lex(t_lexer *lexer)
 	lexer->lex[L_NEWLINE] = newline_lexer;
 	lexer->lex[L_ESCSEQ] = backslash_lexer;
 	lexer->lex[L_ASSIGNEMENT_WORD] = assignement_word_lexer;
-	// lexer->lex[L_EXPANSION] = expansion_lexer;
+	lexer->lex[L_EXPANSION] = expansion_lexer;
 	lexer->lex[L_END] = end_lexer;
 }
 
@@ -42,7 +42,6 @@ void init_lexer(char *line, t_lexer *new)
 	new->token.id = P_ERROR;
 	new->quote = 0;
 	ft_init_lex(new);
-	// ft_init_machine(new->machina);
 }
 
 t_token			*fetch_lexer_token(t_token *token, e_parser_state type, char *data)

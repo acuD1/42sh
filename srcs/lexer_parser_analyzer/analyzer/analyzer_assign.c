@@ -30,7 +30,7 @@ t_analyzer *ass_analyze(t_analyzer *analyzer, t_core *shell)
 	// if (!analyzer->process.av[0])
 		ft_lstappend(&analyzer->assign_list, ft_lstnew(fetch_assign(&analyzer->db), sizeof(t_db)));
 	// else
-		// ft_lstappend(&analyzer->process.assign_list, ft_lstnew(fetch_assign(&analyzer->db), sizeof(t_db)));
+		ft_lstappend(&analyzer->process.assign_list, ft_lstnew(fetch_assign(&analyzer->db), sizeof(t_db)));
 	// if (((t_kone*)analyzer->lexer->next->content)->id == P_WORD)
 	//module assign qui check si existe et possible
 	init_assign(&analyzer->db);

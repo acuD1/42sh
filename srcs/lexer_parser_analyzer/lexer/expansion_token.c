@@ -52,7 +52,7 @@ t_lst *exp_hook_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_t
 static t_lst	*create_expansions_token(t_lexer *lexer, e_parser_state id, t_lst *lexer_token)
 {	
 	int i;
-	t_expansion expansions[] = {
+	t_lex_exp expansions[] = {
 								{exp_tilde_lexer, P_TILDE, 1},
 								{exp_dbparen_lexer, P_DBPARENT, 3},
 								{exp_paren_lexer, P_PARENT, 2},
@@ -68,8 +68,6 @@ static t_lst	*create_expansions_token(t_lexer *lexer, e_parser_state id, t_lst *
 		{
 			if ((lexer_token = expansions[i].func(lexer, id, expansions[i].len, lexer_token)))
 				return (lexer_token);
-			// else
-				// lexer_token = word_lexer(lexer, lexer_token);
 		}
 		i++;
 	}

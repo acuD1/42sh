@@ -1,6 +1,6 @@
 #include "sh42.h"
 
-// char 		*exp_paren(t_token *tok, char *expansion, t_core *shell)
+char 		*exp_paren(t_token *tok, char *expansion, t_core *shell);
 // {
 // 	char *str;
 // 	int index;

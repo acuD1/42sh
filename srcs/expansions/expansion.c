@@ -38,10 +38,8 @@
 // 	printf("totototo\n");
 // }
 
-char *start_expansion(char *expansion, t_core *shell, int *index)
+char *start_expansion(char *data, t_core *shell, t_expansion *expansion)
 {
-	int i;
-	char *new_exp;
 	// static t_token    quotes[] =
 	// 					{
 	// 						{P_TILDE, "~", 1},
@@ -53,9 +51,7 @@ char *start_expansion(char *expansion, t_core *shell, int *index)
 	// 						{P_EXP_INTERRUPT, NULL, 0}
 	// 					};
 
-	i  = *index;
-	new_exp = expansion;
-	printf("%s\n", expansion);
+	printf("%s\n", data);
 	// while (new_exp[i])
 	// {		
 	// 	if (new_exp[i] == '~')
@@ -70,31 +66,66 @@ char *start_expansion(char *expansion, t_core *shell, int *index)
 	// 	}
 	// 	i++;
 	// }
-	return (expansion);
+	return (expansion->result);
 	(void)shell;
 }
 
-void 	expansion(t_core *shell, t_process *process)
+static void	bzero_exp_machine(t_exp machine)
+{
+	int		index;
+
+	index = 0;
+	while (index < NB_OF_EXP)
+	{
+		machine[index] = exp_error;
+		++index;
+	}
+}
+
+void init_exp_machine(t_exp machine)
+{
+	machine[0] = exp_dollar;
+	machine[1] = exp_dbparen;
+	machine[2] = exp_paren;
+	machine[3] = exp_bracket;
+	machine[4] = exp_hook;
+	machine[5] = exp_tilde;
+}
+
+void init_expansion(t_process *process, t_expansion *expansion)
+{
+	expansion->av = process->av;
+	expansion->result = ft_strnew(0);
+	expansion->id = process->type;
+	expansion->len = 0;
+	bzero_exp_machine(expansion->machine);
+	init_exp_machine(expansion->machine);
+	// expansion->exp = init_expansion_exp();
+}
+
+uint8_t 	expansion(t_core *shell, t_process *process)
 {
 	int 	i;
 	int 	j;
+	t_expansion expansion;
 
 	i = 0;
 	j = 0;
 	if (!process->av)
-		return;
+		return (FALSE);
+	init_expansion(process, &expansion);
 	while (process->av[i])
 	{
 		while (process->av[i][j])
 		{
 			if (process->av[i][0] == '$' || process->av[i][0] == '~')
-				process->av[i] = start_expansion(process->av[i], shell, &j);
+				process->av[i] = start_expansion(process->av[i], shell, &expansion);
 			else
 				j++;
 		}
 		i++;
 	}
-	
+	return (TRUE);
 	// if (i == NB_OF_EXP)
 	// 	process_token = word_process(process, process_token);
 	// process->status = L_START;

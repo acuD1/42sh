@@ -1,7 +1,7 @@
 
 #include "sh42.h"
 
-// char 		*exp_bracket(t_token *tok, char *expansion, t_core *shell);
+char 		*exp_bracket(t_token *tok, char *expansion, t_core *shell);
 // {
 // 	char *str;
 // 	int index;
@@ -41,7 +41,7 @@
 // 	return (lexer_token);
 // }
 
-// char 		*exp_dollar(t_token *tok, char *expansion, t_core *shell);
+char 		*exp_dollar(t_token *tok, char *expansion, t_core *shell);
 // {
 // 	char *str;
 // 	int index;
