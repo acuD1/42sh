@@ -52,7 +52,7 @@ int8_t	dispatcher(t_core *shell, t_lst *jobs)
 		}
 		else if (((t_process*)ptr->content)->type == P_ASSIGN)// || ((t_process*)ptr->content)->type == P_EXPANSION
 		{
-			//EXPANSION
+			expansion(shell, (t_process*)ptr->content);
 			ptr = ptr->next;
 		}
 		else

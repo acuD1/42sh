@@ -130,7 +130,6 @@ typedef struct		s_read
 	int		ws_col;
 	int		ws_li;
 	int		ac;
-	int		cptflag;
 
 	int		new_line;
 	int		found;
@@ -219,7 +218,7 @@ typedef struct  s_token
 
 typedef struct		s_expansion
 {
-	t_lst 			*(*func)(t_lexer *, e_parser_state id, int len, t_lst *lexer_token);
+	char 			*(*func)(t_token*, char* , t_core*);
 	e_parser_state 	id;
 	int 			len;
 }					t_expansion;

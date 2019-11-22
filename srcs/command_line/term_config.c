@@ -22,7 +22,6 @@ void			init_cmd_line(t_read *term, t_core *shell)
 	term->sub_prompt = 0;
 	term->buffer = NULL;
 	term->tmp_buff = NULL;
-	term->cptflag = 0;
 	init_history(term);
 }
 

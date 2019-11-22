@@ -95,8 +95,8 @@ t_lst		*name_lexer(t_lexer *lexer, t_lst *lexer_token)
 		lexer_token = dquote_lexer(lexer, lexer_token);
 	else if (lexer->buff[lexer->buf_pos] == '\'')
 		lexer_token = quote_lexer(lexer, lexer_token);
-	else if (ft_strchr(EXPANSION, lexer->buff[lexer->buf_pos]))
-		lexer_token = expansion_lexer(lexer, lexer_token);
+	// else if (ft_strchr(EXPANSION, lexer->buff[lexer->buf_pos]))
+	// 	lexer_token = expansion_lexer(lexer, lexer_token);
 	else
 		lexer_token = word_lexer(lexer, lexer_token);
 	lexer->status = L_START;
@@ -176,3 +176,29 @@ t_lst		*newline_lexer(t_lexer *lexer, t_lst *lexer_token)
 	lexer->status = L_START;
 	return(lexer_token);
 }
+
+
+// static t_lst	*create_expansions_token(t_lexer *lexer, e_parser_state id, t_lst *lexer_token)
+// {	
+// 	int i;
+// 	t_expansion expansions[] = {
+// 								{exp_tilde_lexer, P_TILDE, 1},
+// 								{exp_dbparen_lexer, P_DBPARENT, 3},
+// 								{exp_paren_lexer, P_PARENT, 2},
+// 								{exp_bracket_lexer, P_BRACKET, 2},
+// 								{exp_hook_lexer, P_HOOK, 2},
+// 								{exp_dollar_lexer, P_DOLLAR, 1},
+// 								};
+
+// 	i = 0;
+// 	while (i < NB_OF_EXP)
+// 	{
+// 		if (id == expansions[i].id)
+// 		{
+// 			if ((lexer_token = expansions[i].func(lexer, id, expansions[i].len, lexer_token)))
+// 				return (lexer_token);
+// 		}
+// 		i++;
+// 	}
+// 	return (lexer_token);
+// }

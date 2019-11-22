@@ -84,6 +84,7 @@ EXEC		=	exec/
 LEXER		= 	lexer_parser_analyzer/lexer/
 PARSER		= 	lexer_parser_analyzer/parser/
 ANALYZER	= 	lexer_parser_analyzer/analyzer/
+EXPANSIONS	= 	expansions/
 MISC		=	misc/
 HASH		=	$(EXEC)hash_map/
 
@@ -104,10 +105,19 @@ PATHS		+=	$(O_PATH)$(EXEC)$(REDIRS)
 PATHS		+=	$(O_PATH)$(LEXER)
 PATHS		+=	$(O_PATH)$(PARSER)
 PATHS		+=	$(O_PATH)$(ANALYZER)
+PATHS		+=	$(O_PATH)$(EXPANSIONS)
 PATHS		+=	$(O_PATH)$(HASH)
 PATHS		+=	$(O_PATH)$(MISC)
 
 # Files
+
+
+SRC		+=	$(S_PATH)$(EXPANSIONS)expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)math_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)cmd_subs_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)param_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)tilde_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)analyzer_expansion.c
 
 
 SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
@@ -122,8 +132,6 @@ SRC		+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
 
 SRC		+=	$(S_PATH)$(LEXER)assign_token.c
 SRC		+=	$(S_PATH)$(LEXER)init_lexer.c
-SRC		+=	$(S_PATH)$(LEXER)expansion_token.c
-SRC		+=	$(S_PATH)$(LEXER)expansion_token_bis.c
 SRC		+=	$(S_PATH)$(LEXER)lexer.c
 SRC		+=	$(S_PATH)$(LEXER)name_io_nwln_token.c
 SRC		+=	$(S_PATH)$(LEXER)operator_token.c
@@ -136,7 +144,6 @@ SRC		+=	$(S_PATH)$(PARSER)graph_bis.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyze.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_name.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_assign.c
-SRC		+=	$(S_PATH)$(ANALYZER)analyzer_expansion.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_job.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_process.c
