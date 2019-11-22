@@ -62,10 +62,7 @@ int8_t	dispatcher(t_core *shell, t_lst *jobs)
 		else
 		{
 			if (is_expansion(((t_process*)ptr->content)->type))
-			{
-				if (!expansion(shell, (t_process*)ptr->content))
-					break;
-			}	
+				expansion(shell, (t_process*)ptr->content);
 			exec_process(shell, ptr);
 			ptr = ptr->next;
 		}

@@ -29,7 +29,7 @@ t_lst *exp_hook_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_t
 			}
 			else
 				index++;
-			if (!lexer->buff[index + 1])
+			if (!lexer->buff[index])
 			{
 				ft_dprintf(2, "mathsubst>\n" );
 				// lexer->buf_pos = index;

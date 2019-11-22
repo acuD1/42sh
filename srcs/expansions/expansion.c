@@ -38,9 +38,42 @@
 // 	printf("totototo\n");
 // }
 
-char *start_expansion(char *data, t_core *shell, t_expansion *expansion)
+char 		*exp_math(char *expansion, t_core *shell, e_parser_state id)
 {
-	// static t_token    quotes[] =
+	(void)shell;
+	printf("EXP_DBPARENT [%s %u]\n", expansion, id);
+	return (NULL);
+}
+
+char 		*exp_cmd_subs(char *expansion, t_core *shell, e_parser_state id)
+{
+	(void)shell;
+	printf("EXP_PARENT [%s %u]\n", expansion, id);
+	return (NULL);
+}
+
+char 		*exp_param(char *expansion, t_core *shell, e_parser_state id)
+{
+	(void)shell;
+	printf("EXP_DOLLAR [%s %u]\n", expansion, id);
+	return (NULL);
+}
+
+char 		*exp_tilde(char *expansion, t_core *shell, e_parser_state id)
+{
+	(void)shell;
+	printf("EXP_TILDE [%s %u]\n", expansion, id);
+	return (NULL);
+}
+
+char 		*exp_error(char *expansion, t_core *shell, e_parser_state id)
+{
+	(void)shell;
+	printf("EXP_ERROR [%s %u]\n", expansion, id);
+	return (NULL);
+}
+
+// static t_token    quotes[] =
 	// 					{
 	// 						{P_TILDE, "~", 1},
 	// 						{P_DBPARENT, "$((", 3},
@@ -50,8 +83,6 @@ char *start_expansion(char *data, t_core *shell, t_expansion *expansion)
 	// 						{P_DOLLAR, "$", 1},
 	// 						{P_EXP_INTERRUPT, NULL, 0}
 	// 					};
-
-	printf("%s\n", data);
 	// while (new_exp[i])
 	// {		
 	// 	if (new_exp[i] == '~')
@@ -66,11 +97,17 @@ char *start_expansion(char *data, t_core *shell, t_expansion *expansion)
 	// 	}
 	// 	i++;
 	// }
-	return (expansion->result);
+	// return (expansion->result);
+	// (void)shell;
+char *start_expansion(t_core *shell, t_expansion *expansion, char *data)
+{
+	printf("MEG %s\n", data);
 	(void)shell;
+	(void)expansion;
+	return (NULL);
 }
 
-static void	bzero_exp_machine(t_exp machine)
+void	bzero_exp_machine(t_expan machine)
 {
 	int		index;
 
@@ -82,53 +119,65 @@ static void	bzero_exp_machine(t_exp machine)
 	}
 }
 
-void init_exp_machine(t_exp machine)
+void init_exp_machine(t_expan machine)
 {
-	machine[0] = exp_dollar;
-	machine[1] = exp_dbparen;
-	machine[2] = exp_paren;
-	machine[3] = exp_bracket;
-	machine[4] = exp_hook;
+	machine[0] = exp_param;
+	machine[1] = exp_math;
+	machine[2] = exp_cmd_subs;
+	machine[3] = exp_param;
+	machine[4] = exp_math;
 	machine[5] = exp_tilde;
+	machine[6] = exp_error;
+}
+
+int getnb_exp(e_parser_state id)
+{
+	if (id == P_DOLLAR)
+		return (0);
+	else if (id == P_DBPARENT)
+		return (1);
+	else if (id == P_PARENT)
+		return (2);
+	else if (id == P_BRACKET)
+		return (3);
+	else if (id == P_HOOK)
+		return (4);
+	else if (id == P_TILDE)
+		return (5);
+	return (6);
 }
 
 void init_expansion(t_process *process, t_expansion *expansion)
 {
+	if (!process)
+		return;
+	if (!(expansion = (t_expansion*)malloc(sizeof(t_expansion))))
+		return;
 	expansion->av = process->av;
 	expansion->result = ft_strnew(0);
-	expansion->id = process->type;
+	expansion->type = process->type;
 	expansion->len = 0;
-	bzero_exp_machine(expansion->machine);
-	init_exp_machine(expansion->machine);
-	// expansion->exp = init_expansion_exp();
+	// bzero_exp_machine(&expansion->machine);
+	init_exp_machine(&expansion->machine);
 }
 
 uint8_t 	expansion(t_core *shell, t_process *process)
 {
 	int 	i;
-	int 	j;
-	t_expansion expansion;
+	t_expansion *expansion;
 
-	i = 0;
-	j = 0;
+	i = -1;
 	if (!process->av)
 		return (FALSE);
-	init_expansion(process, &expansion);
-	while (process->av[i])
+	expansion = NULL;
+	init_expansion(process, expansion);
+	while (process->av[++i])
 	{
-		while (process->av[i][j])
-		{
-			if (process->av[i][0] == '$' || process->av[i][0] == '~')
-				process->av[i] = start_expansion(process->av[i], shell, &expansion);
-			else
-				j++;
-		}
-		i++;
+		if (process->av[i][0] == '$' || process->av[i][0] == '~')
+			start_expansion(shell, expansion, process->av[i]);
 	}
+	// ft_free(expansion);
 	return (TRUE);
-	// if (i == NB_OF_EXP)
-	// 	process_token = word_process(process, process_token);
-	// process->status = L_START;
 }
 
 

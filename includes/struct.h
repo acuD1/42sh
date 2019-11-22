@@ -130,10 +130,10 @@ typedef struct s_lex_exp
 
 typedef struct		s_expansion
 {
-	t_exp 			machine[NB_OF_EXP];
+	t_exp 			machine;
 	char 			**av;
 	char 			*result;
-	e_parser_state 	id;
+	e_parser_state 	type;
 	int 			len;
 }					t_expansion;
 

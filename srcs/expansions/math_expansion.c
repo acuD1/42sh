@@ -1,6 +1,6 @@
 // #include "sh42.h"
 
-char 		*exp_hook(t_token *tok, char *expansion, t_core *shell);
+// char 		*exp_hook(char *expansion, t_core *shell, en);
 // {
 // 	char *str;
 // 	int index;
@@ -38,7 +38,7 @@ char 		*exp_hook(t_token *tok, char *expansion, t_core *shell);
 // 	return (lexer_token);
 // }
 
-char 		*exp_dbparen(t_token *tok, char *expansion, t_core *shell);
+// char 		*exp_dbparen(char *expansion, t_core *shell, en);
 // {
 // 	char *str;
 // 	int index;

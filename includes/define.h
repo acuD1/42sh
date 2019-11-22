@@ -132,8 +132,8 @@
 */
 
 # define NB_OF_OPE 14
-# define NB_OF_EXP 6
-# define CHAR_INTERRUPT 			" \t<>$|;&\n"
+# define NB_OF_EXP 7
+# define CHAR_INTERRUPT 			" \t<>$~|;&\n"
 # define OPERATORS 					"&|;><-"
 # define EXPANSION 					"$~"
 # define NB_LEXER_STATE 9
