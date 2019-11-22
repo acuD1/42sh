@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/21 15:31:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/22 21:18:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 /*
  **	  Termcaps capabilities:
- **	  - `up' => to move the cursor vertically up one line
- **	  - `cr' => to move the cursor to the beginning of the line it is on
- **	  - `clr_lines' => to clear line from the cursor and following lines
+ **	  - `up' => to move the cursor vertically up one input
+ **	  - `cr' => to move the cursor to the beginning of the input it is on
+ **	  - `clr_inputs' => to clear input from the cursor and following inputs
  */
 
-void		goto_prompt(t_read *line)
+void		goto_prompt(t_read *input)
 {
-	while (line->y-- > 0)
-		xtputs(line->tcaps[KEY_UP], 1, my_outc);
-	xtputs(line->tcaps[LEFT_MARGIN], 1, my_outc);
-	xtputs(line->tcaps[CLR_LINES], 1, my_outc);
-	if (line->sub_prompt == TRUE)
-		display_subprompt(line, line->prompt);
+	while (input->y-- > 0)
+		xtputs(input->tcaps[KEY_UP], 1, my_outc);
+	xtputs(input->tcaps[LEFT_MARGIN], 1, my_outc);
+	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
+	if (input->sub_prompt > 0)
+		display_subprompt(input, input->prompt);
 	else
-		display_prompt(line);
+		display_prompt(input);
 }
 
 /* void		get_y(t_read *input) */
@@ -83,8 +83,8 @@ void		display_prompt(t_read *term)
 }
 
 /*
-**	  Clear the last buffer/line inserted & Display current prompt
-**	  Launch line edition: read stdin until enter key is pressed
+**	  Clear the last buffer/input inserted & Display current prompt
+**	  Launch input edition: read stdin until enter key is pressed
 **	  The current buffer is saved in a history list
 */
 
