@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/07 00:42:34 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/23 14:20:16 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int8_t	get_bin(t_core *shell, t_process *process)
 		|| (process->av[0][0] == '/'
 			&& process->av[0][1]))
 		process->bin = ft_strdup(process->av[0]);
+//	else if (locate_hash(shell, process) == SUCCESS)
 	else
 	{
 		/*

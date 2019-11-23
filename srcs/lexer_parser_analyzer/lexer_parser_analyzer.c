@@ -82,12 +82,12 @@ void ft_freedblist(t_lst **lst)
 
 void	lexer_parser_analyzer(t_core *shell, char *line)
 {
-	t_lst *lxr_tok;
+	t_lst *lxr_tok; //Malloc en trop need, faire lxr_tok sur la stack et on modifie l'addresse dans lexer
 
 	lxr_tok = lexer(line);
 	if (parser(lxr_tok) == TRUE)
 	{
-		shell->lexer = lxr_tok;
+		shell->lexer = lxr_tok; //Shell->lexer useless du coup
 		analyzer(shell);
 	}
 	ft_freetokenlist(&lxr_tok);

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:20:26 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/05 22:49:31 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/23 14:21:05 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int8_t	locate_hash(t_core *shell, t_lst *process)
 	if (shell->hash.map == NULL)
 		return (FAILURE);
 	map = shell->hash.map;
-	shell->hash.value = get_hash(shell->tokens[0], shell->hash.size);
+	//shell->hash.value = get_hash(process->av[0], shell->hash.size);
 	if (map[shell->hash.value] == NULL)
 		return (FAILURE);
 	sub_map = map[shell->hash.value];

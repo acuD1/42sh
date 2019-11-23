@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_line.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/06 17:09:35 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/16 15:26:12 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_read			*get_size(t_read *data);
  **		Prompt/Subprompt
  */
 
-void			init_prompt(t_read *term);
+void			init_prompt(t_core *shell, t_read *term);
 t_read			*display_prompt(t_read *term);
 void			goto_prompt(t_read *line);
 void			display_subprompt(t_read *term, char quote);

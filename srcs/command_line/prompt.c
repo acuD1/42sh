@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/14 13:35:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/16 15:25:25 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,11 @@ void		get_y(t_read *input)
  **	  The current buffer is saved in a history list
  */
 
-void		init_prompt(t_read *term)
+void		init_prompt(t_core *shell, t_read *term)
 {
 	char	buff[READ_SIZE + 1];
 
+	shell->history = term->history;
 	ft_bzero(buff, READ_SIZE + 1);
 	ft_bzero(term->buffer, BUFF_SIZE);
 	init_config();
@@ -113,4 +114,5 @@ void		init_prompt(t_read *term)
 		save_history(term);
 	}
 	reset_config(term);
+	shell->buff = term->buffer;
 }

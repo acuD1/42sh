@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/16 14:38:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/18 09:15:26 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,61 +19,44 @@
 **	wiches are globals variables, such as tokens, env list etc...
 */
 
-
-/*
-**	TO DO:
-*/
-
 void			free_history(t_core *shell)
-{	t_lst *tmp;
+{
+	t_lst *tmp;
 
+	int i = 1;
 	while (shell->history)
 	{
+		dprintf(STDERR_FILENO, "-%d- |%s|\n", i++, shell->history->content);
 		free(shell->history->content);
+		//free(shell->history);
 		tmp = shell->history;
 		shell->history = shell->history->next;
 		free(tmp);
-		free(shell->history);
+	//	shell->history = shell->history->next;
 	}
+	//free(shell->history);
 }
 
 void			load_prompt(t_core *shell)
 {
 	int8_t		status;
 	t_read		term;
-	//t_lst *tmp;
-
-	// t_parser *parser;
-	// t_ast	*ast;
 
 	status = 1;
 	credit(shell);
-	/* BETA */
 	init_cmd_line(&term, shell);
-	/* Loop for prompt */
 	while (status)
 	{
-		/* Base output for prompt */
-		shell->history = term.history;
-		init_prompt(&term);
-		shell->buff = term.buffer;
-
-		/*
-		**	[NEED REWORK] A lot of stuff happening here :
-		**	- tokens parser (for now)
-		**	- Exp handling
-		**	- Builtins ? (Maybe not accurate for now with futurs implementations)
-		**	- etc ...*/
-
+		init_prompt(shell, &term);
 		lexer_parser_analyzer(shell, shell->buff);
-
 		if (task_master(shell) != SUCCESS)
 			exit(1);
 		free_prompt(shell, shell->buff);
-		ft_freejoblist(&shell->job_list);
-		shell->job_list = NULL;
 		//break;
+		//exit(24);
 	}
-	free_history(shell);
+	//dprintf(STDERR_FILENO, "EXIT\n");
+   //free_history(shell);
+	//free(shell->history);
 	ft_strdel(&shell->buff);
 }

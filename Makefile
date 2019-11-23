@@ -221,6 +221,7 @@ SRC			+=	$(S_PATH)$(HASH)resize_hash_map.c
 
 SRC			+=	$(S_PATH)$(CORE)42sh.c
 SRC			+=	$(S_PATH)$(CORE)load_prompt.c
+SRC			+=	$(S_PATH)$(CORE)load_noi_mode.c
 SRC			+=	$(S_PATH)$(CORE)output.c
 SRC			+=	$(S_PATH)$(CORE)free_handler.c
 

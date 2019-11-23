@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/03 17:15:49 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/18 12:33:16 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,19 @@ int		main(int ac, char **av, char **environ)
 	//print_env(&shell);
 
 	/* Everything else will happen here */
-	load_prompt(&shell);
 
+	// Need "-c implementation and a while to read everything"
+	//char BUFF[16];
+	if (isatty(STDIN_FILENO) == TRUE)
+		load_prompt(&shell);
+	else
+	{
+		while (ft_getnextline(STDIN_FILENO, &shell.buff))
+		{
+			load_noi_mode(&shell);
+			ft_strdel(&shell.buff);
+		}
+	}
 	/* FREE */
 	free_env(shell.env);
 	//free_env(shell.pos_vars);

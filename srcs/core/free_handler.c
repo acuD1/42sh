@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/16 15:06:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/16 15:28:20 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	free_prompt(t_core *shell, char *line)
 	(void)line;
 	ft_strdel(&shell->bin);
 	ft_tabdel(&shell->tokens);
-//	ft_strdel(&line); //(No need if bzero)
+	ft_freejoblist(&shell->job_list);
+	shell->job_list = NULL;
 }
 
 void	free_hash_map(t_hash *hash)

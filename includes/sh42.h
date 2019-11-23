@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/12 10:04:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/18 11:32:38 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void		credit(t_core *shell);
 
 void		print_opt(t_core *shell);
 void		load_prompt(t_core *shell);
+void		load_noi_mode(t_core *shell);
 void		free_env(t_lst *env);
 void		free_prompt(t_core *shell, char *line);
 int8_t		dispatcher(t_core *shell, t_lst *jobs);
