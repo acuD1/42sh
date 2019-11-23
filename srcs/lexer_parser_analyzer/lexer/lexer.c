@@ -52,11 +52,10 @@ t_lst		*start_lexer(t_lexer *lexer, t_lst *lexer_token)
 	}
 	else if (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 	{
-		if (lexer->buff[lexer->buf_pos - 1] == '\\')
+		if (lexer->buff[lexer->buf_pos - 1] && lexer->buff[lexer->buf_pos - 1] == '\\')
 			ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_WORD, " "), sizeof(t_token)));
 		while (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 			lexer->buf_pos++;
-		// ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_WORD, " "), sizeof(t_token)));
 	}
 	else if (!ft_strcmp(&lexer->buff[lexer->buf_pos], "\n")    )
 		lexer->status = L_NEWLINE;

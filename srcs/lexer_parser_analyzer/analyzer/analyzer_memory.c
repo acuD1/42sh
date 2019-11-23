@@ -38,7 +38,7 @@ void ft_free_redirlist(t_lst **head)
 	}
 }
 
-void ft_free_processlist(t_lst **head) ///t_process *process)
+void ft_free_processlist(t_lst **head)
 {
 	t_lst *tmp;
 	t_lst *process;

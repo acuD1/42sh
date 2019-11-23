@@ -45,25 +45,6 @@ char *fill_cmd_job(t_analyzer *analyzer, int flag)
 	return (analyzer->job.command);
 }
 
-int8_t debug_ailleurs(const char *path, const char *str)
-{
-    int fd;
-
-    if ((fd = open(path, O_WRONLY)) < 0)
-        return (FAILURE);
-    dprintf(fd,"{%s}\n", str);
-    return (SUCCESS);
-}
-
-int getlefdpour_debug_ailleurs(const char *path)
-{
-	int fd;
-
-    if ((fd = open(path, O_WRONLY)) < 0)
-        return (FAILURE);
-    return (fd);
-}
-
 t_analyzer *escape_sequence_analyzer(t_analyzer *analyzer, t_core *shell)
 {
 	char *str;
@@ -91,18 +72,9 @@ t_analyzer *escape_sequence_analyzer(t_analyzer *analyzer, t_core *shell)
 	return (analyzer);
 }
 
-uint8_t is_expansion(enum parser_state id)
-{
-	if (id == P_TILDEP || id == P_TILDEM || id == P_TILDE
-		|| id == P_DBPARENT || id == P_PARENT
-		|| id == P_BRACKET || id == P_HOOK ||id == P_DOLLAR)
-		return (TRUE);
-	return (FALSE);
-}
-
 t_analyzer *cmd_analyze(t_analyzer *analyzer, t_core *shell)
 {
-	ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	// ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	analyzer->job.command = fill_cmd_job(analyzer, 1);
 	if (analyzer->state == A_REDIRECT)
 	{
@@ -126,14 +98,14 @@ t_analyzer *cmd_analyze(t_analyzer *analyzer, t_core *shell)
 			analyzer->process.type = ((t_token*)analyzer->lexer->content)->id;
 			analyzer->job.type = ((t_token*)analyzer->lexer->content)->id;
 		}
-		analyzer->state = A_WORD;
+		analyzer->state = A_EXPANSION;
 	}
 	return (analyzer);
 }
 
 t_analyzer *end_analyze(t_analyzer *analyzer, t_core *shell)
 {
-	ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	// ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	separator_analyze(analyzer, shell);
 	analyzer->state = A_STOP;
 	return (analyzer);

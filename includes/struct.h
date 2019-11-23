@@ -41,8 +41,6 @@ typedef struct s_core t_core;
 
 typedef t_analyzer    *(*t_analyze)(t_analyzer*, t_core*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_PARSER_STATE];
-// typedef char *(*t_exp)(char*, t_core*, e_parser_state);
-// typedef t_exp 	t_expan[NB_OF_EXP];
 typedef t_lst *(*t_lexing)(t_lexer*, t_lst *);
 
 
@@ -121,18 +119,9 @@ typedef struct	s_core
 **			EXPANSIONS
 */
 
-typedef struct		s_expansion
-{
-	// t_exp 			machine;
-	char 			**av;
-	char 			*result;
-	e_parser_state 	type;
-	int 			len;
-}					t_expansion;
-
 typedef struct s_expan
 {
-	char 			*(*machine)(char* ,t_core* ,t_expansion*);
+	char 			*(*machine)(char* ,t_core*);
 	e_parser_state 	id;
 	int 			len;
 	char			*data;

@@ -113,12 +113,10 @@ PATHS		+=	$(O_PATH)$(MISC)
 
 
 SRC		+=	$(S_PATH)$(EXPANSIONS)expansion.c
-SRC		+=	$(S_PATH)$(EXPANSIONS)tools_expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)math_expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)cmd_subs_expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)param_expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)tilde_expansion.c
-SRC		+=	$(S_PATH)$(EXPANSIONS)analyzer_expansion.c
 
 
 SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
@@ -151,7 +149,6 @@ SRC		+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_job.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_process.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
-SRC		+=	$(S_PATH)$(ANALYZER)command_subs.c
 SRC		+=	$(S_PATH)$(ANALYZER)printanalyze.c
 SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
 SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c

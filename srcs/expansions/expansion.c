@@ -1,13 +1,22 @@
 #include "sh42.h"
 
-char *exp_error(char *data, t_core *shell, t_expansion *expansion)
+uint8_t is_expansion(enum parser_state id)
+{
+	if (id == P_TILDEP || id == P_TILDEM || id == P_TILDE
+		|| id == P_DBPARENT || id == P_PARENT
+		|| id == P_BRACKET || id == P_HOOK ||id == P_DOLLAR)
+		return (TRUE);
+	return (FALSE);
+}
+
+char *exp_error(char *data, t_core *shell)
 {
 	(void)shell;
-	printf("EXP_ERROR [%s %u]\n", data, expansion->type);
+	printf("EXP_ERROR [%s]\n", data);
 	return (data);
 }
 
-char *start_expansion(t_core *shell, t_expansion *expansion, char *data)
+char *start_expansion(t_core *shell, char *data)
 {
 	int 	i;
 	t_expan expan[] = 	{
@@ -21,17 +30,12 @@ char *start_expansion(t_core *shell, t_expansion *expansion, char *data)
 							{exp_param, P_DOLLAR, 1, "$"},
 						};
 	i = 0;
-	if (!data || !*expansion->av || !shell->env)
+	if (!data || !shell->env)
 		return (data);
 	while (i < NB_OF_EXP)
 	{
 		if (!(ft_strncmp(data, expan[i].data, expan[i].len)))
-		{
-			expansion->type = expan[i].id;
-			expansion->len = expan[i].len;
-			if ((data = expan[i].machine(data, shell, expansion)))
-				return (data);
-		}
+			expan[i].machine(data, shell);
 		i++;
 	}
 	return (data);
@@ -40,21 +44,21 @@ char *start_expansion(t_core *shell, t_expansion *expansion, char *data)
 uint8_t 	expansion(t_core *shell, t_process *process)
 {
 	int 	i;
-	t_expansion expansion;
+	char **tablo;
 
 	i = -1;
+	tablo = NULL;
 	if (!process->av)
 		return (FALSE);
-	init_expansion(process, &expansion);
-	while (expansion.av[++i])
+	tablo = ft_tabcopy(tablo, process->av);
+	while (tablo[++i])
 	{
-		if (expansion.av[i][0] == '$' || expansion.av[i][0] == '~')
-			if (!(expansion.av[i] = start_expansion(shell, &expansion, expansion.av[i])))
-				return (FALSE);
+		if (tablo[i][0] == '$' || tablo[i][0] == '~')
+			tablo[i] = start_expansion(shell, tablo[i]);
 	}
 	ft_tabfree(process->av);
-	process->av = ft_tabcopy(process->av, expansion.av);
-	ft_tabfree(expansion.av);
+	process->av = ft_tabcopy(process->av, tablo);
+	ft_tabfree(tablo);
 	return (TRUE);
 }
 

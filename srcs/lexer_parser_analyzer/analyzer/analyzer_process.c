@@ -2,7 +2,6 @@
 
 void init_process(t_process *new)
 {
-	// ft_tabfree(new->av);
 	new->av = NULL;
 	new->type = P_START;
 	new->redir_list = NULL;

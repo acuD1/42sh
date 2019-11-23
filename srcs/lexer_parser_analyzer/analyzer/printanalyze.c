@@ -1,5 +1,24 @@
  #include "sh42.h"
 
+int8_t debug_ailleurs(const char *path, const char *str)
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    dprintf(fd,"{%s}\n", str);
+    return (SUCCESS);
+}
+
+int getlefdpour_debug_ailleurs(const char *path)
+{
+	int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    return (fd);
+}
+
 void ft_printtab(char **cmd)
 {
 	int i;

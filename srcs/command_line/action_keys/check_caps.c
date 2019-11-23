@@ -90,7 +90,6 @@ uint8_t		charset_count(t_read *input, char charset, int *i)
 	int	count;
 
 	count = 0;
-	printf("[%s]\n", input->buffer);
 	while (input->buffer[*i])
 	{
 		if (input->buffer[*i] == charset)
@@ -109,7 +108,6 @@ uint8_t		check_backslash(t_read *input)
 	int	buff_i;
 	char	*buff_r;
 
-	// buff_i = input->x_index - input->prompt_len - 1;
 	buff_r = ft_strrchr(input->buffer, ';');
 	if (!buff_r)
 		buff_i = 0;
@@ -117,7 +115,6 @@ uint8_t		check_backslash(t_read *input)
 		buff_i = ft_strlen(input->buffer) - ft_strlen(buff_r);
 	if (input->buffer[ft_strlen(input->buffer) - 1] == '\\')
 	{
-		printf("BUFBFUF {%s   %d}\n", buff_r, buff_i);
 		if (charset_count(input, '\\', &buff_i) % 2 != 0)
 		{
 			insert_char_in_buffer(';', input, input->x_index - input->prompt_len);
