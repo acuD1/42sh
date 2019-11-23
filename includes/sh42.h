@@ -19,6 +19,7 @@
 # include "command_line.h"
 # include "enum.h"
 # include "lexer_parser_analyzer.h"
+# include "expansion.h"
 # include <sys/wait.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>

@@ -132,18 +132,18 @@
 */
 
 # define NB_OF_OPE 14
-# define NB_OF_EXP 7
+# define NB_OF_EXP 9
 # define CHAR_INTERRUPT 			" \t<>$~|;&\n"
 # define OPERATORS 					"&|;><-"
 # define EXPANSION 					"$~"
 # define NB_LEXER_STATE 9
-# define NB_PARSER_STATE 29
+# define NB_PARSER_STATE 31
 # define NB_ANALYZER_STATE 10
 # define REDIR                      P_GREAT, P_LESS
 # define REDIR_AND                  P_GREATAND, P_LESSAND
 # define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH
 # define ALL_REDIRECT               REDIR, REDIR_DB, REDIR_AND
-# define ALL_EXPANSION              P_PARENT, P_BRACKET, P_DBPARENT, P_DOLLAR, P_TILDE
+# define ALL_EXPANSION              P_PARENT, P_BRACKET, P_DBPARENT, P_DOLLAR, P_TILDE, P_TILDEP, P_TILDEM
 
 # define IOFILE                     P_GREAT, P_GREATAND, P_LESS, P_LESSAND, P_DGREAT
 # define IOHERE                     P_DLESS, P_DLESSDASH

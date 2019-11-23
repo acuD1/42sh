@@ -21,6 +21,8 @@ void		init_word_graph(t_graph *graph)
 	graph[P_DBPARENT].good_type = tab_good_type;
 	graph[P_BRACKET].good_type = tab_good_type;
 	graph[P_TILDE].good_type = tab_good_type;
+	graph[P_TILDEP].good_type = tab_good_type;
+	graph[P_TILDEM].good_type = tab_good_type;
 	graph[P_DOLLAR].good_type = tab_good_type;
 	graph[P_NEWLINE].good_type = tab_good_type;
 	// graph[P_SPSTRING].good_type = tab_good_type;

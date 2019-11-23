@@ -2,6 +2,8 @@
 
 static const t_token    quotes[] =
 {
+	{P_TILDEP, "~+", 2},
+	{P_TILDEM, "~-", 2},
 	{P_TILDE, "~", 1},
 	{P_DBPARENT, "$((", 3},
 	{P_PARENT, "$(", 2},
@@ -53,6 +55,8 @@ static t_lst	*create_expansions_token(t_lexer *lexer, e_parser_state id, t_lst *
 {	
 	int i;
 	t_lex_exp expansions[] = {
+								{exp_tilde_lexer, P_TILDEP, 2},
+								{exp_tilde_lexer, P_TILDEM, 2},
 								{exp_tilde_lexer, P_TILDE, 1},
 								{exp_dbparen_lexer, P_DBPARENT, 3},
 								{exp_paren_lexer, P_PARENT, 2},

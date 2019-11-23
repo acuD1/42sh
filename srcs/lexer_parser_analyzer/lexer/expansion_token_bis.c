@@ -159,7 +159,7 @@ t_lst *exp_tilde_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_
 	if (lexer->buff[lexer->buf_pos] == '~')
 	{
 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, len)))
-			return (NULL);
+				return (NULL);
 		if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token ,id, str), sizeof(t_token)))))
 			return (NULL);
 		free(str);

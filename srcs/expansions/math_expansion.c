@@ -1,4 +1,11 @@
-// #include "sh42.h"
+#include "sh42.h"
+
+char *exp_math(char *data, t_core *shell, t_expansion *expansion)
+{
+	(void)shell;
+	printf("EXP_DBPARENT [%s %u]\n", data, expansion->type);
+	return (data);
+}
 
 // char 		*exp_hook(char *expansion, t_core *shell, en);
 // {

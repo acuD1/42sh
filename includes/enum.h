@@ -51,6 +51,8 @@ typedef enum    parser_state
     P_IONUMBER, //ionumber
     P_ASSIGN, // stock dans shell->assign une lst key=value;
     P_WORD, //
+    P_TILDEP,
+    P_TILDEM,
     P_TILDE,
     P_DBPARENT,
     P_PARENT,

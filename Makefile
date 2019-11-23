@@ -113,6 +113,7 @@ PATHS		+=	$(O_PATH)$(MISC)
 
 
 SRC		+=	$(S_PATH)$(EXPANSIONS)expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)tools_expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)math_expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)cmd_subs_expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)param_expansion.c
@@ -236,6 +237,7 @@ SRC			+=	$(S_PATH)$(CORE)free_handler.c
 
 HDR			+=	sh42.h
 HDR			+=	define.h
+HDR			+=	expansion.h
 HDR			+=	struct.h
 HDR			+=	lexer_parser_analyzer.h
 HDR			+=	command_line.h

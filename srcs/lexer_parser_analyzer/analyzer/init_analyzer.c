@@ -26,6 +26,8 @@ void init_expansion_analyze(t_anal analyze)
 	analyze[A_EXPANSION][P_HOOK] = cmd_analyze;
 	analyze[A_EXPANSION][P_DOLLAR] = cmd_analyze;
 	analyze[A_EXPANSION][P_TILDE] = cmd_analyze;
+	analyze[A_EXPANSION][P_TILDEP] = cmd_analyze;
+	analyze[A_EXPANSION][P_TILDEM] = cmd_analyze;
 	analyze[A_EXPANSION][P_END] = end_analyze;
 }
 
@@ -55,6 +57,8 @@ void init_start_analyze(t_anal analyze)
 	analyze[A_START][P_HOOK] = cmd_analyze;
 	analyze[A_START][P_DOLLAR] = cmd_analyze;
 	analyze[A_START][P_TILDE] = cmd_analyze;
+	analyze[A_START][P_TILDEM] = cmd_analyze;
+	analyze[A_START][P_TILDEP] = cmd_analyze;
 	analyze[A_START][P_END] = end_analyze;
 }
 
@@ -82,6 +86,8 @@ void init_word_analyze(t_anal analyze)
 	analyze[A_WORD][P_BRACKET] = cmd_analyze;
 	analyze[A_WORD][P_HOOK] = cmd_analyze;
 	analyze[A_WORD][P_DOLLAR] = cmd_analyze;
+	analyze[A_WORD][P_TILDEM] = cmd_analyze;
+	analyze[A_WORD][P_TILDEP] = cmd_analyze;
 	analyze[A_WORD][P_TILDE] = cmd_analyze;
 	analyze[A_WORD][P_END] = end_analyze;
 }

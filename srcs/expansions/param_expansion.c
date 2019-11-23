@@ -1,75 +1,31 @@
 
 #include "sh42.h"
 
-// char 		*exp_bracket(t_token *tok, char *expansion, t_core *shell);
-// {
-// 	char *str;
-// 	int index;
+char *exp_param(char *data, t_core *shell, t_expansion *expansion)
+{
+	printf("EXP_DOLLAR [%s %u]\n", data, expansion->type);
+	t_db *db_tmp;
+	char *tmp;
+	int i;
 
-// 	index = 0;
-// 	str = NULL;
-
-// 	if (!ft_strncmp(&lexer->buff[lexer->buf_pos], "${", len))
-// 	{
-// 		index = lexer->buf_pos;
-// 		while (&lexer->buff[index])
-// 		{
-// 			if (lexer->buff[index] == '}')
-// 			{
-// 				break; // CECI EST UN BUG
-// 			}
-// 			else
-// 				index++;
-// 			if (!lexer->buff[index + 1])
-// 			{
-// 				ft_dprintf(2, "braceparam>\n" );
-// 				// lexer->buf_pos = index;
-// 				// return (lexer_token);
-// 				break;
-// 				// subprompt("braceparam>");
-// 			}
-// 		}
-// 		index++;
-// 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
-// 			return (NULL);
-// 		if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token ,id, str), sizeof(t_token)))))
-// 			return (NULL);
-// 		free(str);
-// 		lexer->ntok++;
-// 		lexer->buf_pos = index;
-// 	}
-// 	return (lexer_token);
-// }
-
-// char 		*exp_dollar(t_token *tok, char *expansion, t_core *shell);
-// {
-// 	char *str;
-// 	int index;
-
-// 	index = lexer->buf_pos + len;
-// 	str = NULL;
-// 	(void)len;
-// 	if (lexer->buff[lexer->buf_pos] == '$')
-// 	{
-// 		while (lexer->buff[index])
-// 		{
-// 			if (lexer->buff[index] == '_' || ft_isdigit(lexer->buff[index]) || ft_isalpha(lexer->buff[index]))
-// 				index++;
-// 			else
-// 			{
-// 				// lexer->buf_pos++;
-// 				// return (lexer_token);
-// 				break;
-// 			}
-// 		}
-// 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
-// 			return (NULL);
-// 		if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token ,id, str), sizeof(t_token)))))
-// 			return (NULL);
-// 		free(str);
-// 		lexer->ntok++;
-// 		lexer->buf_pos = index;
-// 	}
-// 	return (lexer_token);
-// }
-
+	i = ft_strlen(data);
+	tmp = NULL;
+	db_tmp = NULL;
+	if (expansion->type == P_BRACKET)
+		tmp = ft_strsub(data, 2, i - 3);
+	if (expansion->type == P_DOLLAR)
+		tmp = ft_strsub(data, 1, i - 1);
+	if (!(db_tmp = search_db(shell->env, tmp)))
+	{
+		free(data);
+		free(tmp);
+		return (data = ft_strnew(0));
+	}
+	else
+	{
+		free(tmp);
+		free(data);
+		return (data = ft_strdup(db_tmp->value));
+	}
+	return (data);
+}

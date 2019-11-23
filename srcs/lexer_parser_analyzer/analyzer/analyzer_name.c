@@ -93,7 +93,8 @@ t_analyzer *escape_sequence_analyzer(t_analyzer *analyzer, t_core *shell)
 
 uint8_t is_expansion(enum parser_state id)
 {
-	if (id == P_TILDE || id == P_DBPARENT || id == P_PARENT
+	if (id == P_TILDEP || id == P_TILDEM || id == P_TILDE
+		|| id == P_DBPARENT || id == P_PARENT
 		|| id == P_BRACKET || id == P_HOOK ||id == P_DOLLAR)
 		return (TRUE);
 	return (FALSE);

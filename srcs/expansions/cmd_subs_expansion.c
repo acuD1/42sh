@@ -1,5 +1,12 @@
 #include "sh42.h"
 
+char *exp_cmd_subs(char *data, t_core *shell, t_expansion *expansion)
+{
+	(void)shell;
+	printf("EXP_PARENT [%s %u]\n", data, expansion->type);
+	return (data);
+}
+
 // char 		*exp_paren(t_token *tok, char *expansion, t_core *shell);
 // {
 // 	char *str;
