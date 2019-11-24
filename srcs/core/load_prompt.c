@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/24 14:27:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/24 15:53:56 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,11 @@ void			load_prompt(t_core *shell)
 		init_prompt(shell, &term);
 		lexer_parser_analyzer(shell, shell->buff);
 		if (task_master(shell) != SUCCESS)
-			exit(1);
+			break ;
 		free_prompt(shell, shell->buff);
-		//break;
-		//exit(24);
 	}
 	//dprintf(STDERR_FILENO, "EXIT\n");
-   //free_history(shell);
+    //free_history(shell);
 	//free(shell->history);
 	ft_strdel(&shell->buff);
 }

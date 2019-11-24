@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_updates.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:56:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/10 15:55:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/24 15:35:39 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int8_t	update_termsize(t_core *shell)
 
 	db = NULL;
 	value = NULL;
+	ft_bzero(&ws, sizeof(ws));
 	ioctl(STDIN_FILENO, TIOCGWINSZ, &ws);
 	if (shell && (db = get_or_create_db(shell, "LINES", INTERNAL_VAR)) != NULL)
 	{

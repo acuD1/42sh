@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/24 11:08:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/24 15:53:24 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,8 @@ int		main(int ac, char **av, char **environ)
 	else
 	{
 		while (ft_getnextline(STDIN_FILENO, &shell.buff))
-		{
 			load_noi_mode(&shell);
-			ft_strdel(&shell.buff);
-		}
+		ft_strdel(&shell.buff);
 	}
 	/* FREE */
 	free_env(shell.env);
