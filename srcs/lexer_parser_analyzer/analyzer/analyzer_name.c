@@ -48,7 +48,7 @@ char *fill_cmd_job(t_analyzer *analyzer, int flag)
 
 t_analyzer *cmd_analyze(t_analyzer *analyzer, t_core *shell)
 {
-//	ft_printf("CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	// ft_printf("CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	analyzer->job.command = fill_cmd_job(analyzer, 1);
 	if (analyzer->state == A_REDIRECT)
 	{

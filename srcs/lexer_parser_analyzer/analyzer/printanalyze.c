@@ -1,4 +1,4 @@
-#include "sh42.h"
+ #include "sh42.h"
 
 void ft_printtab(char **cmd)
 {
@@ -10,7 +10,7 @@ void ft_printtab(char **cmd)
 	if (cmd)
 	{
 		j = ft_tablen(cmd);
-		printf("cmd ");
+		printf("			cmd ");
 		while(cmd[i])
 		{
 			printf("%s ", cmd[i]);

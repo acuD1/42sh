@@ -17,6 +17,10 @@
 
 void		lexer_parser_analyzer(t_core *shell, char *line);
 
+
+char *cmd_substitution_expansion(t_token *token, t_core *shell);
+
+
 /*
 **  ANALYZER
 */

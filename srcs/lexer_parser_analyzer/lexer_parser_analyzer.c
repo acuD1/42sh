@@ -80,6 +80,22 @@ void ft_freedblist(t_lst **lst)
 	}
 }
 
+
+void printjobbijobba(t_core *shell)
+{
+	if (shell->job_list)
+	{
+		ft_printjoblst(shell->job_list);
+		// ft_freejoblist(&shell->job_list);
+	}
+	if (shell->assign_list)
+	{
+		ft_printf("============= ASSIGNATION LST ============\n");
+		ft_printassignlist(shell->assign_list);
+		// ft_freedblist(&shell->assign_list);
+	}
+}
+
 void	lexer_parser_analyzer(t_core *shell, char *line)
 {
 	t_lst *lxr_tok; //Malloc en trop need, faire lxr_tok sur la stack et on modifie l'addresse dans lexer
