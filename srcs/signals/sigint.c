@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_a_dir.c                                         :+:      :+:    :+:   */
+/*   sigint.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/02 21:25:39 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/19 16:12:09 by mpivet-p         ###   ########.fr       */
+/*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
+/*   Updated: 2019/11/21 22:47:19 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-#include <sys/stat.h>
-#include <errno.h>
+#include <signal.h>
 
-int8_t	is_a_dir(char *path)
+void	sigint_handler(int sig_num)
 {
-	struct stat	stat;
+	t_core	*shell;
 
-	if (lstat(path, &stat) != 0)
-		return (FAILURE);
-	if (S_ISDIR(stat.st_mode))
-		return (EISDIR);
-	return (ENOTDIR);
+	(void)sig_num;
+	shell = get_core(NULL);
+	if (shell->last_process != NULL)
+	{
+		kill(shell->last_process->pid, SIGINT);
+		write(1, "\n", 1);
+	}
 }

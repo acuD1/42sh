@@ -2,4 +2,8 @@ Build information, patch level is incremented at compilation.
 
 RELEASE	=	0
 VERSION	=	1
+<<<<<<< HEAD
 PATCH	=	1096
+=======
+PATCH	=	3640
+>>>>>>> origin/exec_from_merge1_merge3

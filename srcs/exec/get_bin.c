@@ -6,7 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/11/23 14:20:16 by arsciand         ###   ########.fr       */
+=======
+/*   Updated: 2019/11/19 15:34:38 by mpivet-p         ###   ########.fr       */
+>>>>>>> origin/exec_from_merge1_merge3
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +109,9 @@ int8_t	get_bin(t_core *shell, t_process *process)
 	if (process->bin && (ret = check_filepath(process->bin)) != SUCCESS)
 	{
 		ft_perror(process->av[0], ret);
-		exit(127);
+		if (ret == ENOENT)
+			exit(127);
+		exit(126);
 	}
 	//update_hashmap(...);
 	return (SUCCESS);

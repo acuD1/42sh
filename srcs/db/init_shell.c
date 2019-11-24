@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/12 09:56:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/24 11:08:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	init_shell(t_core *shell)
 	/*	global
 	**
 	*/
+	shell->last_process = NULL;
 	shell->env = NULL;
 	shell->pos_vars = NULL;
 	shell->jobs = NULL;

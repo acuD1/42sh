@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/12 09:56:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/24 11:07:48 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct	s_core
 	t_build		build;
 	t_hash		hash;			// Gonna call it on the stack for now
 	t_db		db;
+	struct s_process	*last_process;
 	t_lst		*lexer;
 	t_lst		*job_list;
 	t_lst		*assign_list;
@@ -174,64 +175,64 @@ typedef struct	s_redir
 	enum parser_state	type;
 }				t_redir;
 
-typedef struct            s_process
+typedef struct			s_process
 {
-    enum parser_state	type;
-    t_lst				*assign_list;
-    t_lst				*redir_list;
-    char				**av;
+	enum parser_state	type;
+	t_lst				*assign_list;
+	t_lst				*redir_list;
+	char				**av;
 	char				*bin;
-    // char                **env;
-    // uint8_t                completed;
-    // uint8_t                stopped;
-    // pid_t                pid;
-    // int                    status;
-}                        t_process;
+	pid_t				pid;
+	// char				**env;
+	// uint8_t				completed;
+	// uint8_t				stopped;
+	// int					status;
+}						t_process;
 
 typedef struct s_job
 {
-    char                *command;
-    t_lst              *process_list;
-    // struct termios      *term_modes;
-    // pid_t               pgid;
-    // t_filedesc          fd;
-    // int         status; // 1 = running | 0 = stopped par exemple
-    e_parser_state type;
-}               t_job;
+	char				*command;
+	t_lst			  *process_list;
+	// struct termios	  *term_modes;
+	// pid_t			   pgid;
+	// t_filedesc		  fd;
+	// int		 status; // 1 = running | 0 = stopped par exemple
+	e_parser_state type;
+}			   t_job;
 
 typedef struct  s_analyzer
 {
-    t_anal              analyze;
-    e_analyzer_state    state;
-    t_lst	            *lexer;
-    t_job               job;
-    t_process           process;
-    t_redir             redir;
-    t_db                db;
-    t_lst               *job_list;
-    t_lst               *process_list;
-    t_lst               *redir_list;
-    t_lst               *assign_list;
-    t_lst               *tmp_list;
-}               t_analyzer;
+	t_anal			  analyze;
+	e_analyzer_state	state;
+	t_lst				*lexer;
+	t_job			   job;
+	t_process		   process;
+	t_redir			 redir;
+	t_db				db;
+	t_lst			   *job_list;
+	t_lst			   *process_list;
+	t_lst			   *redir_list;
+	t_lst			   *assign_list;
+	t_lst			   *tmp_list;
+}			   t_analyzer;
 
-typedef struct          s_graph
+typedef struct		  s_graph
 {
-    e_parser_state      *good_type;
-}                       t_graph;
+	e_parser_state	  *good_type;
+}					   t_graph;
 
-typedef struct      s_parser
+typedef struct	  s_parser
 {
-    t_graph         graph[NB_PARSER_STATE];
-    e_parser_state  state;
-}                   t_parser;
+	t_graph		 graph[NB_PARSER_STATE];
+	e_parser_state  state;
+}				   t_parser;
 
 typedef struct  s_token
 {
-    e_parser_state id;
-    char            *data;
-    size_t          data_len;
-}              t_token;
+	e_parser_state id;
+	char			*data;
+	size_t		  data_len;
+}			  t_token;
 
 typedef struct		s_expansion
 {

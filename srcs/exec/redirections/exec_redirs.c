@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:01 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/08 01:24:17 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/19 17:48:40 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	get_io_number(t_redir *ptr)
 	ptr->io_num[1] = -1;
 	if (ptr->op[0] && ft_strcmp(ptr->op[0], "&") != 0)
 		ptr->io_num[0] = ft_atoi(ptr->op[0]);
-	else
+	else if (ptr->op[0])
 	{
 		ptr->io_num[0] = 1;
 		ptr->io_num[1] = 2;
@@ -61,10 +61,7 @@ int8_t			exec_redirs(t_lst *head)
 	while (redirs != NULL)
 	{
 		if (get_fd(((t_redir*)redirs->content)) != SUCCESS)
-		{
-			close_fds(head);
-			return (FAILURE);
-		}
+			exit(1);
 		redirs = redirs->next;
 	}
 	return (SUCCESS);

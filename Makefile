@@ -72,6 +72,7 @@ L_PATH = shared_libft/
 # Add custom dir for .o
 
 CORE		=	core/
+SIGNALS		=	signals/
 DB			=	db/
 BUILTINS	=	builtins/
 BLT_FC		=	builtins/fc/
@@ -91,6 +92,7 @@ HASH		=	$(EXEC)hash_map/
 
 PATHS		+=	$(B_PATH)
 PATHS		+=	$(O_PATH)
+PATHS		+=	$(O_PATH)$(SIGNALS)
 PATHS		+=	$(O_PATH)$(BUILTINS)
 PATHS		+=	$(O_PATH)$(BLT_FC)
 PATHS		+=	$(O_PATH)$(COMMANDLINE)
@@ -197,7 +199,10 @@ SRC			+=	$(S_PATH)$(MISC)recall.c
 SRC			+=	$(S_PATH)$(MISC)check_args.c
 SRC			+=	$(S_PATH)$(MISC)is_a_dir.c
 
+SRC			+=	$(S_PATH)$(SIGNALS)sigint.c
+
 SRC			+=	$(S_PATH)$(EXEC)task_master.c
+SRC			+=	$(S_PATH)$(EXEC)status_handler.c
 SRC			+=	$(S_PATH)$(EXEC)exec_process.c
 SRC			+=	$(S_PATH)$(EXEC)exec_piped_process.c
 SRC			+=	$(S_PATH)$(EXEC)dispatcher.c
@@ -254,7 +259,7 @@ CMPLO = $(C_GCC) -o
 BUILD = $(PATHS)
 AR_RC = ar rc
 RANLI = ranlib
-CFLAG = -Wall -Wextra -Werror
+CFLAG = -Wall -Wextra -Werror -g
 RM_RF = /bin/rm -rf
 MKDIR = mkdir -p
 NORME = norminette
@@ -277,7 +282,7 @@ else ifeq ($(DEBUG), fsanitize)
 else ifeq ($(DEBUG), dev)
 	CFLAG =
 else
-	CFLAG = -Wall -Wextra -Werror
+	CFLAG = -Wall -Wextra -Werror -g
 endif
 
 # Rules
