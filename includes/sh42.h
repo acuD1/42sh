@@ -6,11 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/11/18 11:32:38 by arsciand         ###   ########.fr       */
-=======
-/*   Updated: 2019/11/21 22:32:54 by mpivet-p         ###   ########.fr       */
->>>>>>> origin/exec_from_merge1_merge3
+/*   Updated: 2019/11/24 11:12:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,14 +170,12 @@ int8_t			dup_ifd(t_redir *ptr);
 int8_t			dup_ofd(t_redir *ptr);
 void			close_fds(t_lst *ptr);
 
-<<<<<<< HEAD
 int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
 void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
 void		display_reverse(t_lst *w, u_int64_t opt, char **range);
 u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd);
 void		swap_range(char **r1, char **r2);
 u_int16_t	set_range(t_lst **w, char **range);
-=======
 /*
 **	===========================================================================
 **	SIGNALS....................................................................
@@ -189,7 +183,6 @@ u_int16_t	set_range(t_lst **w, char **range);
 */
 
 void	sigint_handler(int sig_num);
->>>>>>> origin/exec_from_merge1_merge3
 
 /* ###########################  TEMPORARY   #################################*/
 void	debug_analyzer(t_core *shell);
