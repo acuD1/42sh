@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/24 11:12:02 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/24 20:38:22 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ u_int16_t	set_range(t_lst **w, char **range);
 */
 
 void	sigint_handler(int sig_num);
+void	init_signals(void);
 
 /* ###########################  TEMPORARY   #################################*/
 void	debug_analyzer(t_core *shell);

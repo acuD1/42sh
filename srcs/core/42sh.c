@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/24 15:53:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/24 20:38:00 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		main(int ac, char **av, char **environ)
 
 	/* Saving t_core struct */
 	get_core(&shell);
-	signal(SIGINT, sigint_handler);
+	init_signals();
 	/* DEBUG */
 	//print_env(&shell);
 
