@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/21 14:21:45 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/25 15:40:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,11 @@ void			load_prompt(t_core *shell)
 		*/
 		//debug_analyzer(shell);
 		lexer_parser_analyzer(shell, term.buffer);
-	//	debug_ailleurs("/dev/ttys002", "CE N'EST PLUS MA PARTIE");
 		if (task_master(shell) != SUCCESS)
 			exit(1);
 		free_prompt(shell, shell->buff);
 		save_history(&term);
 		free(term.buffer);
-	//	term.buffer = ft_memalloc(BUFF_SIZE);
 		// ft_freejoblist(&shell->job_list);
 		//break;
 	}

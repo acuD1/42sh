@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/22 16:31:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/25 14:51:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		move_col_down(t_read *input)
 
 	width = get_width_current_line(input) - input->x_index;
 	x2 = input->x_index - input->prompt_len;
-	if ((nb_ofline = charset_count(input, NEW_LINE, &x2)) == 0)
+	if ((nb_ofline = charset_count(input, NEW_LINE, x2)) == 0)
 		nb_ofline = input->width / input->ws_col;
 	x = input->x;
 	if (input->y < nb_ofline)

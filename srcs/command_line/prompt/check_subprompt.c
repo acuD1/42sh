@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_quotes.c                                     :+:      :+:    :+:   */
+/*   check_subprompt.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/04 14:06:36 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/22 22:38:42 by fcatusse         ###   ########.fr       */
+/*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/11/25 15:46:04 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,16 @@ char		set_quote_type(char quote)
 	return ('\0');
 }
 
-uint8_t		quotes_is_matching(t_read *line)
+uint8_t		quotes_is_matching(t_read *line, char *quote)
 {
 	int	i;
-	char	quote;
 
 	i = -1;
 	while (line->buffer[++i])
 	{
-		if ((quote = set_quote_type(line->buffer[i])) != '\0')
+		if ((*quote = set_quote_type(line->buffer[i])) != '\0')
 		{
-			if (goto_next_quote(line->buffer, quote, &i) == TRUE)
+			if (goto_next_quote(line->buffer, *quote, &i) == TRUE)
 				continue ;
 			else
 				return (FALSE);
@@ -46,22 +45,22 @@ uint8_t		quotes_is_matching(t_read *line)
 	return (TRUE);
 }
 
-uint8_t		check_quotes(t_read *line)
+uint8_t		check_subprompt(t_read *input)
 {
 	int	i;
 	char	quote;
 
 	i = -1;
-	if (quotes_is_matching(line) == TRUE)
-		return (FALSE);
-	if (ft_strchr(line->buffer, QUOTE)
-			|| ft_strchr(line->buffer, DQUOTE))
+	quote = '\0';
+	if (quotes_is_matching(input, &quote) == TRUE)
 	{
-		while (line->buffer[++i])
-			if ((quote = set_quote_type(line->buffer[i])) != '\0')
-				break ;
-		load_subprompt(quote, line);
-		save_history(line);
+		if (check_backslash(input, &quote) == FALSE)
+			return (FALSE);
+	}
+	if (quote != '\0')
+	{
+		load_subprompt(quote, input);
+		save_history(input);
 		return (TRUE);
 	}
 	return (FALSE);

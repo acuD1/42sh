@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/22 16:28:59 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/25 15:54:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,10 @@ void			call_word(t_read *line, int i);
 **		Quotes and Subprompt/Multiline
 */
 
-uint8_t			check_quotes(t_read *line);
+uint8_t			check_subprompt(t_read *line);
+uint8_t			charset_count(t_read *input, char charset, int i);
+uint8_t			quotes_is_matching(t_read *line, char *quote);
+uint8_t			check_backslash(t_read *input, char *quote);
 void			load_subprompt(char quote, t_read *line);
 
 /*
@@ -113,11 +116,9 @@ uint8_t			read_again(char **prev_b, char *path, char *name, t_read *input);
 int			my_outc(int c);
 uint8_t			get_width_last_line(t_read *input);
 uint8_t			get_width_current_line(t_read *input);
-//void			remove_newline(t_read *line);
 uint64_t		get_mask(char *buff);
 int			is_dot(char *d_name);
 uint8_t			is_tab(char *buff, char *d_name, t_read *input);
-uint8_t			charset_count(t_read *input, char charset, int *i);
 
 /*
 **		Functions safe

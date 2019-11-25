@@ -72,14 +72,15 @@ L_PATH = shared_libft/
 # Add custom dir for .o
 
 CORE		=	core/
-DB			=	db/
+DB		=	db/
 BUILTINS	=	builtins/
 BLT_FC		=	builtins/fc/
-COMMANDLINE	=	command_line/
 REDIRS		=	redirections/
-AC			=	command_line/auto_completion/
-AK			=	command_line/action_keys/
+COMMANDLINE	=	command_line/
+AC		=	command_line/auto_completion/
+AK		=	command_line/action_keys/
 HISTORY		=	command_line/history/
+PROMPT		=	command_line/prompt/
 EXEC		=	exec/
 LEXER		= 	lexer_parser_analyzer/lexer/
 PARSER		= 	lexer_parser_analyzer/parser/
@@ -106,17 +107,19 @@ PATHS		+=	$(O_PATH)$(PARSER)
 PATHS		+=	$(O_PATH)$(ANALYZER)
 PATHS		+=	$(O_PATH)$(HASH)
 PATHS		+=	$(O_PATH)$(MISC)
+PATHS		+=	$(O_PATH)$(PROMPT)
 
 # Files
 
+SRC		+=	$(S_PATH)$(PROMPT)prompt.c
+SRC		+=	$(S_PATH)$(PROMPT)check_subprompt.c
+SRC		+=	$(S_PATH)$(PROMPT)check_backslash.c
+SRC		+=	$(S_PATH)$(PROMPT)sub_prompt.c
 
-SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)term_config.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)check_quotes.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)sub_prompt.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)utils.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)xfunctions.c
+SRC		+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
+SRC		+=	$(S_PATH)$(COMMANDLINE)term_config.c
+SRC		+=	$(S_PATH)$(COMMANDLINE)utils.c
+SRC		+=	$(S_PATH)$(COMMANDLINE)xfunctions.c
 
 SRC		+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
 

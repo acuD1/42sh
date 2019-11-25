@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/18 18:35:36 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/25 15:27:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@
 # define BQUOTE			'`'
 # define NEW_LINE		'\n'
 # define SPACE			" "
+# define ESC_SEQ		'\\'
 
 /*
 **		Action keys hex masks
