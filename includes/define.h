@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/25 15:27:12 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/25 17:02:43 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 */
 
 # define BLT_NUMBER		0x004
-# define BITOK_ERROR	0x001
+# define BITOK_ERROR		0x001
 # define PATH_ERROR		0x002
 # define FORK_ERROR		0x004
 # define BIN_ERROR		0x006
@@ -81,6 +81,12 @@
 # define NEW_LINE		'\n'
 # define SPACE			" "
 # define ESC_SEQ		'\\'
+# define BRACKET_OPEN		'('
+# define BRACKET_CLOSE		')'
+# define CURLY_BRACKET_OPEN	'{'
+# define CURLY_BRACKET_CLOSE	'}'
+# define HOOK_OPEN		'['
+# define HOOK_CLOSE		']'
 
 /*
 **		Action keys hex masks
