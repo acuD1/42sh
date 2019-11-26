@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/24 11:07:48 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/26 01:15:12 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "sh42.h"
 # include "enum.h"
+# include <termios.h>
 
 /*
 **	Some build data
@@ -85,34 +86,34 @@ typedef struct	s_hash
 **	t_core shares global variables
 */
 
-struct termios	old_t;
 
 typedef struct	s_core
 {
 	/* structs */
-	t_build		build;
-	t_hash		hash;			// Gonna call it on the stack for now
-	t_db		db;
+	t_build				build;
+	t_hash				hash;			// Gonna call it on the stack for now
+	t_db				db;
 	struct s_process	*last_process;
-	t_lst		*lexer;
-	t_lst		*job_list;
-	t_lst		*assign_list;
+	t_lst				*lexer;
+	t_lst				*job_list;
+	t_lst				*assign_list;
 
 	/* init shell */
-	//struct termios	new_t;
+	struct termios		old_t;			// Pour eviter la globale
+	struct termios		new_t;
 
 	/* lists */
-	t_lst		*env;
-	t_lst		*pos_vars;
-	t_lst		*jobs;
-	t_lst		*history;
+	t_lst				*env;
+	t_lst				*pos_vars;
+	t_lst				*jobs;
+	t_lst				*history;
 
 	/* variables */
-	char		*buff;
-	char		**tokens;			//	ft_strplit of char *line from GNL [BETA]
-	char		*bin;				//	dup of the binary found or located [BETA]
-	int32_t		status;				//	last exit status value (echo $?)
-	u_int8_t	opt;				//	Option
+	char				*buff;
+	char				**tokens;			//	ft_strplit of char *line from GNL [BETA]
+	char				*bin;				//	dup of the binary found or located [BETA]
+	int32_t				status;				//	last exit status value (echo $?)
+	u_int8_t			opt;				//	Option
 }				t_core;
 
 /*

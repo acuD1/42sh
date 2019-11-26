@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/16 15:25:25 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/25 21:05:40 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void		init_prompt(t_core *shell, t_read *term)
 	shell->history = term->history;
 	ft_bzero(buff, READ_SIZE + 1);
 	ft_bzero(term->buffer, BUFF_SIZE);
-	init_config();
+	init_config(shell);
 	init_termcaps(term);
 	display_prompt(term);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
@@ -113,6 +113,6 @@ void		init_prompt(t_core *shell, t_read *term)
 		check_expansions(term);
 		save_history(term);
 	}
-	reset_config(term);
+	reset_config(shell, term);
 	shell->buff = term->buffer;
 }

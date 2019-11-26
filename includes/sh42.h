@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/24 20:38:22 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/26 00:11:57 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ int8_t		builtin_set(t_core *shell, t_process *process);
 int8_t		builtin_unset(t_core *shell, t_process *process);
 int8_t		builtin_export(t_core *shell, t_process *process);
 int8_t		builtin_fc(t_core *shell, t_process *process);
+int8_t		builtin_exit(t_core *shell, t_process *process);
 
 /*
 **	===========================================================================
