@@ -185,6 +185,7 @@ SRC			+=	$(S_PATH)$(DB)process_vars.c
 SRC			+=	$(S_PATH)$(BUILTINS)set.c
 SRC			+=	$(S_PATH)$(BUILTINS)unset.c
 SRC			+=	$(S_PATH)$(BUILTINS)export.c
+SRC			+=	$(S_PATH)$(BUILTINS)exit.c
 
 # Need final FC
 #SRC			+=	$(S_PATH)$(BLT_FC)fc.c
@@ -201,6 +202,7 @@ SRC			+=	$(S_PATH)$(MISC)check_args.c
 SRC			+=	$(S_PATH)$(MISC)is_a_dir.c
 
 SRC			+=	$(S_PATH)$(SIGNALS)sigint.c
+SRC			+=	$(S_PATH)$(SIGNALS)init_signals.c
 
 SRC			+=	$(S_PATH)$(EXEC)task_master.c
 SRC			+=	$(S_PATH)$(EXEC)status_handler.c

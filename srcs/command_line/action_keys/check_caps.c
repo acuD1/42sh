@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/12 09:41:10 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/25 21:18:04 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,13 @@ void		check_keys_comb(char *buff, t_read *line, uint64_t value)
 
 void		end_of_file(t_read *line, uint64_t value)
 {
+	t_core	*shell;
+
+	shell = get_core(NULL);
 	if (!ft_strcmp(line->buffer, "") && value == CTRL_D)
 	{
 		ft_putstr("exit\n");
-		reset_config(line);
+		reset_config(shell, line);
 		write_history(line);
 		if (line->history)
 		{
