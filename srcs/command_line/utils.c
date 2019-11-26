@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/21 16:25:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:06:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ uint8_t		get_width_last_line(t_read *input)
 		x--;
 		width++;
 	}
-	debugi("/dev/ttys002", x, buff_index, input->buffer[buff_index], width);
 	if (width > input->ws_col)
 		width -= input->ws_col;
 	if (input->y == 1)
@@ -86,13 +85,14 @@ uint8_t		get_width_current_line(t_read *input)
 	buff_index = input->x_index - input->prompt_len;
 	while (input->buffer[buff_index])
 	{
-		if (input->buffer[buff_index] == NEW_LINE || x == input->ws_col)
+		if (input->buffer[buff_index] == NEW_LINE || x == input->ws_col - 1)
 			break ;
 		width++;
 		x++;
 		buff_index++;
 	}
 	width += input->x;
+	debugi("/dev/ttys001", x, buff_index, input->buffer[buff_index], width);
 	return (width);
 }
 

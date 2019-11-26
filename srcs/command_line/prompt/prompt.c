@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/25 15:45:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:49:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,61 +25,29 @@ void		goto_prompt(t_read *input)
 		xtputs(input->tcaps[KEY_UP], 1, my_outc);
 	xtputs(input->tcaps[LEFT_MARGIN], 1, my_outc);
 	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
+	free(input->prompt);
 	if (input->sub_prompt > 0)
-		display_subprompt(input, input->prompt);
+		display_subprompt(input, PS2);
 	else
 		display_prompt(input);
 }
 
-/* void		get_y(t_read *input) */
-/* { */
-/* 	char	buf[16]; */
-/* 	int	i; */
-/* 	char	ch; */
-/* 	char	*tmp; */
-/*  */
-/* 	i = 0; */
-/* 	ch = 0; */
-/* 	ft_bzero(buf, 16); */
-/* 	write(1, "\033[6n", 4); */
-/* 	while (ch != 'R') */
-/* 	{ */
-/* 		xread(0, &ch, 1); */
-/* 		buf[i] = ch; */
-/* 		i++; */
-/* 	} */
-/* 	tmp = ft_strsub(buf, 2, 2); */
-/* 	input->y_li = ft_atoi(tmp) - 1; */
-/* 	ft_strdel(&tmp); */
-/* } */
-
 /*
- **	  Display prompt as the current directory
- **	  Store some datas for pressed keys
- */
+**	  Display prompt as the current directory
+**	  Store some datas for pressed keys
+*/
 
 void		display_prompt(t_read *term)
 {
-	char	path[BUFF_SIZE + 1];
-
-	ft_bzero(path, BUFF_SIZE + 1);
-	if (!getcwd(path, BUFF_SIZE))
-	{
-		term->prompt = ft_strdup(PS1);
-		term->prompt_len = ft_strlen(term->prompt);
-	}
-	else
-	{
-		term->prompt = ft_strdup(ft_strrchr(path, '/') + 1);
-		term->prompt_len = ft_strlen(term->prompt) + 2;
-	}
+	term->prompt = ft_strdup(PS1);
+	term->prompt_len = ft_strlen(term->prompt);
 	term->x = term->prompt_len;
 	term->x_index = term->x;
 	term->y = 0;
 	term->width = term->x;
 	term->sub_prompt = 0;
 	term->new_line = 0;
-	ft_dprintf(STDOUT_FILENO, "%s%s%s$ %s", C_BOLD, C_Y, term->prompt, C_X);
+	ft_printf("%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 }
 
@@ -110,6 +78,5 @@ void		init_prompt(t_read *term)
 		//remove_newline(term);
 		check_expansions(term);
 	}
-	ft_strdel(&term->prompt);
 	reset_config(term);
 }

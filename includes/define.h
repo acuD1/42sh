@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/25 17:02:43 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:19:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@
 # define S_USR_RW		(S_IRUSR | S_IWUSR)
 # define S_GRP_OTH_R		(S_IRGRP | S_IROTH)
 # define MODE_WRITE		(O_CREAT | O_WRONLY | O_TRUNC)
-# define PS1			"42sh$ "
+# define PS1			"42sh-2.0$ "
 # define PS2			"> "
 # define BUFF_SIZE		4096
 # define READ_SIZE		8
@@ -80,7 +80,7 @@
 # define BQUOTE			'`'
 # define NEW_LINE		'\n'
 # define SPACE			" "
-# define ESC_SEQ		'\\'
+# define BACKSLASH		'\\'
 # define BRACKET_OPEN		'('
 # define BRACKET_CLOSE		')'
 # define CURLY_BRACKET_OPEN	'{'

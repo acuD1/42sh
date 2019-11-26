@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/25 16:44:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/26 18:05:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int8_t		debug(char  *path, t_read *in, char c)
 
     if ((fd = open(path, O_WRONLY)) < 0)
         return (FAILURE);
-    dprintf(fd, " bff[%s] tmp[%s]\n quote[%c]\n\n", in->buffer, in->tmp_buff, c);
+    dprintf(fd, " bff[%s] tmp[%s]\n sb[%c]\n\n", in->buffer, in->tmp_buff, c);
     return (SUCCESS);
 }
 
@@ -46,7 +46,7 @@ void		display_subprompt(t_read *term, char *prompt)
 	ft_printf(term->prompt);
 }
 
-uint8_t		read_subline(t_read *input, char quote)
+uint8_t		read_subline(t_read *input, char sb)
 {
 	char	buff[READ_SIZE + 1];
 
@@ -60,11 +60,11 @@ uint8_t		read_subline(t_read *input, char quote)
 		}
 		else
 		{
-			if (quote == ESC_SEQ && check_backslash(input, &quote) == FALSE)
+			if (sb == BACKSLASH && check_backslash(input, &sb) == FALSE)
 				return (FALSE);
-			else if (quote != ESC_SEQ && ft_strchr(input->buffer, quote))
+			else if (sb != BACKSLASH && ft_strchr(input->buffer, sb))
 				return (FALSE);
-			else if (quote != ESC_SEQ)
+			else if (sb != BACKSLASH)
 				input->buffer[ft_strlen(input->buffer)] = NEW_LINE;
 			break ;
 		}
@@ -72,9 +72,9 @@ uint8_t		read_subline(t_read *input, char quote)
 	return (TRUE);
 }
 
-void		load_subprompt(char quote, t_read *input)
+void		load_subprompt(char sb, t_read *input)
 {
-	if (quote != ESC_SEQ)
+	if (sb != BACKSLASH)
 		input->buffer[ft_strlen(input->buffer)] = NEW_LINE;
 	input->tmp_buff = ft_strdup(input->buffer);
 	while (TRUE)
@@ -82,14 +82,14 @@ void		load_subprompt(char quote, t_read *input)
 		free(input->buffer);
 		input->buffer = ft_memalloc(BUFF_SIZE);
 		display_subprompt(input, PS2);
-		if (read_subline(input, quote) == FALSE)
+		if (read_subline(input, sb) == FALSE)
 		{
 			input->sub_prompt = FALSE;
 			input->buffer = ft_strjoin(input->tmp_buff, input->buffer);
-			if (quotes_is_matching(input, &quote) == FALSE)
+			if (quotes_is_matching(input, &sb) == FALSE)
 			{
 				input->buffer[ft_strlen(input->buffer)] = NEW_LINE;
-				debug("/dev/pts/2", input, quote);
+				debug("/dev/pts/2", input, sb);
 				free(input->tmp_buff);
 				input->tmp_buff = ft_strdup(input->buffer);
 				continue ;

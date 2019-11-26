@@ -6,20 +6,20 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/22 21:20:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:13:36 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 
-int8_t		fdebug(char  *path, t_read *in, int j , int X)
+int8_t		fdebug(char  *path, t_read *in)
 {
     int fd;
 
     if ((fd = open(path, O_WRONLY)) < 0)
         return (FAILURE);
-    dprintf(fd, " x[%d] xi [%d] y[%d]\n w[%d] j[%d] X[%d]\n", in->x, in->x_index, in->y, in->width, j, X);
+    dprintf(fd, " x[%d] xi [%d] y[%d]\n\n w[%d] ws_col[%d]\n", in->x, in->x_index, in->y, in->width, in->ws_col);
     return (SUCCESS);
 }
 
@@ -29,10 +29,10 @@ int8_t		fdebug(char  *path, t_read *in, int j , int X)
 
 void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
-	ft_dprintf(STDIN_FILENO, "%c", buff);
-	if (buff == NEW_LINE || input->x == input->ws_col - 1)
+	ft_printf("%c", buff);
+	if (buff == NEW_LINE || input->x >= input->ws_col)
 	{
-		input->x = 0;
+		input->x = 1;
 		input->y++;
 	}
 	else
@@ -40,9 +40,8 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 	input->width++;
 	input->buffer[buff_index] = buff;
 	input->x_index++;
+	fdebug("/dev/ttys001", input);
 	//	move_right(&buff, input);
-	/* if (input->x >= input->ws_col) */
-	/* 	insert_newline_in_buff(input); */
 }
 
 void		insert_at_index(t_read *input, int buff_index, char *buff)

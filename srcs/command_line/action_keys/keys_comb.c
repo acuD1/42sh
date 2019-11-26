@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/25 14:51:33 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:47:44 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		clr_screen(t_read *input)
 
 	i = input->x;
 	xtputs(input->tcaps[CLEAR], 1, my_outc);
-	ft_dprintf(STDOUT_FILENO, "%s%s%s$ %s", C_BOLD, C_Y, input->prompt, C_X);
+	ft_printf("%s%s%s%s", C_BOLD, C_Y, input->prompt, C_X);
 	ft_putstr(input->buffer);
 	xtputs(input->tcaps[UP_LEFT_CORNER], 1, my_outc);
 	while (i--)
@@ -28,7 +28,7 @@ void		clr_screen(t_read *input)
 /*
 **	CTRL/SHIFT + ARROW_UP to move up one input in the same column
 **	Termcaps capabilities :	`up' to go up one input in same col
-**							`nd' to move the cursor on right
+**				`nd' to move the cursor on right
 **
 */
 
@@ -57,7 +57,7 @@ void		move_col_up(t_read *input)
 /*
 **	CTRL/ALT + ARROW_DOWN to move down one input in same column
 **	Termcaps capabilities : `down' to move cursor down at beginning of input
-**							`right' to move cursor on the right
+**				`right' to move cursor on the right
 **
 */
 
