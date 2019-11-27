@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/26 11:23:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:12:30 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void		status_handler(t_core *shell, int status);
 */
 
 u_int32_t	get_hash(char *line, u_int32_t size);
-int8_t		locate_hash(t_core *shell, t_lst *process);
-int8_t		add_hash_map(t_core *shell, t_hash *hash);
+int8_t		locate_hash(t_core *shell, t_process *process);
+int8_t		add_hash_map(t_core *shell, t_hash *hash, t_process *process);
 int8_t		resize_hash_map(t_core *shell, t_hash *hash);
 void		free_hash_map(t_hash *hash);
 t_db		*fetch_hash_db(t_db *db, const char *key, const char *value);
@@ -110,13 +110,12 @@ void		print_hash_map(t_hash *hash);
 
 t_core		*get_core(t_core *core);
 int		check_invalid_identifiers(char *arg, char *exceptions);
-char		*get_abs_path(char *path);
+void		get_abs_path(char *path, char *buffer);
 void		ft_perror(const char *s, const int errnum);
 int8_t		ft_access(char *path, int mode);
 int8_t		is_a_dir(char *path);
 void		print_usage(char *name, int c, char *usage);
 void		ft_perror(const char *s, const int errnum);
-char		*get_abs_path(char *path);
 int			check_invalid_identifiers(char *arg, char *exceptions);
 
 /*

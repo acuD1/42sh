@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_access.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 00:18:54 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/15 00:33:15 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:14:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int8_t	ft_access(char *path, int mode)
 	int		ret;
 
 	depth = 0;
-	path = get_abs_path(path);
+	get_abs_path(path, buffer);
 	path_len = ft_strlen(path);
 	if (access(path, mode) == 0)
 		return (SUCCESS);
@@ -67,11 +67,10 @@ int8_t	ft_access(char *path, int mode)
 	{
 		if ((ret = access_file(buffer, F_OK | X_OK)) != SUCCESS)
 		{
-			ft_strdel(&path);
+			ft_bzero(buffer, MAX_PATH);
 			return (ret);
 		}
 		depth++;
 	}
-	ft_strdel(&path);
 	return (access_file(buffer, mode));
 }

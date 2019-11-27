@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/24 11:08:36 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/27 13:58:41 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 		shell->status = call_builtin(shell, process, blt);
 		return (SUCCESS);
 	}
+	get_bin(shell, ((t_process*)process->content));
 	if ((pid = fork()) < 0)
 		return (exec_handler(shell, FORK_ERROR)); //NEED REWORK
 	else if (pid == 0)
 		call_bin(shell, process);
 	((t_process*)process->content)->pid = pid;
+	//ft_strdel(&((t_process*)process->content)->bin);
+	ft_strdel(&((t_process*)process->content)->bin);
 	shell->last_process = process->content;
 	if (waitpid(pid, &shell->status, WUNTRACED | WCONTINUED) != pid)
 	{

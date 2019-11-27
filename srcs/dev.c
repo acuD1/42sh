@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/26 11:23:17 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/27 11:04:21 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	print_hash_map(t_hash *hash)
 		while (cur_map)
 		{
 			if (z > 0)
-				printf("\t");
-			printf("[%zu][%d] BIN|%s| PATH|%s|\n", i, z,
+				dprintf(STDERR_FILENO, "\t");
+			dprintf(STDERR_FILENO, "[%zu][%d] BIN|%s| PATH|%s|\n", i, z,
 				((t_db*)(cur_map->content))->key,
 				((t_db*)(cur_map->content))->value);
 			cur_map = cur_map->next;

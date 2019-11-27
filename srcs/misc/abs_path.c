@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   abs_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:02:32 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/15 00:29:35 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/27 14:14:35 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,8 @@ static void	dir_write(char *rel, char *abs)
 	abs[j] = 0;
 }
 
-char	*get_abs_path(char *path)
+void	get_abs_path(char *path, char *abs)
 {
-	char	abs[MAX_PATH + 1];
 	char	rel[MAX_PATH + 1];
 
 	ft_bzero(abs, MAX_PATH + 1);
@@ -82,5 +81,4 @@ char	*get_abs_path(char *path)
 			dir_write(rel, abs);
 		dir_forward(rel);
 	}
-	return (ft_strdup(abs));
 }
