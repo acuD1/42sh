@@ -14,7 +14,7 @@ char *get_brace_param(char *str)
 			break;
 		i++;
 	}
-	if (!(tmp = ft_strsub(str, 2, i - 2)))
+	if (!(tmp = ft_strsub(str, 2, i - 1)))
 		return (NULL);
 	return (tmp);
 }
@@ -32,6 +32,8 @@ char *exp_param(char *data, t_core *shell)
 		tmp = get_brace_param(data);
 	else if (data[0] == '$')
 		tmp = ft_strsub(data, 1, i - 1);
+	// if (tmp[0] == '?')
+		// return(get_job_return(shell));
 	if (!(db_tmp = search_db(shell->env, tmp)))
 	{
 		free(tmp);
