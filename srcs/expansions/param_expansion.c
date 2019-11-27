@@ -40,7 +40,7 @@ char *exp_param(char *data, t_core *shell)
 	else
 	{
 		free(tmp);
-		return (db_tmp->value);
+		return (ft_strdup(db_tmp->value));
 	}
-	return (data');
+	return (ft_strdup(data));
 }
