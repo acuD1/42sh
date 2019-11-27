@@ -22,7 +22,6 @@ void init_expansion_analyze(t_anal analyze)
 	analyze[A_EXPANSION][P_BQUOTE] = cmd_analyze;
 	analyze[A_EXPANSION][P_DBQUOTE] = cmd_analyze;
 	analyze[A_EXPANSION][P_QUOTE] = cmd_analyze;
-	analyze[A_EXPANSION][P_WORD] = cmd_analyze;
 	analyze[A_EXPANSION][P_ESCSEQ] = cmd_analyze;
 	analyze[A_EXPANSION][P_DBPARENT] = cmd_analyze;
 	analyze[A_EXPANSION][P_PARENT] = cmd_analyze;

@@ -35,7 +35,7 @@ char *start_expansion(t_core *shell, char *data)
 	while (i < NB_OF_EXP)
 	{
 		if (!(ft_strncmp(data, expan[i].data, expan[i].len)))
-			expan[i].machine(data, shell);
+			data = expan[i].machine(data, shell);
 		i++;
 	}
 	return (data);
@@ -45,16 +45,24 @@ uint8_t 	expansion(t_core *shell, t_process *process)
 {
 	int 	i;
 	char **tablo;
+	char *tmp;
 
 	i = -1;
 	tablo = NULL;
+	tmp = NULL;
 	if (!process->av)
 		return (FALSE);
 	tablo = ft_tabcopy(tablo, process->av);
 	while (tablo[++i])
 	{
 		if (tablo[i][0] == '$' || tablo[i][0] == '~')
-			tablo[i] = start_expansion(shell, tablo[i]);
+		{
+			tmp = ft_strdup(tablo[i]);
+			tmp = start_expansion(shell, tmp);
+			free(tablo[i]);
+			tablo[i] = ft_strdup(tmp);
+			free(tmp);
+		}
 	}
 	ft_tabfree(process->av);
 	process->av = ft_tabcopy(process->av, tablo);
