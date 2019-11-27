@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/19 19:56:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/22 17:57:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int8_t		del_debug(char  *path, t_read *in, int j )
 
     if ((fd = open(path, O_WRONLY)) < 0)
         return (FAILURE);
-    dprintf(fd, " x[%d] xi [%d] y[%d] w[%d] j[%d]\n", in->x, in->x_index, in->y, in->width, j);
+    dprintf(fd, " buf[%s] xi [%d] y[%d] w[%d] j[%d]\n", in->buffer, in->x_index, in->y, in->width, j);
     return (SUCCESS);
 }
 
@@ -50,7 +50,7 @@ void		del_key(t_read *input)
 		&& input->x <= input->width)
 	{
 		i = input->x_index - input->prompt_len - 1;
-		del_debug("/dev/ttys003", input, i);
+		del_debug("/dev/ttys002", input, i);
 		while (input->buffer[++i])
 			input->buffer[i] = input->buffer[i + 1];
 		x = input->x;

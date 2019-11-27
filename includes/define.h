@@ -56,7 +56,7 @@
 */
 
 # define BLT_NUMBER		0x004
-# define BITOK_ERROR	0x001
+# define BITOK_ERROR		0x001
 # define PATH_ERROR		0x002
 # define FORK_ERROR		0x004
 # define BIN_ERROR		0x006
@@ -80,6 +80,13 @@
 # define BQUOTE			'`'
 # define NEW_LINE		'\n'
 # define SPACE			" "
+# define ESC_SEQ		'\\'
+# define BRACKET_OPEN		'('
+# define BRACKET_CLOSE		')'
+# define CURLY_BRACKET_OPEN	'{'
+# define CURLY_BRACKET_CLOSE	'}'
+# define HOOK_OPEN		'['
+# define HOOK_CLOSE		']'
 
 /*
 **		Action keys hex masks
@@ -105,7 +112,7 @@
 # define CTRL_D			0x0400000000000000
 # define ALT_AW_UP		0x1b1b5b4100000000
 # define ALT_AW_DO		0x1b1b5b4200000000
-# define ESC_SEQ		0x5C00000000000000
+# define ESCSEQ			0x5C00000000000000
 
 /*
 **	Hash table

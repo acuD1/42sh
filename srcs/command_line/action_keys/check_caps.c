@@ -85,48 +85,6 @@ uint8_t		cursor_motion(char *buff, t_read *input, uint64_t value)
 	return (TRUE);
 }
 
-uint8_t		charset_count(t_read *input, char charset, int *i)
-{
-	int	count;
-
-	count = 0;
-	while (input->buffer[*i])
-	{
-		if (input->buffer[*i] == charset)
-			count++;
-		(*i)++;
-	}
-	if (input->buffer[*i - 1] != charset)
-		return (FALSE);
-	return (count);
-
-}
-
-
-uint8_t		check_backslash(t_read *input)
-{
-	int	buff_i;
-	char	*buff_r;
-
-	buff_r = ft_strrchr(input->buffer, ';');
-	if (!buff_r)
-		buff_i = 0;
-	else
-		buff_i = ft_strlen(input->buffer) - ft_strlen(buff_r);
-	if (input->buffer[ft_strlen(input->buffer) - 1] == '\\')
-	{
-		if (charset_count(input, '\\', &buff_i) % 2 != 0)
-		{
-			insert_char_in_buffer(';', input, input->x_index - input->prompt_len);
-			xtputs(input->tcaps[KEY_LEFT], 1, my_outc);
-			xtputs(input->tcaps[DEL_CR], 1, my_outc);
-			display_subprompt(input, PS2);
-			return (TRUE);
-		}
-	}
-	return (FALSE);
-}
-
 /*
 **		Interpret and insert char in bufffer
 **		CTRL+R to launch history research
@@ -155,15 +113,8 @@ uint8_t		check_caps(char *buff, t_read *input)
 	   return (TRUE);
 	if (value == RETURN_KEY)
 	{
-		// ft_putchar('\n');
-		if (check_backslash(input) == TRUE)
-			return (TRUE);
-		else
-		{
-			// insert_newline_in_buff(input);
-			ft_putchar('\n');
-			return (FALSE);
-		}
+		ft_putchar('\n');
+		return (FALSE);
 	}
 	else
 		check_keys_comb(buff, input, value);

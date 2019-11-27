@@ -69,8 +69,7 @@ void			load_prompt(t_core *shell)
 			exit(1);
 		free_prompt(shell, shell->buff);
 		save_history(&term);
-		// free(term.buffer);
-	//	term.buffer = ft_memalloc(BUFF_SIZE);
+		free(term.buffer);
 		// ft_freejoblist(&shell->job_list);
 	}
 	free_history(shell);
