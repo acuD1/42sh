@@ -35,12 +35,15 @@ char *exp_param(char *data, t_core *shell)
 	if (!(db_tmp = search_db(shell->env, tmp)))
 	{
 		free(tmp);
+		free(data);
 		return (ft_strdup(""));
 	}
 	else
 	{
 		free(tmp);
+		free(data);
 		return (ft_strdup(db_tmp->value));
 	}
+	free(data);
 	return (ft_strdup(""));
 }
