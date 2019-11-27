@@ -3,7 +3,7 @@
 char 	*exp_tilde(char *data, t_core *shell)
 {
 	t_db *db_tmp;
-	char *path[] = {NULL, "HOME", "OLDPWD", "PWD"};
+	char *path[] = {"HOME", "OLDPWD", "PWD"};
 	int i;
 
 	i = 0;
@@ -11,20 +11,15 @@ char 	*exp_tilde(char *data, t_core *shell)
 	if (!data && !data[0])
 		return (NULL);
 	if (data[0] == '~' && data[1] && data[1] == '+')
-		i = 3;
-	else if (data[0] == '~' && data[1] && data[1] == '-')
 		i = 2;
-	else if (data[0] == '~')
+	else if (data[0] == '~' && data[1] && data[1] == '-')
 		i = 1;
+	else if (data[0] == '~')
+		i = 0;
+	printf("[%s]\n", path[i]);
 	if (!(db_tmp = search_db(shell->env, path[i])))
-	{
-		free(data);
-		return (data = ft_strnew(0));
-	}
+		return (NULL);
 	else
-	{
-		free(data);
-		return (data = ft_strdup(db_tmp->value));
-	}
+		return (db_tmp->value);
 	return (NULL);
 }
