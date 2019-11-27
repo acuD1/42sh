@@ -6,21 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/26 17:28:12 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/27 13:45:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-int8_t		debug_out(char  *path, t_read *in)
-{
-    int fd;
-
-    if ((fd = open(path, O_WRONLY)) < 0)
-        return (FAILURE);
-    dprintf(fd, " %d x[%d] xi [%d] y[%d]\n", in->prompt_len , in->x, in->x_index, in->y);
-    return (SUCCESS);
-}
 
 void			check_tmp_buffer(t_read *input)
 {
