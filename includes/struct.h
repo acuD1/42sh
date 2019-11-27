@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/26 01:15:12 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/27 00:29:59 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,40 +83,6 @@ typedef struct	s_hash
 }				t_hash;
 
 /*
-**	t_core shares global variables
-*/
-
-
-typedef struct	s_core
-{
-	/* structs */
-	t_build				build;
-	t_hash				hash;			// Gonna call it on the stack for now
-	t_db				db;
-	struct s_process	*last_process;
-	t_lst				*lexer;
-	t_lst				*job_list;
-	t_lst				*assign_list;
-
-	/* init shell */
-	struct termios		old_t;			// Pour eviter la globale
-	struct termios		new_t;
-
-	/* lists */
-	t_lst				*env;
-	t_lst				*pos_vars;
-	t_lst				*jobs;
-	t_lst				*history;
-
-	/* variables */
-	char				*buff;
-	char				**tokens;			//	ft_strplit of char *line from GNL [BETA]
-	char				*bin;				//	dup of the binary found or located [BETA]
-	int32_t				status;				//	last exit status value (echo $?)
-	u_int8_t			opt;				//	Option
-}				t_core;
-
-/*
 **			COMMAND_LINE
 */
 
@@ -184,7 +150,6 @@ typedef struct			s_process
 	char				**av;
 	char				*bin;
 	pid_t				pid;
-	// char				**env;
 	// uint8_t				completed;
 	// uint8_t				stopped;
 	// int					status;
@@ -194,10 +159,6 @@ typedef struct s_job
 {
 	char				*command;
 	t_lst			  *process_list;
-	// struct termios	  *term_modes;
-	// pid_t			   pgid;
-	// t_filedesc		  fd;
-	// int		 status; // 1 = running | 0 = stopped par exemple
 	e_parser_state type;
 }			   t_job;
 
@@ -250,6 +211,37 @@ typedef struct  s_lexer
     size_t          buf_pos;
     t_lexing        lex[NB_LEXER_STATE];
     t_token 		token;
-}               t_lexer;
+}				t_lexer;
+
+/*
+**	t_core
+*/
+
+typedef struct	s_core
+{
+	/* structs */
+	t_read				cmd_line;
+	t_build				build;
+	t_hash				hash;			// Gonna call it on the stack for now
+	t_db				db;
+	t_process			*last_process;
+
+	/* init shell */
+	struct termios		old_t;			// Pour eviter la globale
+	struct termios		new_t;
+
+	/* lists */
+	t_lst				*env;
+	t_lst				*pos_vars;
+	t_lst				*history; // REMOVE THIS ONE OR celui dans t_read
+	t_lst				*lexer; //TO REMOVE
+	t_lst				*job_list;
+	t_lst				*assign_list; //TO REMOVE
+
+	/* variables */
+	char				*buff;
+	int32_t				status;				//	last exit status value (echo $?)
+	u_int8_t			opt;				//	Option
+}				t_core;
 
 #endif

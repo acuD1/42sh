@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/15 15:17:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/27 00:22:33 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,23 @@
 **	Store datas of terminal's line/column
 */
 
-t_read   	         *get_size(t_read *data)
+int8_t			get_size(t_read *data)
 {
 	struct winsize    size;
 
 	ft_bzero(&size, sizeof(struct winsize));
 	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &size) != SUCCESS)
 	{
-		ft_dprintf(STDERR_FILENO, "IOCTL ERROR\n");
 		if ((data->ws_col = tgetnum("co")) < 0 || (data->ws_li = tgetnum("li")) < 0)
 		{
-			ft_dprintf(STDERR_FILENO, "IOCTL AND TGETNUM FAILURE");
-			return (NULL);
+			ft_dprintf(STDERR_FILENO, "42sh: ioctl and tgetnum error");
+			return (FAILURE);
 		}
-		return (data);
+		return (SUCCESS);
 	}
 	data->ws_col = size.ws_col;
 	data->ws_li = size.ws_row;
-	return (data);
+	return (SUCCESS);
 }
 
 /*
@@ -43,22 +42,11 @@ t_read   	         *get_size(t_read *data)
 
 int8_t			stock_termcaps(t_read *term)
 {
-	static char	*termcaps[CAPS_NBR];
+	static char	*termcaps[CAPS_NBR] = {"dc", "sc", "rc", "do", "up", "nd"
+		, "le", "cr", "ho", "cl", "cd", "ce"};
 	int		i;
 
 	i = -1;
-	termcaps[0] = "dc";
-	termcaps[1] = "sc";
-	termcaps[2] = "rc";
-	termcaps[3] = "do";
-	termcaps[4] = "up";
-	termcaps[5] = "nd";
-	termcaps[6] = "le";
-	termcaps[7] = "cr";
-	termcaps[8] = "ho";
-	termcaps[9] = "cl";
-	termcaps[10] = "cd";
-	termcaps[11] = "ce";
 	while (++i < CAPS_NBR)
 	{
 		if (!(term->tcaps[i] = xtgetstr(termcaps[i], NULL)))

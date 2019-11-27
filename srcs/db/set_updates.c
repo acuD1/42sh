@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:56:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/24 15:35:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/27 00:34:41 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,15 @@ int8_t	create_term(t_core *shell)
 
 int8_t	update_termsize(t_core *shell)
 {
-	struct winsize	ws;
 	t_db			*db;
 	char			*value;
 
 	db = NULL;
 	value = NULL;
-	ft_bzero(&ws, sizeof(ws));
-	ioctl(STDIN_FILENO, TIOCGWINSZ, &ws);
 	if (shell && (db = get_or_create_db(shell, "LINES", INTERNAL_VAR)) != NULL)
 	{
-		if (!(value = ft_itoa(ws.ws_row)) || modify_db(db, value, 0) == NULL)
+		if (!(value = ft_itoa(shell->cmd_line.ws_li))
+				|| modify_db(db, value, 0) == NULL)
 		{
 			ft_strdel(&value);
 			return (FAILURE);
@@ -78,7 +76,8 @@ int8_t	update_termsize(t_core *shell)
 	}
 	if (shell && (db = get_or_create_db(shell, "COLUMNS", INTERNAL_VAR)))
 	{
-		if (!(value = ft_itoa(ws.ws_col)) || modify_db(db, value, 0) == NULL)
+		if (!(value = ft_itoa(shell->cmd_line.ws_col))
+				|| modify_db(db, value, 0) == NULL)
 		{
 			ft_strdel(&value);
 			return (FAILURE);

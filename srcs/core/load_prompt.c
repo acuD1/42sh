@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/24 15:53:56 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/27 00:52:03 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,15 @@ void			free_history(t_core *shell)
 void			load_prompt(t_core *shell)
 {
 	int8_t		status;
-	t_read		term;
+	t_read		*term;
 
 	status = 1;
+	term = &(shell->cmd_line);
 	credit(shell);
-	init_cmd_line(&term, shell);
+	init_cmd_line(term, shell);
 	while (status)
 	{
-		init_prompt(shell, &term);
+		init_prompt(shell, term);
 		lexer_parser_analyzer(shell, shell->buff);
 		if (task_master(shell) != SUCCESS)
 			break ;

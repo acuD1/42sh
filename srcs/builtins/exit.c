@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 23:42:04 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/26 01:12:56 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/27 00:07:55 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,6 @@ static int8_t	ft_atol(char *s, int64_t *result)
 	return (SUCCESS);
 }
 
-int8_t		leave_shell(t_core *shell, int exit_value)
-{
-
-	//Call all functions to free and restore terminal
-
-	(void)shell;
-	write(STDERR_FILENO, "exit\n", 5);
-	exit(exit_value);
-}
-
 int8_t			builtin_exit(t_core *shell, t_process *process)
 {
 	int64_t	exit_value;
@@ -60,15 +50,15 @@ int8_t			builtin_exit(t_core *shell, t_process *process)
 	argc = ft_tablen(process->av);
 	exit_value = 0;
 	if (argc == 1)
-		leave_shell(shell, 0);
+		quit_shell(shell, 0);
 	if (ft_atol(process->av[1], &exit_value) != SUCCESS)
 	{
 		dprintf(STDERR_FILENO, "bash: exit: %s: numeric argument required\n"
 				, process->av[1]);
-		leave_shell(shell, 255);
+		quit_shell(shell, 255);
 	}
 	else if (argc == 2)
-		leave_shell(shell, exit_value & 0xFF);
+		quit_shell(shell, exit_value & 0xFF);
 	dprintf(STDERR_FILENO, "bash: exit: too many arguments\n");
 	return (FAILURE);
 }

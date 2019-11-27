@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/24 11:08:36 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/26 23:41:09 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 		return (SUCCESS);
 	}
 	if ((pid = fork()) < 0)
-		return (exec_handler(shell, FORK_ERROR)); //NEED REWORK
+	{
+		dprintf(STDERR_FILENO, "42sh: fork error\n");
+		return (FAILURE);
+	}
 	else if (pid == 0)
 		call_bin(shell, process);
 	((t_process*)process->content)->pid = pid;

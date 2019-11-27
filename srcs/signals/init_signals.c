@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/26 01:15:15 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/27 00:49:45 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,23 @@ void	sigh_exit(int signum)
 	//exit(signum);
 }
 
+void	sigh_winch(int signum)
+{
+	t_core	*shell;
+
+	(void)signum;
+	shell = get_core(NULL);
+	if (get_size(&(shell->cmd_line)) != SUCCESS || update_termsize(shell))
+		quit_shell(shell, 1);
+}
+
 void	init_signals(void)
 {
 	static void (*sighandler[31])(int) = {sigh_hup, sigint_handler, sigoff /*HUP INT QUIT*/
 		, sigh_exit, sigh_exit, sigh_exit, sigh_exit, sigh_exit, NULL, SIG_DFL /*ILL TRAP ABRT EMT FPE (KILL uncatch)BUS*/
 		, SIG_DFL, sigh_exit, sigoff, sigoff, sigoff, sigoff, NULL, sigoff /*SEGV SYS PIPE ALRM URG (STOP uncatchable) TSTP*/
 		, sigh_exit, SIG_DFL, sigoff, sigoff, sigoff, sigh_exit, sigh_exit /*CONT CHLD TTIN TTOU IO XCPU XFSZ*/
-		, sigh_exit, sigh_exit, sigoff, sigoff, sigh_exit, sigh_exit}; /*VTALRM PROF WINCH INFO USR1 USR2*/
+		, sigh_exit, sigh_exit, sigh_winch, sigoff, sigh_exit, sigh_exit}; /*VTALRM PROF WINCH INFO USR1 USR2*/
 	int i;
 
 	i = 1;

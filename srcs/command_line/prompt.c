@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/25 21:05:40 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/27 00:02:21 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_read		*display_prompt(t_read *term)
 	term->x_index = term->x;
 	term->y = 0;
 	term->width = term->x;
-	term = get_size(term);
 	ft_dprintf(STDOUT_FILENO, "%s%s<< %s >>%s ", C_BOLD, C_Y, term->prompt + 1, C_X);
 	return (term);
 }

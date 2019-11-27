@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/24 11:08:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/26 23:35:29 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@ void	init_shell(t_core *shell)
 	shell->last_process = NULL;
 	shell->env = NULL;
 	shell->pos_vars = NULL;
-	shell->jobs = NULL;
-	shell->tokens = NULL;
-	shell->bin = NULL;
 	shell->status = 0;
 	shell->opt = 0;
 	shell->buff = NULL;

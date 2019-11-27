@@ -6,25 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/12 09:48:49 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/26 23:34:38 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-void	print_tokens(t_core *shell)
-{
-	char	**tokens;
-	size_t	i;
-
-	i = 0;
-	tokens = shell->tokens;
-	while (tokens[i])
-	{
-		dprintf(STDOUT_FILENO, "TOKEN[%zu] = |%s|\n", i, tokens[i]);
-		i++;
-	}
-}
 
 void	print_env(t_core *shell)
 {

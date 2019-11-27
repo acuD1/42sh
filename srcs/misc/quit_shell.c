@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_tokens.c                                       :+:      :+:    :+:   */
+/*   quit_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/21 13:05:26 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/26 15:47:04 by arsciand         ###   ########.fr       */
+/*   Created: 2019/11/26 23:52:50 by mpivet-p          #+#    #+#             */
+/*   Updated: 2019/11/26 23:54:01 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t		get_tokens(t_core *shell, char *line)
+void	quit_shell(t_core *shell, int exit_value)
 {
-	shell->tokens = ft_strsplit(line, " \t");
-	if (ft_tablen(shell->tokens) == 0)
-		return (FAILURE);
-	return (SUCCESS);
+
+	//Call all functions to free and restore terminal
+
+	(void)shell;
+	write(STDERR_FILENO, "exit\n", 5);
+	exit(exit_value);
 }
