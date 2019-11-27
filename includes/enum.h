@@ -33,24 +33,27 @@ typedef enum analyzer_state
 
 typedef enum    parser_state
 {
-    P_NEWLINE, // si tok->next = 23 job sinon process si condition ok
-    P_ANDIF, // process
-    P_AND, // job deamon
-    P_ORIF, // process
-    P_PIPE, // redir qui att un newline SUBSHELL
-    P_DSEMI, // FOR CASE ?
-    P_SEMICOLON, // job
-    P_DLESSDASH, // redir
-    P_DLESS, // redir
-    P_LESSAND, // redir
-    P_LESS, // redir
-    P_DGREAT, // redir
-    P_GREATAND, // redir
-    P_GREAT, // redir
+    P_NEWLINE,
+    P_ANDIF,
+    P_AND,
+    P_ORIF,
+    P_PIPE,
+    P_DSEMI,
+    P_SEMICOLON,
+    P_DLESSDASH,
+    P_DLESS,
+    P_LESSAND,
+    P_LESS,
+    P_DGREAT,
+    P_GREATAND,
+    P_GREAT,
     P_OPE_INTERRUPT,
-    P_IONUMBER, //ionumber
-    P_ASSIGN, // stock dans shell->assign une lst key=value;
-    P_WORD, //
+    P_IONUMBER,
+    P_ASSIGN,
+    P_WORD,
+    P_QUOTE,
+    P_DBQUOTE,
+    P_BQUOTE,
     P_TILDEP,
     P_TILDEM,
     P_TILDE,
@@ -65,15 +68,9 @@ typedef enum    parser_state
     P_END,
     P_ERROR,
 
-    // P_HOOK_CLOSE,
-    // P_HOOK_OPEN,
-    // P_DBQUOTE,
-    // P_QUOTE,
-    // P_BACKQUOTE,
     // P_QUESTIONMARK
     // P_HASH,
     // P_PERCENT,
-    // P_SPSTRING,
     // P_DEQ,
     // P_NOTEQ,
     // P_CASE,

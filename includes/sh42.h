@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/18 16:04:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:35:43 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@
 
 int8_t		get_opt(int ac, char **av, t_core *shell);
 void		credit(t_core *shell);
-
-// char		*init_prompt(t_read *term);
 
 void		print_opt(t_core *shell);
 void		load_prompt(t_core *shell);

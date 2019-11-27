@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/14 18:31:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/26 18:18:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,22 @@ void			search_in_history(t_read *input)
 
 void		research_mode(t_read *input)
 {
+	char	*saved;
+
+	saved = NULL;
+	if (input->tmp_buff)
+	{
+		saved = ft_strdup(input->tmp_buff);
+		ft_strdel(&input->tmp_buff);
+	}
 	goto_reverse(input, "", SUCCESS);
 	search_in_history(input);
-	xtputs(input->tcaps[LEFT_MARGIN], 1, my_outc);
-	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
-	display_prompt(input);
+	if (saved)
+	{
+		input->tmp_buff = ft_strdup(saved);
+		ft_strdel(&saved);
+	}
+	goto_prompt(input);
 	ft_dprintf(STDIN_FILENO, "%s", input->buffer);
 	input->x += ft_strlen(input->buffer);
 	input->width = input->x;

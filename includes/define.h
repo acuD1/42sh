@@ -70,7 +70,7 @@
 # define S_USR_RW		(S_IRUSR | S_IWUSR)
 # define S_GRP_OTH_R		(S_IRGRP | S_IROTH)
 # define MODE_WRITE		(O_CREAT | O_WRONLY | O_TRUNC)
-# define PS1			"42sh$ "
+# define PS1			"42sh-2.0$ "
 # define PS2			"> "
 # define BUFF_SIZE		4096
 # define READ_SIZE		8
@@ -80,7 +80,7 @@
 # define BQUOTE			'`'
 # define NEW_LINE		'\n'
 # define SPACE			" "
-# define ESC_SEQ		'\\'
+# define BACKSLASH		'\\'
 # define BRACKET_OPEN		'('
 # define BRACKET_CLOSE		')'
 # define CURLY_BRACKET_OPEN	'{'
@@ -144,13 +144,14 @@
 # define OPERATORS 					"&|;><-"
 # define EXPANSION 					"$~"
 # define NB_LEXER_STATE 9
-# define NB_PARSER_STATE 31
+# define NB_PARSER_STATE 34
 # define NB_ANALYZER_STATE 10
 # define REDIR                      P_GREAT, P_LESS
 # define REDIR_AND                  P_GREATAND, P_LESSAND
 # define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH
 # define ALL_REDIRECT               REDIR, REDIR_DB, REDIR_AND
 # define ALL_EXPANSION              P_PARENT, P_BRACKET, P_DBPARENT, P_DOLLAR, P_TILDE, P_TILDEP, P_TILDEM
+# define ALL_WORDS   	           	P_WORD, P_DBQUOTE, P_QUOTE, P_BQUOTE
 
 # define IOFILE                     P_GREAT, P_GREATAND, P_LESS, P_LESSAND, P_DGREAT
 # define IOHERE                     P_DLESS, P_DLESSDASH

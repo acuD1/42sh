@@ -6,31 +6,21 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/21 16:03:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/27 13:45:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t		debug_out(char  *path, t_read *in)
+void			check_tmp_buffer(t_read *input)
 {
-    int fd;
-
-    if ((fd = open(path, O_WRONLY)) < 0)
-        return (FAILURE);
-    dprintf(fd, " %d x[%d] xi [%d] y[%d]\n", in->prompt_len , in->x, in->x_index, in->y);
-    return (SUCCESS);
-}
-
-void			check_tmp_buffer(t_read *line)
-{
-	goto_prompt(line);
-	if (line->tmp_buff && ft_strlen(line->tmp_buff) > 0)
+	goto_prompt(input);
+	memset(input->buffer, 0, strlen(input->buffer));
+	if (input->tmp_buff && ft_strlen(input->tmp_buff) > 0)
 	{
-		memset(line->buffer, 0, strlen(line->buffer));
-		insert_str_in_buffer(line->tmp_buff, line);
-		ft_strdel(&(line->tmp_buff));
-		line->history_index = NULL;
+		insert_str_in_buffer(input->tmp_buff, input);
+		ft_strdel(&(input->tmp_buff));
+		input->history_index = NULL;
 	}
 }
 
@@ -38,29 +28,29 @@ void			check_tmp_buffer(t_read *line)
 **	Arrow down print the prev saved in history from history index
 */
 
-void			move_key_down(t_read *line)
+void			move_key_down(t_read *input)
 {
 	t_lst	 	*w;
 	int		i;
 
 	i = -1;
 	w = NULL;
-	if (line->history && line->history_index)
+	if (input->history && input->history_index)
 	{
-		if (line->history_index && line->history_index->prev)
+		if (input->history_index && input->history_index->prev)
 		{
-			w = line->history_index->prev;
-			line->history_index = w;
+			w = input->history_index->prev;
+			input->history_index = w;
 		}
 		else
 		{
-			check_tmp_buffer(line);
+			check_tmp_buffer(input);
 			return ;
 		}
-		goto_prompt(line);
-		memset(line->buffer, 0, strlen(line->buffer));
+		goto_prompt(input);
+		memset(input->buffer, 0, strlen(input->buffer));
 		while (w->content && ((char*)w->content)[++i])
-			insert_char_in_buffer(((char*)w->content)[i], line, i);
+			insert_char_in_buffer(((char*)w->content)[i], input, i);
 	}
 }
 
@@ -68,32 +58,32 @@ void			move_key_down(t_read *line)
 **	Arrow up print the next saved in history from history index
 */
 
-void			move_key_up(t_read *line)
+void			move_key_up(t_read *input)
 {
 	t_lst	 	*w;
 	int		i;
 
 	i = -1;
-	if (line->history)
+	if (input->history)
 	{
-		if (line->history_index && !line->history_index->next)
+		if (input->history_index && !input->history_index->next)
 			return ;
-		if (line->history_index && line->history_index->next)
+		if (input->history_index && input->history_index->next)
 		{
-			w = line->history_index->next;
-			line->history_index = w;
+			w = input->history_index->next;
+			input->history_index = w;
 		}
 		else
 		{
-			if ((*line).buffer)
-				line->tmp_buff = ft_strdup(line->buffer);
-			line->history_index = line->history;
-			w = line->history;
+			if ((*input).buffer)
+				input->tmp_buff = ft_strdup(input->buffer);
+			input->history_index = input->history;
+			w = input->history;
 		}
-		goto_prompt(line);
-		memset(line->buffer, 0, strlen(line->buffer));
+		goto_prompt(input);
+		memset(input->buffer, 0, strlen(input->buffer));
 		while (w->content && ((char *)w->content)[++i])
-			insert_char_in_buffer(((char *)w->content)[i], line, i);
+			insert_char_in_buffer(((char *)w->content)[i], input, i);
 	}
 }
 
@@ -115,7 +105,7 @@ void			move_right(char *buff, t_read *input)
 		input->x_index++;
 		input->x++;
 	}
-	else if (input->x == input->ws_col || *buff == NEW_LINE
+	else if (input->x >= input->ws_col - 1 || *buff == NEW_LINE
 			|| input->buffer[buff_index] == NEW_LINE)
 	{
 		xtputs(input->tcaps[LEFT_MARGIN], 1, my_outc);
