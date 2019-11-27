@@ -18,6 +18,9 @@ void init_assign_analyze(t_anal analyze)
 	analyze[A_ASSIGN][P_IONUMBER] = error_analyze;
 	analyze[A_ASSIGN][P_ASSIGN] = assign_analyze;
 	analyze[A_ASSIGN][P_WORD] = cmd_analyze;
+	analyze[A_ASSIGN][P_QUOTE] = cmd_analyze;
+	analyze[A_ASSIGN][P_DBQUOTE] = cmd_analyze;
+	analyze[A_ASSIGN][P_BQUOTE] = cmd_analyze;
 	analyze[A_ASSIGN][P_ESCSEQ] = cmd_analyze;
 	analyze[A_ASSIGN][P_DBPARENT] = cmd_analyze;
 	analyze[A_ASSIGN][P_PARENT] = cmd_analyze;
@@ -48,6 +51,9 @@ void init_ionumber_analyze(t_anal analyze)
 	analyze[A_IONUMBER][P_IONUMBER] = error_analyze;
 	analyze[A_IONUMBER][P_ASSIGN] = error_analyze;
 	analyze[A_IONUMBER][P_WORD] = cmd_analyze;
+	analyze[A_IONUMBER][P_QUOTE] = cmd_analyze;
+	analyze[A_IONUMBER][P_BQUOTE] = cmd_analyze;
+	analyze[A_IONUMBER][P_DBQUOTE] = cmd_analyze;
 	analyze[A_IONUMBER][P_ESCSEQ] = cmd_analyze;
 	analyze[A_IONUMBER][P_DBPARENT] = error_analyze;
 	analyze[A_IONUMBER][P_PARENT] = error_analyze;
@@ -78,6 +84,9 @@ void init_redirect_analyze(t_anal analyze)
 	analyze[A_REDIRECT][P_IONUMBER] = ionbr_analyze;
 	analyze[A_REDIRECT][P_ASSIGN] = assign_analyze;
 	analyze[A_REDIRECT][P_WORD] = cmd_analyze;
+	analyze[A_REDIRECT][P_BQUOTE] = cmd_analyze;
+	analyze[A_REDIRECT][P_DBQUOTE] = cmd_analyze;
+	analyze[A_REDIRECT][P_QUOTE] = cmd_analyze;
 	analyze[A_REDIRECT][P_ESCSEQ] = cmd_analyze;
 	analyze[A_REDIRECT][P_DBPARENT] = error_analyze;
 	analyze[A_REDIRECT][P_PARENT] = error_analyze;
@@ -108,6 +117,9 @@ void init_end_analyze(t_anal analyze)
 	analyze[A_END][P_IONUMBER] = ionbr_analyze;
 	analyze[A_END][P_ASSIGN] = assign_analyze;
 	analyze[A_END][P_WORD] = cmd_analyze;
+	analyze[A_END][P_DBQUOTE] = cmd_analyze;
+	analyze[A_END][P_BQUOTE] = cmd_analyze;
+	analyze[A_END][P_QUOTE] = cmd_analyze;
 	analyze[A_END][P_ESCSEQ] = cmd_analyze;
 	analyze[A_END][P_DBPARENT] = cmd_analyze;
 	analyze[A_END][P_PARENT] = cmd_analyze;
@@ -136,6 +148,9 @@ void	init_separator_analyze(t_anal analyze)
 	analyze[A_SEPARATOR][P_IONUMBER] = ionbr_analyze;
 	analyze[A_SEPARATOR][P_ASSIGN] = assign_analyze;
 	analyze[A_SEPARATOR][P_WORD] = cmd_analyze;
+	analyze[A_SEPARATOR][P_BQUOTE] = cmd_analyze;
+	analyze[A_SEPARATOR][P_DBQUOTE] = cmd_analyze;
+	analyze[A_SEPARATOR][P_QUOTE] = cmd_analyze;
 	analyze[A_SEPARATOR][P_ESCSEQ] = cmd_analyze;
 	analyze[A_SEPARATOR][P_DBPARENT] = cmd_analyze;
 	analyze[A_SEPARATOR][P_PARENT] = cmd_analyze;

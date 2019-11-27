@@ -19,6 +19,10 @@ void init_expansion_analyze(t_anal analyze)
 	analyze[A_EXPANSION][P_IONUMBER] = ionbr_analyze;
 	analyze[A_EXPANSION][P_ASSIGN] = assign_analyze;
 	analyze[A_EXPANSION][P_WORD] = cmd_analyze;
+	analyze[A_EXPANSION][P_BQUOTE] = cmd_analyze;
+	analyze[A_EXPANSION][P_DBQUOTE] = cmd_analyze;
+	analyze[A_EXPANSION][P_QUOTE] = cmd_analyze;
+	analyze[A_EXPANSION][P_WORD] = cmd_analyze;
 	analyze[A_EXPANSION][P_ESCSEQ] = cmd_analyze;
 	analyze[A_EXPANSION][P_DBPARENT] = cmd_analyze;
 	analyze[A_EXPANSION][P_PARENT] = cmd_analyze;
@@ -51,6 +55,9 @@ void init_start_analyze(t_anal analyze)
 	analyze[A_START][P_ESCSEQ] = cmd_analyze;
 	analyze[A_START][P_ASSIGN] = assign_analyze;
 	analyze[A_START][P_WORD] = cmd_analyze;
+	analyze[A_START][P_QUOTE] = cmd_analyze;
+	analyze[A_START][P_BQUOTE] = cmd_analyze;
+	analyze[A_START][P_DBQUOTE] = cmd_analyze;
 	analyze[A_START][P_DBPARENT] = cmd_analyze;
 	analyze[A_START][P_PARENT] = cmd_analyze;
 	analyze[A_START][P_BRACKET] = cmd_analyze;
@@ -80,6 +87,9 @@ void init_word_analyze(t_anal analyze)
 	analyze[A_WORD][P_IONUMBER] = ionbr_analyze;
 	analyze[A_WORD][P_ASSIGN] = assign_analyze;
 	analyze[A_WORD][P_WORD] = cmd_analyze;
+	analyze[A_WORD][P_QUOTE] = cmd_analyze;
+	analyze[A_WORD][P_DBQUOTE] = cmd_analyze;
+	analyze[A_WORD][P_BQUOTE] = cmd_analyze;
 	analyze[A_WORD][P_ESCSEQ] = cmd_analyze;
 	analyze[A_WORD][P_DBPARENT] = cmd_analyze;
 	analyze[A_WORD][P_PARENT] = cmd_analyze;

@@ -32,6 +32,7 @@ void			ft_printtoklist(t_lst *lexer)
 	while (lexer)
 	{
 		tmp = (t_token*)lexer->content;
+		ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "{%s %u}\n", ((t_token*)lexer->content)->data, ((t_token*)lexer->content)->id); // LAISSE LE PD
 		if (!lexer->next)
 			break;
 		lexer = lexer->next;
