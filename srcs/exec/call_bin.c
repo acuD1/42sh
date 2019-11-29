@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/24 11:08:31 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/27 22:12:04 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int8_t	call_bin(t_core *shell, t_lst *process)
 	if (get_bin(shell, ((t_process*)process->content)) != SUCCESS)
 	{
 		dprintf(STDERR_FILENO, "42sh: %s: command not found\n", ptr->av[0]);
-		// LEAKS faut check avant le fork !
 		exit(127);
 	}
 	ret = execve(ptr->bin, ptr->av, envp);

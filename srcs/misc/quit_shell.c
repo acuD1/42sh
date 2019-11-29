@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 23:52:50 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/26 23:54:01 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/29 04:59:08 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	quit_shell(t_core *shell, int exit_value)
 {
-
-	//Call all functions to free and restore terminal
-
-	(void)shell;
+	reset_config(shell, &(shell->cmd_line));
+	//MAKE SUR EVERYTHING IS FREED
 	write(STDERR_FILENO, "exit\n", 5);
 	exit(exit_value);
 }

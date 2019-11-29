@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/27 00:06:41 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/29 05:05:12 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,12 @@ uint8_t				init_config(t_core *shell)
 
 uint8_t			reset_config(t_core *shell, t_read *input)
 {
-	if (tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t)) == FAILURE)
+	tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t));
+	if (input->prompt) // secu
 	{
-		// Display error msg
-		return (FAILURE);
+		free(input->prompt);
+		input->prompt = NULL;
 	}
-	shell->old_t.c_lflag |= (ICANON | ECHO);
-	free(input->prompt);
-	(input->tmp_buff) ? ft_strdel(&input->tmp_buff) : 0;
+	ft_strdel(&input->tmp_buff); // pas besoin de secu, ft_strdel est secur
 	return (SUCCESS);
 }

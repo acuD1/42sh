@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/12 09:56:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/29 00:52:41 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@
 
 # define HIST_SIZE		500
 # define HISTFILE_SIZE		500
+
+# define DBGMAX(a, b)	dprintf(open(b, O_RDONLY), "%s", a);
 
 /*
 ** LEXER_PARSER_ANALYZER
