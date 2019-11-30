@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:44:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 16:57:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:48:48 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ uint8_t		charset_count(t_read *input, char charset, int i)
 	{
 		if (input->buffer[i] == charset)
 			count++;
+		else if (count > 0 && input->buffer[i] != charset)
+			count = 0;
 		i++;
 	}
 	return (count);

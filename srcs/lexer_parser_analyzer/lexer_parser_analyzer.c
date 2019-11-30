@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:51:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 17:35:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:38:35 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void ft_freedblist(t_lst **lst)
 	}
 }
 
-
 void printjobbijobba(t_core *shell)
 {
 	if (shell->job_list)
@@ -120,9 +119,8 @@ void lexer_parser_analyzer(t_core *shell, char *line)
 	{
 		shell->lexer = lxr_tok;
 		analyzer(shell);
-	//	ft_printjoblst(shell->job_list);
+		ft_printjoblst(shell->job_list);
 	}
 	else if (lxr_tok)
 		ft_dprintf(2, "42sh: syntax error near unexpected token `%s'\n", ((t_token*)lxr_tok->content)->data);
 }
-
