@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/30 09:00:41 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/30 09:39:54 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	sig_handler(int signum)
 	t_core	*shell;
 
 	shell = get_core(NULL);
-	if (signum == SIGHUP)
-		kill(shell->running_process->pid, SIGHUP);
+	if (signum == SIGHUP && shell->running_process)
+		kill_processes(SIGHUP, shell);
 	if (message[signum - 1] != NULL)
 		dprintf(STDERR_FILENO, "%s: %i (42sh)\n", message[signum - 1], signum);
 	quit_shell(shell, 0, 0);

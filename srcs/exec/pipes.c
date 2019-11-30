@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 11:06:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/30 08:42:37 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/30 09:43:55 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int8_t			exec_pipeline(t_core *shell, t_lst **process)
 
 	ret = SUCCESS;
 	p_len = get_pipeline_len(*process);
+	shell->running_process = *process;
 	if ((pipes = (int*)malloc(sizeof(int) * (2 * p_len))) == NULL)
 		return (FAILURE);
 	if (pipe(pipes) < 0)
@@ -114,6 +115,7 @@ int8_t			exec_pipeline(t_core *shell, t_lst **process)
 		ret = FAILURE;
 	while (p_len-- > 0)
 		wait(&(shell->status));
+	shell->running_process = NULL;
 	status_handler(shell, shell->status);
 	return (ret);
 }

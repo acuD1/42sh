@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/30 08:59:35 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/30 09:19:34 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 	else if (pid == 0)
 		call_bin(shell, process);
 	((t_process*)process->content)->pid = pid;
-	shell->running_process = process->content;
+	shell->running_process = process;
 	if (waitpid(pid, &shell->status, WUNTRACED | WCONTINUED) != pid)
 	{
 		dprintf(STDERR_FILENO, "42sh: waitpid error\n");
