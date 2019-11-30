@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/29 05:05:12 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/30 06:17:03 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			init_cmd_line(t_read *term, t_core *shell)
 	term->buffer = ft_memalloc(BUFF_SIZE);
 	term->tmp_buff = NULL;
 	if (get_size(term) != SUCCESS)
-		quit_shell(shell, 1);
+		quit_shell(shell, 1, 1);
 	init_history(term);
 }
 

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/27 00:48:22 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/30 06:13:35 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int8_t		is_a_dir(char *path);
 char		*get_abs_path(char *path);
 void		print_usage(char *name, int c, char *usage);
 void		ft_perror(const char *s, const int errnum);
-void		quit_shell(t_core *shell, int exit_value);
+void		quit_shell(t_core *shell, int exit_value, int8_t verbose);
 int			check_invalid_identifiers(char *arg, char *exceptions);
 
 /*
