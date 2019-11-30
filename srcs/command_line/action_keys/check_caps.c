@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/12 09:41:10 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:22:43 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,10 @@ void		end_of_file(t_read *input, uint64_t value)
 		ft_putstr("exit\n");
 		reset_config(input);
 		write_history(input);
-		if (input->history)
+		while (input->history)
 		{
-			while (input->history)
-			{
-				free(input->history->content);
-				input->history = input->history->next;
-			}
+			free(input->history->content);
+			input->history = input->history->next;
 		}
 		free(input->history);
 		exit(0);

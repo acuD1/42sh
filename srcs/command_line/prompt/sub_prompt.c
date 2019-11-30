@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 16:40:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:39:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int8_t		debug(char  *path, t_read *in, char c)
 
 void		display_subprompt(t_read *term, char *prompt)
 {
+	if (*term->prompt)
+		ft_strdel(&term->prompt);
 	term->prompt = ft_strdup(prompt);
 	term->prompt_len = ft_strlen(term->prompt);
 	term->x = term->prompt_len;
@@ -85,7 +87,7 @@ void		load_subprompt(char sb, t_read *input)
 		if (read_subline(input, sb) == FALSE)
 		{
 			input->sub_prompt = FALSE;
-			input->buffer = ft_strjoin(input->tmp_buff, input->buffer);
+			input->buffer = ft_strjoinf(input->tmp_buff, input->buffer, 2);
 			if (quotes_is_matching(input, &sb) == FALSE)
 			{
 				input->buffer[ft_strlen(input->buffer)] = NEW_LINE;

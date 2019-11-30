@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 16:39:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:29:48 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void		init_prompt(t_read *term)
 		else
 			break ;
 	}
-	if (check_subprompt(term) == FALSE)
+	if (*term->buffer && check_subprompt(term) == FALSE)
 	{
 		// remove_newline(term);
 		check_expansions(term);

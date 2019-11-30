@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/05 19:06:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:16:04 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd)
 	}
 	if (cmd[0] && !ft_isdigit(*cmd[0]) && !(w->next))
 		return (FAILURE);
-	ft_bzero(shell->buff, ft_strlen(shell->buff));
-	shell->buff = ft_strdup(w->content);
-	get_tokens(shell, shell->buff);
-	ft_printf("%s\n", shell->buff);
+	ft_strdel(&shell->input->buffer);
+	shell->input->buffer = ft_strdup(w->content);
+	get_tokens(shell, shell->input->buffer);
+	ft_printf("%s\n", shell->input->buffer);
 	exec_process(shell, shell->env);
 	return (SUCCESS);
 }

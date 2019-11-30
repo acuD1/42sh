@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/18 18:06:12 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:09:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 void		launch_editor(t_core *shell, char *ed, char *cmd)
 {
 	ft_printf("%d\n", ft_strlen(cmd) + 1);
-	ft_strcpy(shell->buff, ed);
+	ft_strcpy(shell->input->buffer, ed);
 	lexer_parser_analyzer(shell, ed);
 	if (task_master(shell) != SUCCESS)
 		exit(1);
-
 
 
 	ft_printf("%s\n", cmd);

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/30 17:29:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:14:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ typedef struct	s_core
 	t_lst		*history;
 
 	/* variables */
-	char		*buff;
 	char		**tokens;			//	ft_strplit of char *line from GNL [BETA]
 	char		*bin;				//	dup of the binary found or located [BETA]
 	int32_t		status;				//	last exit status value (echo $?)
@@ -140,75 +139,75 @@ typedef struct s_lex_exp
 **			COMMAND_LINE
 */
 
-typedef struct		s_read
+typedef struct			s_read
 {
-	char		*prompt;
-	int		prompt_len;
-	int		x_index;
-	int		x;
-	int		y;
-	int		y_li;
-	int		width;
-	int		ws_col;
-	int		ws_li;
-	int		ac;
+	char				*prompt;
+	int					prompt_len;
+	int					x_index;
+	int					x;
+	int					y;
+	int					y_li;
+	int					width;
+	int					ws_col;
+	int					ws_li;
+	int					ac;
 
-	int		new_line;
-	int		found;
-	int		sub_prompt;
+	int					new_line;
+	int					found;
+	int					sub_prompt;
 
-	char		*tcaps[CAPS_NBR];
-	char		*buffer;
-	char		*tmp_buff;
-	char		**cmd;
+	char				*tcaps[CAPS_NBR];
+	char				*buffer;
+	char				*tmp_buff;
+	char				**cmd;
 
-	t_core		*shell;
-	t_lst		*history;
-	t_lst		*history_index;
-}			t_read;
+	t_core				*shell;
+	t_lst				*history;
+	t_lst				*history_index;
+}						t_read;
 
 /*
 ** 			LEXER_PARSER_ANALYZER
 */
 
-typedef struct		s_redir
+typedef struct			s_redir
 {
-	char			*op[2];
-	int			io_num[2];
-	int			dup_fd;
+	char				*op[2];
+	int					io_num[2];
+	int					dup_fd;
 	enum parser_state	type;
-}			t_redir;
+}						t_redir;
 
-typedef struct		s_process
+typedef struct			s_process
 {
 	enum parser_state	type;
-	t_lst			*assign_list;
-	t_lst			*redir_list;
-	char			**av;
-	char			*bin;
+	t_lst				*assign_list;
+	t_lst				*redir_list;
+	char				**av;
+	char				*bin;
     // char                **env;
     // uint8_t                completed;
     // uint8_t                stopped;
     // pid_t                pid;
     // int                    status;
-}			t_process;
+}						t_process;
 
-typedef struct		s_job
+typedef struct			s_job
 {
-    char			*command;
-    t_lst			*process_list;
+    char				*command;
+    t_lst				*process_list;
     // struct termios      *term_modes;
     // pid_t               pgid;
     // t_filedesc          fd;
     // int         status; // 1 = running | 0 = stopped par exemple
-    e_parser_state type;
-}			t_job;
+    e_parser_state 		type;
+}						t_job;
 
-typedef struct		s_analyzer
+typedef struct			s_analyzer
 {
-    t_anal		analyze;
+    t_anal				analyze;
     e_analyzer_state	state;
-    t_lst		*lexer;
+    t_lst				*lexer;
     t_job               job;
     t_process           process;
     t_redir             redir;
@@ -218,35 +217,35 @@ typedef struct		s_analyzer
     t_lst               *redir_list;
     t_lst               *assign_list;
     t_lst               *tmp_list;
-}			t_analyzer;
+}						t_analyzer;
 
-typedef struct		s_graph
+typedef struct			s_graph
 {
     e_parser_state      *good_type;
 }                       t_graph;
 
-typedef struct      s_parser
+typedef struct			s_parser
 {
-    t_graph         graph[NB_PARSER_STATE];
-    e_parser_state  state;
-}                   t_parser;
+    t_graph				graph[NB_PARSER_STATE];
+    e_parser_state		state;
+}						t_parser;
 
-typedef struct  s_token
+typedef struct			s_token
 {
-    e_parser_state id;
-    char            *data;
-    size_t          data_len;
-}              t_token;
+    e_parser_state		id;
+    char				*data;
+    size_t				data_len;
+}						t_token;
 
-typedef struct  s_lexer
+typedef struct 		 	s_lexer
 {
-    char            *buff;
-    e_lexer_state   status;
-    size_t          ntok;
-    size_t          buf_pos;
-    t_lexing        lex[NB_LEXER_STATE];
-    t_token 		token;
-    u_int8_t 		quote;
-}               t_lexer;
+	char				*buff;
+	e_lexer_state		status;
+	size_t				ntok;
+	size_t				buf_pos;
+    t_lexing			lex[NB_LEXER_STATE];
+    t_token				token;
+    u_int8_t 			quote;
+}						t_lexer;
 
 #endif
