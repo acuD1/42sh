@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/26 17:55:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 14:42:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,6 @@ void			load_prompt(t_core *shell)
 		shell->history = term.history;
 		init_prompt(&term);
 		shell->buff = term.buffer;
-		/*
-		**	[NEED REWORK] A lot of stuff happening here :
-		**	- tokens parser (for now)
-		**	- Exp handling
-		**	- Builtins ? (Maybe not accurate for now with futurs implementations)
-		**	- etc ...
-		*/
-
 		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "BUFF           [%s]\n", shell->buff);
 		lexer_parser_analyzer(shell, term.buffer);
 		debug_ailleurs("/dev/ttys002", "CE N'EST PLUS MA PARTIE");
