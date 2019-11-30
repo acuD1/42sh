@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/12 09:56:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:35:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,13 @@ uint8_t			parser(t_lst *lexer)
 	parser = ft_init_graph(parser);
 	while (((t_token*)tok_lst->content)->id != P_END)
 	{
+		// ft_dprintf(2, "parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
 		if (!(graph(&parser->state, ((t_token*)tok_lst->content)->id,
 			parser->graph[parser->state].good_type)))
+		{
+		//	ft_dprintf(2, "error parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
 			return (FALSE);
+		}
 		tok_lst = tok_lst->next;
 	}
 	lexer = *head;

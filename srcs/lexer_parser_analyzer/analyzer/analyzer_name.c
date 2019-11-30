@@ -50,14 +50,18 @@ t_analyzer *escape_sequence_analyzer(t_analyzer *analyzer, t_core *shell)
 	char *str;
 
 	(void)shell;
+	ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "ESC SEQ state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	str = NULL;
 	str = ft_strnew(0);
 	while (((t_token*)analyzer->lexer->content)->id == P_ESCSEQ && ((t_token*)analyzer->lexer->next->content)->id != P_END)
 	{
-		get_token(analyzer);
-		if (((t_token*)analyzer->lexer->content)->id == P_SEMICOLON || ((t_token*)analyzer->lexer->content)->id == P_ESCSEQ)
+		if (((t_token*)analyzer->lexer->content)->id == P_ESCSEQ || ((t_token*)analyzer->lexer->content)->id == P_SEMICOLON)
 			get_token(analyzer);
+		if (((t_token*)analyzer->lexer->next->content)->id == P_END)
+			break ;
 		str = ft_strjoinf(str, ((t_token*)analyzer->lexer->content)->data, 1);
 		analyzer->job.command = fill_cmd_job(analyzer, 1);
+		get_token(analyzer);
 	}
 	free(((t_token*)analyzer->lexer->content)->data);
 	((t_token*)analyzer->lexer->content)->data = ft_strdup(str);

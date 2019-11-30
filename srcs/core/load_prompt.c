@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/30 14:42:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:33:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,10 @@ void			load_prompt(t_core *shell)
 		shell->buff = term.buffer;
 		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "BUFF           [%s]\n", shell->buff);
 		lexer_parser_analyzer(shell, term.buffer);
-		debug_ailleurs("/dev/ttys002", "CE N'EST PLUS MA PARTIE");
 		if (task_master(shell) != SUCCESS)
 			exit(1);
-		free_prompt(shell, shell->buff);
 		save_history(&term);
-		free(term.buffer);
+		free_prompt(shell, term.buffer);
 		// ft_freejoblist(&shell->job_list);
 	}
 	free_history(shell);

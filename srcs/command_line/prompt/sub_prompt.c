@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/26 18:05:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 16:40:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void		load_subprompt(char sb, t_read *input)
 			if (quotes_is_matching(input, &sb) == FALSE)
 			{
 				input->buffer[ft_strlen(input->buffer)] = NEW_LINE;
-				debug("/dev/pts/2", input, sb);
+				//debug("/dev/pts/2", input, sb);
 				free(input->tmp_buff);
 				input->tmp_buff = ft_strdup(input->buffer);
 				continue ;

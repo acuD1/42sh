@@ -6,21 +6,23 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:44:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/27 17:18:53 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:52:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-uint8_t		charset_count(t_read *input, char charset, int i)
+uint8_t		charset_count(t_read *input, char c, int i)
 {
 	int	count;
 
 	count = 0;
 	while (input->buffer[i])
 	{
-		if (input->buffer[i] == charset)
+		if (input->buffer[i] == c)
 			count++;
+		else if (c == BACKSLASH && count > 0 && input->buffer[i] != c)
+			count = 0;
 		i++;
 	}
 	return (count);

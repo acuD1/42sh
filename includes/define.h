@@ -112,7 +112,6 @@
 # define CTRL_D			0x0400000000000000
 # define ALT_AW_UP		0x1b1b5b4100000000
 # define ALT_AW_DO		0x1b1b5b4200000000
-# define ESCSEQ			0x5C00000000000000
 
 /*
 **	Hash table
