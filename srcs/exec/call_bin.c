@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/27 10:52:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/30 14:57:12 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int8_t	call_bin(t_core *shell, t_lst *process)
 		exit(126);
 	}
 	//print_hash_map(&shell->hash);
-	dprintf(STDERR_FILENO, "test\n");
+	//dprintf(STDERR_FILENO, "test\n");
 	ret = execve(((t_process*)process->content)->bin, ((t_process*)process->content)->av, envp);
 	dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);
 	ft_tabdel(&envp);
