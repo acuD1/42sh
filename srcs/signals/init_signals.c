@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/30 08:41:53 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/30 09:00:41 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ static void	sig_handler(int signum)
 		, "User defined signal 1", "User defined signal 2"};
 	t_core	*shell;
 
-	if (message[signum - 1] != NULL)
-		dprintf(STDERR_FILENO, "%s:%i (42sh)\n", message[signum - 1], signum);
 	shell = get_core(NULL);
+	if (signum == SIGHUP)
+		kill(shell->running_process->pid, SIGHUP);
+	if (message[signum - 1] != NULL)
+		dprintf(STDERR_FILENO, "%s: %i (42sh)\n", message[signum - 1], signum);
 	quit_shell(shell, 0, 0);
 }
 
@@ -56,8 +58,8 @@ void		init_signals(void)
 		, sig_handler, sig_handler, sig_handler, sig_handler, sig_handler /* QUIT ILL TRAP ABRT EMT */
 		, sig_handler, NULL, sig_handler, sig_handler, sig_handler, sig_exit /*FPE KILL(NULL)BUS SEGV SYS PIPE*/
 		, sig_handler, sig_handler, sig_handler, NULL, sig_handler, sig_exit/*ALRM TERM URG STOP(NL) TSTP CONT*/
-		, SIG_DFL, sig_handler, sig_handler, sig_handler, sig_handler /*CHLD TTIN TTOU IO XCPU XFSZ*/
-		, sig_handler, sig_handler, sig_handler, sigh_winch, NULL, sig_handler /*VTALRM PROF WINCH INFO USR1 */
+		, SIG_DFL, SIG_DFL, SIG_DFL, SIG_DFL, sig_handler, sig_handler /*CHLD TTIN TTOU IO XCPU XFSZ*/
+		, sig_handler, sig_handler, sigh_winch, NULL, sig_handler /*VTALRM PROF WINCH INFO USR1 */
 		, sig_handler}; /* USR2*/
 	int i;
 

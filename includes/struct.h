@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/30 08:42:24 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/30 08:58:52 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ typedef struct	s_core
 	t_build				build;
 	t_hash				hash;			// Gonna call it on the stack for now
 	t_db				db;
-	t_process			*last_process;
+	t_process			*running_process;
 
 	/* init shell */
 	struct termios		old_t;			// Pour eviter la globale
