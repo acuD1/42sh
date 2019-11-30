@@ -50,6 +50,7 @@ uint8_t 	expansion(t_core *shell, t_process *process)
 	i = -1;
 	tablo = NULL;
 	tmp = NULL;
+	dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "MEH");
 	if (!process->av)
 		return (FALSE);
 	tablo = ft_tabcopy(tablo, process->av);

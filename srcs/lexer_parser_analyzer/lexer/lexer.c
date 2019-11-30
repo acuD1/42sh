@@ -57,7 +57,7 @@ t_lst		*start_lexer(t_lexer *lexer, t_lst *lexer_token)
 		while (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 			lexer->buf_pos++;
 	}
-	else if (!ft_strcmp(&lexer->buff[lexer->buf_pos], "\n")    )
+	else if (lexer->buff[lexer->buf_pos] == '\n')
 		lexer->status = L_NEWLINE;
 	else if (lexer->buff[lexer->buf_pos] == '\\')
 		lexer->status = L_ESCSEQ;

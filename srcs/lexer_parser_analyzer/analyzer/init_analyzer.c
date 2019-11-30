@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_analyzer.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/30 17:29:49 by guvillat          #+#    #+#             */
+/*   Updated: 2019/11/30 17:29:55 by guvillat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh42.h"
 
-void init_expansion_analyze(t_anal analyze)
+void		init_expansion_analyze(t_anal analyze)
 {
 	analyze[A_START][P_START] = separator_analyze;
 	analyze[A_EXPANSION][P_NEWLINE] = separator_analyze;
@@ -34,7 +46,7 @@ void init_expansion_analyze(t_anal analyze)
 	analyze[A_EXPANSION][P_END] = end_analyze;
 }
 
-void init_start_analyze(t_anal analyze)
+void		init_start_analyze(t_anal analyze)
 {
 	analyze[A_START][P_START] = separator_analyze;
 	analyze[A_START][P_NEWLINE] = separator_analyze;
@@ -68,7 +80,7 @@ void init_start_analyze(t_anal analyze)
 	analyze[A_START][P_END] = end_analyze;
 }
 
-void init_word_analyze(t_anal analyze)
+void		init_word_analyze(t_anal analyze)
 {
 	analyze[A_WORD][P_NEWLINE] = separator_analyze;
 	analyze[A_WORD][P_ANDIF] = separator_analyze;
@@ -116,7 +128,7 @@ static void	bzero_analyze(t_anal parsing)
 	}
 }
 
-t_analyzer *init_analyze(t_analyzer *analyzer, t_core *shell)
+t_analyzer	*init_analyze(t_analyzer *analyzer, t_core *shell)
 {
 	if (!(analyzer = (t_analyzer*)malloc(sizeof(t_analyzer))))
 		return (NULL);

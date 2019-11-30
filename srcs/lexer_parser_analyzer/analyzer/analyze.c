@@ -36,8 +36,10 @@ t_analyzer *separator_analyze(t_analyzer *analyzer, t_core *shell)
 	}
 	else if (state == P_ORIF || state == P_ANDIF || state == P_PIPE)
 	{
+		printf("tto\n");
 		analyzer->job.command = fill_cmd_job(analyzer, 1);
 		analyzer->process.type = state;
+		analyzer->state = A_SEPARATOR;
 		return (analyzer = process_analyze(analyzer, shell));
 	}
 	else if (state == P_NEWLINE || state == P_END)

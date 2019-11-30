@@ -49,18 +49,13 @@ t_analyzer *escape_sequence_analyzer(t_analyzer *analyzer, t_core *shell)
 {
 	char *str;
 
-	str = NULL;	
-	// str = ft_strdup(((t_token*)analyzer->lexer->content)->data); // dans le cas ou ya un \ tout seul mais normalement subprompt donc ca existe pas
+	(void)shell;
 	str = ft_strnew(0);
 	while (((t_token*)analyzer->lexer->content)->id == P_ESCSEQ && ((t_token*)analyzer->lexer->next->content)->id != P_END)
 	{
 		get_token(analyzer);
-		(void)shell;
-		if (((t_token*)analyzer->lexer->content)->id == P_SEMICOLON)
-		{
-			free(str);
-			return (analyzer = separator_analyze(analyzer, shell));
-		}
+		if (((t_token*)analyzer->lexer->content)->id == P_SEMICOLON || ((t_token*)analyzer->lexer->content)->id == P_ESCSEQ)
+			get_token(analyzer);
 		str = ft_strjoinf(str, ((t_token*)analyzer->lexer->content)->data, 1);
 		analyzer->job.command = fill_cmd_job(analyzer, 1);
 	}
