@@ -29,29 +29,24 @@ static int8_t	check_filepath(char *filepath)
 }
 int8_t	call_bin(t_core *shell, t_lst *process)
 {
-	//t_process	*ptr;
+	t_process	*ptr;
 	char		**envp;
 	int			ret;
 
 	envp = set_envp(shell);
-//	ptr = process->content;
-	exec_redirs(((t_process*)process->content)->redir_list);
-	if (((t_process*)process->content)->bin == NULL)
+	ptr = process->content; //Shortcut to ((t_process*)proces->content)
+	exec_redirs(ptr->redir_list);
+	if (ptr->bin == NULL)
 	{
-		dprintf(STDERR_FILENO, "42sh: %s: command not found\n", ((t_process*)process->content)->av[0]);
-		// LEAKS faut check avant le fork !
+		dprintf(STDERR_FILENO, "42sh: %s: command not found\n", ptr->av[0]);
 		exit(127);
 	}
-	if (((t_process*)process->content)->bin && (ret = check_filepath(((t_process*)process->content)->bin)) != SUCCESS)
+	if ((ret = check_filepath(ptr->bin)) != SUCCESS)
 	{
-		ft_perror(((t_process*)process->content)->av[0], ret);
-		if (ret == ENOENT)
-			exit(127);
-		exit(126);
+		ft_perror(ptr->av[0], ret);
+		exit((ret == ENOENT) ? 127: 126);
 	}
-	//print_hash_map(&shell->hash);
-	//dprintf(STDERR_FILENO, "test\n");
-	ret = execve(((t_process*)process->content)->bin, ((t_process*)process->content)->av, envp);
+	ret = execve(ptr->bin, ptr->av, envp);
 	dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);
 	ft_tabdel(&envp);
 	exit(1);
