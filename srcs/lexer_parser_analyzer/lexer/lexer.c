@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 15:41:31 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/30 16:36:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:05:08 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_lst		*start_lexer(t_lexer *lexer, t_lst *lexer_token)
 		while (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 			lexer->buf_pos++;
 	}
-	else if (!ft_strcmp(&lexer->buff[lexer->buf_pos], "\n")    )
+	else if (lexer->buff[lexer->buf_pos] == '\n')
 		lexer->status = L_NEWLINE;
 	else if (lexer->buff[lexer->buf_pos] == '\\')
 		lexer->status = L_ESCSEQ;

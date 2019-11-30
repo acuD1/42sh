@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 14:40:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:01:19 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ char		set_quote_type(char quote)
 		return (quote = BRACKET_CLOSE);
 	else if (quote == CURLY_BRACKET_OPEN)
 		return (quote = CURLY_BRACKET_CLOSE);
-	else if (quote == HOOK_OPEN)
-		return (quote = HOOK_CLOSE);
 	return ('\0');
 }
 

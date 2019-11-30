@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/30 16:51:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:33:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,11 @@ void			load_prompt(t_core *shell)
 		/* Base output for prompt */
 		shell->history = term.history;
 		init_prompt(&term);
-		shell->buff = term.buffer;
 		lexer_parser_analyzer(shell, term.buffer);
 		if (task_master(shell) != SUCCESS)
 			exit(1);
-		free_prompt(shell, shell->buff);
 		save_history(&term);
-		free(term.buffer);
+		free_prompt(shell, term.buffer);
 		// ft_freejoblist(&shell->job_list);
 	}
 	free_history(shell);

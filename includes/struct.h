@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/18 15:32:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 17:29:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef t_analyzer    *(*t_analyze)(t_analyzer*, t_core*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_PARSER_STATE];
 typedef t_lst *(*t_lexing)(t_lexer*, t_lst *);
 
+typedef struct s_read t_read;
 
 /*
 **	t_db is formated to support environnement variables ; {key} and {value}
@@ -91,6 +92,7 @@ struct termios	old_t;
 typedef struct	s_core
 {
 	/* structs */
+	t_read		*input;
 	t_build		build;
 	t_hash		hash;			// Gonna call it on the stack for now
 	t_db		db;
