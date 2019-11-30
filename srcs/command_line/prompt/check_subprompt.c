@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/26 17:58:36 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 14:40:58 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ uint8_t		quotes_is_matching(t_read *line, char *quote)
 
 uint8_t		check_subprompt(t_read *input)
 {
-	int	i;
+	int		i;
 	char	quote;
 
 	i = -1;

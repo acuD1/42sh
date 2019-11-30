@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/26 17:19:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 15:12:46 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 */
 
 # define BLT_NUMBER		0x004
-# define BITOK_ERROR		0x001
+# define BITOK_ERROR	0x001
 # define PATH_ERROR		0x002
 # define FORK_ERROR		0x004
 # define BIN_ERROR		0x006
@@ -68,7 +68,7 @@
 */
 
 # define S_USR_RW		(S_IRUSR | S_IWUSR)
-# define S_GRP_OTH_R		(S_IRGRP | S_IROTH)
+# define S_GRP_OTH_R	(S_IRGRP | S_IROTH)
 # define MODE_WRITE		(O_CREAT | O_WRONLY | O_TRUNC)
 # define PS1			"42sh-2.0$ "
 # define PS2			"> "

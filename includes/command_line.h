@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/25 15:54:41 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 15:22:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ void			clr_screen(t_read *input);
 **		History
 */
 
-void			init_history(t_read *term);
+int8_t			init_history(t_read *term);
 void			save_history(t_read *term);
 void			research_mode(t_read *line);
-void			write_history(t_read *line);
+int8_t			write_history(t_read *line);
 void			check_expansions(t_read *line);
 void			call_number(t_read *line, int i);
 void			last_cmd_back(t_read *line, int i);
