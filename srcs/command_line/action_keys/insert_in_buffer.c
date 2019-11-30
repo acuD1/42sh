@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/27 15:49:49 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/12 09:52:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	while (++x < input->width)
 		move_left(buff, input);
 	ft_strdel(&tmp);
+	if (input->y_li == input->ws_li && input->width % input->ws_col == 2)
+		xtputs(input->tcaps[KEY_UP], 1, my_outc);
 }
 
 /*

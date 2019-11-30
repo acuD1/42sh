@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 15:41:31 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/03 14:43:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/30 16:36:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,20 +52,19 @@ t_lst		*start_lexer(t_lexer *lexer, t_lst *lexer_token)
 	}
 	else if (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 	{
-		if (lexer->buff[lexer->buf_pos - 1] == '\\')
+		if (lexer->buff[lexer->buf_pos - 1] && lexer->buff[lexer->buf_pos - 1] == '\\')
 			ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_WORD, " "), sizeof(t_token)));
 		while (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
 			lexer->buf_pos++;
-		// ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_WORD, " "), sizeof(t_token)));
 	}
+	else if (!ft_strcmp(&lexer->buff[lexer->buf_pos], "\n")    )
+		lexer->status = L_NEWLINE;
 	else if (lexer->buff[lexer->buf_pos] == '\\')
 		lexer->status = L_ESCSEQ;
 	else if (ft_strchr(OPERATORS, lexer->buff[lexer->buf_pos]))
 		lexer->status = L_OPERATOR;
 	else if (ft_isdigit(lexer->buff[lexer->buf_pos]))
 		lexer->status = L_IO_NUMBER;
-	else if (!ft_strcmp(&lexer->buff[lexer->buf_pos], "\n") && !lexer->quote)
-		lexer->status = L_NEWLINE;
 	else if (ft_strchr(&lexer->buff[lexer->buf_pos], '='))
 		lexer->status = L_ASSIGNEMENT_WORD;
 	else
@@ -106,7 +105,8 @@ t_lst *lexer(char *line)
 	while (lexer.status != L_END)
 		lexer_token = lexer.lex[lexer.status](&lexer, *head);
 	lexer_token = *head;
-	ft_printtoklist(lexer_token);
+//	ft_printtoklist(lexer_token);
+	lexer_token = *head;
 	init_lexer(NULL, &lexer);
 	return (*head);
 }

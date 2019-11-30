@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/30 14:42:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 16:51:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 **	wiches are globals variables, such as tokens, env list etc...
 */
 
+// https://linuxconfig.org/bash-prompt-basics
 
 /*
 **	TO DO:
@@ -41,10 +42,6 @@ void			load_prompt(t_core *shell)
 {
 	int8_t		status;
 	t_read		term;
-	//t_lst *tmp;
-
-	// t_parser *parser;
-	// t_ast	*ast;
 
 	status = 1;
 	credit(shell);
@@ -57,7 +54,6 @@ void			load_prompt(t_core *shell)
 		shell->history = term.history;
 		init_prompt(&term);
 		shell->buff = term.buffer;
-		//debug_analyzer(shell);
 		lexer_parser_analyzer(shell, term.buffer);
 		if (task_master(shell) != SUCCESS)
 			exit(1);
@@ -65,7 +61,6 @@ void			load_prompt(t_core *shell)
 		save_history(&term);
 		free(term.buffer);
 		// ft_freejoblist(&shell->job_list);
-		//break;
 	}
 	free_history(shell);
 	ft_strdel(&shell->buff);

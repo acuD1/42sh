@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/12 09:56:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/11/30 16:49:23 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ uint8_t parser(t_lst *lexer)
 		// ft_dprintf(2, "parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
 		if (!(check_lexer_tokens(&parser->state, ((t_token*)tok_lst->content)->id, parser->graph[parser->state].good_type)))
 		{
-			// ft_dprintf(2, "error parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
+		//	ft_dprintf(2, "error parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
 			return (FALSE);
 			// GESTION DE LERREUR ET SUBPROMPT ET SIGNAUX
 		}

@@ -2,6 +2,8 @@
 
 static const t_token    quotes[] =
 {
+	{P_TILDEP, "~+", 2},
+	{P_TILDEM, "~-", 2},
 	{P_TILDE, "~", 1},
 	{P_DBPARENT, "$((", 3},
 	{P_PARENT, "$(", 2},
@@ -29,7 +31,7 @@ t_lst *exp_hook_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_t
 			}
 			else
 				index++;
-			if (!lexer->buff[index + 1])
+			if (!lexer->buff[index])
 			{
 				ft_dprintf(2, "mathsubst>\n" );
 				// lexer->buf_pos = index;
@@ -52,7 +54,9 @@ t_lst *exp_hook_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_t
 static t_lst	*create_expansions_token(t_lexer *lexer, e_parser_state id, t_lst *lexer_token)
 {	
 	int i;
-	t_expansion expansions[] = {
+	t_lex_exp expansions[] = {
+								{exp_tilde_lexer, P_TILDEP, 2},
+								{exp_tilde_lexer, P_TILDEM, 2},
 								{exp_tilde_lexer, P_TILDE, 1},
 								{exp_dbparen_lexer, P_DBPARENT, 3},
 								{exp_paren_lexer, P_PARENT, 2},
@@ -68,8 +72,6 @@ static t_lst	*create_expansions_token(t_lexer *lexer, e_parser_state id, t_lst *
 		{
 			if ((lexer_token = expansions[i].func(lexer, id, expansions[i].len, lexer_token)))
 				return (lexer_token);
-			// else
-				// lexer_token = word_lexer(lexer, lexer_token);
 		}
 		i++;
 	}

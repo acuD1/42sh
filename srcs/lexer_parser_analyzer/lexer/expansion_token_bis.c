@@ -89,23 +89,15 @@ t_lst *exp_bracket_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexe
 
 	if (!ft_strncmp(&lexer->buff[lexer->buf_pos], "${", len))
 	{
-		index = lexer->buf_pos;
-		while (&lexer->buff[index])
+		index = lexer->buf_pos + 2;
+		while (&lexer->buff[index] && lexer->buff[index] != '}')
 		{
-			if (lexer->buff[index] == '}')
+			if (lexer->buff[index] == '?')
 			{
-				break; // CECI EST UN BUG
-			}
-			else
 				index++;
-			if (!lexer->buff[index + 1])
-			{
-				ft_dprintf(2, "braceparam>\n" );
-				// lexer->buf_pos = index;
-				// return (lexer_token);
 				break;
-				// subprompt("braceparam>");
 			}
+			index++;
 		}
 		index++;
 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
@@ -133,6 +125,11 @@ t_lst *exp_dollar_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer
 		{
 			if (lexer->buff[index] == '_' || ft_isdigit(lexer->buff[index]) || ft_isalpha(lexer->buff[index]))
 				index++;
+			else if (lexer->buff[index] == '?')
+			{
+				index++;
+				break;
+			}
 			else
 			{
 				// lexer->buf_pos++;
@@ -159,7 +156,7 @@ t_lst *exp_tilde_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_
 	if (lexer->buff[lexer->buf_pos] == '~')
 	{
 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, len)))
-			return (NULL);
+				return (NULL);
 		if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token ,id, str), sizeof(t_token)))))
 			return (NULL);
 		free(str);

@@ -2,7 +2,7 @@
 
 void init_expansion_analyze(t_anal analyze)
 {
-	// analyze[A_START][P_START] = separator_analyze;
+	analyze[A_START][P_START] = separator_analyze;
 	analyze[A_EXPANSION][P_NEWLINE] = separator_analyze;
 	analyze[A_EXPANSION][P_ANDIF] = separator_analyze;
 	analyze[A_EXPANSION][P_AND] = separator_analyze;
@@ -19,19 +19,24 @@ void init_expansion_analyze(t_anal analyze)
 	analyze[A_EXPANSION][P_IONUMBER] = ionbr_analyze;
 	analyze[A_EXPANSION][P_ASSIGN] = assign_analyze;
 	analyze[A_EXPANSION][P_WORD] = cmd_analyze;
+	analyze[A_EXPANSION][P_BQUOTE] = cmd_analyze;
+	analyze[A_EXPANSION][P_DBQUOTE] = cmd_analyze;
+	analyze[A_EXPANSION][P_QUOTE] = cmd_analyze;
 	analyze[A_EXPANSION][P_ESCSEQ] = cmd_analyze;
-	analyze[A_EXPANSION][P_DBPARENT] = expansion_analyze;
-	analyze[A_EXPANSION][P_PARENT] = expansion_analyze;
-	analyze[A_EXPANSION][P_BRACKET] = expansion_analyze;
-	analyze[A_EXPANSION][P_HOOK] = expansion_analyze;
-	analyze[A_EXPANSION][P_DOLLAR] = expansion_analyze;
-	analyze[A_EXPANSION][P_TILDE] = expansion_analyze;
+	analyze[A_EXPANSION][P_DBPARENT] = cmd_analyze;
+	analyze[A_EXPANSION][P_PARENT] = cmd_analyze;
+	analyze[A_EXPANSION][P_BRACKET] = cmd_analyze;
+	analyze[A_EXPANSION][P_HOOK] = cmd_analyze;
+	analyze[A_EXPANSION][P_DOLLAR] = cmd_analyze;
+	analyze[A_EXPANSION][P_TILDE] = cmd_analyze;
+	analyze[A_EXPANSION][P_TILDEP] = cmd_analyze;
+	analyze[A_EXPANSION][P_TILDEM] = cmd_analyze;
 	analyze[A_EXPANSION][P_END] = end_analyze;
 }
 
 void init_start_analyze(t_anal analyze)
 {
-	// analyze[A_START][P_START] = separator_analyze;
+	analyze[A_START][P_START] = separator_analyze;
 	analyze[A_START][P_NEWLINE] = separator_analyze;
 	analyze[A_START][P_ANDIF] = separator_analyze;
 	analyze[A_START][P_AND] = separator_analyze;
@@ -49,12 +54,17 @@ void init_start_analyze(t_anal analyze)
 	analyze[A_START][P_ESCSEQ] = cmd_analyze;
 	analyze[A_START][P_ASSIGN] = assign_analyze;
 	analyze[A_START][P_WORD] = cmd_analyze;
-	analyze[A_START][P_DBPARENT] = expansion_analyze;
-	analyze[A_START][P_PARENT] = expansion_analyze;
-	analyze[A_START][P_BRACKET] = expansion_analyze;
-	analyze[A_START][P_HOOK] = expansion_analyze;
-	analyze[A_START][P_DOLLAR] = expansion_analyze;
-	analyze[A_START][P_TILDE] = expansion_analyze;
+	analyze[A_START][P_QUOTE] = cmd_analyze;
+	analyze[A_START][P_BQUOTE] = cmd_analyze;
+	analyze[A_START][P_DBQUOTE] = cmd_analyze;
+	analyze[A_START][P_DBPARENT] = cmd_analyze;
+	analyze[A_START][P_PARENT] = cmd_analyze;
+	analyze[A_START][P_BRACKET] = cmd_analyze;
+	analyze[A_START][P_HOOK] = cmd_analyze;
+	analyze[A_START][P_DOLLAR] = cmd_analyze;
+	analyze[A_START][P_TILDE] = cmd_analyze;
+	analyze[A_START][P_TILDEM] = cmd_analyze;
+	analyze[A_START][P_TILDEP] = cmd_analyze;
 	analyze[A_START][P_END] = end_analyze;
 }
 
@@ -76,13 +86,18 @@ void init_word_analyze(t_anal analyze)
 	analyze[A_WORD][P_IONUMBER] = ionbr_analyze;
 	analyze[A_WORD][P_ASSIGN] = assign_analyze;
 	analyze[A_WORD][P_WORD] = cmd_analyze;
+	analyze[A_WORD][P_QUOTE] = cmd_analyze;
+	analyze[A_WORD][P_DBQUOTE] = cmd_analyze;
+	analyze[A_WORD][P_BQUOTE] = cmd_analyze;
 	analyze[A_WORD][P_ESCSEQ] = cmd_analyze;
-	analyze[A_WORD][P_DBPARENT] = expansion_analyze;
-	analyze[A_WORD][P_PARENT] = expansion_analyze;
-	analyze[A_WORD][P_BRACKET] = expansion_analyze;
-	analyze[A_WORD][P_HOOK] = expansion_analyze;
-	analyze[A_WORD][P_DOLLAR] = expansion_analyze;
-	analyze[A_WORD][P_TILDE] = expansion_analyze;
+	analyze[A_WORD][P_DBPARENT] = cmd_analyze;
+	analyze[A_WORD][P_PARENT] = cmd_analyze;
+	analyze[A_WORD][P_BRACKET] = cmd_analyze;
+	analyze[A_WORD][P_HOOK] = cmd_analyze;
+	analyze[A_WORD][P_DOLLAR] = cmd_analyze;
+	analyze[A_WORD][P_TILDEM] = cmd_analyze;
+	analyze[A_WORD][P_TILDEP] = cmd_analyze;
+	analyze[A_WORD][P_TILDE] = cmd_analyze;
 	analyze[A_WORD][P_END] = end_analyze;
 }
 

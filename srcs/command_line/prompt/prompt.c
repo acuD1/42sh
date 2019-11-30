@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/26 17:49:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 16:39:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void		display_prompt(t_read *term)
 
 void		init_prompt(t_read *term)
 {
-	char	buff[READ_SIZE + 1];
+	char	buff[READ_SIZE];
 
 	ft_bzero(buff, READ_SIZE);
 	term->buffer = ft_memalloc(BUFF_SIZE);
@@ -75,7 +75,7 @@ void		init_prompt(t_read *term)
 	}
 	if (check_subprompt(term) == FALSE)
 	{
-		//remove_newline(term);
+		// remove_newline(term);
 		check_expansions(term);
 	}
 	reset_config(term);

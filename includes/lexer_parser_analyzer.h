@@ -20,10 +20,6 @@ int getlefdpour_debug_ailleurs(const char *path);
 
 void 	lexer_parser_analyzer(t_core *shell, char *line);
 
-
-char *cmd_substitution_expansion(t_token *token, t_core *shell);
-
-
 /*
 **  ANALYZER
 */
@@ -44,7 +40,6 @@ void        init_separator_analyze(t_anal analyze);
 void 		analyzer(t_core *shell);
 t_analyzer  *cmd_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer  *end_analyze(t_analyzer *analyzer, t_core *shell);
-t_analyzer 	*expansion_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer  *separator_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer  *redirect_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer  *error_analyze(t_analyzer *analyzer, t_core *shell);
@@ -98,6 +93,7 @@ t_lst	 		*lexer(char *line);
 int				ft_isdigit(int c);
 int 			ft_isalpha(int c);
 
+
 t_lst			*expansion_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst 			*exp_dbparen_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
 t_lst 			*exp_paren_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token);
@@ -108,6 +104,9 @@ t_lst 			*exp_tilde_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lex
 t_lst			*start_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*end_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*name_lexer(t_lexer *lexer, t_lst *lexer_token);
+t_lst			*quote_lexer(t_lexer *lexer, t_lst *lexer_token);
+t_lst 			*dbquote_lexer(t_lexer *lexer, t_lst *lexer_token);
+t_lst 			*bquote_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*newline_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*backslash_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*number_lexer(t_lexer *lexer, t_lst *lexer_token);

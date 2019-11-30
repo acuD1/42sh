@@ -42,7 +42,11 @@ int8_t	dispatcher(t_core *shell, t_lst *jobs)
 	//debug_process(ptr);
 	while (ptr != NULL)
 	{
-		if (((t_process*)ptr->content)->type == P_PIPE)
+		if ((!(*(t_process*)ptr->content).av))
+		{
+			ptr = ptr->next;
+		}
+		else if (((t_process*)ptr->content)->type == P_PIPE)
 		{
 			if (exec_pipeline(shell, &ptr) != SUCCESS)
 			{
@@ -50,18 +54,18 @@ int8_t	dispatcher(t_core *shell, t_lst *jobs)
 				return (FAILURE);
 			}
 		}
-		else if (((t_process*)ptr->content)->type == P_ASSIGN)// || ((t_process*)ptr->content)->type == P_EXPANSION
+		else if (((t_process*)ptr->content)->type == P_ASSIGN)
 		{
-			//EXPANSION
+			printf("FAUT GERER CA CEST BIEN BEAU DE STOCKER DANS UNE LST MAIS APRES ?\n");
 			ptr = ptr->next;
 		}
 		else
 		{
+			if (is_expansion(((t_process*)ptr->content)->type))
+				expansion(shell, (t_process*)ptr->content);
 			exec_process(shell, ptr);
 			ptr = ptr->next;
 		}
-
-		//CONDITIONS
 	}
 	return (SUCCESS);
 }
