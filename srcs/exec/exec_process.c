@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/27 13:58:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/01 10:42:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,21 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 	}
 	get_bin(shell, ((t_process*)process->content));
 	if ((pid = fork()) < 0)
-		return (exec_handler(shell, FORK_ERROR)); //NEED REWORK
+	{
+		dprintf(STDERR_FILENO, "42sh: fork error\n");
+		return (FAILURE);
+	}
 	else if (pid == 0)
 		call_bin(shell, process);
 	((t_process*)process->content)->pid = pid;
-	//ft_strdel(&((t_process*)process->content)->bin);
 	ft_strdel(&((t_process*)process->content)->bin);
-	shell->last_process = process->content;
+	shell->running_process = process->content;
 	if (waitpid(pid, &shell->status, WUNTRACED | WCONTINUED) != pid)
 	{
 		dprintf(STDERR_FILENO, "42sh: waitpid error\n");
 		return (FAILURE);
 	}
-	shell->last_process = NULL;
+	shell->running_process = NULL;
 	status_handler(shell, shell->status);
 	return (SUCCESS);
 }

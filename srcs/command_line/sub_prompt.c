@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 16:01:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/27 00:01:39 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void		display_subprompt(t_read *term, char quote)
 //	term->prompt_len = ft_strlen(term->prompt);
 	term->x = term->prompt_len;
 	term->y = 0;
-	term = get_size(term);
+	if (get_size(term) != SUCCESS)
+		exit(1);
 //	ft_putstr(term->prompt);
 	(quote == DQUOTE) ? ft_putstr("dquote> ") : ft_putstr("> ");
 }

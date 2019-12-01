@@ -38,12 +38,9 @@ void	init_shell(t_core *shell)
 	/*	global
 	**
 	*/
-	shell->last_process = NULL;
+	shell->running_process = NULL;
 	shell->env = NULL;
 	shell->pos_vars = NULL;
-	shell->jobs = NULL;
-	shell->tokens = NULL;
-	shell->bin = NULL;
 	shell->status = 0;
 	shell->opt = 0;
 	shell->buff = NULL;

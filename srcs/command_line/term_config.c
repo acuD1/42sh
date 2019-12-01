@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/25 21:05:22 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/30 06:17:03 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void			init_cmd_line(t_read *term, t_core *shell)
 	term->found = 0;
 	term->buffer = ft_memalloc(BUFF_SIZE);
 	term->tmp_buff = NULL;
+	if (get_size(term) != SUCCESS)
+		quit_shell(shell, 1, 1);
 	init_history(term);
 }
 
@@ -62,13 +64,12 @@ uint8_t				init_config(t_core *shell)
 
 uint8_t			reset_config(t_core *shell, t_read *input)
 {
-	if (tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t)) == FAILURE)
+	tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t));
+	if (input->prompt) // secu
 	{
-		// Display error msg
-		return (FAILURE);
+		free(input->prompt);
+		input->prompt = NULL;
 	}
-	shell->old_t.c_lflag |= (ICANON | ECHO);
-	free(input->prompt);
-	(input->tmp_buff) ? ft_strdel(&input->tmp_buff) : 0;
+	ft_strdel(&input->tmp_buff); // pas besoin de secu, ft_strdel est secur
 	return (SUCCESS);
 }

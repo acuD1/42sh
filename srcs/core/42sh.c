@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/24 20:38:00 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/27 00:55:56 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ int		main(int ac, char **av, char **environ)
 	**	Get t_lst *env, a linked list of char **environ with {key}
 	**	and {value} format. WARNING empty char **environ not supported yet
 	*/
-	if (set_env(&shell, av, environ) != SUCCESS)
+
+	// get_size AVOIDING COND JUMP ON UNINITIALIZED VALUES
+
+	if (get_size(&(shell.cmd_line)) != SUCCESS
+				|| set_env(&shell, av, environ) != SUCCESS)
 	{
 		return (EXIT_FAILURE);
 	}

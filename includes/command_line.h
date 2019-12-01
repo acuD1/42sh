@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/25 20:59:08 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/26 23:55:52 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void			init_termcaps(t_read *term);
 void			init_cmd_line(t_read *term, t_core *shell);
 uint8_t			init_config(t_core *shell);
 uint8_t			reset_config(t_core *shell, t_read *input);
-t_read			*get_size(t_read *data);
+int8_t			get_size(t_read *data);
 
 /*
  **		Prompt/Subprompt

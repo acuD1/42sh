@@ -6,45 +6,69 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/26 01:15:15 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/11/30 09:39:54 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include "sh42.h"
 
-void	sigh_hup(int signum)
+static void	sig_handler(int signum)
 {
-	dprintf(STDERR_FILENO, "SIGNUM CATCHED (Need to kill all child processes)\n");
-	exit(signum);
+	static char *message[31] = {"Hangup", NULL, "Quit", "Illegal instruction"
+		, "Trace/BPT trap", "Abort trap\n", "EMT trap"
+		, "Floating point exception", "Killed", "Bus error"
+		, "Segmentation fault", "Bad system call", NULL, "Alarm clock"
+		, "Terminated", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+		, "Cputime limit exceeded", "Filesize limit exceeded"
+		, "Virtual timer expired", "Profiling timer expired", NULL, NULL
+		, "User defined signal 1", "User defined signal 2"};
+	t_core	*shell;
+
+	shell = get_core(NULL);
+	if (signum == SIGHUP && shell->running_process)
+		kill_processes(SIGHUP, shell);
+	if (message[signum - 1] != NULL)
+		dprintf(STDERR_FILENO, "%s: %i (42sh)\n", message[signum - 1], signum);
+	quit_shell(shell, 0, 0);
 }
 
-void	sigoff(int signum)
+static void	sig_exit(int signum)
 {
-	dprintf(STDERR_FILENO, "unknown signal %i\n", signum);
-	//exit(signum);
+	t_core	*shell;
+
+	shell = get_core(NULL);
+	quit_shell(shell, 141, (signum == SIGPIPE) ? 0 : 1);
 }
 
-void	sigh_exit(int signum)
+static void	sigh_winch(int signum)
 {
-	dprintf(STDERR_FILENO, "Free all the memory, restore termios, exit shell, %i\n", signum);
-	//exit(signum);
+	t_core	*shell;
+
+	(void)signum;
+	fflush(stdout);
+	shell = get_core(NULL);
+	if (get_size(&(shell->cmd_line)) != SUCCESS || update_termsize(shell))
+		quit_shell(shell, 1, 1);
 }
 
-void	init_signals(void)
+void		init_signals(void)
 {
-	static void (*sighandler[31])(int) = {sigh_hup, sigint_handler, sigoff /*HUP INT QUIT*/
-		, sigh_exit, sigh_exit, sigh_exit, sigh_exit, sigh_exit, NULL, SIG_DFL /*ILL TRAP ABRT EMT FPE (KILL uncatch)BUS*/
-		, SIG_DFL, sigh_exit, sigoff, sigoff, sigoff, sigoff, NULL, sigoff /*SEGV SYS PIPE ALRM URG (STOP uncatchable) TSTP*/
-		, sigh_exit, SIG_DFL, sigoff, sigoff, sigoff, sigh_exit, sigh_exit /*CONT CHLD TTIN TTOU IO XCPU XFSZ*/
-		, sigh_exit, sigh_exit, sigoff, sigoff, sigh_exit, sigh_exit}; /*VTALRM PROF WINCH INFO USR1 USR2*/
+	static void (*sighandler[31])(int) = {sig_handler, sigint_handler /* HUP INT */
+		, sig_handler, sig_handler, sig_handler, sig_handler, sig_handler /* QUIT ILL TRAP ABRT EMT */
+		, sig_handler, NULL, sig_handler, sig_handler, sig_handler, sig_exit /*FPE KILL(NULL)BUS SEGV SYS PIPE*/
+		, sig_handler, sig_handler, sig_handler, NULL, sig_handler, sig_exit/*ALRM TERM URG STOP(NL) TSTP CONT*/
+		, SIG_DFL, SIG_DFL, SIG_DFL, SIG_DFL, sig_handler, sig_handler /*CHLD TTIN TTOU IO XCPU XFSZ*/
+		, sig_handler, sig_handler, sigh_winch, NULL, sig_handler /*VTALRM PROF WINCH INFO USR1 */
+		, sig_handler}; /* USR2*/
 	int i;
 
 	i = 1;
 	while (i <= SIGUSR2)
 	{
 		if (sighandler[i - 1] != NULL)
-			signal(i, sighandler[i - 1]);
+			if (signal(i, sighandler[i - 1]) != 0)
+				printf("%i\n", i);
 		i++;
 	}
 }

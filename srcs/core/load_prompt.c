@@ -40,14 +40,15 @@ void			free_history(t_core *shell)
 void			load_prompt(t_core *shell)
 {
 	int8_t		status;
-	t_read		term;
+	t_read		*term;
 
 	status = 1;
+	term = &(shell->cmd_line);
 	credit(shell);
-	init_cmd_line(&term, shell);
+	init_cmd_line(term, shell);
 	while (status)
 	{
-		init_prompt(shell, &term);
+		init_prompt(shell, term);
 		lexer_parser_analyzer(shell, shell->buff);
 		if (task_master(shell) != SUCCESS)
 			break ;

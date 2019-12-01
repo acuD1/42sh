@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/01 09:24:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/01 10:41:58 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int8_t		dispatcher(t_core *shell, t_lst *jobs);
 */
 
 int8_t		set_env(t_core *shell, char **argv, char **environ);
-int8_t		get_tokens(t_core *shell, char *line);
 int8_t		del_db(t_core *shell, char *key);
 void		init_shell(t_core *shell);
 t_db		*fetch_db(t_db *db, const char *s, const u_int8_t var_type);
@@ -87,8 +86,8 @@ void		status_handler(t_core *shell, int status);
 
 u_int32_t	get_hash(char *line, u_int32_t size);
 int8_t		locate_hash(t_core *shell, t_process *process);
-int8_t		add_hash_map(t_core *shell, t_hash *hash, t_process *process);
-int8_t		resize_hash_map(t_core *shell, t_hash *hash);
+int8_t		add_hash_map(t_core *shell, t_process *process);
+int8_t		resize_hash_map(t_core *shell);
 void		free_hash_map(t_hash *hash);
 t_db		*fetch_hash_db(t_db *db, const char *key, const char *value);
 
@@ -98,7 +97,6 @@ t_db		*fetch_hash_db(t_db *db, const char *key, const char *value);
 **	===========================================================================
 */
 
-void		print_tokens(t_core *shell);
 void		print_env(t_core *shell);
 void		print_hash_map(t_hash *hash);
 
@@ -116,6 +114,7 @@ int8_t		ft_access(char *path, int mode);
 int8_t		is_a_dir(char *path);
 void		print_usage(char *name, int c, char *usage);
 void		ft_perror(const char *s, const int errnum);
+void		quit_shell(t_core *shell, int exit_value, int8_t verbose);
 int			check_invalid_identifiers(char *arg, char *exceptions);
 
 /*
@@ -182,6 +181,7 @@ u_int16_t	set_range(t_lst **w, char **range);
 **	===========================================================================
 */
 
+void	kill_processes(int signum, t_core *shell);
 void	sigint_handler(int sig_num);
 void	init_signals(void);
 

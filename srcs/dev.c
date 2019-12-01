@@ -12,20 +12,6 @@
 
 #include "sh42.h"
 
-void	print_tokens(t_core *shell)
-{
-	char	**tokens;
-	size_t	i;
-
-	i = 0;
-	tokens = shell->tokens;
-	while (tokens[i])
-	{
-		dprintf(STDOUT_FILENO, "TOKEN[%zu] = |%s|\n", i, tokens[i]);
-		i++;
-	}
-}
-
 void	print_env(t_core *shell)
 {
 	t_lst	*env;
