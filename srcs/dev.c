@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/27 11:04:21 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/01 09:23:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,22 +82,4 @@ void	debug_analyzer(t_core *shell)
 		tmp = shell->job_list;
 	printf("LST LEN = |%zu|\n", ft_lstlen(tmp));
 	tmp = NULL;
-}
-
-/*
-** Still missing from your branch maxime ;p
-*/
-
-int8_t	is_number(const char *s)
-{
-	int i;
-
-	i = 0;
-	while (s && s[i])
-	{
-		if (s[i] < '0' || s[i] > '9')
-			return (FAILURE);
-		i++;
-	}
-	return (SUCCESS);
 }

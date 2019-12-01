@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/27 14:12:30 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/01 09:24:54 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,5 +188,4 @@ void	init_signals(void);
 /* ###########################  TEMPORARY   #################################*/
 void	debug_analyzer(t_core *shell);
 
-int8_t	is_number(const char *s);
 #endif
