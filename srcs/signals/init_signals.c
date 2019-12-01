@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_signals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/30 09:39:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/01 11:32:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void		init_signals(void)
 	{
 		if (sighandler[i - 1] != NULL)
 			if (signal(i, sighandler[i - 1]) != 0)
-				printf("%i\n", i);
+				dprintf(STDERR_FILENO, "%i\n", i);
 		i++;
 	}
 }

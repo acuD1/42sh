@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/01 10:42:30 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/01 11:45:38 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 {
 	pid_t	pid;
 	int		status;
-	int		blt;
+	//int		blt;
 
 	status = 0;
 	//EXPANSION
-	if ((blt = is_a_blt(((t_process*)process->content)->av[0])) != FAILURE)
+	/*if ((blt = is_a_blt(((t_process*)process->content)->av[0])) != FAILURE)
 	{
 		shell->status = call_builtin(shell, process, blt);
 		return (SUCCESS);
-	}
+	}*/
 	get_bin(shell, ((t_process*)process->content));
 	if ((pid = fork()) < 0)
 	{

@@ -31,8 +31,8 @@ void ft_printassignlist(t_lst *lst)
 
 	while (assign)
 	{
-		printf("\n==== ASSIGN %d ====\n", x);
-		printf("[%s%s]\n", ((t_db*)assign->content)->key, ((t_db*)assign->content)->value);
+		//printf("\n==== ASSIGN %d ====\n", x);
+		//printf("[%s%s]\n", ((t_db*)assign->content)->key, ((t_db*)assign->content)->value);
 		assign = assign->next;
 		x++;
 	}

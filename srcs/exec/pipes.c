@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 11:06:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/30 09:43:55 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/01 11:32:08 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int8_t			exec_pipeline(t_core *shell, t_lst **process)
 	while (p_len-- > 0)
 		wait(&(shell->status));
 	shell->running_process = NULL;
+	free(pipes);
 	status_handler(shell, shell->status);
 	return (ret);
 }

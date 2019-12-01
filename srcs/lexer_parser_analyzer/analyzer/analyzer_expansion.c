@@ -41,7 +41,7 @@ t_analyzer *expansion_analyze(t_analyzer *analyzer, t_core *shell)
 	(void)shell;
 
 	tmp = NULL;
-	ft_printf("EXPANSION state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
+	//ft_printf("EXPANSION state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	// if (((t_token*)analyzer->lexer->content)->id == P_DBPARENT)
 	// {
 	// 	if ((tmp = cmd_substitution_expansion(((t_token*)analyzer->lexer->content), shell)))
