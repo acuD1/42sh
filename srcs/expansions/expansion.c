@@ -16,6 +16,31 @@ char *exp_error(char *data, t_core *shell)
 	return (data);
 }
 
+void add_assign_env(t_lst *lst, t_core *shell)
+{
+	char	*value;
+	t_lst	*tmp;
+
+	if (!lst || !shell->env)
+		return ;
+	printf("TOTO\n");
+	value = NULL;
+	tmp = NULL;
+	while (lst)
+	{
+		value = ft_strdup(((t_db*)lst->content)->value);
+		if (edit_var(shell, ((t_db*)lst->content)->key, value, INTERNAL_VAR) != SUCCESS)
+		{
+			free(value);
+			return ;
+		}
+		tmp = lst;
+		lst = lst->next;
+		// free(((t_db*)tmp->content)->key);
+		free(tmp);
+	}
+}
+
 char *start_expansion(t_core *shell, char *data)
 {
 	int 	i;

@@ -7,6 +7,8 @@
 **  EXPANSION
 */
 
+void 		add_assign_env(t_lst *lst, t_core *shell);
+
 uint8_t		expansion(t_core *shell, t_process *process);
 char 		*exp_math(char *data, t_core *shell);
 char 		*exp_cmd_subs(char *data, t_core *shell);

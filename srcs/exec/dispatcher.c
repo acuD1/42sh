@@ -56,13 +56,13 @@ int8_t	dispatcher(t_core *shell, t_lst *jobs)
 		}
 		else if (((t_process*)ptr->content)->type == P_ASSIGN)
 		{
-			printf("FAUT GERER CA CEST BIEN BEAU DE STOCKER DANS UNE LST MAIS APRES ?\n");
+			printf("TOTO\n");
+			if (((t_process*)ptr->content)->assign_list)
+				add_assign_env(((t_process*)ptr->content)->assign_list, shell);
 			ptr = ptr->next;
 		}
 		else
 		{
-			if (is_expansion(((t_process*)ptr->content)->type))
-				expansion(shell, (t_process*)ptr->content);
 			exec_process(shell, ptr);
 			ptr = ptr->next;
 		}

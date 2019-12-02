@@ -24,7 +24,8 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 	int		blt;
 
 	status = 0;
-	//EXPANSION
+	if (is_expansion(((t_process*)process->content)->type))
+		expansion(shell, (t_process*)process->content);
 	if ((blt = is_a_blt(((t_process*)process->content)->av[0])) != FAILURE)
 	{
 		shell->status = call_builtin(shell, process, blt);
