@@ -12,85 +12,72 @@
 
 #include "sh42.h"
 
-/*
-** ETAT DE LA STATE MACHINE DE DEFAULT ET DE DEPART
-** CHANGE LE STATUS DE LA MACHINE EN FONCTION DU CHAR IDENTIFIÉ
-*/
-
-t_lst		*backslash_lexer(t_lexer *lexer, t_lst *lexer_token)
+t_lst		*backslash_lexer(t_lexer *lx, t_lst *lexer_token)
 {
 	char *str;
 
 	str = NULL;
-	if (!lexer->buff)
+	if (!lx->buff)
 	{
-		lexer->status = L_END;
-		return(lexer_token);
+		lx->status = L_END;
+		return (lexer_token);
 	}
-	if (lexer->buff[lexer->buf_pos] == '\\')
+	if (lx->buff[lx->buf_pos] == '\\')
 	{
-		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, 1)))
-			return(lexer_token);
-		if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_ESCSEQ, str), sizeof(t_token)))))
-			return(lexer_token);
+		if (!(str = ft_strsub(lx->buff, lx->buf_pos, 1)))
+			return (lexer_token);
+		if (!(ft_lstappend(&lexer_token, ft_lstnew(
+			fetch_token(&lx->token, P_ESCSEQ, str), sizeof(t_token)))))
+			return (lexer_token);
 		free(str);
-		lexer->ntok++;
-		lexer->buf_pos++;
+		lx->ntok++;
+		lx->buf_pos++;
 	}
-	lexer->status = L_START;
-	return(lexer_token);
+	lx->status = L_START;
+	return (lexer_token);
 }
 
-t_lst		*start_lexer(t_lexer *lexer, t_lst *lexer_token)
+t_lst		*start_lexer(t_lexer *lx, t_lst *lexer_token)
 {
-	if (lexer->buff[lexer->buf_pos] == '\0')
+	if (lx->buff[lx->buf_pos] == '\0')
+		lexer_token = end_lexer(lx, lexer_token);
+	else if (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
 	{
-		// ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_NEWLINE, "\n"), sizeof(t_token)));
-		ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_END, "(null)"), sizeof(t_token)));
-		lexer->ntok++;
-		lexer->status = L_END;
+		if (lx->buff[lx->buf_pos - 1] && lx->buff[lx->buf_pos - 1] == '\\')
+			ft_lstappend(&lexer_token, ft_lstnew(
+				fetch_token(&lx->token, P_WORD, " "), sizeof(t_token)));
+		while (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
+			lx->buf_pos++;
 	}
-	else if (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
-	{
-		if (lexer->buff[lexer->buf_pos - 1] && lexer->buff[lexer->buf_pos - 1] == '\\')
-			ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, P_WORD, " "), sizeof(t_token)));
-		while (lexer->buff[lexer->buf_pos] == ' ' || lexer->buff[lexer->buf_pos] == '\t')
-			lexer->buf_pos++;
-	}
-	else if (lexer->buff[lexer->buf_pos] == '\n')
-		lexer->status = L_NEWLINE;
-	else if (lexer->buff[lexer->buf_pos] == '\\')
-		lexer->status = L_ESCSEQ;
-	else if (ft_strchr(OPERATORS, lexer->buff[lexer->buf_pos]))
-		lexer->status = L_OPERATOR;
-	else if (ft_isdigit(lexer->buff[lexer->buf_pos]))
-		lexer->status = L_IO_NUMBER;
-	else if (ft_strchr(&lexer->buff[lexer->buf_pos], '='))
-		lexer->status = L_ASSIGNEMENT_WORD;
+	else if (lx->buff[lx->buf_pos] == '\n')
+		lx->status = L_NEWLINE;
+	else if (lx->buff[lx->buf_pos] == '\\')
+		lx->status = L_ESCSEQ;
+	else if (ft_strchr(OPERATORS, lx->buff[lx->buf_pos]))
+		lx->status = L_OPERATOR;
+	else if (ft_isdigit(lx->buff[lx->buf_pos]))
+		lx->status = L_IO_NUMBER;
+	else if (ft_strchr(&lx->buff[lx->buf_pos], '='))
+		lx->status = L_ASSIGNEMENT_WORD;
 	else
-		lexer->status = L_NAME;
-	return(lexer_token);
+		lx->status = L_NAME;
+	return (lexer_token);
 }
-
-/*
-** ETAT DE TRANSITION VERS LE PARSER ?
-*/
 
 t_lst		*end_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
+	ft_lstappend(&lexer_token, ft_lstnew(
+		fetch_token(&lexer->token, P_END, "(null)"), sizeof(t_token)));
+	lexer->ntok++;
 	lexer->status = L_END;
-	return(lexer_token);
+	return (lexer_token);
 }
 
-/*
-*** LEXER IN = LINE EDITION    OUT = PARSER
-*/
-
-t_lst *lexer(char *line)
+t_lst		*lexer(char *line)
 {
 	t_lexer	lexer;
-	t_lst **head;
-	t_lst *lexer_token;
+	t_lst	**head;
+	t_lst	*lexer_token;
 
 	head = NULL;
 	lexer_token = NULL;

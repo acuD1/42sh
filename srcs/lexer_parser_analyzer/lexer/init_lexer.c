@@ -25,16 +25,11 @@ static void		ft_init_lex(t_lexer *lexer)
 	lexer->lex[L_END] = end_lexer;
 }
 
-/*
-** CELLE DU HAUT INIT LE *FCT CELLE DU BAS
-** C MARKÉ DECU
-*/
-
-void init_lexer(char *line, t_lexer *new)
+void			init_lexer(char *line, t_lexer *new)
 {
 	if (!line)
 		return ;
-	new->buff = line; //FREE LINE et dup le buff
+	new->buff = line;
 	new->status = L_START;
 	new->ntok = 0;
 	new->buf_pos = 0;
@@ -44,17 +39,17 @@ void init_lexer(char *line, t_lexer *new)
 	ft_init_lex(new);
 }
 
-t_token			*fetch_lexer_token(t_token *token, e_parser_state type, char *data)
+t_token			*fetch_token(t_token *token, e_pstate type, char *data)
 {
-	t_token *new;
+	t_token		*new;
 
 	new = token;
 	new->id = type;
 	if (!(new->data = ft_strdup(data)))
 		new->data = NULL;
 	if (new->data)
-		new->data_len = ft_strlen(new->data);
+		new->len = ft_strlen(new->data);
 	else
-		new->data_len = 0;
+		new->len = 0;
 	return (new);
 }

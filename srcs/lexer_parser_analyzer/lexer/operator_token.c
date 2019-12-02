@@ -12,10 +12,10 @@
 
 #include "sh42.h"
 
-static const t_token    ope[] =
+const t_token	g_ope[] =
 {
 	{P_NEWLINE, "\n", 1},
-	{P_ANDIF , "&&", 2},
+	{P_ANDIF, "&&", 2},
 	{P_AND, "&", 1},
 	{P_ORIF, "||", 2},
 	{P_PIPE, "|", 1},
@@ -31,46 +31,43 @@ static const t_token    ope[] =
 	{P_OPE_INTERRUPT, NULL, 0}
 };
 
-/*
-** STATE CREANT LES TOKENS DE LA STRUCT OPE CI DESSUS
-*/
-
-static t_lst	*create_operator_token(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token)
+static t_lst	*new_ope(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 {
 	char *str;
 
 	str = NULL;
-	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, len)))
+	if (!(str = ft_strsub(lx->buff, lx->buf_pos, len)))
 		return (NULL);
-	ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token, id, str), sizeof(t_token)));
+	ft_lstappend(&lst, ft_lstnew(
+		fetch_token(&lx->token, id, str), sizeof(t_token)));
 	free(str);
-	lexer->ntok++;
-	lexer->buf_pos += len;
-	lexer->status = L_START;
-	return (lexer_token);
+	lx->ntok++;
+	lx->buf_pos += len;
+	lx->status = L_START;
+	return (lst);
 }
 
-t_lst		*operator_lexer(t_lexer *lexer, t_lst *lexer_token)
+t_lst			*operator_lexer(t_lexer *lx, t_lst *lst)
 {
-	int 	i;
+	int			i;
 
 	i = 0;
-	if (!lexer->buff)
+	if (!lx->buff)
 	{
-		lexer->status = L_END;
-		return(lexer_token);
+		lx->status = L_END;
+		return (lst);
 	}
-	while (ope[i].id != P_OPE_INTERRUPT)
+	while (g_ope[i].id != P_OPE_INTERRUPT)
 	{
-		if (!ft_strncmp(&lexer->buff[lexer->buf_pos], ope[i].data, ope[i].data_len))
+		if (!ft_strncmp(&lx->buff[lx->buf_pos], g_ope[i].data, g_ope[i].len))
 		{
-			if ((lexer_token = create_operator_token(lexer, ope[i].id, ope[i].data_len, lexer_token)))
-				break;
+			if ((lst = new_ope(lx, g_ope[i].id, g_ope[i].len, lst)))
+				break ;
 		}
 		i++;
 	}
 	if (i == NB_OF_OPE)
-		lexer_token = word_lexer(lexer, lexer_token);
-	lexer->status = L_START;
-	return(lexer_token);
+		lst = word_lexer(lx, lst);
+	lx->status = L_START;
+	return (lst);
 }

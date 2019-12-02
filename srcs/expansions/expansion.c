@@ -1,6 +1,6 @@
 #include "sh42.h"
 
-uint8_t is_expansion(enum parser_state id)
+uint8_t is_expansion(e_pstate id)
 {
 	if (id == P_TILDEP || id == P_TILDEM || id == P_TILDE
 		|| id == P_DBPARENT || id == P_PARENT
@@ -50,7 +50,7 @@ uint8_t 	expansion(t_core *shell, t_process *process)
 	i = -1;
 	tablo = NULL;
 	tmp = NULL;
-	dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "MEH");
+	dprintf(nono("/dev/ttys002"), "MEH");
 	if (!process->av)
 		return (FALSE);
 	tablo = ft_tabcopy(tablo, process->av);

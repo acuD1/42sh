@@ -14,7 +14,7 @@
 
 void			init_start_graph(t_graph *graph)
 {
-	static e_parser_state tab_good_type[] = {ALL_WORDS, P_ESCSEQ, ALL_REDIRECT,
+	static e_pstate tab_good_type[] = {ALL_WORDS, P_ESCSEQ, ALL_REDIRECT,
 		P_ASSIGN, ALL_EXPANSION, P_IONUMBER, P_END, P_START, P_ERROR};
 
 	graph[P_START].good_type = tab_good_type;
@@ -25,7 +25,7 @@ void			init_start_graph(t_graph *graph)
 
 void			init_exp_graph(t_graph *graph)
 {
-	static e_parser_state tab_good_type[] = {P_NEWLINE, ALL_WORDS, ALL_REDIRECT,
+	static e_pstate tab_good_type[] = {P_NEWLINE, ALL_WORDS, ALL_REDIRECT,
 		P_ASSIGN, P_IONUMBER, P_PIPE, P_AND, P_END, P_SEMICOLON,
 		P_ANDIF, P_ORIF, P_ESCSEQ, ALL_EXPANSION, P_ERROR};
 
@@ -49,7 +49,7 @@ t_parser		*ft_init_graph(t_parser *parser)
 	return (parser);
 }
 
-uint8_t			graph(e_parser_state *c, e_parser_state n, e_parser_state ps[])
+uint8_t			graph(e_pstate *c, e_pstate n, e_pstate ps[])
 {
 	uint8_t		i;
 
@@ -85,11 +85,9 @@ uint8_t			parser(t_lst *lexer)
 	parser = ft_init_graph(parser);
 	while (((t_token*)tok_lst->content)->id != P_END)
 	{
-		// ft_dprintf(2, "parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
 		if (!(graph(&parser->state, ((t_token*)tok_lst->content)->id,
 			parser->graph[parser->state].good_type)))
 		{
-		//	ft_dprintf(2, "error parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
 			return (FALSE);
 		}
 		tok_lst = tok_lst->next;

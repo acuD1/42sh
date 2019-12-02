@@ -17,7 +17,7 @@
 ** 	LEXER_PARSER_ANALYZER
 */
 
-typedef enum analyzer_state
+typedef enum astate
 {
     A_START,
     A_SEPARATOR,
@@ -25,13 +25,12 @@ typedef enum analyzer_state
     A_IONUMBER,
     A_ASSIGN,
     A_WORD,
-    A_EXPANSION,
     A_END,
     A_ERROR,
     A_STOP,
-}           e_analyzer_state;
+}           e_astate;
 
-typedef enum    parser_state
+typedef enum    pstate
 {
     P_NEWLINE,
     P_ANDIF,
@@ -86,9 +85,9 @@ typedef enum    parser_state
     // P_THEN,
     // P_UNTIL,
     // P_WHILE,
-}               e_parser_state;
+}               e_pstate;
 
-typedef enum    lexer_state {
+typedef enum    lstate {
     L_START,
     L_NAME,
     L_NEWLINE,
@@ -98,7 +97,7 @@ typedef enum    lexer_state {
     L_EXPANSION,
     L_OPERATOR,
     L_END,
-}               e_lexer_state;
+}               e_lstate;
 
 /*
 ** 	TERMCAPS STRINGS

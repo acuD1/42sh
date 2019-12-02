@@ -46,7 +46,5 @@ void	init_shell(t_core *shell)
 	shell->status = 0;
 	shell->opt = 0;
 	shell->buff = NULL;
-	shell->lexer = NULL;
 	shell->job_list = NULL;
-	shell->assign_list = NULL;
 }

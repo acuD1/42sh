@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   analyzer_process.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/02 13:54:30 by guvillat          #+#    #+#             */
+/*   Updated: 2019/12/02 13:54:34 by guvillat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh42.h"
 
-void init_process(t_process *new)
+void			init_process(t_process *new)
 {
 	new->av = NULL;
 	new->type = P_START;
@@ -8,9 +20,9 @@ void init_process(t_process *new)
 	new->assign_list = NULL;
 }
 
-t_process *fetch_process(t_process *process)
+t_process		*fetch_process(t_process *process)
 {
-	t_process *new;
+	t_process	*new;
 
 	new = process;
 	if (!process)
@@ -23,33 +35,29 @@ t_process *fetch_process(t_process *process)
 		new->type = process->type;
 	else
 		new->type = P_START;
-	if (process->redir_list)
-		new->redir_list = process->redir_list;
-	else
-		new->redir_list = NULL;
 	if (process->assign_list)
 		new->assign_list = process->assign_list;
 	else
 		new->assign_list = NULL;
+	if (process->redir_list)
+		new->redir_list = process->redir_list;
+	else
+		new->redir_list = NULL;
 	return (new);
 }
 
-t_analyzer *process_analyze(t_analyzer *analyzer, t_core *shell)
+t_analyzer		*process_analyze(t_analyzer *anal, t_core *shell)
 {
-	// ft_dprintf(2, "CREATE PROCESS state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
-	if (analyzer->process.av)
-		ft_lstappend(&analyzer->process.assign_list, analyzer->assign_list);
+	anal->process.redir_list = anal->redir_list;
+	ft_lstappend(&anal->process_list,
+		ft_lstnew(fetch_process(&anal->process), sizeof(t_process)));
+	anal->redir_list = NULL;
+	init_process(&anal->process);
+	if (anal->lexer->next
+		&& !ft_strcmp("(null)", ((t_token*)anal->lexer->next->content)->data))
+		anal->state = A_STOP;
 	else
-		ft_lstappend(&analyzer->tmp_list, analyzer->assign_list);
-	analyzer->process.redir_list = analyzer->redir_list;
-	ft_lstappend(&analyzer->process_list, ft_lstnew(fetch_process(&analyzer->process), sizeof(t_process)));
-	analyzer->redir_list = NULL;
-	analyzer->assign_list = NULL;
-	init_process(&analyzer->process);
-	if (analyzer->lexer->next && !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
-		analyzer->state = A_STOP;
-	else
-		analyzer->state = A_SEPARATOR;
+		anal->state = A_SEPARATOR;
 	(void)shell;
-	return (analyzer);
+	return (anal);
 }

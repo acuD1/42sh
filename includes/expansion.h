@@ -14,6 +14,6 @@ char 		*exp_param(char *data, t_core *shell);
 char 		*exp_tilde(char *data, t_core *shell);
 char 		*exp_error(char *data, t_core *shell);
 char 		*cmd_substitution_expansion(char *data, t_core *shell);
-uint8_t 	is_expansion(enum parser_state id);
+uint8_t 	is_expansion(e_pstate id);
 
 #endif

@@ -1,22 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   analyzer_name.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/02 13:54:18 by guvillat          #+#    #+#             */
+/*   Updated: 2019/12/02 13:54:19 by guvillat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh42.h"
 
-char **ft_add_arg_cmd_process(char **tablo, char *str)
+static char	**create_tablo(char *str)
 {
-	char **tb;
-	int j;
+	char	**tablo;
+
+	if (!str)
+		return (NULL);
+	tablo = NULL;
+	if (!(tablo = (char**)malloc(sizeof(char*) * 2)))
+		return (NULL);
+	tablo[0] = ft_strdup(str);
+	tablo[1] = NULL;
+	return (tablo);
+}
+
+char		**ft_add_arg_cmd_process(char **tablo, char *str)
+{
+	char	**tb;
+	int		j;
 
 	j = 0;
 	tb = NULL;
 	if (!str)
 		return (NULL);
 	if (!tablo)
-	{
-		if (!(tablo = (char**)malloc(sizeof(char*) * 2)))
-			return (NULL);
-		tablo[0] = ft_strdup(str);
-		tablo[1] = NULL;
-		return (tablo);
-	}
+		return (tablo = create_tablo(str));
 	if (!(tb = (char**)malloc(sizeof(char*) * (ft_tablen(tablo) + 2))))
 		return (NULL);
 	while (tablo[j])
@@ -31,12 +51,11 @@ char **ft_add_arg_cmd_process(char **tablo, char *str)
 	return (tb);
 }
 
-char *fill_cmd_job(t_analyzer *analyzer, int flag)
+char		*fill_cmd_job(t_analyzer *analyzer, int flag)
 {
-	char *str;
+	char	*str;
 
 	str = NULL;
-	// (void)flag;
 	if (((t_token*)analyzer->lexer->next->content)->id == 0 || !flag)
 		str = ft_strdup(((t_token*)analyzer->lexer->content)->data);
 	else
@@ -45,17 +64,17 @@ char *fill_cmd_job(t_analyzer *analyzer, int flag)
 	return (analyzer->job.command);
 }
 
-t_analyzer *escape_sequence_analyzer(t_analyzer *analyzer, t_core *shell)
+t_analyzer	*escape_sequence_analyzer(t_analyzer *analyzer)
 {
-	char *str;
+	char	*str;
 
-	(void)shell;
-	ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "ESC SEQ state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
 	str = NULL;
 	str = ft_strnew(0);
-	while (((t_token*)analyzer->lexer->content)->id == P_ESCSEQ && ((t_token*)analyzer->lexer->next->content)->id != P_END)
+	while (((t_token*)analyzer->lexer->content)->id == P_ESCSEQ
+		&& ((t_token*)analyzer->lexer->next->content)->id != P_END)
 	{
-		if (((t_token*)analyzer->lexer->content)->id == P_ESCSEQ || ((t_token*)analyzer->lexer->content)->id == P_SEMICOLON)
+		if (((t_token*)analyzer->lexer->content)->id == P_ESCSEQ
+			|| ((t_token*)analyzer->lexer->content)->id == P_SEMICOLON)
 			get_token(analyzer);
 		if (((t_token*)analyzer->lexer->next->content)->id == P_END)
 			break ;
@@ -66,46 +85,35 @@ t_analyzer *escape_sequence_analyzer(t_analyzer *analyzer, t_core *shell)
 	free(((t_token*)analyzer->lexer->content)->data);
 	((t_token*)analyzer->lexer->content)->data = ft_strdup(str);
 	free(str);
-	analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->content)->data);
+	analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av,
+		((t_token*)analyzer->lexer->content)->data);
 	((t_token*)analyzer->lexer->content)->id = P_WORD;
 	return (analyzer);
 }
 
-t_analyzer *cmd_analyze(t_analyzer *analyzer, t_core *shell)
+t_analyzer	*cmd_analyze(t_analyzer *anal, t_core *shell)
 {
-	// ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "CMD state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
-	analyzer->job.command = fill_cmd_job(analyzer, 1);
-	if (analyzer->state == A_REDIRECT)
+	anal->job.command = fill_cmd_job(anal, 1);
+	if (anal->state == A_REDIRECT)
 	{
-		analyzer->redir.op[1] = ft_strdup(((t_token*)analyzer->lexer->content)->data);
-		analyzer->state = A_WORD;
-		return (analyzer = redir_analyze(analyzer, shell));
+		anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
+		anal->state = A_WORD;
+		return (anal = redir_analyze(anal, shell));
 	}
-	else if (analyzer->state == A_ASSIGN)
-	{
-		analyzer->db.value = ft_strdup(((t_token*)analyzer->lexer->content)->data);
-		analyzer->state = A_START;
-		return (analyzer = ass_analyze(analyzer, shell));
-	}
-	else if (((t_token*)analyzer->lexer->content)->id == P_ESCSEQ)
-		escape_sequence_analyzer(analyzer, shell);
+	else if (anal->state == A_ASSIGN)
+		return (anal = ass_analyze(anal));
+	else if (((t_token*)anal->lexer->content)->id == P_ESCSEQ)
+		escape_sequence_analyzer(anal);
 	else
 	{
-		analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av, ((t_token*)analyzer->lexer->content)->data);
-		if (is_expansion(((t_token*)analyzer->lexer->content)->id))
+		anal->process.av = ft_add_arg_cmd_process(anal->process.av,
+			((t_token*)anal->lexer->content)->data);
+		if (is_expansion(((t_token*)anal->lexer->content)->id))
 		{
-			analyzer->process.type = ((t_token*)analyzer->lexer->content)->id;
-			analyzer->job.type = ((t_token*)analyzer->lexer->content)->id;
+			anal->process.type = ((t_token*)anal->lexer->content)->id;
+			anal->job.type = ((t_token*)anal->lexer->content)->id;
 		}
-		analyzer->state = A_EXPANSION;
+		anal->state = A_WORD;
 	}
-	return (analyzer);
-}
-
-t_analyzer *end_analyze(t_analyzer *analyzer, t_core *shell)
-{
-	// ft_dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "END state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
-	separator_analyze(analyzer, shell);
-	analyzer->state = A_STOP;
-	return (analyzer);
+	return (anal);
 }

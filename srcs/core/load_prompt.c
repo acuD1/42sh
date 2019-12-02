@@ -54,7 +54,7 @@ void			load_prompt(t_core *shell)
 		shell->history = term.history;
 		init_prompt(&term);
 		shell->buff = term.buffer;
-		dprintf(getlefdpour_debug_ailleurs("/dev/ttys002"), "BUFF           [%s]\n", shell->buff);
+		dprintf(nono("/dev/ttys002"), "BUFF           [%s]\n", shell->buff);
 		lexer_parser_analyzer(shell, term.buffer);
 		if (task_master(shell) != SUCCESS)
 			exit(1);

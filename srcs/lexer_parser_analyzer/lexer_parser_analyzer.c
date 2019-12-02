@@ -96,14 +96,13 @@ void		lexer_parser_analyzer(t_core *shell, char *line)
 {
 	t_lst	*lxr_tok;
 	t_lst	*lst_job;
-	
+
 	lxr_tok = lexer(line);
 	lst_job = NULL;
 	shell->job_list = NULL;
 	if (parser(lxr_tok) == TRUE)
 	{
-		shell->lexer = lxr_tok;
-		analyzer(shell);
+		analyzer(shell, lxr_tok);
 		ft_printjoblst(shell->job_list);
 	}
 	else

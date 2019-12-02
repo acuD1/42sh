@@ -29,7 +29,10 @@ char *exp_param(char *data, t_core *shell)
 	tmp = NULL;
 	db_tmp = NULL;
 	if (data[0] == '$' && data[1] == '{')
+	{
 		tmp = get_brace_param(data);
+		printf("%s\n", tmp);
+	}
 	else if (data[0] == '$')
 		tmp = ft_strsub(data, 1, i - 1);
 	// if (tmp[0] == '?')

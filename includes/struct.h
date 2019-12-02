@@ -96,9 +96,7 @@ typedef struct	s_core
 	t_build		build;
 	t_hash		hash;			// Gonna call it on the stack for now
 	t_db		db;
-	t_lst		*lexer;
 	t_lst		*job_list;
-	t_lst		*assign_list;
 
 	/* init shell */
 	//struct termios	new_t;
@@ -124,15 +122,15 @@ typedef struct	s_core
 typedef struct s_expan
 {
 	char 			*(*machine)(char* ,t_core*);
-	e_parser_state 	id;
+	e_pstate 	id;
 	int 			len;
 	char			*data;
 }		t_expan;
 
 typedef struct s_lex_exp
 {
-	t_lst 			*(*func)(t_lexer *, e_parser_state, int, t_lst *);
-	e_parser_state 	id;
+	t_lst 			*(*func)(t_lexer *, e_pstate, int, t_lst *);
+	e_pstate 	id;
 	int 			len;
 }		t_lex_exp;
 
@@ -171,21 +169,21 @@ typedef struct		s_read
 ** 			LEXER_PARSER_ANALYZER
 */
 
-typedef struct		s_redir
+typedef struct	s_redir
 {
-	char			*op[2];
+	char		*op[2];
 	int			io_num[2];
 	int			dup_fd;
-	enum parser_state	type;
+	e_pstate	type;
 }			t_redir;
 
 typedef struct		s_process
 {
-	enum parser_state	type;
-	t_lst			*assign_list;
+	e_pstate		type;
 	t_lst			*redir_list;
 	char			**av;
 	char			*bin;
+	t_lst			*assign_list;
     // char                **env;
     // uint8_t                completed;
     // uint8_t                stopped;
@@ -201,14 +199,14 @@ typedef struct		s_job
     // pid_t               pgid;
     // t_filedesc          fd;
     // int         status; // 1 = running | 0 = stopped par exemple
-    e_parser_state type;
+    e_pstate type;
 }			t_job;
 
 typedef struct		s_analyzer
 {
-    t_anal		analyze;
-    e_analyzer_state	state;
-    t_lst		*lexer;
+    t_anal				analyze;
+    e_astate			state;
+    t_lst				*lexer;
     t_job               job;
     t_process           process;
     t_redir             redir;
@@ -216,32 +214,30 @@ typedef struct		s_analyzer
     t_lst               *job_list;
     t_lst               *process_list;
     t_lst               *redir_list;
-    t_lst               *assign_list;
-    t_lst               *tmp_list;
 }			t_analyzer;
 
 typedef struct		s_graph
 {
-    e_parser_state      *good_type;
+    e_pstate      *good_type;
 }                       t_graph;
 
 typedef struct      s_parser
 {
     t_graph         graph[NB_PARSER_STATE];
-    e_parser_state  state;
+    e_pstate  state;
 }                   t_parser;
 
 typedef struct  s_token
 {
-    e_parser_state id;
+    e_pstate id;
     char            *data;
-    size_t          data_len;
+    size_t          len;
 }              t_token;
 
 typedef struct  s_lexer
 {
     char            *buff;
-    e_lexer_state   status;
+    e_lstate   status;
     size_t          ntok;
     size_t          buf_pos;
     t_lexing        lex[NB_LEXER_STATE];

@@ -144,7 +144,7 @@
 # define EXPANSION 					"$~"
 # define NB_LEXER_STATE 9
 # define NB_PARSER_STATE 34
-# define NB_ANALYZER_STATE 10
+# define NB_ANALYZER_STATE 9
 # define REDIR                      P_GREAT, P_LESS
 # define REDIR_AND                  P_GREATAND, P_LESSAND
 # define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH
