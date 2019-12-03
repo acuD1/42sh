@@ -185,6 +185,7 @@ SRC			+=	$(S_PATH)$(BUILTINS)set.c
 SRC			+=	$(S_PATH)$(BUILTINS)unset.c
 SRC			+=	$(S_PATH)$(BUILTINS)export.c
 SRC			+=	$(S_PATH)$(BUILTINS)exit.c
+SRC			+=	$(S_PATH)$(BUILTINS)hash.c
 
 # Need final FC
 #SRC			+=	$(S_PATH)$(BLT_FC)fc.c

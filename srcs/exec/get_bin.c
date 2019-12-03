@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/01 10:43:53 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/01 14:36:31 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,11 @@ int8_t	get_bin(t_core *shell, t_process *process)
 			&& process->av[0][2] != 0)
 		|| (process->av[0][0] == '/'
 			&& process->av[0][1]))
+	{
 		process->bin = ft_strdup(process->av[0]);
+		return(SUCCESS);
+	}
+	//dprintf(STDERR_FILENO, "get bin ..\nav = |%s|\nbin = |%s|\n", process->av[0], process->bin);
 	if (locate_hash(shell, process) == SUCCESS)
 		return (SUCCESS);
 	if ((ret = get_bin_path(shell, process)) == 1)

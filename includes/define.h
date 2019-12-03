@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/29 00:52:41 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/03 14:46:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@
 **	Hash table
 */
 
-# define HASH_SIZE		4096
+# define HASH_SIZE		256
 # define MAX_LOAD_F		0.75
 
 /*

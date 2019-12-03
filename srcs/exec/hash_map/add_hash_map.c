@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:38:40 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/30 14:57:48 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/03 14:34:04 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int8_t	add_hash_map(t_core *shell, t_process *process)
 
 	/*	get hash value from the binary found in PATH */
 	shell->hash.value = get_hash(process->av[0], shell->hash.size);
-
 	shell->hash.lenght++;
 	/* add to hash map */
 	ft_lstappend(&shell->hash.map[shell->hash.value],

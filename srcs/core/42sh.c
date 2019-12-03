@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/27 00:55:56 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/03 15:55:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,8 @@ int		main(int ac, char **av, char **environ)
 
 	// get_size AVOIDING COND JUMP ON UNINITIALIZED VALUES
 
-	if (get_size(&(shell.cmd_line)) != SUCCESS
-				|| set_env(&shell, av, environ) != SUCCESS)
-	{
+	if (set_env(&shell, av, environ) != SUCCESS)
 		return (EXIT_FAILURE);
-	}
 	/* Options output */
 	print_opt(&shell);
 
@@ -59,7 +56,11 @@ int		main(int ac, char **av, char **environ)
 	// Need "-c implementation and a while to read everything"
 	//char BUFF[16];
 	if (isatty(STDIN_FILENO) == TRUE)
+	{
+		if (get_size(&(shell.cmd_line)) != SUCCESS)
+			return (EXIT_FAILURE);
 		load_prompt(&shell);
+	}
 	else
 	{
 		while (ft_getnextline(STDIN_FILENO, &shell.buff))
