@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 00:18:54 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/27 14:14:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/03 15:18:22 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,15 @@ int8_t	ft_access(char *path, int mode)
 	int		ret;
 
 	depth = 0;
-	get_abs_path(path, buffer);
-	path_len = ft_strlen(path);
+	path_len = 0;
 	if (access(path, mode) == 0)
 		return (SUCCESS);
+	ft_bzero(buffer, MAX_PATH + 1);
+	getcwd(buffer, MAX_PATH);
+	if (ft_strlen(path) + ft_strlen(buffer) > ACCESS_MAX_PATH
+			|| get_canonical_path(path, buffer) != SUCCESS)
+		return (ENAMETOOLONG);
+	path_len = ft_strlen(buffer);
 	while (dir_depth(path, buffer, depth) < path_len)
 	{
 		if ((ret = access_file(buffer, F_OK | X_OK)) != SUCCESS)

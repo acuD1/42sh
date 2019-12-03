@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/29 00:52:41 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/02 21:04:57 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@
 
 # define OPT_VERS		0x001
 # define OPT_HELP		0x002
-# define MAX_PATH		8192
+# define MAX_PATH			4096
+# define ACCESS_MAX_PATH	4096
 
 /*
 **	Exec

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/01 10:41:58 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/03 15:14:18 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ void		print_hash_map(t_hash *hash);
 */
 
 t_core		*get_core(t_core *core);
-int		check_invalid_identifiers(char *arg, char *exceptions);
-void		get_abs_path(char *path, char *buffer);
+int			check_invalid_identifiers(char *arg, char *exceptions);
+int8_t		get_canonical_path(char *path, char *buffer);
 void		ft_perror(const char *s, const int errnum);
 int8_t		ft_access(char *path, int mode);
 int8_t		is_a_dir(char *path);
