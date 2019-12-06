@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/03 15:47:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/06 09:59:55 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_db		*fetch_hash_db(t_db *db, const char *key, const char *value);
 */
 
 void		print_env(t_core *shell);
-void		print_hash_map(t_hash *hash);
+//void		print_hash_map(t_hash *hash);
 
 /*
 **	===========================================================================

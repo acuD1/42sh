@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/27 00:52:37 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/06 09:44:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ void	free_hash_map(t_hash *hash)
 		i++;
 	}
 	free(hash->map);
-	return;
+	hash->map = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/01 09:23:32 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/06 09:59:28 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	print_env(t_core *shell)
 /*
 **	hash_table [VALGRIND BUG]
 */
-
+/*
 void	print_hash_map(t_hash *hash)
 {
 	t_lst	**map;
@@ -58,7 +58,7 @@ void	print_hash_map(t_hash *hash)
 		i++;
 	}
 }
-
+*/
 void	debug_analyzer(t_core *shell)
 {
 	t_lst *tmp;
