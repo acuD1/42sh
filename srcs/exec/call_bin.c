@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/30 14:57:12 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/07 21:06:13 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int8_t	call_bin(t_core *shell, t_lst *process)
 	}
 	if ((ret = check_filepath(ptr->bin)) != SUCCESS)
 	{
-		ft_perror(ptr->av[0], ret);
+		ft_perror(ptr->av[0], NULL, ret);
 		exit((ret == ENOENT) ? 127: 126);
 	}
 	ret = execve(ptr->bin, ptr->av, envp);

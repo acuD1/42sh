@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/27 11:54:58 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/03 16:21:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,5 @@ void	init_shell(t_core *shell)
 	/*
 	**	hash
 	*/
-	shell->hash.map = NULL;
-	shell->hash.value = 0;
 	shell->hash.size = HASH_SIZE;
-	shell->hash.lenght = 0;
-
-	/*	global
-	**
-	*/
-	shell->running_process = NULL;
-	shell->env = NULL;
-	shell->pos_vars = NULL;
-	shell->status = 0;
-	shell->opt = 0;
-	shell->buff = NULL;
-	shell->lexer = NULL;
-	shell->job_list = NULL;
-	shell->assign_list = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:20:26 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/01 11:23:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/05 21:13:48 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int8_t	locate_hash(t_core *shell, t_process *process)
 		{
 			process->bin = ft_strdup(((t_db*)(sub_map->content))->value);
 			((t_db*)(sub_map->content))->hit += 1;
-			dprintf(STDERR_FILENO, "BIN LOCATED\n");
+//			dprintf(STDERR_FILENO, "BIN LOCATED\n");
 			return (SUCCESS);
 		}
 		sub_map = sub_map->next;

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 01:28:05 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/01 14:49:43 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/07 21:08:42 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	print_usage(char *name, int c, char *usage)
 	dprintf(STDERR_FILENO, "%s: usage: %s\n", name, usage);
 }
 
-void	ft_perror(const char *s, const int errnum)
+void	ft_perror(const char *s, const char *name, const int errnum)
 {
-	static char	*error[] = {0, 0, "No such file or directory", 0, 0, 0, 0, 0, 0
+	static char	*error[] = {"Undefined error: 0", 0, "No such file or directory", 0, 0, 0, 0, 0, 0
 		, 0, 0, 0, 0, "Permission denied", 0, 0, 0, 0, 0, 0, "Not a directory"
 		, "Is a directory", 0, 0, 0, 0, 0, 0, 0, 0, 0 // 30
 		, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 40
@@ -29,5 +29,8 @@ void	ft_perror(const char *s, const int errnum)
 		, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 60
 		, 0, 0, "File name too long", 0, 0, 0, 0, 0, 0, 0 // 70
 	};
-	dprintf(STDERR_FILENO, "42sh: %s: %s\n", s, error[errnum]);
+	if (name != NULL)
+		dprintf(STDERR_FILENO, "42sh: %s: %s: %s\n", name, s, error[errnum]);
+	else
+		dprintf(STDERR_FILENO, "42sh: %s: %s\n", s, error[errnum]);
 }

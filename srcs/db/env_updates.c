@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/10 15:47:34 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/04 16:45:48 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ int8_t	increment_shlvl(t_core *shell)
 
 int8_t	update_pwd(t_core *shell)
 {
-	char	buf[1025];
+	char	buf[MAX_PATH + 1];
 	t_db	*db;
 	char	*value;
 
 	db = NULL;
 	value = NULL;
-	ft_bzero(buf, 1025);
+	ft_bzero(buf, MAX_PATH + 1);
 	if (shell != NULL && (db = get_or_create_db(shell, "PWD", ENV_VAR)) != NULL)
 	{
-		getcwd(buf, 1025);
+		getcwd(buf, MAX_PATH);
 		value = ft_strdup(buf);
 		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);

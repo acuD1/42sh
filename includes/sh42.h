@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/03 15:14:18 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/07 21:07:29 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,10 @@ void		print_hash_map(t_hash *hash);
 t_core		*get_core(t_core *core);
 int			check_invalid_identifiers(char *arg, char *exceptions);
 int8_t		get_canonical_path(char *path, char *buffer);
-void		ft_perror(const char *s, const int errnum);
+void		ft_perror(const char *s, const char *name, const int errnum);
 int8_t		ft_access(char *path, int mode);
 int8_t		is_a_dir(char *path);
 void		print_usage(char *name, int c, char *usage);
-void		ft_perror(const char *s, const int errnum);
 void		quit_shell(t_core *shell, int exit_value, int8_t verbose);
 int			check_invalid_identifiers(char *arg, char *exceptions);
 
@@ -152,6 +151,9 @@ int8_t		builtin_unset(t_core *shell, t_process *process);
 int8_t		builtin_export(t_core *shell, t_process *process);
 int8_t		builtin_fc(t_core *shell, t_process *process);
 int8_t		builtin_exit(t_core *shell, t_process *process);
+int8_t		builtin_cd(t_core *shell, t_process *process);
+int8_t		builtin_echo(t_core *shell, t_process *process);
+int8_t		builtin_pwd(t_core *shell, t_process *process);
 
 /*
 **	===========================================================================

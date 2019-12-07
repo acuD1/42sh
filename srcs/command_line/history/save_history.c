@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/16 15:44:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/07 18:11:07 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void			write_history(t_read *line)
 	if (!hst)
 		return ;
 	if ((fd = open(HISTORY_FILE, MODE_WRITE, S_USR_RW | S_GRP_OTH_R)) == -1)
+	{
 		ft_dprintf(STDIN_FILENO, "can't open history file\n");
+		return ;
+	}
 	while (hst->next)
 		hst = hst->next;
 	while (hst && ++i < HISTFILE_SIZE)

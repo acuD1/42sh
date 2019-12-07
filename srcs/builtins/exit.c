@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 23:42:04 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/30 06:16:48 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:30:12 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ static int8_t	ft_atol(char *s, int64_t *result)
 	}
 	while (s[i] == ' ')
 		i++;
-	if (s[i] != 0)
-		return (FAILURE);
 	*result = nb;
-	return (SUCCESS);
+	return ((s[i] != 0) ? FAILURE : SUCCESS);
 }
 
 int8_t			builtin_exit(t_core *shell, t_process *process)

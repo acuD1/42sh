@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/03 15:55:35 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/03 16:21:16 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		main(int ac, char **av, char **environ)
 {
 	t_core	shell;
 
+	ft_bzero(&shell, sizeof(t_core));
 	init_shell(&shell);
 
 	//shell.new_t = ft_memalloc(sizeof(shell.new_t));
@@ -40,11 +41,8 @@ int		main(int ac, char **av, char **environ)
 
 	// get_size AVOIDING COND JUMP ON UNINITIALIZED VALUES
 
-	if (get_size(&(shell.cmd_line)) != SUCCESS
-				|| set_env(&shell, av, environ) != SUCCESS)
-	{
+	if (set_env(&shell, av, environ) != SUCCESS)
 		return (EXIT_FAILURE);
-	}
 	/* Options output */
 	print_opt(&shell);
 
