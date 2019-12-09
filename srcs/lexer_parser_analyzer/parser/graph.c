@@ -59,10 +59,8 @@ void		init_process_graph(t_graph *graph)
 {
 	static e_pstate tab_good_type[] = {ALL_WORDS, P_ESCSEQ, ALL_REDIRECT,
 		ALL_EXPANSION, P_ASSIGN, P_NEWLINE, P_ERROR};
-	static e_pstate tab_type[] = {ALL_WORDS, P_ESCSEQ, ALL_REDIRECT,
-		ALL_EXPANSION, P_NEWLINE, P_ASSIGN, P_ERROR};
 
-	graph[P_PIPE].good_type = tab_type;
+	graph[P_PIPE].good_type = tab_good_type;
 	graph[P_AND].good_type = tab_good_type;
 	graph[P_SEMICOLON].good_type = tab_good_type;
 }

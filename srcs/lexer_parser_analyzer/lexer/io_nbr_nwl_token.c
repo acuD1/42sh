@@ -12,7 +12,7 @@
 
 #include "sh42.h"
 
-static int	isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token)
+t_lst		*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token)
 {
 	int		i;
 	char	*str;
@@ -20,23 +20,23 @@ static int	isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token)
 	str = NULL;
 	i = lexer->buf_pos;
 	if (!lexer->buff[i] || !ft_isdigit(lexer->buff[i]))
-		return (0);
+		return (NULL);
 	while (ft_isdigit(lexer->buff[i]) && lexer->buff[i])
 		i++;
 	if ((lexer->buff[i] == '<' || lexer->buff[i] == '>'))
 	{
 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
-			return (0);
+			return (NULL);
 		if (!(ft_lstappend(&lexer_token, ft_lstnew(
 			fetch_token(&lexer->token, P_IONUMBER, str), sizeof(t_token)))))
-			return (0);
+			return (NULL);
 		free(str);
 		lexer->buf_pos = i;
 		lexer->ntok++;
 	}
 	else
-		return (0);
-	return (1);
+		return (NULL);
+	return (lexer_token);
 }
 
 t_lst		*number_lexer(t_lexer *lexer, t_lst *lexer_token)
@@ -46,7 +46,7 @@ t_lst		*number_lexer(t_lexer *lexer, t_lst *lexer_token)
 		lexer->status = L_END;
 		return (lexer_token);
 	}
-	if (isvalid_ionumber(lexer, lexer_token))
+	if ((lexer_token = isvalid_ionumber(lexer, lexer_token)))
 		lexer_token = operator_lexer(lexer, lexer_token);
 	else
 		lexer_token = name_lexer(lexer, lexer_token);
