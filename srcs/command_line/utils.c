@@ -6,54 +6,23 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/26 17:06:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:17:37 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t		debugi(char  *path, int i, int d, char c, int w)
-{
-    int fd;
-
-    if ((fd = open(path, O_WRONLY)) < 0)
-        return (FAILURE);
-    dprintf(fd, " x[%d] bufi[%d] char[%c] w[%d]\n\n", i, d, c ,w);
-    return (SUCCESS);
-}
-
-int			my_outc(int c)
+int		my_outc(int c)
 {
 	write(0, &c, 1);
 	return (SUCCESS);
 }
 
-void		remove_newline(t_read *line)
-{
-	char		*tmp;
-	int		i;
-	int		j;
-
-	i = -1;
-	j = -1;
-	tmp = ft_strdup(line->buffer);
-	ft_bzero(line->buffer, line->width);
-	while (tmp[++i])
-	{
-		if (tmp[i] == NEW_LINE)
-			line->width--;
-		else
-			line->buffer[++j] = tmp[i];
-	}
-	line->buffer[j + 1] = '\0';
-	ft_strdel(&tmp);
-}
-
 uint8_t		get_width_last_line(t_read *input)
 {
-	int		buff_index;
-	int		width;
-	int		x;
+	int	buff_index;
+	int	width;
+	int	x;
 
 	width = 0;
 	x = input->x + 1;
@@ -92,14 +61,13 @@ uint8_t		get_width_current_line(t_read *input)
 		buff_index++;
 	}
 	width += input->x;
-	debugi("/dev/ttys001", x, buff_index, input->buffer[buff_index], width);
 	return (width);
 }
 
-uint64_t		get_mask(char *buff)
+uint64_t	get_mask(char *buff)
 {
 	uint16_t	i;
-	uint16_t 	shift;
+	uint16_t	shift;
 	uint64_t	value;
 	uint64_t	tmp;
 

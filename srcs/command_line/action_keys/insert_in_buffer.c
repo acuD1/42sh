@@ -6,22 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/12 09:52:22 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:50:36 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-
-int8_t		fdebug(char  *path, t_read *in)
-{
-    int fd;
-
-    if ((fd = open(path, O_WRONLY)) < 0)
-        return (FAILURE);
-    dprintf(fd, " x[%d] xi [%d] y[%d]\n\n w[%d] ws_col[%d]\n", in->x, in->x_index, in->y, in->width, in->ws_col);
-    return (SUCCESS);
-}
 
 /*
 **	To insert a char in buffer at the end of line
@@ -40,7 +29,6 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 	input->width++;
 	input->buffer[buff_index] = buff;
 	input->x_index++;
-	//	move_right(&buff, input);
 }
 
 void		insert_at_index(t_read *input, int buff_index, char *buff)
@@ -49,14 +37,7 @@ void		insert_at_index(t_read *input, int buff_index, char *buff)
 
 	j = ft_strlen(input->buffer) + 1;
 	while (--j > buff_index)
-	{
-		/* if (input->buffer[j - 1] == NEW_LINE) */
-		/* { */
-		/* 	input->buffer[j] = input->buffer[j - 2]; */
-		/* 	j = j - 2; */
-		/* } */
 		input->buffer[j] = input->buffer[j - 1];
-	}
 	input->buffer[buff_index] = *buff;
 }
 
@@ -70,7 +51,7 @@ void		insert_at_index(t_read *input, int buff_index, char *buff)
 void		insert_inline_char(char *buff, t_read *input, int buff_index)
 {
 	char	*tmp;
-	int 	x;
+	int32_t	x;
 
 	x = 0;
 	tmp = NULL;
@@ -89,13 +70,13 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 }
 
 /*
- **	To insert a string in buffer at the end of line
- */
+**	To insert a string in buffer at the end of line
+*/
 
-void			insert_str_in_buffer(char *d_name, t_read *input)
+void		insert_str_in_buffer(char *d_name, t_read *input)
 {
-	int		buff_index;
-	int		i;
+	int	buff_index;
+	int	i;
 
 	i = ft_strlen(d_name);
 	while (i--)
@@ -110,18 +91,23 @@ void			insert_str_in_buffer(char *d_name, t_read *input)
 }
 
 /*
- **	Insert one char if size of buff is equal to 1
- **	Otherwise (size greater than 1) paste the string in buffer
- **	If cursor position is under the width of line => insert inline
- */
+**	Insert one char if size of buff is equal to 1
+**	Otherwise (size greater than 1) paste the string in buffer
+**	If cursor position is under the width of line => insert inline
+*/
 
 void		insert_in_buffer(char *buff, t_read *input)
 {
-	int		buff_index;
+	int	buff_index;
+	int	increase_len;
 
+	increase_len = 0;
 	buff_index = input->x_index - input->prompt_len;
 	if (input->x_index >= BUFF_SIZE)
-		input->buffer = realloc(input->buffer, ft_strlen(input->buffer) + READ_SIZE);
+	{
+		increase_len = ft_strlen(input->buffer) + READ_SIZE;
+		input->buffer = realloc(input->buffer, increase_len);
+	}
 	if (ft_strlen(buff) > 1)
 	{
 		insert_str_in_buffer(buff, input);

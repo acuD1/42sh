@@ -6,33 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 18:39:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:18:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-int8_t		debug(char  *path, t_read *in, char c)
-{
-    int fd;
-
-    if ((fd = open(path, O_WRONLY)) < 0)
-        return (FAILURE);
-    dprintf(fd, " bff[%s] tmp[%s]\n sb[%c]\n\n", in->buffer, in->tmp_buff, c);
-    return (SUCCESS);
-}
-
-/* void		insert_newline_in_buff(t_read *input) */
-/* { */
-/* 	int		buff_index; */
-/*  */
-/* 	buff_index = input->x_index - input->prompt_len; */
-/* 	input->buffer[buff_index] = NEW_LINE; */
-/* 	input->width++; */
-/* 	input->x = 0; */
-/* 	input->y++; */
-/* 	input->x_index++; */
-/* } */
 
 void		display_subprompt(t_read *term, char *prompt)
 {
@@ -91,7 +69,6 @@ void		load_subprompt(char sb, t_read *input)
 			if (quotes_is_matching(input, &sb) == FALSE)
 			{
 				input->buffer[ft_strlen(input->buffer)] = NEW_LINE;
-				//debug("/dev/pts/2", input, sb);
 				free(input->tmp_buff);
 				input->tmp_buff = ft_strdup(input->buffer);
 				continue ;

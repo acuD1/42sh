@@ -6,13 +6,13 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/27 13:45:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:50:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			check_tmp_buffer(t_read *input)
+void		check_tmp_buffer(t_read *input)
 {
 	goto_prompt(input);
 	memset(input->buffer, 0, strlen(input->buffer));
@@ -25,13 +25,13 @@ void			check_tmp_buffer(t_read *input)
 }
 
 /*
-**	Arrow down print the prev saved in history from history index
+**		Arrow down print the prev saved in history from history index
 */
 
-void			move_key_down(t_read *input)
+void		move_key_down(t_read *input)
 {
-	t_lst	 	*w;
-	int		i;
+	t_lst		*w;
+	uint32_t	i;
 
 	i = -1;
 	w = NULL;
@@ -55,13 +55,13 @@ void			move_key_down(t_read *input)
 }
 
 /*
-**	Arrow up print the next saved in history from history index
+**		Arrow up print the next saved in history from history index
 */
 
-void			move_key_up(t_read *input)
+void		move_key_up(t_read *input)
 {
-	t_lst	 	*w;
-	int		i;
+	t_lst		*w;
+	uint32_t	i;
 
 	i = -1;
 	if (input->history)
@@ -88,13 +88,13 @@ void			move_key_up(t_read *input)
 }
 
 /*
-**	Arrow right to move the cursor one char on the right
+**		Arrow right to move the cursor one char on the right
 */
 
-void			move_right(char *buff, t_read *input)
+void		move_right(char *buff, t_read *input)
 {
-	int		width;
-	int		buff_index;
+	int	width;
+	int	buff_index;
 
 	(void)buff;
 	width = get_width_current_line(input);
@@ -117,12 +117,12 @@ void			move_right(char *buff, t_read *input)
 }
 
 /*
-**	Arrow left to move the cursor one char on the left
+**		Arrow left to move the cursor one char on the left
 */
 
 void		move_left(char *buff, t_read *input)
 {
-	int		width;
+	int	width;
 
 	(void)buff;
 	if ((input->x > input->prompt_len && input->y == 0)
