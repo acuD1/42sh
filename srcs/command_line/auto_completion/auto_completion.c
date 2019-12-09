@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/12 09:41:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:09:14 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,26 @@
 
 void			delete_last_cmd(char *d_name, t_read *input)
 {
-	int			i;
-	int			buff_index;
+	int		i;
+	int		j;
+	int		buff_index;
+	char		*tmp;
 
+	tmp = NULL;
 	i = ft_strlen(d_name);
+	j = input->width - input->prompt_len - i;
+	tmp = ft_strsub(input->buffer, 0, i);
 	buff_index = input->x_index - input->prompt_len - 1;
 	while (i--)
 	{
-		input->buffer[buff_index] = '\0';
 		input->width--;
 		move_left(d_name, input);
 		buff_index--;
 	}
+	tmp = ft_strsub(input->buffer, 0, j);
+	free(input->buffer);
+	input->buffer = ft_strdup(tmp);
+	free(tmp);
 	xtputs(input->tcaps[CLR_EOL], 1, my_outc);
 }
 

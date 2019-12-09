@@ -6,12 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/06 15:52:16 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:08:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-#include <sys/stat.h>
 
 /*
 **		Delete last command insert in buffer and insert the new one
@@ -21,14 +20,14 @@
 uint8_t			read_again(char **prev_b, char *path, char *name, t_read *input)
 {
 	uint64_t	value;
-	char		buff[READ_SIZE + 1];
+	char		buff[READ_SIZE];
 
 	ft_bzero(buff, READ_SIZE);
 	delete_last_cmd(*prev_b, input);
 	if (is_dir(path) == TRUE)
 		ft_strcat(name, "/");
 	insert_str_in_buffer(name, input);
-	if (xread(0, buff, READ_SIZE) > 0)
+	if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		value = get_mask(buff);
 		if (value == TAB_KEY)

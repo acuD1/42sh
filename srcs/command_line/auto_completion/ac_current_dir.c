@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/05 21:07:23 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:08:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ uint8_t			is_tab(char *buff, char *d_name, t_read *input)
 {
 	uint64_t	value;
 
-	ft_bzero(buff, READ_SIZE + 1);
-	if (xread(0, buff, READ_SIZE) > 0)
+	ft_bzero(buff, READ_SIZE);
+	if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		value = get_mask(buff);
 		if (value == TAB_KEY)

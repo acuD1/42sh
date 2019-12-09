@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/26 17:39:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:08:52 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 		input->found = 1;
 		goto_prompt(input);
 		insert_bin_in_buffer(name, input);
-		if (xread(0, buf, READ_SIZE) > 0)
+		if (xread(STDIN_FILENO, buf, READ_SIZE) > 0)
 		{
 			value = get_mask(buf);
 			if (value == TAB_KEY)
