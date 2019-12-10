@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/09 16:18:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 13:17:22 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void		display_subprompt(t_read *term, char *prompt)
 {
-	if (*term->prompt)
-		ft_strdel(&term->prompt);
-	term->prompt = ft_strdup(prompt);
+	ft_strcpy(term->prompt, prompt);
 	term->prompt_len = ft_strlen(term->prompt);
 	term->x = term->prompt_len;
 	term->y = 0;

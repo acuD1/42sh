@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/06 15:47:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 12:07:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *input)
 {
 	if ((ft_strlen(input->buffer) == 0))
 		return (FALSE);
-	if ((input->cmd = ft_strsplit(input->buffer, SPACE)) == NULL)
+	if ((int)strlen_to(input->buffer, ' ') != (input->width - input->prompt_len))
+		return (FALSE);
+	if (!(input->cmd = ft_strsplit(input->buffer, SPACE)))
 		return (FALSE);
 	input->ac = ft_tablen(input->cmd);
 	*last_cmd = input->cmd[ft_tablen(input->cmd) - 1];

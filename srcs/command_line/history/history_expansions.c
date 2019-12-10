@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/05 16:00:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 10:25:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,15 @@
 int			insert_content(int j, int i, t_read *line, char *content)
 {
 	char		*tmp;
-	int		len;
+	int64_t		len;
+	int64_t		inc_len;
 
+	inc_len = 0;
 	if (i >= BUFF_SIZE)
-		line->buffer = realloc(line->buffer, ft_strlen(line->buffer) + ft_strlen((char *)content));
+	{
+		inc_len = ft_strlen(line->buffer) + ft_strlen((char *)content);
+		line->buffer = realloc(line->buffer, inc_len);
+	}
 	len = line->width - line->prompt_len - j;
 	tmp = ft_strsub(line->buffer, i + j, len);
 	j = -1;
@@ -44,11 +49,11 @@ int			insert_content(int j, int i, t_read *line, char *content)
 **		"!word" expansion search the word to find from the end of hst lst
 */
 
-void			call_word(t_read *line, int i)
+void		call_word(t_read *line, int i)
 {
 	char		word[BUFF_SIZE];
-	int		j;
-	int		n;
+	int64_t		j;
+	int64_t		n;
 	t_lst		*w;
 
 	j = -1;
@@ -77,12 +82,12 @@ void			call_word(t_read *line, int i)
 **		"!-number" expansion search from the end of hst lst
 */
 
-void			callback_number(t_read *line, int i)
+void		callback_number(t_read *line, int i)
 {
 	char		nb[BUFF_SIZE];
-	int		n;
+	int64_t		n;
 	t_lst		*w;
-	int		j;
+	int64_t		j;
 
 	j = -1;
 	w = line->history;
@@ -108,12 +113,12 @@ void			callback_number(t_read *line, int i)
 **		"!number" expansion search from the beggining of hst lst
 */
 
-void			call_number(t_read *line, int i)
+void		call_number(t_read *line, int i)
 {
 	char		nb[BUFF_SIZE];
-	int		n;
+	int64_t		n;
 	t_lst		*w;
-	int		j;
+	int64_t		j;
 
 	j = -1;
 	w = line->history;
@@ -129,10 +134,8 @@ void			call_number(t_read *line, int i)
 	while (w->next)
 		w = w->next;
 	while (w && n != 0 && --n)
-	{
 		if (w->prev)
 			w = w->prev;
-	}
 	insert_content(j + 2, i, line, (char *)w->content);
 	i = i + j + 1;
 }
@@ -141,7 +144,7 @@ void			call_number(t_read *line, int i)
 **		"!!" expansion search the last occurence of hst list
 */
 
-void			last_cmd_back(t_read *line, int i)
+void		last_cmd_back(t_read *line, int i)
 {
 	t_lst		*w;
 

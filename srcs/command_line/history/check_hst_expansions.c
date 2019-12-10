@@ -6,13 +6,13 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/23 13:55:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 11:27:52 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		find_expansions(t_read *line, int *i)
+void		find_expansions(t_read *line, int64_t *i)
 {
 	if (line->buffer[*i + 1] == '!')
 		last_cmd_back(line, *i);
@@ -26,8 +26,8 @@ void		find_expansions(t_read *line, int *i)
 
 void		check_expansions(t_read *line)
 {
-	int	i;
-	int	buff_len;
+	int64_t	i;
+	int64_t	buff_len;
 	char	*tmp;
 
 	i = -1;
