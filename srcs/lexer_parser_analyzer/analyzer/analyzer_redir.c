@@ -43,11 +43,6 @@ t_analyzer	*redir_analyze(t_analyzer *anal, t_core *shell)
 	ft_lstappend(&anal->redir_list,
 		ft_lstnew(fetch_redir(&anal->redir), sizeof(t_redir)));
 	init_redir(&anal->redir);
-	if (anal->lexer->next
-		&& !ft_strcmp("(null)", ((t_token*)anal->lexer->next->content)->data))
-		anal->state = A_STOP;
-	else
-		anal->state = A_WORD;
 	(void)shell;
 	return (anal);
 }

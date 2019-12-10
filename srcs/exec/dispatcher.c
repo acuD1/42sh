@@ -42,11 +42,7 @@ int8_t	dispatcher(t_core *shell, t_lst *jobs)
 	//debug_process(ptr);
 	while (ptr != NULL)
 	{
-		if ((!(*(t_process*)ptr->content).av))
-		{
-			ptr = ptr->next;
-		}
-		else if (((t_process*)ptr->content)->type == P_PIPE)
+		if (((t_process*)ptr->content)->type == P_PIPE)
 		{
 			if (exec_pipeline(shell, &ptr) != SUCCESS)
 			{
@@ -54,18 +50,15 @@ int8_t	dispatcher(t_core *shell, t_lst *jobs)
 				return (FAILURE);
 			}
 		}
-		else if (((t_process*)ptr->content)->type == P_ASSIGN)
+		else 
 		{
-			printf("TOTO\n");
-			if (((t_process*)ptr->content)->assign_list)
-				add_assign_env(((t_process*)ptr->content)->assign_list, shell);
+			// if (((t_process*)ptr->content)->assign_list)
+				// add_assign_env(((t_process*)ptr->content)->assign_list, shell);
+			if (((*(t_process*)ptr->content).av))
+				exec_process(shell, ptr);
 			ptr = ptr->next;
 		}
-		else
-		{
-			exec_process(shell, ptr);
-			ptr = ptr->next;
-		}
+		
 	}
 	return (SUCCESS);
 }
