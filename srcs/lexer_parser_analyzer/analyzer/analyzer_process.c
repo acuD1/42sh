@@ -3,10 +3,8 @@
 void init_process(t_process *new)
 {
 	// ft_tabfree(new->av);
-	new->av = NULL;
+	ft_bzero(new, sizeof(t_process));
 	new->type = P_START;
-	new->redir_list = NULL;
-	new->assign_list = NULL;
 }
 
 t_process *fetch_process(t_process *process)

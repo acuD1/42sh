@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/07 21:05:40 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/10 18:31:09 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int8_t	cd_oldpwd(t_core *shell)
 		return (1);
 	}
 	if (cd_check_path(var->value) == SUCCESS)
-		dprintf(STDERR_FILENO, "%s", var->value);
+		dprintf(STDERR_FILENO, "%s\n", var->value);
 	return (change_dir(shell, var->value));
 }
 

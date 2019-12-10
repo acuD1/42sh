@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/30 09:34:47 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/10 20:58:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ typedef struct		s_read
 
 typedef struct	s_redir
 {
+	char				*heredoc
 	char				*op[2];
 	int					io_num[2];
 	int					dup_fd;
