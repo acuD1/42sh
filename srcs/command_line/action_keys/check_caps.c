@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/09 16:19:07 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:14:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 void		check_keys_comb(char *buff, t_read *input, uint64_t value)
 {
-	int	i;
+	int		i;
 
 	i = input->width - input->x_index;
 	if (value == CTRL_L)

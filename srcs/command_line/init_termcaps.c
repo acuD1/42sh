@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/26 17:34:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:21:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_read			*get_size(t_read *data)
 int8_t			stock_termcaps(t_read *term)
 {
 	static char	*termcaps[CAPS_NBR];
-	int		i;
+	int			i;
 
 	i = -1;
 	termcaps[0] = "dc";

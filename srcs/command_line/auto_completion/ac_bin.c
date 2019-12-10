@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 12:07:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:13:35 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 void			insert_bin_in_buffer(char *d_name, t_read *input)
 {
-	int		i;
-	int		buf_index;
+	int			i;
+	int			buf_index;
 
 	i = -1;
 	buf_index = 0;
@@ -65,9 +65,9 @@ uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 void			to_complete_bin(char *buf, char *to_find, t_read *input)
 {
 	struct dirent	*data;
-	DIR		*dir;
-	char		**path;
-	int		i;
+	DIR				*dir;
+	char			**path;
+	int				i;
 
 	i = -1;
 	path = split_path(input->shell, "PATH");

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 12:07:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 18:12:18 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ void			parse_env(char *prev_b, char *to_find, t_read *input)
 		{
 			tmp = ft_strjoin("$", ((t_db *)(env->content))->key);
 			if (read_again(&prev_b, NULL, tmp, input) == FALSE)
-			{
-				ft_strdel(&tmp);
-				return ;
-			}
+				break ;
 			input->found = TRUE;
 		}
 		if (env->next)
@@ -38,8 +35,9 @@ void			parse_env(char *prev_b, char *to_find, t_read *input)
 		else if (input->found == TRUE)
 			env = head;
 		else
-			return ;
+			break ;
 	}
+	ft_strdel(&tmp);
 }
 
 /*
@@ -67,11 +65,14 @@ char			**split_path(t_core *shell, char *str)
 
 uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *input)
 {
-	if ((ft_strlen(input->buffer) == 0))
+	int		i;
+
+	i = -1;
+	while (isspace(input->buffer[++i]))
+		continue ;
+	if (input->buffer[i] == '\0')
 		return (FALSE);
-	if ((int)strlen_to(input->buffer, ' ') != (input->width - input->prompt_len))
-		return (FALSE);
-	if (!(input->cmd = ft_strsplit(input->buffer, SPACE)))
+	if ((input->cmd = ft_strsplit(input->buffer, SPACE)) == NULL)
 		return (FALSE);
 	input->ac = ft_tablen(input->cmd);
 	*last_cmd = input->cmd[ft_tablen(input->cmd) - 1];

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 12:13:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/09/19 13:42:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:19:22 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char		*xtgetstr(char *id, char **area)
 
 size_t		xread(int fd, char *buff, int size)
 {
-	int	ret;
+	int		ret;
 
 	if ((ret = read(fd, buff, size)) < 1)
 	{

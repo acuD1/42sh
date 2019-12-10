@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 10:25:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:04:08 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 int			insert_content(int j, int i, t_read *line, char *content)
 {
 	char		*tmp;
-	int64_t		len;
-	int64_t		inc_len;
+	int			len;
+	int			inc_len;
 
 	inc_len = 0;
 	if (i >= BUFF_SIZE)
@@ -49,11 +49,11 @@ int			insert_content(int j, int i, t_read *line, char *content)
 **		"!word" expansion search the word to find from the end of hst lst
 */
 
-void		call_word(t_read *line, int i)
+void			call_word(t_read *line, int i)
 {
 	char		word[BUFF_SIZE];
-	int64_t		j;
-	int64_t		n;
+	int			j;
+	int			n;
 	t_lst		*w;
 
 	j = -1;
@@ -82,12 +82,12 @@ void		call_word(t_read *line, int i)
 **		"!-number" expansion search from the end of hst lst
 */
 
-void		callback_number(t_read *line, int i)
+void			callback_number(t_read *line, int i)
 {
 	char		nb[BUFF_SIZE];
-	int64_t		n;
+	int			n;
 	t_lst		*w;
-	int64_t		j;
+	int			j;
 
 	j = -1;
 	w = line->history;
@@ -99,7 +99,7 @@ void		callback_number(t_read *line, int i)
 	}
 	n = ft_atoi(nb);
 	if (!w || n > (int)ft_lstlen(w) || n > HIST_SIZE || n < 0)
-		return ; // call error fct
+		return ;
 	while (w && n != 0 && --n)
 	{
 		if (w->next)
@@ -113,12 +113,12 @@ void		callback_number(t_read *line, int i)
 **		"!number" expansion search from the beggining of hst lst
 */
 
-void		call_number(t_read *line, int i)
+void			call_number(t_read *line, int i)
 {
 	char		nb[BUFF_SIZE];
-	int64_t		n;
+	int			n;
 	t_lst		*w;
-	int64_t		j;
+	int			j;
 
 	j = -1;
 	w = line->history;
@@ -130,7 +130,7 @@ void		call_number(t_read *line, int i)
 	}
 	n = ft_atoi(nb);
 	if (!w || n > (int)ft_lstlen(w) || n > HIST_SIZE || n < 0)
-		return ; //call error fct
+		return ;
 	while (w->next)
 		w = w->next;
 	while (w && n != 0 && --n)

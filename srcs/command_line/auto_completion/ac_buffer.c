@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/09 16:08:41 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:12:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,14 @@ uint8_t			read_again(char **prev_b, char *path, char *name, t_read *input)
 			return (TRUE);
 		}
 		else
-		{
-			xtputs(input->tcaps[SAVE_CR], 1, my_outc);
-			if (check_caps(buff, input) == FALSE)
-				xtputs(input->tcaps[RESTORE_CR], 1, my_outc);
 			return (FALSE);
-		}
 	}
 	return (FALSE);
 }
 
-uint8_t		get_dir(char *prev_b, char *to_find, char *current_dir)
+uint8_t			get_dir(char *prev_b, char *to_find, char *current_dir)
 {
-	int	found;
+	int			found;
 
 	found = ft_strlen(to_find);
 	while (to_find[--found])
@@ -66,9 +61,9 @@ uint8_t		get_dir(char *prev_b, char *to_find, char *current_dir)
 	return (FALSE);
 }
 
-DIR			*update_curr_dir(char *to_find, char *prev_b, char *curr_dir)
+DIR				*update_curr_dir(char *to_find, char *prev_b, char *curr_dir)
 {
-	DIR             *dir;
+	DIR			*dir;
 
 	if (get_dir(prev_b, to_find, curr_dir))
 		ft_strcpy(to_find, prev_b);
@@ -83,16 +78,15 @@ DIR			*update_curr_dir(char *to_find, char *prev_b, char *curr_dir)
 
 /*
 **		Reading data name off the current directory opened
-**		Return FAILURE(-1) to stop reading (an error occured or no tab key pressed)
+**		Return FAILURE(-1) to stop reading
 */
 
 int8_t			read_dir(char **prev_b, char *to_find, t_read *input)
 {
-	char            current_dir[BUFF_SIZE];
-	struct dirent   *data;
-	uint8_t		found;
-	DIR		*dir;
-	char            *path;
+	struct dirent	*data;
+	DIR				*dir;
+	char			*path;
+	char			current_dir[BUFF_SIZE];
 
 	if ((dir = update_curr_dir(to_find, *prev_b, current_dir)) == NULL)
 		return (FAILURE);
@@ -100,7 +94,7 @@ int8_t			read_dir(char **prev_b, char *to_find, t_read *input)
 	{
 		if (isstart(data->d_name, to_find))
 		{
-			found = TRUE;
+			input->found = TRUE;
 			path = ft_strjoin(current_dir, data->d_name);
 			if (read_again(prev_b, path, data->d_name, input) == TRUE)
 				continue ;
@@ -112,7 +106,8 @@ int8_t			read_dir(char **prev_b, char *to_find, t_read *input)
 			}
 		}
 	}
-	return (found);
+	free(path);
+	return (input->found);
 }
 
 /*
@@ -121,15 +116,13 @@ int8_t			read_dir(char **prev_b, char *to_find, t_read *input)
 
 void			to_complete_buffer(char *prev_b, char *to_find, t_read *input)
 {
-	int		found;
-
-	found = FALSE;
+	input->found = FALSE;
 	if (isstart(to_find, "$"))
 	{
 		parse_env(prev_b, to_find, input);
 		return ;
 	}
-	if ((found = read_dir(&prev_b, to_find, input)) == FAILURE)
+	if (read_dir(&prev_b, to_find, input) == FAILURE)
 		return ;
-	found == TRUE ? to_complete_buffer(prev_b, to_find, input) : 0;
+	input->found == TRUE ? to_complete_buffer(prev_b, to_find, input) : 0;
 }

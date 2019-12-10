@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 14:34:44 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:14:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 
 void		insert_at_index(t_read *input, int buff_index, char *buff)
 {
-	int	j;
+	int		j;
 
 	j = ft_strlen(input->buffer) + 1;
 	while (--j > buff_index)
@@ -51,7 +51,7 @@ void		insert_at_index(t_read *input, int buff_index, char *buff)
 void		insert_inline_char(char *buff, t_read *input, int buff_index)
 {
 	char	*tmp;
-	int32_t	x;
+	int		x;
 
 	x = 0;
 	tmp = NULL;
@@ -75,8 +75,8 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 
 void		insert_str_in_buffer(char *d_name, t_read *input)
 {
-	int	buff_index;
-	int	i;
+	int		buff_index;
+	int		i;
 
 	i = ft_strlen(d_name);
 	while (i--)
@@ -98,8 +98,8 @@ void		insert_str_in_buffer(char *d_name, t_read *input)
 
 void		insert_in_buffer(char *buff, t_read *input)
 {
-	int	buff_index;
-	int	increase_len;
+	int		buff_index;
+	int		increase_len;
 
 	increase_len = 0;
 	buff_index = input->x_index - input->prompt_len;

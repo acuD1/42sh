@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/09 16:50:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:15:14 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		check_tmp_buffer(t_read *input)
 void		move_key_down(t_read *input)
 {
 	t_lst		*w;
-	uint32_t	i;
+	int			i;
 
 	i = -1;
 	w = NULL;
@@ -61,7 +61,7 @@ void		move_key_down(t_read *input)
 void		move_key_up(t_read *input)
 {
 	t_lst		*w;
-	uint32_t	i;
+	int			i;
 
 	i = -1;
 	if (input->history)

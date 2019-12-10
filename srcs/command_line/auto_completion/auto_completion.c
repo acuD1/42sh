@@ -6,12 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 11:48:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:17:07 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-#include <sys/stat.h>
 
 /*
 **		Delete the last cmd in buffer if an another key tab is pressed
@@ -20,33 +19,25 @@
 
 void			delete_last_cmd(char *d_name, t_read *input)
 {
-	int		i;
-	int		j;
-	int		buff_index;
+	int			i;
 	char		*tmp;
 
 	tmp = NULL;
-	i = ft_strlen(d_name);
-	j = input->width - input->prompt_len - i;
+	i = input->width - input->prompt_len - ft_strlen(d_name);
 	tmp = ft_strsub(input->buffer, 0, i);
-	buff_index = input->x_index - input->prompt_len - 1;
-	while (i--)
-	{
-		input->width--;
-		move_left(d_name, input);
-		buff_index--;
-	}
-	tmp = ft_strsub(input->buffer, 0, j);
-	free(input->buffer);
-	input->buffer = ft_strdup(tmp);
-	free(tmp);
-	xtputs(input->tcaps[CLR_EOL], 1, my_outc);
+	goto_prompt(input);
+	ft_strdel(&input->buffer);
+	input->buffer = ft_memalloc(BUFF_SIZE);
+	insert_str_in_buffer(tmp, input);
+	ft_strdel(&tmp);
 }
 
 uint8_t			is_dir(char *dir)
 {
-	struct stat 	buf;
+	struct stat	buf;
 
+	if (!dir)
+		return (FALSE);
 	if (lstat(dir, &buf) == FAILURE)
 		return (FALSE);
 	if (S_ISDIR(buf.st_mode))
@@ -76,7 +67,7 @@ void			auto_complete_mode(char *buf, t_read *input)
 		return ;
 	if (input->ac > 1)
 	{
-		if (/* is_dir(to_find) ||  */input->buffer[i] == ' ')
+		if (input->buffer[i] == ' ')
 			display_current_directory(buf, input, to_find);
 		else
 			to_complete_buffer(last_buf, to_find, input);
@@ -85,7 +76,7 @@ void			auto_complete_mode(char *buf, t_read *input)
 	{
 		if (is_dir(input->buffer) || isstart(input->buffer, "/"))
 			read_directories(buf, to_find, input);
-		else
+		else if (ft_isalpha(*to_find))
 			to_complete_bin(buf, to_find, input);
 		if (input->found == 0)
 			to_complete_buffer(last_buf, to_find, input);

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:51:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 17:38:35 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:12:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void printjobbijobba(t_core *shell)
 {
 	if (shell->job_list)
 	{
-		ft_printjoblst(shell->job_list);
+	//	ft_printjoblst(shell->job_list);
 		// ft_freejoblist(&shell->job_list);
 	}
 	// if (shell->assign_list)
