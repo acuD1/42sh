@@ -48,6 +48,7 @@ void	init_ionumber_analyze(t_anal analyze)
 	analyze[A_IONUMBER][P_LESS] = redirect_analyze;
 	analyze[A_IONUMBER][P_DGREAT] = redirect_analyze;
 	analyze[A_IONUMBER][P_GREATAND] = redirect_analyze;
+	analyze[A_IONUMBER][P_LESSAND] = redirect_analyze;
 	analyze[A_IONUMBER][P_GREAT] = redirect_analyze;
 	analyze[A_IONUMBER][P_WORD] = cmd_analyze;
 	analyze[A_IONUMBER][P_QUOTE] = cmd_analyze;
@@ -67,6 +68,7 @@ void	init_redirect_analyze(t_anal analyze)
 	analyze[A_REDIRECT][P_LESS] = redirect_analyze;
 	analyze[A_REDIRECT][P_DGREAT] = redirect_analyze;
 	analyze[A_REDIRECT][P_GREATAND] = redirect_analyze;
+	analyze[A_REDIRECT][P_LESSAND] = redirect_analyze;
 	analyze[A_REDIRECT][P_GREAT] = redirect_analyze;
 	analyze[A_REDIRECT][P_IONUMBER] = ionbr_analyze;
 	analyze[A_REDIRECT][P_ASSIGN] = assign_analyze;

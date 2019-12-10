@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expansion.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
+/*   Updated: 2019/12/10 19:32:29 by guvillat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh42.h"
 
 uint8_t is_expansion(e_pstate id)
 {
 	if (id == P_TILDEP || id == P_TILDEM || id == P_TILDE
-		|| id == P_DBPARENT || id == P_PARENT
-		|| id == P_BRACKET || id == P_HOOK ||id == P_DOLLAR)
+			|| id == P_DBPARENT || id == P_PARENT
+			|| id == P_BRACKET || id == P_HOOK ||id == P_DOLLAR)
 		return (TRUE);
 	return (FALSE);
 }
@@ -45,15 +57,15 @@ char *start_expansion(t_core *shell, char *data)
 {
 	int 	i;
 	t_expan expan[] = 	{
-							{exp_tilde, P_TILDE, 1, "~"},
-							{exp_tilde, P_TILDEP, 2, "~+"},
-							{exp_tilde, P_TILDEM, 2, "~-"},
-							{exp_math, P_DBPARENT, 3, "$(("},
-							{exp_cmd_subs, P_PARENT, 2, "$("},
-							{exp_param, P_BRACKET, 2, "${"},
-							{exp_math, P_HOOK, 2, "$["},
-							{exp_param, P_DOLLAR, 1, "$"},
-						};
+		{exp_tilde, P_TILDE, 1, "~"},
+		{exp_tilde, P_TILDEP, 2, "~+"},
+		{exp_tilde, P_TILDEM, 2, "~-"},
+		{exp_math, P_DBPARENT, 3, "$(("},
+		{exp_cmd_subs, P_PARENT, 2, "$("},
+		{exp_param, P_BRACKET, 2, "${"},
+		{exp_math, P_HOOK, 2, "$["},
+		{exp_param, P_DOLLAR, 1, "$"},
+	};
 	i = 0;
 	if (!data || !shell->env)
 		return (data);

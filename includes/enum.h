@@ -66,7 +66,6 @@ typedef enum    pstate
     P_START,
     P_END,
     P_ERROR,
-
     // P_QUESTIONMARK
     // P_HASH,
     // P_PERCENT,
