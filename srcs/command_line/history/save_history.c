@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 17:57:36 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 14:24:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,25 +79,20 @@ void			save_history(t_read *term)
 int8_t			init_history(t_read *term)
 {
 	char		*line;
-	int			fd;
-	int			i;
-	int			j;
+	int		fd;
+	int		i;
 
-	j = 0;
-	i = -1;
+	i = 0;
 	line = NULL;
 	if ((fd = open(HISTORY_FILE, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)
 		return (FAILURE);
 	while (ft_getnextline(fd, &line) > 0)
 	{
-		term->buffer = ft_memalloc(BUFF_SIZE);
-		while (++i < (int)ft_strlen(line))
-			term->buffer[i] = line[i];
+		term->buffer = ft_strdup(line);
 		save_history(term);
-		term->history->content_size = ++j;
+		term->history->content_size = ++i;
 		free(line);
 		free(term->buffer);
-		i = -1;
 	}
 	free(line);
 	close(fd);
