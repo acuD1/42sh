@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/25 21:18:04 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/10 22:19:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,76 +15,74 @@
 /*
 **	Combination of Keys :
 **	CTRL + L to clear the screen
-**	CTRL + A && HOME key to move the cursor to the beginning of line
-**	CTRL + E && END key to move move the cursor to the end of line
-**	CTRL + K to clear from the cursor to the end of line
+**	CTRL + A && HOME key to move the cursor to the beginning of input
+**	CTRL + E && END key to move move the cursor to the end of input
+**	CTRL + K to clear from the cursor to the end of input
 **	CTRL + B to jump one word backward
 **	CTRL + F to jump one word forward
 */
 
-void		check_keys_comb(char *buff, t_read *line, uint64_t value)
+void		check_keys_comb(char *buff, t_read *input, uint64_t value)
 {
 	int	i;
 
+	i = input->width - input->x_index;
 	if (value == CTRL_L)
-		clr_screen(line);
+		clr_screen(input);
 	else if (value == CTRL_A || value == HOME)
-		while (line->x_index > line->prompt_len)
-			move_left(buff, line);
+		while (input->x_index > input->prompt_len)
+			move_left(buff, input);
 	else if (value == CTRL_E || value == END_LE)
-		while (line->x_index < line->width)
-			move_right(buff, line);
+		while (input->x_index < input->width)
+			move_right(buff, input);
 	else if (value == CTRL_K)
-	{
-		i = line->x_index;
-		while (i++ < line->width)
-			del_key(line);
-	}
+		while (i--)
+			del_key(input);
 	else
-		jump_words(buff, line, value);
+		jump_words(buff, input, value);
 }
 
 /*
 **		Check if is EOF (CTRL+D) to exit program is buffer is empty
 */
 
-void		end_of_file(t_read *line, uint64_t value)
+void		end_of_file(t_read *input, uint64_t value)
 {
 	t_core	*shell;
 
 	shell = get_core(NULL);
-	if (!ft_strcmp(line->buffer, "") && value == CTRL_D)
+	if (!ft_strcmp(input->buffer, "") && value == CTRL_D)
 	{
 		ft_putstr("exit\n");
-		reset_config(shell, line);
-		write_history(line);
-		if (line->history)
+		reset_config(shell, input);
+		write_history(input);
+		if (input->history)
 		{
-			while (line->history)
+			while (input->history)
 			{
-				free(line->history->content);
-				line->history = line->history->next;
+				free(input->history->content);
+				input->history = input->history->next;
 			}
 		}
-		free(line->history);
+		free(input->history);
 		exit(0);
 	}
 }
 
-uint8_t		cursor_motion(char *buff, t_read *line, uint64_t value)
+uint8_t		cursor_motion(char *buff, t_read *input, uint64_t value)
 {
 	if (value == ARROW_UP)
-		move_key_up(line);
+		move_key_up(input);
 	else if (value == ARROW_DOWN)
-		move_key_down(line);
+		move_key_down(input);
 	else if (value == ARROW_RIGHT)
-		move_right(buff, line);
+		move_right(buff, input);
 	else if (value == ARROW_LEFT)
-		move_left(buff, line);
+		move_left(buff, input);
 	else if (value == DEL_KEY)
-		del_key(line);
+		del_key(input);
 	else if (value == BS_KEY)
-		bs_key(buff, line);
+		bs_key(buff, input);
 	else
 		return (FALSE);
 	return (TRUE);
@@ -94,27 +92,27 @@ uint8_t		cursor_motion(char *buff, t_read *line, uint64_t value)
 **		Interpret and insert char in bufffer
 **		CTRL+R to launch history research
 **		Tab key to turn on auto complete mode
-**		Right/Left arrows keys to move cursor in line
+**		Right/Left arrows keys to move cursor in input
 **		Up/Down arrows keys to navigate through history
-**		Enter key to return the line
-**		Backspace/Delete keys to delete character in line
+**		Enter key to return the input
+**		Backspace/Delete keys to delete character in input
 */
 
-uint8_t		check_caps(char *buff, t_read *line)
+uint8_t		check_caps(char *buff, t_read *input)
 {
 	uint64_t	value;
 
 	value = get_mask(buff);
 	if (is_print(*buff))
-		insert_in_buffer(buff, line);
+		insert_in_buffer(buff, input);
 	if (value == CTRL_R)
-		research_mode(line);
+		research_mode(input);
 	if (value == TAB_KEY)
 	{
-		auto_complete_mode(buff, line);
+		auto_complete_mode(buff, input);
 		value = get_mask(buff);
 	}
-	if (cursor_motion(buff, line, value))
+	if (cursor_motion(buff, input, value))
 	   return (TRUE);
 	if (value == RETURN_KEY)
 	{
@@ -122,7 +120,7 @@ uint8_t		check_caps(char *buff, t_read *line)
 		return (FALSE);
 	}
 	else
-		check_keys_comb(buff, line, value);
-	end_of_file(line, value);
+		check_keys_comb(buff, input, value);
+	end_of_file(input, value);
 	return (TRUE);
 }

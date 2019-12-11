@@ -6,12 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/27 00:22:33 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/10 21:46:22 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-#include <sys/ioctl.h>
 
 /*
 **	Store datas of terminal's line/column
@@ -75,5 +74,10 @@ void			init_termcaps(t_read *term)
 	{
 		// Display error msg
 		EXIT_FAILURE ;
+	}
+	if (get_size(term) != SUCCESS)
+	{
+		//SHELL MUST LEAVE : Print message + exit
+		quit_shell(get_core(NULL), 1, 0);
 	}
 }

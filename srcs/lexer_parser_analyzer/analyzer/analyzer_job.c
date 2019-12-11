@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   analyzer_job.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/02 13:53:51 by guvillat          #+#    #+#             */
+/*   Updated: 2019/12/02 13:54:01 by guvillat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh42.h"
 
-void init_job(t_job *new)
+void		init_job(t_job *new)
 {
-	new->command  = ft_strnew(0);
+	new->command = ft_strnew(0);
 	new->type = P_END;
 	new->process_list = NULL;
 }
 
-t_job *fetch_job(t_job *job)
+t_job		*fetch_job(t_job *job)
 {
-	t_job *new;
+	t_job	*new;
 
 	if (!job)
 		return (NULL);
@@ -26,17 +38,18 @@ t_job *fetch_job(t_job *job)
 	return (new);
 }
 
-t_analyzer *job_analyze(t_analyzer *analyzer, t_core *shell)
+t_analyzer	*job_analyze(t_analyzer *anal, t_core *shell)
 {
-	analyzer = process_analyze(analyzer, shell);
-	// ft_printf("CREATE JOB state %u || token id %u || token data %s\n", analyzer->state, ((t_token*)analyzer->lexer->content)->id ,((t_token*)analyzer->lexer->content)->data);
-	analyzer->job.process_list = analyzer->process_list;
-	ft_lstappend(&analyzer->job_list ,ft_lstnew(fetch_job(&analyzer->job), sizeof(t_job)));
-	analyzer->process_list = NULL;
-	init_job(&analyzer->job);
-	// if (analyzer->lexer->next && !ft_strcmp("(null)", ((t_token*)analyzer->lexer->next->content)->data))
-		// analyzer->state = A_STOP;
-	// else
-		analyzer->state = A_START;
-	return (analyzer);
+	anal = process_analyze(anal, shell);
+	anal->job.process_list = anal->process_list;
+	ft_lstappend(&anal->job_list,
+		ft_lstnew(fetch_job(&anal->job), sizeof(t_job)));
+	anal->process_list = NULL;
+	init_job(&anal->job);
+	if (anal->lexer->next
+		&& !ft_strcmp("(null)", ((t_token*)anal->lexer->next->content)->data))
+		anal->state = A_STOP;
+	else
+		anal->state = A_START;
+	return (anal);
 }

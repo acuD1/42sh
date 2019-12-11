@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enum.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/18 15:28:30 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/12/11 23:35:25 by mpivet-p         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef ENUM_H
 # define ENUM_H
 
 /*
-** LEXER_PARSER_ANALYZER
+** 	LEXER_PARSER_ANALYZER
 */
 
-typedef enum analyzer_state
+typedef enum astate
 {
     A_START,
     A_SEPARATOR,
@@ -14,33 +25,37 @@ typedef enum analyzer_state
     A_IONUMBER,
     A_ASSIGN,
     A_WORD,
-    A_EXPANSION,
     A_END,
     A_ERROR,
     A_STOP,
-}           e_analyzer_state;
+	NB_ANALYZER_STATE //KEEP AT THE END OF THE ENUM TO GET THE NUMBER OF ELEMTS
+}           e_astate;
 
-typedef enum    parser_state
+typedef enum    pstate
 {
-    P_NEWLINE, // si tok->next = 23 job sinon process si condition ok
-    P_ANDIF, // process
-    P_AND, // job deamon
-    P_ORIF, // process
-    P_PIPE, // redir qui att un newline SUBSHELL
-    P_DSEMI, // FOR CASE ?
-    P_SEMICOLON, // job
-    P_DLESSDASH, // redir
-    P_DLESS, // redir
-    P_LESSGREAT, // redir
-    P_LESSAND, // redir
-    P_LESS, // redir
-    P_DGREAT, // redir
-    P_GREATAND, // redir
-    P_GREAT, // redir
+    P_NEWLINE,
+    P_ANDIF,
+    P_AND,
+    P_ORIF,
+    P_PIPE,
+    P_DSEMI,
+    P_SEMICOLON,
+    P_DLESSDASH,
+    P_DLESS,
+    P_LESSAND,
+    P_LESS,
+    P_DGREAT,
+    P_GREATAND,
+    P_GREAT,
     P_OPE_INTERRUPT,
-    P_IONUMBER, //ionumber
-    P_ASSIGN, // stock dans shell->assign une lst key=value;
-    P_WORD, //
+    P_IONUMBER,
+    P_ASSIGN,
+    P_WORD,
+    P_QUOTE,
+    P_DBQUOTE,
+    P_BQUOTE,
+    P_TILDEP,
+    P_TILDEM,
     P_TILDE,
     P_DBPARENT,
     P_PARENT,
@@ -48,19 +63,13 @@ typedef enum    parser_state
     P_HOOK,
     P_DOLLAR,
     P_EXP_INTERRUPT,
+    P_ESCSEQ,
     P_START,
     P_END,
     P_ERROR,
-
-    // P_HOOK_CLOSE,
-    // P_HOOK_OPEN,
-    // P_DBQUOTE,
-    // P_QUOTE,
-    // P_BACKQUOTE,
     // P_QUESTIONMARK
     // P_HASH,
     // P_PERCENT,
-    // P_SPSTRING,
     // P_DEQ,
     // P_NOTEQ,
     // P_CASE,
@@ -76,17 +85,41 @@ typedef enum    parser_state
     // P_THEN,
     // P_UNTIL,
     // P_WHILE,
-}               e_parser_state;
+	NB_PARSER_STATE //KEEP AT THE END OF THE ENUM TO GET THE NUMBER OF ELEMTS
+}               e_pstate;
 
-typedef enum    lexer_state {
+typedef enum    lstate {
     L_START,
     L_NAME,
     L_NEWLINE,
+    L_ESCSEQ,
     L_IO_NUMBER,
     L_ASSIGNEMENT_WORD,
     L_EXPANSION,
     L_OPERATOR,
     L_END,
-}               e_lexer_state;
+	NB_LEXER_STATE //KEEP AT THE END OF THE ENUM TO GET THE NUMBER OF ELEMTS
+}               e_lstate;
+
+/*
+** 	TERMCAPS STRINGS
+*/
+
+enum			e_tcaps
+{
+	DEL_CR,
+	SAVE_CR,
+	RESTORE_CR,
+	KEY_DOWN,
+	KEY_UP,
+	KEY_RIGHT,
+	KEY_LEFT,
+	LEFT_MARGIN,
+	UP_LEFT_CORNER,
+	CLEAR,
+	CLR_LINES,
+	CLR_EOL,
+	CAPS_NBR
+};
 
 #endif

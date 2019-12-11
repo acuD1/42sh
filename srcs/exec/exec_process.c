@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/09 21:33:23 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/11 23:38:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 
 	status = 0;
 	ptr = ((t_process*)process->content);
-	//EXPANSION
+	if (is_expansion(ptr->type))
+		expansion(shell, ptr);
 	if (ptr->av)
 	{
 		if ((blt = is_a_blt(ptr->av[0])) != FAILURE)

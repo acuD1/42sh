@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/05 19:12:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/18 16:37:52 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ void			get_range(char **cmd, char **range)
 **		Editing (default) & Listing (-lnr options)
 */
 
-int8_t			builtin_fc(t_core *shell)
+int8_t			builtin_fc(t_core *shell, t_process *process)
 {
 	t_lst		*saved;
 	char		**cmd;
 	char		*range[2];
 	u_int64_t	opt;
 
+	(void)process;
 	if ((saved = shell->history) == NULL)
 	{
 		ft_dprintf(2, "42sh: fc: history specification out of range\n");
@@ -56,7 +57,10 @@ int8_t			builtin_fc(t_core *shell)
 	opt = get_options(ft_tablen(cmd), cmd, "elnrs0123456789");
 	get_range(cmd, range);
 	if (opt & (1ULL << 63))
+	{
+		print_usage("fc", opt % 128, "fc: usage: fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]");
 		return (FAILURE);
+	}
 	else if (saved && (opt & (1ULL << 18)))
 		return (select_specifier(shell, saved, range));
 	else if (saved && (opt & (1ULL << 11)))

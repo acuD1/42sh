@@ -76,15 +76,17 @@ SIGNALS		=	signals/
 DB			=	db/
 BUILTINS	=	builtins/
 BLT_FC		=	builtins/fc/
-COMMANDLINE	=	command_line/
 REDIRS		=	redirections/
-AC			=	command_line/auto_completion/
-AK			=	command_line/action_keys/
+COMMANDLINE	=	command_line/
+AC		=	command_line/auto_completion/
+AK		=	command_line/action_keys/
 HISTORY		=	command_line/history/
+PROMPT		=	command_line/prompt/
 EXEC		=	exec/
 LEXER		= 	lexer_parser_analyzer/lexer/
 PARSER		= 	lexer_parser_analyzer/parser/
 ANALYZER	= 	lexer_parser_analyzer/analyzer/
+EXPANSIONS	= 	expansions/
 MISC		=	misc/
 HASH		=	$(EXEC)hash_map/
 
@@ -106,45 +108,53 @@ PATHS		+=	$(O_PATH)$(EXEC)$(REDIRS)
 PATHS		+=	$(O_PATH)$(LEXER)
 PATHS		+=	$(O_PATH)$(PARSER)
 PATHS		+=	$(O_PATH)$(ANALYZER)
+PATHS		+=	$(O_PATH)$(EXPANSIONS)
 PATHS		+=	$(O_PATH)$(HASH)
 PATHS		+=	$(O_PATH)$(MISC)
+PATHS		+=	$(O_PATH)$(PROMPT)
 
 # Files
 
-#SRC			+=	$(S_PATH)debug.c
+SRC		+=	$(S_PATH)$(PROMPT)prompt.c
+SRC		+=	$(S_PATH)$(PROMPT)check_subprompt.c
+SRC		+=	$(S_PATH)$(PROMPT)check_backslash.c
+SRC		+=	$(S_PATH)$(PROMPT)sub_prompt.c
 
-SRC			+=	$(S_PATH)$(COMMANDLINE)prompt.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)math_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)cmd_subs_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)param_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)tilde_expansion.c
+
+
 SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)term_config.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)check_quotes.c
-SRC			+=	$(S_PATH)$(COMMANDLINE)sub_prompt.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)utils.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)xfunctions.c
 
 SRC		+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
+SRC		+=	$(S_PATH)lexer_parser_analyzer/tmp_debug.c
 
 SRC		+=	$(S_PATH)$(LEXER)assign_token.c
 SRC		+=	$(S_PATH)$(LEXER)init_lexer.c
+SRC		+=	$(S_PATH)$(LEXER)lexer.c
+SRC		+=	$(S_PATH)$(LEXER)name_token.c
+SRC		+=	$(S_PATH)$(LEXER)io_nbr_nwl_token.c
+SRC		+=	$(S_PATH)$(LEXER)operator_token.c
 SRC		+=	$(S_PATH)$(LEXER)expansion_token.c
 SRC		+=	$(S_PATH)$(LEXER)expansion_token_bis.c
-SRC		+=	$(S_PATH)$(LEXER)lexer.c
-SRC		+=	$(S_PATH)$(LEXER)name_io_nwln_token.c
-SRC		+=	$(S_PATH)$(LEXER)operator_token.c
 SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
 
 SRC		+=	$(S_PATH)$(PARSER)parser.c
 SRC		+=	$(S_PATH)$(PARSER)graph.c
-SRC		+=	$(S_PATH)$(PARSER)graph_bis.c
 
 SRC		+=	$(S_PATH)$(ANALYZER)analyze.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_name.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_assign.c
-SRC		+=	$(S_PATH)$(ANALYZER)analyzer_expansion.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_job.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_process.c
 SRC		+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
-SRC		+=	$(S_PATH)$(ANALYZER)command_subs.c
 SRC		+=	$(S_PATH)$(ANALYZER)printanalyze.c
 SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
 SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
@@ -189,7 +199,6 @@ SRC			+=	$(S_PATH)$(BUILTINS)cd.c
 SRC			+=	$(S_PATH)$(BUILTINS)echo.c
 SRC			+=	$(S_PATH)$(BUILTINS)pwd.c
 
-# Need final FC
 #SRC			+=	$(S_PATH)$(BLT_FC)fc.c
 #SRC			+=	$(S_PATH)$(BLT_FC)fc_edit.c
 #SRC			+=	$(S_PATH)$(BLT_FC)fc_reverse.c
@@ -239,6 +248,7 @@ SRC			+=	$(S_PATH)$(CORE)free_handler.c
 
 HDR			+=	sh42.h
 HDR			+=	define.h
+HDR			+=	expansion.h
 HDR			+=	struct.h
 HDR			+=	lexer_parser_analyzer.h
 HDR			+=	command_line.h

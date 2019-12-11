@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_parser_analyzer.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/18 15:51:01 by fcatusse          #+#    #+#             */
+/*   Updated: 2019/11/30 17:38:35 by fcatusse         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh42.h"
 
-void ft_freejoblist(t_lst **lst)
+void		ft_freejoblist(t_lst **lst)
 {
-	t_lst *tmp;
-	t_lst *node;
+	t_lst	*tmp;
+	t_lst	*node;
 
-	if (!*lst)
-		return;
+	if (!lst)
+		return ;
 	tmp = *lst;
 	while (tmp)
 	{
@@ -20,20 +32,20 @@ void ft_freejoblist(t_lst **lst)
 		if (!tmp->next)
 		{
 			free(tmp);
-			break;
+			break ;
 		}
 		tmp = tmp->next;
 		free(node);
 	}
 }
 
-void ft_freetokenlist(t_lst **lst)
+void		ft_freetokenlist(t_lst **lst)
 {
-	t_lst *tmp;
-	t_lst *node;
+	t_lst	*tmp;
+	t_lst	*node;
 
 	if (!*lst)
-		return;
+		return ;
 	tmp = *lst;
 	while (tmp)
 	{
@@ -46,20 +58,20 @@ void ft_freetokenlist(t_lst **lst)
 		if (!tmp->next)
 		{
 			free(tmp);
-			break;
+			break ;
 		}
 		tmp = tmp->next;
 		free(node);
 	}
 }
 
-void ft_freedblist(t_lst **lst)
+void		ft_freedblist(t_lst **lst)
 {
-	t_lst *tmp;
-	t_lst *node;
+	t_lst	*tmp;
+	t_lst	*node;
 
 	if (!*lst)
-		return;
+		return ;
 	tmp = *lst;
 	while (tmp)
 	{
@@ -73,39 +85,26 @@ void ft_freedblist(t_lst **lst)
 		if (!tmp->next)
 		{
 			free(tmp);
-			break;
+			break ;
 		}
 		tmp = tmp->next;
 		free(node);
 	}
 }
 
-
-void printjobbijobba(t_core *shell)
+void		lexer_parser_analyzer(t_core *shell, char *line)
 {
-	if (shell->job_list)
-	{
-		ft_printjoblst(shell->job_list);
-		// ft_freejoblist(&shell->job_list);
-	}
-	if (shell->assign_list)
-	{
-		ft_printf("============= ASSIGNATION LST ============\n");
-		ft_printassignlist(shell->assign_list);
-		// ft_freedblist(&shell->assign_list);
-	}
-}
-
-void	lexer_parser_analyzer(t_core *shell, char *line)
-{
-	t_lst *lxr_tok; //Malloc en trop need, faire lxr_tok sur la stack et on modifie l'addresse dans lexer
+	t_lst	*lxr_tok;
+	t_lst	*lst_job;
 
 	lxr_tok = lexer(line);
+	lst_job = NULL;
+	shell->job_list = NULL;
 	if (parser(lxr_tok) == TRUE)
 	{
-		shell->lexer = lxr_tok; //Shell->lexer useless du coup
-		analyzer(shell);
+		analyzer(shell, lxr_tok);
+		//ft_printjoblst(shell->job_list);
 	}
-	ft_freetokenlist(&lxr_tok);
-	shell->lexer = NULL;
+	else
+		debug_ailleurs("/dev/ttys002", "erreur parser..\n");
 }

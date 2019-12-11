@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/10 18:42:29 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:39:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 void			insert_bin_in_buffer(char *d_name, t_read *input)
 {
-	int			i;
-	int			buf_index;
+	int		i;
+	int		buf_index;
 
 	i = -1;
 	buf_index = 0;
@@ -60,7 +60,6 @@ uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 /*
 ** 	Open directories in the PATH variable
 ** 	Check if an exe bin already exists with the curr buffer inserted
-**	Todo: add fct to check if builtins matching
 */
 
 void			to_complete_bin(char *buf, char *to_find, t_read *input)

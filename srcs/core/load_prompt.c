@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/05 21:15:00 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/12 00:41:09 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,28 @@
 **	wiches are globals variables, such as tokens, env list etc...
 */
 
-void			free_history(t_core *shell)
+// https://linuxconfig.org/bash-prompt-basics
+
+/*
+**	TO DO:
+*/
+
+void			free_history(t_read *term)
 {
 	t_lst *tmp;
 
 	int i = 1;
-	while (shell->history)
+	while (term->history)
 	{
-		dprintf(STDERR_FILENO, "-%d- |%s|\n", i++, shell->history->content);
-		free(shell->history->content);
-		//free(shell->history);
-		tmp = shell->history;
-		shell->history = shell->history->next;
+		dprintf(STDERR_FILENO, "-%d- |%s|\n", i++, term->history->content);
+		free(term->history->content);
+		//free(term->history);
+		tmp = term->history;
+		term->history = term->history->next;
 		free(tmp);
-	//	shell->history = shell->history->next;
+	//	term->history = term->history->next;
 	}
-	//free(shell->history);
+	//free(term->history);
 }
 
 void			load_prompt(t_core *shell)
@@ -48,15 +54,15 @@ void			load_prompt(t_core *shell)
 	init_cmd_line(term, shell);
 	while (status)
 	{
+		/* Base output for prompt */
 		init_prompt(shell, term);
-		lexer_parser_analyzer(shell, shell->buff);
+		lexer_parser_analyzer(shell, term->buffer);
 		if (task_master(shell) != SUCCESS)
 			break ;
-//		print_hash_map(&shell->hash);
-		free_prompt(shell, shell->buff);
+		save_history(term);
+		free_prompt(shell, term->buffer);
+		// ft_freejoblist(&shell->job_list);
 	}
-	//dprintf(STDERR_FILENO, "EXIT\n");
-    //free_history(shell);
-	//free(shell->history);
-	ft_strdel(&shell->buff);
+	free_history(term);
+	ft_strdel(&(term->buffer));
 }

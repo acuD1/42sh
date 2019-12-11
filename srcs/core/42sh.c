@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/03 16:21:16 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/12 00:40:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int		main(int ac, char **av, char **environ)
 	**	and {value} format. WARNING empty char **environ not supported yet
 	*/
 
-	// get_size AVOIDING COND JUMP ON UNINITIALIZED VALUES
-
 	if (set_env(&shell, av, environ) != SUCCESS)
 		return (EXIT_FAILURE);
 	/* Options output */
@@ -60,9 +58,9 @@ int		main(int ac, char **av, char **environ)
 		load_prompt(&shell);
 	else
 	{
-		while (ft_getnextline(STDIN_FILENO, &shell.buff))
+		while (ft_getnextline(STDIN_FILENO, &(shell.cmd_line.buffer)))
 			load_noi_mode(&shell);
-		ft_strdel(&shell.buff);
+		ft_strdel(&(shell.cmd_line.buffer));
 	}
 	/* FREE */
 	free_env(shell.env);

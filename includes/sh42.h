@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/07 21:07:29 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/11 23:19:55 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "command_line.h"
 # include "enum.h"
 # include "lexer_parser_analyzer.h"
+# include "expansion.h"
 # include <sys/wait.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
@@ -35,8 +36,6 @@
 
 int8_t		get_opt(int ac, char **av, t_core *shell);
 void		credit(t_core *shell);
-
-// char		*init_prompt(t_read *term);
 
 void		print_opt(t_core *shell);
 void		load_prompt(t_core *shell);
@@ -149,11 +148,18 @@ int8_t		update_last_arg(t_core *shell, char **argv);
 int8_t		builtin_set(t_core *shell, t_process *process);
 int8_t		builtin_unset(t_core *shell, t_process *process);
 int8_t		builtin_export(t_core *shell, t_process *process);
-int8_t		builtin_fc(t_core *shell, t_process *process);
+//int8_t		builtin_fc(t_core *shell, t_process *process);
 int8_t		builtin_exit(t_core *shell, t_process *process);
 int8_t		builtin_cd(t_core *shell, t_process *process);
 int8_t		builtin_echo(t_core *shell, t_process *process);
 int8_t		builtin_pwd(t_core *shell, t_process *process);
+
+int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
+void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
+void		display_reverse(t_lst *w, u_int64_t opt, char **range);
+u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd);
+void		swap_range(char **r1, char **r2);
+u_int16_t	set_range(t_lst **w, char **range);
 
 /*
 **	===========================================================================

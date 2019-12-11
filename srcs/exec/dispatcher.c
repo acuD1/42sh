@@ -63,6 +63,8 @@ int8_t	dispatcher(t_core *shell, t_lst *jobs)
 		else if (condition_fulfilled(shell, cond) == SUCCESS)
 		{
 			//EXPANSION
+			// if (((t_process*)ptr->content)->assign_list)
+				// add_assign_env(((t_process*)ptr->content)->assign_list, shell);
 			exec_process(shell, ptr);
 		}
 		else
