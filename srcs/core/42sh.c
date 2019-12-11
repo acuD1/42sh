@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/03 15:55:49 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/07 13:34:00 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ int		main(int ac, char **av, char **environ)
 	free_env(shell.env);
 	//free_env(shell.pos_vars);
 	free_hash_map(&shell.hash);			// For now here ..
-
+	system("leaks checker");
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/06 09:53:05 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/11 09:50:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@
 
 # define ARROW_UP		0x1b5b410000000000
 # define ARROW_DOWN		0x1b5b420000000000
-# define ARROW_RIGHT		0x1b5b430000000000
+# define ARROW_RIGHT	0x1b5b430000000000
 # define ARROW_LEFT		0x1b5b440000000000
 # define BS_KEY			0x7f00000000000000
 # define DEL_KEY		0x1b5b337e00000000
@@ -112,6 +112,7 @@
 # define MAX_LOAD_F		0.75
 # define HASH_DEFAULT	0x001
 # define HASH_LISTED	0x002
+# define HASH_PATH		0x004
 
 /*
 **	===========================================================================
