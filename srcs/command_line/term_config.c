@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 14:08:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/11 14:38:18 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ uint8_t			reset_config(t_read *input)
 		return (FAILURE);
 	}
 	old_t.c_lflag |= (ICANON | ECHO);
-	(input->tmp_buff) ? ft_strdel(&input->tmp_buff) : 0;
+	ft_strdel(&input->tmp_buff);
 	return (SUCCESS);
 }

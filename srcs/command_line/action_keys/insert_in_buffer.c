@@ -6,11 +6,21 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 19:14:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/11 18:11:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+int8_t debug(const char *path, int buff, t_read *in)
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (-1);
+    dprintf(fd,"[%c] {%d}\n", buff, in->x);
+    return (1);
+}
 
 /*
 **	To insert a char in buffer at the end of line
@@ -18,14 +28,13 @@
 
 void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
-	ft_printf("%c", buff);
+	dprintf(STDIN_FILENO, "%c", buff);
 	if (buff == NEW_LINE || input->x >= input->ws_col)
 	{
-		input->x = 1;
+		input->x = 0;
 		input->y++;
 	}
-	else
-		input->x++;
+	input->x++;
 	input->width++;
 	input->buffer[buff_index] = buff;
 	input->x_index++;
@@ -65,8 +74,6 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 	while (++x < input->width)
 		move_left(buff, input);
 	ft_strdel(&tmp);
-	if (input->y_li == input->ws_li && input->width % input->ws_col == 2)
-		xtputs(input->tcaps[KEY_UP], 1, my_outc);
 }
 
 /*
@@ -111,7 +118,6 @@ void		insert_in_buffer(char *buff, t_read *input)
 	if (ft_strlen(buff) > 1)
 	{
 		insert_str_in_buffer(buff, input);
-		ft_bzero(buff, READ_SIZE);
 		return ;
 	}
 	else if (input->x_index == input->width)

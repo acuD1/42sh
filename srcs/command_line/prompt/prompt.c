@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 14:17:40 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/11 17:48:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void		goto_prompt(t_read *input)
 
 void		display_prompt(t_read *term)
 {
+	ft_bzero(term->prompt, 10);
 	ft_strcpy(term->prompt, PS1);
 	term->prompt_len = ft_strlen(term->prompt);
 	term->x = term->prompt_len;
