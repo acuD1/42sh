@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 19:12:53 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/12 14:36:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 uint8_t			read_again(char **prev_b, char *path, char *name, t_read *input)
 {
 	uint64_t	value;
-	char		buff[READ_SIZE];
+	char		buff[READ_SIZE + 1];
 
 	ft_bzero(buff, READ_SIZE);
 	delete_last_cmd(*prev_b, input);
@@ -32,7 +32,8 @@ uint8_t			read_again(char **prev_b, char *path, char *name, t_read *input)
 		value = get_mask(buff);
 		if (value == TAB_KEY)
 		{
-			*prev_b = name;
+			ft_strdel(&*prev_b);
+			*prev_b = ft_strdup(name);
 			return (TRUE);
 		}
 		else
@@ -44,7 +45,9 @@ uint8_t			read_again(char **prev_b, char *path, char *name, t_read *input)
 uint8_t			get_dir(char *prev_b, char *to_find, char *current_dir)
 {
 	int			found;
+	char		*tmp;
 
+	tmp = NULL;
 	found = ft_strlen(to_find);
 	while (to_find[--found])
 	{
@@ -52,9 +55,12 @@ uint8_t			get_dir(char *prev_b, char *to_find, char *current_dir)
 		{
 			ft_bzero(current_dir, BUFF_SIZE);
 			ft_strncpy(current_dir, prev_b, found + 1);
-			to_find = ft_strrchr(to_find, '/') + 1;
-			ft_bzero(prev_b, ft_strlen(prev_b));
-			ft_strcpy(prev_b, to_find);
+			tmp = ft_strdup(to_find);
+			ft_strdel(&to_find);
+			to_find = ft_strdup(ft_strrchr(tmp, '/') + 1);
+			ft_strdel(&tmp);
+			ft_strdel(&prev_b);
+			prev_b = ft_strdup(to_find);
 			return (TRUE);
 		}
 	}
@@ -66,7 +72,10 @@ DIR				*update_curr_dir(char *to_find, char *prev_b, char *curr_dir)
 	DIR			*dir;
 
 	if (get_dir(prev_b, to_find, curr_dir))
-		ft_strcpy(to_find, prev_b);
+	{
+		ft_strdel(&to_find);
+		to_find = ft_strdup(prev_b);
+	}
 	else if (getcwd(curr_dir, BUFF_SIZE))
 		ft_strcat(curr_dir, "/");
 	else
@@ -88,6 +97,7 @@ int8_t			read_dir(char **prev_b, char *to_find, t_read *input)
 	char			*path;
 	char			current_dir[BUFF_SIZE];
 
+	path = NULL;
 	if ((dir = update_curr_dir(to_find, *prev_b, current_dir)) == NULL)
 		return (FAILURE);
 	while ((data = readdir(dir)) != NULL)
@@ -101,12 +111,12 @@ int8_t			read_dir(char **prev_b, char *to_find, t_read *input)
 			else
 			{
 				closedir(dir);
-				free(path);
+				ft_strdel(&path);
 				return (FAILURE);
 			}
 		}
 	}
-	free(path);
+	ft_strdel(&path);
 	return (input->found);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 18:12:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/12 14:33:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,20 @@ char			**split_path(t_core *shell, char *str)
 
 uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *input)
 {
-	int		i;
+	int			i;
 
 	i = -1;
-	while (isspace(input->buffer[++i]))
+	while (ft_isblank(input->buffer[++i]))
 		continue ;
 	if (input->buffer[i] == '\0')
 		return (FALSE);
 	if ((input->cmd = ft_strsplit(input->buffer, SPACE)) == NULL)
 		return (FALSE);
 	input->ac = ft_tablen(input->cmd);
-	*last_cmd = input->cmd[ft_tablen(input->cmd) - 1];
+	*last_cmd = ft_strdup(input->cmd[ft_tablen(input->cmd) - 1]);
 	if (input->buffer[ft_strlen(input->buffer) - 1] == ' ')
 		input->ac += 1;
-	if (*last_cmd)
-		*to_find = ft_strdup(*last_cmd);
-	else
+	if ((*to_find = ft_strdup(*last_cmd)) == NULL)
 		return (FALSE);
 	return (TRUE);
 }

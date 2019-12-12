@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 19:17:07 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/12 13:16:03 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ void			auto_complete_mode(char *buf, t_read *input)
 		if (input->found == 0)
 			to_complete_buffer(last_buf, to_find, input);
 	}
-	free(to_find);
+	ft_strdel(&to_find);
 	ft_tabfree(input->cmd);
 }

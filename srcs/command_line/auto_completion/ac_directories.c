@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:27:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 19:17:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/12 13:16:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ uint8_t			ac_dir(t_read *input, char *buf, char *dir, char *to_find)
 			ft_strcat(dir, "/");
 		insert_str_in_buffer(dir, input);
 		input->found = TRUE;
-		free(tmp);
+		ft_strdel(&tmp);
 	}
 	else
 	{
-		free(tmp);
+		ft_strdel(&tmp);
 		return (SUCCESS);
 	}
 	if (is_tab(buf, dir, input) == TRUE)
