@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/06 09:44:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/14 15:09:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,6 @@ void	free_hash_map(t_hash *hash)
 	}
 	free(hash->map);
 	hash->map = NULL;
+	hash->lenght = 0;
+	hash->size = HASH_SIZE;
 }

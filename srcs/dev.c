@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/06 09:59:28 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/14 14:03:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	print_env(t_core *shell)
 /*
 **	hash_table [VALGRIND BUG]
 */
-/*
-void	print_hash_map(t_hash *hash)
+
+void	print_hash_map_dev(t_hash *hash)
 {
 	t_lst	**map;
 	t_lst	*cur_map;
@@ -40,6 +40,7 @@ void	print_hash_map(t_hash *hash)
 	if (hash->map == NULL)
 		return;
 	map = hash->map;
+	dprintf(STDERR_FILENO, "HASH SIZE = |%d| LENGHT = |%d|\n", hash->size, hash->lenght);
 	cur_map = NULL;
 	while (i < hash->size)
 	{
@@ -58,7 +59,7 @@ void	print_hash_map(t_hash *hash)
 		i++;
 	}
 }
-*/
+
 void	debug_analyzer(t_core *shell)
 {
 	t_lst *tmp;

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:38:40 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/11 12:06:05 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/14 15:18:33 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ int8_t	add_hash_map(t_core *shell, t_process *process, u_int8_t format)
 	if (shell->hash.map == NULL
 		&& !(shell->hash.map = ft_memalloc(sizeof(t_lst*) * shell->hash.size)))
 		return (FAILURE);
-	load_factor = shell->hash.lenght / shell->hash.size;
+	shell->hash.lenght++;
+	load_factor = (float)shell->hash.lenght / shell->hash.size;
 	if (load_factor > MAX_LOAD_F && resize_hash_map(shell) != SUCCESS)
 		return (FAILURE);
 	if (format & HASH_DEFAULT)
 	{
 		shell->hash.value = get_hash(process->av[0], shell->hash.size);
-		shell->hash.lenght++;
 		ft_lstappend(&shell->hash.map[shell->hash.value],
 			ft_lstnew(fetch_hash_db(&shell->db, process->av[0],
-							process->bin), sizeof(t_db)));
+							process->bin, 1), sizeof(t_db)));
 	}
 	while (format & HASH_PATH && process->av[i])
 	{
@@ -45,7 +45,9 @@ int8_t	add_hash_map(t_core *shell, t_process *process, u_int8_t format)
 		}
 		ft_lstappend(&shell->hash.map[shell->hash.value],
 			ft_lstnew(fetch_hash_db(&shell->db, process->av[i],
-							process->av[2]), sizeof(t_db)));
+							process->av[2], 0), sizeof(t_db)));
+		if (process->av[i + 1])
+			shell->hash.lenght++;
 		i++;
 	}
 	return (SUCCESS);
