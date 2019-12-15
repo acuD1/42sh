@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 14:50:10 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/14 15:56:31 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/15 13:18:11 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ void	del_hash_key(t_core *shell, t_process *process)
 				dprintf(STDERR_FILENO, "Hash map erazed\n");
 				free(shell->hash.map);
 				shell->hash.map = NULL;
+				return ;
 			}
-			return ;
+			i++;
+			continue;
 		}
 		while (map && ft_strequ(((t_db*)map->content)->key, process->av[i]) == FALSE)
 		{
