@@ -37,14 +37,16 @@ void		init_redirect_graph(t_graph *graph)
 {
 	static e_pstate tab_good_type[] = {ALL_WORDS, P_ESCSEQ, ALL_EXPANSION,
 		P_ERROR};
+	static e_pstate good_type[] = {ALL_WORDS, P_ESCSEQ, ALL_EXPANSION,
+		P_LESS, P_ERROR};
 
 	graph[P_GREAT].good_type = tab_good_type;
 	graph[P_DGREAT].good_type = tab_good_type;
 	graph[P_LESS].good_type = tab_good_type;
-	graph[P_DLESS].good_type = tab_good_type;
+	graph[P_DLESS].good_type = good_type;
 	graph[P_GREATAND].good_type = tab_good_type;
 	graph[P_LESSAND].good_type = tab_good_type;
-	graph[P_DLESSDASH].good_type = tab_good_type;
+	graph[P_DLESSDASH].good_type = good_type;
 }
 
 void		init_assign_graph(t_graph *graph)

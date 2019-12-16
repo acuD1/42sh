@@ -15,7 +15,7 @@
 uint8_t is_expansion(e_pstate id)
 {
 	if (id == P_TILDEP || id == P_TILDEM || id == P_TILDE
-			|| id == P_DBPARENT || id == P_PARENT
+			|| id == P_DBPARENT || id == P_PARENT || id == P_DBQUOTE
 			|| id == P_BRACKET || id == P_HOOK ||id == P_DOLLAR)
 		return (TRUE);
 	return (FALSE);
@@ -43,13 +43,12 @@ int8_t add_assign_env(t_lst *lst, t_core *shell)
 		if (edit_var(shell, ((t_db*)lst->content)->key, value, INTERNAL_VAR) != SUCCESS)
 		{
 			// free(value);
-			printf("%s\n", value);
 			return (FAILURE);
 		}
 		tmp = lst;
 		lst = lst->next;
-		// free(((t_db*)tmp->content)->key);
-		// free(tmp);
+		free(((t_db*)tmp->content)->key);
+		free(tmp);
 	}
 	return (TRUE);
 }
@@ -79,34 +78,49 @@ char *start_expansion(t_core *shell, char *data)
 	return (data);
 }
 
-uint8_t 	expansion(t_core *shell, t_process *process)
+// char *do_exp_in_dbquote(char *str, t_cre *shell)
+// {
+// 	va parcourir la str et check a chaque ~ ou $ lexpansion si ya pas dexpansion go next et join 
+// }
+
+void		find_expansion(char **tablo, t_core *shell)
 {
-	int 	i;
-	char **tablo;
-	char *tmp;
+	int		i;
+	char	*tmp;
 
 	i = -1;
-	tablo = NULL;
 	tmp = NULL;
-	if (!process->av)
-		return (FALSE);
-	tablo = ft_tabcopy(tablo, process->av);
 	while (tablo[++i])
 	{
+		tmp = ft_strdup(tablo[i]);
 		if (tablo[i][0] == '$' || tablo[i][0] == '~')
 		{
-			tmp = ft_strdup(tablo[i]);
 			//LEAKS
 			tmp = start_expansion(shell, tmp);
 			free(tablo[i]);
 			tablo[i] = ft_strdup(tmp);
 			ft_strdel(&tmp);
 		}
+		// else if (tablo[i][0] == '\"')
+		// {
+		// 	tmp = do_exp_in_dbquote(tmp, shell)
+		// 	free(tablo[i]);
+		// 	tablo[i] = ft_strdup(tmp);
+		// 	ft_strdel(&tmp);
+		// }
 	}
+}
+
+void		expansion(t_core *shell, t_process *process)
+{
+	char	**tablo;
+
+	tablo = NULL;
+	if (!process->av)
+		return ;
+	tablo = ft_tabcopy(tablo, process->av);
+	find_expansion(tablo, shell);
 	ft_tabfree(process->av);
 	process->av = ft_tabcopy(process->av, tablo);
 	ft_tabfree(tablo);
-	return (TRUE);
 }
-
-
