@@ -198,6 +198,7 @@ SRC			+=	$(S_PATH)$(BUILTINS)exit.c
 SRC			+=	$(S_PATH)$(BUILTINS)cd.c
 SRC			+=	$(S_PATH)$(BUILTINS)echo.c
 SRC			+=	$(S_PATH)$(BUILTINS)pwd.c
+SRC			+=	$(S_PATH)$(BUILTINS)type.c
 
 #SRC			+=	$(S_PATH)$(BLT_FC)fc.c
 #SRC			+=	$(S_PATH)$(BLT_FC)fc_edit.c

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 00:24:24 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/05 17:57:45 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/16 06:24:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int8_t	is_a_blt(char *cmd)
 {
-	static char		*blt_names[7] = {"set", "unset", "export", "exit", "cd"
-		, "echo", "pwd"};
+	static char		*blt_names[8] = {"set", "unset", "export", "exit", "cd"
+		, "echo", "pwd", "type"};
 	int				i;
 
 	i = 0;
-	while (i < 7)
+	while (i < 8)
 	{
 		if (ft_strcmp(blt_names[i], cmd) == 0)
 			return (i);
@@ -30,9 +30,9 @@ int8_t	is_a_blt(char *cmd)
 
 int8_t	call_builtin(t_core *shell, t_lst *process, int blt)
 {
-	static int8_t	(*blt_call[7])(t_core *shell, t_process *process) = {
+	static int8_t	(*blt_call[8])(t_core *shell, t_process *process) = {
 		builtin_set, builtin_unset, builtin_export, builtin_exit, builtin_cd
-		, builtin_echo, builtin_pwd};
+		, builtin_echo, builtin_pwd, builtin_type};
 	int				ret;
 
 	exec_redirs(((t_process*)process->content)->redir_list);
