@@ -55,7 +55,8 @@ t_analyzer	*assign_analyze(t_analyzer *anal, t_core *shell)
 	if (((t_token*)anal->lexer->content)->id == P_ASSIGN
 		&& ((anal->state != A_WORD)))
 	{
-		anal->db.key = ft_strdup(((t_token*)anal->lexer->content)->data);
+		anal->db.key = ft_strsub(((t_token*)anal->lexer->content)->data, 0,
+			ft_strlen(((t_token*)anal->lexer->content)->data) - 1);
 		anal->process.type = ((t_token*)anal->lexer->content)->id;
 		anal->state = A_ASSIGN;
 	}

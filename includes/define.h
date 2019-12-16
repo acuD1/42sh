@@ -74,7 +74,7 @@
 # define PS1			"42sh-2.0$ "
 # define PS2			"> "
 # define BUFF_SIZE		4096
-# define READ_SIZE		8
+# define READ_SIZE		4
 # define HISTORY_FILE	"./.42sh_history"
 # define QUOTE			'\''
 # define DQUOTE			'\"'
@@ -147,8 +147,9 @@
 # define EXPANSION 					"$~"
 # define REDIR                      P_GREAT, P_LESS
 # define REDIR_AND                  P_GREATAND, P_LESSAND
-# define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH
-# define ALL_REDIRECT               REDIR, REDIR_DB, REDIR_AND
+# define REDIR_DB                   P_DGREAT
+# define HEREDC						P_DLESS, P_DLESSDASH
+# define ALL_REDIRECT               REDIR, REDIR_DB, REDIR_AND, HEREDC
 # define ALL_EXPANSION              P_PARENT, P_BRACKET, P_DBPARENT, P_DOLLAR, P_TILDE, P_TILDEP, P_TILDEM
 # define ALL_WORDS   	           	P_WORD, P_DBQUOTE, P_QUOTE, P_BQUOTE
 

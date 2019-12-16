@@ -144,6 +144,7 @@ typedef struct	s_redir
 	int					io_num[2];
 	int					dup_fd;
 	e_pstate			type;
+	char				*heredoc;
 }				t_redir;
 
 typedef struct			s_process

@@ -28,13 +28,13 @@ char *exp_error(char *data, t_core *shell)
 	return (data);
 }
 
-t_lst *add_assign_env(t_lst *lst, t_core *shell)
+int8_t add_assign_env(t_lst *lst, t_core *shell)
 {
 	char	*value;
 	t_lst	*tmp;
-
+	
 	if (!lst || !shell->env)
-		return (NULL);
+		return (FAILURE);
 	value = NULL;
 	tmp = NULL;
 	while (lst)
@@ -43,14 +43,15 @@ t_lst *add_assign_env(t_lst *lst, t_core *shell)
 		if (edit_var(shell, ((t_db*)lst->content)->key, value, INTERNAL_VAR) != SUCCESS)
 		{
 			// free(value);
-			return (lst);
+			printf("%s\n", value);
+			return (FAILURE);
 		}
 		tmp = lst;
 		lst = lst->next;
 		// free(((t_db*)tmp->content)->key);
 		// free(tmp);
 	}
-	return (lst);
+	return (TRUE);
 }
 
 char *start_expansion(t_core *shell, char *data)
@@ -87,7 +88,6 @@ uint8_t 	expansion(t_core *shell, t_process *process)
 	i = -1;
 	tablo = NULL;
 	tmp = NULL;
-//	dprintf(nono("/dev/ttys002"), "MEH");
 	if (!process->av)
 		return (FALSE);
 	tablo = ft_tabcopy(tablo, process->av);

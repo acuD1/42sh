@@ -20,7 +20,7 @@ t_lst		*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token)
 	str = NULL;
 	i = lexer->buf_pos;
 	if (!lexer->buff[i] || !ft_isdigit(lexer->buff[i]))
-		return (NULL);
+		return (lexer_token);
 	while (ft_isdigit(lexer->buff[i]) && lexer->buff[i])
 		i++;
 	if ((lexer->buff[i] == '<' || lexer->buff[i] == '>'))
@@ -34,8 +34,6 @@ t_lst		*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token)
 		lexer->buf_pos = i;
 		lexer->ntok++;
 	}
-	else
-		return (NULL);
 	return (lexer_token);
 }
 
@@ -67,10 +65,10 @@ t_lst		*newline_lexer(t_lexer *lexer, t_lst *lexer_token)
 	if (lexer->buff[lexer->buf_pos] == '\n')
 	{
 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, 1)))
-			return (lexer_token);
+			return (NULL);
 		if (!(ft_lstappend(&lexer_token, ft_lstnew(
 			fetch_token(&lexer->token, P_NEWLINE, str), sizeof(t_token)))))
-			return (lexer_token);
+			return (NULL);
 		free(str);
 		lexer->ntok++;
 		lexer->buf_pos++;

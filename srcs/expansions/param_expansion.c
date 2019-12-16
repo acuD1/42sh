@@ -34,11 +34,12 @@ char *exp_param(char *data, t_core *shell)
 		tmp = ft_strsub(data, 1, i - 1);
 	// if (tmp[0] == '?')
 		// return(get_job_return(shell));
+	printf("%s\n", tmp);
 	if (!(db_tmp = search_db(shell->env, tmp)))
 	{
 		free(tmp);
 		free(data);
-		return (ft_strdup(""));
+		return (data);
 	}
 	else
 	{
@@ -47,5 +48,5 @@ char *exp_param(char *data, t_core *shell)
 		return (ft_strdup(db_tmp->value));
 	}
 	free(data);
-	return (ft_strdup(""));
+	return (data);
 }
