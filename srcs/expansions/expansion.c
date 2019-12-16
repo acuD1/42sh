@@ -6,7 +6,7 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/10 19:32:29 by guvillat         ###   ########.fr       */
+/*   Updated: 2019/12/16 04:59:06 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ uint8_t 	expansion(t_core *shell, t_process *process)
 	i = -1;
 	tablo = NULL;
 	tmp = NULL;
-	dprintf(nono("/dev/ttys002"), "MEH");
+//	dprintf(nono("/dev/ttys002"), "MEH");
 	if (!process->av)
 		return (FALSE);
 	tablo = ft_tabcopy(tablo, process->av);
@@ -96,10 +96,11 @@ uint8_t 	expansion(t_core *shell, t_process *process)
 		if (tablo[i][0] == '$' || tablo[i][0] == '~')
 		{
 			tmp = ft_strdup(tablo[i]);
+			//LEAKS
 			tmp = start_expansion(shell, tmp);
 			free(tablo[i]);
 			tablo[i] = ft_strdup(tmp);
-			free(tmp);
+			ft_strdel(&tmp);
 		}
 	}
 	ft_tabfree(process->av);
