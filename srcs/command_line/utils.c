@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/26 17:06:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/12 01:02:45 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ uint8_t		get_width_current_line(t_read *input)
 		buff_index++;
 	}
 	width += input->x;
-	debugi("/dev/ttys001", x, buff_index, input->buffer[buff_index], width);
+	//debugi("/dev/ttys001", x, buff_index, input->buffer[buff_index], width);
 	return (width);
 }
 

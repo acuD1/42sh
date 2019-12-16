@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>		  +#+  +:+	   +#+		*/
 /*												+#+#+#+#+#+   +#+		   */
 /*   Created: 2019/06/15 16:43:36 by arsciand		  #+#	#+#			 */
-/*   Updated: 2019/12/12 00:37:05 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/15 03:25:09 by mpivet-p         ###   ########.fr       */
 /*																			*/
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ typedef struct		s_read
 
 typedef struct	s_redir
 {
-	char				*heredoc;
 	char				*op[2];
 	int					io_num[2];
 	int					dup_fd;
@@ -155,9 +154,6 @@ typedef struct			s_process
 	char				**av;
 	char				*bin;
 	pid_t				pid;
-	// uint8_t				completed;
-	// uint8_t				stopped;
-	// int					status;
 }						t_process;
 
 typedef struct		s_job
@@ -237,6 +233,7 @@ typedef struct	s_core
 	t_lst				*job_list;
 
 	/* variables */
+	char				origin[MAX_PATH + 1];
 	int32_t				status;				//	last exit status value (echo $?)
 	u_int8_t			opt;				//	Option
 }				t_core;

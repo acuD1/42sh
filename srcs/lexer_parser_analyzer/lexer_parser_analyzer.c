@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:51:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 17:38:35 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/15 05:18:47 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void		lexer_parser_analyzer(t_core *shell, char *line)
 		analyzer(shell, lxr_tok);
 		//ft_printjoblst(shell->job_list);
 	}
+	//REMOVE BEFORE FINAL PUSH
 	else
 		debug_ailleurs("/dev/ttys002", "erreur parser..\n");
 }

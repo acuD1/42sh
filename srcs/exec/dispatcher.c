@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/21 23:50:13 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/15 05:02:50 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,7 @@ int8_t	dispatcher(t_core *shell, t_lst *jobs)
 				return (FAILURE);
 		}
 		else if (condition_fulfilled(shell, cond) == SUCCESS)
-		{
-			//EXPANSION
-			// if (((t_process*)ptr->content)->assign_list)
-				// add_assign_env(((t_process*)ptr->content)->assign_list, shell);
 			exec_process(shell, ptr);
-		}
 		else
 			return (SUCCESS);
 		cond = ((t_process*)ptr->content)->type;

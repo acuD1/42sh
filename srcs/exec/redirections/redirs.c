@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:42 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/07 21:06:55 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/15 04:06:26 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int8_t	redir_input(t_redir *ptr)
 			ft_perror(ptr->op[1], NULL, ft_access(ptr->op[1], R_OK));
 		return (FAILURE);
 	}
+	if (ptr->type == P_DLESS)
+		unlink(ptr->op[1]);
 	return (dup_input(fd, ptr));
 }
 

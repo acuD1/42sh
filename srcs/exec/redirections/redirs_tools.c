@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:29:40 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/24 21:09:39 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/15 03:50:46 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,21 @@ int8_t	dup_output(int fd, t_redir *ptr)
 	return (SUCCESS);
 }
 
+void	close_fds(t_lst *ptr)
+{
+	while (ptr)
+	{
+		if (((t_redir*)ptr->content)->dup_fd >= 0)
+			close(((t_redir*)ptr->content)->dup_fd);
+		ptr = ptr->next;
+	}
+}
+
 int8_t	dup_input(int fd, t_redir *ptr)
 {
 	ptr->dup_fd = dup2(fd, ptr->io_num[0]);
 	close(fd);
-	if (ptr->dup_fd < 0)
-		return (FAILURE);
+//	if (ptr->dup_fd < 0) HEREDOCS TEST
+//		return (FAILURE);
 	return (SUCCESS);
 }

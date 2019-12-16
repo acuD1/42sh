@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/03 16:21:32 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/15 03:26:53 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_shell(t_core *shell)
 	shell->build.version = BUILDV;
 	shell->build.patch = BUILDP + 1;
 	shell->build.date = DATE;
+	getcwd(shell->origin, MAX_PATH);
 
 	/*
 	**	hash
