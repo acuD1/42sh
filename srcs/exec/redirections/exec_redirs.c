@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:01 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/15 03:40:33 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/17 08:59:41 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int8_t	get_fd(t_redir *redir)
 	return (SUCCESS);
 }
 
-int8_t			exec_redirs(t_lst *head)
+int8_t			exec_redirs(t_core *shell, t_lst *head)
 {
 	t_lst *redirs;
 	int		i;
@@ -51,6 +51,8 @@ int8_t			exec_redirs(t_lst *head)
 	redirs = head;
 	while (redirs != NULL)
 	{
+		if (((t_redir*)redirs->content)->type == P_DLESS)
+			((t_redir*)redirs->content)->dup_fd = shell->heredoc++;
 		if (get_fd(((t_redir*)redirs->content)) != SUCCESS)
 			exit(1);
 		redirs = redirs->next;
