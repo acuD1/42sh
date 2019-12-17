@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>		  +#+  +:+	   +#+		*/
 /*												+#+#+#+#+#+   +#+		   */
 /*   Created: 2019/06/15 16:43:36 by arsciand		  #+#	#+#			 */
-/*   Updated: 2019/12/17 08:59:16 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/17 11:50:55 by mpivet-p         ###   ########.fr       */
 /*																			*/
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ typedef struct		s_read
 	int		new_line;
 	int		found;
 	int		sub_prompt;
+	int8_t	status;
 
 	char		*tcaps[CAPS_NBR];
 	char		*buffer;

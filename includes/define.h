@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/11 23:35:23 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/17 13:35:56 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@
 # define CURLY_BRACKET_CLOSE	'}'
 # define HOOK_OPEN		'['
 # define HOOK_CLOSE		']'
+
+# define CMD_PROMPT		0
+# define CMD_SUBPROMPT	1
+# define CMD_DONE		2
 
 /*
 **		Action keys hex masks
