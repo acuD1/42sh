@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/15 15:05:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/17 08:46:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int8_t		resize_hash_map(t_core *shell);
 void		free_hash_map(t_hash *hash);
 t_db		*fetch_hash_db
 	(t_db *db, const char *key, const char *value, u_int8_t format);
+void 		del_hash_key(t_core *shell, char *process);
 
 /*
 **	===========================================================================

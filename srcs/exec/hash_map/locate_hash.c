@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:20:26 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/15 12:50:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/17 09:03:04 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int8_t	locate_hash(t_core *shell, t_process *process)
 {
 	t_lst		**map;
 	t_lst		*sub_map;
+	t_db		*db;
 
 	if (shell->hash.map == NULL)
 		return (FAILURE);
@@ -26,15 +27,28 @@ int8_t	locate_hash(t_core *shell, t_process *process)
 	sub_map = map[shell->hash.value];
 	while (sub_map)
 	{
-		if (ft_strequ(process->av[0], ((t_db*)(sub_map->content))->key))
+		db = sub_map->content;
+		dprintf(STDERR_FILENO, "|%s| |%s|\n", process->av[0], db->key);
+		if (ft_strequ(process->av[0], db->key))
 		{
-			if (ft_access(((t_db*)(sub_map->content))->value, F_OK | X_OK) != SUCCESS)
+			if (ft_access(db->value, F_OK | X_OK) != SUCCESS)
+			{
+				if ((db->value[0] == '.' && db->value[1] == '/'
+					&& db->value[2] != 0))
+					db->hit += 1;
+				else
+					del_hash_key(shell, process->av[0]);
 				return (SUCCESS);
-			process->bin = ft_strdup(((t_db*)(sub_map->content))->value);
-			((t_db*)(sub_map->content))->hit += 1;
+			}
+			process->bin = ft_strdup(db->value);
+			db->hit += 1;
 			return (SUCCESS);
 		}
 		sub_map = sub_map->next;
 	}
 	return (FAILURE);
 }
+
+
+/*Rework del_hash_key to have only one char in argument so locate hash delete this key aswell.
+*/

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/14 14:03:02 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/17 08:44:56 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,3 +70,58 @@ void	debug_analyzer(t_core *shell)
 	printf("LST LEN = |%zu|\n", ft_lstlen(tmp));
 	tmp = NULL;
 }
+
+/*
+void	del_hash_key(t_core *shell, t_process *process)
+{
+	t_lst		*map;
+	t_lst		*prev;
+	size_t		i;
+	u_int32_t	hash_value;
+
+	i = 2;
+	if (shell->hash.map == NULL)
+		return ;
+	while (process->av[i])
+	{
+		dprintf(STDERR_FILENO, "process->av = |%s|\n", process->av[i]);
+		hash_value = get_hash(process->av[i], shell->hash.size);
+		map = shell->hash.map[hash_value];
+		if (map && ft_strequ(((t_db*)map->content)->key, process->av[i]) == TRUE)
+		{
+			shell->hash.map[hash_value] = map->next;
+			ft_strdel(&((t_db*)map->content)->key);
+			ft_strdel(&((t_db*)map->content)->value);
+			free(map->content);
+			free(map);
+			shell->hash.lenght--;
+			if (shell->hash.lenght == 0)
+			{
+				dprintf(STDERR_FILENO, "Hash map erazed\n");
+				free(shell->hash.map);
+				shell->hash.map = NULL;
+				return ;
+			}
+			i++;
+			continue;
+		}
+		while (map && ft_strequ(((t_db*)map->content)->key, process->av[i]) == FALSE)
+		{
+			prev = map;
+			map = map->next;
+		}
+		if (map == NULL)
+		{
+			dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process->av[i]);
+			i++;
+			continue ;
+		}
+		prev->next = map->next;
+		ft_strdel(&((t_db*)map->content)->key);
+		ft_strdel(&((t_db*)map->content)->value);
+		free(map->content);
+		free(map);
+		shell->hash.lenght--;
+		i++;
+	}
+}*/
