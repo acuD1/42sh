@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/17 14:20:48 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/18 08:19:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ void			sigint_handler(int signum)
 	shell = get_core(NULL);
 	signal(SIGINT, sigint_handler);
 	if (shell->running_process != NULL)
+	{
 		kill_processes(signum, shell);
+		write(2, "\n", 1);
+	}
 	else
 		erase_line(shell);
 }
