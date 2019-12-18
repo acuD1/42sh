@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:01:15 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/14 15:16:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/18 08:10:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int8_t		resize_hash_map(t_core *shell)
 
 	tmp_hash_lenght = shell->hash.lenght;
 	tmp_hash_size = shell->hash.size;
-	dprintf(STDERR_FILENO, "Resizing... SIZE = |%d| LENGHT = |%d|\n", shell->hash.size, shell->hash.lenght);
 	if (!(new_map = ft_memalloc(sizeof(t_lst*) * (shell->hash.size * 2))))
 		return (FAILURE);
 	fill_new_hash_map(shell, map, new_map);
@@ -61,6 +60,5 @@ int8_t		resize_hash_map(t_core *shell)
 	shell->hash.map = new_map;
 	shell->hash.size = tmp_hash_size * 2;
 	shell->hash.lenght = tmp_hash_lenght;
-	dprintf(STDERR_FILENO, "Resized ! SIZE = |%d| LENGHT = |%d|\n", shell->hash.size, shell->hash.lenght);
 	return (SUCCESS);
 }

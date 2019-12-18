@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:20:26 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/17 09:03:04 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/18 08:09:33 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int8_t	locate_hash(t_core *shell, t_process *process)
 	while (sub_map)
 	{
 		db = sub_map->content;
-		dprintf(STDERR_FILENO, "|%s| |%s|\n", process->av[0], db->key);
 		if (ft_strequ(process->av[0], db->key))
 		{
 			if (ft_access(db->value, F_OK | X_OK) != SUCCESS)

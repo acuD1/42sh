@@ -6,12 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:38:40 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/17 09:12:35 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/17 14:30:31 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-#include <errno.h>
 
 int8_t	fill_hash_map(t_core *shell, char *key, char *value, u_int8_t format)
 {
@@ -40,13 +39,6 @@ int8_t	hash_map_dispatcher(t_core *shell, t_process *process, u_int8_t format)
 		return(fill_hash_map(shell, process->av[0], process->bin, format));
 	while (process->av[i])
 	{
-		dprintf(STDERR_FILENO, "? %s\n", process->av[i]);
-		if (is_a_dir(process->av[2]) == EISDIR)
-		{
-			dprintf(STDERR_FILENO, "test\n");
-			i++;
-			continue ;
-		}
 		hash = get_hash(process->av[i], shell->hash.size);
 		if (shell->hash.map[hash])
 			db = shell->hash.map[hash]->content;

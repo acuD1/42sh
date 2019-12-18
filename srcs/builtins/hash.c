@@ -6,11 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 14:50:10 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/17 08:55:01 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/18 08:46:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <errno.h>
 
 void print_hash_map(t_core *shell, u_int8_t format)
 {
@@ -54,10 +55,8 @@ void del_hash_key(t_core *shell, char *process)
 	i = 2;
 	if (shell->hash.map == NULL || process == NULL)
 		return;
-	dprintf(STDERR_FILENO, "process->av = |%s|\n", process);
 	hash_value = get_hash(process, shell->hash.size);
 	map = shell->hash.map[hash_value];
-	dprintf(STDERR_FILENO, "?\n");
 	if (map && ft_strequ(((t_db *)map->content)->key, process) == TRUE)
 	{
 		shell->hash.map[hash_value] = map->next;
@@ -74,7 +73,6 @@ void del_hash_key(t_core *shell, char *process)
 		}
 		return;
 	}
-	dprintf(STDERR_FILENO, "?\n");
 	while (map && ft_strequ(((t_db *)map->content)->key, process) == FALSE)
 	{
 		prev = map;
@@ -91,6 +89,47 @@ void del_hash_key(t_core *shell, char *process)
 	free(map->content);
 	free(map);
 	shell->hash.lenght--;
+}
+
+void	find_hash(t_core *shell, t_process *process, int ac)
+{
+	t_lst	**map;
+	t_lst	*sub_map;
+	t_db	*db;
+	size_t	i;
+
+	i = 2;
+	map = NULL;
+	if (shell->hash.map)
+		map = shell->hash.map;
+	while (process->av[i])
+	{
+		shell->hash.value = get_hash(process->av[i], shell->hash.size);
+		if (map == NULL || map[shell->hash.value] == NULL)
+		{
+			dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process->av[i]);
+			i++;
+			continue ;
+		}
+		sub_map = map[shell->hash.value];
+		while (sub_map)
+		{
+			db = sub_map->content;
+			if (ft_strequ(process->av[i], db->key))
+			{
+				if (ac > 3)
+					dprintf(STDOUT_FILENO, "%s    %s\n", db->key, db->value);
+				else
+					dprintf(STDOUT_FILENO, "%s\n", db->value);
+				db->hit += 1;
+				break ;
+			}
+			sub_map = sub_map->next;
+		}
+		if (sub_map == NULL)
+			dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process->av[i]);
+		i++;
+	}
 }
 
 int8_t parse_hash(t_core *shell, int ac, t_process *process)
@@ -123,6 +162,16 @@ int8_t parse_hash(t_core *shell, int ac, t_process *process)
 		free_hash_map(&shell->hash);
 		return (FAILURE);
 	}
+	if (options & (1ULL << 19))
+	{
+		if (ac == 2)
+		{
+			dprintf(STDERR_FILENO, "42sh: hash: -t: option requires an argument\n");
+			return (FAILURE);
+		}
+		find_hash(shell, process, ac);
+		return (FAILURE);
+	}
 	if (options & (1ULL << 15))
 	{
 		if (ac == 2)
@@ -133,6 +182,16 @@ int8_t parse_hash(t_core *shell, int ac, t_process *process)
 		}
 		if (ac == 3)
 			return (SUCCESS);
+		if (is_a_dir(process->av[2]) == EISDIR)
+		{
+			i = 3;
+			while (process->av[i])
+			{
+				dprintf(STDERR_FILENO, "42sh: hash: %s: Is a directoy\n", process->av[2]);
+				i++;
+			}
+			return (FAILURE);
+		}
 		add_hash_map(shell, process, HASH_PATH);
 		return (FAILURE);
 	}

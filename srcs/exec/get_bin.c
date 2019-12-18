@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/15 13:06:55 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/18 08:10:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,8 @@ int8_t	get_bin(t_core *shell, t_process *process)
 		process->bin = ft_strdup(process->av[0]);
 		return(SUCCESS);
 	}
-	//dprintf(STDERR_FILENO, "get bin ..\nav = |%s|\nbin = |%s|\n", process->av[0], process->bin);
 	if (locate_hash(shell, process) == SUCCESS)
 		return (SUCCESS);
-	dprintf(STDERR_FILENO, "Nope\n");
 	if ((ret = get_bin_path(shell, process)) == 1)
 		return (FAILURE);
 	return (SUCCESS);
