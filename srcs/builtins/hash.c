@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 14:50:10 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/18 08:46:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/18 11:07:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ int8_t parse_hash(t_core *shell, int ac, t_process *process)
 			}
 			return (FAILURE);
 		}
-		add_hash_map(shell, process, HASH_PATH);
+		hash_map_dispatcher(shell, process, HASH_PATH);
 		return (FAILURE);
 	}
 	return (SUCCESS);

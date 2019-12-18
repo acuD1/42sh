@@ -6,13 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:38:40 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/18 11:28:56 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/18 10:30:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t	fill_dflt(t_core *shell, char *key, char *value, u_int8_t format)
+int8_t	fill_hash_map_default
+	(t_core *shell, char *key, char *value, u_int8_t format)
 {
 	float	load_factor;
 
@@ -27,27 +28,35 @@ int8_t	fill_dflt(t_core *shell, char *key, char *value, u_int8_t format)
 	return (SUCCESS);
 }
 
-int8_t	fill_path(t_core *shell, t_process *process, u_int8_t format, size_t i)
+int8_t	fill_hash_map_path
+	(t_core *shell, t_process *process, u_int8_t format, size_t	i)
 {
-	t_lst		*map;
-	u_int32_t	hash;
+	t_lst	*head_ref;
+	t_db	*db;
+	u_int32_t hash;
 
 	hash = get_hash(process->av[i], shell->hash.size);
-	map = shell->hash.map[hash];
-	while (map)
+	if (shell->hash.map[hash])
+		db = shell->hash.map[hash]->content;
+	head_ref = shell->hash.map[hash];
+	while (shell->hash.map[hash])
 	{
-		if (ft_strequ(process->av[i], ((t_db*)map->content)->key) == TRUE)
+		if (ft_strequ(process->av[i], db->key) == TRUE)
 		{
-			ft_strdel(&(((t_db*)map->content)->value));
-			((t_db*)map->content)->value = ft_strdup(process->av[2]);
-			return (SUCCESS);
+			ft_strdel(&(db->value));
+			db->value = ft_strdup(process->av[2]);
+			break ;
 		}
-		map = map->next;
+		shell->hash.map[hash] = shell->hash.map[hash]->next;
 	}
-	if (map == NULL
-		&& fill_dflt(shell, process->av[i], process->av[2], format) != SUCCESS)
-		return (FAILURE);
-	return (SUCCESS);
+	if (shell->hash.map[hash] == NULL)
+	{
+		shell->hash.map[hash] = head_ref;
+		if (fill_hash_map_default
+			(shell, process->av[i], process->av[2], format) != SUCCESS)
+			return (FAILURE);
+	}
+	return(SUCCESS);
 }
 
 int8_t	hash_map_dispatcher(t_core *shell, t_process *process, u_int8_t format)
@@ -61,8 +70,9 @@ int8_t	hash_map_dispatcher(t_core *shell, t_process *process, u_int8_t format)
 		&& !(shell->hash.map = ft_memalloc(sizeof(t_lst*) * shell->hash.size)))
 		return (FAILURE);
 	if (format & HASH_DEFAULT)
-		return (fill_dflt(shell, process->av[0], process->bin, format));
-	while (process->av[i] && fill_path(shell, process, format, i) == SUCCESS)
+		return (fill_hash_map_default(shell, process->av[0], process->bin, format));
+	while (process->av[i]
+		&& fill_hash_map_path(shell, process, format, i) == SUCCESS)
 		i++;
 	return (SUCCESS);
 }

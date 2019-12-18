@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/03 16:22:35 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/18 09:50:33 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static int8_t	export(t_core *shell, char *arg, int *ret)
 
 	len = ft_strclen(arg, '=');
 	str = ft_strsub(arg, 0, len);
+	if (ft_strequ(str, "PATH") == TRUE)
+		free_hash_map(&shell->hash); // Need testing, also we need it when we assign variable without export
 	if (str && (check_invalid_identifiers(str, "=")
 			|| ft_isdigit(arg[0]) != SUCCESS))
 	{

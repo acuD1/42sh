@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 22:37:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/08 02:20:42 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/18 09:39:56 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void		print_internal_vars(t_core *shell)
 		if (((t_db*)ptr->content)->type & ENV_VAR
 				|| ((t_db*)ptr->content)->type & INTERNAL_VAR)
 		{
-			printf("%s=%s\n", ((t_db*)ptr->content)->key
+			dprintf(STDOUT_FILENO, "%s=%s\n", ((t_db*)ptr->content)->key
 					, ((t_db*)ptr->content)->value); //ADD FT_
 		}
 		ptr = ptr->next;
