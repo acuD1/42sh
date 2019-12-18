@@ -49,7 +49,8 @@
 
 # define OPT_VERS		0x001
 # define OPT_HELP		0x002
-# define MAX_PATH		8192
+# define MAX_PATH			4096
+# define ACCESS_MAX_PATH	4096
 
 /*
 **	Exec
@@ -68,16 +69,29 @@
 */
 
 # define S_USR_RW		(S_IRUSR | S_IWUSR)
-# define S_GRP_OTH_R		(S_IRGRP | S_IROTH)
+# define S_GRP_OTH_R	(S_IRGRP | S_IROTH)
 # define MODE_WRITE		(O_CREAT | O_WRONLY | O_TRUNC)
+# define PS1			"42sh-2.0$ "
+# define PS2			"> "
 # define BUFF_SIZE		4096
 # define READ_SIZE		4
-# define HISTORY_FILE		"./.42sh_history"
+# define HISTORY_FILE	"./.42sh_history"
 # define QUOTE			'\''
 # define DQUOTE			'\"'
 # define BQUOTE			'`'
 # define NEW_LINE		'\n'
 # define SPACE			" "
+# define BACKSLASH		'\\'
+# define BRACKET_OPEN		'('
+# define BRACKET_CLOSE		')'
+# define CURLY_BRACKET_OPEN	'{'
+# define CURLY_BRACKET_CLOSE	'}'
+# define HOOK_OPEN		'['
+# define HOOK_CLOSE		']'
+
+# define CMD_PROMPT		0
+# define CMD_SUBPROMPT	1
+# define CMD_DONE		2
 
 /*
 **		Action keys hex masks
@@ -134,20 +148,19 @@
 ** LEXER_PARSER_ANALYZER
 */
 
-# define NB_OF_OPE 15
-# define NB_OF_EXP 6
-# define CHAR_INTERRUPT 			" \t<$>|;&\n"
-# define OPERATORS 					"&|;><-\n"
-# define EXPANSION 					"$~" // \" \'
-# define NB_LEXER_STATE 8
-# define NB_PARSER_STATE 29
-# define NB_ANALYZER_STATE 10
+# define NB_OF_OPE 14
+# define NB_OF_EXP 9
+# define CHAR_INTERRUPT 			" \t<>$~|;&\n"
+# define OPERATORS 					"&|;><-"
+# define EXPANSION 					"$~"
 # define REDIR                      P_GREAT, P_LESS
 # define REDIR_AND                  P_GREATAND, P_LESSAND
-# define REDIR_DB                   P_DGREAT, P_DLESS, P_DLESSDASH
-# define ALL_REDIRECT               REDIR, REDIR_DB, REDIR_AND
-# define ALL_EXPANSION              P_PARENT, P_BRACKET, P_DBPARENT, P_DOLLAR, P_TILDE
+# define REDIR_DB                   P_DGREAT
+# define HEREDC						P_DLESS, P_DLESSDASH
+# define ALL_REDIRECT               REDIR, REDIR_DB, REDIR_AND, HEREDC
+# define ALL_EXPANSION              P_PARENT, P_BRACKET, P_DBPARENT, P_DOLLAR, P_TILDE, P_TILDEP, P_TILDEM
+# define ALL_WORDS   	           	P_WORD, P_DBQUOTE, P_QUOTE, P_BQUOTE
 
-# define IOFILE                     P_GREAT, P_GREATAND, P_LESS, P_LESSAND, P_DGREAT, P_LESSGREAT
-# define IOHERE                     P_DLESS, P_DLESSDASH,
+# define IOFILE                     P_GREAT, P_GREATAND, P_LESS, P_LESSAND, P_DGREAT
+# define IOHERE                     P_DLESS, P_DLESSDASH
 #endif

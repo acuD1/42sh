@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/01 11:32:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/09 21:12:31 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	sig_handler(int signum)
 	if (signum == SIGHUP && shell->running_process)
 		kill_processes(SIGHUP, shell);
 	if (message[signum - 1] != NULL)
-		dprintf(STDERR_FILENO, "%s: %i (42sh)\n", message[signum - 1], signum);
+		dprintf(STDERR_FILENO, "\n%s: %i (42sh)\n", message[signum - 1], signum);
 	quit_shell(shell, 0, 0);
 }
 

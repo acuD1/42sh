@@ -6,11 +6,21 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/07 21:09:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/12 01:02:45 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+int8_t		debugi(char  *path, int i, int d, char c, int w)
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    dprintf(fd, " x[%d] bufi[%d] char[%c] w[%d]\n\n", i, d, c ,w);
+    return (SUCCESS);
+}
 
 int			my_outc(int c)
 {
@@ -52,39 +62,37 @@ uint8_t		get_width_last_line(t_read *input)
 	{
 		if (input->buffer[buff_index] == '\n')
 			break ;
-		else if (x == 0)
-			return (input->ws_col);
+		else if (x == 0 && !ft_strchr(input->buffer, '\n'))
+			return (input->ws_col - 1);
 		x--;
 		width++;
 	}
-	if (input->y == 1 && width != input->ws_col - input->prompt_len)
-	{
-		input->x = width + input->prompt_len - 1;
-		width += input->prompt_len - 2;
-	}
-	else if (input->y == 1)
+	if (width > input->ws_col)
+		width -= input->ws_col;
+	if (input->y == 1)
 		width += input->prompt_len;
 	return (width);
 }
 
 uint8_t		get_width_current_line(t_read *input)
 {
-	int		buff_index;
-	int		width;
-	int		x;
+	int	buff_index;
+	int	width;
+	int	x;
 
 	width = 0;
 	x = input->x;
 	buff_index = input->x_index - input->prompt_len;
 	while (input->buffer[buff_index])
 	{
-		if (input->buffer[buff_index] == NEW_LINE || x == input->ws_col)
+		if (input->buffer[buff_index] == NEW_LINE || x == input->ws_col - 1)
 			break ;
 		width++;
 		x++;
 		buff_index++;
 	}
 	width += input->x;
+	//debugi("/dev/ttys001", x, buff_index, input->buffer[buff_index], width);
 	return (width);
 }
 

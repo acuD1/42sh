@@ -19,6 +19,7 @@
 # include "command_line.h"
 # include "enum.h"
 # include "lexer_parser_analyzer.h"
+# include "expansion.h"
 # include <sys/wait.h>
 # include <sys/ioctl.h>
 # include <fcntl.h>
@@ -35,8 +36,6 @@
 
 int8_t		get_opt(int ac, char **av, t_core *shell);
 void		credit(t_core *shell);
-
-// char		*init_prompt(t_read *term);
 
 void		print_opt(t_core *shell);
 void		load_prompt(t_core *shell);
@@ -110,13 +109,12 @@ void		print_hash_map_dev(t_hash *hash);
 */
 
 t_core		*get_core(t_core *core);
-int		check_invalid_identifiers(char *arg, char *exceptions);
-void		get_abs_path(char *path, char *buffer);
-void		ft_perror(const char *s, const int errnum);
+int			check_invalid_identifiers(char *arg, char *exceptions);
+int8_t		get_canonical_path(char *path, char *buffer);
+void		ft_perror(const char *s, const char *name, const int errnum);
 int8_t		ft_access(char *path, int mode);
 int8_t		is_a_dir(char *path);
 void		print_usage(char *name, int c, char *usage);
-void		ft_perror(const char *s, const int errnum);
 void		quit_shell(t_core *shell, int exit_value, int8_t verbose);
 int			check_invalid_identifiers(char *arg, char *exceptions);
 
@@ -153,9 +151,19 @@ int8_t		update_last_arg(t_core *shell, char **argv);
 int8_t		builtin_set(t_core *shell, t_process *process);
 int8_t		builtin_unset(t_core *shell, t_process *process);
 int8_t		builtin_export(t_core *shell, t_process *process);
-int8_t		builtin_fc(t_core *shell, t_process *process);
+//int8_t		builtin_fc(t_core *shell, t_process *process);
 int8_t		builtin_exit(t_core *shell, t_process *process);
 int8_t		builtin_hash(t_core *shell, t_process *process);
+int8_t		builtin_cd(t_core *shell, t_process *process);
+int8_t		builtin_echo(t_core *shell, t_process *process);
+int8_t		builtin_pwd(t_core *shell, t_process *process);
+
+int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
+void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
+void		display_reverse(t_lst *w, u_int64_t opt, char **range);
+u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd);
+void		swap_range(char **r1, char **r2);
+u_int16_t	set_range(t_lst **w, char **range);
 
 /*
 **	===========================================================================
@@ -163,7 +171,7 @@ int8_t		builtin_hash(t_core *shell, t_process *process);
 **	===========================================================================
 */
 
-int8_t			exec_redirs(t_lst *redirs);
+int8_t			exec_redirs(t_core *shell, t_lst *redirs);
 int8_t			dup_output(int fd, t_redir *ptr);
 int8_t			dup_input(int fd, t_redir *ptr);
 int8_t			append_output(t_redir *ptr);
@@ -172,6 +180,7 @@ int8_t			redir_input(t_redir *ptr);
 int8_t			dup_ifd(t_redir *ptr);
 int8_t			dup_ofd(t_redir *ptr);
 void			close_fds(t_lst *ptr);
+int8_t			write_heredoc(t_redir *ptr);
 
 int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
 void		listing_mode(t_lst *saved, u_int64_t opt, char **range);

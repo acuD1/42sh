@@ -6,11 +6,21 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/06 17:01:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/15 02:00:19 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+int8_t		del_debug(char  *path, t_read *in, int j )
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    dprintf(fd, " buf[%s] xi [%d] y[%d] w[%d] j[%d]\n", in->buffer, in->x_index, in->y, in->width, j);
+    return (SUCCESS);
+}
 
 /*
 **	Termcaps capabilities:
@@ -40,6 +50,7 @@ void		del_key(t_read *input)
 		&& input->x <= input->width)
 	{
 		i = input->x_index - input->prompt_len - 1;
+		//del_debug("/dev/ttys002", input, i);
 		while (input->buffer[++i])
 			input->buffer[i] = input->buffer[i + 1];
 		x = input->x;

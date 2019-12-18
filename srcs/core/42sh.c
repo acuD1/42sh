@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/07 13:34:00 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/12 00:40:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		main(int ac, char **av, char **environ)
 {
 	t_core	shell;
 
+	ft_bzero(&shell, sizeof(t_core));
 	init_shell(&shell);
 
 	//shell.new_t = ft_memalloc(sizeof(shell.new_t));
@@ -37,8 +38,6 @@ int		main(int ac, char **av, char **environ)
 	**	Get t_lst *env, a linked list of char **environ with {key}
 	**	and {value} format. WARNING empty char **environ not supported yet
 	*/
-
-	// get_size AVOIDING COND JUMP ON UNINITIALIZED VALUES
 
 	if (set_env(&shell, av, environ) != SUCCESS)
 		return (EXIT_FAILURE);
@@ -63,9 +62,9 @@ int		main(int ac, char **av, char **environ)
 	}
 	else
 	{
-		while (ft_getnextline(STDIN_FILENO, &shell.buff))
+		while (ft_getnextline(STDIN_FILENO, &(shell.cmd_line.buffer)))
 			load_noi_mode(&shell);
-		ft_strdel(&shell.buff);
+		ft_strdel(&(shell.cmd_line.buffer));
 	}
 	/* FREE */
 	free_env(shell.env);

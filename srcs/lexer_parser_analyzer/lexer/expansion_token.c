@@ -1,7 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expansion_token.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/02 17:37:09 by guvillat          #+#    #+#             */
+/*   Updated: 2019/12/02 17:37:14 by guvillat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh42.h"
 
-static const t_token    quotes[] =
+static	const	t_token	g_exp[] =
 {
+	{P_TILDEP, "~+", 2},
+	{P_TILDEM, "~-", 2},
 	{P_TILDE, "~", 1},
 	{P_DBPARENT, "$((", 3},
 	{P_PARENT, "$(", 2},
@@ -11,92 +25,112 @@ static const t_token    quotes[] =
 	{P_EXP_INTERRUPT, NULL, 0}
 };
 
-t_lst *exp_hook_lexer(t_lexer *lexer, e_parser_state id, int len, t_lst *lexer_token)
+t_lst	*exp_dbparen(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 {
-	char *str;
-	int index;
+	char				*str;
+	int					index;
 
 	str = NULL;
 	index = 0;
-	if (!ft_strncmp(&lexer->buff[lexer->buf_pos], "$[", len))
+	if (!ft_strncmp(&lx->buff[lx->buf_pos], "$((", len))
 	{
-		index = lexer->buf_pos;
-		while (&lexer->buff[index])
+		index = lx->buf_pos - 1;
+		while (lx->buff[++index])
 		{
-			if (lexer->buff[index] == ']')
-			{
-				break; // CECI EST UN BUG
-			}
-			else
-				index++;
-			if (!lexer->buff[index + 1])
-			{
-				ft_printf("mathsubst>\n" );
-				// lexer->buf_pos = index;
-				break;
-				// subprompt("braceparam>");
-			}
+			if (lx->buff[index] == ')' && lx->buff[index + 1]
+					&& lx->buff[index + 1] == ')')
+				break ;
 		}
 		index += 2;
-		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, index - lexer->buf_pos)))
+		if (!(str = ft_strsub(lx->buff, lx->buf_pos, index - lx->buf_pos)))
 			return (NULL);
-		if (!(ft_lstappend(&lexer_token, ft_lstnew(fetch_lexer_token(&lexer->token ,id, str), sizeof(t_token)))))
+		if (!(ft_lstappend(&lst, ft_lstnew(
+			fetch_token(&lx->token, id, str), sizeof(t_token)))))
 			return (NULL);
 		free(str);
-		lexer->ntok++;
-		lexer->buf_pos = index;
+		lx->ntok++;
+		lx->buf_pos = index;
 	}
-	return (lexer_token);
+	return (lst);
 }
 
-static t_lst	*create_expansions_token(t_lexer *lexer, e_parser_state id, t_lst *lexer_token)
-{	
-	int i;
-	t_expansion expansions[] = {
-								{exp_tilde_lexer, P_TILDE, 1},
-								{exp_dbparen_lexer, P_DBPARENT, 3},
-								{exp_paren_lexer, P_PARENT, 2},
-								{exp_bracket_lexer, P_BRACKET, 2},
-								{exp_hook_lexer, P_HOOK, 2},
-								{exp_dollar_lexer, P_DOLLAR, 1},
-								};
+t_lst	*exp_hook(t_lexer *lx, e_pstate id, int len, t_lst *lst)
+{
+	char				*str;
+	int					index;
+
+	str = NULL;
+	index = 0;
+	if (!ft_strncmp(&lx->buff[lx->buf_pos], "$[", len))
+	{
+		index = lx->buf_pos;
+		while (&lx->buff[index])
+		{
+			if (lx->buff[index] == ']')
+				break ;
+			index++;
+		}
+		index += 2;
+		if (!(str = ft_strsub(lx->buff, lx->buf_pos, index - lx->buf_pos)))
+			return (NULL);
+		if (!(ft_lstappend(&lst, ft_lstnew(
+			fetch_token(&lx->token, id, str), sizeof(t_token)))))
+			return (NULL);
+		free(str);
+		lx->ntok++;
+		lx->buf_pos = index;
+	}
+	return (lst);
+}
+
+t_lst	*new_exp(t_lexer *lexer, e_pstate id, t_lst *lst)
+{
+	int					i;
+	static t_lex_exp	lex_pex[] = {
+		{exp_tilde_lexer, P_TILDEP, 2},
+		{exp_tilde_lexer, P_TILDEM, 2},
+		{exp_tilde_lexer, P_TILDE, 1},
+		{exp_dbparen, P_DBPARENT, 3},
+		{exp_paren_lexer, P_PARENT, 2},
+		{exp_bracket_lexer, P_BRACKET, 2},
+		{exp_hook, P_HOOK, 2},
+		{exp_dollar_lexer, P_DOLLAR, 1},
+	};
 
 	i = 0;
 	while (i < NB_OF_EXP)
 	{
-		if (id == expansions[i].id)
+		if (id == lex_pex[i].id)
 		{
-			if ((lexer_token = expansions[i].func(lexer, id, expansions[i].len, lexer_token)))
-				return (lexer_token);
-			// else
-				// lexer_token = word_lexer(lexer, lexer_token);
+			if ((lst = lex_pex[i].func(lexer, id, lex_pex[i].len, lst)))
+				return (lst);
 		}
 		i++;
 	}
-	return (lexer_token);
+	return (lst);
 }
 
-t_lst		*expansion_lexer(t_lexer *lexer, t_lst *lexer_token)
+t_lst	*expansion_lexer(t_lexer *lx, t_lst *lexer_token)
 {
-	int 	i;
+	int					i;
 
 	i = 0;
-	if (!lexer->buff)
+	if (!lx->buff)
 	{
-		lexer->status = L_END;
-		return(lexer_token);
+		lx->status = L_END;
+		return (lexer_token);
 	}
-	while (quotes[i].id != P_EXP_INTERRUPT)
+	while (g_exp[i].id != P_EXP_INTERRUPT)
 	{
-		if (!ft_strncmp(&lexer->buff[lexer->buf_pos], quotes[i].data, quotes[i].data_len))
+		if (!ft_strncmp(&lx->buff[lx->buf_pos], g_exp[i].data, g_exp[i].len))
 		{
-			if ((lexer_token = create_expansions_token(lexer, quotes[i].id, lexer_token)))
+			if ((lexer_token = new_exp(lx, g_exp[i].id, lexer_token)))
 				return (lexer_token);
 		}
 		i++;
 	}
 	if (i == NB_OF_EXP)
-		lexer_token = word_lexer(lexer, lexer_token);
-	lexer->status = L_START;
-	return(lexer_token);
+		lexer_token = word_lexer(lx, lexer_token);
+	lx->status = L_START;
+	return (lexer_token);
 }

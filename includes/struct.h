@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/15 16:43:36 by arsciand          #+#    #+#             */
-/*   Updated: 2019/11/30 09:34:47 by mpivet-p         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   struct.h										   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: arsciand <arsciand@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2019/06/15 16:43:36 by arsciand		  #+#	#+#			 */
+/*   Updated: 2019/12/17 11:50:55 by mpivet-p         ###   ########.fr       */
+/*																			*/
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
@@ -16,6 +16,8 @@
 # include "sh42.h"
 # include "enum.h"
 # include <termios.h>
+
+
 
 /*
 **	Some build data
@@ -38,11 +40,11 @@ typedef struct s_parser	t_parser;
 typedef struct s_analyzer t_analyzer;
 typedef struct s_core t_core;
 
-typedef t_analyzer    *(*t_analyze)(t_analyzer*, t_core*);
+typedef t_analyzer	*(*t_analyze)(t_analyzer*, t_core*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_PARSER_STATE];
-
 typedef t_lst *(*t_lexing)(t_lexer*, t_lst *);
 
+typedef struct s_read t_read;
 
 /*
 **	t_db is formated to support environnement variables ; {key} and {value}
@@ -86,22 +88,24 @@ typedef struct	s_hash
 **			COMMAND_LINE
 */
 
-enum			e_tcaps
+typedef struct s_expan
 {
-	DEL_CR,
-	SAVE_CR,
-	RESTORE_CR,
-	KEY_DOWN,
-	KEY_UP,
-	KEY_RIGHT,
-	KEY_LEFT,
-	LEFT_MARGIN,
-	UP_LEFT_CORNER,
-	CLEAR,
-	CLR_LINES,
-	CLR_EOL,
-	CAPS_NBR
-};
+	char 			*(*machine)(char* ,t_core*);
+	e_pstate 	id;
+	int 			len;
+	char			*data;
+}		t_expan;
+
+typedef struct s_lex_exp
+{
+	t_lst 			*(*func)(t_lexer *, e_pstate, int, t_lst *);
+	e_pstate 	id;
+	int 			len;
+}		t_lex_exp;
+
+/*
+**			COMMAND_LINE
+*/
 
 typedef struct		s_read
 {
@@ -119,6 +123,7 @@ typedef struct		s_read
 	int		new_line;
 	int		found;
 	int		sub_prompt;
+	int8_t	status;
 
 	char		*tcaps[CAPS_NBR];
 	char		*buffer;
@@ -131,41 +136,43 @@ typedef struct		s_read
 }			t_read;
 
 /*
-** LEXER_PARSER_ANALYZER
+** 			LEXER_PARSER_ANALYZER
 */
 
 typedef struct	s_redir
 {
+	e_pstate			type;
+	char				*heredoc;
 	char				*op[2];
 	int					io_num[2];
 	int					dup_fd;
-	enum parser_state	type;
 }				t_redir;
 
 typedef struct			s_process
 {
-	enum parser_state	type;
+	e_pstate			type;
 	t_lst				*assign_list;
 	t_lst				*redir_list;
 	char				**av;
 	char				*bin;
 	pid_t				pid;
-	// uint8_t				completed;
-	// uint8_t				stopped;
-	// int					status;
 }						t_process;
 
-typedef struct s_job
+typedef struct		s_job
 {
-	char				*command;
-	t_lst			  *process_list;
-	e_parser_state type;
-}			   t_job;
+	char			*command;
+	t_lst			*process_list;
+	// struct termios	  *term_modes;
+	// pid_t			   pgid;
+	// t_filedesc		  fd;
+	// int		 status; // 1 = running | 0 = stopped par exemple
+	e_pstate		type;
+}			t_job;
 
-typedef struct  s_analyzer
+typedef struct		s_analyzer
 {
-	t_anal			  analyze;
-	e_analyzer_state	state;
+	t_anal				analyze;
+	e_astate			state;
 	t_lst				*lexer;
 	t_job			   job;
 	t_process		   process;
@@ -174,43 +181,34 @@ typedef struct  s_analyzer
 	t_lst			   *job_list;
 	t_lst			   *process_list;
 	t_lst			   *redir_list;
-	t_lst			   *assign_list;
-	t_lst			   *tmp_list;
-}			   t_analyzer;
+}			t_analyzer;
 
-typedef struct		  s_graph
+typedef struct		s_graph
 {
-	e_parser_state	  *good_type;
+	e_pstate	  *good_type;
 }					   t_graph;
 
-typedef struct	  s_parser
+typedef struct		s_parser
 {
-	t_graph		 graph[NB_PARSER_STATE];
-	e_parser_state  state;
-}				   t_parser;
+	t_graph			graph[NB_PARSER_STATE];
+	e_pstate		state;
+}					t_parser;
 
 typedef struct  s_token
 {
-	e_parser_state id;
+	e_pstate id;
 	char			*data;
-	size_t		  data_len;
+	size_t		  len;
 }			  t_token;
-
-typedef struct		s_expansion
-{
-	t_lst 			*(*func)(t_lexer *, e_parser_state id, int len, t_lst *lexer_token);
-	e_parser_state 	id;
-	int 			len;
-}					t_expansion;
 
 typedef struct  s_lexer
 {
-    char            *buff;
-    e_lexer_state   status;
-    size_t          ntok;
-    size_t          buf_pos;
-    t_lexing        lex[NB_LEXER_STATE];
-    t_token 		token;
+	char			*buff;
+	e_lstate		status;
+	size_t			ntok;
+	size_t			buf_pos;
+	t_lexing		lex[NB_LEXER_STATE];
+	t_token 		token;
 }				t_lexer;
 
 /*
@@ -233,14 +231,12 @@ typedef struct	s_core
 	/* lists */
 	t_lst				*env;
 	t_lst				*pos_vars;
-	t_lst				*history; // REMOVE THIS ONE OR celui dans t_read
 	t_lst				*lexer; //TO REMOVE
 	t_lst				*job_list;
-	t_lst				*assign_list; //TO REMOVE
 
 	/* variables */
-	char				*buff;
 	int32_t				status;				//	last exit status value (echo $?)
+	int32_t				heredoc;			//	counting number of heredocs
 	u_int8_t			opt;				//	Option
 }				t_core;
 

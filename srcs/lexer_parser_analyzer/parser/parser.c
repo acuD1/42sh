@@ -6,33 +6,61 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/12 09:56:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/10 22:17:58 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-t_parser *ft_init_parser(t_parser *parser)
+void			init_start_graph(t_graph *graph)
 {
-	if (!(parser = (t_parser*)malloc(sizeof(t_parser))))
-		return (NULL);
-	parser->state = P_START;
-	parser = ft_init_graph(parser);
+	static e_pstate tab_good_type[] = {ALL_WORDS, P_ESCSEQ, ALL_REDIRECT,
+		P_ASSIGN, ALL_EXPANSION, P_IONUMBER, P_END, P_START, P_ERROR};
+
+	graph[P_START].good_type = tab_good_type;
+	graph[P_NEWLINE].good_type = tab_good_type;
+	graph[P_ORIF].good_type = tab_good_type;
+	graph[P_ANDIF].good_type = tab_good_type;
+}
+
+void			init_exp_graph(t_graph *graph)
+{
+	static e_pstate tab_good_type[] = {P_NEWLINE, ALL_WORDS, ALL_REDIRECT,
+		P_ASSIGN, P_IONUMBER, P_PIPE, P_AND, P_END, P_SEMICOLON,
+		P_ANDIF, P_ORIF, P_ESCSEQ, ALL_EXPANSION, P_ERROR};
+
+	graph[P_PARENT].good_type = tab_good_type;
+	graph[P_DBPARENT].good_type = tab_good_type;
+	graph[P_BRACKET].good_type = tab_good_type;
+	graph[P_HOOK].good_type = tab_good_type;
+	graph[P_TILDE].good_type = tab_good_type;
+	graph[P_DOLLAR].good_type = tab_good_type;
+}
+
+t_parser		*ft_init_graph(t_parser *parser)
+{
+	init_start_graph(parser->graph);
+	init_redirect_graph(parser->graph);
+	init_assign_graph(parser->graph);
+	init_process_graph(parser->graph);
+	init_ionumber_graph(parser->graph);
+	init_word_graph(parser->graph);
+	init_exp_graph(parser->graph);
 	return (parser);
 }
 
-uint8_t check_lexer_tokens(e_parser_state *current, e_parser_state needed, e_parser_state possible_state[])
+uint8_t			graph(e_pstate *c, e_pstate n, e_pstate ps[])
 {
 	uint8_t		i;
 
 	i = 0;
-	if (possible_state == NULL)
+	if (ps == NULL)
 		return (0);
-	while (possible_state[i] != P_ERROR)
+	while (ps[i] != P_ERROR)
 	{
-		if (needed == possible_state[i])
+		if (n == ps[i])
 		{
-			*current = needed;
+			*c = n;
 			return (1);
 		}
 		i++;
@@ -40,26 +68,27 @@ uint8_t check_lexer_tokens(e_parser_state *current, e_parser_state needed, e_par
 	return (0);
 }
 
-uint8_t parser(t_lst *lexer)
+uint8_t			parser(t_lst *lexer)
 {
 	t_parser	*parser;
-	t_lst 		*tok_lst;
-	t_lst 		**head;
+	t_lst		*tok_lst;
+	t_lst		**head;
 
 	parser = NULL;
 	if (!lexer)
 		return (FALSE);
+	if (!(parser = (t_parser*)malloc(sizeof(t_parser))))
+		return (FALSE);
+	parser->state = P_START;
 	tok_lst = lexer;
 	head = &lexer;
-	parser = ft_init_parser(parser);
+	parser = ft_init_graph(parser);
 	while (((t_token*)tok_lst->content)->id != P_END)
 	{
-		// ft_printf("parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
-		if (!(check_lexer_tokens(&parser->state, ((t_token*)tok_lst->content)->id, parser->graph[parser->state].good_type)))
+		if (!(graph(&parser->state, ((t_token*)tok_lst->content)->id,
+			parser->graph[parser->state].good_type)))
 		{
-			// ft_printf("error parser %u       %s   %u\n", parser->state,((t_token*)tok_lst->content)->data, ((t_token*)tok_lst->content)->id);
 			return (FALSE);
-			// GESTION DE LERREUR ET SUBPROMPT ET SIGNAUX
 		}
 		tok_lst = tok_lst->next;
 	}

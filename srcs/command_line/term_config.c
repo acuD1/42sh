@@ -19,7 +19,8 @@ void			init_cmd_line(t_read *term, t_core *shell)
 	term->shell = shell;
 	term->new_line = 0;
 	term->found = 0;
-	term->buffer = ft_memalloc(BUFF_SIZE);
+	term->sub_prompt = 0;
+	term->buffer = NULL;
 	term->tmp_buff = NULL;
 	if (get_size(term) != SUCCESS)
 		quit_shell(shell, 1, 1);

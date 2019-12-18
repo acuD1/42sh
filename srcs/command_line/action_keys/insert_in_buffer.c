@@ -12,18 +12,27 @@
 
 #include "sh42.h"
 
+
+int8_t		fdebug(char  *path, t_read *in)
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (FAILURE);
+    dprintf(fd, " x[%d] xi [%d] y[%d]\n\n w[%d] ws_col[%d]\n", in->x, in->x_index, in->y, in->width, in->ws_col);
+    return (SUCCESS);
+}
+
 /*
 **	To insert a char in buffer at the end of line
 */
 
 void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 {
-	if (input->x != 0 || (input->x == 0 && buff != NEW_LINE))
-		ft_dprintf(STDIN_FILENO, "%c", buff);
-	if (buff == NEW_LINE || input->x > input->ws_col)
+	ft_printf("%c", buff);
+	if (buff == NEW_LINE || input->x >= input->ws_col)
 	{
-		//	(input->x == 0) ? input->y-- : 0;
-		input->x = 0;
+		input->x = 1;
 		input->y++;
 	}
 	else
@@ -32,8 +41,23 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 	input->buffer[buff_index] = buff;
 	input->x_index++;
 	//	move_right(&buff, input);
-	/* if (input->x >= input->ws_col) */
-	/* 	insert_newline_in_buff(input); */
+}
+
+void		insert_at_index(t_read *input, int buff_index, char *buff)
+{
+	int	j;
+
+	j = ft_strlen(input->buffer) + 1;
+	while (--j > buff_index)
+	{
+		/* if (input->buffer[j - 1] == NEW_LINE) */
+		/* { */
+		/* 	input->buffer[j] = input->buffer[j - 2]; */
+		/* 	j = j - 2; */
+		/* } */
+		input->buffer[j] = input->buffer[j - 1];
+	}
+	input->buffer[buff_index] = *buff;
 }
 
 /*
@@ -45,34 +69,21 @@ void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
 
 void		insert_inline_char(char *buff, t_read *input, int buff_index)
 {
-	int 	j;
-	int	i;
 	char	*tmp;
+	int 	x;
 
+	x = 0;
 	tmp = NULL;
-	input->width += 1;
-	j = ft_strlen(input->buffer) + 1;
-	i = input->width - input->prompt_len;
-	while (--j > buff_index)
-	{
-		if (input->buffer[j - 1] == NEW_LINE)
-		{
-			input->buffer[j] = input->buffer[j - 2];
-			j = j - 2;
-		}
-		input->buffer[j] = input->buffer[j - 1];
-	}
-	input->buffer[buff_index] = *buff;
-	tmp = ft_strsub(input->buffer, buff_index, strlen_to(input->buffer, '\0'));
-	xtputs(input->tcaps[SAVE_CR], 1, my_outc);
-	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
-	ft_dprintf(STDOUT_FILENO, "%s", tmp);
-	xtputs(input->tcaps[RESTORE_CR], 1, my_outc);
-	move_right(buff, input);
+	insert_at_index(input, buff_index, buff);
+	tmp = ft_strdup(input->buffer);
+	goto_prompt(input);
+	ft_strdel(&input->buffer);
+	input->buffer = ft_memalloc(BUFF_SIZE);
+	insert_str_in_buffer(tmp, input);
+	x = buff_index + input->prompt_len;
+	while (++x < input->width)
+		move_left(buff, input);
 	ft_strdel(&tmp);
-
-//	win_size("/dev/ttys001", input->width, input->width % input->ws_col);
-//	win_size("/dev/ttys002", input->y_li, input->ws_li);
 	if (input->y_li == input->ws_li && input->width % input->ws_col == 2)
 		xtputs(input->tcaps[KEY_UP], 1, my_outc);
 }
@@ -110,7 +121,7 @@ void		insert_in_buffer(char *buff, t_read *input)
 
 	buff_index = input->x_index - input->prompt_len;
 	if (input->x_index >= BUFF_SIZE)
-		input->buffer = realloc(input->buffer, ft_strlen(input->buffer) + 1);
+		input->buffer = realloc(input->buffer, ft_strlen(input->buffer) + READ_SIZE);
 	if (ft_strlen(buff) > 1)
 	{
 		insert_str_in_buffer(buff, input);

@@ -14,9 +14,9 @@
 #include <errno.h>
 
 /*
-**	Function inside the fork where env is created, redirections occurs and where
-**
-*/
+ **	Function inside the fork where env is created, redirections occurs and where
+ **
+ */
 static int8_t	check_filepath(char *filepath)
 {
 	int			ret;
@@ -27,24 +27,27 @@ static int8_t	check_filepath(char *filepath)
 		return (EISDIR);
 	return (SUCCESS);
 }
+
 int8_t	call_bin(t_core *shell, t_lst *process)
 {
 	t_process	*ptr;
 	char		**envp;
 	int			ret;
 
-	envp = set_envp(shell);
+	envp = NULL;
 	ptr = process->content; //Shortcut to ((t_process*)proces->content)
-	exec_redirs(ptr->redir_list);
 	dprintf(STDERR_FILENO, "BIN = |%s|\n", ptr->bin);
+	exec_redirs(shell, ptr->redir_list);
 	if (ptr->bin == NULL)
 	{
-		dprintf(STDERR_FILENO, "42sh: %s: command not found\n", ptr->av[0]);
+		if (ptr->av != NULL)
+			dprintf(STDERR_FILENO, "42sh: %s: command not found\n", ptr->av[0]);
 		exit(127);
 	}
+	envp = set_envp(shell);
 	if ((ret = check_filepath(ptr->bin)) != SUCCESS)
 	{
-		ft_perror(ptr->av[0], ret);
+		ft_perror(ptr->av[0], NULL, ret);
 		exit((ret == ENOENT) ? 127: 126);
 	}
 	ret = execve(ptr->bin, ptr->av, envp);

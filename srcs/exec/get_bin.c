@@ -84,7 +84,7 @@ int8_t	get_bin(t_core *shell, t_process *process)
 			&& process->av[0][1]))
 	{
 		process->bin = ft_strdup(process->av[0]);
-		return(SUCCESS);
+		return (SUCCESS);
 	}
 	if (locate_hash(shell, process) == SUCCESS)
 		return (SUCCESS);

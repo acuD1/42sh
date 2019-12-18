@@ -6,31 +6,39 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/01 15:00:45 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/11 23:38:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
-**	exec_process takes for parameter t_lst *env for now because we can set
-**	a temporary environnement if we use the env builtin.
-*/
+ **	exec_process takes for parameter t_lst *env for now because we can set
+ **	a temporary environnement if we use the env builtin.
+ */
 
 int8_t	exec_process(t_core *shell, t_lst *process)
 {
-	pid_t	pid;
-	int		status;
-	int		blt;
+	t_process	*ptr;
+	pid_t		pid;
+	int			status;
+	int			blt;
 
 	status = 0;
-	//EXPANSION
-	if ((blt = is_a_blt(((t_process*)process->content)->av[0])) != FAILURE)
+	ptr = ((t_process*)process->content);
+	if (is_expansion(ptr->type))
+		expansion(shell, ptr);
+	if (ptr->assign_list)
+		add_assign_env(ptr->assign_list, shell);
+	if (ptr->av)
 	{
-		shell->status = call_builtin(shell, process, blt);
-		return (SUCCESS);
+		if ((blt = is_a_blt(ptr->av[0])) != FAILURE)
+		{
+			shell->status = call_builtin(shell, process, blt);
+			return (SUCCESS);
+		}
+		get_bin(shell, ptr);
 	}
-	get_bin(shell, ((t_process*)process->content));
 	if ((pid = fork()) < 0)
 	{
 		dprintf(STDERR_FILENO, "42sh: fork error\n");
@@ -38,9 +46,9 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 	}
 	else if (pid == 0)
 		call_bin(shell, process);
-	((t_process*)process->content)->pid = pid;
-	ft_strdel(&((t_process*)process->content)->bin);
-	shell->running_process = process->content;
+	ptr->pid = pid;
+	ft_strdel(&(ptr->bin));
+	shell->running_process = process;
 	if (waitpid(pid, &shell->status, WUNTRACED | WCONTINUED) != pid)
 	{
 		dprintf(STDERR_FILENO, "42sh: waitpid error\n");
