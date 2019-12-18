@@ -100,6 +100,7 @@ tags
 # Ignore all local history of files
 .history
 .42sh_history
+truc
 
 ### DEBUG ###
 srcs/debug.c
