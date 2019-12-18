@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/16 06:22:13 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/17 09:03:06 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ u_int16_t	set_range(t_lst **w, char **range);
 **	===========================================================================
 */
 
-int8_t			exec_redirs(t_lst *redirs);
+int8_t			exec_redirs(t_core *shell, t_lst *redirs);
 int8_t			dup_output(int fd, t_redir *ptr);
 int8_t			dup_input(int fd, t_redir *ptr);
 int8_t			append_output(t_redir *ptr);
@@ -177,6 +177,7 @@ int8_t			redir_input(t_redir *ptr);
 int8_t			dup_ifd(t_redir *ptr);
 int8_t			dup_ofd(t_redir *ptr);
 void			close_fds(t_lst *ptr);
+int8_t			write_heredoc(t_redir *ptr);
 
 int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
 void		listing_mode(t_lst *saved, u_int64_t opt, char **range);

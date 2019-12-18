@@ -16,12 +16,7 @@ char 	*exp_tilde(char *data, t_core *shell)
 		i = 1;
 	else if (data[0] == '~')
 		i = 0;
-	if (!(db_tmp = search_db(shell->env, path[i])))
-	{
-		free(data);
-		return (ft_strdup(""));
-	}
-	else
+	if ((db_tmp = search_db(shell->env, path[i])))
 	{
 		free(data);
 		return (ft_strdup(db_tmp->value));

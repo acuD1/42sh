@@ -37,10 +37,10 @@ t_lst			*create_assign_token(t_lexer *lex, int len, t_lst *lexer_token)
 
 	str = NULL;
 	if (!(str = ft_strsub(lex->buff, lex->buf_pos, len - lex->buf_pos)))
-		return (lexer_token);
+		return (NULL);
 	if (!(ft_lstappend(&lexer_token,
 		ft_lstnew(fetch_token(&lex->token, P_ASSIGN, str), sizeof(t_token)))))
-		return (lexer_token);
+		return (NULL);
 	free(str);
 	lex->ntok++;
 	lex->buf_pos = len;

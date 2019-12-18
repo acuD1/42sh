@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 16:40:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/17 14:19:58 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void		load_subprompt(char sb, t_read *input)
 	if (sb != BACKSLASH)
 		input->buffer[ft_strlen(input->buffer)] = NEW_LINE;
 	input->tmp_buff = ft_strdup(input->buffer);
+	input->status = CMD_SUBPROMPT;
 	while (TRUE)
 	{
 		free(input->buffer);
@@ -89,7 +90,6 @@ void		load_subprompt(char sb, t_read *input)
 			if (quotes_is_matching(input, &sb) == FALSE)
 			{
 				input->buffer[ft_strlen(input->buffer)] = NEW_LINE;
-				//debug("/dev/pts/2", input, sb);
 				free(input->tmp_buff);
 				input->tmp_buff = ft_strdup(input->buffer);
 				continue ;
@@ -97,7 +97,10 @@ void		load_subprompt(char sb, t_read *input)
 			else
 				break ;
 		}
+		if (input->status == CMD_PROMPT)
+			return ;
 		input->tmp_buff = ft_strjoinf(input->tmp_buff, input->buffer, 1);
 	}
 	ft_strdel(&input->tmp_buff);
+	input->status = CMD_DONE;
 }

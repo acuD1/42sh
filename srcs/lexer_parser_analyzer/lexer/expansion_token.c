@@ -25,10 +25,39 @@ static	const	t_token	g_exp[] =
 	{P_EXP_INTERRUPT, NULL, 0}
 };
 
-t_lst					*exp_hook(t_lexer *lx, e_pstate id, int len, t_lst *lst)
+t_lst	*exp_dbparen(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 {
-	char		*str;
-	int			index;
+	char				*str;
+	int					index;
+
+	str = NULL;
+	index = 0;
+	if (!ft_strncmp(&lx->buff[lx->buf_pos], "$((", len))
+	{
+		index = lx->buf_pos - 1;
+		while (lx->buff[++index])
+		{
+			if (lx->buff[index] == ')' && lx->buff[index + 1]
+					&& lx->buff[index + 1] == ')')
+				break ;
+		}
+		index += 2;
+		if (!(str = ft_strsub(lx->buff, lx->buf_pos, index - lx->buf_pos)))
+			return (NULL);
+		if (!(ft_lstappend(&lst, ft_lstnew(
+			fetch_token(&lx->token, id, str), sizeof(t_token)))))
+			return (NULL);
+		free(str);
+		lx->ntok++;
+		lx->buf_pos = index;
+	}
+	return (lst);
+}
+
+t_lst	*exp_hook(t_lexer *lx, e_pstate id, int len, t_lst *lst)
+{
+	char				*str;
+	int					index;
 
 	str = NULL;
 	index = 0;
@@ -54,7 +83,7 @@ t_lst					*exp_hook(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 	return (lst);
 }
 
-t_lst					*new_exp(t_lexer *lexer, e_pstate id, t_lst *lst)
+t_lst	*new_exp(t_lexer *lexer, e_pstate id, t_lst *lst)
 {
 	int					i;
 	static t_lex_exp	lex_pex[] = {
@@ -81,9 +110,9 @@ t_lst					*new_exp(t_lexer *lexer, e_pstate id, t_lst *lst)
 	return (lst);
 }
 
-t_lst					*expansion_lexer(t_lexer *lx, t_lst *lexer_token)
+t_lst	*expansion_lexer(t_lexer *lx, t_lst *lexer_token)
 {
-	int			i;
+	int					i;
 
 	i = 0;
 	if (!lx->buff)

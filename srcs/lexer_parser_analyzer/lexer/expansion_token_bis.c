@@ -12,35 +12,6 @@
 
 #include "sh42.h"
 
-t_lst		*exp_dbparen(t_lexer *lx, e_pstate id, int len, t_lst *lst)
-{
-	char	*str;
-	int		index;
-
-	str = NULL;
-	index = 0;
-	if (!ft_strncmp(&lx->buff[lx->buf_pos], "$((", len))
-	{
-		index = lx->buf_pos - 1;
-		while (lx->buff[++index])
-		{
-			if (lx->buff[index] == ')' && lx->buff[index + 1]
-					&& lx->buff[index + 1] == ')')
-				break ;
-		}
-		index += 2;
-		if (!(str = ft_strsub(lx->buff, lx->buf_pos, index - lx->buf_pos)))
-			return (NULL);
-		if (!(ft_lstappend(&lst, ft_lstnew(
-			fetch_token(&lx->token, id, str), sizeof(t_token)))))
-			return (NULL);
-		free(str);
-		lx->ntok++;
-		lx->buf_pos = index;
-	}
-	return (lst);
-}
-
 t_lst		*exp_paren_lexer(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 {
 	char	*str;
@@ -95,6 +66,25 @@ t_lst		*exp_bracket_lexer(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 	return (lst);
 }
 
+int8_t		get_index_expan(char *str, int index)
+{
+	if (!str)
+		return (index);
+	while (str[index])
+	{
+		if (str[index] == '?')
+		{
+			index++;
+			break ;
+		}
+		if (!(str[index] == '_' || ft_isdigit(str[index])
+			|| ft_isalpha(str[index])))
+			break ;
+		index++;
+	}
+	return (index);
+}
+
 t_lst		*exp_dollar_lexer(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 {
 	char	*str;
@@ -105,13 +95,7 @@ t_lst		*exp_dollar_lexer(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 	(void)len;
 	if (lx->buff[lx->buf_pos] == '$')
 	{
-		while (lx->buff[index])
-		{
-			if (!(lx->buff[index] == '_' || ft_isdigit(lx->buff[index])
-				|| ft_isalpha(lx->buff[index])))
-				break ;
-			index++;
-		}
+		index = get_index_expan(lx->buff, index);
 		if (!(str = ft_strsub(lx->buff, lx->buf_pos, index - lx->buf_pos)))
 			return (NULL);
 		if (!(ft_lstappend(&lst, ft_lstnew(

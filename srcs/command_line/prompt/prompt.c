@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 21:44:32 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/17 14:01:15 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,27 @@ void		init_prompt(t_core *shell, t_read *term)
 {
 	char	buff[READ_SIZE];
 
+	term->status = CMD_PROMPT;
 	ft_bzero(buff, READ_SIZE);
 	term->buffer = ft_memalloc(BUFF_SIZE);
 	init_config(shell);
 	init_termcaps(term);
 	display_prompt(term);
-	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
-	{
-		if (check_caps(buff, term) == TRUE)
-			ft_bzero(buff, READ_SIZE);
-		else
-			break ;
-	}
-	if (check_subprompt(term) == FALSE)
-	{
-		// remove_newline(term);
-		check_expansions(term);
-	}
+//	while (term->status != CMD_DONE)
+//	{
+		while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+		{
+			if (check_caps(buff, term) == TRUE)
+				ft_bzero(buff, READ_SIZE);
+			else
+				break ;
+		}
+		term->status = CMD_DONE;
+		if (check_subprompt(term) == FALSE)
+		{
+			// remove_newline(term);
+			check_expansions(term);
+		}
+//	}
 	reset_config(shell, term);
 }

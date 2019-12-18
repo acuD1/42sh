@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:42 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/15 04:06:26 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/17 09:02:12 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int8_t	redir_input(t_redir *ptr)
 
 	if (ptr->io_num[0] < 0)
 		ptr->io_num[0] = 0;
+	if (ptr->type == P_DLESS && write_heredoc(ptr) != SUCCESS)
+		return (FAILURE);
 	if ((fd = open(ptr->op[1], O_RDONLY)) < 0)
 	{
 		if (is_a_dir(ptr->op[1]) == EISDIR)

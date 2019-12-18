@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 00:24:24 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/16 06:24:30 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/17 09:03:54 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int8_t	call_builtin(t_core *shell, t_lst *process, int blt)
 		, builtin_echo, builtin_pwd, builtin_type};
 	int				ret;
 
-	exec_redirs(((t_process*)process->content)->redir_list);
+	exec_redirs(shell, ((t_process*)process->content)->redir_list);
 	ret = blt_call[blt](shell, ((t_process*)process->content));
 	close_fds(((t_process*)process->content)->redir_list);
 	return (ret);

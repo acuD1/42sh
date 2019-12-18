@@ -23,7 +23,7 @@ t_lst		*quote_lexer(t_lexer *lexer, t_lst *lexer_token)
 		i++;
 	i++;
 	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
-		return (lexer_token);
+		return (NULL);
 	ft_lstappend(&lexer_token, ft_lstnew(
 		fetch_token(&lexer->token, P_QUOTE, str), sizeof(t_token)));
 	free(str);
@@ -43,7 +43,7 @@ t_lst		*dbquote_lexer(t_lexer *lexer, t_lst *lexer_token)
 		i++;
 	i++;
 	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
-		return (lexer_token);
+		return (NULL);
 	ft_lstappend(&lexer_token, ft_lstnew(
 		fetch_token(&lexer->token, P_DBQUOTE, str), sizeof(t_token)));
 	free(str);
@@ -63,7 +63,7 @@ t_lst		*bquote_lexer(t_lexer *lexer, t_lst *lexer_token)
 		i++;
 	i++;
 	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
-		return (lexer_token);
+		return (NULL);
 	ft_lstappend(&lexer_token, ft_lstnew(
 		fetch_token(&lexer->token, P_BQUOTE, str), sizeof(t_token)));
 	free(str);
@@ -82,7 +82,7 @@ t_lst		*word_lexer(t_lexer *lexer, t_lst *lexer_token)
 	while (!ft_strchr(CHAR_INTERRUPT, lexer->buff[i]) && lexer->buff[i])
 		i++;
 	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
-		return (lexer_token);
+		return (NULL);
 	ft_lstappend(&lexer_token, ft_lstnew(
 		fetch_token(&lexer->token, P_WORD, str), sizeof(t_token)));
 	free(str);

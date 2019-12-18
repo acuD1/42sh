@@ -28,6 +28,8 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 	ptr = ((t_process*)process->content);
 	if (is_expansion(ptr->type))
 		expansion(shell, ptr);
+	if (ptr->assign_list)
+		add_assign_env(ptr->assign_list, shell);
 	if (ptr->av)
 	{
 		if ((blt = is_a_blt(ptr->av[0])) != FAILURE)
