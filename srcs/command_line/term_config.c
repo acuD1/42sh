@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/19 10:47:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/22 15:52:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			init_cmd_line(t_read *term, t_core *shell)
+void			init_cmd_line(t_core *shell, t_read *term)
 {
 	term->history = NULL;
 	term->history_index = NULL;
@@ -25,6 +25,7 @@ void			init_cmd_line(t_read *term, t_core *shell)
 	if (get_size(term) != SUCCESS)
 		quit_shell(shell, 1, 1);
 	init_history(term);
+	//shell->history = term->history;
 }
 
 /*
@@ -63,12 +64,12 @@ uint8_t				init_config(t_core *shell)
 **	Reset term when exit, before launch another shell, set term in bg..
 */
 
-uint8_t			reset_config(t_core *shell, t_read *input)
+uint8_t			reset_config(t_core *shell)
 {
 	tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t));
 	//ft_strdel(&(input->prompt));
-	ft_bzero(input->prompt, READ_SIZE);
+	ft_bzero(shell->term.prompt, READ_SIZE);
 //	shell->old_t.c_lflag |= (ICANON | ECHO); ??
-	ft_strdel(&input->tmp_buff);
+	ft_strdel(&shell->term.tmp_buff);
 	return (SUCCESS);
 }

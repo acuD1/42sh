@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/09 21:12:31 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/22 15:14:24 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	sigh_winch(int signum)
 	(void)signum;
 	fflush(stdout);
 	shell = get_core(NULL);
-	if (get_size(&(shell->cmd_line)) != SUCCESS || update_termsize(shell))
+	if (get_size(&(shell->term)) != SUCCESS || update_termsize(shell))
 		quit_shell(shell, 1, 1);
 }
 

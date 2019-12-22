@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/22 12:57:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/22 16:07:25 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,45 +25,18 @@
 **	TO DO:
 */
 
-void			free_history(t_read *term)
-{
-	t_lst *tmp;
-
-	int i = 1;
-	while (term->history)
-	{
-		dprintf(STDERR_FILENO, "-%d- |%s|\n", i++, term->history->content);
-		free(term->history->content);
-		//free(term->history);
-		tmp = term->history;
-		term->history = term->history->next;
-		free(tmp);
-	//	term->history = term->history->next;
-	}
-	//free(term->history);
-}
-
 void			load_prompt(t_core *shell)
 {
-	int8_t		status;
-	t_read		*term;
-
-	status = 1;
-	term = &(shell->cmd_line);
 	credit(shell);
-	init_cmd_line(term, shell);
-	while (status)
+	init_cmd_line(shell, &shell->term);
+	while (1)
 	{
-		/* Base output for prompt */
-		init_prompt(shell, term);
-		lexer_parser_analyzer(shell, term->buffer);
+		init_prompt(shell);
+		lexer_parser_analyzer(shell);
 		if (task_master(shell) != SUCCESS)
-			break ;
+			quit_shell(shell, EXIT_FAILURE, FALSE) ;
 		//print_hash_map_dev(&shell->hash);
-		save_history(term);
-		free_prompt(shell, term->buffer);
-		// ft_freejoblist(&shell->job_list);
+		save_history(&shell->term);
+		free_prompt(shell);
 	}
-	free_history(term);
-	ft_strdel(&(term->buffer));
 }

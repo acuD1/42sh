@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/22 12:54:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/22 16:31:33 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,10 @@ void	free_env(t_lst *env)
 	}
 }
 
-void	free_prompt(t_core *shell, char *line)
+void	free_prompt(t_core *shell)
 {
-	(void)line;
 	ft_freejoblist(&shell->job_list);
-	shell->job_list = NULL;
-	ft_strdel(&line);
+	ft_strdel(&shell->term.buffer);
 }
 
 void	free_hash_map(t_hash *hash)
@@ -64,4 +62,18 @@ void	free_hash_map(t_hash *hash)
 	hash->map = NULL;
 	hash->lenght = 0;
 	hash->size = HASH_SIZE;
+}
+
+void			free_history(t_read *term)
+{
+	t_lst *tmp;
+
+	while (term->history)
+	{
+		free(term->history->content);
+		tmp = term->history;
+		term->history = term->history->next;
+		free(tmp);
+		tmp = NULL;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quit_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 23:52:50 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/30 06:13:13 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/22 16:31:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 void	quit_shell(t_core *shell, int exit_value, int8_t verbose)
 {
-	reset_config(shell, &(shell->cmd_line));
+	(void)exit_value;
+	reset_config(shell);
 	//MAKE SUR EVERYTHING IS FREED
+	free_prompt(shell);
+	free_env(shell->env);
+	free_hash_map(&shell->hash);
+	free_history(&shell->term);
 	if (verbose != 0)
 		write(STDERR_FILENO, "exit\n", 5);
-	exit(exit_value);
+	longjmp(exit_leaks, 42);
+	//exit(exit_value);
 }

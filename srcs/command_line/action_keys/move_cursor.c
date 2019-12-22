@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_cursor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/11 14:53:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/22 13:57:57 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void		move_key_up(t_read *input)
 		input->buffer = ft_memalloc(BUFF_SIZE);
 		insert_str_in_buffer((char*)w->content, input);
 	}
-	debugs("/dev/ttys002", input);
+	//debugs("/dev/ttys002", input);
 }
 
 /*

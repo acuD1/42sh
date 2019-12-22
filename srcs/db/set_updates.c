@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:56:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/27 00:34:41 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/22 15:07:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int8_t	update_termsize(t_core *shell)
 	value = NULL;
 	if (shell && (db = get_or_create_db(shell, "LINES", INTERNAL_VAR)) != NULL)
 	{
-		if (!(value = ft_itoa(shell->cmd_line.ws_li))
+		if (!(value = ft_itoa(shell->term.ws_li))
 				|| modify_db(db, value, 0) == NULL)
 		{
 			ft_strdel(&value);
@@ -76,7 +76,7 @@ int8_t	update_termsize(t_core *shell)
 	}
 	if (shell && (db = get_or_create_db(shell, "COLUMNS", INTERNAL_VAR)))
 	{
-		if (!(value = ft_itoa(shell->cmd_line.ws_col))
+		if (!(value = ft_itoa(shell->term.ws_col))
 				|| modify_db(db, value, 0) == NULL)
 		{
 			ft_strdel(&value);

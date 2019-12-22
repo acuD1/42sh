@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 19:08:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/22 15:52:23 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@
 */
 
 void			init_termcaps(t_read *term);
-void			init_cmd_line(t_read *term, t_core *shell);
-uint8_t			init_config(t_core *shell);
-uint8_t			reset_config(t_core *shell, t_read *input);
+void			init_cmd_line(t_core *shell, t_read *term);
+u_int8_t		init_config(t_core *shell);
+u_int8_t		reset_config(t_core *shell);
 int8_t			get_size(t_read *data);
 
 /*
 **		Prompt/Subprompt
 */
 
-void			init_prompt(t_core *shell, t_read *term);
+void			init_prompt(t_core *shell);
 void			display_prompt(t_read *term);
 void			goto_prompt(t_read *line);
 void			display_subprompt(t_read *term, char *prompt);

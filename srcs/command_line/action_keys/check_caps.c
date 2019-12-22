@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/19 10:42:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/22 16:32:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,11 @@ void		end_of_file(t_read *input, uint64_t value)
 	if (!ft_strcmp(input->buffer, "") && value == CTRL_D)
 	{
 		ft_putstr("exit\n");
-		reset_config(shell, input);
+		reset_config(shell);
 		write_history(input);
-		while (input->history)
-		{
-			free(input->history->content);
-			input->history = input->history->next;
-		}
-		free(input->history);
-		exit(0);
+		free_history(input);
+		quit_shell(shell, 0, FALSE);
+		//exit(0);
 	}
 }
 

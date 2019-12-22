@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/19 10:39:21 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/22 16:32:28 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # include <stdint.h>
 # include <unistd.h>
 # include <stdio.h> // /!\ For debug only !
+# include <setjmp.h>
+
+jmp_buf exit_leaks;
 
 /*
 **	===========================================================================
@@ -42,7 +45,8 @@ void		print_opt(t_core *shell);
 void		load_prompt(t_core *shell);
 void		load_noi_mode(t_core *shell);
 void		free_env(t_lst *env);
-void		free_prompt(t_core *shell, char *line);
+void		free_prompt(t_core *shell);
+void		free_history(t_read *term);
 int8_t		dispatcher(t_core *shell, t_lst *jobs);
 
 /*

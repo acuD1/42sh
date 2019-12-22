@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/19 10:50:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/22 14:54:15 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,31 +57,31 @@ void		display_prompt(t_read *term)
 **	  The current buffer is saved in a history list
 */
 
-void		init_prompt(t_core *shell, t_read *term)
+void		init_prompt(t_core *shell)
 {
 	char	buff[READ_SIZE + 1];
 
-	term->status = CMD_PROMPT;
+	shell->term.status = CMD_PROMPT;
 	ft_bzero(buff, READ_SIZE);
-	term->buffer = ft_memalloc(BUFF_SIZE);
+	shell->term.buffer = ft_memalloc(BUFF_SIZE);
 	init_config(shell);
-	init_termcaps(term);
-	display_prompt(term);
+	init_termcaps(&shell->term);
+	display_prompt(&shell->term);
 //	while (term->status != CMD_DONE)
 //	{
 		while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 		{
-			if (check_caps(buff, term) == TRUE)
+			if (check_caps(buff, &shell->term) == TRUE)
 				ft_bzero(buff, READ_SIZE);
 			else
 				break ;
 		}
-		term->status = CMD_DONE;
-		if (check_subprompt(term) == FALSE)
+		shell->term.status = CMD_DONE;
+		if (check_subprompt(&shell->term) == FALSE)
 		{
 			// remove_newline(term);
-			check_expansions(term);
+			check_expansions(&shell->term);
 		}
 //	}
-	reset_config(shell, term);
+	reset_config(shell);
 }

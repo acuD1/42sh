@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:07:16 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/18 15:29:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/22 15:56:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int8_t 		debug_ailleurs(const char *path, const char *str);
 int8_t 		nono(const char *path);
 void        ft_printtab(char **cmd);
 
-void 		lexer_parser_analyzer(t_core *shell, char *line);
+void 		lexer_parser_analyzer(t_core *shell);
 
 /*
 **  ANALYZER

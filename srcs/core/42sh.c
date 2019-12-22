@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/12 00:40:36 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/22 15:04:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		main(int ac, char **av, char **environ)
 
 	// Need "-c implementation and a while to read everything"
 	//char BUFF[16];
-	if (isatty(STDIN_FILENO) == TRUE)
+	/*if (isatty(STDIN_FILENO) == TRUE)
 	{
 		if (get_size(&(shell.cmd_line)) != SUCCESS)
 			return (EXIT_FAILURE);
@@ -65,11 +65,31 @@ int		main(int ac, char **av, char **environ)
 		while (ft_getnextline(STDIN_FILENO, &(shell.cmd_line.buffer)))
 			load_noi_mode(&shell);
 		ft_strdel(&(shell.cmd_line.buffer));
+	}*/
+	if (setjmp(exit_leaks))
+	{
+		dprintf(STDERR_FILENO, "Exited with free handling ..\n");
+		//return (EXIT_SUCCESS);
+	}
+	else
+	{
+		dprintf(STDERR_FILENO, "Entering 42sh with setjmp activated !!!\n");
+		if (isatty(STDIN_FILENO) == TRUE)
+		{
+			if (get_size(&(shell.term)) != SUCCESS)
+				return (EXIT_FAILURE);
+			load_prompt(&shell);
+		}
+		else
+		{
+			while (ft_getnextline(STDIN_FILENO, &(shell.term.buffer)))
+				load_noi_mode(&shell);
+		}
 	}
 	/* FREE */
-	free_env(shell.env);
+	//free_env(shell.env);
 	//free_env(shell.pos_vars);
-	free_hash_map(&shell.hash);			// For now here ..
-	system("leaks checker");
+	//free_hash_map(&shell.hash);			// For now here ..
+	//system("leaks checker");
 	return (EXIT_SUCCESS);
 }

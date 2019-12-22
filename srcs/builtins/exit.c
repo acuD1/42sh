@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 23:42:04 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/04 17:30:12 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/22 13:38:25 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
+/*
 static int8_t	ft_atol(char *s, int64_t *result)
 {
 	size_t	i;
@@ -39,12 +39,12 @@ static int8_t	ft_atol(char *s, int64_t *result)
 	*result = nb;
 	return ((s[i] != 0) ? FAILURE : SUCCESS);
 }
-
+*/
 int8_t			builtin_exit(t_core *shell, t_process *process)
 {
 	int64_t	exit_value;
 	int		argc;
-
+/*
 	argc = ft_tablen(process->av);
 	exit_value = 0;
 	if (argc == 1)
@@ -58,5 +58,10 @@ int8_t			builtin_exit(t_core *shell, t_process *process)
 	else if (argc == 2)
 		quit_shell(shell, exit_value & 0xFF, 1);
 	dprintf(STDERR_FILENO, "bash: exit: too many arguments\n");
-	return (FAILURE);
+	return (FAILURE);*/
+	(void)process;
+	(void)exit_value;
+	(void)argc;
+	quit_shell(shell, 1, TRUE);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 10:41:55 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/19 10:50:30 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/22 16:09:47 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ typedef struct			s_read
 	char			*tmp_buff;
 	char			**cmd;
 
-	t_core			*shell; // ?
+	t_core			*shell;
 	t_lst			*history;
 	t_lst			*history_index;
 }				t_read;
@@ -216,7 +216,7 @@ typedef struct 		 	s_lexer
 typedef struct	s_core
 {
 	/* structs */
-	t_read				cmd_line;
+	t_read				term;
 	t_build				build;
 	t_hash				hash;			// Gonna call it on the stack for now
 	t_db				db;

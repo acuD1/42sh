@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigint.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/18 08:19:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/22 15:14:31 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,22 @@ void			kill_processes(int signum, t_core *shell)
 
 static	void	erase_line(t_core *shell)
 {
-	if (shell->cmd_line.status == CMD_PROMPT)
+	if (shell->term.status == CMD_PROMPT)
 	{
-		while (shell->cmd_line.x_index < shell->cmd_line.width)
-			move_right(shell->cmd_line.buffer, &(shell->cmd_line));
-		ft_bzero(shell->cmd_line.buffer, BUFF_SIZE);
+		while (shell->term.x_index < shell->term.width)
+			move_right(shell->term.buffer, &(shell->term));
+		ft_bzero(shell->term.buffer, BUFF_SIZE);
 		write(2, "\n", 1);
-		display_prompt(&(shell->cmd_line));
+		display_prompt(&(shell->term));
 	}
-	else if (shell->cmd_line.status == CMD_SUBPROMPT)
+	else if (shell->term.status == CMD_SUBPROMPT)
 	{
-		ft_bzero(shell->cmd_line.tmp_buff, ft_strlen(shell->cmd_line.tmp_buff));
-		ft_strdel(&(shell->cmd_line.tmp_buff));
-		ft_bzero(shell->cmd_line.buffer, BUFF_SIZE);
-		shell->cmd_line.status = CMD_PROMPT;
+		ft_bzero(shell->term.tmp_buff, ft_strlen(shell->term.tmp_buff));
+		ft_strdel(&(shell->term.tmp_buff));
+		ft_bzero(shell->term.buffer, BUFF_SIZE);
+		shell->term.status = CMD_PROMPT;
 		write(2, "\n", 1);
-		display_prompt(&(shell->cmd_line));
+		display_prompt(&(shell->term));
 	}
 }
 
