@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>		  +#+  +:+	   +#+		*/
 /*												+#+#+#+#+#+   +#+		   */
 /*   Created: 2019/06/15 16:43:36 by arsciand		  #+#	#+#			 */
-/*   Updated: 2019/12/17 11:50:55 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/22 13:25:55 by mpivet-p         ###   ########.fr       */
 /*																			*/
 /* ************************************************************************** */
 
@@ -60,19 +60,6 @@ typedef struct		s_db
 }				t_db;
 
 /*
-**	t_process is formated to contain background processes
-*/
-
-
-typedef struct	s_process_var
-{
-	char		*name;
-	pid_t		pid;
-	u_int16_t	bck_order;	// Background place order (0 = last)
-	u_int16_t	bck_id;		// Background id
-}				t_process_var;
-
-/*
 **	t_hash and his db for hash table implementation
 */
 
@@ -96,12 +83,12 @@ typedef struct s_expan
 	char			*data;
 }		t_expan;
 
-typedef struct s_lex_exp
+typedef struct	s_lex_exp
 {
 	t_lst 			*(*func)(t_lexer *, e_pstate, int, t_lst *);
-	e_pstate 	id;
-	int 			len;
-}		t_lex_exp;
+	e_pstate		id;
+	int				len;
+}				t_lex_exp;
 
 /*
 **			COMMAND_LINE
@@ -151,37 +138,39 @@ typedef struct	s_redir
 typedef struct			s_process
 {
 	e_pstate			type;
+	int8_t				completed;
+	int8_t				stopped;
+	int8_t				status;
 	t_lst				*assign_list;
 	t_lst				*redir_list;
+	pid_t				pid;
 	char				**av;
 	char				*bin;
-	pid_t				pid;
 }						t_process;
 
 typedef struct		s_job
 {
-	char			*command;
-	t_lst			*process_list;
-	// struct termios	  *term_modes;
-	// pid_t			   pgid;
-	// t_filedesc		  fd;
-	// int		 status; // 1 = running | 0 = stopped par exemple
+	struct termios	tmodes;
 	e_pstate		type;
-}			t_job;
+	t_lst			*process_list;
+	pid_t			 pgid;
+	char			*command;
+	int8_t			notified;
+}					t_job;
 
 typedef struct		s_analyzer
 {
 	t_anal				analyze;
 	e_astate			state;
 	t_lst				*lexer;
-	t_job			   job;
-	t_process		   process;
-	t_redir			 redir;
+	t_job				job;
+	t_process			process;
+	t_redir			 	redir;
 	t_db				db;
-	t_lst			   *job_list;
-	t_lst			   *process_list;
-	t_lst			   *redir_list;
-}			t_analyzer;
+	t_lst				*job_list;
+	t_lst				*process_list;
+	t_lst				*redir_list;
+}					t_analyzer;
 
 typedef struct		s_graph
 {
@@ -194,12 +183,12 @@ typedef struct		s_parser
 	e_pstate		state;
 }					t_parser;
 
-typedef struct  s_token
+typedef struct		s_token
 {
-	e_pstate id;
+	e_pstate		id;
 	char			*data;
-	size_t		  len;
-}			  t_token;
+	size_t			len;
+}					t_token;
 
 typedef struct  s_lexer
 {
@@ -238,6 +227,9 @@ typedef struct	s_core
 	int32_t				status;				//	last exit status value (echo $?)
 	int32_t				heredoc;			//	counting number of heredocs
 	u_int8_t			opt;				//	Option
+	int8_t				is_interactive;		//	Job control
+	int8_t				terminal;			//	Job control
+	pid_t				pgid;
 }				t_core;
 
 #endif

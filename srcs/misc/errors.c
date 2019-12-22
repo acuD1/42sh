@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 01:28:05 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/07 21:08:42 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/22 19:25:10 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,14 @@
 void	print_usage(char *name, int c, char *usage)
 {
 	if (c > 0)
-		dprintf(STDERR_FILENO, "42sh: %s: -%c: invalid option\n", name, c);
+		dprintf(STDERR_FILENO, "%s: -%c: invalid option\n", name, c);
 	dprintf(STDERR_FILENO, "%s: usage: %s\n", name, usage);
+}
+
+void	print_and_quit(t_core *shell, char *message)
+{
+	dprintf(STDERR_FILENO, "%s", message);
+	quit_shell(shell, EXIT_FAILURE, FALSE);
 }
 
 void	ft_perror(const char *s, const char *name, const int errnum)

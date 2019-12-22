@@ -7,5 +7,5 @@ int		main(void)
 	int ret;
 	write(1, "a\n", 2);
 	perror("test");
-	return (0);
+	return (212132151);
 }

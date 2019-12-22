@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:20:07 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/02 12:59:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/21 14:57:38 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,20 @@
 
 void	credit(t_core *shell)
 {
-	dprintf(STDOUT_FILENO,
-		"%s|%sv.%d_%d_%d%s|%s 42sh%s\n\n",
+	dprintf(STDOUT_FILENO, "%s|%sv.%d_%d_%d%s|%s 42sh%s\n\n",
 		C_G, C_X,
 		shell->build.release, shell->build.version, shell->build.patch,
 		C_G, C_Y, C_X);
 }
 
-void	print_opt(t_core *shell)
+void	print_opt(t_core *shell, int ac, char **av)
 {
+	/* Getting options */
+	if ((shell->opt = get_options(ac, av, "hv")) & OPT_ERROR)
+	{
+		print_usage("42sh", shell->opt % 128, "42sh [-hv]");
+		exit(2);
+	}
 	if (shell->opt & OPT_HELP)
 	{
 		/* Need more stuff ... */

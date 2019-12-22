@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:31:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/30 06:32:52 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/21 16:28:46 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ void	status_handler(t_core *shell, int status)
 		shell->status = status + 128;
 	}
 	else
+	{
 		shell->status /= 256;
+		shell->status &= 0xFF;
+	}
 }

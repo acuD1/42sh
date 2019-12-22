@@ -72,6 +72,7 @@ L_PATH = shared_libft/
 # Add custom dir for .o
 
 CORE		=	core/
+JOBC		=	jobcontrol/
 SIGNALS		=	signals/
 DB			=	db/
 BUILTINS	=	builtins/
@@ -94,6 +95,7 @@ HASH		=	$(EXEC)hash_map/
 
 PATHS		+=	$(B_PATH)
 PATHS		+=	$(O_PATH)
+PATHS		+=	$(O_PATH)$(JOBC)
 PATHS		+=	$(O_PATH)$(SIGNALS)
 PATHS		+=	$(O_PATH)$(BUILTINS)
 PATHS		+=	$(O_PATH)$(BLT_FC)
@@ -160,7 +162,12 @@ SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
 SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
 
 
-SRC		+=	$(S_PATH)dev.c
+SRC			+=	$(S_PATH)dev.c
+
+SRC			+=	$(S_PATH)$(JOBC)foreground.c
+SRC			+=	$(S_PATH)$(JOBC)background.c
+SRC			+=	$(S_PATH)$(JOBC)job_utils.c
+
 SRC			+=	$(S_PATH)$(HISTORY)save_history.c
 SRC			+=	$(S_PATH)$(HISTORY)search_in_history.c
 SRC			+=	$(S_PATH)$(HISTORY)history_expansions.c
@@ -179,7 +186,6 @@ SRC			+=	$(S_PATH)$(AC)ac_bin.c
 SRC			+=	$(S_PATH)$(AC)ac_directories.c
 SRC			+=	$(S_PATH)$(AC)ac_tools.c
 
-SRC			+=	$(S_PATH)$(DB)init_shell.c
 SRC			+=	$(S_PATH)$(DB)get_opt.c
 SRC			+=	$(S_PATH)$(DB)set_env.c
 SRC			+=	$(S_PATH)$(DB)fetch_db.c
@@ -240,6 +246,7 @@ SRC			+=	$(S_PATH)$(HASH)resize_hash_map.c
 
 
 SRC			+=	$(S_PATH)$(CORE)42sh.c
+SRC			+=	$(S_PATH)$(CORE)init_shell.c
 SRC			+=	$(S_PATH)$(CORE)load_prompt.c
 SRC			+=	$(S_PATH)$(CORE)load_noi_mode.c
 SRC			+=	$(S_PATH)$(CORE)output.c

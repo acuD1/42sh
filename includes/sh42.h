@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/17 09:03:06 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/22 19:04:10 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 int8_t		get_opt(int ac, char **av, t_core *shell);
 void		credit(t_core *shell);
 
-void		print_opt(t_core *shell);
+void		print_opt(t_core *shell, int ac, char **av);
 void		load_prompt(t_core *shell);
 void		load_noi_mode(t_core *shell);
 void		free_env(t_lst *env);
@@ -52,7 +52,7 @@ int8_t		dispatcher(t_core *shell, t_lst *jobs);
 
 int8_t		set_env(t_core *shell, char **argv, char **environ);
 int8_t		del_db(t_core *shell, char *key);
-void		init_shell(t_core *shell);
+void		init_shell(t_core *shell, char **av, char **env);
 t_db		*fetch_db(t_db *db, const char *s, const u_int8_t var_type);
 t_db		*modify_db(t_db	*db, char *new_value, u_int8_t new_type);
 t_db		*get_or_create_db(t_core *shell, char *key, u_int8_t var_type);
@@ -113,6 +113,7 @@ int8_t		ft_access(char *path, int mode);
 int8_t		is_a_dir(char *path);
 void		print_usage(char *name, int c, char *usage);
 void		quit_shell(t_core *shell, int exit_value, int8_t verbose);
+void		print_and_quit(t_core *shell, char *message);
 int			check_invalid_identifiers(char *arg, char *exceptions);
 
 /*
@@ -185,6 +186,7 @@ void		display_reverse(t_lst *w, u_int64_t opt, char **range);
 u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd);
 void		swap_range(char **r1, char **r2);
 u_int16_t	set_range(t_lst **w, char **range);
+
 /*
 **	===========================================================================
 **	SIGNALS....................................................................
@@ -194,6 +196,18 @@ u_int16_t	set_range(t_lst **w, char **range);
 void	kill_processes(int signum, t_core *shell);
 void	sigint_handler(int sig_num);
 void	init_signals(void);
+
+/*
+**	===========================================================================
+**	JOB CONTROL................................................................
+**	===========================================================================
+*/
+
+t_job	*find_job(t_lst *ptr, pid_t pgid);
+int8_t	job_is_stopped(t_job *job);
+int8_t	job_is_completed(t_job *job);
+void	put_job_in_background(t_core *shell, t_job *job, int cont);
+int8_t	put_job_in_foreground(t_core *shell, t_job *job, int cont);
 
 /* ###########################  TEMPORARY   #################################*/
 void	debug_analyzer(t_core *shell);
