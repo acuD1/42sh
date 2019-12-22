@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:44:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 17:52:59 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:32:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ uint8_t		charset_count(t_read *input, char c, int i)
 
 uint8_t		check_backslash(t_read *input, char *quote)
 {
+	if (!*input->buffer)
+		return (FALSE);
 	if (input->buffer[ft_strlen(input->buffer) - 1] == BACKSLASH)
 	{
 		if (input->buffer[ft_strlen(input->buffer) - 1] != BACKSLASH)

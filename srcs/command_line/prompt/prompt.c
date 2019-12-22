@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/17 14:01:15 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/19 10:50:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void		goto_prompt(t_read *input)
 		xtputs(input->tcaps[KEY_UP], 1, my_outc);
 	xtputs(input->tcaps[LEFT_MARGIN], 1, my_outc);
 	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
-	free(input->prompt);
 	if (input->sub_prompt > 0)
 		display_subprompt(input, PS2);
 	else
@@ -39,7 +38,8 @@ void		goto_prompt(t_read *input)
 
 void		display_prompt(t_read *term)
 {
-	term->prompt = ft_strdup(PS1);
+	ft_bzero(term->prompt, 10);
+	ft_strcpy(term->prompt, PS1);
 	term->prompt_len = ft_strlen(term->prompt);
 	term->x = term->prompt_len;
 	term->x_index = term->x;
@@ -59,7 +59,7 @@ void		display_prompt(t_read *term)
 
 void		init_prompt(t_core *shell, t_read *term)
 {
-	char	buff[READ_SIZE];
+	char	buff[READ_SIZE + 1];
 
 	term->status = CMD_PROMPT;
 	ft_bzero(buff, READ_SIZE);

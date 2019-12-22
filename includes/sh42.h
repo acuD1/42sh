@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/18 11:07:59 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/19 10:39:21 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "expansion.h"
 # include <sys/wait.h>
 # include <sys/ioctl.h>
+# include <sys/stat.h>
 # include <fcntl.h>
 # include <stdlib.h>
 # include <stdint.h>

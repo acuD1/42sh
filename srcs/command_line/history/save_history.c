@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/07 18:11:07 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/19 10:42:40 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
 
 int8_t			write_history(t_read *line)
 {
-	int		fd;
-	int		i;
-	t_lst	*hst;
+	int			fd;
+	int			i;
+	t_lst		*hst;
 
+	i = 0;
 	if (!(hst = line->history))
 		return (FAILURE);
-	i = 0;
 	if ((fd = open(HISTORY_FILE, MODE_WRITE, S_USR_RW | S_GRP_OTH_R)) == -1)
 	{
 		ft_dprintf(STDIN_FILENO, "can't open history file\n");
@@ -60,7 +60,7 @@ void			save_history(t_read *term)
 	t_lst		*saved;
 
 	saved = NULL;
-	if ((*term).buffer && ft_strlen(term->buffer) > 0)
+	if (*term->buffer)
 	{
 		saved = ft_memalloc(sizeof(*saved));
 		saved->prev = NULL;
@@ -84,23 +84,18 @@ int8_t			init_history(t_read *term)
 	char		*line;
 	int			fd;
 	int			i;
-	int			j;
 
-	j = 0;
-	i = -1;
+	i = 0;
 	line = NULL;
 	if ((fd = open(HISTORY_FILE, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)
 		return (FAILURE);
 	while (ft_getnextline(fd, &line) > 0)
 	{
-		term->buffer = ft_memalloc(BUFF_SIZE);
-		while (++i < (int)ft_strlen(line))
-			term->buffer[i] = line[i];
+		term->buffer = ft_strdup(line);
 		save_history(term);
-		term->history->content_size = ++j;
+		term->history->content_size = ++i;
 		free(line);
 		free(term->buffer);
-		i = -1;
 	}
 	free(line);
 	close(fd);

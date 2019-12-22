@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 22:19:32 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/19 10:42:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 void		check_keys_comb(char *buff, t_read *input, uint64_t value)
 {
-	int	i;
+	int		i;
 
 	i = input->width - input->x_index;
 	if (value == CTRL_L)
@@ -56,13 +56,10 @@ void		end_of_file(t_read *input, uint64_t value)
 		ft_putstr("exit\n");
 		reset_config(shell, input);
 		write_history(input);
-		if (input->history)
+		while (input->history)
 		{
-			while (input->history)
-			{
-				free(input->history->content);
-				input->history = input->history->next;
-			}
+			free(input->history->content);
+			input->history = input->history->next;
 		}
 		free(input->history);
 		exit(0);
@@ -113,7 +110,7 @@ uint8_t		check_caps(char *buff, t_read *input)
 		value = get_mask(buff);
 	}
 	if (cursor_motion(buff, input, value))
-	   return (TRUE);
+		return (TRUE);
 	if (value == RETURN_KEY)
 	{
 		ft_putchar('\n');

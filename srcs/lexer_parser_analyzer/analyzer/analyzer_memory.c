@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer_memory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 17:40:31 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 13:54:11 by guvillat         ###   ########.fr       */
+/*   Updated: 2019/12/22 12:45:48 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void		get_token(t_analyzer *analyzer)
 	if (!analyzer->lexer)
 		return ;
 	tmp = analyzer->lexer->content;
+	ft_strdel(&(tmp->data));
 	free(tmp->data);
 	free(tmp);
 	analyzer->lexer = analyzer->lexer->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   term_config.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 06:17:03 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/19 10:47:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,9 @@ uint8_t				init_config(t_core *shell)
 uint8_t			reset_config(t_core *shell, t_read *input)
 {
 	tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t));
-	if (input->prompt) // secu
-	{
-		free(input->prompt);
-		input->prompt = NULL;
-	}
-	ft_strdel(&input->tmp_buff); // pas besoin de secu, ft_strdel est secur
+	//ft_strdel(&(input->prompt));
+	ft_bzero(input->prompt, READ_SIZE);
+//	shell->old_t.c_lflag |= (ICANON | ECHO); ??
+	ft_strdel(&input->tmp_buff);
 	return (SUCCESS);
 }

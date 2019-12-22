@@ -3,40 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   sub_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/17 14:19:58 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/19 10:43:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t		debug(char  *path, t_read *in, char c)
-{
-    int fd;
-
-    if ((fd = open(path, O_WRONLY)) < 0)
-        return (FAILURE);
-    dprintf(fd, " bff[%s] tmp[%s]\n sb[%c]\n\n", in->buffer, in->tmp_buff, c);
-    return (SUCCESS);
-}
-
-/* void		insert_newline_in_buff(t_read *input) */
-/* { */
-/* 	int		buff_index; */
-/*  */
-/* 	buff_index = input->x_index - input->prompt_len; */
-/* 	input->buffer[buff_index] = NEW_LINE; */
-/* 	input->width++; */
-/* 	input->x = 0; */
-/* 	input->y++; */
-/* 	input->x_index++; */
-/* } */
-
 void		display_subprompt(t_read *term, char *prompt)
 {
-	term->prompt = ft_strdup(prompt);
+	ft_strcpy(term->prompt, prompt);
 	term->prompt_len = ft_strlen(term->prompt);
 	term->x = term->prompt_len;
 	term->y = 0;
@@ -86,7 +64,7 @@ void		load_subprompt(char sb, t_read *input)
 		if (read_subline(input, sb) == FALSE)
 		{
 			input->sub_prompt = FALSE;
-			input->buffer = ft_strjoin(input->tmp_buff, input->buffer);
+			input->buffer = ft_strjoinf(input->tmp_buff, input->buffer, 2);
 			if (quotes_is_matching(input, &sb) == FALSE)
 			{
 				input->buffer[ft_strlen(input->buffer)] = NEW_LINE;

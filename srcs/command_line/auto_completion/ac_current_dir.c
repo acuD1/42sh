@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/05 21:07:23 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:16:07 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ uint8_t			is_tab(char *buff, char *d_name, t_read *input)
 {
 	uint64_t	value;
 
-	ft_bzero(buff, READ_SIZE + 1);
-	if (xread(0, buff, READ_SIZE) > 0)
+	ft_bzero(buff, READ_SIZE);
+	if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		value = get_mask(buff);
 		if (value == TAB_KEY)
@@ -39,7 +39,7 @@ uint8_t			is_tab(char *buff, char *d_name, t_read *input)
 	return (FALSE);
 }
 
-int			is_dot(char *d_name)
+int				is_dot(char *d_name)
 {
 	if (!ft_strcmp(d_name, "."))
 		return (TRUE);
@@ -68,9 +68,9 @@ char			*get_current_dir(char *curr_dir, char *tmp_curr, t_read *input)
 void			display_current_directory(char *buf, t_read *input, char *curr_dir)
 {
 	struct dirent	*data;
-	DIR		*dir;
-	char		tmp[BUFF_SIZE];
-	char		current_dir[BUFF_SIZE];
+	DIR				*dir;
+	char			tmp[BUFF_SIZE];
+	char			current_dir[BUFF_SIZE];
 
 	get_current_dir(curr_dir, current_dir, input);
 	if ((dir = opendir(current_dir)) == NULL)

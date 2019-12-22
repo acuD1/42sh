@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/23 13:55:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:03:00 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void		find_expansions(t_read *line, int *i)
 
 void		check_expansions(t_read *line)
 {
-	int	i;
-	int	buff_len;
+	int		i;
+	int		buff_len;
 	char	*tmp;
 
 	i = -1;

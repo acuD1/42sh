@@ -6,16 +6,27 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/27 13:45:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/11 14:53:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			check_tmp_buffer(t_read *input)
+int8_t debugs(const char *path, t_read *in)
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (-1);
+    dprintf(fd,"y {%d}\n", in->y);
+    return (1);
+}
+
+void		check_tmp_buffer(t_read *input)
 {
 	goto_prompt(input);
-	memset(input->buffer, 0, strlen(input->buffer));
+	ft_strdel(&input->buffer);
+	input->buffer = ft_memalloc(BUFF_SIZE);
 	if (input->tmp_buff && ft_strlen(input->tmp_buff) > 0)
 	{
 		insert_str_in_buffer(input->tmp_buff, input);
@@ -25,15 +36,13 @@ void			check_tmp_buffer(t_read *input)
 }
 
 /*
-**	Arrow down print the prev saved in history from history index
+**		Arrow down print the prev saved in history from history index
 */
 
-void			move_key_down(t_read *input)
+void		move_key_down(t_read *input)
 {
-	t_lst	 	*w;
-	int		i;
+	t_lst		*w;
 
-	i = -1;
 	w = NULL;
 	if (input->history && input->history_index)
 	{
@@ -48,22 +57,20 @@ void			move_key_down(t_read *input)
 			return ;
 		}
 		goto_prompt(input);
-		memset(input->buffer, 0, strlen(input->buffer));
-		while (w->content && ((char*)w->content)[++i])
-			insert_char_in_buffer(((char*)w->content)[i], input, i);
+		ft_strdel(&input->buffer);
+		input->buffer = ft_memalloc(BUFF_SIZE);
+		insert_str_in_buffer((char*)w->content, input);
 	}
 }
 
 /*
-**	Arrow up print the next saved in history from history index
+**		Arrow up print the next saved in history from history index
 */
 
-void			move_key_up(t_read *input)
+void		move_key_up(t_read *input)
 {
-	t_lst	 	*w;
-	int		i;
+	t_lst		*w;
 
-	i = -1;
 	if (input->history)
 	{
 		if (input->history_index && !input->history_index->next)
@@ -81,20 +88,21 @@ void			move_key_up(t_read *input)
 			w = input->history;
 		}
 		goto_prompt(input);
-		memset(input->buffer, 0, strlen(input->buffer));
-		while (w->content && ((char *)w->content)[++i])
-			insert_char_in_buffer(((char *)w->content)[i], input, i);
+		ft_strdel(&input->buffer);
+		input->buffer = ft_memalloc(BUFF_SIZE);
+		insert_str_in_buffer((char*)w->content, input);
 	}
+	debugs("/dev/ttys002", input);
 }
 
 /*
-**	Arrow right to move the cursor one char on the right
+**		Arrow right to move the cursor one char on the right
 */
 
-void			move_right(char *buff, t_read *input)
+void		move_right(char *buff, t_read *input)
 {
-	int		width;
-	int		buff_index;
+	int	width;
+	int	buff_index;
 
 	(void)buff;
 	width = get_width_current_line(input);
@@ -117,12 +125,12 @@ void			move_right(char *buff, t_read *input)
 }
 
 /*
-**	Arrow left to move the cursor one char on the left
+**		Arrow left to move the cursor one char on the left
 */
 
 void		move_left(char *buff, t_read *input)
 {
-	int		width;
+	int	width;
 
 	(void)buff;
 	if ((input->x > input->prompt_len && input->y == 0)

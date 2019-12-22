@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/18 16:37:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/11/30 18:07:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int8_t			builtin_fc(t_core *shell, t_process *process)
 		ft_dprintf(2, "42sh: fc: history specification out of range\n");
 		return (FAILURE);
 	}
-	cmd = ft_strsplit(shell->buff, SPACE);
+	cmd = ft_strsplit(shell->input->buffer, SPACE);
 	opt = get_options(ft_tablen(cmd), cmd, "elnrs0123456789");
 	get_range(cmd, range);
 	if (opt & (1ULL << 63))

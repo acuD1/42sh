@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   struct.h										   :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: arsciand <arsciand@student.42.fr>		  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2019/06/15 16:43:36 by arsciand		  #+#	#+#			 */
-/*   Updated: 2019/12/17 11:50:55 by mpivet-p         ###   ########.fr       */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/19 10:41:55 by arsciand          #+#    #+#             */
+/*   Updated: 2019/12/19 10:50:30 by arsciand         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
@@ -16,8 +16,6 @@
 # include "sh42.h"
 # include "enum.h"
 # include <termios.h>
-
-
 
 /*
 **	Some build data
@@ -107,33 +105,33 @@ typedef struct s_lex_exp
 **			COMMAND_LINE
 */
 
-typedef struct		s_read
+typedef struct			s_read
 {
-	char		*prompt;
-	int		prompt_len;
-	int		x_index;
-	int		x;
-	int		y;
-	int		y_li;
-	int		width;
-	int		ws_col;
-	int		ws_li;
-	int		ac;
+	char			prompt[10];
+	int			prompt_len;
+	int			x_index;
+	int			x;
+	int			y;
+	int			y_li;
+	int			width;
+	int			ws_col;
+	int			ws_li;
+	int			ac;
 
-	int		new_line;
-	int		found;
-	int		sub_prompt;
-	int8_t	status;
+	int			new_line;
+	int			found;
+	int			sub_prompt;
+	int			status;
 
-	char		*tcaps[CAPS_NBR];
-	char		*buffer;
-	char		*tmp_buff;
-	char		**cmd;
+	char			*tcaps[CAPS_NBR];
+	char			*buffer;
+	char			*tmp_buff;
+	char			**cmd;
 
-	t_core		*shell;
-	t_lst		*history;
-	t_lst		*history_index;
-}			t_read;
+	t_core			*shell; // ?
+	t_lst			*history;
+	t_lst			*history_index;
+}				t_read;
 
 /*
 ** 			LEXER_PARSER_ANALYZER
@@ -158,7 +156,7 @@ typedef struct			s_process
 	pid_t				pid;
 }						t_process;
 
-typedef struct		s_job
+typedef struct			s_job
 {
 	char			*command;
 	t_lst			*process_list;
@@ -169,7 +167,7 @@ typedef struct		s_job
 	e_pstate		type;
 }			t_job;
 
-typedef struct		s_analyzer
+typedef struct			s_analyzer
 {
 	t_anal				analyze;
 	e_astate			state;
@@ -183,7 +181,7 @@ typedef struct		s_analyzer
 	t_lst			   *redir_list;
 }			t_analyzer;
 
-typedef struct		s_graph
+typedef struct			s_graph
 {
 	e_pstate	  *good_type;
 }					   t_graph;
@@ -194,14 +192,14 @@ typedef struct		s_parser
 	e_pstate		state;
 }					t_parser;
 
-typedef struct  s_token
+typedef struct			s_token
 {
 	e_pstate id;
 	char			*data;
 	size_t		  len;
 }			  t_token;
 
-typedef struct  s_lexer
+typedef struct 		 	s_lexer
 {
 	char			*buff;
 	e_lstate		status;

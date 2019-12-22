@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/17 14:25:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/19 10:39:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@
 */
 
 # define S_USR_RW		(S_IRUSR | S_IWUSR)
-# define S_GRP_OTH_R	(S_IRGRP | S_IROTH)
+# define S_GRP_OTH_R		(S_IRGRP | S_IROTH)
 # define MODE_WRITE		(O_CREAT | O_WRONLY | O_TRUNC)
 # define PS1			"42sh-2.0$ "
 # define PS2			"> "
 # define BUFF_SIZE		4096
-# define READ_SIZE		4
-# define HISTORY_FILE	"./.42sh_history"
+# define READ_SIZE		10
+# define HISTORY_FILE		"./.42sh_history"
 # define QUOTE			'\''
 # define DQUOTE			'\"'
 # define BQUOTE			'`'

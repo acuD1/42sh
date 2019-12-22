@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_parser_analyzer.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:51:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/17 14:12:44 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/22 12:56:45 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void		ft_freetokenlist(t_lst **lst)
 		node = tmp;
 		if (tmp->content)
 		{
-			free(((t_token*)tmp->content)->data);
-			free((t_token*)tmp->content);
+			ft_strdel(&((t_token*)tmp->content)->data);
+			free(tmp->content);
 		}
 		if (!tmp->next)
 		{
@@ -92,20 +92,14 @@ void		ft_freedblist(t_lst **lst)
 	}
 }
 
-void		lexer_parser_analyzer(t_core *shell, char *line)
+void lexer_parser_analyzer(t_core *shell, char *line)
 {
-	t_lst	*lxr_tok;
-	t_lst	*lst_job;
+	t_lst *lxr_tok;
 
 	lxr_tok = lexer(line);
-	lst_job = NULL;
-	shell->job_list = NULL;
+	if (lxr_tok == NULL)
+		return ;
 	if (parser(lxr_tok) == TRUE)
-	{
 		analyzer(shell, lxr_tok);
-		ft_printjoblst(shell->job_list);
-	}
-	//REMOVE BEFORE FINAL PUSH
-	//	else
-		//debug_ailleurs("/dev/ttys002", "erreur parser..\n");
+	ft_freetokenlist(&lxr_tok);
 }

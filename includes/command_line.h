@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 15:22:33 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:08:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ void			research_mode(t_read *line);
 int8_t			write_history(t_read *line);
 void			check_expansions(t_read *line);
 void			call_number(t_read *line, int i);
-void			last_cmd_back(t_read *line, int i);
 void			callback_number(t_read *line, int i);
 void			call_word(t_read *line, int i);
+void			last_cmd_back(t_read *line, int i);
 
 /*
 **		Quotes and Subprompt/Multiline
@@ -113,11 +113,11 @@ uint8_t			read_again(char **prev_b, char *path, char *name, t_read *input);
 **		Utils/Tools
 */
 
-int			my_outc(int c);
+int				my_outc(int c);
 uint8_t			get_width_last_line(t_read *input);
 uint8_t			get_width_current_line(t_read *input);
 uint64_t		get_mask(char *buff);
-int			is_dot(char *d_name);
+int				is_dot(char *d_name);
 uint8_t			is_tab(char *buff, char *d_name, t_read *input);
 
 /*

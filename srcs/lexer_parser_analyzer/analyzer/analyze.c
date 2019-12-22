@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:52:47 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 13:53:25 by guvillat         ###   ########.fr       */
+/*   Updated: 2019/12/22 13:01:10 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void				analyzer(t_core *shell, t_lst *lexer)
 	{
 		anal = anal->analyze[anal->state]
 			[((t_token*)anal->lexer->content)->id](anal, shell);
-		get_token(anal);
+		//get_token(anal); Are u mad or something ???
+		anal->lexer = anal->lexer->next;
 	}
 	free(anal->job.command);
 	shell->job_list = anal->job_list;
