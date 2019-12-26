@@ -2,7 +2,7 @@
 
 **/42sh
 **/build/42sh*
-.build
+*.build
 
 # Dir
 **/build
