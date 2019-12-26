@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ac_buffer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/12 14:36:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:26:23 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@
 **		Read again buff if another tab key is pressed => return TRUE
 */
 
-uint8_t			read_again(char **prev_b, char *path, char *name, t_read *input)
+uint8_t			read_again(char **prev_b, char *path, char *name, t_read *term)
 {
 	uint64_t	value;
 	char		buff[READ_SIZE + 1];
 
 	ft_bzero(buff, READ_SIZE);
-	delete_last_cmd(*prev_b, input);
+	delete_last_cmd(*prev_b, term);
 	if (is_dir(path) == TRUE)
 		ft_strcat(name, "/");
-	insert_str_in_buffer(name, input);
+	insert_str_in_buffer(name, term);
 	if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		value = get_mask(buff);
@@ -90,7 +90,7 @@ DIR				*update_curr_dir(char *to_find, char *prev_b, char *curr_dir)
 **		Return FAILURE(-1) to stop reading
 */
 
-int8_t			read_dir(char **prev_b, char *to_find, t_read *input)
+int8_t			read_dir(char **prev_b, char *to_find, t_read *term)
 {
 	struct dirent	*data;
 	DIR				*dir;
@@ -104,9 +104,9 @@ int8_t			read_dir(char **prev_b, char *to_find, t_read *input)
 	{
 		if (isstart(data->d_name, to_find))
 		{
-			input->found = TRUE;
+			term->found = TRUE;
 			path = ft_strjoin(current_dir, data->d_name);
-			if (read_again(prev_b, path, data->d_name, input) == TRUE)
+			if (read_again(prev_b, path, data->d_name, term) == TRUE)
 				continue ;
 			else
 			{
@@ -117,22 +117,22 @@ int8_t			read_dir(char **prev_b, char *to_find, t_read *input)
 		}
 	}
 	ft_strdel(&path);
-	return (input->found);
+	return (term->found);
 }
 
 /*
 **		To complete files if char inserted match with any files in current dir
 */
 
-void			to_complete_buffer(char *prev_b, char *to_find, t_read *input)
+void			to_complete_buffer(char *prev_b, char *to_find, t_read *term)
 {
-	input->found = FALSE;
+	term->found = FALSE;
 	if (isstart(to_find, "$"))
 	{
-		parse_env(prev_b, to_find, input);
+		parse_env(prev_b, to_find, term);
 		return ;
 	}
-	if (read_dir(&prev_b, to_find, input) == FAILURE)
+	if (read_dir(&prev_b, to_find, term) == FAILURE)
 		return ;
-	input->found == TRUE ? to_complete_buffer(prev_b, to_find, input) : 0;
+	term->found == TRUE ? to_complete_buffer(prev_b, to_find, term) : 0;
 }

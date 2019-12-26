@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ac_bin.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 19:13:35 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:26:40 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@
 ** 	Function to save in buffer the current bin found at buffer[0]
 */
 
-void			insert_bin_in_buffer(char *d_name, t_read *input)
+void			insert_bin_in_buffer(char *d_name, t_read *term)
 {
 	int			i;
 	int			buf_index;
 
 	i = -1;
 	buf_index = 0;
-	ft_bzero(input->buffer, ft_strlen(input->buffer));
+	ft_bzero(term->buffer, ft_strlen(term->buffer));
 	while (d_name[++i])
 	{
-		insert_char_in_buffer(d_name[i], input, buf_index);
+		insert_char_in_buffer(d_name[i], term, buf_index);
 		buf_index++;
 	}
 }
@@ -36,15 +36,15 @@ void			insert_bin_in_buffer(char *d_name, t_read *input)
 ** 	Return true if another tab key is pressed or no match found
 */
 
-uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
+uint8_t			not_found(char *name, char *to_find, char *buf, t_read *term)
 {
 	uint64_t	value;
 
 	if (isstart(name, to_find))
 	{
-		input->found = 1;
-		goto_prompt(input);
-		insert_bin_in_buffer(name, input);
+		term->found = 1;
+		goto_prompt(term);
+		insert_bin_in_buffer(name, term);
 		if (xread(STDIN_FILENO, buf, READ_SIZE) > 0)
 		{
 			value = get_mask(buf);
@@ -62,7 +62,7 @@ uint8_t			not_found(char *name, char *to_find, char *buf, t_read *input)
 ** 	Check if an exe bin already exists with the curr buffer inserted
 */
 
-void			to_complete_bin(char *buf, char *to_find, t_read *input)
+void			to_complete_bin(char *buf, char *to_find, t_read *term)
 {
 	struct dirent	*data;
 	DIR				*dir;
@@ -70,13 +70,13 @@ void			to_complete_bin(char *buf, char *to_find, t_read *input)
 	int				i;
 
 	i = -1;
-	path = split_path(input->shell, "PATH");
+	path = split_path(term->shell, "PATH");
 	while (path && path[++i])
 	{
 		dir = opendir(path[i]);
 		while ((data = readdir(dir)) != NULL)
 		{
-			if (not_found(data->d_name, to_find, buf, input))
+			if (not_found(data->d_name, to_find, buf, term))
 				continue ;
 			else
 			{
@@ -87,5 +87,5 @@ void			to_complete_bin(char *buf, char *to_find, t_read *input)
 		}
 		closedir(dir);
 	}
-	input->found == 1 ? to_complete_bin(buf, to_find, input) : 0;
+	term->found == 1 ? to_complete_bin(buf, to_find, term) : 0;
 }

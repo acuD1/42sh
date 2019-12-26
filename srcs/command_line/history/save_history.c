@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/19 10:42:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:28:41 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 **	Open "./.42sh_history" file to write history datas at the end of file
 */
 
-int8_t			write_history(t_read *line)
+int8_t			write_history(t_read *term)
 {
 	int			fd;
 	int			i;
 	t_lst		*hst;
 
 	i = 0;
-	if (!(hst = line->history))
+	if (!(hst = term->history))
 		return (FAILURE);
 	if ((fd = open(HISTORY_FILE, MODE_WRITE, S_USR_RW | S_GRP_OTH_R)) == -1)
 	{

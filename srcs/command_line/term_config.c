@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/22 15:52:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:20:11 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ uint8_t				init_config(t_core *shell)
 uint8_t			reset_config(t_core *shell)
 {
 	tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t));
-	//ft_strdel(&(input->prompt));
+	//ft_strdel(&(term->prompt));
 	ft_bzero(shell->term.prompt, READ_SIZE);
 //	shell->old_t.c_lflag |= (ICANON | ECHO); ??
 	ft_strdel(&shell->term.tmp_buff);

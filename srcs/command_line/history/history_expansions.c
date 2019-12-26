@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_expansions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 19:04:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:30:05 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 **		To insert in buffer the content found from the hst lst
 */
 
-int			insert_content(int j, int i, t_read *line, char *content)
+int			insert_content(int j, int i, t_read *term, char *content)
 {
 	char		*tmp;
 	int			len;
@@ -25,22 +25,22 @@ int			insert_content(int j, int i, t_read *line, char *content)
 	inc_len = 0;
 	if (i >= BUFF_SIZE)
 	{
-		inc_len = ft_strlen(line->buffer) + ft_strlen((char *)content);
-		line->buffer = realloc(line->buffer, inc_len);
+		inc_len = ft_strlen(term->buffer) + ft_strlen((char *)content);
+		term->buffer = realloc(term->buffer, inc_len);
 	}
-	len = line->width - line->prompt_len - j;
-	tmp = ft_strsub(line->buffer, i + j, len);
+	len = term->width - term->prompt_len - j;
+	tmp = ft_strsub(term->buffer, i + j, len);
 	j = -1;
 	while (((char*)content)[++j])
 	{
-		line->buffer[i] = ((char *)content)[j];
+		term->buffer[i] = ((char *)content)[j];
 		i++;
 	}
 	j = -1;
 	len = i;
 	while (tmp[++j])
-		line->buffer[i++] = tmp[j];
-	line->buffer[i] = 0;
+		term->buffer[i++] = tmp[j];
+	term->buffer[i] = 0;
 	ft_strdel(&tmp);
 	return (len - 1);
 }
@@ -49,7 +49,7 @@ int			insert_content(int j, int i, t_read *line, char *content)
 **		"!word" expansion search the word to find from the end of hst lst
 */
 
-void			call_word(t_read *line, int i)
+void			call_word(t_read *term, int i)
 {
 	char		word[BUFF_SIZE];
 	int			j;
@@ -57,11 +57,11 @@ void			call_word(t_read *line, int i)
 	t_lst		*w;
 
 	j = -1;
-	w = line->history;
+	w = term->history;
 	n = i + 1;
-	while (n < (int)ft_strlen(line->buffer) && !ft_isblank(line->buffer[n]))
+	while (n < (int)ft_strlen(term->buffer) && !ft_isblank(term->buffer[n]))
 	{
-		word[++j] = line->buffer[n];
+		word[++j] = term->buffer[n];
 		n++;
 	}
 	word[j + 1] = '\0';
@@ -75,14 +75,14 @@ void			call_word(t_read *line, int i)
 	}
 	if (!w->next)
 		return ;
-	insert_content(j + 2, i, line, (char *)w->content);
+	insert_content(j + 2, i, term, (char *)w->content);
 }
 
 /*
 **		"!-number" expansion search from the end of hst lst
 */
 
-void			callback_number(t_read *line, int i)
+void			callback_number(t_read *term, int i)
 {
 	char		nb[BUFF_SIZE];
 	int			n;
@@ -90,11 +90,11 @@ void			callback_number(t_read *line, int i)
 	int			j;
 
 	j = -1;
-	w = line->history;
+	w = term->history;
 	n = i + 2;
-	while (ft_isdigit(line->buffer[n]))
+	while (ft_isdigit(term->buffer[n]))
 	{
-		nb[++j] = line->buffer[n];
+		nb[++j] = term->buffer[n];
 		n++;
 	}
 	n = ft_atoi(nb);
@@ -105,7 +105,7 @@ void			callback_number(t_read *line, int i)
 		if (w->next)
 			w = w->next;
 	}
-	insert_content(j + 3, i, line, (char *)w->content);
+	insert_content(j + 3, i, term, (char *)w->content);
 	i = i + j + 1;
 }
 
@@ -113,7 +113,7 @@ void			callback_number(t_read *line, int i)
 **		"!number" expansion search from the beggining of hst lst
 */
 
-void			call_number(t_read *line, int i)
+void			call_number(t_read *term, int i)
 {
 	char		nb[BUFF_SIZE];
 	int			n;
@@ -121,11 +121,11 @@ void			call_number(t_read *line, int i)
 	int			j;
 
 	j = -1;
-	w = line->history;
+	w = term->history;
 	n = i + 1;
-	while (ft_isdigit(line->buffer[n]))
+	while (ft_isdigit(term->buffer[n]))
 	{
-		nb[++j] = line->buffer[n];
+		nb[++j] = term->buffer[n];
 		n++;
 	}
 	n = ft_atoi(nb);
@@ -136,7 +136,7 @@ void			call_number(t_read *line, int i)
 	while (w && n != 0 && --n)
 		if (w->prev)
 			w = w->prev;
-	insert_content(j + 2, i, line, (char *)w->content);
+	insert_content(j + 2, i, term, (char *)w->content);
 	i = i + j + 1;
 }
 
@@ -144,13 +144,13 @@ void			call_number(t_read *line, int i)
 **		"!!" expansion search the last occurence of hst list
 */
 
-void		last_cmd_back(t_read *line, int i)
+void		last_cmd_back(t_read *term, int i)
 {
 	t_lst		*w;
 
-	w = line->history;
-	if (!line->history || ft_strlen(line->buffer) > BUFF_SIZE)
+	w = term->history;
+	if (!term->history || ft_strlen(term->buffer) > BUFF_SIZE)
 		return ;
 	if (w && w->content)
-		i = insert_content(2, i, line, (char *)w->content);
+		i = insert_content(2, i, term, (char *)w->content);
 }

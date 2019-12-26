@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/22 13:57:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:20:40 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ int8_t debugs(const char *path, t_read *in)
     return (1);
 }
 
-void		check_tmp_buffer(t_read *input)
+void		check_tmp_buffer(t_read *term)
 {
-	goto_prompt(input);
-	ft_strdel(&input->buffer);
-	input->buffer = ft_memalloc(BUFF_SIZE);
-	if (input->tmp_buff && ft_strlen(input->tmp_buff) > 0)
+	goto_prompt(term);
+	ft_strdel(&term->buffer);
+	term->buffer = ft_memalloc(BUFF_SIZE);
+	if (term->tmp_buff && ft_strlen(term->tmp_buff) > 0)
 	{
-		insert_str_in_buffer(input->tmp_buff, input);
-		ft_strdel(&(input->tmp_buff));
-		input->history_index = NULL;
+		insert_str_in_buffer(term->tmp_buff, term);
+		ft_strdel(&(term->tmp_buff));
+		term->history_index = NULL;
 	}
 }
 
@@ -39,27 +39,27 @@ void		check_tmp_buffer(t_read *input)
 **		Arrow down print the prev saved in history from history index
 */
 
-void		move_key_down(t_read *input)
+void		move_key_down(t_read *term)
 {
 	t_lst		*w;
 
 	w = NULL;
-	if (input->history && input->history_index)
+	if (term->history && term->history_index)
 	{
-		if (input->history_index && input->history_index->prev)
+		if (term->history_index && term->history_index->prev)
 		{
-			w = input->history_index->prev;
-			input->history_index = w;
+			w = term->history_index->prev;
+			term->history_index = w;
 		}
 		else
 		{
-			check_tmp_buffer(input);
+			check_tmp_buffer(term);
 			return ;
 		}
-		goto_prompt(input);
-		ft_strdel(&input->buffer);
-		input->buffer = ft_memalloc(BUFF_SIZE);
-		insert_str_in_buffer((char*)w->content, input);
+		goto_prompt(term);
+		ft_strdel(&term->buffer);
+		term->buffer = ft_memalloc(BUFF_SIZE);
+		insert_str_in_buffer((char*)w->content, term);
 	}
 }
 
@@ -67,60 +67,60 @@ void		move_key_down(t_read *input)
 **		Arrow up print the next saved in history from history index
 */
 
-void		move_key_up(t_read *input)
+void		move_key_up(t_read *term)
 {
 	t_lst		*w;
 
-	if (input->history)
+	if (term->history)
 	{
-		if (input->history_index && !input->history_index->next)
+		if (term->history_index && !term->history_index->next)
 			return ;
-		if (input->history_index && input->history_index->next)
+		if (term->history_index && term->history_index->next)
 		{
-			w = input->history_index->next;
-			input->history_index = w;
+			w = term->history_index->next;
+			term->history_index = w;
 		}
 		else
 		{
-			if ((*input).buffer)
-				input->tmp_buff = ft_strdup(input->buffer);
-			input->history_index = input->history;
-			w = input->history;
+			if ((*term).buffer)
+				term->tmp_buff = ft_strdup(term->buffer);
+			term->history_index = term->history;
+			w = term->history;
 		}
-		goto_prompt(input);
-		ft_strdel(&input->buffer);
-		input->buffer = ft_memalloc(BUFF_SIZE);
-		insert_str_in_buffer((char*)w->content, input);
+		goto_prompt(term);
+		ft_strdel(&term->buffer);
+		term->buffer = ft_memalloc(BUFF_SIZE);
+		insert_str_in_buffer((char*)w->content, term);
 	}
-	//debugs("/dev/ttys002", input);
+	//debugs("/dev/ttys002", term);
 }
 
 /*
 **		Arrow right to move the cursor one char on the right
 */
 
-void		move_right(char *buff, t_read *input)
+void		move_right(char *buff, t_read *term)
 {
 	int	width;
 	int	buff_index;
 
 	(void)buff;
-	width = get_width_current_line(input);
-	buff_index = input->x_index - input->prompt_len;
-	if (input->x < width)
+	width = get_width_current_line(term);
+	buff_index = term->x_index - term->prompt_len;
+	if (term->x < width)
 	{
-		xtputs(input->tcaps[KEY_RIGHT], 1, my_outc);
-		input->x_index++;
-		input->x++;
+		xtputs(term->tcaps[KEY_RIGHT], 1, my_outc);
+		term->x_index++;
+		term->x++;
 	}
-	else if (input->x >= input->ws_col - 1 || *buff == NEW_LINE
-			|| input->buffer[buff_index] == NEW_LINE)
+	else if (term->x >= term->ws_col - 1 || *buff == NEW_LINE
+			|| term->buffer[buff_index] == NEW_LINE)
 	{
-		xtputs(input->tcaps[LEFT_MARGIN], 1, my_outc);
-		xtputs(input->tcaps[KEY_DOWN], 1, my_outc);
-		input->x_index++;
-		input->x = 0;
-		input->y++;
+		xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
+		xtputs(term->tcaps[KEY_DOWN], 1, my_outc);
+		term->x_index++;
+		term->x = 0;
+		term->y++;
 	}
 }
 
@@ -128,26 +128,26 @@ void		move_right(char *buff, t_read *input)
 **		Arrow left to move the cursor one char on the left
 */
 
-void		move_left(char *buff, t_read *input)
+void		move_left(char *buff, t_read *term)
 {
 	int	width;
 
 	(void)buff;
-	if ((input->x > input->prompt_len && input->y == 0)
-		|| (input->x > 0 && input->y > 0))
+	if ((term->x > term->prompt_len && term->y == 0)
+		|| (term->x > 0 && term->y > 0))
 	{
-		xtputs(input->tcaps[KEY_LEFT], 1, my_outc);
-		input->x_index--;
-		input->x--;
+		xtputs(term->tcaps[KEY_LEFT], 1, my_outc);
+		term->x_index--;
+		term->x--;
 	}
-	else if (input->y > 0 && input->x == 0)
+	else if (term->y > 0 && term->x == 0)
 	{
-		width = get_width_last_line(input);
-		input->x = width;
+		width = get_width_last_line(term);
+		term->x = width;
 		while (width--)
-			xtputs(input->tcaps[KEY_RIGHT], 1, my_outc);
-		xtputs(input->tcaps[KEY_UP], 1, my_outc);
-		input->x_index--;
-		input->y--;
+			xtputs(term->tcaps[KEY_RIGHT], 1, my_outc);
+		xtputs(term->tcaps[KEY_UP], 1, my_outc);
+		term->x_index--;
+		term->y--;
 	}
 }

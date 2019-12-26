@@ -3,43 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   check_backslash.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:44:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 18:32:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-uint8_t		charset_count(t_read *input, char c, int i)
+uint8_t		charset_count(t_read *term, char c, int i)
 {
 	int	count;
 
 	count = 0;
-	while (input->buffer[i])
+	while (term->buffer[i])
 	{
-		if (input->buffer[i] == c)
+		if (term->buffer[i] == c)
 			count++;
-		else if (c == BACKSLASH && count > 0 && input->buffer[i] != c)
+		else if (c == BACKSLASH && count > 0 && term->buffer[i] != c)
 			count = 0;
 		i++;
 	}
 	return (count);
 }
 
-uint8_t		check_backslash(t_read *input, char *quote)
+uint8_t		check_backslash(t_read *term, char *quote)
 {
-	if (!*input->buffer)
+	if (!*term->buffer)
 		return (FALSE);
-	if (input->buffer[ft_strlen(input->buffer) - 1] == BACKSLASH)
+	if (term->buffer[ft_strlen(term->buffer) - 1] == BACKSLASH)
 	{
-		if (input->buffer[ft_strlen(input->buffer) - 1] != BACKSLASH)
+		if (term->buffer[ft_strlen(term->buffer) - 1] != BACKSLASH)
 			return (FALSE);
-		if (charset_count(input, BACKSLASH, 0) % 2 != 0)
+		if (charset_count(term, BACKSLASH, 0) % 2 != 0)
 		{
-			if (ft_strlen(input->buffer) > 1)
-				input->buffer = ft_strjoin(input->buffer, ";");
+			if (ft_strlen(term->buffer) > 1)
+				term->buffer = ft_strjoin(term->buffer, ";");
 			*quote = BACKSLASH;
 			return (TRUE);
 		}

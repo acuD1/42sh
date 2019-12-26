@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ac_directories.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:27:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/12 13:16:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:26:59 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ uint8_t			is_exe(char *dir)
 		return (FALSE);
 }
 
-uint8_t			ac_dir(t_read *input, char *buf, char *dir, char *to_find)
+uint8_t			ac_dir(t_read *term, char *buf, char *dir, char *to_find)
 {
 	char		*tmp;
 
@@ -34,8 +34,8 @@ uint8_t			ac_dir(t_read *input, char *buf, char *dir, char *to_find)
 	{
 		if (is_dir(tmp))
 			ft_strcat(dir, "/");
-		insert_str_in_buffer(dir, input);
-		input->found = TRUE;
+		insert_str_in_buffer(dir, term);
+		term->found = TRUE;
 		ft_strdel(&tmp);
 	}
 	else
@@ -43,13 +43,13 @@ uint8_t			ac_dir(t_read *input, char *buf, char *dir, char *to_find)
 		ft_strdel(&tmp);
 		return (SUCCESS);
 	}
-	if (is_tab(buf, dir, input) == TRUE)
+	if (is_tab(buf, dir, term) == TRUE)
 		return (SUCCESS);
 	else
 		return (FAILURE);
 }
 
-void			read_directories(char *buf, char *to_find, t_read *input)
+void			read_directories(char *buf, char *to_find, t_read *term)
 {
 	struct dirent	*data;
 	DIR				*dir;
@@ -58,7 +58,7 @@ void			read_directories(char *buf, char *to_find, t_read *input)
 	{
 		while ((data = readdir(dir)) != NULL)
 		{
-			if (ac_dir(input, buf, data->d_name, to_find) == SUCCESS)
+			if (ac_dir(term, buf, data->d_name, to_find) == SUCCESS)
 				continue ;
 			else
 			{
@@ -69,5 +69,5 @@ void			read_directories(char *buf, char *to_find, t_read *input)
 	}
 	else
 		return ;
-	input->found == TRUE ? read_directories(buf, to_find, input) : 0;
+	term->found == TRUE ? read_directories(buf, to_find, term) : 0;
 }

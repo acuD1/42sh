@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/12 13:16:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@
 **		Termcaps `clr_end' => clear from the cursor to the end of the current line
 */
 
-void			delete_last_cmd(char *d_name, t_read *input)
+void			delete_last_cmd(char *d_name, t_read *term)
 {
 	int			i;
 	char		*tmp;
 
 	tmp = NULL;
-	i = input->width - input->prompt_len - ft_strlen(d_name);
-	tmp = ft_strsub(input->buffer, 0, i);
-	goto_prompt(input);
-	ft_strdel(&input->buffer);
-	input->buffer = ft_memalloc(BUFF_SIZE);
-	insert_str_in_buffer(tmp, input);
+	i = term->width - term->prompt_len - ft_strlen(d_name);
+	tmp = ft_strsub(term->buffer, 0, i);
+	goto_prompt(term);
+	ft_strdel(&term->buffer);
+	term->buffer = ft_memalloc(BUFF_SIZE);
+	insert_str_in_buffer(tmp, term);
 	ft_strdel(&tmp);
 }
 
@@ -53,34 +53,34 @@ uint8_t			is_dir(char *dir)
 **		- complete directories recursively
 */
 
-void			auto_complete_mode(char *buf, t_read *input)
+void			auto_complete_mode(char *buf, t_read *term)
 {
 	char		*last_buf;
 	char		*to_find;
 	int			i;
 
-	i = ft_strlen(input->buffer) - 1;
+	i = ft_strlen(term->buffer) - 1;
 	last_buf = NULL;
 	to_find = NULL;
-	input->found = 0;
-	if (split_cmd(&last_buf, &to_find, input) == FALSE)
+	term->found = 0;
+	if (split_cmd(&last_buf, &to_find, term) == FALSE)
 		return ;
-	if (input->ac > 1)
+	if (term->ac > 1)
 	{
-		if (input->buffer[i] == ' ')
-			display_current_directory(buf, input, to_find);
+		if (term->buffer[i] == ' ')
+			display_current_directory(buf, term, to_find);
 		else
-			to_complete_buffer(last_buf, to_find, input);
+			to_complete_buffer(last_buf, to_find, term);
 	}
-	else if (input->ac == 1)
+	else if (term->ac == 1)
 	{
-		if (is_dir(input->buffer) || isstart(input->buffer, "/"))
-			read_directories(buf, to_find, input);
+		if (is_dir(term->buffer) || isstart(term->buffer, "/"))
+			read_directories(buf, to_find, term);
 		else if (ft_isalpha(*to_find))
-			to_complete_bin(buf, to_find, input);
-		if (input->found == 0)
-			to_complete_buffer(last_buf, to_find, input);
+			to_complete_bin(buf, to_find, term);
+		if (term->found == 0)
+			to_complete_buffer(last_buf, to_find, term);
 	}
 	ft_strdel(&to_find);
-	ft_tabfree(input->cmd);
+	ft_tabfree(term->cmd);
 }

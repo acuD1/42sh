@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ac_tools.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/12 14:33:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:20:40 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			parse_env(char *prev_b, char *to_find, t_read *input)
+void			parse_env(char *prev_b, char *to_find, t_read *term)
 {
 	t_lst		*env;
 	t_lst		*head;
 	char		*tmp;
 
 	tmp = NULL;
-	env = input->shell->env;
+	env = term->shell->env;
 	head = env;
 	while (env)
 	{
 		if (isstart(((t_db *)(env->content))->key, to_find + 1))
 		{
 			tmp = ft_strjoin("$", ((t_db *)(env->content))->key);
-			if (read_again(&prev_b, NULL, tmp, input) == FALSE)
+			if (read_again(&prev_b, NULL, tmp, term) == FALSE)
 				break ;
-			input->found = TRUE;
+			term->found = TRUE;
 		}
 		if (env->next)
 			env = env->next;
-		else if (input->found == TRUE)
+		else if (term->found == TRUE)
 			env = head;
 		else
 			break ;
@@ -63,21 +63,21 @@ char			**split_path(t_core *shell, char *str)
 	return (array);
 }
 
-uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *input)
+uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *term)
 {
 	int			i;
 
 	i = -1;
-	while (ft_isblank(input->buffer[++i]))
+	while (ft_isblank(term->buffer[++i]))
 		continue ;
-	if (input->buffer[i] == '\0')
+	if (term->buffer[i] == '\0')
 		return (FALSE);
-	if ((input->cmd = ft_strsplit(input->buffer, SPACE)) == NULL)
+	if ((term->cmd = ft_strsplit(term->buffer, SPACE)) == NULL)
 		return (FALSE);
-	input->ac = ft_tablen(input->cmd);
-	*last_cmd = ft_strdup(input->cmd[ft_tablen(input->cmd) - 1]);
-	if (input->buffer[ft_strlen(input->buffer) - 1] == ' ')
-		input->ac += 1;
+	term->ac = ft_tablen(term->cmd);
+	*last_cmd = ft_strdup(term->cmd[ft_tablen(term->cmd) - 1]);
+	if (term->buffer[ft_strlen(term->buffer) - 1] == ' ')
+		term->ac += 1;
 	if ((*to_find = ft_strdup(*last_cmd)) == NULL)
 		return (FALSE);
 	return (TRUE);

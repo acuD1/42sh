@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/22 16:31:33 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:19:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	free_env(t_lst *env)
 
 void	free_prompt(t_core *shell)
 {
-	ft_freejoblist(&shell->job_list);
 	ft_strdel(&shell->term.buffer);
+	ft_freejoblist(&shell->job_list);
 }
 
 void	free_hash_map(t_hash *hash)

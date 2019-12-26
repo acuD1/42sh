@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_subprompt.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/30 17:01:19 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:28:41 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ char		set_quote_type(char quote)
 	return ('\0');
 }
 
-uint8_t		quotes_is_matching(t_read *line, char *quote)
+uint8_t		quotes_is_matching(t_read *term, char *quote)
 {
 	int	i;
 
 	i = -1;
-	while (line->buffer[++i])
+	while (term->buffer[++i])
 	{
-		if ((*quote = set_quote_type(line->buffer[i])) != '\0')
+		if ((*quote = set_quote_type(term->buffer[i])) != '\0')
 		{
-			if (goto_next_quote(line->buffer, *quote, &i) == TRUE)
+			if (goto_next_quote(term->buffer, *quote, &i) == TRUE)
 				continue ;
 			else
 				return (FALSE);
@@ -49,22 +49,22 @@ uint8_t		quotes_is_matching(t_read *line, char *quote)
 	return (TRUE);
 }
 
-uint8_t		check_subprompt(t_read *input)
+uint8_t		check_subprompt(t_read *term)
 {
 	int		i;
 	char	quote;
 
 	i = -1;
 	quote = '\0';
-	if (quotes_is_matching(input, &quote) == TRUE)
+	if (quotes_is_matching(term, &quote) == TRUE)
 	{
-		if (check_backslash(input, &quote) == FALSE)
+		if (check_backslash(term, &quote) == FALSE)
 			return (FALSE);
 	}
 	if (quote != '\0')
 	{
-		load_subprompt(quote, input);
-		save_history(input);
+		load_subprompt(quote, term);
+		save_history(term);
 		return (TRUE);
 	}
 	return (FALSE);

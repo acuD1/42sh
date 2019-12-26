@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   keys_comb.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/11/27 18:03:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			clr_screen(t_read *input)
+void			clr_screen(t_read *term)
 {
 	int		i;
 
-	i = input->x;
-	xtputs(input->tcaps[CLEAR], 1, my_outc);
-	ft_printf("%s%s%s%s", C_BOLD, C_Y, input->prompt, C_X);
-	ft_putstr(input->buffer);
-	xtputs(input->tcaps[UP_LEFT_CORNER], 1, my_outc);
+	i = term->x;
+	xtputs(term->tcaps[CLEAR], 1, my_outc);
+	ft_printf("%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
+	ft_putstr(term->buffer);
+	xtputs(term->tcaps[UP_LEFT_CORNER], 1, my_outc);
 	while (i--)
-		xtputs(input->tcaps[KEY_RIGHT], 1, my_outc);
+		xtputs(term->tcaps[KEY_RIGHT], 1, my_outc);
 }
 
 /*
@@ -31,27 +31,27 @@ void			clr_screen(t_read *input)
 **				`nd' to move the cursor on right
 */
 
-void			move_col_up(t_read *input)
+void			move_col_up(t_read *term)
 {
 	int		width;
 
 	width = 0;
-	xtputs(input->tcaps[KEY_UP], 1, my_outc);
-	if (input->x < input->prompt_len && input->y == 1)
+	xtputs(term->tcaps[KEY_UP], 1, my_outc);
+	if (term->x < term->prompt_len && term->y == 1)
 	{
-		while ((input->x)++ < input->prompt_len)
-			xtputs(input->tcaps[KEY_RIGHT], 1, my_outc);
-		input->x_index = input->x;
+		while ((term->x)++ < term->prompt_len)
+			xtputs(term->tcaps[KEY_RIGHT], 1, my_outc);
+		term->x_index = term->x;
 	}
 	else
 	{
-		width = get_width_last_line(input);
-		if (input->y == 1)
-			input->x_index = input->x;
+		width = get_width_last_line(term);
+		if (term->y == 1)
+			term->x_index = term->x;
 		else
-			input->x_index -= width;
+			term->x_index -= width;
 	}
-	input->y--;
+	term->y--;
 }
 
 /*
@@ -59,30 +59,30 @@ void			move_col_up(t_read *input)
 **	Termcaps capabilities : `down' to move cursor down at beginning of input
 */
 
-void			move_col_down(t_read *input)
+void			move_col_down(t_read *term)
 {
 	int		width;
 	int		nb_ofline;
 
 	nb_ofline = 0;
-	width = get_width_current_line(input) - input->x;
-	if ((nb_ofline = charset_count(input, NEW_LINE, 0)) == 0)
-		nb_ofline = input->width / input->ws_col;
-	if (input->y < nb_ofline)
+	width = get_width_current_line(term) - term->x;
+	if ((nb_ofline = charset_count(term, NEW_LINE, 0)) == 0)
+		nb_ofline = term->width / term->ws_col;
+	if (term->y < nb_ofline)
 	{
-		xtputs(input->tcaps[KEY_DOWN], 1, my_outc);
-		input->x_index = input->x_index + width + 1;
-		input->x = 0;
-		input->y++;
+		xtputs(term->tcaps[KEY_DOWN], 1, my_outc);
+		term->x_index = term->x_index + width + 1;
+		term->x = 0;
+		term->y++;
 	}
 }
 
-void			move_in_column(uint64_t value, t_read *input)
+void			move_in_column(uint64_t value, t_read *term)
 {
-	if (value == ALT_AW_UP && input->y > 0)
-		move_col_up(input);
+	if (value == ALT_AW_UP && term->y > 0)
+		move_col_up(term);
 	else if (value == ALT_AW_DO)
-		move_col_down(input);
+		move_col_down(term);
 }
 
 /*
@@ -90,30 +90,30 @@ void			move_in_column(uint64_t value, t_read *input)
 **	(CTRL+B) to jump one word backward
 */
 
-void			jump_words(char *buff, t_read *input, uint64_t value)
+void			jump_words(char *buff, t_read *term, uint64_t value)
 {
 	if (value == CTRL_F)
 	{
-		if (input->buffer[input->x_index - input->prompt_len] != ' ')
-			move_left(buff, input);
-		while (input->x_index > input->prompt_len
-			&& input->buffer[input->x_index - input->prompt_len] == ' ')
-			move_left(buff, input);
-		while (input->x_index > input->prompt_len
-			&& input->buffer[input->x_index - input->prompt_len - 1] != ' ')
-			move_left(buff, input);
+		if (term->buffer[term->x_index - term->prompt_len] != ' ')
+			move_left(buff, term);
+		while (term->x_index > term->prompt_len
+			&& term->buffer[term->x_index - term->prompt_len] == ' ')
+			move_left(buff, term);
+		while (term->x_index > term->prompt_len
+			&& term->buffer[term->x_index - term->prompt_len - 1] != ' ')
+			move_left(buff, term);
 	}
 	else if (value == CTRL_B)
 	{
-		if (input->buffer[input->x_index - input->prompt_len] != ' ')
-			move_right(buff, input);
-		while (input->x_index < input->width
-			&& input->buffer[input->x_index - input->prompt_len] == ' ')
-			move_right(buff, input);
-		while (input->x_index < input->width
-			&& input->buffer[input->x_index - input->prompt_len] != ' ')
-			move_right(buff, input);
+		if (term->buffer[term->x_index - term->prompt_len] != ' ')
+			move_right(buff, term);
+		while (term->x_index < term->width
+			&& term->buffer[term->x_index - term->prompt_len] == ' ')
+			move_right(buff, term);
+		while (term->x_index < term->width
+			&& term->buffer[term->x_index - term->prompt_len] != ' ')
+			move_right(buff, term);
 	}
 	else if (value == ALT_AW_UP || value == ALT_AW_DO)
-		move_in_column(value, input);
+		move_in_column(value, term);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/19 10:43:27 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,61 +24,61 @@ void		display_subprompt(t_read *term, char *prompt)
 	ft_printf(term->prompt);
 }
 
-uint8_t		read_subline(t_read *input, char sb)
+uint8_t		read_subline(t_read *term, char sb)
 {
 	char	buff[READ_SIZE + 1];
 
 	ft_bzero(buff, READ_SIZE);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
-		if (check_caps(buff, input) == TRUE)
+		if (check_caps(buff, term) == TRUE)
 		{
 			ft_bzero(buff, READ_SIZE);
 			continue ;
 		}
 		else
 		{
-			if (sb == BACKSLASH && check_backslash(input, &sb) == FALSE)
+			if (sb == BACKSLASH && check_backslash(term, &sb) == FALSE)
 				return (FALSE);
-			else if (sb != BACKSLASH && ft_strchr(input->buffer, sb))
+			else if (sb != BACKSLASH && ft_strchr(term->buffer, sb))
 				return (FALSE);
 			else if (sb != BACKSLASH)
-				input->buffer[ft_strlen(input->buffer)] = NEW_LINE;
+				term->buffer[ft_strlen(term->buffer)] = NEW_LINE;
 			break ;
 		}
 	}
 	return (TRUE);
 }
 
-void		load_subprompt(char sb, t_read *input)
+void		load_subprompt(char sb, t_read *term)
 {
 	if (sb != BACKSLASH)
-		input->buffer[ft_strlen(input->buffer)] = NEW_LINE;
-	input->tmp_buff = ft_strdup(input->buffer);
-	input->status = CMD_SUBPROMPT;
+		term->buffer[ft_strlen(term->buffer)] = NEW_LINE;
+	term->tmp_buff = ft_strdup(term->buffer);
+	term->status = CMD_SUBPROMPT;
 	while (TRUE)
 	{
-		free(input->buffer);
-		input->buffer = ft_memalloc(BUFF_SIZE);
-		display_subprompt(input, PS2);
-		if (read_subline(input, sb) == FALSE)
+		free(term->buffer);
+		term->buffer = ft_memalloc(BUFF_SIZE);
+		display_subprompt(term, PS2);
+		if (read_subline(term, sb) == FALSE)
 		{
-			input->sub_prompt = FALSE;
-			input->buffer = ft_strjoinf(input->tmp_buff, input->buffer, 2);
-			if (quotes_is_matching(input, &sb) == FALSE)
+			term->sub_prompt = FALSE;
+			term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
+			if (quotes_is_matching(term, &sb) == FALSE)
 			{
-				input->buffer[ft_strlen(input->buffer)] = NEW_LINE;
-				free(input->tmp_buff);
-				input->tmp_buff = ft_strdup(input->buffer);
+				term->buffer[ft_strlen(term->buffer)] = NEW_LINE;
+				free(term->tmp_buff);
+				term->tmp_buff = ft_strdup(term->buffer);
 				continue ;
 			}
 			else
 				break ;
 		}
-		if (input->status == CMD_PROMPT)
+		if (term->status == CMD_PROMPT)
 			return ;
-		input->tmp_buff = ft_strjoinf(input->tmp_buff, input->buffer, 1);
+		term->tmp_buff = ft_strjoinf(term->tmp_buff, term->buffer, 1);
 	}
-	ft_strdel(&input->tmp_buff);
-	input->status = CMD_DONE;
+	ft_strdel(&term->tmp_buff);
+	term->status = CMD_DONE;
 }

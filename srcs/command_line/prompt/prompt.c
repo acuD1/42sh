@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/22 14:54:15 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@
 **	  - `clr_inputs' => to clear input from the cursor and following inputs
 */
 
-void		goto_prompt(t_read *input)
+void		goto_prompt(t_read *term)
 {
-	while (input->y-- > 0)
-		xtputs(input->tcaps[KEY_UP], 1, my_outc);
-	xtputs(input->tcaps[LEFT_MARGIN], 1, my_outc);
-	xtputs(input->tcaps[CLR_LINES], 1, my_outc);
-	if (input->sub_prompt > 0)
-		display_subprompt(input, PS2);
+	while (term->y-- > 0)
+		xtputs(term->tcaps[KEY_UP], 1, my_outc);
+	xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
+	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
+	if (term->sub_prompt > 0)
+		display_subprompt(term, PS2);
 	else
-		display_prompt(input);
+		display_prompt(term);
 }
 
 /*

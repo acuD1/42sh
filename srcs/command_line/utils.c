@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/19 10:47:33 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:18:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,49 +18,49 @@ int		my_outc(int c)
 	return (SUCCESS);
 }
 
-uint8_t		get_width_last_line(t_read *input)
+uint8_t		get_width_last_line(t_read *term)
 {
 	int	buff_index;
 	int	width;
 	int	x;
 
 	width = 0;
-	x = input->x + 1;
-	buff_index = input->x_index - input->prompt_len - 1;
+	x = term->x + 1;
+	buff_index = term->x_index - term->prompt_len - 1;
 	while (--buff_index)
 	{
-		if (input->buffer[buff_index] == '\n')
+		if (term->buffer[buff_index] == '\n')
 			break ;
-		else if (x == 0 && !ft_strchr(input->buffer, '\n'))
-			return (input->ws_col - 1);
+		else if (x == 0 && !ft_strchr(term->buffer, '\n'))
+			return (term->ws_col - 1);
 		x--;
 		width++;
 	}
-	if (width > input->ws_col)
-		width -= input->ws_col;
-	if (input->y == 1)
-		width += input->prompt_len;
+	if (width > term->ws_col)
+		width -= term->ws_col;
+	if (term->y == 1)
+		width += term->prompt_len;
 	return (width);
 }
 
-uint8_t		get_width_current_line(t_read *input)
+uint8_t		get_width_current_line(t_read *term)
 {
 	int	buff_index;
 	int	width;
 	int	x;
 
 	width = 0;
-	x = input->x;
-	buff_index = input->x_index - input->prompt_len;
-	while (input->buffer[buff_index])
+	x = term->x;
+	buff_index = term->x_index - term->prompt_len;
+	while (term->buffer[buff_index])
 	{
-		if (input->buffer[buff_index] == NEW_LINE || x == input->ws_col - 1)
+		if (term->buffer[buff_index] == NEW_LINE || x == term->ws_col - 1)
 			break ;
 		width++;
 		x++;
 		buff_index++;
 	}
-	width += input->x;
+	width += term->x;
 	return (width);
 }
 

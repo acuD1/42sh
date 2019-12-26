@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/11 18:11:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,28 @@ int8_t debug(const char *path, int buff, t_read *in)
 **	To insert a char in buffer at the end of line
 */
 
-void		insert_char_in_buffer(char buff, t_read *input, int buff_index)
+void		insert_char_in_buffer(char buff, t_read *term, int buff_index)
 {
 	dprintf(STDIN_FILENO, "%c", buff);
-	if (buff == NEW_LINE || input->x >= input->ws_col)
+	if (buff == NEW_LINE || term->x >= term->ws_col)
 	{
-		input->x = 0;
-		input->y++;
+		term->x = 0;
+		term->y++;
 	}
-	input->x++;
-	input->width++;
-	input->buffer[buff_index] = buff;
-	input->x_index++;
+	term->x++;
+	term->width++;
+	term->buffer[buff_index] = buff;
+	term->x_index++;
 }
 
-void		insert_at_index(t_read *input, int buff_index, char *buff)
+void		insert_at_index(t_read *term, int buff_index, char *buff)
 {
 	int		j;
 
-	j = ft_strlen(input->buffer) + 1;
+	j = ft_strlen(term->buffer) + 1;
 	while (--j > buff_index)
-		input->buffer[j] = input->buffer[j - 1];
-	input->buffer[buff_index] = *buff;
+		term->buffer[j] = term->buffer[j - 1];
+	term->buffer[buff_index] = *buff;
 }
 
 /*
@@ -57,22 +57,22 @@ void		insert_at_index(t_read *input, int buff_index, char *buff)
 **			`clr_lines' => to clear all following lines from cursor
 */
 
-void		insert_inline_char(char *buff, t_read *input, int buff_index)
+void		insert_inline_char(char *buff, t_read *term, int buff_index)
 {
 	char	*tmp;
 	int		x;
 
 	x = 0;
 	tmp = NULL;
-	insert_at_index(input, buff_index, buff);
-	tmp = ft_strdup(input->buffer);
-	goto_prompt(input);
-	ft_strdel(&input->buffer);
-	input->buffer = ft_memalloc(BUFF_SIZE);
-	insert_str_in_buffer(tmp, input);
-	x = buff_index + input->prompt_len;
-	while (++x < input->width)
-		move_left(buff, input);
+	insert_at_index(term, buff_index, buff);
+	tmp = ft_strdup(term->buffer);
+	goto_prompt(term);
+	ft_strdel(&term->buffer);
+	term->buffer = ft_memalloc(BUFF_SIZE);
+	insert_str_in_buffer(tmp, term);
+	x = buff_index + term->prompt_len;
+	while (++x < term->width)
+		move_left(buff, term);
 	ft_strdel(&tmp);
 }
 
@@ -80,7 +80,7 @@ void		insert_inline_char(char *buff, t_read *input, int buff_index)
 **	To insert a string in buffer at the end of line
 */
 
-void		insert_str_in_buffer(char *d_name, t_read *input)
+void		insert_str_in_buffer(char *d_name, t_read *term)
 {
 	int		buff_index;
 	int		i;
@@ -88,11 +88,11 @@ void		insert_str_in_buffer(char *d_name, t_read *input)
 	i = ft_strlen(d_name);
 	while (i--)
 	{
-		buff_index = input->x_index - input->prompt_len;
-		if (input->x_index < input->width)
-			insert_inline_char(d_name, input, buff_index);
+		buff_index = term->x_index - term->prompt_len;
+		if (term->x_index < term->width)
+			insert_inline_char(d_name, term, buff_index);
 		else
-			insert_char_in_buffer(*d_name, input, buff_index);
+			insert_char_in_buffer(*d_name, term, buff_index);
 		d_name++;
 	}
 }
@@ -103,25 +103,25 @@ void		insert_str_in_buffer(char *d_name, t_read *input)
 **	If cursor position is under the width of line => insert inline
 */
 
-void		insert_in_buffer(char *buff, t_read *input)
+void		insert_in_buffer(char *buff, t_read *term)
 {
 	int		buff_index;
 	int		increase_len;
 
 	increase_len = 0;
-	buff_index = input->x_index - input->prompt_len;
-	if (input->x_index >= BUFF_SIZE)
+	buff_index = term->x_index - term->prompt_len;
+	if (term->x_index >= BUFF_SIZE)
 	{
-		increase_len = ft_strlen(input->buffer) + READ_SIZE;
-		input->buffer = realloc(input->buffer, increase_len);
+		increase_len = ft_strlen(term->buffer) + READ_SIZE;
+		term->buffer = realloc(term->buffer, increase_len);
 	}
 	if (ft_strlen(buff) > 1)
 	{
-		insert_str_in_buffer(buff, input);
+		insert_str_in_buffer(buff, term);
 		return ;
 	}
-	else if (input->x_index == input->width)
-		insert_char_in_buffer(*buff, input, buff_index);
-	else if (input->x_index < input->width)
-		insert_inline_char(buff, input, buff_index);
+	else if (term->x_index == term->width)
+		insert_char_in_buffer(*buff, term, buff_index);
+	else if (term->x_index < term->width)
+		insert_inline_char(buff, term, buff_index);
 }
