@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:38:40 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/18 11:28:56 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/26 12:41:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int8_t	fill_path(t_core *shell, t_process *process, u_int8_t format, size_t i)
 		{
 			ft_strdel(&(((t_db*)map->content)->value));
 			((t_db*)map->content)->value = ft_strdup(process->av[2]);
+			((t_db*)map->content)->hit = 0;
 			return (SUCCESS);
 		}
 		map = map->next;

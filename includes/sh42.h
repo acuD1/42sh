@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/26 10:18:31 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/26 15:23:17 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void		load_noi_mode(t_core *shell);
 void		free_env(t_lst *env);
 void		free_prompt(t_core *shell);
 void		free_history(t_read *term);
+void		reset_hash(t_hash *hash);
 int8_t		dispatcher(t_core *shell, t_lst *jobs);
 
 /*
@@ -96,7 +97,7 @@ int8_t		resize_hash_map(t_core *shell);
 void		free_hash_map(t_hash *hash);
 t_db		*fetch_hash_db
 	(t_db *db, const char *key, const char *value, u_int8_t format);
-void 		del_hash_key(t_core *shell, char *process);
+void 		hash_key_remover(t_core *shell, char *process);
 
 /*
 **	===========================================================================

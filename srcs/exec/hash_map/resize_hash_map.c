@@ -6,13 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:01:15 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/18 08:10:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/26 13:49:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-/* This fuctions resize the current hash map with a x2 multiplicator.
+/*
+** This fuctions resize the current hash map with a x2 multiplicator.
 ** It will almost be never call tho, it's just in case ..
 */
 
@@ -28,7 +29,6 @@ static void	fill_new_hash_map
 		sub_map = map[i];
 		while (sub_map)
 		{
-			//shell->hash.lenght++;
 			shell->hash.value = get_hash(((t_db*)(sub_map->content))->key,
 									(shell->hash.size * 2));
 			ft_lstappend(&new_map[shell->hash.value],
@@ -50,7 +50,6 @@ int8_t		resize_hash_map(t_core *shell)
 	u_int32_t	tmp_hash_size;
 
 	map = shell->hash.map;
-
 	tmp_hash_lenght = shell->hash.lenght;
 	tmp_hash_size = shell->hash.size;
 	if (!(new_map = ft_memalloc(sizeof(t_lst*) * (shell->hash.size * 2))))

@@ -6,27 +6,25 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 14:50:10 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/18 11:07:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/26 16:10:45 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <errno.h>
 
-void print_hash_map(t_core *shell, u_int8_t format)
+void	print_hash_map(t_core *shell, u_int8_t format)
 {
-	t_lst **map;
-	t_lst *cur_map;
-	size_t i;
+	t_lst	**map;
+	t_lst	*cur_map;
+	size_t	i;
 
-	i = 0;
-	if (shell->hash.map == NULL)
-		return;
-	map = shell->hash.map;
-	cur_map = NULL;
+	i = -1;
+	if ((map = shell->hash.map) == NULL)
+		return ;
 	if (format & HASH_DEFAULT)
 		dprintf(STDOUT_FILENO, "hits    command\n");
-	while (i < shell->hash.size)
+	while (++i < shell->hash.size)
 	{
 		cur_map = map[i];
 		while (cur_map)
@@ -41,61 +39,78 @@ void print_hash_map(t_core *shell, u_int8_t format)
 						((t_db *)cur_map->content)->key);
 			cur_map = cur_map->next;
 		}
-		i++;
 	}
 }
 
-void del_hash_key(t_core *shell, char *process)
+void	free_hash_key(t_hash *hash, t_lst *map)
 {
-	t_lst *map;
-	t_lst *prev;
-	size_t i;
-	u_int32_t hash_value;
+	ft_strdel(&((t_db *)map->content)->key);
+	ft_strdel(&((t_db *)map->content)->value);
+	free(map->content);
+	free(map);
+	map = NULL;
+	hash->lenght--;
+	if (hash->lenght == 0)
+		reset_hash(hash);
+}
 
-	i = 2;
+void	hash_key_remover(t_core *shell, char *process)
+{
+	t_lst		*map;
+	t_lst		*prev;
+	u_int32_t	hash_value;
+
 	if (shell->hash.map == NULL || process == NULL)
-		return;
+		return ;
 	hash_value = get_hash(process, shell->hash.size);
 	map = shell->hash.map[hash_value];
 	if (map && ft_strequ(((t_db *)map->content)->key, process) == TRUE)
 	{
 		shell->hash.map[hash_value] = map->next;
-		ft_strdel(&((t_db *)map->content)->key);
-		ft_strdel(&((t_db *)map->content)->value);
-		free(map->content);
-		free(map);
-		shell->hash.lenght--;
-		if (shell->hash.lenght == 0)
-		{
-			dprintf(STDERR_FILENO, "Hash map erazed\n");
-			free(shell->hash.map);
-			shell->hash.map = NULL;
-		}
-		return;
+		return (free_hash_key(&shell->hash, map));
 	}
 	while (map && ft_strequ(((t_db *)map->content)->key, process) == FALSE)
 	{
 		prev = map;
-		map = map->next;
-	}
-	if (map == NULL)
-	{
-		dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process);
-		return ;
+		if ((map = map->next) == NULL)
+		{
+			dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process);
+			return ;
+		}
 	}
 	prev->next = map->next;
-	ft_strdel(&((t_db *)map->content)->key);
-	ft_strdel(&((t_db *)map->content)->value);
-	free(map->content);
-	free(map);
-	shell->hash.lenght--;
+	free_hash_key(&shell->hash, map);
+}
+
+void	find_hash_sub_map(t_process *process, t_lst *map, size_t i, int ac)
+{
+	t_lst	*sub_map;
+
+	sub_map = map;
+	while (sub_map)
+	{
+		if (ft_strequ(process->av[i], ((t_db *)sub_map->content)->key))
+		{
+			if (ac > 3)
+				dprintf(STDOUT_FILENO, "%-8s        %s\n",
+					((t_db *)sub_map->content)->key,
+					((t_db *)sub_map->content)->value);
+			else
+				dprintf(STDOUT_FILENO, "%s\n",
+					((t_db *)sub_map->content)->value);
+				((t_db *)sub_map->content)->hit += 1;
+			break ;
+		}
+		sub_map = sub_map->next;
+	}
+	if (sub_map == NULL)
+		dprintf(STDERR_FILENO,
+			"42sh: hash: %s: not found\n", process->av[i]);
 }
 
 void	find_hash(t_core *shell, t_process *process, int ac)
 {
 	t_lst	**map;
-	t_lst	*sub_map;
-	t_db	*db;
 	size_t	i;
 
 	i = 2;
@@ -107,35 +122,20 @@ void	find_hash(t_core *shell, t_process *process, int ac)
 		shell->hash.value = get_hash(process->av[i], shell->hash.size);
 		if (map == NULL || map[shell->hash.value] == NULL)
 		{
-			dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process->av[i]);
+			dprintf(STDERR_FILENO,
+				"42sh: hash: %s: not found\n", process->av[i]);
 			i++;
 			continue ;
 		}
-		sub_map = map[shell->hash.value];
-		while (sub_map)
-		{
-			db = sub_map->content;
-			if (ft_strequ(process->av[i], db->key))
-			{
-				if (ac > 3)
-					dprintf(STDOUT_FILENO, "%s    %s\n", db->key, db->value);
-				else
-					dprintf(STDOUT_FILENO, "%s\n", db->value);
-				db->hit += 1;
-				break ;
-			}
-			sub_map = sub_map->next;
-		}
-		if (sub_map == NULL)
-			dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process->av[i]);
+		find_hash_sub_map(process, map[shell->hash.value], i, ac);
 		i++;
 	}
 }
 
-int8_t parse_hash(t_core *shell, int ac, t_process *process)
+int8_t	parse_hash(t_core *shell, int ac, t_process *process)
 {
-	u_int64_t options;
-	size_t	i;
+	u_int64_t	options;
+	size_t		i;
 
 	options = get_options(ac, process->av, "rlpdt");
 	if (options & (1ULL << 63))
@@ -154,7 +154,7 @@ int8_t parse_hash(t_core *shell, int ac, t_process *process)
 			return (SUCCESS);
 		i = 2;
 		while (process->av[i])
-			del_hash_key(shell, process->av[i++]);
+			hash_key_remover(shell, process->av[i++]);
 		return (FAILURE);
 	}
 	if (options & (1ULL << 17))
@@ -198,9 +198,9 @@ int8_t parse_hash(t_core *shell, int ac, t_process *process)
 	return (SUCCESS);
 }
 
-int8_t builtin_hash(t_core *shell, t_process *process)
+int8_t	builtin_hash(t_core *shell, t_process *process)
 {
-	int ac;
+	int	ac;
 
 	ac = ft_tablen(process->av);
 	if (parse_hash(shell, ac, process) != SUCCESS)
