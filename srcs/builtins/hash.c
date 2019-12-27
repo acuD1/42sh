@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 14:50:10 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/26 16:10:45 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/27 12:36:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,20 @@ void	hash_key_remover(t_core *shell, char *process)
 	free_hash_key(&shell->hash, map);
 }
 
+int		get_hash_t_pad(char *key)
+{
+	int	pad;
+
+	pad = ft_strlen(key);
+	if (pad > 8)
+		pad += 7;
+	else if (pad == 8)
+		pad += 8;
+	else
+		pad = 8;
+	return (pad);
+}
+
 void	find_hash_sub_map(t_process *process, t_lst *map, size_t i, int ac)
 {
 	t_lst	*sub_map;
@@ -92,7 +106,8 @@ void	find_hash_sub_map(t_process *process, t_lst *map, size_t i, int ac)
 		if (ft_strequ(process->av[i], ((t_db *)sub_map->content)->key))
 		{
 			if (ac > 3)
-				dprintf(STDOUT_FILENO, "%-8s        %s\n",
+				dprintf(STDOUT_FILENO, "%-*s%s\n",
+					get_hash_t_pad(((t_db *)sub_map->content)->key),
 					((t_db *)sub_map->content)->key,
 					((t_db *)sub_map->content)->value);
 			else
