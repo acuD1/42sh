@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:01:15 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/26 13:49:32 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/28 17:28:08 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** It will almost be never call tho, it's just in case ..
 */
 
-static void	fill_new_hash_map
+static int8_t	fill_new_hash_map
 	(t_core *shell, t_lst **map, t_lst **new_map)
 {
 	t_lst		*sub_map;
@@ -31,18 +31,20 @@ static void	fill_new_hash_map
 		{
 			shell->hash.value = get_hash(((t_db*)(sub_map->content))->key,
 									(shell->hash.size * 2));
-			ft_lstappend(&new_map[shell->hash.value],
-				ft_lstnew(fetch_hash_db(&shell->db,
+			if (!(ft_lstappend(&new_map[shell->hash.value],
+					ft_lstnew(fetch_hash_db(&shell->db,
 					((t_db*)(sub_map->content))->key,
 					((t_db*)(sub_map->content))->value,
-					((t_db*)(sub_map->content))->hit), sizeof(t_db)));
+					((t_db*)(sub_map->content))->hit), sizeof(t_db)))))
+					return (FAILURE);
 			sub_map = sub_map->next;
 		}
 		i++;
 	}
+	return (SUCCESS);
 }
 
-int8_t		resize_hash_map(t_core *shell)
+int8_t			resize_hash_map(t_core *shell)
 {
 	t_lst		**new_map;
 	t_lst		**map;
@@ -54,7 +56,8 @@ int8_t		resize_hash_map(t_core *shell)
 	tmp_hash_size = shell->hash.size;
 	if (!(new_map = ft_memalloc(sizeof(t_lst*) * (shell->hash.size * 2))))
 		return (FAILURE);
-	fill_new_hash_map(shell, map, new_map);
+	if (fill_new_hash_map(shell, map, new_map) != SUCCESS)
+		return (FAILURE);
 	free_hash_map(&(shell->hash));
 	shell->hash.map = new_map;
 	shell->hash.size = tmp_hash_size * 2;

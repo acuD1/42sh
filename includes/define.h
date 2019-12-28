@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/19 10:39:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/28 18:54:25 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,10 @@
 # define HASH_DEFAULT	0x001
 # define HASH_LISTED	0x002
 # define HASH_PATH		0x004
-# define HASH_ABORT		0x006
+# define HASH_EXEC		0x006
+# define HASH_ABORT		0x008
+# define HASH_USAGE		"[-rl] [-p pathname] [-dt] [name ...]"
+# define HASH_OPT		"lrpdt"
 
 /*
 **	===========================================================================

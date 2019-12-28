@@ -88,7 +88,7 @@ PARSER		= 	lexer_parser_analyzer/parser/
 ANALYZER	= 	lexer_parser_analyzer/analyzer/
 EXPANSIONS	= 	expansions/
 MISC		=	misc/
-HASH		=	$(EXEC)hash_map/
+HASH		=	$(BUILTINS)hash/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -195,10 +195,17 @@ SRC			+=	$(S_PATH)$(BUILTINS)set.c
 SRC			+=	$(S_PATH)$(BUILTINS)unset.c
 SRC			+=	$(S_PATH)$(BUILTINS)export.c
 SRC			+=	$(S_PATH)$(BUILTINS)exit.c
-SRC			+=	$(S_PATH)$(BUILTINS)hash.c
 SRC			+=	$(S_PATH)$(BUILTINS)cd.c
 SRC			+=	$(S_PATH)$(BUILTINS)echo.c
 SRC			+=	$(S_PATH)$(BUILTINS)pwd.c
+
+SRC			+=	$(S_PATH)$(HASH)add_hash_map.c
+SRC			+=	$(S_PATH)$(HASH)fetch_hash_db.c
+SRC			+=	$(S_PATH)$(HASH)get_hash.c
+SRC			+=	$(S_PATH)$(HASH)locate_hash.c
+SRC			+=	$(S_PATH)$(HASH)resize_hash_map.c
+SRC			+=	$(S_PATH)$(HASH)hash.c
+SRC			+=	$(S_PATH)$(HASH)hash_error.c
 
 #SRC			+=	$(S_PATH)$(BLT_FC)fc.c
 #SRC			+=	$(S_PATH)$(BLT_FC)fc_edit.c
@@ -232,11 +239,6 @@ SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs.c
 SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs_tools.c
 
 
-SRC			+=	$(S_PATH)$(HASH)add_hash_map.c
-SRC			+=	$(S_PATH)$(HASH)fetch_hash_db.c
-SRC			+=	$(S_PATH)$(HASH)get_hash.c
-SRC			+=	$(S_PATH)$(HASH)locate_hash.c
-SRC			+=	$(S_PATH)$(HASH)resize_hash_map.c
 
 
 SRC			+=	$(S_PATH)$(CORE)42sh.c

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/22 13:02:08 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/27 13:15:21 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,19 @@ int8_t	condition_fulfilled(t_core *shell, int cond)
 int8_t	dispatcher(t_core *shell, t_lst *jobs)
 {
 	t_lst	*ptr;
-	int		status;
 	int		cond;
 
 	ptr = ((t_job*)jobs->content)->process_list;
-	status = 0;
 	cond = 0;
-	//debug_process(ptr);
 	while (ptr != NULL)
 	{
-		if (((t_process*)ptr->content)->type == P_PIPE)
-		{
-			if (exec_pipeline(shell, &ptr) != SUCCESS)
-				return (FAILURE);
-		}
+		if (((t_process*)ptr->content)->type == P_PIPE
+			&& exec_pipeline(shell, &ptr) != SUCCESS)
+			return (FAILURE);
 		else if (condition_fulfilled(shell, cond) == SUCCESS)
 			exec_process(shell, ptr);
 		else
-			return (SUCCESS);
+			break ;
 		cond = ((t_process*)ptr->content)->type;
 		ptr = ptr->next;
 	}

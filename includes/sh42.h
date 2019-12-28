@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/26 15:23:17 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/28 18:46:40 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int8_t		exec_pipeline(t_core *shell, t_lst **process);
 int8_t		exec_handler(t_core *shell, u_int8_t handler);
 int8_t		exec_process(t_core *shell, t_lst *env);
 int8_t		call_bin(t_core *shell, t_lst *process);
+int8_t		get_bin_path(t_core *shell, t_process *process);
 int8_t		task_master(t_core *shell);
 int8_t		is_a_blt(char *cmd);
 int8_t		get_bin(t_core *shell, t_process *process);
@@ -91,13 +92,14 @@ void		status_handler(t_core *shell, int status);
 
 u_int32_t	get_hash(char *line, u_int32_t size);
 int8_t		locate_hash(t_core *shell, t_process *process);
-int8_t		hash_map_dispatcher
+void		hash_map_dispatcher
 	(t_core *shell, t_process *process, u_int8_t format);
 int8_t		resize_hash_map(t_core *shell);
 void		free_hash_map(t_hash *hash);
 t_db		*fetch_hash_db
 	(t_db *db, const char *key, const char *value, u_int8_t format);
 void 		hash_key_remover(t_core *shell, char *process);
+void		hash_error(t_hash *hash);
 
 /*
 **	===========================================================================
