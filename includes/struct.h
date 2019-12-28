@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>		  +#+  +:+	   +#+		*/
 /*												+#+#+#+#+#+   +#+		   */
 /*   Created: 2019/06/15 16:43:36 by arsciand		  #+#	#+#			 */
-/*   Updated: 2019/12/22 13:25:55 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/28 17:43:15 by mpivet-p         ###   ########.fr       */
 /*																			*/
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ typedef struct			s_process
 	t_lst				*assign_list;
 	t_lst				*redir_list;
 	pid_t				pid;
+	pid_t				pgid;
 	char				**av;
 	char				*bin;
 }						t_process;
@@ -152,10 +153,10 @@ typedef struct		s_job
 {
 	struct termios	tmodes;
 	e_pstate		type;
-	t_lst			*process_list;
-	pid_t			 pgid;
-	char			*command;
 	int8_t			notified;
+	t_lst			*process_list;
+	pid_t			pgid;
+	char			*command;
 }					t_job;
 
 typedef struct		s_analyzer
@@ -228,7 +229,7 @@ typedef struct	s_core
 	int32_t				heredoc;			//	counting number of heredocs
 	u_int8_t			opt;				//	Option
 	int8_t				is_interactive;		//	Job control
-	int8_t				terminal;			//	Job control
+	int32_t				terminal;			//	Job control
 	pid_t				pgid;
 }				t_core;
 

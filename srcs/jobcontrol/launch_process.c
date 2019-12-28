@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/22 16:40:16 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/28 17:43:57 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,12 @@ void	reset_signals(void)
 {
 	int	i;
 
-	i = 1;
-	while (i <= SIGUSR2)
-	{
-		signal(i, SIG_DFL)
-		i++;
-	}
+	i = 0;
+	while (i++ < SIGUSR2)
+		signal(i, SIG_DFL);
 }
 
-int8_t	put_process_in_grp(t_core *shell, t_process *process)
+void	put_process_in_grp(t_core *shell, t_process *process)
 {
 	process->pid = getpid();
 	if (process->pgid == 0)
@@ -34,7 +31,7 @@ int8_t	put_process_in_grp(t_core *shell, t_process *process)
 		dprintf(STDERR_FILENO, "42sh: tcsetpgrp error\n");
 		exit(EXIT_FAILURE);
 	}
-	if (foreground)
+	if (process->stopped != TRUE)
 	{
 		if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
 		{
@@ -44,9 +41,8 @@ int8_t	put_process_in_grp(t_core *shell, t_process *process)
 	}
 }
 
-int8_t	launch_process(t_core *shell, t_process *process, int8_t foreground)
+int8_t	launch_process(t_core *shell, t_process *process, int infile, int outfile)
 {
-	//redirections
 	if (shell->is_interactive)
 	{
 		reset_signals();
@@ -54,76 +50,69 @@ int8_t	launch_process(t_core *shell, t_process *process, int8_t foreground)
 	}
 	if (infile != STDIN_FILENO)
 	{
-		dup2 (infile, STDIN_FILENO);
-		close (infile);
+		dup2(infile, STDIN_FILENO);
+		close(infile);
 	}
 	if (outfile != STDOUT_FILENO)
 	{
-		dup2 (outfile, STDOUT_FILENO);
-		close (outfile);
+		dup2(outfile, STDOUT_FILENO);
+		close(outfile);
 	}
+	//call_bin
+	return (SUCCESS);
 }
 
-int8_t	launch_job(t_core *shell, t_lst *job, int8_t foreground)
+void	launch_job(t_core *shell, t_job *job)
 {
-	t_lst	*process;
-	int		mypipe[2];
-	int		infile;
-	int		outfile;
+	t_process	*ptr;
+	t_lst		*process;
+	int8_t		foreground;
+	int			mypipe[2];
+	int			infile;
+	int			outfile;
 
 	infile = STDIN_FILENO;
-	process = ((t_job*)job->content)->process_list;
+	process = job->process_list;
+	foreground = TRUE; // = (job->type == P_AND) ? FALSE : TRUE;
 	while (process)
 	{
-		/* Set up pipes, if necessary.	*/
-		if (p->next)
+		ptr = ((t_process*)process->content);
+		outfile = STDOUT_FILENO;
+		mypipe[0] = STDIN_FILENO;
+
+		if (ptr->type == P_PIPE) /* Setup pipes */
 		{
 			if (pipe(mypipe) < 0)
-			{
-				perror("pipe");
-				exit(1);
-			}
+				print_and_quit(shell, "42sh: pipe failure\n");
 			outfile = mypipe[1];
 		}
-		else
-			outfile = j->stdout;
 
-		/* Fork the child processes.	*/
-		if ((pid = fork()) == 0)/* This is the child process.	*/
+		if ((ptr->pid = fork()) == 0)/* CHILD PROCESS */
+			launch_process(shell, ptr, infile, outfile);
+		else if (ptr->pid < 0) /* FORK ERROR */
+			print_and_quit(shell, "42sh: fork failure\n");
+		else /* PARENT PROCESS */
 		{
-			launch_process(shell, ((t_process*)process->content), foreground);
-		}
-		else if (pid < 0) /* The fork failed.	*/
-		{
-			perror("fork");
-			exit(1);
-		}
-		else /* This is the parent process.	*/
-		{
-			((t_process*)process->content)->pid = pid;
 			if (shell->is_interactive)
 			{
-				if (((t_job)job->content)->pgid <= 0)
-					((t_job)job->cotnent)->pgid = pid;
-				if (setpgid(pid, j->pgid) != SUCCESS)
-				{
-					dprintf("42sh: setpgid error\n");
-					quit_shell(shell, EXIT_FAILURE, FALSE);
-				}
+				if (job->pgid <= 0)
+					job->pgid = ptr->pid;
+				if (setpgid(ptr->pid, job->pgid) != SUCCESS)
+					print_and_quit(shell, "42sh: setpgid error\n");
 			}
 		}
-		/* Clean up after pipes.	*/
-		if (infile != STDIN_FILENO)
+
+		if (infile != STDIN_FILENO)/* Clean up after pipes.	*/
 			close(infile);
 		if (outfile != STDOUT_FILENO)
 			close(outfile);
 		infile = mypipe[0];
+
 		process = process->next;
 	}
-
 	if (!shell->is_interactive)
-		wait_for_job(j);
-	else if (foreground)
+		wait_for_job(shell, job);
+	else if (foreground != TRUE)
 		put_job_in_foreground(shell, job, FALSE);
 	else
 		put_job_in_background(shell, job, FALSE);

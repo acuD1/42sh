@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:51:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/18 09:01:45 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/28 17:55:47 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		ft_freejoblist(t_lst **lst)
 		node = tmp;
 		if (tmp->content)
 		{
-			ft_free_processlist(&((t_job*)tmp->content)->process_list);
+			free_process_list(&((t_job*)tmp->content)->process_list);
 			free(((t_job*)tmp->content)->command);
 			free((t_job*)tmp->content);
 		}

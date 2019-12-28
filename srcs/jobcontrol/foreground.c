@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 18:01:39 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/22 19:02:28 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/27 21:16:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@ int8_t	put_job_in_foreground(t_core *shell, t_job *job, int cont)
 	}
 
 	/* Wait for it to report */
-//	wait_for_job(job);
+	wait_for_job(shell, job);
 
 	/* Put the shell back in the foreground */
 	if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
 		print_and_quit(shell, "42sh: tcsetpgrp error\n");
 
 	/* Restore the shell’s terminal modes */
-	tcgetattr(shell->terminal, &job->tmodes);
-	tcsetattr(shell->terminal, TCSADRAIN, &shell->new_t);
+	if (tcgetattr(shell->terminal, &job->tmodes) != SUCCESS)
+		print_and_quit(shell, "42sh: tcgetattr error\n");
+	if (tcsetattr(shell->terminal, TCSADRAIN, &shell->new_t) != SUCCESS)
+		print_and_quit(shell, "42sh: tcsetattr error\n");
 	return (SUCCESS);
 }

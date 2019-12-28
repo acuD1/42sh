@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/22 19:25:07 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/28 18:18:50 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	init_shell(t_core *shell, char **av, char **env)
 	shell->build = (struct s_build){BUILDR, BUILDV, BUILDP + 1, DATE};
 	shell->hash.size = HASH_SIZE;
 	shell->terminal = STDIN_FILENO;
-	
 
 	/* Saving t_core struct to avoid using global variable */
 	get_core(shell);
@@ -41,16 +40,15 @@ void	init_shell(t_core *shell, char **av, char **env)
 		/* Put ourselves in our own process group.  */
 		shell->pgid = getpid();
 		if (setpgid(shell->pgid, shell->pgid) < 0)
-		{
-			dprintf(STDERR_FILENO, "42sh: Couldn't put the shell in its own process group\n");
-			quit_shell(shell, EXIT_FAILURE, FALSE); //MUST BE REPLACED WITH QUIT_SHELL
-		}
+			print_and_quit(shell, "42sh: Couldn't put the shell in its own process group\n");
 		init_signals();
 
 		/* Grab control of the terminal.  */
-		tcsetpgrp(shell->terminal, shell->pgid);
+		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
+			print_and_quit(shell, "42sh: tcsetpgrp error\n");
 
-		/* Save default terminal attributes for shell.  */
-		tcgetattr(shell->terminal, &(shell->old_t));
+		/* Save default terminal attributes for shell. */
+		if (tcgetattr(shell->terminal, &(shell->old_t)) != SUCCESS)
+			print_and_quit(shell, "42sh: tcsetpgrp error\n");
 	}
 }

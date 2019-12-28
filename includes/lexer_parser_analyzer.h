@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 18:07:16 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/18 15:29:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2019/12/28 17:55:27 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_job       *fetch_job(t_job *job);
 t_redir     *fetch_redir(t_redir *redir);
 t_process   *fetch_process(t_process *process);
 void        get_token(t_analyzer *analyzer);
-void        ft_free_processlist(t_lst **head);
+void        free_process_list(t_lst **head);
 void        ft_free_redirlist(t_lst **head);
 void        ft_free_redir(t_redir *redir);
 

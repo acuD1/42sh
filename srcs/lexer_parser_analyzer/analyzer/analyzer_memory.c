@@ -6,7 +6,7 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 17:40:31 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 13:54:11 by guvillat         ###   ########.fr       */
+/*   Updated: 2019/12/28 17:54:54 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void		ft_free_redirlist(t_lst **head)
 	}
 }
 
-void		ft_free_processlist(t_lst **head)
+void		free_process_list(t_lst **head)
 {
 	t_lst		*tmp;
 	t_lst		*process;
@@ -59,9 +59,10 @@ void		ft_free_processlist(t_lst **head)
 	process = NULL;
 	pro = NULL;
 	tmp = NULL;
-	if (!*head)
+	if (!head || !*head)
 		return ;
 	process = *head;
+	*head = NULL;
 	while (process)
 	{
 		if (process->content)
