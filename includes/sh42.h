@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/28 17:57:31 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/29 19:27:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,6 @@ void		mark_job_as_running(t_job *job);
 int8_t		continue_job(t_core *shell, t_job *job, int foreground);
 int8_t		put_job_in_foreground(t_core *shell, t_job *job, int cont);
 void		reset_signals(void);
-void		put_process_in_grp(t_core *shell, t_process *process);
 int8_t		launch_process(t_core *shell, t_process *process, int infile, int outfile);
 void		launch_job(t_core *shell, t_job *job);
 int8_t		do_job_notification(t_core *shell);

@@ -6,7 +6,7 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:54:18 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 13:54:19 by guvillat         ###   ########.fr       */
+/*   Updated: 2019/12/29 21:26:49 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,11 @@ t_analyzer	*cmd_analyze(t_analyzer *anal, t_core *shell)
 	{
 		anal->process.av = ft_add_arg_cmd_process(anal->process.av,
 			((t_token*)anal->lexer->content)->data);
-		if (is_expansion(((t_token*)anal->lexer->content)->id))
-		{
-			anal->process.type = ((t_token*)anal->lexer->content)->id;
-			anal->job.type = ((t_token*)anal->lexer->content)->id;
-		}
+//		if (is_expansion(((t_token*)anal->lexer->content)->id))
+//		{
+//			anal->process.type = ((t_token*)anal->lexer->content)->id;
+//			anal->job.type = ((t_token*)anal->lexer->content)->id;
+//		}
 		anal->state = A_WORD;
 	}
 	return (anal);

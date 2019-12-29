@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/21 15:01:48 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/29 21:31:10 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,11 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 {
 	t_process	*ptr;
 	pid_t		pid;
-	int			status;
 	int			blt;
 
-	status = 0;
 	ptr = ((t_process*)process->content);
-	if (is_expansion(ptr->type))
-		expansion(shell, ptr);
-	if (ptr->assign_list)
-		add_assign_env(ptr->assign_list, shell);
+	expansion(shell, ptr);
+	add_assign_env(shell, ptr);
 	if (ptr->av)
 	{
 		if ((blt = is_a_blt(ptr->av[0])) != FAILURE)
@@ -40,10 +36,7 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 		get_bin(shell, ptr);
 	}
 	if ((pid = fork()) < 0)
-	{
-		dprintf(STDERR_FILENO, "42sh: fork error\n");
-		return (FAILURE);
-	}
+		print_and_quit(shell, "42sh: fork error\n");
 	else if (pid == 0)
 		call_bin(shell, process);
 	ptr->pid = pid;

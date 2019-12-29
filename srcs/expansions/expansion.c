@@ -6,20 +6,11 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/16 04:59:06 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2019/12/29 21:05:52 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-uint8_t is_expansion(e_pstate id)
-{
-	if (id == P_TILDEP || id == P_TILDEM || id == P_TILDE
-			|| id == P_DBPARENT || id == P_PARENT || id == P_DBQUOTE
-			|| id == P_BRACKET || id == P_HOOK ||id == P_DOLLAR)
-		return (TRUE);
-	return (FALSE);
-}
 
 char *exp_error(char *data, t_core *shell)
 {
@@ -28,25 +19,25 @@ char *exp_error(char *data, t_core *shell)
 	return (data);
 }
 
-int8_t add_assign_env(t_lst *lst, t_core *shell)
+int8_t add_assign_env(t_core *shell, t_process *process)
 {
 	char	*value;
 	t_lst	*tmp;
+	t_lst	*ptr;
 	
-	if (!lst || !shell->env)
-		return (FAILURE);
 	value = NULL;
 	tmp = NULL;
-	while (lst)
+	ptr = process->assign_list;
+	while (ptr)
 	{
-		value = ft_strdup(((t_db*)lst->content)->value);
-		if (edit_var(shell, ((t_db*)lst->content)->key, value, INTERNAL_VAR) != SUCCESS)
+		value = ft_strdup(((t_db*)ptr->content)->value);
+		if (edit_var(shell, ((t_db*)ptr->content)->key, value, INTERNAL_VAR) != SUCCESS)
 		{
 			// free(value);
 			return (FAILURE);
 		}
-		tmp = lst;
-		lst = lst->next;
+		tmp = ptr;
+		ptr = ptr->next;
 		free(((t_db*)tmp->content)->key);
 		free(tmp);
 	}

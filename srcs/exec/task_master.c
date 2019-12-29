@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/27 10:59:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/28 19:12:19 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 int8_t	task_master(t_core *shell)
 {
-	t_lst *job_ptr;
+	t_lst *job;
 
-	job_ptr = shell->job_list;
-	while (job_ptr)
+	job = shell->job_list;
+	while (job)
 	{
-		if (dispatcher(shell, job_ptr) != SUCCESS)
+		printf("[ %i ]\n", ((t_job*)job->content)->type);
+		if (dispatcher(shell, job) != SUCCESS)
 			return (FAILURE);
-		job_ptr = job_ptr->next;
+		job = job->next;
 	}
 	return (SUCCESS);
 }
