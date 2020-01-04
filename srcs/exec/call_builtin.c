@@ -28,15 +28,15 @@ int8_t	is_a_blt(char *cmd)
 	return (FAILURE);
 }
 
-int8_t	call_builtin(t_core *shell, t_lst *process, int blt)
+int8_t	call_builtin(t_core *shell, t_process *process, int blt)
 {
 	static int8_t	(*blt_call[8])(t_core *shell, t_process *process) = {
 		builtin_set, builtin_unset, builtin_export, builtin_exit, builtin_cd
 		, builtin_echo, builtin_pwd, builtin_type};
 	int				ret;
 
-	exec_redirs(shell, ((t_process*)process->content)->redir_list);
-	ret = blt_call[blt](shell, ((t_process*)process->content));
-	close_fds(((t_process*)process->content)->redir_list);
+	exec_redirs(shell, process->redir_list);
+	ret = blt_call[blt](shell, process);
+	close_fds(process->redir_list);
 	return (ret);
 }

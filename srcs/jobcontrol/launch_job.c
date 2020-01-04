@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_job.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/29 18:14:01 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/29 19:28:04 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/04 18:36:26 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,5 @@ void	launch_job(t_core *shell, t_job *job)
 
 		process = process->next;
 	}
-	place_job(shell, job, foreground);
+//	place_job(shell, job, foreground);
 }

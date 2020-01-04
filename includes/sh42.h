@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh42.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/29 19:27:30 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/04 18:29:50 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void		load_prompt(t_core *shell);
 void		load_noi_mode(t_core *shell);
 void		free_env(t_lst *env);
 void		free_prompt(t_core *shell, char *line);
-int8_t		dispatcher(t_core *shell, t_lst *jobs);
 
 /*
 **	===========================================================================
@@ -65,12 +64,10 @@ int8_t		edit_var(t_core *shell, char *name, char *value, u_int8_t var_type);
 **	===========================================================================
 */
 
-int32_t		exec_piped_process(t_core *shell, t_lst *process);
-int8_t		call_builtin(t_core *shell, t_lst *process, int blt);
-int8_t		exec_pipeline(t_core *shell, t_lst **process);
+int8_t		call_builtin(t_core *shell, t_process *process, int blt);
 int8_t		exec_handler(t_core *shell, u_int8_t handler);
-int8_t		exec_process(t_core *shell, t_lst *env);
-int8_t		call_bin(t_core *shell, t_lst *process);
+void		exec_process(t_job *job, t_process *process, int infile, int outfile);
+int8_t		call_bin(t_core *shell, t_process *process);
 int8_t		task_master(t_core *shell);
 int8_t		is_a_blt(char *cmd);
 int8_t		get_bin(t_core *shell, t_process *process);
@@ -213,11 +210,13 @@ void		mark_job_as_running(t_job *job);
 int8_t		continue_job(t_core *shell, t_job *job, int foreground);
 int8_t		put_job_in_foreground(t_core *shell, t_job *job, int cont);
 void		reset_signals(void);
-int8_t		launch_process(t_core *shell, t_process *process, int infile, int outfile);
+void		launch_process(t_core *shell, t_process *process, int infile, int outfile);
 void		launch_job(t_core *shell, t_job *job);
 int8_t		do_job_notification(t_core *shell);
 void		wait_for_job(t_core *shell, t_job *job);
 int8_t		mark_process_status(t_core *shell, pid_t pid, int status);
+int8_t		launch_blt(t_core *shell, t_process *process);
+
 
 /* ###########################  TEMPORARY   #################################*/
 void	debug_analyzer(t_core *shell);

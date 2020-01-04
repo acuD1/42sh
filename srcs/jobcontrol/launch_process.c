@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/29 19:27:01 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/04 20:00:27 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void		reset_signals(void)
 
 static void	put_process_in_grp(t_core *shell, t_process *process)
 {
+	(void)shell;
 	process->pid = getpid();
 	if (process->pgid == 0)
 		process->pgid = process->pid;
@@ -31,14 +32,21 @@ static void	put_process_in_grp(t_core *shell, t_process *process)
 		dprintf(STDERR_FILENO, "42sh: tcsetpgrp error\n");
 		exit(EXIT_FAILURE);
 	}
-	if (process->stopped != TRUE)
-	{
-		if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
-		{
-			dprintf(STDERR_FILENO, "42sh: tcsetpgrp error\n");
-			exit(EXIT_FAILURE);
-		}
-	}
+//	if (process->stopped != TRUE)
+//	{
+//	//	write(1, "f\n", 2);
+//	//	printf("%i\n", process->pgid);
+//	//	printf("%i\n", process->pid);
+//	//	printf("%i\n", shell->terminal);
+//	//	printf("%i\n", tcsetpgrp(shell->terminal, process->pgid));
+//		if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
+//		{
+//			write(1, "f\n", 2);
+//			dprintf(STDERR_FILENO, "42sh: tcsetpgrp error\n");
+//			exit(EXIT_FAILURE);
+//		}
+//		write(1, "z\n", 2);
+//	}
 }
 
 static void	redir_pipes(int *infile, int *outfile)
@@ -55,7 +63,21 @@ static void	redir_pipes(int *infile, int *outfile)
 	}
 }
 
-int8_t		launch_process(t_core *shell, t_process *process, int infile, int outfile)
+int8_t		launch_blt(t_core *shell, t_process *process)
+{
+	int		blt;
+
+	if (process->av && (blt = is_a_blt(process->av[0])) != FAILURE)
+	{
+		process->status = call_builtin(shell, process, blt);
+		process->completed = TRUE;
+		shell->status = process->status;
+		return (SUCCESS);
+	}
+	return (FAILURE);
+}
+
+void	launch_process(t_core *shell, t_process *process, int infile, int outfile)
 {
 	if (shell->is_interactive)
 	{
@@ -63,6 +85,11 @@ int8_t		launch_process(t_core *shell, t_process *process, int infile, int outfil
 		put_process_in_grp(shell, process);
 	}
 	redir_pipes(&infile, &outfile);
-	//call_bin
-	return (SUCCESS);
+	if (process->av)
+	{
+		if (launch_blt(shell, process) != FAILURE)
+			exit(process->status);
+		get_bin(shell, process);
+	}
+	call_bin(shell, process);
 }

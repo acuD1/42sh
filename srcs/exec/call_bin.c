@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   call_bin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/17 09:04:56 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/04 18:04:51 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,26 @@ static int8_t	check_filepath(char *filepath)
 	return (SUCCESS);
 }
 
-int8_t	call_bin(t_core *shell, t_lst *process)
+int8_t	call_bin(t_core *shell, t_process *process)
 {
-	t_process	*ptr;
 	char		**envp;
 	int			ret;
 
 	envp = NULL;
-	ptr = process->content; //Shortcut to ((t_process*)proces->content)
-	exec_redirs(shell, ptr->redir_list);
-	if (ptr->bin == NULL)
+	exec_redirs(shell, process->redir_list);
+	if (process->bin == NULL)
 	{
-		if (ptr->av != NULL)
-			dprintf(STDERR_FILENO, "42sh: %s: command not found\n", ptr->av[0]);
+		if (process->av != NULL)
+			dprintf(STDERR_FILENO, "42sh: %s: command not found\n", process->av[0]);
 		exit(127);
 	}
 	envp = set_envp(shell);
-	if ((ret = check_filepath(ptr->bin)) != SUCCESS)
+	if ((ret = check_filepath(process->bin)) != SUCCESS)
 	{
-		ft_perror(ptr->av[0], NULL, ret);
+		ft_perror(process->av[0], NULL, ret);
 		exit((ret == ENOENT) ? 127: 126);
 	}
-	ret = execve(ptr->bin, ptr->av, envp);
+	ret = execve(process->bin, process->av, envp);
 	dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);
 	ft_tabdel(&envp);
 	exit(1);
