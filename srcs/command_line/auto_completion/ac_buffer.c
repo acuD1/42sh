@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/04 18:26:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/04 20:07:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,5 +145,4 @@ void			to_complete_buffer(char *prev_b, char *to_find, t_read *term)
 	if (read_dir(&prev_b, to_find, term) == FAILURE)
 		return ;
 	term->found == TRUE ? to_complete_buffer(prev_b, to_find, term) : 0;
-//	debugi("/dev/ttys001", to_find, prev_b, term->buffer);
 }

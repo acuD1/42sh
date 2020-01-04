@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/04 18:27:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/04 20:10:22 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ void			auto_complete_mode(t_read *term)
 			to_complete_buffer(last_buf, to_find, term);
 	}
 	ft_strdel(&to_find);
-	ft_strdel(&last_buf);
+	//ft_strdel(&last_buf);
 	ft_tabfree(term->cmd);
 }
