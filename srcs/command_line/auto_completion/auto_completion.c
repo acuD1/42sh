@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/04 17:02:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ uint8_t			is_dir(char *dir)
 **		- complete directories recursively
 */
 
-void			auto_complete_mode(char *buf, t_read *term)
+void			auto_complete_mode(t_read *term)
 {
 	char		*last_buf;
 	char		*to_find;
@@ -67,20 +67,21 @@ void			auto_complete_mode(char *buf, t_read *term)
 		return ;
 	if (term->ac > 1)
 	{
-		if (term->buffer[i] == ' ')
-			display_current_directory(buf, term, to_find);
+		if (term->buffer[i] == ' ' || is_dir(to_find))
+			display_current_directory(term, to_find);
 		else
 			to_complete_buffer(last_buf, to_find, term);
 	}
 	else if (term->ac == 1)
 	{
 		if (is_dir(term->buffer) || isstart(term->buffer, "/"))
-			read_directories(buf, to_find, term);
+			read_directories(to_find, term);
 		else if (ft_isalpha(*to_find))
-			to_complete_bin(buf, to_find, term);
+			to_complete_bin(to_find, term);
 		if (term->found == 0)
 			to_complete_buffer(last_buf, to_find, term);
 	}
 	ft_strdel(&to_find);
+	ft_strdel(&last_buf);
 	ft_tabfree(term->cmd);
 }

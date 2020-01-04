@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/04 16:19:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void		end_of_file(t_read *term, uint64_t value)
 		write_history(term);
 		free_history(term);
 		quit_shell(shell, 0, FALSE);
-		//exit(0);
 	}
 }
 
@@ -102,7 +101,7 @@ uint8_t		check_caps(char *buff, t_read *term)
 		research_mode(term);
 	if (value == TAB_KEY)
 	{
-		auto_complete_mode(buff, term);
+		auto_complete_mode(term);
 		value = get_mask(buff);
 	}
 	if (cursor_motion(buff, term, value))

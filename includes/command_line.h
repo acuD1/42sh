@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:28:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/04 16:19:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,13 +98,12 @@ void			load_subprompt(char quote, t_read *term);
 **		Auto completion
 */
 
-void			auto_complete_mode(char *buf, t_read *term);
-void			read_directories(char *buf, char *to_find, t_read *term);
-void			to_complete_bin(char *buf, char *to_find, t_read *term);
+void			auto_complete_mode(t_read *term);
+void			read_directories(char *to_find, t_read *term);
+void			to_complete_bin(char *to_find, t_read *term);
 void			to_complete_buffer(char *last_buf, char *to_find, t_read *term);
-void			display_current_directory(char *buf, t_read *term, char *dir);
+void			display_current_directory(t_read *term, char *dir);
 void			delete_last_cmd(char *d_name, t_read *term);
-uint8_t			is_dir(char *dir);
 void			parse_env(char *prev_b, char *to_find, t_read *term);
 char			**split_path(t_core *shell, char *str);
 uint8_t			read_again(char **prev_b, char *path, char *name, t_read *term);
@@ -118,7 +117,8 @@ uint8_t			get_width_last_line(t_read *term);
 uint8_t			get_width_current_line(t_read *term);
 uint64_t		get_mask(char *buff);
 int				is_dot(char *d_name);
-uint8_t			is_tab(char *buff, char *d_name, t_read *term);
+uint8_t			is_tab(char *d_name, t_read *term);
+uint8_t			is_dir(char *dir);
 
 /*
 **		Functions safe
