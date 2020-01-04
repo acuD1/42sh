@@ -6,19 +6,19 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/04 16:58:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/04 18:26:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t debugi(const char *path, char *str1, char *str2)
+int8_t debugi(const char *path, char *str1, char *str2, int i)
 {
     int fd;
 
 	    if ((fd = open(path, O_WRONLY)) < 0)
 		        return (FAILURE);
-		dprintf(fd, "[%s] [%s]\n", str1, str2);
+		dprintf(fd, "[%s] [%s] [%d]\n", str1, str2, i);
 	   return (SUCCESS);
 }
 
@@ -58,12 +58,11 @@ uint8_t			get_dir(char *prev_b, char *to_find, char *current_dir)
 	char		*tmp;
 
 	tmp = NULL;
-	found = ft_strlen(to_find);
-	while (to_find[--found])
+	found = ft_strlen(to_find) - 1;
+	while (found--)
 	{
 		if (to_find[found] == '/')
 		{
-		debugi("/dev/ttys001", to_find, prev_b);
 			ft_bzero(current_dir, BUFF_SIZE);
 			ft_strncpy(current_dir, prev_b, found + 1);
 			tmp = ft_strdup(to_find);
