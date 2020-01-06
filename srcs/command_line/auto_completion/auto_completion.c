@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/04 20:10:22 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/06 13:58:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,20 @@ uint8_t			is_dir(char *dir)
 
 void			auto_complete_mode(t_read *term)
 {
-	char		*last_buf;
 	char		*to_find;
 	int			i;
 
 	i = ft_strlen(term->buffer) - 1;
-	last_buf = NULL;
 	to_find = NULL;
 	term->found = 0;
-	if (split_cmd(&last_buf, &to_find, term) == FALSE)
+	if (split_cmd(&to_find, term) == FALSE)
 		return ;
 	if (term->ac > 1)
 	{
 		if (term->buffer[i] == ' ' || is_dir(to_find))
 			display_current_directory(term, to_find);
 		else
-			to_complete_buffer(last_buf, to_find, term);
+			to_complete_buffer(to_find, term);
 	}
 	else if (term->ac == 1)
 	{
@@ -79,9 +77,8 @@ void			auto_complete_mode(t_read *term)
 		else if (ft_isalpha(*to_find))
 			to_complete_bin(to_find, term);
 		if (term->found == 0)
-			to_complete_buffer(last_buf, to_find, term);
+			to_complete_buffer(to_find, term);
 	}
 	ft_strdel(&to_find);
-	//ft_strdel(&last_buf);
 	ft_tabfree(term->cmd);
 }

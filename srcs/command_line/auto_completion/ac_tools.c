@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/06 13:35:04 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/06 14:01:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			parse_env(char *prev_b, char *to_find, t_read *term)
+void			parse_env(char **prev_b, char *to_find, t_read *term)
 {
 	t_lst		*env;
 	t_lst		*head;
@@ -27,9 +27,10 @@ void			parse_env(char *prev_b, char *to_find, t_read *term)
 			|| !ft_strcmp(to_find, "$"))
 		{
 			tmp = ft_strjoin("$", ((t_db *)(env->content))->key);
-			if (read_again(&prev_b, NULL, tmp, term) == FALSE)
+			if (read_again(prev_b, NULL, tmp, term) == FALSE)
 				break ;
 			term->found = TRUE;
+			ft_strdel(&tmp);
 		}
 		if (env->next)
 			env = env->next;
@@ -62,7 +63,7 @@ char			**split_path(t_core *shell, char *str)
 	return (array);
 }
 
-uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *term)
+uint8_t			split_cmd(char **to_find, t_read *term)
 {
 	int			i;
 
@@ -74,10 +75,9 @@ uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *term)
 	if ((term->cmd = ft_strsplit(term->buffer, SPACE)) == NULL)
 		return (FALSE);
 	term->ac = ft_tablen(term->cmd);
-	*last_cmd = ft_strdup(term->cmd[ft_tablen(term->cmd) - 1]);
 	if (term->buffer[ft_strlen(term->buffer) - 1] == ' ')
 		term->ac += 1;
-	if ((*to_find = ft_strdup(*last_cmd)) == NULL)
+	if (!(*to_find = ft_strdup(term->cmd[ft_tablen(term->cmd) - 1])))
 		return (FALSE);
 	return (TRUE);
 }

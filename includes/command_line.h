@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/04 16:19:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/06 14:01:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ void			load_subprompt(char quote, t_read *term);
 void			auto_complete_mode(t_read *term);
 void			read_directories(char *to_find, t_read *term);
 void			to_complete_bin(char *to_find, t_read *term);
-void			to_complete_buffer(char *last_buf, char *to_find, t_read *term);
+void			to_complete_buffer(char *to_find, t_read *term);
 void			display_current_directory(t_read *term, char *dir);
 void			delete_last_cmd(char *d_name, t_read *term);
-void			parse_env(char *prev_b, char *to_find, t_read *term);
+void			parse_env(char **prev_b, char *to_find, t_read *term);
 char			**split_path(t_core *shell, char *str);
 uint8_t			read_again(char **prev_b, char *path, char *name, t_read *term);
 
@@ -127,6 +127,6 @@ uint8_t			is_dir(char *dir);
 void			xtputs(char *str, int i, int (*f)(int));
 char			*xtgetstr(char *id, char **area);
 size_t			xread(int fd, char *buff, int size);
-uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *term);
+uint8_t			split_cmd(char **to_find, t_read *term);
 
 #endif

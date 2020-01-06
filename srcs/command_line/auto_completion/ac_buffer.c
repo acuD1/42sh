@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/06 13:21:00 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/06 14:02:51 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,15 +134,19 @@ int8_t			read_dir(char **prev_b, char *to_find, t_read *term)
 **		To complete files if char inserted match with any files in current dir
 */
 
-void			to_complete_buffer(char *prev_b, char *to_find, t_read *term)
+void			to_complete_buffer(char *to_find, t_read *term)
 {
+	char		*prev_b;
+
+	prev_b = ft_strdup(to_find);
 	term->found = FALSE;
 	if (isstart(to_find, "$"))
 	{
-		parse_env(prev_b, to_find, term);
+		parse_env(&prev_b, to_find, term);
+		ft_strdel(&prev_b);
 		return ;
 	}
 	if (read_dir(&prev_b, to_find, term) == FAILURE)
 		return ;
-	term->found == TRUE ? to_complete_buffer(prev_b, to_find, term) : 0;
+	term->found == TRUE ? to_complete_buffer(to_find, term) : 0;
 }
