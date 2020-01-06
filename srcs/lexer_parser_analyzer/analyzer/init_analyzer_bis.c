@@ -20,12 +20,13 @@ void	init_assign_analyze(t_anal analyze)
 	analyze[A_ASSIGN][P_ORIF] = separator_analyze;
 	analyze[A_ASSIGN][P_PIPE] = separator_analyze;
 	analyze[A_ASSIGN][P_SEMICOLON] = separator_analyze;
+	analyze[A_ASSIGN][P_DSEMI] = separator_analyze;
+
 	analyze[A_ASSIGN][P_DLESSDASH] = redirect_analyze;
 	analyze[A_ASSIGN][P_DLESS] = redirect_analyze;
-	analyze[A_ASSIGN][P_LESS] = redirect_analyze;
-	analyze[A_ASSIGN][P_DGREAT] = redirect_analyze;
-	analyze[A_ASSIGN][P_GREATAND] = redirect_analyze;
-	analyze[A_ASSIGN][P_GREAT] = redirect_analyze;
+	// analyze[A_ASSIGN][P_DLESSDASH] = heredoc_analyze;
+	// analyze[A_ASSIGN][P_DLESS] = heredoc_analyze;
+
 	analyze[A_ASSIGN][P_ASSIGN] = assign_analyze;
 	analyze[A_ASSIGN][P_WORD] = cmd_analyze;
 	analyze[A_ASSIGN][P_QUOTE] = cmd_analyze;
@@ -38,6 +39,9 @@ void	init_assign_analyze(t_anal analyze)
 	analyze[A_ASSIGN][P_TILDE] = cmd_analyze;
 	analyze[A_ASSIGN][P_TILDEM] = cmd_analyze;
 	analyze[A_ASSIGN][P_TILDEP] = cmd_analyze;
+	analyze[A_ASSIGN][P_BRACKET] = cmd_analyze;
+	analyze[A_ASSIGN][P_DOLLAR] = cmd_analyze;
+	
 	analyze[A_ASSIGN][P_END] = end_analyze;
 }
 

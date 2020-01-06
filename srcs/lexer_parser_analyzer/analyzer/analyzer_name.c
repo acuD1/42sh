@@ -102,12 +102,12 @@ t_analyzer	*process_word_analyze(t_analyzer *anal)
 {
 	anal->process.av = ft_add_arg_cmd_process(anal->process.av,
 	((t_token*)anal->lexer->content)->data);
-	if (is_expansion(((t_token*)anal->lexer->content)->id))
-	{
-		anal->process.type = ((t_token*)anal->lexer->content)->id;
-		anal->job.type = ((t_token*)anal->lexer->content)->id;
-	}
-	anal->state = A_WORD;
+	// if (is_expansion(((t_token*)anal->lexer->content)->id))
+	// {
+	// 	anal->process.type = ((t_token*)anal->lexer->content)->id;
+	// 	anal->job.type = ((t_token*)anal->lexer->content)->id;
+	// }
+	// anal->state = A_WORD;
 	return (anal);
 }
 

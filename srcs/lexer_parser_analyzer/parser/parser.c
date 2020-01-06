@@ -88,6 +88,7 @@ uint8_t			parser(t_lst *lexer)
 		if (!(graph(&parser->state, ((t_token*)tok_lst->content)->id,
 			parser->graph[parser->state].good_type)))
 		{
+			printf("syntax error\n");
 			return (FALSE);
 		}
 		tok_lst = tok_lst->next;
