@@ -31,31 +31,32 @@ void		init_word_graph(t_graph *graph)
 	graph[P_TILDEM].good_type = tab_good_type;
 	graph[P_DOLLAR].good_type = tab_good_type;
 	graph[P_NEWLINE].good_type = tab_good_type;
+	graph[P_ASSIGN].good_type = tab_good_type;
 }
 
 void		init_redirect_graph(t_graph *graph)
 {
 	static e_pstate tab_good_type[] = {ALL_WORDS, P_ESCSEQ, ALL_EXPANSION,
 		P_ERROR};
-	static e_pstate good_type[] = {ALL_WORDS, P_ESCSEQ, ALL_EXPANSION,
+	static e_pstate heredoc[] = {ALL_WORDS, P_ESCSEQ, ALL_EXPANSION,
 		P_LESS, P_ERROR};
 
 	graph[P_GREAT].good_type = tab_good_type;
 	graph[P_DGREAT].good_type = tab_good_type;
 	graph[P_LESS].good_type = tab_good_type;
-	graph[P_DLESS].good_type = good_type;
+	graph[P_DLESS].good_type = heredoc;
 	graph[P_GREATAND].good_type = tab_good_type;
 	graph[P_LESSAND].good_type = tab_good_type;
-	graph[P_DLESSDASH].good_type = good_type;
+	graph[P_DLESSDASH].good_type = heredoc;
 }
 
-void		init_assign_graph(t_graph *graph)
-{
-	static e_pstate tab_good_type[] = {ALL_WORDS, P_ESCSEQ, ALL_EXPANSION,
-		P_ERROR};
+// void		init_assign_graph(t_graph *graph)
+// {
+// 	static e_pstate tab_good_type[] = {ALL_WORDS, P_ESCSEQ, ALL_EXPANSION,
+// 		P_ASSIGN ,P_ERROR};
 
-	graph[P_ASSIGN].good_type = tab_good_type;
-}
+// 	graph[P_ASSIGN].good_type = tab_good_type;
+// }
 
 void		init_process_graph(t_graph *graph)
 {

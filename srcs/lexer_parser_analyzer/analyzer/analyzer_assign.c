@@ -36,14 +36,25 @@ t_db		*fetch_assign(t_db *assign)
 	return (new);
 }
 
-t_analyzer	*ass_analyze(t_analyzer *analyzer)
+t_analyzer	*ass_analyze(t_analyzer *anal)
 {
-	analyzer->db.value = ft_strdup(((t_token*)analyzer->lexer->content)->data);
-	analyzer->state = A_START;
-	ft_lstappend(&analyzer->process.assign_list,
-		ft_lstnew(fetch_assign(&analyzer->db), sizeof(t_db)));
-	init_assign(&analyzer->db);
-	return (analyzer);
+	char **tablo;
+
+	tablo = NULL;
+	printf("ASS %s\n", ((t_token*)anal->lexer->content)->data);
+	if (!(tablo = ft_strsplit(((t_token*)anal->lexer->content)->data, "=")))
+		return (anal);
+	anal->db.key = ft_strdup(tablo[0]);
+	if (tablo[1])
+		anal->db.value = ft_strdup(tablo[1]);
+	else
+		anal->db.value = ft_strdup("(null)");
+	ft_lstappend(&anal->process.assign_list,
+		ft_lstnew(fetch_assign(&anal->db), sizeof(t_db)));
+	init_assign(&anal->db);
+	anal->process.type = ((t_token*)anal->lexer->content)->id;
+	anal->state = A_ASSIGN;
+	return (anal);
 }
 
 t_analyzer	*assign_analyze(t_analyzer *anal, t_core *shell)
@@ -51,21 +62,13 @@ t_analyzer	*assign_analyze(t_analyzer *anal, t_core *shell)
 	char	*tmp;
 
 	tmp = NULL;
-	anal->job.command = fill_cmd_job(anal, 0);
+	anal->job.command = fill_cmd_job(anal, 1);
 	if (((t_token*)anal->lexer->content)->id == P_ASSIGN
 		&& ((anal->state != A_WORD)))
-	{
-		anal->db.key = ft_strsub(((t_token*)anal->lexer->content)->data, 0,
-			ft_strlen(((t_token*)anal->lexer->content)->data) - 1);
-		anal->process.type = ((t_token*)anal->lexer->content)->id;
-		anal->state = A_ASSIGN;
-	}
+		return (anal = ass_analyze(anal));
 	else
 	{
 		tmp = ft_strdup(((t_token*)anal->lexer->content)->data);
-		get_token(anal);
-		anal->job.command = fill_cmd_job(anal, 0);
-		tmp = ft_strjoinf(tmp, ((t_token*)anal->lexer->content)->data, 1);
 		anal->process.av = ft_add_arg_cmd_process(anal->process.av, tmp);
 		anal->state = A_WORD;
 		free(tmp);

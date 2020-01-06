@@ -17,7 +17,7 @@ static int		isvalid_assignement_word(char *str, size_t index)
 	int			i;
 
 	i = index;
-	if (!str || ft_isdigit(str[0]) || str[0] == '=')
+	if (!str || ft_isdigit(str[i]) || str[i] == '=')
 		return (0);
 	while (str[i] != '=')
 	{
@@ -31,11 +31,26 @@ static int		isvalid_assignement_word(char *str, size_t index)
 	return (i + 1);
 }
 
+static int		get_assign_word_size(t_lexer *lex, int len)
+{
+	if (!lex || !lex->buff || !len)
+		return (lex->buf_pos);
+	while (lex->buff[len])
+	{
+		if (lex->buff[len] == '_' || ft_isdigit(lex->buff[len]) || ft_isalpha(lex->buff[len]))
+			len++;
+		else
+			break;
+	}
+	return (len);
+}
+
 t_lst			*create_assign_token(t_lexer *lex, int len, t_lst *lexer_token)
 {
 	char		*str;
 
 	str = NULL;
+	len = get_assign_word_size(lex, len);
 	if (!(str = ft_strsub(lex->buff, lex->buf_pos, len - lex->buf_pos)))
 		return (NULL);
 	if (!(ft_lstappend(&lexer_token,
@@ -57,7 +72,10 @@ t_lst			*assignement_word_lexer(t_lexer *lexer, t_lst *lexer_token)
 	else
 	{
 		if ((i = isvalid_assignement_word(lexer->buff, lexer->buf_pos)))
+		{
+			printf("IIIII   %d\n", i);
 			lexer_token = create_assign_token(lexer, i, lexer_token);
+		}
 		else
 			lexer_token = name_lexer(lexer, lexer_token);
 	}
