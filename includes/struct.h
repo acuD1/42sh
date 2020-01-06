@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 10:41:55 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/26 10:17:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/06 17:46:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,31 +107,31 @@ typedef struct s_lex_exp
 
 typedef struct			s_read
 {
-	char			prompt[10];
-	int			prompt_len;
-	int			x_index;
-	int			x;
-	int			y;
-	int			y_li;
-	int			width;
-	int			ws_col;
-	int			ws_li;
-	int			ac;
+	char				prompt[10];
+	int					prompt_len;
+	int					x_index;
+	int					x;
+	int					y;
+	int					y_li;
+	int					width;
+	int					ws_col;
+	int					ws_li;
+	int					ac;
 
-	int			new_line;
-	int			found;
-	int			sub_prompt;
-	int			status;
+	int					new_line;
+	int					found;
+	int					sub_prompt;
+	int					status;
 
-	char			*tcaps[CAPS_NBR];
-	char			*buffer;
-	char			*tmp_buff;
-	char			**cmd;
+	char				*tcaps[CAPS_NBR];
+	char				*buffer;
+	char				*tmp_buff;
+	char				**cmd;
 
-	t_core			*shell;
-	t_lst			*history;
-	t_lst			*history_index;
-}				t_read;
+	t_core				*shell;
+	t_lst				*history;
+	t_lst				*history_index;
+}						t_read;
 
 /*
 ** 			LEXER_PARSER_ANALYZER
