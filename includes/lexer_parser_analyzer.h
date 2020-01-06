@@ -47,6 +47,7 @@ t_analyzer  *error_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer  *ionbr_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer  *assign_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer 	*redir_analyze(t_analyzer *analyzer, t_core *shell);
+t_analyzer	*redir_wanalyze(t_analyzer *anal, t_core *shell);
 t_analyzer  *process_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer  *job_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer 	*ass_analyze(t_analyzer *analyzer);

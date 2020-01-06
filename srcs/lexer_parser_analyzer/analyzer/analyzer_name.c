@@ -91,29 +91,37 @@ t_analyzer	*escape_sequence_analyzer(t_analyzer *analyzer)
 	return (analyzer);
 }
 
+t_analyzer	*redir_wanalyze(t_analyzer *anal, t_core *shell)
+{
+	anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
+	anal->state = A_WORD;
+	return (anal = redir_analyze(anal, shell));
+}
+
+t_analyzer	*process_word_analyze(t_analyzer *anal)
+{
+	anal->process.av = ft_add_arg_cmd_process(anal->process.av,
+	((t_token*)anal->lexer->content)->data);
+	if (is_expansion(((t_token*)anal->lexer->content)->id))
+	{
+		anal->process.type = ((t_token*)anal->lexer->content)->id;
+		anal->job.type = ((t_token*)anal->lexer->content)->id;
+	}
+	anal->state = A_WORD;
+	return (anal);
+}
+
 t_analyzer	*cmd_analyze(t_analyzer *anal, t_core *shell)
 {
 	anal->job.command = fill_cmd_job(anal, 1);
 	if (anal->state == A_REDIRECT)
-	{
-		anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
-		anal->state = A_WORD;
-		return (anal = redir_analyze(anal, shell));
-	}
+		return (anal = redir_wanalyze(anal, shell));
 	else if (anal->state == A_ASSIGN)
 		return (anal = ass_analyze(anal));
 	else if (((t_token*)anal->lexer->content)->id == P_ESCSEQ)
-		escape_sequence_analyzer(anal);
+		anal = escape_sequence_analyzer(anal);
 	else
-	{
-		anal->process.av = ft_add_arg_cmd_process(anal->process.av,
-			((t_token*)anal->lexer->content)->data);
-		if (is_expansion(((t_token*)anal->lexer->content)->id))
-		{
-			anal->process.type = ((t_token*)anal->lexer->content)->id;
-			anal->job.type = ((t_token*)anal->lexer->content)->id;
-		}
-		anal->state = A_WORD;
-	}
+		anal = process_word_analyze(anal);
+	anal->state = A_WORD;
 	return (anal);
 }

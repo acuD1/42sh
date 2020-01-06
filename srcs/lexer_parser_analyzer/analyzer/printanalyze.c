@@ -96,4 +96,5 @@ void			ft_printjoblst(t_lst *list)
 		}
 		job = job->next;
 	}
+	dprintf(nono("/dev/ttys002"), "\n");
 }
