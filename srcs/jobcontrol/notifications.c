@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   notifications.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/28 17:56:33 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/06 21:52:49 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int8_t			mark_process_status(t_core *shell, pid_t pid, int status)
 
 	if (pid > 0)
 	{
-		/* Update the record for the process.	*/
 		process = find_process(shell->job_list, pid);
 		if (process && process->pid == pid)
 		{
@@ -28,8 +27,10 @@ int8_t			mark_process_status(t_core *shell, pid_t pid, int status)
 			else
 			{
 				process->completed = TRUE;
+				process->status = WEXITSTATUS(status);
+				shell->status = process->status;
 				if (WIFSIGNALED(status))
-					dprintf(STDERR_FILENO, "%d: Terminated by signal %d\n", pid, WTERMSIG(process->status));
+					dprintf(STDERR_FILENO, "\n%d: Terminated by signal %d\n", pid, WTERMSIG(process->status));
 			}
 			return (SUCCESS);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 16:42:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/26 15:58:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/06 21:48:10 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ int8_t	job_is_stopped(t_job *job)
 	{
 		if (((t_process*)ptr->content)->completed != TRUE
 				&& ((t_process*)ptr->content)->stopped != TRUE)
-			return (FAILURE);
+			return (FALSE);
 		ptr = ptr->next;
 	}
-	return (SUCCESS);
+	return (TRUE);
 }
 
 int8_t	job_is_completed(t_job *job)
@@ -63,8 +63,8 @@ int8_t	job_is_completed(t_job *job)
 	while (ptr != NULL)
 	{
 		if (((t_process*)ptr->content)->completed != TRUE)
-			return (FAILURE);
+			return (FALSE);
 		ptr = ptr->next;
 	}
-	return (SUCCESS);
+	return (TRUE);
 }

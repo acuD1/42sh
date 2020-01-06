@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/04 19:40:08 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/06 21:49:54 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	clean_pipes(int *infile, int *outfile, int *mypipe)
 		mypipe[0] = STDIN_FILENO;
 }
 
-/*static void	place_job(t_core *shell, t_job *job, int8_t foreground)
+static void	place_job(t_core *shell, t_job *job, int8_t foreground)
 {
 	if (!shell->is_interactive)
 		wait_for_job(shell, job);
@@ -61,7 +61,7 @@ static void	clean_pipes(int *infile, int *outfile, int *mypipe)
 		put_job_in_foreground(shell, job, FALSE);
 	else
 		put_job_in_background(shell, job, FALSE);
-}*/
+}
 
 int8_t	condition_fulfilled(t_core *shell, int cond)
 {
@@ -104,9 +104,12 @@ void	launch_job(t_core *shell, t_job *job)
 			if (ptr->completed != TRUE)
 				exec_process(job, ptr, infile, outfile);
 		}
+		else
+			break ;
 		clean_pipes(&infile, &outfile, mypipe);
 		cond = ptr->type;
 		process = process->next;
 	}
-//	place_job(shell, job, foreground);
+	if (!job_is_completed(job) && !job_is_stopped(job) && process == NULL)
+		place_job(shell, job, foreground);
 }

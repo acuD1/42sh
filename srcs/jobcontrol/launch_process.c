@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/04 20:00:27 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/06 17:56:54 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,13 @@ static void	put_process_in_grp(t_core *shell, t_process *process)
 {
 	(void)shell;
 	process->pid = getpid();
-	if (process->pgid == 0)
+	if (process->pgid == -1)
 		process->pgid = process->pid;
 	if (setpgid(process->pid, process->pgid) != SUCCESS)
 	{
-		dprintf(STDERR_FILENO, "42sh: tcsetpgrp error\n");
+		dprintf(STDERR_FILENO, "42sh: setpgid error\n");
 		exit(EXIT_FAILURE);
 	}
-//	if (process->stopped != TRUE)
-//	{
-//	//	write(1, "f\n", 2);
-//	//	printf("%i\n", process->pgid);
-//	//	printf("%i\n", process->pid);
-//	//	printf("%i\n", shell->terminal);
-//	//	printf("%i\n", tcsetpgrp(shell->terminal, process->pgid));
-//		if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
-//		{
-//			write(1, "f\n", 2);
-//			dprintf(STDERR_FILENO, "42sh: tcsetpgrp error\n");
-//			exit(EXIT_FAILURE);
-//		}
-//		write(1, "z\n", 2);
-//	}
 }
 
 static void	redir_pipes(int *infile, int *outfile)
