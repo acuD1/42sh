@@ -6,34 +6,24 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/06 18:31:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/07 12:13:21 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-int8_t debugi(const char *path, char *str1, char *str2, int i)
-{
-    int fd;
-
-	    if ((fd = open(path, O_WRONLY)) < 0)
-		        return (FAILURE);
-		dprintf(fd, "[%s] [%s] [%d]\n", str1, str2, i);
-	   return (SUCCESS);
-}
 
 /*
 **		Delete last command insert in buffer and insert the new one
 **		Read again buff if another tab key is pressed => return TRUE
 */
 
-uint8_t			read_again(char **prev_b, char *path, char *name, t_read *term)
+uint8_t			read_again(char **prev, char *path, char *name, t_read *term)
 {
 	uint64_t	value;
 	char		buff[READ_SIZE + 1];
 
 	ft_bzero(buff, READ_SIZE);
-	delete_last_cmd(*prev_b, term);
+	delete_last_cmd(*prev, term);
 	if (is_dir(path) == TRUE)
 		ft_strcat(name, "/");
 	insert_str_in_buffer(name, term);
@@ -42,12 +32,15 @@ uint8_t			read_again(char **prev_b, char *path, char *name, t_read *term)
 		value = get_mask(buff);
 		if (value == TAB_KEY)
 		{
-			ft_strdel(&*prev_b);
-			*prev_b = ft_strdup(name);
+			ft_strdel(&*prev);
+			*prev = ft_strdup(name);
 			return (TRUE);
 		}
 		else
+		{
+			term->found = FALSE;
 			return (FALSE);
+		}
 	}
 	return (FALSE);
 }
@@ -71,6 +64,7 @@ uint8_t			get_dir(t_read *term, char *current_dir)
 			ft_strdel(&term->cmd[0]);
 			i = ft_strlen(tmp);
 			term->cmd[0] = ft_strdup(tmp + 1);
+			ft_strdel(&tmp);
 			return (TRUE);
 		}
 	}
@@ -104,7 +98,7 @@ DIR				*update_curr_dir(t_read *term, char *curr_dir)
 **		Return FAILURE(-1) to stop reading
 */
 
-void				read_dir(t_read *term, char current_dir[], DIR *dir)
+void			read_dir(t_read *term, char current_dir[], DIR *dir)
 {
 	struct dirent	*data;
 	char			*path;
@@ -112,6 +106,7 @@ void				read_dir(t_read *term, char current_dir[], DIR *dir)
 	path = NULL;
 	while ((data = readdir(dir)) != NULL)
 	{
+		ft_strdel(&path);
 		if (isstart(data->d_name, term->cmd[0]))
 		{
 			term->found = TRUE;
@@ -119,10 +114,7 @@ void				read_dir(t_read *term, char current_dir[], DIR *dir)
 			if (read_again(&term->cmd[1], path, data->d_name, term) == TRUE)
 				continue ;
 			else
-			{
-				term->found = FALSE;
 				break ;
-			}
 		}
 	}
 	ft_strdel(&path);
@@ -143,6 +135,7 @@ void			to_complete_buffer(char *to_find, t_read *term)
 	char		current_dir[BUFF_SIZE];
 	DIR			*dir;
 
+	ft_bzero(current_dir, BUFF_SIZE);
 	term->found = FALSE;
 	ft_tabfree(term->cmd);
 	term->cmd = ft_memalloc(BUFF_SIZE);

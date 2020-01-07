@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/06 18:32:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/07 11:47:34 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 **		Delete the last cmd in buffer if an another key tab is pressed
-**		Termcaps `clr_end' => clear from the cursor to the end of the current line
+**		Termcaps `clr_end' => clear from the cursor to the end of the line
 */
 
 void			delete_last_cmd(char *d_name, t_read *term)
@@ -60,7 +60,6 @@ void			auto_complete_mode(t_read *term)
 
 	i = ft_strlen(term->buffer) - 1;
 	to_find = NULL;
-	term->found = 0;
 	if (split_cmd(&to_find, term) == FALSE)
 		return ;
 	if (term->ac > 1)
@@ -76,7 +75,7 @@ void			auto_complete_mode(t_read *term)
 			read_directories(to_find, term);
 		else if (ft_isalpha(*to_find))
 			to_complete_bin(to_find, term);
-		if (term->found == 0)
+		if (term->found == FALSE)
 			to_complete_buffer(to_find, term);
 	}
 	ft_strdel(&to_find);

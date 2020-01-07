@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/04 16:21:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/07 12:08:07 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void			to_complete_bin(char *to_find, t_read *term)
 	int				i;
 
 	i = -1;
-	term->found = FALSE;
 	path = split_path(term->shell, "PATH");
 	while (path && path[++i])
 	{
@@ -92,5 +91,6 @@ void			to_complete_bin(char *to_find, t_read *term)
 		}
 		closedir(dir);
 	}
+	ft_tabfree(path);
 	term->found == TRUE ? to_complete_bin(to_find, term) : 0;
 }

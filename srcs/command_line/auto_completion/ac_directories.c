@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:27:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/04 15:40:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/07 11:41:55 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void			read_directories(char *to_find, t_read *term)
 	struct dirent	*data;
 	DIR				*dir;
 
+	dir = NULL;
 	if (is_dir(to_find) && (dir = opendir(to_find)))
 	{
 		while ((data = readdir(dir)) != NULL)
@@ -62,12 +63,13 @@ void			read_directories(char *to_find, t_read *term)
 				continue ;
 			else
 			{
-				closedir(dir);
-				return ;
+				term->found = FALSE;
+				break ;
 			}
 		}
 	}
 	else
-		return ;
+		term->found = FALSE;
+	closedir(dir);
 	term->found == TRUE ? read_directories(to_find, term) : 0;
 }
