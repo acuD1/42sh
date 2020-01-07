@@ -6,16 +6,30 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:29:16 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/07 18:25:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
+int8_t debugu(const char *path, int i, int j, char c, char *tmp)
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (-1);
+    dprintf(fd,"i[%d] j{%d} \"%c\" after[%s]\n", i,j,c, tmp);
+    return (1);
+}
+
 void		find_expansions(t_read *term, int *i)
 {
+	debugu("/dev/ttys001",*i, 0, term->buffer[*i + 1], NULL);
 	if (term->buffer[*i + 1] == '!')
+	{
 		last_cmd_back(term, *i);
+		(*i)++;
+	}
 	else if (ft_isdigit(term->buffer[*i + 1]))
 		call_number(term, *i);
 	else if (ft_isalpha(term->buffer[*i + 1]))
@@ -36,6 +50,7 @@ void		check_expansions(t_read *term)
 	buff_len = ft_strlen(term->buffer);
 	while (buff_len--)
 	{
+	debugu("/dev/ttys001",i, buff_len, term->buffer[i], NULL);
 		if (term->buffer[++i] == '!')
 			find_expansions(term, &i);
 	}
