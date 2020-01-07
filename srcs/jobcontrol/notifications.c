@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/06 21:52:49 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/07 20:36:12 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int8_t		do_job_notification(t_core *shell)
 
 	/* Update status information for child processes.	*/
 	update_status(shell);
-	job = shell->job_list;
+	job = shell->launched_jobs;
 	while (job)
 	{
 		ptr = ((t_job*)job->content);
@@ -104,6 +104,7 @@ int8_t		do_job_notification(t_core *shell)
 		else if (job_is_stopped(ptr) && ptr->notified != TRUE)
 		{
 			format_job_info(ptr, "Stopped");
+			ft_lstappend(&(shell->launched_jobs), job);
 			ptr->notified = 1;
 		}
 		job = jnext;

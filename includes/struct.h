@@ -157,6 +157,7 @@ typedef struct		s_job
 	t_lst			*process_list;
 	pid_t			pgid;
 	char			*command;
+	int				id;
 }					t_job;
 
 typedef struct		s_analyzer
@@ -223,6 +224,7 @@ typedef struct	s_core
 	t_lst				*pos_vars;
 	t_lst				*lexer; //TO REMOVE
 	t_lst				*job_list;
+	t_lst				*launched_jobs;
 
 	/* variables */
 	int32_t				status;				//	last exit status value (echo $?)
