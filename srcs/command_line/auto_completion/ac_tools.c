@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/06 14:01:17 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/07 13:13:50 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ uint8_t			split_cmd(char **to_find, t_read *term)
 	int			i;
 
 	i = -1;
+	term->ac = 0;
 	while (ft_isblank(term->buffer[++i]))
 		continue ;
 	if (term->buffer[i] == '\0')

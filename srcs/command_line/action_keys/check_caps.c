@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/04 16:19:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/07 14:57:21 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		end_of_file(t_read *term, uint64_t value)
 	t_core	*shell;
 
 	shell = get_core(NULL);
-	if (!ft_strcmp(term->buffer, "") && value == CTRL_D)
+	if (!*term->buffer && value == CTRL_D)
 	{
 		ft_putstr("exit\n");
 		reset_config(shell);

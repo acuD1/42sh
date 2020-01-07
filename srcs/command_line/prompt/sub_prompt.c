@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/07 14:48:29 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		load_subprompt(char sb, t_read *term)
 	term->status = CMD_SUBPROMPT;
 	while (TRUE)
 	{
-		free(term->buffer);
+		ft_strdel(&term->buffer);
 		term->buffer = ft_memalloc(BUFF_SIZE);
 		display_subprompt(term, PS2);
 		if (read_subline(term, sb) == FALSE)
@@ -68,7 +68,7 @@ void		load_subprompt(char sb, t_read *term)
 			if (quotes_is_matching(term, &sb) == FALSE)
 			{
 				term->buffer[ft_strlen(term->buffer)] = NEW_LINE;
-				free(term->tmp_buff);
+				ft_strdel(&term->tmp_buff);
 				term->tmp_buff = ft_strdup(term->buffer);
 				continue ;
 			}

@@ -6,21 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/07 15:36:16 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-int8_t debug(const char *path, int buff, t_read *in)
-{
-    int fd;
-
-    if ((fd = open(path, O_WRONLY)) < 0)
-        return (-1);
-    dprintf(fd,"[%c] {%d}\n", buff, in->x);
-    return (1);
-}
 
 /*
 **	To insert a char in buffer at the end of line
@@ -28,7 +18,7 @@ int8_t debug(const char *path, int buff, t_read *in)
 
 void		insert_char_in_buffer(char buff, t_read *term, int buff_index)
 {
-	dprintf(STDIN_FILENO, "%c", buff);
+	ft_dprintf(STDIN_FILENO, "%c", buff);
 	if (buff == NEW_LINE || term->x >= term->ws_col)
 	{
 		term->x = 0;
