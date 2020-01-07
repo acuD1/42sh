@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/04 18:46:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/07 13:06:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ uint8_t			is_tab(char *d_name, t_read *term)
 
 int				is_dot(char *d_name)
 {
-	if (!ft_strcmp(d_name, "."))
+	if (!ft_strcmp(d_name, ".") || isstart(d_name, "."))
 		return (TRUE);
 	else if (!ft_strcmp(d_name, ".."))
 		return (TRUE);

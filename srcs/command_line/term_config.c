@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:20:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/07 12:58:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,14 @@ uint8_t				init_config(t_core *shell)
 {
 	if (tgetent(NULL, "xterm-256color") == FAILURE)
 	{
-		// Display error msg
+		ft_perror("tgetent", NULL, 0);
+		quit_shell(shell, 0, TRUE);
 		return (FAILURE);
 	}
 	if (tcgetattr(STDIN_FILENO, &(shell->old_t)) == FAILURE)
 	{
-		// Display error msg
+		ft_perror("tgetattr", NULL, 0);
+		quit_shell(shell, 0, TRUE);
 		return (FAILURE);
 	}
 	shell->new_t = shell->old_t;
@@ -53,7 +55,8 @@ uint8_t				init_config(t_core *shell)
 	shell->new_t.c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->new_t)) == FAILURE)
 	{
-		// Display error msg
+		ft_perror("tcsetattr", NULL, 0);
+		quit_shell(shell, 0, TRUE);
 		return (FAILURE);
 	}
 	return (SUCCESS);
@@ -69,7 +72,7 @@ uint8_t			reset_config(t_core *shell)
 	tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t));
 	//ft_strdel(&(term->prompt));
 	ft_bzero(shell->term.prompt, READ_SIZE);
-//	shell->old_t.c_lflag |= (ICANON | ECHO); ??
+	//shell->old_t.c_lflag |= (ICANON | ECHO); ?
 	ft_strdel(&shell->term.tmp_buff);
 	return (SUCCESS);
 }

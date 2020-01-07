@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/07 11:47:34 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/07 13:08:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ uint8_t			is_dir(char *dir)
 		return (FALSE);
 	if (lstat(dir, &buf) == FAILURE)
 		return (FALSE);
-	if (S_ISDIR(buf.st_mode))
+	if (S_ISDIR(buf.st_mode) && !is_dot(dir))
 		return (TRUE);
 	return (FALSE);
 }

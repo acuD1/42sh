@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 12:13:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/10 19:19:22 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/07 12:25:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,26 @@
 
 void		xtputs(char *str, int i, int (*f)(int))
 {
-		if (tputs(str, i, f) == ERR)
-		{
-			//Error fct
-			dprintf(2, "tputs error.");
-			exit(0);
-		}
+	t_core	*shell;
+
+	shell = get_core(NULL);
+	if (tputs(str, i, f) == ERR)
+	{
+		ft_perror("tputs", NULL, 0);
+		quit_shell(shell, 0, TRUE);
+	}
 }
 
 char		*xtgetstr(char *id, char **area)
 {
 	char	*str;
+	t_core	*shell;
 
+	shell = get_core(NULL);
 	if ((str = tgetstr(id, area)) == NULL)
 	{
-		//Error fct
-		dprintf(2, "tgetstr error.");
-		exit(0);
+		ft_perror("tgetstr", NULL, 0);
+		quit_shell(shell, 0, TRUE);
 	}
 	return (str);
 }
@@ -43,14 +46,15 @@ char		*xtgetstr(char *id, char **area)
 size_t		xread(int fd, char *buff, int size)
 {
 	int		ret;
+	t_core	*shell;
 
+	shell = get_core(NULL);
 	if ((ret = read(fd, buff, size)) < 1)
 	{
 		if (ret == FAILURE)
 		{
-			//Error fct
-			dprintf(2, "read error");
-			exit(EXIT_FAILURE);
+			ft_perror("read", NULL, 0);
+			quit_shell(shell, 0, TRUE);
 		}
 	}
 	return (ret);
