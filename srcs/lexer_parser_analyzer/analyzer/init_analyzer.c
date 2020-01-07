@@ -93,17 +93,10 @@ void		init_word_analyze(t_anal analyze)
 	analyze[A_WORD][P_END] = end_analyze;
 }
 
-static void	init_lereste(t_anal analyze)
-{
+// static void	init_lereste(t_anal analyze)
+// {
 
-	analyze[A_END][P_IONUMBER] = ionbr_analyze;
-	analyze[A_END][P_ASSIGN] = assign_analyze;
-	analyze[A_END][P_END] = end_analyze;
-	analyze[A_SEPARATOR][P_IONUMBER] = ionbr_analyze;
-	analyze[A_SEPARATOR][P_ASSIGN] = assign_analyze;
-
-	analyze[A_END][P_LESSAND] = redirect_analyze;
-}
+// }
 
 static void	bzero_analyze(t_anal parsing)
 {
@@ -136,7 +129,7 @@ t_analyzer	*init_analyze(t_analyzer *analyzer, t_lst *lexer)
 	init_separator_analyze(analyzer->analyze);
 	init_redirect_analyze(analyzer->analyze);
 	init_end_analyze(analyzer->analyze);
-	init_lereste(analyzer->analyze);
+	// init_lereste(analyzer->analyze);
 	analyzer->state = A_START;
 	analyzer->lexer = lexer;
 	analyzer->job_list = NULL;

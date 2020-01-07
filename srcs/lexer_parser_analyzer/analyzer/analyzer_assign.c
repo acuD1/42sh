@@ -41,7 +41,6 @@ t_analyzer	*ass_analyze(t_analyzer *anal)
 	char **tablo;
 
 	tablo = NULL;
-	printf("ASS %s\n", ((t_token*)anal->lexer->content)->data);
 	if (!(tablo = ft_strsplit(((t_token*)anal->lexer->content)->data, "=")))
 		return (anal);
 	anal->db.key = ft_strdup(tablo[0]);

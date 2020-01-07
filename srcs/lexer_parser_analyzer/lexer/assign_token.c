@@ -72,10 +72,7 @@ t_lst			*assignement_word_lexer(t_lexer *lexer, t_lst *lexer_token)
 	else
 	{
 		if ((i = isvalid_assignement_word(lexer->buff, lexer->buf_pos)))
-		{
-			printf("IIIII   %d\n", i);
 			lexer_token = create_assign_token(lexer, i, lexer_token);
-		}
 		else
 			lexer_token = name_lexer(lexer, lexer_token);
 	}

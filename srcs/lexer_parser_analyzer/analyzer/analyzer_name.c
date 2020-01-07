@@ -100,7 +100,6 @@ t_analyzer	*redir_wanalyze(t_analyzer *anal, t_core *shell)
 
 t_analyzer	*process_word_analyze(t_analyzer *anal)
 {
-	printf("MEH %s\n", ((t_token*)anal->lexer->content)->data);
 	anal->process.av = ft_add_arg_cmd_process(anal->process.av,
 	((t_token*)anal->lexer->content)->data);
 	// if (is_expansion(((t_token*)anal->lexer->content)->id))
@@ -117,8 +116,6 @@ t_analyzer	*cmd_analyze(t_analyzer *anal, t_core *shell)
 	anal->job.command = fill_cmd_job(anal, 1);
 	if (anal->state == A_REDIRECT)
 		return (anal = redir_wanalyze(anal, shell));
-	// else if (anal->state == A_ASSIGN)
-	// 	return (anal = ass_analyze(anal));
 	else if (((t_token*)anal->lexer->content)->id == P_ESCSEQ)
 		anal = escape_sequence_analyzer(anal);
 	else

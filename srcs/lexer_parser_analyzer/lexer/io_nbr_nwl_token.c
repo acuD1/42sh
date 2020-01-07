@@ -44,11 +44,8 @@ t_lst		*number_lexer(t_lexer *lexer, t_lst *lexer_token)
 		lexer->status = L_END;
 		return (lexer_token);
 	}
-	if ((lexer_token = isvalid_ionumber(lexer, lexer_token)))
-		lexer_token = operator_lexer(lexer, lexer_token);
-	else
-		lexer_token = name_lexer(lexer, lexer_token);
-	lexer->status = L_START;
+	lexer_token = isvalid_ionumber(lexer, lexer_token);
+	lexer->status = L_OPERATOR;
 	return (lexer_token);
 }
 

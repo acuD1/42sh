@@ -81,7 +81,6 @@ void				analyzer(t_core *shell, t_lst *lexer)
 	{
 		anal = anal->analyze[anal->state]
 			[((t_token*)anal->lexer->content)->id](anal, shell);
-		//get_token(anal); Are u mad or something ???
 		anal->lexer = anal->lexer->next;
 	}
 	free(anal->job.command);

@@ -67,7 +67,7 @@ t_lst			*operator_lexer(t_lexer *lx, t_lst *lst)
 		i++;
 	}
 	if (i == NB_OF_OPE)
-		lst = word_lexer(lx, lst);
+		lst = word_lexer(lx, lst); //BUG DES IONBR
 	lx->status = L_START;
 	return (lst);
 }
