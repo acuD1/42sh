@@ -62,7 +62,8 @@ void		ft_freetokenlist(t_lst **lst)
 			break ;
 		}
 		tmp = tmp->next;
-		free(node);
+		if (node)
+			free(node);
 	}
 }
 

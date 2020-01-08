@@ -12,17 +12,11 @@
 
 #include "sh42.h"
 
-t_lst		*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token)
+t_lst		*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token, int i)
 {
-	int		i;
 	char	*str;
 
 	str = NULL;
-	i = lexer->buf_pos;
-	if (!lexer->buff[i] || !ft_isdigit(lexer->buff[i]))
-		return (lexer_token);
-	while (ft_isdigit(lexer->buff[i]) && lexer->buff[i])
-		i++;
 	if ((lexer->buff[i] == '<' || lexer->buff[i] == '>'))
 	{
 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
@@ -30,22 +24,35 @@ t_lst		*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token)
 		if (!(ft_lstappend(&lexer_token, ft_lstnew(
 			fetch_token(&lexer->token, P_IONUMBER, str), sizeof(t_token)))))
 			return (NULL);
-		free(str);
-		lexer->buf_pos = i;
-		lexer->ntok++;
 	}
+	else
+	{
+		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
+			return (NULL);
+		if (!(ft_lstappend(&lexer_token, ft_lstnew(
+			fetch_token(&lexer->token, P_WORD, str), sizeof(t_token)))))
+			return (NULL);
+	}
+	free(str);
+	lexer->buf_pos = i;
+	lexer->ntok++;
 	return (lexer_token);
 }
 
 t_lst		*number_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
-	if (!lexer->buff)
+	int		i;
+
+	i = lexer->buf_pos;
+	if (!lexer->buff[lexer->buf_pos] || !ft_isdigit(lexer->buff[lexer->buf_pos]))
 	{
 		lexer->status = L_END;
 		return (lexer_token);
 	}
-	lexer_token = isvalid_ionumber(lexer, lexer_token);
-	lexer->status = L_OPERATOR;
+	while (ft_isdigit(lexer->buff[i]) && lexer->buff[i])
+		i++;
+	lexer_token = isvalid_ionumber(lexer, lexer_token, i);
+	lexer->status = L_START;
 	return (lexer_token);
 }
 

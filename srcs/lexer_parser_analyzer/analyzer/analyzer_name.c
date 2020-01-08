@@ -82,9 +82,10 @@ t_analyzer	*escape_sequence_analyzer(t_analyzer *analyzer)
 		analyzer->job.command = fill_cmd_job(analyzer, 1);
 		get_token(analyzer);
 	}
-	free(((t_token*)analyzer->lexer->content)->data);
-	((t_token*)analyzer->lexer->content)->data = ft_strdup(str);
-	free(str);
+	// printf("{%s}\n", str);
+	// ft_strdel(&(((t_token*)analyzer->lexer->content)->data));
+	// ((t_token*)analyzer->lexer->content)->data = ft_strdup(str);
+	// ft_strdel(&(str));
 	analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av,
 		((t_token*)analyzer->lexer->content)->data);
 	((t_token*)analyzer->lexer->content)->id = P_WORD;

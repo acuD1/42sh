@@ -199,6 +199,11 @@ typedef struct			s_token
 	size_t		  len;
 }			  t_token;
 
+struct	s_flex
+{
+	int (*flex[128])(t_lexer*, t_lst*);
+};
+
 typedef struct 		 	s_lexer
 {
 	char			*buff;

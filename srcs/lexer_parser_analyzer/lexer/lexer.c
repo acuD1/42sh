@@ -14,24 +14,33 @@
 
 t_lst		*backslash_lexer(t_lexer *lx, t_lst *lexer_token)
 {
-	char *str;
+	char	*str;
+	int		i;
 
 	str = NULL;
+	i = lx->buf_pos;
 	if (!lx->buff)
 	{
 		lx->status = L_END;
 		return (lexer_token);
 	}
-	if (lx->buff[lx->buf_pos] == '\\')
+	if (lx->buff[i] == '\\')
 	{
-		if (!(str = ft_strsub(lx->buff, lx->buf_pos, 1)))
+		while (lx->buff[i] == '\\')
+			i++;
+		if (lx->buff[i])
+		{
+			i++;
+		}
+		printf("%s {%c}\n", lx->buff, lx->buff[i]);
+		if (!(str = ft_strsub(lx->buff, lx->buf_pos, i - lx->buf_pos)))
 			return (lexer_token);
 		if (!(ft_lstappend(&lexer_token, ft_lstnew(
 			fetch_token(&lx->token, P_ESCSEQ, str), sizeof(t_token)))))
 			return (lexer_token);
 		free(str);
 		lx->ntok++;
-		lx->buf_pos++;
+		lx->buf_pos = i;
 	}
 	lx->status = L_START;
 	return (lexer_token);
@@ -43,9 +52,6 @@ t_lst		*start_lexer(t_lexer *lx, t_lst *lexer_token)
 		lexer_token = end_lexer(lx, lexer_token);
 	else if (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
 	{
-		if (lx->buff[lx->buf_pos - 1] && lx->buff[lx->buf_pos - 1] == '\\')
-			ft_lstappend(&lexer_token, ft_lstnew(
-				fetch_token(&lx->token, P_WORD, " "), sizeof(t_token)));
 		while (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
 			lx->buf_pos++;
 	}
