@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:59:13 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/07 20:27:44 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/08 22:39:55 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_job	*get_last_job(t_lst *jobs)
 	while (jobs)
 	{
 		ptr = jobs->content;
-		if (jobs->next == NULL)
+		if (jobs->next != NULL && jobs->next->next == NULL)
 			return (ptr);
 		jobs = jobs->next;
 	}
@@ -79,6 +79,6 @@ int8_t	builtin_fg(t_core *shell, t_process *process)
 		dprintf(STDERR_FILENO, "42sh: fg: %s: no such job\n", (process->av[1]) ? process->av[1] : "current");
 		return (1);
 	}
-	put_job_in_foreground(shell, job, TRUE);
+	continue_job(shell, job, TRUE);
 	return (SUCCESS);
 }

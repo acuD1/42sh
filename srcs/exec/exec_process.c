@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/06 21:45:40 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/08 22:36:18 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	exec_process(t_job *job, t_process *process, int infile, int outfile)
 		process->pgid = job->pgid;
 		if (setpgid(process->pid, process->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: setpgid error\n");
-		if (process->stopped != TRUE && infile == STDIN_FILENO
-		&& outfile == STDOUT_FILENO && tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
+		if (process->stopped != TRUE
+		&& infile == STDIN_FILENO && outfile == STDOUT_FILENO
+		&& tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: tcsetpgrp error (1)\n");
 
-		//MUST BE REPLACED
 		if (infile == STDIN_FILENO && outfile == STDOUT_FILENO && process->stopped != TRUE)
 		{
 			wait_for_process(shell, process);
@@ -63,10 +63,3 @@ void	exec_process(t_job *job, t_process *process, int infile, int outfile)
 		}
 	}
 }
-
-/*
-	Si av :
-	{
-		si blt
-	}
-*/

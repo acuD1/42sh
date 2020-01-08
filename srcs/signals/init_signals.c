@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/07 18:13:45 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/08 22:02:24 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,19 @@
 
 static void	sig_handler(int signum)
 {
-	static char *message[31] = {"Hangup", NULL, "Quit", "Illegal instruction"
-		, "Trace/BPT trap", "Abort trap\n", "EMT trap"
-		, "Floating point exception", "Killed", "Bus error"
-		, "Segmentation fault", "Bad system call", NULL, "Alarm clock"
-		, "Terminated", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
-		, "Cputime limit exceeded", "Filesize limit exceeded"
-		, "Virtual timer expired", "Profiling timer expired", NULL, NULL
-		, "User defined signal 1", "User defined signal 2"};
 	t_core	*shell;
+	pid_t	pid;
 
 	shell = get_core(NULL);
-	if (signum == SIGHUP && shell->running_process)
-		kill_processes(SIGHUP, shell);
 	if (signum == SIGTSTP)
+	{
+		printf("CC -> sig_handler\n");
 		return ;
-	if (message[signum - 1] != NULL)
-		dprintf(STDERR_FILENO, "\n%s: %i (42sh)\n", message[signum - 1], signum);
-	quit_shell(shell, 0, 0);
+	}
+	reset_config(shell, &(shell->cmd_line));
+	pid = getpid();
+	signal(signum, SIG_DFL);
+	kill(pid, signum);
 }
 
 static void	sig_exit(int signum)

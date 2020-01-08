@@ -6,31 +6,11 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/06 21:49:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/08 21:11:29 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-/*
-static void	debug_process(t_lst *process)
-{
-	dprintf(STDERR_FILENO, "%i = P_PIPE\n{\n", P_PIPE);
-	while (process)
-	{
-		dprintf(STDERR_FILENO, "+---------------------\n");
-		dprintf(STDERR_FILENO, "| %s\n", ((t_process*)process->content)->av[0]);
-		dprintf(STDERR_FILENO, "| type = %i\n", ((t_process*)process->content)->type);
-		dprintf(STDERR_FILENO, "+---------------------\n");
-		if (process->next)
-		{
-			dprintf(STDERR_FILENO, "           |\n");
-			dprintf(STDERR_FILENO, "           V\n");
-		}
-		process = process->next;
-	}
-	dprintf(STDERR_FILENO, "}\n");
-}*/
 
 static void	setup_pipes(t_core *shell, t_process *process, int *mypipe, int *outfile)
 {
@@ -88,7 +68,7 @@ void	launch_job(t_core *shell, t_job *job)
 	infile = STDIN_FILENO;
 	process = job->process_list;
 	foreground = (job->type == P_AND) ? FALSE : TRUE;
-	//debug_process(ptr);
+	job->id = 0;
 	while (process)
 	{
 		ptr = ((t_process*)process->content);
@@ -110,6 +90,6 @@ void	launch_job(t_core *shell, t_job *job)
 		cond = ptr->type;
 		process = process->next;
 	}
-	if (!job_is_completed(job) && !job_is_stopped(job) && process == NULL)
+	if (shell->is_interactive && !job_is_completed(job) && process == NULL)
 		place_job(shell, job, foreground);
 }

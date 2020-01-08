@@ -6,7 +6,7 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 17:40:31 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/28 17:54:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/08 22:06:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,55 +26,45 @@ void		get_token(t_analyzer *analyzer)
 
 void		ft_free_redir(t_redir *redir)
 {
-	free(redir->op[0]);
-	free(redir->op[1]);
+	ft_strdel(&(redir->op[0]));
+	ft_strdel(&(redir->op[1]));
+	ft_strdel(&(redir->heredoc));
 	free(redir);
 }
 
 void		ft_free_redirlist(t_lst **head)
 {
-	t_lst	*curr;
+	t_lst	*ptr;
 	t_lst	*next;
 
-	if (!*head)
+	if (head == NULL || *head == NULL)
 		return ;
-	curr = *head;
-	next = NULL;
-	while (curr)
+	ptr = *head;
+	while (ptr)
 	{
-		if (curr->content)
-			ft_free_redir((t_redir*)curr->content);
-		next = curr;
-		curr = curr->next;
-		free(next);
+		next = ptr->next;
+		ft_free_redir(ptr->content);
+		free(ptr);
+		ptr = next;
 	}
 }
 
 void		free_process_list(t_lst **head)
 {
-	t_lst		*tmp;
-	t_lst		*process;
-	t_process	*pro;
+	t_lst *ptr;
+	t_lst *next;
 
-	process = NULL;
-	pro = NULL;
-	tmp = NULL;
-	if (!head || !*head)
+	if (head == NULL || *head == NULL)
 		return ;
-	process = *head;
 	*head = NULL;
-	while (process)
+	ptr = *head;
+	while (ptr != NULL)
 	{
-		if (process->content)
-		{
-			pro = (t_process*)process->content;
-			ft_free_redirlist(&pro->redir_list);
-			if (pro->av)
-				ft_tabfree(pro->av);
-		}
-		free(process->content);
-		tmp = process;
-		process = process->next;
-		free(tmp);
+		next = ptr->next;
+		ft_free_redirlist(&(((t_process*)ptr->content)->redir_list));
+		ft_tabdel(&(((t_process*)ptr->content)->av));
+		//free_assign_list
+		ptr = next;
 	}
+
 }

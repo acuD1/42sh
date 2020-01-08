@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   load_prompt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/12 00:41:09 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/08 22:36:22 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void			load_prompt(t_core *shell)
 			break ;
 		save_history(term);
 		free_prompt(shell, term->buffer);
-		// ft_freejoblist(&shell->job_list);
+		do_job_notification(shell);
+		shell->job_list = NULL;
 	}
 	free_history(term);
 	ft_strdel(&(term->buffer));
