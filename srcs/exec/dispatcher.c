@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/08 21:11:29 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/09 14:58:44 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static void	clean_pipes(int *infile, int *outfile, int *mypipe)
 static void	place_job(t_core *shell, t_job *job, int8_t foreground)
 {
 	if (!shell->is_interactive)
-		wait_for_job(shell, job);
+		wait_for_job(shell, shell->job_list, job);
 	else if (foreground == TRUE)
-		put_job_in_foreground(shell, job, FALSE);
+		put_job_in_foreground(shell, shell->job_list, job, FALSE);
 	else
 		put_job_in_background(shell, job, FALSE);
 }

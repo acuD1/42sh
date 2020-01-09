@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/07 20:25:52 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/09 14:57:20 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,20 +205,18 @@ t_job		*find_job(t_lst *ptr, pid_t pgid);
 t_process	*find_process(t_lst *job, pid_t pid);
 int8_t		job_is_stopped(t_job *job);
 int8_t		job_is_completed(t_job *job);
-int8_t		put_job_in_foreground(t_core *shell, t_job *job, int cont);
+int8_t		put_job_in_foreground(t_core *shell, t_lst *jobs, t_job *job, int cont);
 void		put_job_in_background(t_core *shell, t_job *job, int cont);
 void		mark_job_as_running(t_job *job);
 int8_t		continue_job(t_core *shell, t_job *job, int foreground);
-int8_t		put_job_in_foreground(t_core *shell, t_job *job, int cont);
 void		reset_signals(void);
 void		launch_process(t_core *shell, t_process *process, int infile, int outfile);
 void		launch_job(t_core *shell, t_job *job);
 int8_t		do_job_notification(t_core *shell);
-void		wait_for_job(t_core *shell, t_job *job);
-int8_t		mark_process_status(t_core *shell, pid_t pid, int status);
+void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
+int8_t		mark_process_status(t_core *shell, t_lst *jobs, pid_t pid, int status);
 int8_t		launch_blt(t_core *shell, t_process *process);
-void		wait_for_process(t_core *shell, t_process *process);
-
+void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
 
 /* ###########################  TEMPORARY   #################################*/
 void	debug_analyzer(t_core *shell);

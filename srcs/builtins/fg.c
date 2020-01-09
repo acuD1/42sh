@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:59:13 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/08 22:39:55 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/09 15:03:42 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 static t_job	*get_last_job(t_lst *jobs)
 {
-	t_job	*ptr;
-
 	while (jobs)
 	{
-		ptr = jobs->content;
-		if (jobs->next != NULL && jobs->next->next == NULL)
-			return (ptr);
+		if (jobs->next == NULL)
+			return (jobs->content);
 		jobs = jobs->next;
 	}
 	return (NULL);

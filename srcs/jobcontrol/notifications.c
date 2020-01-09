@@ -6,19 +6,19 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/08 21:20:20 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/09 14:58:23 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t			mark_process_status(t_core *shell, pid_t pid, int status)
+int8_t			mark_process_status(t_core *shell, t_lst *jobs, pid_t pid, int status)
 {
 	t_process	*process;
 
 	if (pid > 0)
 	{
-		process = find_process(shell->launched_jobs, pid);
+		process = find_process(jobs, pid);
 		if (process && process->pid == pid)
 		{
 			process->status = status;
@@ -44,7 +44,7 @@ static void		update_status(t_core *shell)
 	int		status;
 
 	pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
-	while (pid > 0 && !mark_process_status(shell, pid, status))
+	while (pid > 0 && !mark_process_status(shell, shell->launched_jobs, pid, status))
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
 }
 
@@ -53,7 +53,7 @@ static void		format_job_info(t_job *job, const char *status)
 	dprintf(STDERR_FILENO, "[%i]   %s\t\t%s\n", job->id, status, job->command);
 }
 
-static void		free_job(t_core *shell, t_lst *job)
+static void	free_job(t_core *shell, t_lst *job)
 {
 	t_lst	*ptr;
 

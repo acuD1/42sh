@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/08 22:39:07 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/09 16:05:51 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,51 @@ void	remove_completed_jobs(t_lst **jobs)
 	}
 }*/
 
+static void	free_job(t_core *shell, t_lst *job)
+{
+	t_lst	*ptr;
+
+	ptr = shell->job_list;
+	if (shell->job_list != job)
+	{
+		while (ptr && ptr->next != job)
+			ptr = ptr->next;
+		ptr->next = job->next;
+	}
+	else
+		shell->job_list = job->next;
+
+	// freeing job link
+	free_process_list(job->content);
+	ft_strdel(&(((t_job*)job->content)->command));
+	free(job->content);
+	free(job);
+}
+
+
+static void	save_job(t_core *shell, t_lst *job)
+{
+	if (!job_is_completed(job->content))
+	{
+		ft_lstappend(&(shell->launched_jobs), job);
+		return ;
+	}
+	free_job(shell, job);
+	job = NULL;
+}
+
 int8_t	task_master(t_core *shell)
 {
 	t_lst *job;
+	t_lst *next;
 
 	job = shell->job_list;
 	while (job)
 	{
-		ft_lstappend(&(shell->launched_jobs), job);
+		next = job->next;
 		launch_job(shell, job->content);
-		job = job->next;
+		save_job(shell, job);
+		job = next;
 	}
 	shell->job_list = NULL;
 	return (SUCCESS);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   continue.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 15:51:08 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/26 15:58:45 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/09 14:57:47 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int8_t	continue_job(t_core *shell, t_job *job, int foreground)
 {
 	mark_job_as_running(job);
 	if (foreground)
-		put_job_in_foreground(shell, job, TRUE);
+		put_job_in_foreground(shell, shell->launched_jobs, job, TRUE);
 	else
 		put_job_in_background(shell, job, TRUE);
 	return (SUCCESS);
