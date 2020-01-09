@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/08 22:02:24 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/09 20:40:20 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,19 @@ static void	sig_exit(int signum)
 	shell = get_core(NULL);
 	quit_shell(shell, 141, (signum == SIGPIPE) ? 0 : 1);
 }
+/*
+static void	sig_chld(int signum)
+{
+	pid_t	pid;
+	pid_t	pgid;
+	int		status;
+
+	(void)signum;
+	pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
+	if (WIFSTOPPED(status))
+		printf("\nsignal : Stopped\n");
+	printf("pid = %d   status = %i\n", pid, WEXITSTATUS(status));
+}*/
 
 static void	sigh_winch(int signum)
 {
@@ -54,7 +67,7 @@ void		init_signals(void)
 	static void (*sighandler[31])(int) = {sig_handler, sigint_handler /* HUP INT */
 		, sig_handler, sig_handler, sig_handler, sig_handler, sig_handler /* QUIT ILL TRAP ABRT EMT */
 		, sig_handler, NULL, sig_handler, sig_handler, sig_handler, sig_exit /*FPE KILL(NULL)BUS SEGV SYS PIPE*/
-		, sig_handler, sig_handler, sig_handler, NULL, SIG_IGN, sig_exit/*ALRM TERM URG STOP(NL) TSTP CONT*/
+		, sig_handler, sig_handler, sig_handler, NULL, SIG_DFL, sig_exit/*ALRM TERM URG STOP(NL) TSTP CONT*/
 		, SIG_DFL, SIG_IGN, SIG_IGN, SIG_DFL, sig_handler, sig_handler /*CHLD TTIN TTOU IO XCPU XFSZ*/
 		, sig_handler, sig_handler, sigh_winch, NULL, sig_handler /*VTALRM PROF WINCH INFO USR1 */
 		, sig_handler}; /* USR2*/

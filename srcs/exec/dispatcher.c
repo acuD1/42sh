@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/09 14:58:44 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/09 20:41:28 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ void	launch_job(t_core *shell, t_job *job)
 		cond = ptr->type;
 		process = process->next;
 	}
-	if (shell->is_interactive && !job_is_completed(job) && process == NULL)
+	if (shell->is_interactive && !job_is_completed(job) && !job_is_stopped(job) && process == NULL)
 		place_job(shell, job, foreground);
 }
