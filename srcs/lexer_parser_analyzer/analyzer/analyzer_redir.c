@@ -38,6 +38,13 @@ t_redir		*fetch_redir(t_redir *redir)
 	return (new);
 }
 
+t_analyzer	*redir_wanalyze(t_analyzer *anal, t_core *shell)
+{
+	anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
+	anal->state = A_WORD;
+	return (anal = redir_analyze(anal, shell));
+}
+
 t_analyzer	*redir_analyze(t_analyzer *anal, t_core *shell)
 {
 	ft_lstappend(&anal->redir_list,
@@ -49,7 +56,6 @@ t_analyzer	*redir_analyze(t_analyzer *anal, t_core *shell)
 
 t_analyzer	*redirect_analyze(t_analyzer *analyzer, t_core *shell)
 {
-	analyzer->job.command = fill_cmd_job(analyzer, 1);
 	analyzer->redir.type = ((t_token*)analyzer->lexer->content)->id;
 	analyzer->state = A_REDIRECT;
 	(void)shell;

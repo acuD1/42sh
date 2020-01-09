@@ -37,10 +37,14 @@ typedef struct s_lexer 	t_lexer;
 typedef struct s_parser	t_parser;
 typedef struct s_analyzer t_analyzer;
 typedef struct s_core t_core;
+typedef struct s_token t_token;
 
 typedef t_analyzer	*(*t_analyze)(t_analyzer*, t_core*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_PARSER_STATE];
 typedef t_lst *(*t_lexing)(t_lexer*, t_lst *);
+typedef char *(*t_exp)(t_token* ,t_core*);
+
+	
 
 typedef struct s_read t_read;
 
@@ -86,13 +90,11 @@ typedef struct	s_hash
 **			COMMAND_LINE
 */
 
-typedef struct s_expan
+typedef struct s_expansion
 {
-	char 			*(*machine)(char* ,t_core*);
-	e_pstate 	id;
-	int 			len;
-	char			*data;
-}		t_expan;
+	int 			erience;
+	t_exp 			sionat[10];
+}		t_expansion;
 
 typedef struct s_lex_exp
 {
@@ -151,6 +153,7 @@ typedef struct			s_process
 	e_pstate			type;
 	t_lst				*assign_list;
 	t_lst				*redir_list;
+	t_lst				*tok_list;
 	char				**av;
 	char				*bin;
 	pid_t				pid;
@@ -167,6 +170,13 @@ typedef struct			s_job
 	e_pstate		type;
 }			t_job;
 
+typedef struct			s_token
+{
+	e_pstate id;
+	char			*data;
+	size_t		  len;
+}			  t_token;
+
 typedef struct			s_analyzer
 {
 	t_anal				analyze;
@@ -176,6 +186,7 @@ typedef struct			s_analyzer
 	t_process		   process;
 	t_redir			 redir;
 	t_db				db;
+	t_token 			tok;
 	t_lst			   *job_list;
 	t_lst			   *process_list;
 	t_lst			   *redir_list;
@@ -191,18 +202,6 @@ typedef struct		s_parser
 	t_graph			graph[NB_PARSER_STATE];
 	e_pstate		state;
 }					t_parser;
-
-typedef struct			s_token
-{
-	e_pstate id;
-	char			*data;
-	size_t		  len;
-}			  t_token;
-
-struct	s_flex
-{
-	int (*flex[128])(t_lexer*, t_lst*);
-};
 
 typedef struct 		 	s_lexer
 {

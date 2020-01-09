@@ -100,9 +100,10 @@
 // 	return (ret);
 // }
 
-char *exp_cmd_subs(char *data, t_core *shell)
+char *exp_cmd_subs(t_token *tok, t_core *shell)
 {
 	(void)shell;
+	printf("EXP_CMD_SUBS [%s]\n", tok->data);
 	// data = cmd_substitution_expansion(data, shell);
-	return (data);
+	return (tok->data);
 }

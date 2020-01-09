@@ -12,20 +12,51 @@
 
 #include "sh42.h"
 
+
+
+// char *start_expansion(t_core *shell, char *data)
+// {
+// 	int 	i;
+
+// 	i = 0;
+// 	if (!data || !shell->env)
+// 		return (data);
+// 	while (i < NB_OF_EXP)
+// 	{
+		// if (!(ft_strncmp(data, expan[i].data, expan[i].len)))
+// 			data = expan[i].machine(data, shell);
+// 		i++;
+// 	}
+// 	return (data);
+// }
+
 uint8_t is_expansion(e_pstate id)
 {
-	if (id == P_TILDEP || id == P_TILDEM || id == P_TILDE
-			|| id == P_DBPARENT || id == P_PARENT || id == P_DBQUOTE
-			|| id == P_BRACKET || id == P_HOOK ||id == P_DOLLAR)
-		return (TRUE);
-	return (FALSE);
+	if (id == P_TILDEP)
+		return (1);
+	else if (id == P_TILDEM)
+		return (2);
+	else if (id == P_TILDE)
+		return (3);
+	else if ( id == P_DBPARENT)
+		return (4);
+	else if ( id == P_PARENT)
+		return (5);
+	else if ( id == P_BRACKET)
+		return (6);
+	else if ( id == P_HOOK)
+		return (7);
+	else if (id == P_DOLLAR)
+		return (8);
+	// else if (id == P_DBQUOTE)
+		// return (9);
+	return (0);
 }
 
-char *exp_error(char *data, t_core *shell)
+char *no_exp(t_token *tok, t_core *shell)
 {
 	(void)shell;
-	printf("EXP_ERROR [%s]\n", data);
-	return (data);
+	return (tok->data);
 }
 
 int8_t add_assign_env(t_lst *lst, t_core *shell)
@@ -53,74 +84,57 @@ int8_t add_assign_env(t_lst *lst, t_core *shell)
 	return (TRUE);
 }
 
-char *start_expansion(t_core *shell, char *data)
+char *exp_dbquote(t_token *tok, t_core *shell)
 {
-	int 	i;
-	t_expan expan[] = 	{
-		{exp_tilde, P_TILDE, 1, "~"},
-		{exp_tilde, P_TILDEP, 2, "~+"},
-		{exp_tilde, P_TILDEM, 2, "~-"},
-		{exp_math, P_DBPARENT, 3, "$(("},
-		{exp_cmd_subs, P_PARENT, 2, "$("},
-		{exp_param, P_BRACKET, 2, "${"},
-		{exp_math, P_HOOK, 2, "$["},
-		{exp_param, P_DOLLAR, 1, "$"},
-	};
-	i = 0;
-	if (!data || !shell->env)
-		return (data);
-	while (i < NB_OF_EXP)
+	int 	index;
+	char 	*str;
+
+	if (!tok || !tok->data || !shell || tok->data[0] != '\"')
+		return (NULL);
+	index = 1;
+	str = tok->data;
+	while (str[index++] && str[index] != '\"')
 	{
-		if (!(ft_strncmp(data, expan[i].data, expan[i].len)))
-			data = expan[i].machine(data, shell);
-		i++;
+		if (str[index] == '$' || str[index] == '~')
+			printf("%s\n", &str[index]);
 	}
-	return (data);
+	return (tok->data);
 }
 
-// char *do_exp_in_dbquote(char *str, t_cre *shell)
-// {
-// 	va parcourir la str et check a chaque ~ ou $ lexpansion si ya pas dexpansion go next et join 
-// }
-
-void		find_expansion(char **tablo, t_core *shell)
+void init_expansionat(t_expansion 	*exp)
 {
-	int		i;
-	char	*tmp;
-
-	i = -1;
-	tmp = NULL;
-	while (tablo[++i])
-	{
-		tmp = ft_strdup(tablo[i]);
-		if (tablo[i][0] == '$' || tablo[i][0] == '~')
-		{
-			//LEAKS
-			tmp = start_expansion(shell, tmp);
-			free(tablo[i]);
-			tablo[i] = ft_strdup(tmp);
-			ft_strdel(&tmp);
-		}
-		// else if (tablo[i][0] == '\"')
-		// {
-		// 	tmp = do_exp_in_dbquote(tmp, shell)
-		// 	free(tablo[i]);
-		// 	tablo[i] = ft_strdup(tmp);
-		// 	ft_strdel(&tmp);
-		// }
-	}
+	exp->erience = 0;
+	exp->sionat[0] = no_exp;
+	exp->sionat[1] = exp_tilde;
+	exp->sionat[2] = exp_tilde;
+	exp->sionat[3] = exp_tilde;
+	exp->sionat[4] = exp_math;
+	exp->sionat[5] = exp_cmd_subs;
+	exp->sionat[6] = exp_param;
+	exp->sionat[7] = exp_math;
+	exp->sionat[8] = exp_param;
+	exp->sionat[9] = exp_dbquote;
 }
 
 void		expansion(t_core *shell, t_process *process)
 {
-	char	**tablo;
+	t_lst *lst;
+	t_expansion exp;
+	char *tmp;
 
-	tablo = NULL;
-	if (!process->av)
+	if (!process->tok_list || !shell)
 		return ;
-	tablo = ft_tabcopy(tablo, process->av);
-	find_expansion(tablo, shell);
-	ft_tabfree(process->av);
-	process->av = ft_tabcopy(process->av, tablo);
-	ft_tabfree(tablo);
+	tmp = NULL;
+	lst = process->tok_list;
+	init_expansionat(&exp);
+	while (lst)
+	{
+		exp.erience = is_expansion(((t_token*)lst->content)->id);
+		if ((tmp = exp.sionat[exp.erience](lst->content, shell)))
+		{
+			process->av = ft_add_arg_cmd_process(process->av, tmp);
+			free (tmp);
+		}
+		lst = lst->next;
+	}
 }

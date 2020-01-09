@@ -32,7 +32,6 @@ t_lst		*backslash_lexer(t_lexer *lx, t_lst *lexer_token)
 		{
 			i++;
 		}
-		printf("%s {%c}\n", lx->buff, lx->buff[i]);
 		if (!(str = ft_strsub(lx->buff, lx->buf_pos, i - lx->buf_pos)))
 			return (lexer_token);
 		if (!(ft_lstappend(&lexer_token, ft_lstnew(
