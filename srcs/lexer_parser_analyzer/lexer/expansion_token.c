@@ -12,19 +12,6 @@
 
 #include "sh42.h"
 
-static	const	t_token	g_exp[] =
-{
-	{P_TILDEP, "~+", 2},
-	{P_TILDEM, "~-", 2},
-	{P_TILDE, "~", 1},
-	{P_DBPARENT, "$((", 3},
-	{P_PARENT, "$(", 2},
-	{P_BRACKET, "${", 2},
-	{P_HOOK, "$[", 2},
-	{P_DOLLAR, "$", 1},
-	{P_EXP_INTERRUPT, NULL, 0}
-};
-
 t_lst	*exp_dbparen(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 {
 	char				*str;
@@ -110,26 +97,45 @@ t_lst	*new_exp(t_lexer *lexer, e_pstate id, t_lst *lst)
 	return (lst);
 }
 
-t_lst	*expansion_lexer(t_lexer *lx, t_lst *lexer_token)
+e_pstate find_expansion(char *str)
 {
-	int					i;
+	const	t_token	exp[] = 	{
+									{P_TILDEP, "~+", 2},
+									{P_TILDEM, "~-", 2},
+									{P_TILDE, "~", 1},
+									{P_DBPARENT, "$((", 3},
+									{P_PARENT, "$(", 2},
+									{P_BRACKET, "${", 2},
+									{P_HOOK, "$[", 2},
+									{P_DOLLAR, "$", 1},
+									{P_EXP_INTERRUPT, NULL, 0}
+								};
+	int 				i;
 
 	i = 0;
+	while (exp[i].id != P_EXP_INTERRUPT)
+	{
+		if (!ft_strncmp(str, exp[i].data, exp[i].len))
+			return (exp[i].id);
+		i++;
+	}
+	return (P_EXP_INTERRUPT);
+}
+
+t_lst	*expansion_lexer(t_lexer *lx, t_lst *lexer_token)
+{
+	e_pstate		state;
+
+	state = P_EXP_INTERRUPT;
 	if (!lx->buff)
 	{
 		lx->status = L_END;
 		return (lexer_token);
 	}
-	while (g_exp[i].id != P_EXP_INTERRUPT)
-	{
-		if (!ft_strncmp(&lx->buff[lx->buf_pos], g_exp[i].data, g_exp[i].len))
-		{
-			if ((lexer_token = new_exp(lx, g_exp[i].id, lexer_token)))
+	if ((state = find_expansion(&lx->buff[lx->buf_pos])) != P_EXP_INTERRUPT)
+		if ((lexer_token = new_exp(lx, state, lexer_token)))
 				return (lexer_token);
-		}
-		i++;
-	}
-	if (i == NB_OF_EXP)
+	if (state == P_EXP_INTERRUPT)
 		lexer_token = word_lexer(lx, lexer_token);
 	lx->status = L_START;
 	return (lexer_token);

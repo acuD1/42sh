@@ -48,14 +48,15 @@ uint8_t is_expansion(e_pstate id)
 		return (7);
 	else if (id == P_DOLLAR)
 		return (8);
-	// else if (id == P_DBQUOTE)
-		// return (9);
+	else if (id == P_DBQUOTE)
+		return (9);
 	return (0);
 }
 
-char *no_exp(t_token *tok, t_core *shell)
+char *no_exp(t_token *tok, t_core *shell, t_expansion *exp)
 {
 	(void)shell;
+	(void)exp;
 	return (tok->data);
 }
 
@@ -84,19 +85,57 @@ int8_t add_assign_env(t_lst *lst, t_core *shell)
 	return (TRUE);
 }
 
-char *exp_dbquote(t_token *tok, t_core *shell)
+static char *get_exp_indbquote(char *str, t_expansion exp, t_token *tok, t_core *shell)
+{
+	int i;
+	e_pstate state;
+	char *tmp;
+
+	i = 2;
+	state = P_EXP_INTERRUPT;
+	tmp = NULL;
+	if (!str)
+		return (tmp);
+	(void)exp;
+	(void)shell;
+	(void)tok;
+	if ((state = find_expansion(str)) != P_EXP_INTERRUPT)
+	{
+		// printf("%s\n", exp->sionat[state](tok, shell, exp));
+		printf("state %u\n", state);
+		// if ((tmp = exp.sionat[state](tok, shell, &exp)))
+		// {
+			// printf("le res poto %s\n", tmp);
+			// return (tmp);
+		// }
+	}
+	return (str);
+}
+
+char *exp_dbquote(t_token *tok, t_core *shell, t_expansion *exp)
 {
 	int 	index;
+	int 	trigger;
 	char 	*str;
+	char 	*ret;
+	char 	*new;
 
-	if (!tok || !tok->data || !shell || tok->data[0] != '\"')
+	if (!tok || !tok->data || !shell || !shell->env)
 		return (NULL);
-	index = 1;
+	printf("CA RENTRE\n");
+	index = 0;
+	trigger = 0;
 	str = tok->data;
+	new = NULL;
+	ret = ft_strnew(0);
 	while (str[index++] && str[index] != '\"')
 	{
 		if (str[index] == '$' || str[index] == '~')
-			printf("%s\n", &str[index]);
+		{
+			get_exp_indbquote(&str[index], *exp, tok, shell);
+			printf("old [%s]\n", &str[index]);
+			// ret = ft_strjoinf(ret, new, 4);
+		}
 	}
 	return (tok->data);
 }
@@ -130,7 +169,7 @@ void		expansion(t_core *shell, t_process *process)
 	while (lst)
 	{
 		exp.erience = is_expansion(((t_token*)lst->content)->id);
-		if ((tmp = exp.sionat[exp.erience](lst->content, shell)))
+		if ((tmp = exp.sionat[exp.erience](lst->content, shell, &exp)))
 		{
 			process->av = ft_add_arg_cmd_process(process->av, tmp);
 			free (tmp);

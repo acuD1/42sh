@@ -1,11 +1,12 @@
 #include "sh42.h"
 
-char 	*exp_tilde(t_token *tok, t_core *shell)
+char 	*exp_tilde(t_token *tok, t_core *shell, t_expansion *exp)
 {
 	t_db *db_tmp;
 	char *path[] = {"HOME", "OLDPWD", "PWD"};
 	int i;
 
+	(void)exp;
 	i = 0;
 	db_tmp = NULL;
 	if (!tok->data && !tok->data[0])

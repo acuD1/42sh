@@ -38,11 +38,12 @@ typedef struct s_parser	t_parser;
 typedef struct s_analyzer t_analyzer;
 typedef struct s_core t_core;
 typedef struct s_token t_token;
+typedef struct s_expansion t_expansion;
 
 typedef t_analyzer	*(*t_analyze)(t_analyzer*, t_core*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_PARSER_STATE];
 typedef t_lst *(*t_lexing)(t_lexer*, t_lst *);
-typedef char *(*t_exp)(t_token* ,t_core*);
+typedef char *(*t_exp)(t_token* ,t_core*, t_expansion*);
 
 	
 

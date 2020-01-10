@@ -80,7 +80,7 @@ void		init_prompt(t_core *shell)
 		if (check_subprompt(&shell->term) == FALSE)
 		{
 			// remove_newline(term);
-			check_expansions(&shell->term);
+			// check_expansions(&shell->term);
 		}
 //	}
 	reset_config(shell);
