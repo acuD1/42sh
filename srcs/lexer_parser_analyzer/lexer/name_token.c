@@ -12,79 +12,47 @@
 
 #include "sh42.h"
 
-t_lst		*quote_lexer(t_lexer *lexer, t_lst *lexer_token)
+int 	get_word_size_ntype(int i, char *str, e_pstate *state)
 {
-	int		i;
-	char	*str;
+	int index;
+	e_pstate stat;
 
-	i = lexer->buf_pos + 1;
-	str = NULL;
-	while (lexer->buff[i] && lexer->buff[i] != '\'')
-		i++;
-	i++;
-	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
-		return (NULL);
-	ft_lstappend(&lexer_token, ft_lstnew(
-		fetch_token(&lexer->token, P_QUOTE, str), sizeof(t_token)));
-	free(str);
-	lexer->ntok++;
-	lexer->buf_pos = i;
-	return (lexer_token);
-}
-
-t_lst		*dbquote_lexer(t_lexer *lexer, t_lst *lexer_token)
-{
-	int		i;
-	char	*str;
-
-	i = lexer->buf_pos + 1;
-	str = NULL;
-	while (lexer->buff[i] && lexer->buff[i] != '\"')
-		i++;
-	i++;
-	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
-		return (NULL);
-	ft_lstappend(&lexer_token, ft_lstnew(
-		fetch_token(&lexer->token, P_DBQUOTE, str), sizeof(t_token)));
-	free(str);
-	lexer->ntok++;
-	lexer->buf_pos = i;
-	return (lexer_token);
-}
-
-t_lst		*bquote_lexer(t_lexer *lexer, t_lst *lexer_token)
-{
-	int		i;
-	char	*str;
-
-	i = lexer->buf_pos + 1;
-	str = NULL;
-	while (lexer->buff[i] && lexer->buff[i] != '`')
-		i++;
-	i++;
-	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
-		return (NULL);
-	ft_lstappend(&lexer_token, ft_lstnew(
-		fetch_token(&lexer->token, P_BQUOTE, str), sizeof(t_token)));
-	free(str);
-	lexer->ntok++;
-	lexer->buf_pos = i;
-	return (lexer_token);
+	if (!str || !str[i])
+		return (0);
+	index = i;
+	stat = *state;
+	while (str[index] && (!ft_strchr(CHAR_INTERRUPT, str[index])))
+	{
+		if (str[index] == '\'')
+			while (str[index++] && str[index] != '\'')
+				stat = P_QUOTE;
+		if (str[index] == '\"')
+			while (str[index++] && str[index] != '\"')
+				stat = P_DBQUOTE;
+		if (str[index] == '`')
+			while (str[index++] && str[index] != '`')
+				stat = P_BQUOTE;
+		index++;
+	}
+	*state = stat;
+	return (index);
 }
 
 t_lst		*word_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	int		i;
 	char	*str;
+	e_pstate state;
 
 	i = lexer->buf_pos;
 	str = NULL;
-	while (!ft_strchr(CHAR_INTERRUPT, lexer->buff[i]) && lexer->buff[i])
-		i++;
+	state = P_WORD;
+	if (!(i = get_word_size_ntype(i, lexer->buff, &state)))
+		return (NULL);
 	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
 		return (NULL);
 	ft_lstappend(&lexer_token, ft_lstnew(
-		fetch_token(&lexer->token, P_WORD, str), sizeof(t_token)));
+		fetch_token(&lexer->token, state, str), sizeof(t_token)));
 	free(str);
 	lexer->ntok++;
 	lexer->buf_pos = i;
@@ -98,13 +66,7 @@ t_lst		*name_lexer(t_lexer *lexer, t_lst *lexer_token)
 		lexer->status = L_END;
 		return (lexer_token);
 	}
-	if (lexer->buff[lexer->buf_pos] == '\"')
-		lexer_token = dbquote_lexer(lexer, lexer_token);
-	else if (lexer->buff[lexer->buf_pos] == '`')
-		lexer_token = bquote_lexer(lexer, lexer_token);
-	else if (lexer->buff[lexer->buf_pos] == '\'')
-		lexer_token = quote_lexer(lexer, lexer_token);
-	else if (ft_strchr(EXPANSION, lexer->buff[lexer->buf_pos]))
+	if (ft_strchr(EXPANSION, lexer->buff[lexer->buf_pos]))
 		lexer_token = expansion_lexer(lexer, lexer_token);
 	else
 		lexer_token = word_lexer(lexer, lexer_token);

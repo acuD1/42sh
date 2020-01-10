@@ -61,7 +61,7 @@ char *no_exp(t_token *tok, t_core *shell)
 
 int8_t add_assign_env(t_lst *lst, t_core *shell)
 {
-	char	*value;
+	char	*value;	
 	t_lst	*tmp;
 	
 	if (!lst || !shell->env)
