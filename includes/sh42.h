@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/09 14:57:20 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/10 21:03:38 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,13 +146,14 @@ int8_t		update_last_arg(t_core *shell, char **argv);
 int8_t		builtin_set(t_core *shell, t_process *process);
 int8_t		builtin_unset(t_core *shell, t_process *process);
 int8_t		builtin_export(t_core *shell, t_process *process);
-//int8_t		builtin_fc(t_core *shell, t_process *process);
 int8_t		builtin_exit(t_core *shell, t_process *process);
 int8_t		builtin_cd(t_core *shell, t_process *process);
 int8_t		builtin_echo(t_core *shell, t_process *process);
 int8_t		builtin_pwd(t_core *shell, t_process *process);
 int8_t		builtin_type(t_core *shell, t_process *process);
 int8_t		builtin_fg(t_core *shell, t_process *process);
+int8_t		builtin_jobs(t_core *shell, t_process *process);
+int8_t		builtin_bg(t_core *shell, t_process *process);
 
 int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
 void		listing_mode(t_lst *saved, u_int64_t opt, char **range);

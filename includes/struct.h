@@ -157,7 +157,8 @@ typedef struct		s_job
 	t_lst			*process_list;
 	pid_t			pgid;
 	char			*command;
-	int				id;
+	int				jobc_id;
+	char			jobc_last;
 }					t_job;
 
 typedef struct		s_analyzer

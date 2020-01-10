@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/09 20:41:28 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:04:43 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	launch_job(t_core *shell, t_job *job)
 	infile = STDIN_FILENO;
 	process = job->process_list;
 	foreground = (job->type == P_AND) ? FALSE : TRUE;
-	job->id = 0;
+	job->jobc_id = 0;
 	while (process)
 	{
 		ptr = ((t_process*)process->content);

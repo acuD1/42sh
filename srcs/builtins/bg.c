@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fg.c                                               :+:      :+:    :+:   */
+/*   bg.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:59:13 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/10 19:33:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/10 20:55:34 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static t_job	*get_job_by_name(t_lst *jobs, char *str)
 	return (NULL);
 }
 
-int8_t	builtin_fg(t_core *shell, t_process *process)
+int8_t	builtin_bg(t_core *shell, t_process *process)
 {
 	t_job	*job;
 	int		argc;
@@ -73,10 +73,9 @@ int8_t	builtin_fg(t_core *shell, t_process *process)
 		job = get_last_job(shell->launched_jobs);
 	if (!job)
 	{
-		dprintf(STDERR_FILENO, "42sh: fg: %s: no such job\n", (process->av[1]) ? process->av[1] : "current");
+		dprintf(STDERR_FILENO, "42sh: bg: %s: no such job\n", (process->av[1]) ? process->av[1] : "current");
 		return (1);
 	}
-	printf("%s\n", job->command);
-	continue_job(shell, job, TRUE);
+	printf("BG :%s\n", job->command);
 	return (SUCCESS);
 }
