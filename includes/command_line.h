@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/06 14:01:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/11 04:44:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,15 @@ void			clr_screen(t_read *term);
 */
 
 int8_t			init_history(t_read *term);
+int8_t			write_history(t_read *term);
 void			save_history(t_read *term);
 void			research_mode(t_read *term);
-int8_t			write_history(t_read *term);
 void			check_expansions(t_read *term);
-void			call_number(t_read *term, int i);
-void			callback_number(t_read *term, int i);
-void			call_word(t_read *term, int i);
-void			last_cmd_back(t_read *term, int i);
+void			insert_content(int j, int i, t_read *term, char *content);
+int64_t			call_number(t_read *term, int i);
+int64_t			callback_number(t_read *term, int i);
+int64_t			call_word(t_read *term, int i);
+int64_t			last_cmd_back(t_read *term, int i);
 
 /*
 **		Quotes and Subprompt/Multiline

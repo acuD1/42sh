@@ -6,36 +6,32 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/07 18:25:41 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/11 04:49:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t debugu(const char *path, int i, int j, char c, char *tmp)
+int8_t debugu(const char *path, int i, char c)
 {
     int fd;
 
     if ((fd = open(path, O_WRONLY)) < 0)
         return (-1);
-    dprintf(fd,"i[%d] j{%d} \"%c\" after[%s]\n", i,j,c, tmp);
+    dprintf(fd,"i[%d] c{%c}\n", i,c);
     return (1);
 }
 
 void		find_expansions(t_read *term, int *i)
 {
-	debugu("/dev/ttys001",*i, 0, term->buffer[*i + 1], NULL);
 	if (term->buffer[*i + 1] == '!')
-	{
-		last_cmd_back(term, *i);
-		(*i)++;
-	}
+		*i = last_cmd_back(term, *i);
 	else if (ft_isdigit(term->buffer[*i + 1]))
-		call_number(term, *i);
+		*i = call_number(term, *i);
 	else if (ft_isalpha(term->buffer[*i + 1]))
-		call_word(term, *i);
+		*i = call_word(term, *i);
 	else if (term->buffer[*i + 1] == '-' && ft_isdigit(term->buffer[*i + 2]))
-		callback_number(term, *i);
+		*i = callback_number(term, *i);
 }
 
 void		check_expansions(t_read *term)
@@ -50,7 +46,6 @@ void		check_expansions(t_read *term)
 	buff_len = ft_strlen(term->buffer);
 	while (buff_len--)
 	{
-	debugu("/dev/ttys001",i, buff_len, term->buffer[i], NULL);
 		if (term->buffer[++i] == '!')
 			find_expansions(term, &i);
 	}
