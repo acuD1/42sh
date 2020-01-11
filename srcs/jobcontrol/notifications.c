@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/10 19:21:14 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/11 22:07:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ int8_t			mark_process_status(t_core *shell, t_lst *jobs, pid_t pid, int status)
 
 	if (pid > 0)
 	{
-		process = find_process(jobs, pid);
-		if (process && process->pid == pid)
+		if ((process = find_process(jobs, pid)) && process->pid == pid)
 		{
-			process->status = status;
 			if (WIFSTOPPED(status))
 			{
-				process->status = status;
+				printf("\n");
+				process->status = 18;
 				process->stopped = TRUE;
 			}
 			else
 			{
 				process->completed = TRUE;
+				process->status = (WIFEXITED(status)) ? WTERMSIG(status) : WEXITSTATUS(status);
 				status_handler(shell, status);
 			}
 			return (SUCCESS);
@@ -87,7 +87,7 @@ static void	attr_jobc_id(t_core *shell, t_job *job)
 	while (jobs)
 	{
 		ptr = ((t_job*)jobs->content);
-		if (ptr->jobc_id > c)
+		if (ptr != job && ptr->jobc_id > c)
 			c = ptr->jobc_id;
 		ptr->jobc_last = (ptr->jobc_last == '+') ? '-' : ' ';
 		jobs = jobs->next;

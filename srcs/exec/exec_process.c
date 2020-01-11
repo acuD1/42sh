@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/09 19:28:02 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/11 21:57:43 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,10 @@ void	exec_process(t_job *job, t_process *process, int infile, int outfile)
 		process->pgid = job->pgid;
 		if (setpgid(process->pid, process->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: setpgid error\n");
-		if (process->stopped != TRUE
-		&& infile == STDIN_FILENO && outfile == STDOUT_FILENO
-		&& tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
-			print_and_quit(shell, "42sh: tcsetpgrp error (1)\n");
-
-		if (infile == STDIN_FILENO && outfile == STDOUT_FILENO && process->stopped != TRUE)
+		if (process->stopped != TRUE && infile == STDIN_FILENO && outfile == STDOUT_FILENO)
 		{
+			if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
+				print_and_quit(shell, "42sh: tcsetpgrp error (1)\n");
 			wait_for_process(shell, shell->job_list, process);
 			if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
 				print_and_quit(shell, "42sh: tcsetpgrp error (2)\n");

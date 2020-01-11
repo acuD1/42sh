@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/10 21:03:38 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/11 16:19:48 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void		print_usage(char *name, int c, char *usage);
 void		quit_shell(t_core *shell, int exit_value, int8_t verbose);
 void		print_and_quit(t_core *shell, char *message);
 int			check_invalid_identifiers(char *arg, char *exceptions);
+char		*signal_msg(int sig);
 
 /*
 **	===========================================================================

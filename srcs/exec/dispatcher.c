@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/10 18:04:43 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/11 21:44:43 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,12 @@ void	launch_job(t_core *shell, t_job *job)
 		setup_pipes(shell, ptr, mypipe, &outfile);
 
 		ptr->stopped = (foreground == TRUE) ? FALSE : TRUE;
+		ptr->status = 21;
 		if (condition_fulfilled(shell, cond) == SUCCESS)
 		{
 			expansion(shell, ptr);
 			add_assign_env(shell, ptr);
-			if (infile == STDIN_FILENO && outfile == STDOUT_FILENO)
+			if (infile == STDIN_FILENO && outfile == STDOUT_FILENO && foreground == TRUE)
 				launch_blt(shell, ptr);
 			if (ptr->completed != TRUE)
 				exec_process(job, ptr, infile, outfile);
