@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/26 15:25:05 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/11 15:13:35 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,42 +31,6 @@ void	free_prompt(t_core *shell)
 {
 	ft_strdel(&shell->term.buffer);
 	ft_freejoblist(&shell->job_list);
-}
-
-void	reset_hash(t_hash *hash)
-{
-	free(hash->map);
-	hash->map = NULL;
-	hash->lenght = 0;
-	hash->size = HASH_SIZE;
-}
-
-void	free_hash_map(t_hash *hash)
-{
-	t_lst	*tmp;
-	size_t	i;
-
-	i = 0;
-	if (!hash->map)
-		return ;
-	while (i < hash->size)
-	{
-		if (ft_lstlen(hash->map[i]) > 0)
-		{
-			tmp = NULL;
-			while (hash->map[i])
-			{
-				ft_strdel(&((t_db*)(hash->map[i]->content))->key);
-				ft_strdel(&((t_db*)(hash->map[i]->content))->value);
-				free(hash->map[i]->content);
-				tmp = hash->map[i];
-				hash->map[i] = hash->map[i]->next;
-				free(tmp);
-			}
-		}
-		i++;
-	}
-	reset_hash(hash);
 }
 
 void	free_history(t_read *term)

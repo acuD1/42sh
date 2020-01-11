@@ -6,14 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:20:26 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/26 15:22:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/11 15:19:05 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <errno.h>
 
-int8_t	del_located_hash(t_core *shell, t_lst *node, t_process *process)
+static int8_t	del_located_hash(t_core *shell, t_lst *node, t_process *process)
 {
 	if (((t_db*)node->content)->value[0] == '.'
 		&& ((t_db*)node->content)->value[1] == '/'
@@ -25,7 +25,7 @@ int8_t	del_located_hash(t_core *shell, t_lst *node, t_process *process)
 	return (SUCCESS);
 }
 
-int8_t	locate_hash(t_core *shell, t_process *process)
+int8_t			locate_hash(t_core *shell, t_process *process)
 {
 	t_lst		*sub_map;
 

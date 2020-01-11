@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:01:15 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/28 17:28:08 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/11 14:40:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int8_t	fill_new_hash_map
 					((t_db*)(sub_map->content))->key,
 					((t_db*)(sub_map->content))->value,
 					((t_db*)(sub_map->content))->hit), sizeof(t_db)))))
-					return (FAILURE);
+				return (FAILURE);
 			sub_map = sub_map->next;
 		}
 		i++;

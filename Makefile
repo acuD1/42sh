@@ -205,7 +205,9 @@ SRC			+=	$(S_PATH)$(HASH)get_hash.c
 SRC			+=	$(S_PATH)$(HASH)locate_hash.c
 SRC			+=	$(S_PATH)$(HASH)resize_hash_map.c
 SRC			+=	$(S_PATH)$(HASH)hash.c
-SRC			+=	$(S_PATH)$(HASH)hash_error.c
+SRC			+=	$(S_PATH)$(HASH)hash_handler.c
+SRC			+=	$(S_PATH)$(HASH)hash_opt.c
+SRC			+=	$(S_PATH)$(HASH)hash_opt_tools.c
 
 #SRC			+=	$(S_PATH)$(BLT_FC)fc.c
 #SRC			+=	$(S_PATH)$(BLT_FC)fc_edit.c
@@ -255,6 +257,7 @@ HDR			+=	expansion.h
 HDR			+=	struct.h
 HDR			+=	lexer_parser_analyzer.h
 HDR			+=	command_line.h
+HDR			+=	enum.h
 HDR			+=	shared_libft.h
 ###############################################################################
 #                                                                             #

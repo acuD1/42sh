@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/28 18:46:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/11 15:26:31 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,22 @@ void		status_handler(t_core *shell, int status);
 u_int32_t	get_hash(char *line, u_int32_t size);
 int8_t		locate_hash(t_core *shell, t_process *process);
 void		hash_map_dispatcher
-	(t_core *shell, t_process *process, u_int8_t format);
+	(t_core *shell, t_process *process, e_hash fmt);
 int8_t		resize_hash_map(t_core *shell);
 void		free_hash_map(t_hash *hash);
 t_db		*fetch_hash_db
-	(t_db *db, const char *key, const char *value, u_int8_t format);
+	(t_db *db, const char *key, const char *value, e_hash fmt);
 void 		hash_key_remover(t_core *shell, char *process);
+int8_t		hash_l(t_core *shell, t_process *process, int ac);
+int8_t		hash_r(t_core *shell, t_process *process, int ac);
+int8_t		hash_p(t_core *shell, t_process *process, int ac);
+int8_t		hash_d(t_core *shell, t_process *process, int ac);
+int8_t		hash_t(t_core *shell, t_process *process, int ac);
+void		print_hash_map(t_core *shell, e_hash fmt);
+void		find_hash(t_core *shell, t_process *process, int ac);
+void		free_hash_key(t_hash *hash, t_lst *map);
 void		hash_error(t_hash *hash);
+
 
 /*
 **	===========================================================================

@@ -3,16 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   enum.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:28:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/11 23:35:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/09 11:14:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENUM_H
 # define ENUM_H
 
+/*
+**  HASH
+*/
+
+typedef enum hash
+{
+    H_DEF,
+    H_EXEC,
+    H_PATH,
+    H_LISTED,
+    H_ABORT
+}           e_hash;
 /*
 ** 	LEXER_PARSER_ANALYZER
 */
