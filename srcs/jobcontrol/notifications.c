@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/11 22:07:36 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/12 23:16:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int8_t			mark_process_status(t_core *shell, t_lst *jobs, pid_t pid, int status)
 	return (FAILURE);
 }
 
-static void		update_status(t_core *shell)
+void		update_status(t_core *shell)
 {
 	pid_t	pid;
 	int		status;

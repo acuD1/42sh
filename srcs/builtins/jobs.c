@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/11 21:50:17 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/12 23:14:00 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	print_longjob(t_job *job)
 		if (ptr == job->process_list)
 			printf("[%d]%c %d %-24s %s\n", job->jobc_id, job->jobc_last, process->pid, signal_msg(process->status),"process->cmd");
 		else
-			printf("     %d %24s%s\n", process->pid, signal_msg(process->status), "process->command");
+			printf("     %d %24s%s\n", process->pid, (job_is_stopped(job)) ? "Stopped" : signal_msg(process->status), "process->command");
 		ptr = ptr->next;
 	}
 }
@@ -50,6 +50,8 @@ int8_t	builtin_jobs(t_core *shell, t_process *process)
 
 	argc = ft_tablen(process->av);
 	job = shell->launched_jobs;
+	if (shell->launched_jobs)
+		update_status(shell);
 	if ((opt = get_options(argc, process->av, "lp")) & OPT_ERROR)
 		print_usage("42sh: jobs", opt & 0xFF, "jobs [-lp] [jobspec ...]");
 	while (job)

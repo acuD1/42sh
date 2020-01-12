@@ -6,27 +6,11 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/09 19:29:35 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/12 21:33:49 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-/*
-void	remove_completed_jobs(t_lst **jobs)
-{
-	t_lst	*ptr;
-	t_lst	*next;
-
-	ptr = *jobs;
-	while (ptr)
-	{
-		next = ptr->next;
-		if (job_is_completed(ptr->content)
-			free_job(shell, ptr);
-		ptr = next;
-	}
-}*/
 
 static void	free_job(t_core *shell, t_lst *job)
 {
@@ -72,6 +56,7 @@ int8_t	task_master(t_core *shell)
 		next = job->next;
 		launch_job(shell, job->content);
 		save_job(shell, job);
+		do_job_notification(shell);
 		job = next;
 	}
 	shell->job_list = NULL;
