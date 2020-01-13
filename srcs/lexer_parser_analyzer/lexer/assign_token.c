@@ -35,13 +35,8 @@ static int		get_assign_word_size(t_lexer *lex, int len)
 {
 	if (!lex || !lex->buff || !len)
 		return (lex->buf_pos);
-	while (lex->buff[len])
-	{
-		if (lex->buff[len] == '_' || ft_isdigit(lex->buff[len]) || ft_isalpha(lex->buff[len]))
+	while (lex->buff[len] && !ft_strchr(CHAR_INTERRUPT, lex->buff[len]))
 			len++;
-		else
-			break;
-	}
 	return (len);
 }
 

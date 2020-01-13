@@ -152,10 +152,12 @@ typedef struct	s_redir
 typedef struct			s_process
 {
 	e_pstate			type;
+	char				*command;
 	t_lst				*assign_list;
 	t_lst				*redir_list;
 	t_lst				*tok_list;
 	char				**av;
+	char				**envp;
 	char				*bin;
 	pid_t				pid;
 }						t_process;

@@ -21,7 +21,7 @@ int 	get_word_size_ntype(int i, char *str, e_pstate *state)
 		return (0);
 	index = i;
 	stat = *state;
-	while (str[index] && (!ft_strchr(CHAR_INTERRUPT, str[index])))
+	while (str[index] && (!ft_strchr(CHAR_INTERRUPT, str[index]) && !ft_strchr(EXPANSION, str[index])))
 	{
 		if (str[index] == '\'')
 			while (str[index++] && str[index] != '\'')
