@@ -169,9 +169,9 @@ SRC			+=	$(S_PATH)$(JOBC)continue.c
 SRC			+=	$(S_PATH)$(JOBC)foreground.c
 SRC			+=	$(S_PATH)$(JOBC)job_utils.c
 SRC			+=	$(S_PATH)$(JOBC)launch_process.c
-#SRC			+=	$(S_PATH)$(JOBC)launch_job.c
 SRC			+=	$(S_PATH)$(JOBC)notifications.c
 SRC			+=	$(S_PATH)$(JOBC)wait_job.c
+SRC			+=	$(S_PATH)$(JOBC)get_job.c
 
 SRC			+=	$(S_PATH)$(HISTORY)save_history.c
 SRC			+=	$(S_PATH)$(HISTORY)search_in_history.c

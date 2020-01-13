@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/13 17:09:58 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/13 20:49:39 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void		update_status(t_core *shell)
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
 }
 
-static void		format_job_info(t_job *job, const char *status)
+void		format_job_info(t_job *job, const char *status)
 {
 	dprintf(STDERR_FILENO, "[%i]%c  %s\t\t%s\n", job->jobc_id, job->jobc_last, status, job->command);
 }
