@@ -6,13 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:38:40 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/13 08:33:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 11:02:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int8_t	fill_exec(t_core *shell, char *key, char *value, enum e_hash fmt)
+static int8_t	fill_exec
+	(t_core *shell, char *key, char *value, enum e_hash fmt)
 {
 	float	load_factor;
 
