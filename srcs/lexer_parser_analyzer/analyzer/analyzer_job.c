@@ -19,31 +19,31 @@ void		init_job(t_job *new)
 	new->process_list = NULL;
 }
 
-t_job		*fetch_job(t_job *job)
-{
-	t_job	*new;
+// t_job		*fetch_job(t_job *job)
+// {
+// 	t_job	*new;
 
-	if (!job)
-		return (NULL);
-	new = job;
-	new->type = job->type;
-	if (job->command)
-		new->command = job->command;
-	else
-		new->command = NULL;
-	if (job->process_list)
-		new->process_list = job->process_list;
-	else
-		new->process_list = NULL;
-	return (new);
-}
+// 	if (!job)
+// 		return (NULL);
+// 	new = job;
+// 	new->type = job->type;
+// 	if (job->command)
+// 		new->command = job->command;
+// 	else
+// 		new->command = NULL;
+// 	if (job->process_list)
+// 		new->process_list = job->process_list;
+// 	else
+// 		new->process_list = NULL;
+// 	return (new);
+// }
 
 t_analyzer	*job_analyze(t_analyzer *anal, t_core *shell)
 {
 	anal = process_analyze(anal, shell);
 	anal->job.process_list = anal->process_list;
 	ft_lstappend(&anal->job_list,
-		ft_lstnew(fetch_job(&anal->job), sizeof(t_job)));
+		ft_lstnew(&anal->job, sizeof(t_job)));
 	anal->process_list = NULL;
 	init_job(&anal->job);
 	if (anal->lexer->next

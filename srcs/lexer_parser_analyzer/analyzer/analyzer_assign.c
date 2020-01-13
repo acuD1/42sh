@@ -38,18 +38,22 @@ t_db		*fetch_assign(t_db *assign)
 
 t_analyzer	*ass_analyze(t_analyzer *anal)
 {
-	char **tablo;
+	int i;
+	int j;
+	char *str;
 
-	tablo = NULL;
-	if (!(tablo = ft_strsplit(((t_token*)anal->lexer->content)->data, "=")))
-		return (anal);
-	anal->db.key = ft_strdup(tablo[0]);
-	if (tablo[1])
-		anal->db.value = ft_strdup(tablo[1]);
-	else
-		anal->db.value = ft_strdup("(null)");
+	i = 0;
+	j = 0;
+	str = ((t_token*)anal->lexer->content)->data;
+	while (str[i] != '=')
+		i++;
+	anal->db.key = ft_strsub(str, 0, i);
+	j = i++;
+	while (str[j])
+		j++;
+	anal->db.value = ft_strsub(str, i, j - i);
 	ft_lstappend(&anal->process.assign_list,
-		ft_lstnew(fetch_assign(&anal->db), sizeof(t_db)));
+		ft_lstnew(&anal->db, sizeof(t_db)));
 	init_assign(&anal->db);
 	anal->process.type = ((t_token*)anal->lexer->content)->id;
 	anal->state = A_ASSIGN;
@@ -61,6 +65,7 @@ t_analyzer	*assign_analyze(t_analyzer *anal, t_core *shell)
 	char	*tmp;
 
 	tmp = NULL;
+	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command, 1);
 	if (((t_token*)anal->lexer->content)->id == P_ASSIGN
 		&& ((anal->state != A_WORD)))
 		return (anal = ass_analyze(anal));

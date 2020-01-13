@@ -59,15 +59,46 @@ t_lst		*word_lexer(t_lexer *lexer, t_lst *lexer_token)
 	return (lexer_token);
 }
 
+t_lst	*expansion_lexer(t_lexer *lx, t_lst *lexer_token)
+{
+	e_pstate		state;
+	char *str;
+
+	state = P_EXP_INTERRUPT;
+	str = NULL;
+	if (!lx->buff)
+	{
+		lx->status = L_END;
+		return (lexer_token);
+	}
+	if ((state = find_expansion(&lx->buff[lx->buf_pos])) != P_EXP_INTERRUPT)
+	{
+		str = get_expansion(&lx->buff[lx->buf_pos], state);
+		ft_lstappend(&lexer_token, ft_lstnew(
+			fetch_token(&lx->token, state, str), sizeof(t_token)));
+		lx->ntok++;
+		lx->buf_pos += ft_strlen(str);
+		ft_strdel(&str);
+		return (lexer_token);
+	}
+	lx->status = L_START;
+	return (lexer_token = word_lexer(lx, lexer_token));
+}
+
 t_lst		*name_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
+	char *str;
+
+	str = NULL;
 	if (lexer->buff == '\0')
 	{
 		lexer->status = L_END;
 		return (lexer_token);
 	}
 	if (ft_strchr(EXPANSION, lexer->buff[lexer->buf_pos]))
+	{
 		lexer_token = expansion_lexer(lexer, lexer_token);
+	}
 	else
 		lexer_token = word_lexer(lexer, lexer_token);
 	lexer->status = L_START;

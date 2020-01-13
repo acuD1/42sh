@@ -141,8 +141,10 @@ SRC		+=	$(S_PATH)$(LEXER)lexer.c
 SRC		+=	$(S_PATH)$(LEXER)name_token.c
 SRC		+=	$(S_PATH)$(LEXER)io_nbr_nwl_token.c
 SRC		+=	$(S_PATH)$(LEXER)operator_token.c
-SRC		+=	$(S_PATH)$(LEXER)expansion_token.c
-SRC		+=	$(S_PATH)$(LEXER)expansion_token_bis.c
+SRC		+=	$(S_PATH)$(LEXER)exp.c
+SRC		+=	$(S_PATH)$(LEXER)exp_bis.c
+# SRC		+=	$(S_PATH)$(LEXER)expansion_token.c
+# SRC		+=	$(S_PATH)$(LEXER)expansion_token_bis.c
 SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
 
 SRC		+=	$(S_PATH)$(PARSER)parser.c

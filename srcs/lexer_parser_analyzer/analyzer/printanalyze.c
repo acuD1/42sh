@@ -57,6 +57,7 @@ void			ft_printprocess(t_process *process)
 	dprintf(nono("/dev/ttys002"), "process state %u\n", tmp->type);
 	if (tmp->av)
 		ft_printtab(tmp->av);
+	dprintf(nono("/dev/ttys002"), "process cmd {%s}\n", tmp->command);
 	if (tmp->tok_list)
 	{
 		ttp = tmp->tok_list; 
@@ -77,8 +78,6 @@ void			ft_printjob(t_job *job)
 		return ;
 	tmp = job;
 	dprintf(nono("/dev/ttys002"), "job state %u\n", tmp->type);
-	// if (tmp->command)
-		// dprintf(nono("/dev/ttys002"), "job command [%s]\n", tmp->command);
 }
 
 void			ft_printjoblst(t_lst *list)
@@ -93,6 +92,8 @@ void			ft_printjoblst(t_lst *list)
 	while (job)
 	{
 		ft_printjob((t_job*)job->content);
+		if (((t_job*)job->content)->command)
+			dprintf(nono("/dev/ttys002"), "job cmd {%s}\n", ((t_job*)job->content)->command);
 		process = ((t_job*)job->content)->process_list;
 		while (process)
 		{

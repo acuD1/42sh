@@ -44,7 +44,7 @@ void		ft_printtab(char **cmd)
 		dprintf(nono("/dev/ttys002"), "cmd {");
 		while (cmd[i])
 		{
-			dprintf(nono("/dev/ttys002"), "'%s' ", cmd[i]);
+			dprintf(nono("/dev/ttys002"), "'%s'", cmd[i]);
 			i++;
 		}
 		dprintf(nono("/dev/ttys002"), "}\n");

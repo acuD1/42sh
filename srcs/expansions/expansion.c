@@ -53,11 +53,11 @@ uint8_t is_expansion(e_pstate id)
 	return (0);
 }
 
-char *no_exp(t_token *tok, t_core *shell, t_expansion *exp)
+char *no_exp(char *data, t_core *shell, t_expansion *exp)
 {
 	(void)shell;
 	(void)exp;
-	return (tok->data);
+	return (data);
 }
 
 int8_t add_assign_env(t_lst *lst, t_core *shell)
@@ -85,59 +85,95 @@ int8_t add_assign_env(t_lst *lst, t_core *shell)
 	return (TRUE);
 }
 
-static char *get_exp_indbquote(char *str, t_expansion exp, t_token *tok, t_core *shell)
+// char *piece_by_piece(char *exp, e_pstate id)
+// {
+	// if (state == P_TILDE && !ft_str)
+// }
+
+// static char *get_exp_indbquote(char *str, t_expansion exp, t_token *tok, t_core *shell)
+// {
+// 	int size;
+// 	char *tmp;
+
+// 	size = 0;
+// 	tmp = NULL;
+// 	if (!str)
+// 		return (tmp);
+// 	(void)exp;
+// 	(void)shell;
+// 	(void)tok;
+
+
+// 		// printf("%s  %u\n", str, state);
+// 		// if ((tmp = exp.sionat[state](tok, shell, &exp)))
+// 		// {
+// 			// printf("le res poto %s\n", tmp);
+// 			// return (tmp);
+// 		// }
+
+// 	return (str);
+// }
+
+char	*ft_pushchar(char *s, char c)
 {
 	int i;
-	e_pstate state;
-	char *tmp;
+	char *new;
 
-	i = 2;
-	state = P_EXP_INTERRUPT;
-	tmp = NULL;
-	if (!str)
-		return (tmp);
-	(void)exp;
-	(void)shell;
-	(void)tok;
-	if ((state = find_expansion(str)) != P_EXP_INTERRUPT)
-	{
-		// printf("%s\n", exp->sionat[state](tok, shell, exp));
-		printf("state %u\n", state);
-		// if ((tmp = exp.sionat[state](tok, shell, &exp)))
-		// {
-			// printf("le res poto %s\n", tmp);
-			// return (tmp);
-		// }
-	}
-	return (str);
+	i = 0;
+	if (!s)
+		return (NULL);
+	new = NULL;
+	i = ft_strlen(s);
+	new = ft_strnew(i + 1);
+	new = ft_strcpy(new, s);
+	new[i - 1] = c;
+	new[i] = '\0';
+	printf("'%s;\n", new);
+	return (new);
 }
 
-char *exp_dbquote(t_token *tok, t_core *shell, t_expansion *exp)
+char *exp_dbquote(char *data, t_core *shell, t_expansion *exp)
 {
-	int 	index;
-	int 	trigger;
+	int 	index, i= 0 , z =0;
 	char 	*str;
-	char 	*ret;
+	char 	*tmp;
+	char 	*tpp;
 	char 	*new;
+	e_pstate state;
+	t_expansion toto;
 
-	if (!tok || !tok->data || !shell || !shell->env)
+	if (!data || !shell || !shell->env)
 		return (NULL);
 	printf("CA RENTRE\n");
 	index = 0;
-	trigger = 0;
-	str = tok->data;
+	init_expansionat(&toto);
+	str = data;
 	new = NULL;
-	ret = ft_strnew(0);
-	while (str[index++] && str[index] != '\"')
+	// tmp = ft_strsub(data, 1, 1);
+	tmp = ft_strnew(0);
+	tpp = ft_strnew(0);
+	// state = P_EXP_INTERRUPT;
+	i = ft_strlen(str);
+	while (str[index++])
 	{
 		if (str[index] == '$' || str[index] == '~')
 		{
-			get_exp_indbquote(&str[index], *exp, tok, shell);
-			printf("old [%s]\n", &str[index]);
+			tpp = ft_strsub(str, 0, index);
+			z = ft_strlen(&str[index]);
+			state = find_expansion(&str[index]);
+			toto.erience = is_expansion(state);
+			if ((new = get_expansion(&str[index], state)))
+				tmp = toto.sionat[toto.erience](new, shell, &toto);
+			printf("old {%s} new '%s'  reload {%s}  state %u  {%d,%d}\n", &str[index], new ,tmp, state, index , z);
 			// ret = ft_strjoinf(ret, new, 4);
+			tpp = ft_strjoinf(tpp, tmp, 4);
 		}
 	}
-	return (tok->data);
+	tmp = ft_strsub(&str[index], 0, index);
+	tpp = ft_strjoinf(tpp, tmp, 4);
+	printf("TMPPPP %s \n", tpp);
+	(void)exp;
+	return (data);
 }
 
 void init_expansionat(t_expansion 	*exp)
@@ -169,7 +205,7 @@ void		expansion(t_core *shell, t_process *process)
 	while (lst)
 	{
 		exp.erience = is_expansion(((t_token*)lst->content)->id);
-		if ((tmp = exp.sionat[exp.erience](lst->content, shell, &exp)))
+		if ((tmp = exp.sionat[exp.erience](((t_token*)lst->content)->data, shell, &exp)))
 		{
 			process->av = ft_add_arg_cmd_process(process->av, tmp);
 			free (tmp);

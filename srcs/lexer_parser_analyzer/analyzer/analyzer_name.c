@@ -40,7 +40,15 @@ t_analyzer	*escape_sequence_analyzer(t_analyzer *analyzer)
 }
 
 t_analyzer	*process_word_analyze(t_analyzer *anal)
-{
+{	
+	int flag;
+
+	flag = 1;
+	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command, 1);
+	if (anal->lexer->next && (((t_token*)anal->lexer->next->content)->id == 32 
+		|| ((t_token*)anal->lexer->next->content)->id != P_WORD))
+		flag = 0;
+	anal->process.command = fill_cmd_job(anal->lexer, anal->process.command, flag);
 	ft_lstappend(&anal->process.tok_list, ft_lstnew(fetch_token(&anal->tok,
 		((t_token*)anal->lexer->content)->id, ((t_token*)anal->lexer->content)->data), sizeof(t_token)));
 	return (anal);

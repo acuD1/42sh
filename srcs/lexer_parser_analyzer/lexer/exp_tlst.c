@@ -12,6 +12,31 @@
 
 #include "sh42.h"
 
+// const t_exp_size g_exp_size[] =
+// {
+// 		{exp_tilde_size, P_TILDEP, 2},
+// 		{exp_tilde_size, P_TILDEM, 2},
+// 		{exp_tilde_size, P_TILDE, 1},
+// 		{exp_dbparen_size, P_DBPARENT, 3},
+// 		{exp_paren_size, P_PARENT, 2},
+// 		{exp_bracket_size, P_BRACKET, 2},
+// 		{exp_hook_size, P_HOOK, 2},
+// 		{exp_dollar_size, P_DOLLAR, 1},
+// };
+
+// char *exp_tilde_size(char *str, e_pstate id)
+// {
+// 	char *new;
+
+// 	if (!str)
+// 		return (NULL);
+// 	new = NULL;
+// 	if (id == P_TILDE)
+// 		return (ft_strdup("~"));
+// }
+
+
+
 t_lst	*exp_dbparen(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 {
 	char				*str;
