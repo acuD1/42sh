@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:38:40 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/11 15:02:58 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:33:24 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int8_t	fill_exec(t_core *shell, char *key, char *value, e_hash fmt)
+static int8_t	fill_exec(t_core *shell, char *key, char *value, enum e_hash fmt)
 {
 	float	load_factor;
 
@@ -29,7 +29,7 @@ static int8_t	fill_exec(t_core *shell, char *key, char *value, e_hash fmt)
 }
 
 static int8_t	fill_path
-	(t_core *shell, t_process *process, e_hash fmt, size_t i)
+	(t_core *shell, t_process *process, enum e_hash fmt, size_t i)
 {
 	t_lst		*map;
 	u_int32_t	hash;
@@ -75,7 +75,7 @@ static int8_t	is_hashed(t_core *shell, t_process *process, size_t i)
 }
 
 static int8_t	fill_default
-	(t_core *shell, t_process *process, e_hash fmt, size_t i)
+	(t_core *shell, t_process *process, enum e_hash fmt, size_t i)
 {
 	t_process	process_tmp;
 
@@ -96,7 +96,7 @@ static int8_t	fill_default
 }
 
 void			hash_map_dispatcher
-	(t_core *shell, t_process *process, e_hash fmt)
+	(t_core *shell, t_process *process, enum e_hash fmt)
 {
 	size_t			i;
 	static int8_t	(*fill_fp[3])() = {fill_default, fill_exec, fill_path};

@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 15:12:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/11 15:22:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:34:48 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		print_hash_map(t_core *shell, e_hash fmt)
+void		print_hash_map(t_core *shell, enum e_hash fmt)
 {
 	t_lst	**map;
 	t_lst	*cur_map;

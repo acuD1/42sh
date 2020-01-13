@@ -6,15 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:28:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:44:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COMMAND_LINE_H
 # define COMMAND_LINE_H
 
-# include "sh42.h"
-# include "shared_libft.h"
 # include <stdint.h>
 # include <termios.h>
 # include <term.h>

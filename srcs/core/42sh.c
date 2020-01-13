@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/26 10:20:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:31:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		main(int ac, char **av, char **environ)
 			load_noi_mode(&shell);
 		ft_strdel(&(shell.cmd_line.buffer));
 	}*/
-	if (setjmp(exit_leaks))
+	if (setjmp(g_exit_leaks))
 	{
 		dprintf(STDERR_FILENO, "Exited with free handling ..\n");
 		//return (EXIT_SUCCESS);
@@ -89,7 +89,7 @@ int		main(int ac, char **av, char **environ)
 	/* FREE */
 	//free_env(shell.env);
 	//free_env(shell.pos_vars);
-	//free_hash_map(&shell.hash);			// For now here ..
+	//freenum e_hash_map(&shell.hash);			// For now here ..
 	//system("leaks checker");
 	return (EXIT_SUCCESS);
 }

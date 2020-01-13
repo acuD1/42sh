@@ -6,14 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:57:11 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/11 13:42:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:31:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 t_db	*fetch_hash_db
-	(t_db *db, const char *key, const char *value, e_hash fmt)
+	(t_db *db, const char *key, const char *value, enum e_hash fmt)
 {
 	if (!(db->key = ft_strdup(key)))
 		return (NULL);

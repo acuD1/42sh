@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/10 22:17:58 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:29:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void			init_start_graph(t_graph *graph)
 {
-	static e_pstate tab_good_type[] = {ALL_WORDS, P_ESCSEQ, ALL_REDIRECT,
+	static enum e_pstate tab_good_type[] = {ALL_WORDS, P_ESCSEQ, ALL_REDIRECT,
 		P_ASSIGN, ALL_EXPANSION, P_IONUMBER, P_END, P_START, P_ERROR};
 
 	graph[P_START].good_type = tab_good_type;
@@ -25,7 +25,7 @@ void			init_start_graph(t_graph *graph)
 
 void			init_exp_graph(t_graph *graph)
 {
-	static e_pstate tab_good_type[] = {P_NEWLINE, ALL_WORDS, ALL_REDIRECT,
+	static enum e_pstate tab_good_type[] = {P_NEWLINE, ALL_WORDS, ALL_REDIRECT,
 		P_ASSIGN, P_IONUMBER, P_PIPE, P_AND, P_END, P_SEMICOLON,
 		P_ANDIF, P_ORIF, P_ESCSEQ, ALL_EXPANSION, P_ERROR};
 
@@ -49,7 +49,7 @@ t_parser		*ft_init_graph(t_parser *parser)
 	return (parser);
 }
 
-uint8_t			graph(e_pstate *c, e_pstate n, e_pstate ps[])
+uint8_t			graph(enum e_pstate *c, enum e_pstate n, enum e_pstate ps[])
 {
 	uint8_t		i;
 

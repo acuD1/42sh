@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 23:52:50 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/26 10:19:22 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:35:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ void	quit_shell(t_core *shell, int exit_value, int8_t verbose)
 	free_history(&shell->term);
 	if (verbose != 0)
 		write(STDERR_FILENO, "exit\n", 5);
-	longjmp(exit_leaks, 42);
+	longjmp(g_exit_leaks, 42);
 	//exit(exit_value);
 }

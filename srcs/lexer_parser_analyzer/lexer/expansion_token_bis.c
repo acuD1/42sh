@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_token_bis.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 17:36:49 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 17:36:52 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:29:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-t_lst		*exp_paren_lexer(t_lexer *lx, e_pstate id, int len, t_lst *lst)
+t_lst		*exp_paren_lexer(t_lexer *lx, enum e_pstate id, int len, t_lst *lst)
 {
 	char	*str;
 	int		index;
@@ -41,7 +41,7 @@ t_lst		*exp_paren_lexer(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 	return (lst);
 }
 
-t_lst		*exp_bracket_lexer(t_lexer *lx, e_pstate id, int len, t_lst *lst)
+t_lst		*exp_bracket_lexer(t_lexer *lx, enum e_pstate id, int len, t_lst *lst)
 {
 	char	*str;
 	int		index;
@@ -85,7 +85,7 @@ int8_t		get_index_expan(char *str, int index)
 	return (index);
 }
 
-t_lst		*exp_dollar_lexer(t_lexer *lx, e_pstate id, int len, t_lst *lst)
+t_lst		*exp_dollar_lexer(t_lexer *lx, enum e_pstate id, int len, t_lst *lst)
 {
 	char	*str;
 	int		index;
@@ -108,7 +108,7 @@ t_lst		*exp_dollar_lexer(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 	return (lst);
 }
 
-t_lst		*exp_tilde_lexer(t_lexer *lexer, e_pstate id, int len, t_lst *lst)
+t_lst		*exp_tilde_lexer(t_lexer *lexer, enum e_pstate id, int len, t_lst *lst)
 {
 	char	*str;
 

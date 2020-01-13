@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:52:47 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/22 13:01:10 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:29:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_analyzer			*error_analyze(t_analyzer *anal, t_core *shell)
 
 t_analyzer			*separator_analyze(t_analyzer *analyzer, t_core *shell)
 {
-	e_pstate		state;
+	enum e_pstate		state;
 
 	state = P_ERROR;
 	state = ((t_token*)analyzer->lexer->content)->id;

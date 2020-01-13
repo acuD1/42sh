@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/16 04:59:06 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:29:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-uint8_t is_expansion(e_pstate id)
+uint8_t is_expansion(enum e_pstate id)
 {
 	if (id == P_TILDEP || id == P_TILDEM || id == P_TILDE
 			|| id == P_DBPARENT || id == P_PARENT || id == P_DBQUOTE
@@ -32,7 +32,7 @@ int8_t add_assign_env(t_lst *lst, t_core *shell)
 {
 	char	*value;
 	t_lst	*tmp;
-	
+
 	if (!lst || !shell->env)
 		return (FAILURE);
 	value = NULL;
@@ -80,7 +80,7 @@ char *start_expansion(t_core *shell, char *data)
 
 // char *do_exp_in_dbquote(char *str, t_cre *shell)
 // {
-// 	va parcourir la str et check a chaque ~ ou $ lexpansion si ya pas dexpansion go next et join 
+// 	va parcourir la str et check a chaque ~ ou $ lexpansion si ya pas dexpansion go next et join
 // }
 
 void		find_expansion(char **tablo, t_core *shell)

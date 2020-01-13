@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/26 11:15:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/11 16:00:48 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,9 @@
 **	wiches are globals variables, such as tokens, env list etc...
 */
 
-// https://linuxconfig.org/bash-prompt-basics
-
-/*
-**	TO DO:
-*/
-
 void			load_prompt(t_core *shell)
 {
-	credit(shell);
+	version(shell);
 	init_cmd_line(shell, &shell->term);
 	while (1)
 	{
@@ -35,7 +29,6 @@ void			load_prompt(t_core *shell)
 		lexer_parser_analyzer(shell);
 		if (task_master(shell) != SUCCESS)
 			quit_shell(shell, EXIT_FAILURE, FALSE) ;
-		print_hash_map_dev(&shell->hash);
 		save_history(&shell->term);
 		free_prompt(shell);
 	}
