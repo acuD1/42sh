@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/11 15:13:35 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 14:50:46 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,12 @@ void	free_history(t_read *term)
 		free(tmp);
 		tmp = NULL;
 	}
+}
+
+void	free_shell(t_core *shell)
+{
+	free_env(shell->env);
+	free_prompt(shell);
+	free_history(&shell->term);
+	free_hash_map(&shell->hash);
 }

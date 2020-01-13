@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/13 08:32:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:15:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ jmp_buf g_exit_leaks;
 int8_t		get_opt(int ac, char **av, t_core *shell);
 void		version(t_core *shell);
 void		print_opt(t_core *shell);
-void		load_prompt(t_core *shell);
-void		load_noi_mode(t_core *shell);
+u_int8_t	shell_loader(t_core *shell);
+u_int8_t	load_noi_mode(t_core *shell);
 void		free_env(t_lst *env);
 void		free_prompt(t_core *shell);
 void		free_history(t_read *term);
+void		free_shell(t_core *shell);
 void		reset_hash(t_hash *hash);
 int8_t		dispatcher(t_core *shell, t_lst *jobs);
 
@@ -135,7 +136,7 @@ void		ft_perror(const char *s, const char *name, const int errnum);
 int8_t		ft_access(char *path, int mode);
 int8_t		is_a_dir(char *path);
 void		print_usage(char *name, int c, char *usage);
-void		quit_shell(t_core *shell, int exit_value, int8_t verbose);
+void		quit_shell(t_core *shell, int exit_value, int8_t v, u_int8_t mode);
 int			check_invalid_identifiers(char *arg, char *exceptions);
 
 /*

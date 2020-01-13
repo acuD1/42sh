@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:21:41 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ void		end_of_file(t_read *term, uint64_t value)
 		ft_putstr("exit\n");
 		reset_config(shell);
 		write_history(term);
-		free_history(term);
-		quit_shell(shell, 0, FALSE);
+		shell->mode |= EXIT;
+		//free_history(term);
+		//quit_shell(shell, 0, FALSE, I_MODE);
 		//exit(0);
 	}
 }

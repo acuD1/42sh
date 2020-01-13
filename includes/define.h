@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/11 16:05:12 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:11:41 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@
 **	Command Line
 */
 
+# define I_MODE					0x001
+# define NOI_MODE				0x002
+# define EXIT					0x004
 # define CREDIT					"arsciand, fcatusse, mpivet-p and guvillat\n"
 # define S_USR_RW				(S_IRUSR | S_IWUSR)
 # define S_GRP_OTH_R			(S_IRGRP | S_IROTH)

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:20:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 13:21:11 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void			init_cmd_line(t_core *shell, t_read *term)
 	term->buffer = NULL;
 	term->tmp_buff = NULL;
 	if (get_size(term) != SUCCESS)
-		quit_shell(shell, 1, 1);
+		quit_shell(shell, 1, TRUE, I_MODE);
 	init_history(term);
 	//shell->history = term->history;
 }

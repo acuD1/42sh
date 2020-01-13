@@ -239,8 +239,7 @@ SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs.c
 SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs_tools.c
 
 SRC			+=	$(S_PATH)$(CORE)42sh.c
-SRC			+=	$(S_PATH)$(CORE)load_prompt.c
-SRC			+=	$(S_PATH)$(CORE)load_noi_mode.c
+SRC			+=	$(S_PATH)$(CORE)shell_loader.c
 SRC			+=	$(S_PATH)$(CORE)output.c
 SRC			+=	$(S_PATH)$(CORE)free_handler.c
 
