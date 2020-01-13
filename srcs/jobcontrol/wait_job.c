@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 20:36:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/09 19:23:33 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:18:55 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	wait_for_process(t_core *shell, t_lst *jobs, t_process *process)
 	pid_t	pid;
 	int		status;
 
-	pid = waitpid(WAIT_ANY, &status, WUNTRACED);
-	while (!mark_process_status(shell, jobs, pid, status) && process->completed == FALSE && process->stopped == FALSE)
-		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
+	pid = waitpid(process->pid, &status, WUNTRACED);
+	mark_process_status(shell, jobs, pid, status);
 }

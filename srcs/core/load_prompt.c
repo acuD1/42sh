@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/12 21:33:42 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:24:11 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void			load_prompt(t_core *shell)
 			break ;
 		save_history(term);
 		free_prompt(shell, term->buffer);
+		do_job_notification(shell);
 	}
 	free_history(term);
 	ft_strdel(&(term->buffer));

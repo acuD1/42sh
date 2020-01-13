@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/12 23:16:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/13 17:09:58 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ int8_t			mark_process_status(t_core *shell, t_lst *jobs, pid_t pid, int status)
 				process->status = (WIFEXITED(status)) ? WTERMSIG(status) : WEXITSTATUS(status);
 				status_handler(shell, status);
 			}
-			return (SUCCESS);
 		}
-		dprintf(STDERR_FILENO, "42sh: (%d) no child process\n", pid);
+		return (SUCCESS);
 	}
 	else if (pid != 0)
 		dprintf(STDERR_FILENO, "42sh: waitpid error (mark_process_status)\n");
