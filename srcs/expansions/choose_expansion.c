@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   choose_expansion.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/14 16:14:39 by guvillat          #+#    #+#             */
+/*   Updated: 2020/01/14 16:14:44 by guvillat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh42.h"
 
 char *do_expansion(t_core *shell, char *data, e_pstate id)
@@ -36,7 +48,7 @@ void		expansion_redir(t_core *shell, t_process *process)
 
 	id = P_WORD;
 	if (!process->redir_list || !shell
-		|| !((t_redir*)process->redir_list->content)->op[1])
+			|| !((t_redir*)process->redir_list->content)->op[1])
 		return ;
 	lst = process->redir_list;
 	res = NULL;

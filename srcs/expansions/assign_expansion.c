@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   assign_expansion.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/14 16:14:29 by guvillat          #+#    #+#             */
+/*   Updated: 2020/01/14 16:14:33 by guvillat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh42.h"
 
 
@@ -5,7 +17,7 @@ int8_t add_assign_env(t_lst *lst, t_core *shell)
 {
 	char	*value;	
 	t_lst	*tmp;
-	
+
 	if (!lst || !shell->env)
 		return (FAILURE);
 	value = NULL;
@@ -40,7 +52,6 @@ void		expansion_assign(t_core *shell, t_process *process)
 	while (lst)
 	{
 		id = find_expansion(((t_db*)lst->content)->value);
-		printf("%s\n", ((t_db*)lst->content)->value);
 		if ((res = do_expansion(shell, ((t_db*)lst->content)->value, id)))
 		{
 			ft_strdel(&((t_db*)lst->content)->value);

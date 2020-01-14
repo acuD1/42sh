@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion_token.c                                  :+:      :+:    :+:   */
+/*   exp.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/02 17:37:09 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 17:37:14 by guvillat         ###   ########.fr       */
+/*   Created: 2020/01/14 16:13:53 by guvillat          #+#    #+#             */
+/*   Updated: 2020/01/14 16:13:59 by guvillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,16 @@ char	*new_exp(char *string, e_pstate id)
 e_pstate find_expansion(char *str)
 {
 	const	t_token	exp[] = 	{
-									{P_TILDEP, "~+", 2},
-									{P_TILDEM, "~-", 2},
-									{P_TILDE, "~", 1},
-									{P_DBPARENT, "$((", 3},
-									{P_PARENT, "$(", 2},
-									{P_BRACKET, "${", 2},
-									{P_HOOK, "$[", 2},
-									{P_DOLLAR, "$", 1},
-									{P_EXP_INTERRUPT, NULL, 0}
-								};
+		{P_TILDEP, "~+", 2},
+		{P_TILDEM, "~-", 2},
+		{P_TILDE, "~", 1},
+		{P_DBPARENT, "$((", 3},
+		{P_PARENT, "$(", 2},
+		{P_BRACKET, "${", 2},
+		{P_HOOK, "$[", 2},
+		{P_DOLLAR, "$", 1},
+		{P_EXP_INTERRUPT, NULL, 0}
+	};
 	int 				i;
 
 	i = 0;

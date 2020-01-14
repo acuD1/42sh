@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   name_io_nwln_token.c                               :+:      :+:    :+:   */
+/*   name_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/11 17:23:16 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/03 14:56:27 by arsciand         ###   ########.fr       */
+/*   Created: 2020/01/14 16:15:08 by guvillat          #+#    #+#             */
+/*   Updated: 2020/01/14 16:15:10 by guvillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_lst		*word_lexer(t_lexer *lexer, t_lst *lexer_token)
 	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
 		return (NULL);
 	ft_lstappend(&lexer_token, ft_lstnew(
-		fetch_token(&lexer->token, state, str), sizeof(t_token)));
+				fetch_token(&lexer->token, state, str), sizeof(t_token)));
 	free(str);
 	lexer->ntok++;
 	lexer->buf_pos = i;
@@ -75,7 +75,7 @@ t_lst	*expansion_lexer(t_lexer *lx, t_lst *lexer_token)
 	{
 		str = get_expansion(&lx->buff[lx->buf_pos], state);
 		ft_lstappend(&lexer_token, ft_lstnew(
-			fetch_token(&lx->token, state, str), sizeof(t_token)));
+					fetch_token(&lx->token, state, str), sizeof(t_token)));
 		lx->ntok++;
 		lx->buf_pos += ft_strlen(str);
 		ft_strdel(&str);
