@@ -79,7 +79,6 @@ char	*new_exp(char *string, e_pstate id)
 
 	i = 0;
 	new = NULL;
-	printf("%u\n", id);
 	while (i < NB_OF_EXP)
 	{
 		if (id == lex_pex[i].id)

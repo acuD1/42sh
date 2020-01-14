@@ -84,13 +84,11 @@ char		*exp_get_dollar(char *string, int len)
 
 	index = len;
 	str = NULL;
-	printf("INDEX %d\n", index);
 	if (string[0] == '$')
 	{
 		index = get_index_expan(string);
 		if (!(str = ft_strsub(string, 0, index)))
 			return (NULL);
-		printf("'%s'\n", str);
 		return (str);
 	}
 	return (NULL);
