@@ -59,7 +59,9 @@ int expelliarmus(char *src, int index, char **dst, t_core *shell)
 		if ((exp = get_expansion(&src[index], state)))
 			if ((trans = toto.sionat[toto.erience](exp, shell)))
 				*dst = ft_strjoinf(*dst, trans, 4);
-		return ((index += ft_strlen(exp)));
+		index += ft_strlen(exp);
+		ft_strdel(&exp);
+		return (index);
 	}
 	return (index);
 }
