@@ -12,7 +12,6 @@
 
 #include "sh42.h"
 
-
 int8_t add_assign_env(t_lst *lst, t_core *shell)
 {
 	char	*value;	
@@ -56,7 +55,7 @@ void		expansion_assign(t_core *shell, t_process *process)
 		{
 			ft_strdel(&((t_db*)lst->content)->value);
 			((t_db*)lst->content)->value = ft_strdup(res);
-			ft_strdel(&res);
+			// free(res);
 		}
 		lst = lst->next;
 	}

@@ -30,7 +30,8 @@ uint8_t is_expansion(e_pstate id)
 		return (7);
 	else if (id == P_DOLLAR)
 		return (8);
-	else if (id == P_DBQUOTE || id == P_WORD || id == P_BQUOTE)
+	else if (id == P_DBQUOTE || id == P_WORD
+		|| id == P_BQUOTE || id == P_ASSIGN)
 		return (9);
 	return (0);
 }

@@ -59,7 +59,7 @@ void		expansion_redir(t_core *shell, t_process *process)
 		{
 			ft_strdel(&(((t_redir*)lst->content)->op[1]));
 			((t_redir*)lst->content)->op[1] = ft_strdup(res);
-			ft_strdel(&res);
+			free(res);
 		}
 		lst = lst->next;
 	}
@@ -79,7 +79,7 @@ void		expansion_tok(t_core *shell, t_process *process)
 		if ((res = do_expansion(shell, ((t_token*)lst->content)->data, ((t_token*)lst->content)->id)))
 		{
 			process->av = ft_add_arg_cmd_process(process->av, res);
-			ft_strdel(&res);
+			free(res);
 		}
 		lst = lst->next;
 	}

@@ -12,6 +12,101 @@
 
 #include "sh42.h"
 
+char *point_de_cote(char *src, char quote)
+{
+	char *one;
+	char *two;
+	char *three;
+	char *vivalagerie;
+	int nb[3];
+
+	nb[0] = 0;
+	nb[1] = ft_strlen(src);
+	nb[2] = nb[1] + 1;
+	one = NULL;
+	two = NULL;
+	three = NULL;
+	vivalagerie = NULL;
+	if (src[0] == quote && src[nb[1] - 1] == quote)
+	{
+
+		one = ft_strsub(src, 1, nb[1] - 2);
+		free(src);
+		return (one);
+	}
+	if (src[0] != quote)
+	{
+		while (src[nb[0]] != quote)
+			nb[0]++;
+		one = ft_strsub(src, 0, nb[0]);
+		printf("one %s\n", one);
+	}
+	if (src[--nb[1]] != quote)
+	{
+		while (src[nb[1]] != quote)
+			nb[1]--;
+		two = ft_strsub(src, nb[1] + 1, nb[2] - nb[1]);
+		printf("two %s\n", two);
+	}
+	if (!one)
+	{
+		one = ft_strsub(src, 1, ft_strlen(two));
+		printf("1 %s\n", one);
+	}
+	if (!two)
+	{
+		two = ft_strsub(src, ft_strlen(one), ft_strlen(src) - 1);
+		printf("2 %s\n", two);
+	}
+	if (one && two)
+	{
+		nb[2] = (ft_strlen(src)) - (ft_strlen(one) + ft_strlen(two) + 2);
+		three = ft_strsub(src, ft_strlen(one) + 1, nb[2]);
+		// three = ft_strjoinf(one, two, 4);
+		printf("3 %s nb[2] %d\n", three, nb[2]);
+		free(src);
+		return (three);
+	}
+
+	// three = ft_strsub(src, ft_strlen(one), ft_strlen(src) - (ft_strlen(one) + ft_strlen(two)));
+	// printf("%s %s\n", one, two);
+	// nb[2] = ft_strlen(src) - (ft_strlen(one) + ft_strlen(two) + 2);
+	// nb[0] = ft_strlen(one) + 1;
+	// printf("start %d size %d\n", nb[0], nb[1]);
+	// three = ft_strsub(src, nb[0], nb[1]);
+	// printf("3 '%s'\n", three);
+	// vivalagerie = ft_strjoinf(one, three, 4);
+	// one = ft_strjoinf(vivalagerie, two, 4);
+		// return (one);
+	// if (src[nb[1] - 1] != quote)
+	// {
+	// 	while (src[nb[1]] != quote)
+	// 		nb[1]--;
+	// 	three = ft_strsub(src, nb[1], nb[2] - nb[1]);
+	// }
+	// two = ft_strsub(src, nb[0], nb[2] - (nb[1] + nb[0]));
+	// printf("{%s}+{%s}+{%s}      %d %d %d\n", one, two, three, nb[0], nb[1], nb[2]);
+	// one = ft_strjoinf(one, two, 4);
+	// two = ft_strjoinf(three, one, 4);
+	// free(src);
+	// // printf("NUMBER 2 %s\n", two);
+	// return (two);
+	return (src);
+}
+
+char *quote_removing(t_token *tok)
+{
+	if (!tok->data)
+		return (NULL);
+	if (tok->id == P_DBQUOTE)
+		tok->data = point_de_cote(tok->data, '\"');
+	else if (tok->id == P_QUOTE)
+		tok->data = point_de_cote(tok->data, '\'');
+	else if (tok->id == P_BQUOTE)
+		tok->data = point_de_cote(tok->data, '`');
+	return (tok->data);
+}
+
 static char	**create_tablo(char *str)
 {
 	char	**tablo;

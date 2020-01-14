@@ -19,6 +19,8 @@ int8_t 		debug_ailleurs(const char *path, const char *str);
 int8_t 		nono(const char *path);
 void        ft_printtab(char **cmd);
 
+char *quote_removing(t_token *tok);
+
 void 		lexer_parser_analyzer(t_core *shell);
 
 /*

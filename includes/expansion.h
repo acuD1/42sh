@@ -23,7 +23,6 @@ char 	*do_expansion(t_core *shell, char *data, e_pstate id);
 void 	init_expansionat(t_expansion 	*exp);
 uint8_t is_expansion(e_pstate id);
 
-
 int8_t		add_assign_env(t_lst *lst, t_core *shell);
 void		expansion_assign(t_core *shell, t_process *process);
 

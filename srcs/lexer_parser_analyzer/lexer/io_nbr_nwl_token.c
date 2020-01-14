@@ -24,18 +24,12 @@ t_lst		*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token, int i)
 		if (!(ft_lstappend(&lexer_token, ft_lstnew(
 			fetch_token(&lexer->token, P_IONUMBER, str), sizeof(t_token)))))
 			return (NULL);
+		free(str);
+		lexer->buf_pos = i;
+		lexer->ntok++;
 	}
 	else
-	{
-		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
-			return (NULL);
-		if (!(ft_lstappend(&lexer_token, ft_lstnew(
-			fetch_token(&lexer->token, P_WORD, str), sizeof(t_token)))))
-			return (NULL);
-	}
-	free(str);
-	lexer->buf_pos = i;
-	lexer->ntok++;
+		return (lexer_token = name_lexer(lexer, lexer_token));
 	return (lexer_token);
 }
 
