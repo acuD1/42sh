@@ -1,12 +1,11 @@
 #include "sh42.h"
 
-char 	*exp_tilde(char *data, t_core *shell, t_expansion *exp)
+char 	*exp_tilde(char *data, t_core *shell)
 {
 	t_db *db_tmp;
 	char *path[] = {"HOME", "OLDPWD", "PWD"};
 	int i;
 
-	(void)exp;
 	i = 0;
 	db_tmp = NULL;
 	if (!data && !data[0])

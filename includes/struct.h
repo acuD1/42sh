@@ -44,7 +44,7 @@ typedef struct s_expansion t_expansion;
 typedef t_analyzer	*(*t_analyze)(t_analyzer*, t_core*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_PARSER_STATE];
 typedef t_lst *(*t_lexing)(t_lexer*, t_lst *);
-typedef char *(*t_exp)(char* ,t_core*, t_expansion*);
+typedef char *(*t_exp)(char* ,t_core*);
 
 	
 

@@ -79,6 +79,7 @@ char	*new_exp(char *string, e_pstate id)
 
 	i = 0;
 	new = NULL;
+	printf("%u\n", id);
 	while (i < NB_OF_EXP)
 	{
 		if (id == lex_pex[i].id)
@@ -119,7 +120,6 @@ char	*get_expansion(char *string, e_pstate state)
 	char *new;
 
 	new = NULL;
-	printf("MEH %s %u\n", string, state);
 	if ((new = new_exp(string, state)))
 		return (new);
 	return (NULL);

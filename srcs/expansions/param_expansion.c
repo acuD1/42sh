@@ -18,7 +18,7 @@ char *get_brace_param(char *str)
 	return (tmp);
 }
 
-char *exp_param(char *data, t_core *shell, t_expansion *exp)
+char *exp_param(char *data, t_core *shell)
 {
 	t_db *db_tmp;
 	char *tmp;
@@ -37,6 +37,5 @@ char *exp_param(char *data, t_core *shell, t_expansion *exp)
 		return (ft_strdup(db_tmp->value));
 	}
 	free(tmp);
-	(void)exp;
 	return (NULL);
 }

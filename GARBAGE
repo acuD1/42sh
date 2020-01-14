@@ -1,0 +1,151 @@
+
+// char *expelliarmus(char *string, t_core *shell)
+// {
+// 	t_expansion toto;
+// 	e_pstate state;
+// 	char *exp;
+// 	char *res;
+
+// 	state = P_EXP_INTERRUPT;
+// 	res = NULL;
+// 	exp = NULL;
+// 	init_expansionat(&toto);
+// 	if (!exp || !string  || !shell)
+// 		return (NULL);
+// 	state = find_expansion(string);
+// 	toto.erience = is_expansion(state);
+// 	if ((exp = get_expansion(string, state)))
+// 	{
+// 		if ((res = toto.sionat[toto.erience](exp, shell)))
+// 		{
+// 			res = ft_strjoinf(res, res, 4);
+// 			return (res)
+// 		}
+// 	}
+// 	return (res);
+// }
+
+// int check_ifquoted(int expelliarmus)
+// {
+// 	if (!expelliarmus)
+// 		expelliarmus = 1;
+// 	else
+// 		expelliarmus = 0;
+// 	return (expelliarmus);
+// }
+
+
+char *expelliarmus(char *string, t_core *shell)
+{
+	t_expansion toto;
+	e_pstate state;
+	char *exp;
+	char *res;
+
+	state = P_EXP_INTERRUPT;
+	res = NULL;
+	exp = NULL;
+	init_expansionat(&toto);
+	if (!exp || !string  || !shell)
+		return (NULL);
+	state = find_expansion(string);
+	toto.erience = is_expansion(state);
+	if ((exp = get_expansion(string, state)))
+	{
+		if ((res = toto.sionat[toto.erience](exp, shell)))
+		{
+			res = ft_strjoinf(res, res, 4);
+			return (res)
+		}
+	}
+	return (res);
+}
+
+// char *piece_by_piece(char *exp, e_pstate id)
+// {
+	// if (state == P_TILDE && !ft_str)
+// }
+
+// static char *get_exp_indbquote(char *str, t_expansion exp, t_token *tok, t_core *shell)
+// {
+// 	int size;
+// 	char *tmp;
+
+// 	size = 0;
+// 	tmp = NULL;
+// 	if (!str)
+// 		return (tmp);
+// 	(void)exp;
+// 	(void)shell;
+// 	(void)tok;
+
+
+// 		// printf("%s  %u\n", str, state);
+// 		// if ((tmp = exp.sionat[state](tok, shell, &exp)))
+// 		// {
+// 			// printf("le res poto %s\n", tmp);
+// 			// return (tmp);
+// 		// }
+
+// 	return (str);
+// }
+
+
+
+// char *expelliarmus()
+	// e_pstate state;
+	// t_expansion toto;
+
+	// if (!data || !shell || !shell->env)
+	// 	return (NULL);
+	// init_expansionat(&toto);
+	// str = data;
+	// exp = ft_strnew(0);
+	// new = ft_strnew(0);
+	// resultat = ft_strnew(0);
+	// ret = ft_strnew(0);
+	// oldie = ft_strnew(0);
+	// state = P_EXP_INTERRUPT;
+	// while (str[index++])
+	// {
+	// 	if (str[index] == '$' || str[index] == '~')
+	// 	{
+	// 		oldie = ft_strsub(str, start, index);
+	// 		// start =
+	// 		printf("oldie but goldie %s\n", oldie);
+			// state = find_expansion(&str[index]);
+			// toto.erience = is_expansion(state);
+			// if ((exp = get_expansion(&str[index], state)))
+	// 		{
+	// 			start += ft_strlen(exp);
+				// if ((ret = toto.sionat[toto.erience](exp, shell, &toto)))
+	// 			{
+	// 				oldie = ft_strjoinf(oldie, ret, 4);
+	// 				new = ft_strjoin(oldie, new);
+	// 			}
+	// 			index = start;
+	// 		}
+	// 		printf("exp '%s' ret {%s} new [%s] state %u  str {%s}\n", exp , ret ,new, state, &str[index]);
+	// 		latex = index + 1; 
+	// 	}
+	// }
+	// exp = ft_strsub(str, latex, index);
+	// resultat = ft_strjoinf(new, exp, 4);
+	// printf("TMPPPP [%s} 	'%s'\n", exp, resultat);
+	// (void)useless;
+	// return (resultat);
+// char *start_expansion(t_core *shell, char *data)
+// {
+// 	int 	i;
+
+// 	i = 0;
+// 	if (!data || !shell->env)
+// 		return (data);
+// 	while (i < NB_OF_EXP)
+// 	{
+		// if (!(ft_strncmp(data, expan[i].data, expan[i].len)))
+// 			data = expan[i].machine(data, shell);
+// 		i++;
+// 	}
+// 	return (data);
+// }
