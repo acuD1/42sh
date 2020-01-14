@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 18:01:39 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/09 16:25:57 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/14 21:41:58 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 int8_t	put_job_in_foreground(t_core *shell, t_lst *jobs, t_job *job, int cont)
 {
-	/* Put the job into the foreground.	*/
+	/* Put the job into the foreground. */
 	if (tcsetpgrp(shell->terminal, job->pgid) != SUCCESS)
 		print_and_quit(shell, "42sh: tcsetpgrp error (put_job_in_foreground 1)\n");
 
-	/* Send the job a continue signal, if necessary.	*/
+	/* Send the job a continue signal, if necessary. */
 	if (cont)
 	{
 		if (tcsetattr(shell->terminal, TCSADRAIN, &(shell->new_t)) != SUCCESS)

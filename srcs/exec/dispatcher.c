@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/12 21:57:13 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/14 23:42:09 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static void	place_job(t_core *shell, t_job *job, int8_t foreground)
 	else if (foreground == TRUE)
 		put_job_in_foreground(shell, shell->job_list, job, FALSE);
 	else
+	{
+		printf("[1] pgid\n");
 		put_job_in_background(shell, job, FALSE);
+	}
 }
 
 int8_t	condition_fulfilled(t_core *shell, int cond)
@@ -68,14 +71,11 @@ void	launch_job(t_core *shell, t_job *job)
 	infile = STDIN_FILENO;
 	process = job->process_list;
 	foreground = (job->type == P_AND) ? FALSE : TRUE;
-	job->jobc_id = 0;
 	while (process)
 	{
 		ptr = ((t_process*)process->content);
 		setup_pipes(shell, ptr, mypipe, &outfile);
-
 		ptr->stopped = (foreground == TRUE) ? FALSE : TRUE;
-		ptr->status = 21;
 		if (condition_fulfilled(shell, cond) == SUCCESS)
 		{
 			expansion(shell, ptr);
@@ -86,7 +86,7 @@ void	launch_job(t_core *shell, t_job *job)
 				exec_process(job, ptr, infile, outfile);
 		}
 		else
-			break ;
+			return ;
 		clean_pipes(&infile, &outfile, mypipe);
 		cond = ptr->type;
 		process = process->next;

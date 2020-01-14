@@ -6,7 +6,7 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:53:51 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 13:54:01 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/01/14 23:33:28 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void		init_job(t_job *new)
 {
-	new->command = ft_strnew(0);
+	ft_bzero(new, sizeof(t_job));
 	new->type = P_END;
-	new->process_list = NULL;
+	new->command = ft_strnew(0);
 }
 
 t_job		*fetch_job(t_job *job)
