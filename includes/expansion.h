@@ -19,33 +19,38 @@
 **  EXPANSION
 */
 
-e_pstate find_expansion(char *str);
+char 	*do_expansion(t_core *shell, char *data, e_pstate id);
+void 	init_expansionat(t_expansion 	*exp);
+uint8_t is_expansion(e_pstate id);
+
+
 int8_t		add_assign_env(t_lst *lst, t_core *shell);
+void		expansion_assign(t_core *shell, t_process *process);
 
-void		expansion(t_core *shell, t_process *process);
-char 		*exp_math(char *data, t_core *shell);
-char 		*no_exp(char *data, t_core *shell);
-char 		*exp_cmd_subs(char *data, t_core *shell);
-char 		*exp_param(char *data, t_core *shell);
-char 		*exp_tilde(char *data, t_core *shell);
-char 		*exp_error(char *data, t_core *shell);
-char 		*cmd_substitution_expansion(char *data, t_core *shell);
+void		expansion_redir(t_core *shell, t_process *process);
+void		expansion_tok(t_core *shell, t_process *process);
+
+char *exp_cmd_subs(char *data, t_core *shell);
+char *no_exp(char *data, t_core *shell);
 char *exp_dbquote(char *data, t_core *shell);
-uint8_t 	is_expansion(e_pstate id);
+char *exp_math(char *data, t_core *shell);
+char *exp_param(char *data, t_core *shell);
+char *exp_tilde(char *data, t_core *shell);
 
+void	expansion(t_core *shell, t_process *process);
+int		expelliarmus(char *src, int index, char **dst, t_core *shell);
 
-
-void init_expansionat(t_expansion 	*exp);
-
-
-char	*get_expansion(char *string, e_pstate state);
-
-
-char		*exp_get_paren(char *string, int len);
-char		*exp_get_bracket(char *string, int len);
-int8_t		get_index_expan(char *str);
-char		*exp_get_dollar(char *string, int len);
 char		*exp_get_tilde(char *string, int len);
 char		*exp_get_tildep(char *string, int len);
 char		*exp_get_tildem(char *string, int len);
+char		*exp_get_paren(char *string, int len);
+char		*exp_get_bracket(char *string, int len);
+char		*exp_get_dollar(char *string, int len);
+char		*exp_get_dbparen(char *string, int len);
+char		*exp_get_hook(char *string, int len);
+char		*new_exp(char *string, e_pstate id);
+e_pstate 	find_expansion(char *str);
+char		*get_expansion(char *string, e_pstate state);
 #endif
+
+

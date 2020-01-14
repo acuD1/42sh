@@ -55,7 +55,7 @@ char		*exp_get_bracket(char *string, int len)
 	return (NULL);
 }
 
-int8_t		get_index_expan(char *str)
+static int8_t		get_index_expan(char *str)
 {
 	int i;
 
@@ -92,52 +92,4 @@ char		*exp_get_dollar(char *string, int len)
 		return (str);
 	}
 	return (NULL);
-}
-
-char		*exp_get_tilde(char *string, int len)
-{
-	// char	*str;
-	(void)string;
-	(void)len;
-	// str = NULL;
-	// if (!ft_strncmp(string, "~", len))
-	// {
-	// 	// if (!(str = ft_strsub(string, string, len)))
-	// 	// 	return (NULL);
-	// 	// return (str);
-	// }
-	// return (string);
-	return (ft_strdup("~"));
-}
-
-char		*exp_get_tildep(char *string, int len)
-{
-	// char	*str;
-	(void)string;
-	(void)len;
-	// str = NULL;
-	// if (!ft_strncmp(string, "~+", len))
-	// {
-	// 	if (!(str = ft_strsub(string, 0, len)))
-	// 		return (NULL);
-	// 	return (str)
-	// }
-	// return (string);
-	return (ft_strdup("~+"));
-}
-
-char		*exp_get_tildem(char *string, int len)
-{
-	// char	*str;
-	(void)string;
-	(void)len;
-	// str = NULL;
-	// if (!ft_strncmp(string, "~-", len))
-	// {
-	// 	if (!(str = ft_strsub(string, 0, len)))
-	// 		return (NULL);
-	// 	return (str);
-	// }
-	// return (string);
-	return (ft_strdup("~-"));
 }

@@ -1,7 +1,7 @@
 
 #include "sh42.h"
 
-char *get_brace_param(char *str)
+static char *get_brace_param(char *str)
 {
 	int i;
 	char *tmp;

@@ -26,12 +26,7 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 
 	status = 0;
 	ptr = ((t_process*)process->content);
-	if (ptr->tok_list)
-		expansion(shell, ptr);
-	if (ptr->av)
-		ft_printtab(ptr->av);
-	if (ptr->assign_list)
-		add_assign_env(ptr->assign_list, shell);
+	expansion(shell, ptr);
 	if (ptr->av)
 	{
 		if ((blt = is_a_blt(ptr->av[0])) != FAILURE)

@@ -88,6 +88,15 @@ void	init_redirect_analyze(t_anal analyze)
 	analyze[A_REDIRECT][P_QUOTE] = cmd_analyze;
 	analyze[A_REDIRECT][P_ESCSEQ] = cmd_analyze;
 	analyze[A_REDIRECT][P_END] = end_analyze;
+	analyze[A_REDIRECT][P_DBPARENT] = cmd_analyze;
+	analyze[A_REDIRECT][P_PARENT] = cmd_analyze;
+	analyze[A_REDIRECT][P_HOOK] = cmd_analyze;
+	analyze[A_REDIRECT][P_TILDE] = cmd_analyze;
+	analyze[A_REDIRECT][P_TILDEM] = cmd_analyze;
+	analyze[A_REDIRECT][P_TILDEP] = cmd_analyze;
+	analyze[A_REDIRECT][P_BRACKET] = cmd_analyze;
+	analyze[A_REDIRECT][P_DOLLAR] = cmd_analyze;
+
 }
 
 void	init_end_analyze(t_anal analyze)

@@ -41,31 +41,6 @@ char *no_exp(char *data, t_core *shell)
 	return (data);
 }
 
-int8_t add_assign_env(t_lst *lst, t_core *shell)
-{
-	char	*value;	
-	t_lst	*tmp;
-	
-	if (!lst || !shell->env)
-		return (FAILURE);
-	value = NULL;
-	tmp = NULL;
-	while (lst)
-	{
-		value = ft_strdup(((t_db*)lst->content)->value);
-		if (edit_var(shell, ((t_db*)lst->content)->key, value, INTERNAL_VAR) != SUCCESS)
-		{
-			// free(value);
-			return (FAILURE);
-		}
-		tmp = lst;
-		lst = lst->next;
-		free(((t_db*)tmp->content)->key);
-		free(tmp);
-	}
-	return (TRUE);
-}
-
 int expelliarmus(char *src, int index, char **dst, t_core *shell)
 {
 	t_expansion toto;
@@ -114,40 +89,17 @@ char *exp_dbquote(char *data, t_core *shell)
 	return (res);
 }
 
-void init_expansionat(t_expansion 	*exp)
+void expansion(t_core *shell, t_process *process)
 {
-	exp->erience = 0;
-	exp->sionat[0] = no_exp;
-	exp->sionat[1] = exp_tilde;
-	exp->sionat[2] = exp_tilde;
-	exp->sionat[3] = exp_tilde;
-	exp->sionat[4] = exp_math;
-	exp->sionat[5] = exp_cmd_subs;
-	exp->sionat[6] = exp_param;
-	exp->sionat[7] = exp_math;
-	exp->sionat[8] = exp_param;
-	exp->sionat[9] = exp_dbquote;
-}
-
-void		expansion(t_core *shell, t_process *process)
-{
-	t_lst *lst;
-	t_expansion exp;
-	char *tmp;
-
-	if (!process->tok_list || !shell)
+	if (!process || !shell)
 		return ;
-	tmp = NULL;
-	lst = process->tok_list;
-	init_expansionat(&exp);
-	while (lst)
+	if (process->tok_list)
+		expansion_tok(shell, process);
+	if (process->assign_list)
 	{
-		exp.erience = is_expansion(((t_token*)lst->content)->id);
-		if ((tmp = exp.sionat[exp.erience](((t_token*)lst->content)->data, shell)))
-		{
-			process->av = ft_add_arg_cmd_process(process->av, tmp);
-			free (tmp);
-		}
-		lst = lst->next;
+		expansion_assign(shell, process);
+		add_assign_env(process->assign_list, shell);
 	}
+	if (process->redir_list)
+		expansion_redir(shell, process);
 }

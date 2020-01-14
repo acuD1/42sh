@@ -1,0 +1,74 @@
+#include "sh42.h"
+
+char *do_expansion(t_core *shell, char *data, e_pstate id)
+{
+	char *res;
+	t_expansion exp;
+
+	init_expansionat(&exp);
+	res = NULL;
+	exp.erience = is_expansion(id);
+	if ((res = exp.sionat[exp.erience](data, shell)))
+		return (res);
+	return (NULL);
+}
+
+void init_expansionat(t_expansion 	*exp)
+{
+	exp->erience = 0;
+	exp->sionat[0] = no_exp;
+	exp->sionat[1] = exp_tilde;
+	exp->sionat[2] = exp_tilde;
+	exp->sionat[3] = exp_tilde;
+	exp->sionat[4] = exp_math;
+	exp->sionat[5] = exp_cmd_subs;
+	exp->sionat[6] = exp_param;
+	exp->sionat[7] = exp_math;
+	exp->sionat[8] = exp_param;
+	exp->sionat[9] = exp_dbquote;
+}
+
+void		expansion_redir(t_core *shell, t_process *process)
+{
+	t_lst *lst;
+	char *res;
+	e_pstate id;
+
+	id = P_WORD;
+	if (!process->redir_list || !shell
+		|| !((t_redir*)process->redir_list->content)->op[1])
+		return ;
+	lst = process->redir_list;
+	res = NULL;
+	while (lst)
+	{
+		id = find_expansion(((t_redir*)lst->content)->op[1]);
+		if ((res = do_expansion(shell, ((t_redir*)lst->content)->op[1], id)))
+		{
+			ft_strdel(&(((t_redir*)lst->content)->op[1]));
+			((t_redir*)lst->content)->op[1] = ft_strdup(res);
+			ft_strdel(&res);
+		}
+		lst = lst->next;
+	}
+}
+
+void		expansion_tok(t_core *shell, t_process *process)
+{
+	t_lst *lst;
+	char *res;
+
+	if (!process->tok_list || !shell)
+		return ;
+	res = NULL;
+	lst = process->tok_list;
+	while (lst)
+	{
+		if ((res = do_expansion(shell, ((t_token*)lst->content)->data, ((t_token*)lst->content)->id)))
+		{
+			process->av = ft_add_arg_cmd_process(process->av, res);
+			ft_strdel(&res);
+		}
+		lst = lst->next;
+	}
+}

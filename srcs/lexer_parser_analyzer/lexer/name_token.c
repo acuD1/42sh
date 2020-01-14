@@ -96,9 +96,7 @@ t_lst		*name_lexer(t_lexer *lexer, t_lst *lexer_token)
 		return (lexer_token);
 	}
 	if (ft_strchr(EXPANSION, lexer->buff[lexer->buf_pos]))
-	{
 		lexer_token = expansion_lexer(lexer, lexer_token);
-	}
 	else
 		lexer_token = word_lexer(lexer, lexer_token);
 	lexer->status = L_START;

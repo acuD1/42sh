@@ -121,6 +121,8 @@ SRC		+=	$(S_PATH)$(PROMPT)check_backslash.c
 SRC		+=	$(S_PATH)$(PROMPT)sub_prompt.c
 
 SRC		+=	$(S_PATH)$(EXPANSIONS)expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)assign_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)choose_expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)math_expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)cmd_subs_expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)param_expansion.c
@@ -143,8 +145,7 @@ SRC		+=	$(S_PATH)$(LEXER)io_nbr_nwl_token.c
 SRC		+=	$(S_PATH)$(LEXER)operator_token.c
 SRC		+=	$(S_PATH)$(LEXER)exp.c
 SRC		+=	$(S_PATH)$(LEXER)exp_bis.c
-# SRC		+=	$(S_PATH)$(LEXER)expansion_token.c
-# SRC		+=	$(S_PATH)$(LEXER)expansion_token_bis.c
+SRC		+=	$(S_PATH)$(LEXER)exp_tilde.c
 SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
 
 SRC		+=	$(S_PATH)$(PARSER)parser.c
