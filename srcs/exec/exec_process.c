@@ -6,16 +6,16 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/14 22:44:07 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:35:37 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
- **	exec_process takes for parameter t_lst *env for now because we can set
- **	a temporary environnement if we use the env builtin.
- */
+**	exec_process takes for parameter t_lst *env for now because we can set
+**	a temporary environnement if we use the env builtin.
+*/
 
 static int8_t	job_part_completed(t_job *job, t_process *process)
 {
@@ -31,7 +31,8 @@ static int8_t	job_part_completed(t_job *job, t_process *process)
 	return (TRUE);
 }
 
-void	exec_process(t_job *job, t_process *process, int infile, int outfile)
+void			exec_process(t_job *job, t_process *process
+		, int infile, int outfile)
 {
 	t_core	*shell;
 
@@ -39,9 +40,9 @@ void	exec_process(t_job *job, t_process *process, int infile, int outfile)
 	if (job_part_completed(job, process))
 		job->pgid = -1;
 	process->pgid = job->pgid;
-	if ((process->pid = fork()) == 0)/* CHILD PROCESS */
+	if ((process->pid = fork()) == 0)
 		launch_process(shell, process, infile, outfile);
-	else if (process->pid < 0) /* FORK ERROR */
+	else if (process->pid < 0)
 		print_and_quit(shell, "42sh: fork failure\n");
 	if (shell->is_interactive)
 	{

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/11 18:57:48 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:23:20 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <errno.h>
 
 /*
- **	Function inside the fork where env is created, redirections occurs and where
- **
- */
+**	Function inside the fork where env is created, redirections
+*/
+
 static int8_t	check_filepath(char *filepath)
 {
 	int			ret;
@@ -28,7 +28,7 @@ static int8_t	check_filepath(char *filepath)
 	return (SUCCESS);
 }
 
-int8_t	call_bin(t_core *shell, t_process *process)
+int8_t			call_bin(t_core *shell, t_process *process)
 {
 	char		**envp;
 	int			ret;
@@ -38,14 +38,15 @@ int8_t	call_bin(t_core *shell, t_process *process)
 	if (process->bin == NULL)
 	{
 		if (process->av != NULL)
-			dprintf(STDERR_FILENO, "42sh: %s: command not found\n", process->av[0]);
+			dprintf(STDERR_FILENO
+				, "42sh: %s: command not found\n", process->av[0]);
 		exit(127);
 	}
 	envp = set_envp(shell);
 	if ((ret = check_filepath(process->bin)) != SUCCESS)
 	{
 		ft_perror(process->av[0], NULL, ret);
-		exit((ret == ENOENT) ? 127: 126);
+		exit((ret == ENOENT) ? 127 : 126);
 	}
 	ret = execve(process->bin, process->av, envp);
 	dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);

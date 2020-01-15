@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/03 15:21:50 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:24:19 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int8_t	get_bin_path(t_core *shell, t_process *process)
 	return (1);
 }
 
-int8_t	get_bin(t_core *shell, t_process *process)
+int8_t			get_bin(t_core *shell, t_process *process)
 {
 	int		ret;
 

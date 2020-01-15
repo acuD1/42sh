@@ -6,16 +6,17 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/14 23:42:09 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:38:41 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static void	setup_pipes(t_core *shell, t_process *process, int *mypipe, int *outfile)
+static void		setup_pipes(t_core *shell, t_process *process
+		, int *mypipe, int *outfile)
 {
 	*outfile = STDOUT_FILENO;
-	if (process->type == P_PIPE) /* Setup pipes */
+	if (process->type == P_PIPE)
 	{
 		if (pipe(mypipe) < 0)
 			print_and_quit(shell, "42sh: pipe failure\n");
@@ -23,17 +24,17 @@ static void	setup_pipes(t_core *shell, t_process *process, int *mypipe, int *out
 	}
 }
 
-static void	clean_pipes(int *infile, int *outfile, int *mypipe)
+static void		clean_pipes(int *infile, int *outfile, int *mypipe)
 {
-		if (*infile != STDIN_FILENO)/* Clean up after pipes.	*/
-			close(*infile);
-		if (*outfile != STDOUT_FILENO)
-			close(*outfile);
-		*infile = mypipe[0];
-		mypipe[0] = STDIN_FILENO;
+	if (*infile != STDIN_FILENO)
+		close(*infile);
+	if (*outfile != STDOUT_FILENO)
+		close(*outfile);
+	*infile = mypipe[0];
+	mypipe[0] = STDIN_FILENO;
 }
 
-static void	place_job(t_core *shell, t_job *job, int8_t foreground)
+static void		place_job(t_core *shell, t_job *job, int8_t foreground)
 {
 	if (!shell->is_interactive)
 		wait_for_job(shell, shell->job_list, job);
@@ -46,7 +47,7 @@ static void	place_job(t_core *shell, t_job *job, int8_t foreground)
 	}
 }
 
-int8_t	condition_fulfilled(t_core *shell, int cond)
+static int8_t	condition_fulfilled(t_core *shell, int cond)
 {
 	if (cond != P_ANDIF && cond != P_ORIF)
 		return (SUCCESS);
@@ -57,12 +58,12 @@ int8_t	condition_fulfilled(t_core *shell, int cond)
 	return (FAILURE);
 }
 
-void	launch_job(t_core *shell, t_job *job)
+void			launch_job(t_core *shell, t_job *job)
 {
-	int			cond;
 	t_process	*ptr;
 	t_lst		*process;
 	int8_t		foreground;
+	int			cond;
 	int			mypipe[2];
 	int			infile;
 	int			outfile;
