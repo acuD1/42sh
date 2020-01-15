@@ -191,7 +191,6 @@ SRC			+=	$(S_PATH)$(AC)ac_bin.c
 SRC			+=	$(S_PATH)$(AC)ac_directories.c
 SRC			+=	$(S_PATH)$(AC)ac_tools.c
 
-SRC			+=	$(S_PATH)$(DB)get_opt.c
 SRC			+=	$(S_PATH)$(DB)set_env.c
 SRC			+=	$(S_PATH)$(DB)fetch_db.c
 SRC			+=	$(S_PATH)$(DB)env_updates.c

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*  special_vars.c                                 :+:      :+:    :+:   */
+/*   special_vars.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/02 11:28:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/05 01:42:48 by mpivet-p         ###   ########.fr       */
+/*   Created: 2020/01/15 16:40:07 by mpivet-p          #+#    #+#             */
+/*   Updated: 2020/01/15 16:41:03 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int8_t	update_sharp_var(t_core *shell)
 
 	db = NULL;
 	value = NULL;
-	if (shell != NULL && (db = get_or_create_db(shell, "#", SPECIAL_VAR)) != NULL)
+	if (shell && (db = get_or_create_db(shell, "#", SPECIAL_VAR)) != NULL)
 	{
 		value = ft_itoa(ft_lstlen(shell->pos_vars));
 		if (value && modify_db(db, value, 0) != NULL)
@@ -46,7 +46,7 @@ int8_t	update_shell_name(t_core *shell)
 	t_db	*db;
 
 	db = NULL;
-	if (shell != NULL && (db = get_or_create_db(shell, "0", SPECIAL_VAR)) != NULL)
+	if (shell && (db = get_or_create_db(shell, "0", SPECIAL_VAR)) != NULL)
 	{
 		value = ft_strdup("42sh");
 		if (value && modify_db(db, value, 0) != NULL)
@@ -68,7 +68,7 @@ int8_t	update_shell_flags(t_core *shell)
 
 	db = NULL;
 	value = NULL;
-	if (shell != NULL && (db = get_or_create_db(shell, "-", SPECIAL_VAR)) != NULL)
+	if (shell && (db = get_or_create_db(shell, "-", SPECIAL_VAR)) != NULL)
 	{
 		value = ft_strdup("himBH");
 		if (value && modify_db(db, value, 0) != NULL)
@@ -90,7 +90,7 @@ int8_t	update_exit_status(t_core *shell)
 
 	db = NULL;
 	value = NULL;
-	if (shell != NULL && (db = get_or_create_db(shell, "?", SPECIAL_VAR)) != NULL)
+	if (shell && (db = get_or_create_db(shell, "?", SPECIAL_VAR)) != NULL)
 	{
 		value = ft_itoa(shell->status);
 		if (value && modify_db(db, value, 0) != NULL)

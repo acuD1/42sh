@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:56:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/27 00:34:41 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:41:50 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /*
  **	Create IFS set variable (Input Field Separator)
- */
+*/
 
 int8_t	update_ifs(t_core *shell)
 {
@@ -24,7 +24,7 @@ int8_t	update_ifs(t_core *shell)
 
 	db = NULL;
 	value = NULL;
-	if (shell != NULL && (db = get_or_create_db(shell, "IFS", INTERNAL_VAR)) != NULL)
+	if (shell && (db = get_or_create_db(shell, "IFS", INTERNAL_VAR)) != NULL)
 	{
 		value = ft_strdup("' \t\n'");
 		if (value && modify_db(db, value, 0) != NULL)
@@ -54,9 +54,9 @@ int8_t	create_term(t_core *shell)
 }
 
 /*
- **	Create LINES and COLUMNS (set variables) with the terminal width and height
- **		- Should be updated each time SIGWINCH is captured
- */
+**	Create LINES and COLUMNS (set variables) with the terminal width and height
+**		- Should be updated each time SIGWINCH is captured
+*/
 
 int8_t	update_termsize(t_core *shell)
 {

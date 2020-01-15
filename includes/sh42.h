@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/13 22:20:57 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:59:16 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 **	===========================================================================
 */
 
-int8_t		get_opt(int ac, char **av, t_core *shell);
 void		credit(t_core *shell);
 
 void		print_opt(t_core *shell, int ac, char **av);

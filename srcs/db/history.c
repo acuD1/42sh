@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 20:18:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/10/22 20:18:34 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:03:24 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int8_t	update_hist_size(t_core *shell)
 
 	db = NULL;
 	value = NULL;
-	if (shell && (db = get_or_create_db(shell, "HISTSIZE", INTERNAL_VAR)) != NULL)
+	if (shell
+		&& (db = get_or_create_db(shell, "HISTSIZE", INTERNAL_VAR)) != NULL)
 	{
 		value = ft_itoa(HIST_SIZE);
 		if (value && modify_db(db, value, 0) != NULL)
@@ -61,7 +62,7 @@ int8_t	update_hist_size(t_core *shell)
 }
 
 /*
-**	Update [INTERNAL_VAR] HISTFILESIZE containing the max size of the history file
+**	Update [INTERNAL_VAR] HISTFILESIZE containing the maxsize of the hist file
 **		- Should only be executed at shell startup
 */
 
@@ -72,7 +73,8 @@ int8_t	update_histfile_size(t_core *shell)
 
 	db = NULL;
 	value = NULL;
-	if (shell && (db = get_or_create_db(shell, "HISTFILESIZE", INTERNAL_VAR)) != NULL)
+	if (shell
+		&& (db = get_or_create_db(shell, "HISTFILESIZE", INTERNAL_VAR)) != NULL)
 	{
 		value = ft_itoa(HISTFILE_SIZE);
 		if (value && modify_db(db, value, 0) != NULL)
