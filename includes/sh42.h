@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/13 15:15:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 09:26:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ jmp_buf g_exit_leaks;
 int8_t		get_opt(int ac, char **av, t_core *shell);
 void		version(t_core *shell);
 void		print_opt(t_core *shell);
-u_int8_t	shell_loader(t_core *shell);
-u_int8_t	load_noi_mode(t_core *shell);
+void		load_i_mode(t_core *shell);
+void		load_noi_mode(t_core *shell);
 void		free_env(t_lst *env);
 void		free_prompt(t_core *shell);
 void		free_history(t_read *term);

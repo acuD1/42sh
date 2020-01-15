@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/13 15:21:28 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 09:30:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,11 @@ int		main(int ac, char **av, char **environ)
 	print_opt(&shell);
 	get_core(&shell);
 	init_signals();
-	/*
-	// Need "-c implementation and a while to read everything"
-	//char BUFF[16];
-	if (isatty(STDIN_FILENO) == TRUE)
-	{
-		if (get_size(&(shell.cmd_line)) != SUCCESS)
-			return (EXIT_FAILURE);
-		load_prompt(&shell);
-	}
-	else
-	{
-		while (ft_getnextline(STDIN_FILENO, &(shell.cmd_line.buffer)))
-			load_noi_mode(&shell);
-		ft_strdel(&(shell.cmd_line.buffer));
-	}*/
 	if (setjmp(g_exit_leaks))
+	{
 		dprintf(STDOUT_FILENO, "Exited with free handling ..\n");
+		return (EXIT_SUCCESS);
+	}
 	else
 	{
 		dprintf(STDERR_FILENO, "Entering 42sh with setjmp activated !!!\n");
@@ -51,13 +39,12 @@ int		main(int ac, char **av, char **environ)
 		{
 			if (get_size(&shell.term) != SUCCESS)
 				quit_shell(&shell, EXIT_FAILURE, FALSE, I_MODE);
-			shell.mode |= I_MODE;
+			load_i_mode(&shell);
 		}
 		else
-			shell.mode |= NOI_MODE;
-		shell_loader(&shell);
+			load_noi_mode(&shell);
 	}
-	dprintf(STDERR_FILENO, "?\n");
 	free_shell(&shell);
+	dprintf(STDERR_FILENO, "%sEXIT_SUCCESS%s\n", C_G, C_X);
 	return (EXIT_SUCCESS);
 }

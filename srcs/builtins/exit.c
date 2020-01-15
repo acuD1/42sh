@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 23:42:04 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/13 13:20:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 09:38:10 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ int8_t			builtin_exit(t_core *shell, t_process *process)
 	(void)process;
 	(void)exit_value;
 	(void)argc;
-	quit_shell(shell, 1, TRUE, I_MODE);
+	quit_shell(shell, EXIT_SUCCESS, TRUE, I_MODE);
 	return (1);
 }

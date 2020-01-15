@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/13 08:44:02 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 09:26:35 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int8_t			get_size(t_read *term);
 **		Prompt/Subprompt
 */
 
-void			init_prompt(t_core *shell);
+int8_t			init_prompt(t_core *shell);
 void			display_prompt(t_read *term);
 void			goto_prompt(t_read *term);
 void			display_subprompt(t_read *term, char *prompt);

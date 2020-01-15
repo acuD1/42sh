@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 17:09:47 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/13 15:18:45 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 09:31:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ struct						s_core
 	int32_t					status;
 	int32_t					heredoc;
 	u_int8_t				opt;
-	u_int8_t				mode;
 };
 
 /*
