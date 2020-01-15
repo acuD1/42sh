@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                            :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/29 01:28:05 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/22 19:25:10 by mpivet-p         ###   ########.fr       */
+/*   Created: 2020/01/15 20:32:08 by mpivet-p          #+#    #+#             */
+/*   Updated: 2020/01/15 20:38:59 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,16 @@ void	print_and_quit(t_core *shell, char *message)
 
 void	ft_perror(const char *s, const char *name, const int errnum)
 {
-	static char	*error[] = {"Undefined error: 0", 0, "No such file or directory", 0, 0, 0, 0, 0, 0
+	static char	*error[] = {
+		"Undefined error: 0", 0, "No such file or directory", 0, 0, 0, 0, 0, 0
 		, 0, 0, 0, 0, "Permission denied", 0, 0, 0, 0, 0, 0, "Not a directory"
-		, "Is a directory", 0, 0, 0, 0, 0, 0, 0, 0, 0 // 30
-		, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 40
-		, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 50
-		, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 60
-		, 0, 0, "File name too long", 0, 0, 0, 0, 0, 0, 0 // 70
+		, "Is a directory", 0, 0, 0, 0, 0, 0, 0, 0, 0
+		, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+		, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+		, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+		, 0, 0, "File name too long", 0, 0, 0, 0, 0, 0, 0
 	};
+
 	if (name != NULL)
 		dprintf(STDERR_FILENO, "42sh: %s: %s: %s\n", name, s, error[errnum]);
 	else
