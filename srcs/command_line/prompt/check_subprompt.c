@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:28:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:48:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,27 @@ uint8_t		quotes_is_matching(t_read *term, char *quote)
 	return (TRUE);
 }
 
+int8_t		is_heredoc(t_read *term)
+{
+	int		i;
+
+	i = 0;
+	while (term->buffer[i] && term->buffer[i++])
+	{
+		if (term->buffer[i] == '<' && term->buffer[i + 1] == '<')
+		{
+			if (term->buffer[i + 2] && term->buffer[i + 2] != '<'
+				&& !ft_strchr(term->buffer, '\n'))
+				term->cmd = ft_strsplit(term->buffer, "<<");
+			else
+				return (FALSE);
+			term->found = TRUE;
+			return (TRUE);
+		}
+	}
+	return (FALSE);
+}
+
 uint8_t		check_subprompt(t_read *term)
 {
 	int		i;
@@ -58,6 +79,12 @@ uint8_t		check_subprompt(t_read *term)
 	quote = '\0';
 	if (quotes_is_matching(term, &quote) == TRUE)
 	{
+		if (is_heredoc(term) == TRUE)
+		{
+			load_heredoc(term);
+			save_history(term);
+			return (TRUE);
+		}
 		if (check_backslash(term, &quote) == FALSE)
 			return (FALSE);
 	}

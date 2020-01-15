@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/19 10:39:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 22:04:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@
 **	Option
 */
 
-# define OPT_VERS		0x001
-# define OPT_HELP		0x002
+# define OPT_VERS			0x001
+# define OPT_HELP			0x002
 # define MAX_PATH			4096
 # define ACCESS_MAX_PATH	4096
 
@@ -68,26 +68,26 @@
 **	Command Line
 */
 
-# define S_USR_RW		(S_IRUSR | S_IWUSR)
-# define S_GRP_OTH_R		(S_IRGRP | S_IROTH)
-# define MODE_WRITE		(O_CREAT | O_WRONLY | O_TRUNC)
-# define PS1			"42sh-2.0$ "
-# define PS2			"> "
-# define BUFF_SIZE		4096
-# define READ_SIZE		10
-# define HISTORY_FILE		"./.42sh_history"
-# define QUOTE			'\''
-# define DQUOTE			'\"'
-# define BQUOTE			'`'
-# define NEW_LINE		'\n'
-# define SPACE			" "
-# define BACKSLASH		'\\'
-# define BRACKET_OPEN		'('
-# define BRACKET_CLOSE		')'
-# define CURLY_BRACKET_OPEN	'{'
+# define S_USR_RW				(S_IRUSR | S_IWUSR)
+# define S_GRP_OTH_R			(S_IRGRP | S_IROTH)
+# define MODE_WRITE				(O_CREAT | O_WRONLY | O_TRUNC)
+# define PS1					"42sh-2.0$ "
+# define PS2					"> "
+# define PS3					"heredoc> "
+# define BUFF_SIZE				4096
+# define READ_SIZE				10
+# define HISTORY_FILE			"./.42sh_history"
+# define QUOTE					'\''
+# define DQUOTE					'\"'
+# define BQUOTE					'`'
+# define NEW_LINE				'\n'
+# define SPACE					" "
+# define BACKSLASH				'\\'
+# define BRACKET_OPEN			'('
+# define BRACKET_CLOSE			')'
+# define CURLY_BRACKET_OPEN		'{'
 # define CURLY_BRACKET_CLOSE	'}'
-# define HOOK_OPEN		'['
-# define HOOK_CLOSE		']'
+# define HEREDOC				"<<"
 
 # define CMD_PROMPT		0
 # define CMD_SUBPROMPT	1

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 10:41:55 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/06 17:46:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/13 14:33:23 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ typedef struct			s_read
 	int					x_index;
 	int					x;
 	int					y;
-	int					y_li;
 	int					width;
 	int					ws_col;
 	int					ws_li;
@@ -127,6 +126,7 @@ typedef struct			s_read
 	char				*buffer;
 	char				*tmp_buff;
 	char				**cmd;
+	char				**heredoc;
 
 	t_core				*shell;
 	t_lst				*history;

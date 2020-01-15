@@ -121,6 +121,7 @@ SRC		+=	$(S_PATH)$(PROMPT)prompt.c
 SRC		+=	$(S_PATH)$(PROMPT)check_subprompt.c
 SRC		+=	$(S_PATH)$(PROMPT)check_backslash.c
 SRC		+=	$(S_PATH)$(PROMPT)sub_prompt.c
+SRC		+=	$(S_PATH)$(PROMPT)heredoc.c
 
 SRC		+=	$(S_PATH)$(EXPANSIONS)expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)math_expansion.c

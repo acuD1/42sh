@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/11 04:44:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/15 22:28:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 
 void			init_termcaps(t_read *term);
 void			init_cmd_line(t_core *shell, t_read *term);
-u_int8_t		init_config(t_core *shell);
-u_int8_t		reset_config(t_core *shell);
+int8_t			init_config(t_core *shell);
+int8_t			reset_config(t_core *shell);
 int8_t			get_size(t_read *term);
 
 /*
@@ -37,9 +37,8 @@ int8_t			get_size(t_read *term);
 
 void			init_prompt(t_core *shell);
 void			display_prompt(t_read *term);
-void			goto_prompt(t_read *term);
 void			display_subprompt(t_read *term, char *prompt);
-void			goto_subprompt(t_read *term);
+void			goto_prompt(t_read *term);
 
 /*
 **		Check Caps and Interpret
@@ -86,14 +85,16 @@ int64_t			call_word(t_read *term, int i);
 int64_t			last_cmd_back(t_read *term, int i);
 
 /*
-**		Quotes and Subprompt/Multiline
+**		Subprompt/Multiline
 */
 
 uint8_t			check_subprompt(t_read *term);
+uint8_t			check_backslash(t_read *term, char *quote);
 uint8_t			charset_count(t_read *term, char charset, int i);
 uint8_t			quotes_is_matching(t_read *term, char *quote);
-uint8_t			check_backslash(t_read *term, char *quote);
+uint8_t			read_multiline(t_read *term, char sb);
 void			load_subprompt(char quote, t_read *term);
+void			load_heredoc(t_read *term);
 
 /*
 **		Auto completion
@@ -120,6 +121,7 @@ uint64_t		get_mask(char *buff);
 int				is_dot(char *d_name);
 uint8_t			is_tab(char *d_name, t_read *term);
 uint8_t			is_dir(char *dir);
+uint8_t			split_cmd(char **to_find, t_read *term);
 
 /*
 **		Functions safe
@@ -128,6 +130,5 @@ uint8_t			is_dir(char *dir);
 void			xtputs(char *str, int i, int (*f)(int));
 char			*xtgetstr(char *id, char **area);
 size_t			xread(int fd, char *buff, int size);
-uint8_t			split_cmd(char **to_find, t_read *term);
 
 #endif

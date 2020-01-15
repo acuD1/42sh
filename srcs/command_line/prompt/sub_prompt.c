@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/07 14:48:29 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/15 22:29:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		display_subprompt(t_read *term, char *prompt)
 	ft_printf(term->prompt);
 }
 
-uint8_t		read_subline(t_read *term, char sb)
+uint8_t		read_multiline(t_read *term, char sb)
 {
 	char	buff[READ_SIZE + 1];
 
@@ -39,6 +39,8 @@ uint8_t		read_subline(t_read *term, char sb)
 		else
 		{
 			if (sb == BACKSLASH && check_backslash(term, &sb) == FALSE)
+				return (FALSE);
+			else if (sb == FALSE)
 				return (FALSE);
 			else if (sb != BACKSLASH && ft_strchr(term->buffer, sb))
 				return (FALSE);
@@ -61,7 +63,7 @@ void		load_subprompt(char sb, t_read *term)
 		ft_strdel(&term->buffer);
 		term->buffer = ft_memalloc(BUFF_SIZE);
 		display_subprompt(term, PS2);
-		if (read_subline(term, sb) == FALSE)
+		if (read_multiline(term, sb) == FALSE)
 		{
 			term->sub_prompt = FALSE;
 			term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);

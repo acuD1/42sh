@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 04:02:43 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/11 04:58:14 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/13 12:18:37 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void			insert_content(int j, int i, t_read *term, char *content)
 	}
 	if (i > 0)
 		begin = ft_strsub(term->buffer, 0, i);
-	if (i + 1 < term->width - term->prompt_len)
+	if (i + 1 < (int)ft_strlen(term->buffer))
 		end = ft_strsub(term->buffer, i + j, term->width - term->prompt_len);
 	ft_strdel(&term->buffer);
 	term->buffer = ft_memalloc(BUFF_SIZE);

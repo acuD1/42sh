@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/22 13:05:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 09:46:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int8_t	call_bin(t_core *shell, t_lst *process)
 
 	envp = NULL;
 	ptr = process->content; //Shortcut to ((t_process*)proces->content)
-	exec_redirs(shell, ptr->redir_list);
+//	exec_redirs(shell, ptr->redir_list);
 	if (ptr->bin == NULL)
 	{
 		if (ptr->av != NULL)

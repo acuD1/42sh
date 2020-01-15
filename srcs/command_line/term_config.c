@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/07 12:58:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:08:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void			init_cmd_line(t_core *shell, t_read *term)
 **	- ECHO disable echo input characters
 */
 
-uint8_t				init_config(t_core *shell)
+int8_t				init_config(t_core *shell)
 {
 	if (tgetent(NULL, "xterm-256color") == FAILURE)
 	{
@@ -67,12 +67,15 @@ uint8_t				init_config(t_core *shell)
 **	Reset term when exit, before launch another shell, set term in bg..
 */
 
-uint8_t			reset_config(t_core *shell)
+int8_t			reset_config(t_core *shell)
 {
-	tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t));
-	//ft_strdel(&(term->prompt));
+	if (tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t)) == FAILURE)
+	{
+		ft_perror("tcsetattr", NULL, 0);
+		quit_shell(shell, 0, TRUE);
+		return (FAILURE);
+	}
 	ft_bzero(shell->term.prompt, READ_SIZE);
-	//shell->old_t.c_lflag |= (ICANON | ECHO); ?
 	ft_strdel(&shell->term.tmp_buff);
 	return (SUCCESS);
 }
