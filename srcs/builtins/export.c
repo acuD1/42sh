@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/08 02:20:29 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 20:52:40 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static int8_t	export(t_core *shell, char *arg, int *ret)
 			|| ft_isdigit(arg[0]) != SUCCESS))
 	{
 		*ret = 1;
-		dprintf(STDERR_FILENO, "42sh: export: `%s': not a valid identifier\n", arg);
+		dprintf(STDERR_FILENO
+			, "42sh: export: `%s': not a valid identifier\n", arg);
 		ft_strdel(&str);
 		return (SUCCESS);
 	}
@@ -52,7 +53,7 @@ static int8_t	export(t_core *shell, char *arg, int *ret)
 	return (SUCCESS);
 }
 
-int8_t	builtin_export(t_core *shell, t_process *process)
+int8_t			builtin_export(t_core *shell, t_process *process)
 {
 	int		argc;
 	int		ret;

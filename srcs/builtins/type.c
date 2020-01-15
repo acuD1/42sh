@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 05:41:09 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/16 06:32:52 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:08:21 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int8_t	type(t_core *shell, char *path)
 	if ((process.av = (char**)malloc(sizeof(char*) * 2)) == NULL)
 		return (FAILURE);
 	process.av[0] = path;
-	process.av[1] = NULL;;
+	process.av[1] = NULL;
 	if (locate_hash(shell, &process) == SUCCESS)
 		printf("%s is hashed (%s)\n", path, process.bin);
 	else if (get_bin(shell, &process) == SUCCESS)
@@ -36,13 +36,13 @@ static int8_t	type(t_core *shell, char *path)
 	return (SUCCESS);
 }
 
-int8_t	builtin_type(t_core *shell, t_process *process)
+int8_t			builtin_type(t_core *shell, t_process *process)
 {
 	int		i;
 	int		ret;
 
 	i = 1;
-	ret = 0; 
+	ret = 0;
 	while (process->av[i])
 	{
 		ret = type(shell, process->av[i]);

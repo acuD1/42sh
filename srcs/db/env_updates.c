@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 17:57:29 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:06:15 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,23 @@ int8_t	update_last_arg(t_core *shell, char **argv)
 	if (shell != NULL && (db = get_or_create_db(shell, "_", ENV_VAR)) != NULL)
 	{
 		value = ft_strdup(argv[tablen - 1]);
+		if (value && modify_db(db, value, 0) != NULL)
+			return (SUCCESS);
+		ft_strdel(&value);
+	}
+	return (FAILURE);
+}
+
+int8_t	update_oldpwd(t_core *shell, char *oldpwd)
+{
+	t_db	*db;
+	char	*value;
+
+	db = NULL;
+	value = NULL;
+	if (shell && (db = get_or_create_db(shell, "OLDPWD", ENV_VAR)) != NULL)
+	{
+		value = ft_strdup(oldpwd);
 		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);
 		ft_strdel(&value);

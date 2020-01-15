@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 17:59:16 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:06:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int8_t		update_shell_flags(t_core *shell);
 int8_t		update_exit_status(t_core *shell);
 int8_t		update_backgroud_pid(t_core *shell);
 int8_t		update_last_arg(t_core *shell, char **argv);
+int8_t		update_oldpwd(t_core *shell, char *oldpwd);
 
 /*
 **	===========================================================================

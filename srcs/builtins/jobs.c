@@ -6,16 +6,16 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/14 20:38:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:18:35 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static void print_longjob(t_job *job)
+static void	print_longjob(t_job *job)
 {
-	t_process *process;
-	t_lst *ptr;
+	t_process	*process;
+	t_lst		*ptr;
 
 	ptr = job->process_list;
 	while (ptr != NULL)
@@ -31,7 +31,7 @@ static void print_longjob(t_job *job)
 	}
 }
 
-static void print_job(t_job *job, uint64_t opt)
+static void	print_job(t_job *job, uint64_t opt)
 {
 	if (opt & (1ULL << 15))
 		printf("%d\n", job->pgid);
@@ -39,24 +39,24 @@ static void print_job(t_job *job, uint64_t opt)
 		print_longjob(job);
 	else
 		printf("[%d]%c  %s\t\t%s\n", job->jobc_id, job->jobc_last
-		,(job_is_stopped(job)) ? "Stopped" : "Done", job->command);
+		, (job_is_stopped(job)) ? "Stopped" : "Done", job->command);
 }
 
-int8_t builtin_jobs(t_core *shell, t_process *process)
+int8_t		builtin_jobs(t_core *shell, t_process *process)
 {
-	uint64_t opt;
-	t_lst *job;
-	int argc;
-	int i;
+	uint64_t	opt;
+	t_lst		*job;
+	int			argc;
+	int			i;
 
 	argc = ft_tablen(process->av);
 	job = shell->launched_jobs;
-	i = (process->av[1] && ft_strcmp(process->av[1], "--")) ? 1 : 2;
+	i = (process->av[1] && ft_strcmp(process->av[1], "--") == 0) ? 2 : 1;
 	if (shell->launched_jobs)
 		update_status(shell);
 	if ((opt = get_options(argc, process->av, "lp")) & OPT_ERROR)
 		print_usage("42sh: jobs", opt & 0xFF, "jobs [-lp] [jobspec ...]");
-	if (i == argc - 1)
+	if (i == argc)
 		while (job)
 		{
 			print_job(job->content, opt);

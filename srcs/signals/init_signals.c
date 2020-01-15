@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/12 21:10:33 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 20:45:46 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,26 @@ static void	sigh_winch(int signum)
 		quit_shell(shell, 1, 1);
 }
 
+/*
+**	HUP INT
+**	QUIT ILL TRAP ABRT EMT
+**	FPE KILL(NULL)BUS SEGV SYS PIPE
+**	ALRM TERM URG STOP(NL) TSTP CONT
+**	CHLD TTIN TTOU IO XCPU XFSZ
+**	VTALRM PROF WINCH INFO USR1
+**	USR2
+*/
+
 void		init_signals(void)
 {
-	static void (*sighandler[31])(int) = {sig_handler, sigint_handler /* HUP INT */
-		, sig_handler, sig_handler, sig_handler, sig_handler, sig_handler /* QUIT ILL TRAP ABRT EMT */
-		, sig_handler, NULL, sig_handler, sig_handler, sig_handler, sig_exit /*FPE KILL(NULL)BUS SEGV SYS PIPE*/
-		, sig_handler, sig_handler, sig_handler, NULL, SIG_IGN, sig_exit/*ALRM TERM URG STOP(NL) TSTP CONT*/
-		, SIG_DFL, SIG_IGN, SIG_IGN, SIG_DFL, sig_handler, sig_handler /*CHLD TTIN TTOU IO XCPU XFSZ*/
-		, sig_handler, sig_handler, sigh_winch, NULL, sig_handler /*VTALRM PROF WINCH INFO USR1 */
-		, sig_handler}; /* USR2*/
-	int i;
+	static void	(*sighandler[31])(int) = {sig_handler, sigint_handler
+		, sig_handler, sig_handler, sig_handler, sig_handler, sig_handler
+		, sig_handler, NULL, sig_handler, sig_handler, sig_handler, sig_exit
+		, sig_handler, sig_handler, sig_handler, NULL, SIG_IGN, sig_exit
+		, SIG_DFL, SIG_IGN, SIG_IGN, SIG_DFL, sig_handler, sig_handler
+		, sig_handler, sig_handler, sigh_winch, NULL, sig_handler
+		, sig_handler};
+	int			i;
 
 	i = 1;
 	while (i <= SIGUSR2)

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 22:37:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/08 02:20:42 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:08:51 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void		print_internal_vars(t_core *shell)
 				|| ((t_db*)ptr->content)->type & INTERNAL_VAR)
 		{
 			printf("%s=%s\n", ((t_db*)ptr->content)->key
-					, ((t_db*)ptr->content)->value); //ADD FT_
+					, ((t_db*)ptr->content)->value);
 		}
 		ptr = ptr->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/10 18:31:09 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:05:50 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,6 @@ static int8_t	cd_check_path(char *path)
 	if (errnum == 0)
 		errnum = ft_access(path, X_OK);
 	return (errnum);
-}
-
-static	int8_t	update_oldpwd(t_core *shell, char *oldpwd)
-{
-	t_db	*db;
-	char	*value;
-
-	db = NULL;
-	value = NULL;
-	if (shell != NULL && (db = get_or_create_db(shell, "OLDPWD", ENV_VAR)) != NULL)
-	{
-		value = ft_strdup(oldpwd);
-		if (value && modify_db(db, value, 0) != NULL)
-			return (SUCCESS);
-		ft_strdel(&value);
-	}
-	return (FAILURE);
 }
 
 static int8_t	change_dir(t_core *shell, char *path)
@@ -89,7 +72,7 @@ static int8_t	cd_oldpwd(t_core *shell)
 	return (change_dir(shell, var->value));
 }
 
-int8_t	builtin_cd(t_core *shell, t_process *process)
+int8_t			builtin_cd(t_core *shell, t_process *process)
 {
 	int		argc;
 
