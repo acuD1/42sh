@@ -12,6 +12,19 @@
 
 #include "sh42.h"
 
+char *quote_removing(t_token *tok)
+{
+	if (!tok->data)
+		return (NULL);
+	if (tok->id == P_DBQUOTE)
+		tok->data = point_de_cote(tok->data, '\"');
+	else if (tok->id == P_QUOTE)
+		tok->data = point_de_cote(tok->data, '\'');
+	else if (tok->id == P_BQUOTE)
+		tok->data = point_de_cote(tok->data, '`');
+	return (tok->data);
+}
+
 t_analyzer	*escape_sequence_analyzer(t_analyzer *analyzer)
 {
 	// char	*str;
@@ -59,7 +72,7 @@ t_analyzer	*cmd_analyze(t_analyzer *anal, t_core *shell)
 	if (((t_token*)anal->lexer->content)->id == P_QUOTE
 		|| ((t_token*)anal->lexer->content)->id == P_BQUOTE
 		|| ((t_token*)anal->lexer->content)->id == P_DBQUOTE)
-		quote_removing((t_token*)anal->lexer->content);
+		((t_token*)anal->lexer->content)->data = quote_removing((t_token*)anal->lexer->content);
 	if (anal->state == A_REDIRECT)
 		return (anal = redir_wanalyze(anal, shell));
 	// else if (((t_token*)anal->lexer->content)->id == P_ESCSEQ)

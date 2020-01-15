@@ -19,7 +19,22 @@ int8_t 		debug_ailleurs(const char *path, const char *str);
 int8_t 		nono(const char *path);
 void        ft_printtab(char **cmd);
 
+
+/*
+**  QUOTE
+*/
+
 char *quote_removing(t_token *tok);
+// char *quote_removing(char *data, e_pstate id);
+char *point_de_cote(char *src, char quote);
+
+
+
+
+
+
+
+
 
 void 		lexer_parser_analyzer(t_core *shell);
 

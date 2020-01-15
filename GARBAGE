@@ -1,4 +1,42 @@
 
+	// if (!one)
+	// {
+	// 	one = ft_strsub(src, 1, ft_strlen(two));
+	// 	printf("1 %s\n", one);
+	// }
+	// if (!two)
+	// {
+	// 	two = ft_strsub(src, ft_strlen(one), ft_strlen(src) - 1);
+	// 	printf("2 %s\n", two);
+	// }
+
+	// three = ft_strsub(src, ft_strlen(one), ft_strlen(src) - (ft_strlen(one) + ft_strlen(two)));
+	// printf("%s %s\n", one, two);
+	// nb[2] = ft_strlen(src) - (ft_strlen(one) + ft_strlen(two) + 2);
+	// nb[0] = ft_strlen(one) + 1;
+	// printf("start %d size %d\n", nb[0], nb[1]);
+	// three = ft_strsub(src, nb[0], nb[1]);
+	// printf("3 '%s'\n", three);
+	// vivalagerie = ft_strjoinf(one, three, 4);
+	// one = ft_strjoinf(vivalagerie, two, 4);
+		// return (one);
+	// if (src[nb[1] - 1] != quote)
+	// {
+	// 	while (src[nb[1]] != quote)
+	// 		nb[1]--;
+	// 	three = ft_strsub(src, nb[1], nb[2] - nb[1]);
+	// }
+	// two = ft_strsub(src, nb[0], nb[2] - (nb[1] + nb[0]));
+	// printf("{%s}+{%s}+{%s}      %d %d %d\n", one, two, three, nb[0], nb[1], nb[2]);
+	// one = ft_strjoinf(one, two, 4);
+	// two = ft_strjoinf(three, one, 4);
+	// free(src);
+	// // printf("NUMBER 2 %s\n", two);
+	// return (two);
+	// return (src);
+
+
+
 // char *expelliarmus(char *string, t_core *shell)
 // {
 // 	t_expansion toto;

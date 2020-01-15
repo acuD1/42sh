@@ -30,8 +30,7 @@ uint8_t is_expansion(e_pstate id)
 		return (7);
 	else if (id == P_DOLLAR)
 		return (8);
-	else if (id == P_DBQUOTE || id == P_WORD
-		|| id == P_BQUOTE || id == P_ASSIGN)
+	else if (id == P_DBQUOTE || id == P_BQUOTE || id == P_ASSIGN)
 		return (9);
 	return (0);
 }
@@ -60,7 +59,7 @@ int expelliarmus(char *src, int index, char **dst, t_core *shell)
 		if ((exp = get_expansion(&src[index], state)))
 			if ((trans = toto.sionat[toto.erience](exp, shell)))
 				*dst = ft_strjoinf(*dst, trans, 4);
-		index += ft_strlen(exp);
+		index = ft_strlen(exp) + index;
 		ft_strdel(&exp);
 		return (index);
 	}
@@ -85,6 +84,8 @@ char *exp_dbquote(char *data, t_core *shell)
 				index++;
 		}
 		index = expelliarmus(data, index, &res, shell);
+		if ((size_t)index == ft_strlen(data))
+			break ;
 		tmp = ft_strsub(data, index, 1);
 		res = ft_strjoinf(res, tmp, 4);
 		index++;

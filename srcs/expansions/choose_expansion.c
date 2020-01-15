@@ -12,6 +12,23 @@
 
 #include "sh42.h"
 
+// e_pstate ft_ffqtype(char *str)
+// {
+// 	if (!str || !(*str))
+// 		return (P_END);
+// 	while (*str)
+// 	{
+// 		if (*str == '\"')
+// 			return (P_DBQUOTE);
+// 		if (*str == '\'')
+// 			return (P_QUOTE);
+// 		if (*str == '`')
+// 			return (P_BQUOTE);
+// 		str++;
+// 	}
+// 	return (P_WORD);
+// }
+
 char *do_expansion(t_core *shell, char *data, e_pstate id)
 {
 	char *res;
@@ -20,6 +37,7 @@ char *do_expansion(t_core *shell, char *data, e_pstate id)
 	init_expansionat(&exp);
 	res = NULL;
 	exp.erience = is_expansion(id);
+	printf("dododododanananana %u\n", exp.erience);
 	if ((res = exp.sionat[exp.erience](data, shell)))
 		return (res);
 	return (NULL);
@@ -78,6 +96,8 @@ void		expansion_tok(t_core *shell, t_process *process)
 	{
 		if ((res = do_expansion(shell, ((t_token*)lst->content)->data, ((t_token*)lst->content)->id)))
 		{
+
+			// res = quote_removing(res, ((t_token*)lst->content)->id);
 			process->av = ft_add_arg_cmd_process(process->av, res);
 			free(res);
 		}
