@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:42 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/17 09:02:12 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/16 23:50:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int8_t	append_output(t_redir *ptr)
 
 	if (ptr->io_num[0] < 0)
 		ptr->io_num[0] = 1;
-	if ((fd = open(ptr->op[1], O_WRONLY | O_APPEND | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR)) < 0)
+	if ((fd = open(ptr->op[1], O_WRONLY | O_APPEND | O_CREAT
+				, S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR)) < 0)
 	{
 		if (is_a_dir(ptr->op[1]) == EISDIR)
 			ft_perror(ptr->op[1], NULL, EISDIR);
@@ -36,7 +37,8 @@ int8_t	redir_output(t_redir *ptr)
 
 	if (ptr->io_num[0] < 0)
 		ptr->io_num[0] = 1;
-	if ((fd = open(ptr->op[1], O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR)) < 0)
+	if ((fd = open(ptr->op[1], O_WRONLY | O_TRUNC | O_CREAT
+				, S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR)) < 0)
 	{
 		if (is_a_dir(ptr->op[1]) == EISDIR)
 			ft_perror(ptr->op[1], NULL, EISDIR);

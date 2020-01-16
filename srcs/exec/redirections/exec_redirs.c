@@ -6,13 +6,13 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:01 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/17 08:59:41 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/16 23:47:15 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static void	get_io_number(t_redir *ptr)
+static void		get_io_number(t_redir *ptr)
 {
 	ptr->io_num[0] = -1;
 	ptr->io_num[1] = -1;
@@ -44,7 +44,7 @@ static int8_t	get_fd(t_redir *redir)
 
 int8_t			exec_redirs(t_core *shell, t_lst *head)
 {
-	t_lst *redirs;
+	t_lst	*redirs;
 	int		i;
 
 	i = 0;

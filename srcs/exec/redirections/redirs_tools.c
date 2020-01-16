@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:29:40 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/17 09:06:22 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/16 23:49:43 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int8_t	dup_output(int fd, t_redir *ptr)
 		ptr->dup_fd = dup2(tmp, ptr->io_num[1]);
 		close(tmp);
 	}
-	close (fd);
+	close(fd);
 	if (tmp < 0 || ptr->dup_fd < 0)
 		return (FAILURE);
 	return (SUCCESS);
@@ -57,7 +57,8 @@ int8_t	write_heredoc(t_redir *ptr)
 	ft_bzero(filename, 24);
 	ft_strcat(filename, "/tmp/.tmphdoc");
 	ft_itoabuf(ptr->dup_fd, filename);
-	if ((fd = open(path, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR)) < 0)
+	if ((fd = open(path, O_WRONLY | O_TRUNC | O_CREAT
+					, S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR)) < 0)
 		return (FAILURE);
 	ptr->op[1] = ft_strdup(path);
 	ft_putstr_fd(ptr->heredoc, fd);
