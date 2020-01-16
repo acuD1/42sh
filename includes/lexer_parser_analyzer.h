@@ -30,8 +30,7 @@ char *point_de_cote(char *src, char quote);
 
 
 
-
-
+t_analyzer	*process_word_analyze(t_analyzer *anal);
 
 
 

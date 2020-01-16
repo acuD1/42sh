@@ -37,7 +37,6 @@ char *do_expansion(t_core *shell, char *data, e_pstate id)
 	init_expansionat(&exp);
 	res = NULL;
 	exp.erience = is_expansion(id);
-	printf("dododododanananana %u\n", exp.erience);
 	if ((res = exp.sionat[exp.erience](data, shell)))
 		return (res);
 	return (NULL);

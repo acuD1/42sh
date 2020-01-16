@@ -57,7 +57,6 @@ void			ft_printprocess(t_process *process)
 	dprintf(nono("/dev/ttys002"), "process state %u\n", tmp->type);
 	if (tmp->av)
 		ft_printtab(tmp->av);
-	dprintf(nono("/dev/ttys002"), "process cmd {%s}\n", tmp->command);
 	if (tmp->tok_list)
 	{
 		ttp = tmp->tok_list; 

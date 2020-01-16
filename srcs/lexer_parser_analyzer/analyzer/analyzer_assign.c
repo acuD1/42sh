@@ -65,16 +65,16 @@ t_analyzer	*assign_analyze(t_analyzer *anal, t_core *shell)
 	char	*tmp;
 
 	tmp = NULL;
-	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command, 1);
 	if (((t_token*)anal->lexer->content)->id == P_ASSIGN
 		&& ((anal->state != A_WORD)))
+	{
+		anal->job.command = fill_cmd_job(anal->lexer, anal->job.command, 1);
 		return (anal = ass_analyze(anal));
+	}
 	else
 	{
-		tmp = ft_strdup(((t_token*)anal->lexer->content)->data);
-		anal->process.av = ft_add_arg_cmd_process(anal->process.av, tmp);
+		anal = process_word_analyze(anal);
 		anal->state = A_WORD;
-		free(tmp);
 	}
 	(void)shell;
 	return (anal);

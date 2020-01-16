@@ -99,11 +99,11 @@ void expansion(t_core *shell, t_process *process)
 		return ;
 	if (process->tok_list)
 		expansion_tok(shell, process);
-	if (process->assign_list)
-	{
-		expansion_assign(shell, process);
-		add_assign_env(process->assign_list, shell);
-	}
-	if (process->redir_list)
-		expansion_redir(shell, process);
+// 	if (process->assign_list)
+// 	{
+// 		expansion_assign(shell, process);
+// 		add_assign_env(process->assign_list, shell);
+// 	}
+// 	if (process->redir_list)
+// 		expansion_redir(shell, process);
 }

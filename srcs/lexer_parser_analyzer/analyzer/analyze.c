@@ -77,6 +77,7 @@ void				analyzer(t_core *shell, t_lst *lexer)
 	anal = init_analyze(anal, lexer);
 	while (anal->state != A_STOP)
 	{
+		ft_printf("tok data {%s} id %u state %u\n", ((t_token*)anal->lexer->content)->data,((t_token*)anal->lexer->content)->id, anal->state);
 		anal = anal->analyze[anal->state]
 			[((t_token*)anal->lexer->content)->id](anal, shell);
 		anal->lexer = anal->lexer->next;
