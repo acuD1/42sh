@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 21:06:30 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/17 06:11:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ int8_t		launch_blt(t_core *shell, t_process *process);
 void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
 void		update_status(t_core *shell);
 t_job		*get_job(t_lst *jobs, char *str);
-void		format_job_info(t_job *job, const char *status);
+void		format_job_info(t_job *job);
 
 /* ###########################  TEMPORARY   #################################*/
 void	debug_analyzer(t_core *shell);

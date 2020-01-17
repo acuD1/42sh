@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 16:42:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/06 21:48:10 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/17 00:13:50 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_process	*find_process(t_lst *job, pid_t pid)
 {
 	t_lst *process;
+
 	while (job != NULL)
 	{
 		process = ((t_job*)job->content)->process_list;
@@ -29,7 +30,7 @@ t_process	*find_process(t_lst *job, pid_t pid)
 	return (NULL);
 }
 
-t_job	*find_job(t_lst *job, pid_t pgid)
+t_job		*find_job(t_lst *job, pid_t pgid)
 {
 	while (job != NULL)
 	{
@@ -40,7 +41,7 @@ t_job	*find_job(t_lst *job, pid_t pgid)
 	return (NULL);
 }
 
-int8_t	job_is_stopped(t_job *job)
+int8_t		job_is_stopped(t_job *job)
 {
 	t_lst	*ptr;
 
@@ -55,7 +56,7 @@ int8_t	job_is_stopped(t_job *job)
 	return (TRUE);
 }
 
-int8_t	job_is_completed(t_job *job)
+int8_t		job_is_completed(t_job *job)
 {
 	t_lst	*ptr;
 

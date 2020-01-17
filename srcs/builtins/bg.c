@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:59:13 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/14 23:30:33 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/17 06:11:10 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ int8_t	builtin_bg(t_core *shell, t_process *process)
 			, (process->av[i]) ? process->av[1] : "current");
 			return (1);
 		}
-		format_job_info(job, "Stopped");
+		job->notified = FALSE;
 		continue_job(shell, job, FALSE);
+		format_job_info(job);
 		i++;
 	}
 	return (SUCCESS);

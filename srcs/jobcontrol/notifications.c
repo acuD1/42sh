@@ -6,13 +6,14 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/14 23:52:53 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/17 06:18:29 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t			mark_process_status(t_core *shell, t_lst *jobs, pid_t pid, int status)
+int8_t		mark_process_status(t_core *shell
+		, t_lst *jobs, pid_t pid, int status)
 {
 	t_process	*process;
 
@@ -29,7 +30,8 @@ int8_t			mark_process_status(t_core *shell, t_lst *jobs, pid_t pid, int status)
 			else
 			{
 				process->completed = TRUE;
-				process->status = (WIFEXITED(status)) ? WTERMSIG(status) : WEXITSTATUS(status);
+				process->status = (WIFEXITED(status))
+					? WTERMSIG(status) : WEXITSTATUS(status);
 				status_handler(shell, status);
 			}
 		}
@@ -45,14 +47,29 @@ void		update_status(t_core *shell)
 	pid_t	pid;
 	int		status;
 
+	if (!shell->launched_jobs)
+		return ;
 	pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
-	while (pid > 0 && !mark_process_status(shell, shell->launched_jobs, pid, status))
+	while (pid > 0
+		&& !mark_process_status(shell, shell->launched_jobs, pid, status))
+	{
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
+	}
 }
 
-void		format_job_info(t_job *job, const char *status)
+void		format_job_info(t_job *job)
 {
-	dprintf(STDERR_FILENO, "[%i]%c  %s\t\t%s\n", job->jobc_id, job->jobc_last, status, job->command);
+	static char	*str[2] = {"Stopped", "Done"};
+	int			status;
+
+	if (job_is_completed(job))
+		status = 1;
+	else if (job_is_stopped(job) && job->notified == FALSE)
+		status = 0;
+	else
+		return ;
+	dprintf(STDERR_FILENO, "[%i]%c  %s\t\t%s\n", job->jobc_id
+		, job->jobc_last, str[status], job->command);
 }
 
 static void	free_job(t_core *shell, t_lst *job)
@@ -68,8 +85,6 @@ static void	free_job(t_core *shell, t_lst *job)
 	}
 	else
 		shell->launched_jobs = job->next;
-
-	// freeing job link
 	free_process_list(job->content);
 	ft_strdel(&(((t_job*)job->content)->command));
 	free(job);
@@ -101,27 +116,22 @@ int8_t		do_job_notification(t_core *shell)
 	t_lst *jnext;
 	t_job *ptr;
 
-	/* Update status information for child processes.	*/
-	if (shell->launched_jobs)
-		update_status(shell);
+	update_status(shell);
 	job = shell->launched_jobs;
 	while (job)
 	{
 		ptr = ((t_job*)job->content);
 		jnext = job->next;
-
+		format_job_info(ptr);
 		if (job_is_completed(ptr))
 		{
-			format_job_info(ptr, "Done");
 			free_job(shell, job);
 			job = shell->launched_jobs;
 			ptr = NULL;
-			continue ;
 		}
 		else if (job_is_stopped(ptr) && ptr->notified != TRUE)
 		{
 			attr_jobc_id(shell, ptr);
-			format_job_info(ptr, "Stopped");
 			ptr->notified = TRUE;
 		}
 		job = jnext;

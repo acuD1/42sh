@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/06 17:56:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/17 00:20:41 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int8_t		launch_blt(t_core *shell, t_process *process)
 	return (FAILURE);
 }
 
-void	launch_process(t_core *shell, t_process *process, int infile, int outfile)
+void		launch_process(t_core *shell
+		, t_process *process, int infile, int outfile)
 {
 	if (shell->is_interactive)
 	{
