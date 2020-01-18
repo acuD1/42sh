@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 21:26:07 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/18 19:36:21 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int8_t		task_master(t_core *shell)
 	while (job)
 	{
 		next = job->next;
-		launch_job(shell, job->content);
+		launch_job(shell, job->content
+				, (((t_job*)job->content)->type != P_AND) ? TRUE : FALSE);
 		save_job(shell, job);
 		do_job_notification(shell);
 		job = next;

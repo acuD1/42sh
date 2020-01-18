@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 21:35:37 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/18 16:59:07 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,14 @@ static int8_t	job_part_completed(t_job *job, t_process *process)
 	return (TRUE);
 }
 
-void			exec_process(t_job *job, t_process *process
-		, int infile, int outfile)
+void			exec_process(t_core *shell, t_job *job, t_process *process
+		, int *fds)
 {
-	t_core	*shell;
-
-	shell = get_core(NULL);
 	if (job_part_completed(job, process))
 		job->pgid = -1;
 	process->pgid = job->pgid;
 	if ((process->pid = fork()) == 0)
-		launch_process(shell, process, infile, outfile);
+		launch_process(shell, process, fds[0], fds[1]);
 	else if (process->pid < 0)
 		print_and_quit(shell, "42sh: fork failure\n");
 	if (shell->is_interactive)
@@ -51,7 +48,7 @@ void			exec_process(t_job *job, t_process *process
 		process->pgid = job->pgid;
 		if (setpgid(process->pid, process->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: setpgid error\n");
-		if (process->stopped != TRUE && outfile == STDOUT_FILENO)
+		if (process->stopped != TRUE && fds[1] == STDOUT_FILENO)
 		{
 			if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
 				print_and_quit(shell, "42sh: tcsetpgrp error (1)\n");

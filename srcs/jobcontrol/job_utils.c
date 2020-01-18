@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 16:42:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/17 00:13:50 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/18 19:44:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,19 @@ int8_t		job_is_completed(t_job *job)
 		ptr = ptr->next;
 	}
 	return (TRUE);
+}
+
+void		debug_job(t_job *job)
+{
+	t_lst *ptr;
+
+	ptr = job->process_list;
+	printf(" ** JOB **\n");
+	while (ptr)
+	{
+		printf("[stopped] = %i || [completed] = %i\n====\n"
+		, ((t_process*)ptr->content)->stopped
+		, ((t_process*)ptr->content)->completed);
+		ptr = ptr->next;
+	}
 }

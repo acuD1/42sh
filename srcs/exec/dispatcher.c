@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 21:38:41 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/18 19:41:10 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,11 @@ static void		clean_pipes(int *infile, int *outfile, int *mypipe)
 
 static void		place_job(t_core *shell, t_job *job, int8_t foreground)
 {
+	if (shell->is_interactive && (job_is_completed(job) || job_is_stopped(job)))
+		return ;
 	if (!shell->is_interactive)
 		wait_for_job(shell, shell->job_list, job);
-	else if (foreground == TRUE)
+	else if (foreground == TRUE && !job_is_stopped(job))
 		put_job_in_foreground(shell, shell->job_list, job, FALSE);
 	else
 	{
@@ -47,8 +49,17 @@ static void		place_job(t_core *shell, t_job *job, int8_t foreground)
 	}
 }
 
-static int8_t	condition_fulfilled(t_core *shell, int cond)
+static int8_t	condition_fulfilled(t_core *shell, t_lst *ptr, t_lst *process)
 {
+	int		cond;
+
+	if (ptr == process)
+		return (SUCCESS);
+	while (ptr && ptr->next != process)
+		ptr = ptr->next;
+	if (!ptr)
+		return (FAILURE);
+	cond = ((t_process*)ptr->content)->type;
 	if (cond != P_ANDIF && cond != P_ORIF)
 		return (SUCCESS);
 	else if (cond == P_ANDIF && shell->status == 0)
@@ -58,40 +69,30 @@ static int8_t	condition_fulfilled(t_core *shell, int cond)
 	return (FAILURE);
 }
 
-void			launch_job(t_core *shell, t_job *job)
+void			launch_job(t_core *shell, t_job *job, int foreground)
 {
 	t_process	*ptr;
 	t_lst		*process;
-	int8_t		foreground;
-	int			cond;
 	int			mypipe[2];
-	int			infile;
-	int			outfile;
+	int			fds[2];
 
-	cond = 0;
-	infile = STDIN_FILENO;
+	fds[0] = STDIN_FILENO;
 	process = job->process_list;
-	foreground = (job->type == P_AND) ? FALSE : TRUE;
 	while (process)
 	{
 		ptr = ((t_process*)process->content);
-		setup_pipes(shell, ptr, mypipe, &outfile);
+		setup_pipes(shell, ptr, mypipe, &fds[1]);
 		ptr->stopped = (foreground == TRUE) ? FALSE : TRUE;
-		if (condition_fulfilled(shell, cond) == SUCCESS)
-		{
-			expansion(shell, ptr);
-			add_assign_env(shell, ptr);
-			if (infile == STDIN_FILENO && outfile == STDOUT_FILENO && foreground == TRUE)
-				launch_blt(shell, ptr);
-			if (ptr->completed != TRUE)
-				exec_process(job, ptr, infile, outfile);
-		}
-		else
-			return ;
-		clean_pipes(&infile, &outfile, mypipe);
-		cond = ptr->type;
+		if (condition_fulfilled(shell, job->process_list, process) != SUCCESS)
+			break ;
+		expansion(shell, ptr);
+		add_assign_env(shell, ptr);
+		if (fds[0] == STDIN_FILENO && fds[1] == STDOUT_FILENO && foreground)
+			launch_blt(shell, ptr);
+		if (ptr->completed != TRUE)
+			exec_process(shell, job, ptr, fds);
+		clean_pipes(&fds[0], &fds[1], mypipe);
 		process = process->next;
 	}
-	if (shell->is_interactive && !job_is_completed(job) && !job_is_stopped(job) && process == NULL)
-		place_job(shell, job, foreground);
+	place_job(shell, job, foreground);
 }

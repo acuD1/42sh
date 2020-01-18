@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/17 06:11:36 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/18 19:40:53 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int8_t		edit_var(t_core *shell, char *name, char *value, u_int8_t var_type);
 
 int8_t		call_builtin(t_core *shell, t_process *process, int blt);
 int8_t		exec_handler(t_core *shell, u_int8_t handler);
-void		exec_process(t_job *job, t_process *process, int infile, int outfile);
+void		exec_process(t_core *shell, t_job *job, t_process *process, int *fds);
 int8_t		call_bin(t_core *shell, t_process *process);
 int8_t		task_master(t_core *shell);
 int8_t		is_a_blt(char *cmd);
@@ -112,6 +112,7 @@ void		quit_shell(t_core *shell, int exit_value, int8_t verbose);
 void		print_and_quit(t_core *shell, char *message);
 int			check_invalid_identifiers(char *arg, char *exceptions);
 char		*signal_msg(int sig);
+void		debug_job(t_job *job);
 
 /*
 **	===========================================================================
@@ -213,7 +214,7 @@ void		mark_job_as_running(t_job *job);
 int8_t		continue_job(t_core *shell, t_job *job, int foreground);
 void		reset_signals(void);
 void		launch_process(t_core *shell, t_process *process, int infile, int outfile);
-void		launch_job(t_core *shell, t_job *job);
+void		launch_job(t_core *shell, t_job *job, int foreground);
 int8_t		do_job_notification(t_core *shell);
 void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
 int8_t		mark_process_status(t_core *shell, t_lst *jobs, pid_t pid, int status);
