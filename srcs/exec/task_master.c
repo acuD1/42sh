@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/18 19:36:21 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/19 22:54:31 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,6 @@ static void	free_job(t_core *shell, t_lst *job)
 	free(job);
 }
 
-static void	save_job(t_core *shell, t_lst *job)
-{
-	if (!job_is_completed(job->content))
-	{
-		ft_lstappend(&(shell->launched_jobs), job);
-		return ;
-	}
-	free_job(shell, job);
-	job = NULL;
-}
-
 int8_t		task_master(t_core *shell)
 {
 	t_lst	*job;
@@ -55,8 +44,10 @@ int8_t		task_master(t_core *shell)
 		next = job->next;
 		launch_job(shell, job->content
 				, (((t_job*)job->content)->type != P_AND) ? TRUE : FALSE);
-		save_job(shell, job);
-		do_job_notification(shell);
+		if (job_is_completed(job->content))
+			free_job(shell, job);
+		else
+			ft_lstappend(&(shell->launched_jobs), job);
 		job = next;
 	}
 	shell->job_list = NULL;

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 21:18:35 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/18 21:20:31 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	print_longjob(t_job *job)
 
 static void	print_job(t_job *job, uint64_t opt)
 {
+	if (!job)
+		return ;
 	if (opt & (1ULL << 15))
 		printf("%d\n", job->pgid);
 	else if (opt & (1ULL << 11))

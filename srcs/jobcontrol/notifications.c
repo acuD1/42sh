@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/17 22:34:18 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/19 23:07:37 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,12 @@ void		update_status(t_core *shell)
 
 void		format_job_info(t_job *job)
 {
-	static char	*str[2] = {"Stopped", "Done"};
-	int			status;
+	int		signal;
 
-	if (job_is_completed(job))
-		status = 1;
-	else if (job_is_stopped(job) && job->notified == FALSE)
-		status = 0;
-	else
-		return ;
-	dprintf(STDERR_FILENO, "[%i]%c  %s\t\t%s\n", job->jobc_id
-		, job->jobc_last, str[status], job->command);
+	signal = (job_is_completed(job)) ? 0 : 7;
+	dprintf(STDERR_FILENO, "[%i]%c  %s\t\t%s\n", job->jobc_id, job->jobc_last
+		, (job_is_stopped(job) && !job_is_completed(job))
+		? "Stopped" : signal_msg(signal), job->command);
 }
 
 static void	free_job(t_core *shell, t_lst *job)
@@ -60,48 +55,32 @@ static void	free_job(t_core *shell, t_lst *job)
 	free(job);
 }
 
-static void	attr_jobc_id(t_core *shell, t_job *job)
+void		job_background_notif(t_job *job)
 {
-	t_lst	*jobs;
-	t_job	*ptr;
-	int		c;
-
-	c = 0;
-	jobs = shell->launched_jobs;
-	while (jobs)
-	{
-		ptr = ((t_job*)jobs->content);
-		if (ptr != job && ptr->jobc_id > c)
-			c = ptr->jobc_id;
-		ptr->jobc_last = (ptr->jobc_last == '+') ? '-' : ' ';
-		jobs = jobs->next;
-	}
-	job->jobc_id = c + 1;
-	job->jobc_last = '+';
+	printf("[%i] %i\n", job->jobc_id, job->pgid);
 }
 
-int8_t		do_job_notification(t_core *shell)
+int8_t		do_job_notification(t_core *shell, t_lst *job)
 {
-	t_lst *job;
 	t_lst *jnext;
 	t_job *ptr;
 
 	update_status(shell);
-	job = shell->launched_jobs;
 	while (job)
 	{
 		ptr = ((t_job*)job->content);
 		jnext = job->next;
-		format_job_info(ptr);
 		if (job_is_completed(ptr))
 		{
 			free_job(shell, job);
+			format_job_info(ptr);
 			job = shell->launched_jobs;
 			ptr = NULL;
 		}
 		else if (job_is_stopped(ptr) && ptr->notified != TRUE)
 		{
 			attr_jobc_id(shell, ptr);
+			format_job_info(ptr);
 			ptr->notified = TRUE;
 		}
 		job = jnext;

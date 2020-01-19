@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/18 19:41:10 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/19 23:01:33 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static void		place_job(t_core *shell, t_job *job, int8_t foreground)
 		put_job_in_foreground(shell, shell->job_list, job, FALSE);
 	else
 	{
-		printf("[1] pgid\n");
+		job->jobc_id = update_jobs(shell->launched_jobs);
+		job_background_notif(job);
 		put_job_in_background(shell, job, FALSE);
 	}
 }

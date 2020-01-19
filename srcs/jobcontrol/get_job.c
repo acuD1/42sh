@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 19:25:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/17 00:13:14 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/19 22:57:43 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_job	*get_last_job(t_lst *jobs)
 	return (NULL);
 }
 
-static t_job	*get_job_by_id(t_lst *jobs, int id)
+t_job			*get_job_by_id(t_lst *jobs, int id)
 {
 	t_job	*ptr;
 

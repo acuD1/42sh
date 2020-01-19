@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/18 19:40:53 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/19 23:03:31 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,14 +215,18 @@ int8_t		continue_job(t_core *shell, t_job *job, int foreground);
 void		reset_signals(void);
 void		launch_process(t_core *shell, t_process *process, int infile, int outfile);
 void		launch_job(t_core *shell, t_job *job, int foreground);
-int8_t		do_job_notification(t_core *shell);
+int8_t		do_job_notification(t_core *shell, t_lst *job);
+void		job_background_notif(t_job *job);
 void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
 int8_t		mark_process_status(t_core *shell, t_lst *jobs, pid_t pid, int status);
 int8_t		launch_blt(t_core *shell, t_process *process);
 void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
 void		update_status(t_core *shell);
 t_job		*get_job(t_lst *jobs, char *str);
+t_job		*get_job_by_id(t_lst *jobs, int id);
 void		format_job_info(t_job *job);
+int			update_jobs(t_lst *jobs);
+void		attr_jobc_id(t_core *shell, t_job *job);
 
 /* ###########################  TEMPORARY   #################################*/
 void	debug_analyzer(t_core *shell);
