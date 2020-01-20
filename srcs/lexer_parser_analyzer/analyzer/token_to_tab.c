@@ -51,20 +51,13 @@ char		**ft_add_arg_cmd_process(char **tablo, char *str)
 	return (tb);
 }
 
-char		*fill_cmd_job(t_lst *tok_lst, char *cmd, int flag)
+char		*fill_cmd_job(t_lst *tok_lst, char *cmd)
 {
-	char	*str;
-	t_token *token;
-
-	str = NULL;
 	if (!tok_lst || !tok_lst->content)
 		return (NULL);
-	token = (t_token*)tok_lst->content;
-	if ((tok_lst->next && ((t_token*)tok_lst->next->content)->id == 32)
-		|| token->id == 0 || !flag)
-		str = ft_strdup(token->data);
+	if (!cmd)
+		cmd = ft_strdup(((t_token*)tok_lst->content)->data);
 	else
-		str = ft_strjoin(token->data, " ");
-	cmd = ft_strjoinf(cmd, str, 4);
+		cmd = ft_strjoinf(cmd , ((t_token*)tok_lst->content)->data, 1);
 	return (cmd);
 }

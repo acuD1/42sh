@@ -25,6 +25,7 @@ void        ft_printtab(char **cmd);
 */
 
 char *quote_removing(t_token *tok);
+char *quote_mechanisms(char *str);
 // char *quote_removing(char *data, e_pstate id);
 char *point_de_cote(char *src, char quote);
 
@@ -78,7 +79,7 @@ void        ft_free_processlist(t_lst **head);
 void        ft_free_redirlist(t_lst **head);
 void        ft_free_redir(t_redir *redir);
 
-char        *fill_cmd_job(t_lst *tok_lst, char *cmd, int flag);
+char        *fill_cmd_job(t_lst *tok_lst, char *cmd);
 char 		**fill_cmd_process(char *str);
 char 		**ft_add_arg_cmd_process(char **tablo, char *str);
 

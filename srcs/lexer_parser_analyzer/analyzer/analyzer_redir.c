@@ -40,7 +40,7 @@ void		init_redir(t_redir *new)
 
 t_analyzer	*redir_wanalyze(t_analyzer *anal, t_core *shell)
 {
-	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command, 1);
+	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
 	anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
 	anal->state = A_WORD;
 	return (anal = redir_analyze(anal, shell));
@@ -57,7 +57,7 @@ t_analyzer	*redir_analyze(t_analyzer *anal, t_core *shell)
 
 t_analyzer	*redirect_analyze(t_analyzer *analyzer, t_core *shell)
 {
-	analyzer->job.command = fill_cmd_job(analyzer->lexer, analyzer->job.command, 1);
+	analyzer->job.command = fill_cmd_job(analyzer->lexer, analyzer->job.command);
 	analyzer->redir.type = ((t_token*)analyzer->lexer->content)->id;
 	analyzer->state = A_REDIRECT;
 	(void)shell;

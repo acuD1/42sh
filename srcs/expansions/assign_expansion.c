@@ -55,6 +55,7 @@ void		expansion_assign(t_core *shell, t_process *process)
 		{
 			ft_strdel(&((t_db*)lst->content)->value);
 			((t_db*)lst->content)->value = ft_strdup(res);
+			printf("%s\n", ((t_db*)lst->content)->value);
 			// free(res);
 		}
 		lst = lst->next;

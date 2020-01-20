@@ -68,7 +68,7 @@ t_analyzer	*assign_analyze(t_analyzer *anal, t_core *shell)
 	if (((t_token*)anal->lexer->content)->id == P_ASSIGN
 		&& ((anal->state != A_WORD)))
 	{
-		anal->job.command = fill_cmd_job(anal->lexer, anal->job.command, 1);
+		anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
 		return (anal = ass_analyze(anal));
 	}
 	else

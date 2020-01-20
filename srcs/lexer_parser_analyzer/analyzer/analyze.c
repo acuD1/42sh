@@ -22,7 +22,7 @@ t_analyzer			*end_analyze(t_analyzer *analyzer, t_core *shell)
 t_analyzer			*ionbr_analyze(t_analyzer *anal, t_core *shell)
 {
 	anal->state = A_IONUMBER;
-	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command, 0);
+	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
 	anal->redir.op[0] = ft_strdup(((t_token*)anal->lexer->content)->data);
 	(void)shell;
 	return (anal);
@@ -52,11 +52,11 @@ t_analyzer			*separator_analyze(t_analyzer *anal, t_core *shell)
 	}
 	else if (state == P_ORIF || state == P_ANDIF || state == P_PIPE)
 	{
-		anal->job.command = fill_cmd_job(anal->lexer, anal->job.command, 1);
+		anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
 		anal->process.type = state;
 		anal->state = A_SEPARATOR;
 		anal = process_analyze(anal, shell);
-		anal->process.command = fill_cmd_job(anal->lexer, anal->process.command, 1);
+		anal->process.command = fill_cmd_job(anal->lexer, anal->process.command);
 	}
 	else if (state == P_NEWLINE || state == P_END)
 	{

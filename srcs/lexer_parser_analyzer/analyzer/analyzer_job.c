@@ -14,7 +14,7 @@
 
 void		init_job(t_job *new)
 {
-	new->command = ft_strnew(0);
+	new->command = NULL;
 	new->type = P_END;
 	new->process_list = NULL;
 }

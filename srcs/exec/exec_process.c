@@ -30,6 +30,7 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 	if (ptr->av)
 	{
 		ft_printtab(ptr->av);
+		dprintf(nono("/dev/ttys002"), "meh \n\n");
 		if ((blt = is_a_blt(ptr->av[0])) != FAILURE)
 		{
 			shell->status = call_builtin(shell, process, blt);

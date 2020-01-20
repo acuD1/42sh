@@ -72,7 +72,7 @@ t_lst		*start_lexer(t_lexer *lx, t_lst *lexer_token)
 t_lst		*end_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	ft_lstappend(&lexer_token, ft_lstnew(
-		fetch_token(&lexer->token, P_END, "(null)"), sizeof(t_token)));
+		fetch_token(&lexer->token, P_END, "newline"), sizeof(t_token)));
 	lexer->ntok++;
 	lexer->status = L_END;
 	return (lexer_token);
