@@ -96,9 +96,9 @@ void		expansion_tok(t_core *shell, t_process *process)
 		if ((res = do_expansion(shell, ((t_token*)lst->content)->data, ((t_token*)lst->content)->id)))
 		{
 
-			// res = quote_removing(res, ((t_token*)lst->content)->id);
-			printf("ttototooto\n");
-			res = ft_strdup(quote_mechanisms(res));
+			res = quote_removing(res);
+			printf("ttototooto %s\n", res);
+			// res = ft_strdup(quote_mechanisms(res));
 			process->av = ft_add_arg_cmd_process(process->av, res);
 			free(res);
 		}

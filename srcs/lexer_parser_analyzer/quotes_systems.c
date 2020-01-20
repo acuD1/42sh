@@ -49,9 +49,9 @@ char *quote_mechanisms(char *str)
 	printf("%u\n", state);
 	while (str[j])
 	{
-		if ((str[j] == '\"' && state == P_DBQUOTE)
-			|| (str[j] == '`' && state == P_BQUOTE)
-			|| (str[j] == '\'' && state == P_QUOTE))
+		while ((str[j] == '\"' )
+			|| (str[j] == '`' )
+			|| (str[j] == '\'' ))
 			j++;
 		new[i] = str[j];
 		i++;
@@ -61,22 +61,25 @@ char *quote_mechanisms(char *str)
 	if (new)
 	{
 		free(str);
-		return (new);
+		return (ft_strdup(new));
 	}
 	printf("FINAL {%s] %d  ", new, j);
 	return (str);
 }
 
-char *quote_removing(t_token *tok)
+char *quote_removing(char *str)
 {
-	if (!tok->data)
-		return (NULL);
-	// if (tok->id == P_DBQUOTE)
-	// 	tok->data = point_de_cote(tok->data, '\"');
-	// else if (tok->id == P_QUOTE)
-	// 	tok->data = point_de_cote(tok->data, '\'');
-	// else if (tok->id == P_BQUOTE)
-	// 	tok->data = point_de_cote(tok->data, '`');
+	e_pstate state;
 
-	return (tok->data);
+	state = 0;
+	if (!str)
+		return (NULL);
+	state = get_quote_state(str);
+	if (state == P_DBQUOTE)
+		str = point_de_cote(str, '\"');
+	else if (state == P_QUOTE)
+		str = point_de_cote(str, '\'');
+	else if (state == P_BQUOTE)
+		str = point_de_cote(str, '`');
+	return (str);
 }

@@ -150,7 +150,7 @@
 
 # define NB_OF_OPE 14
 # define NB_OF_EXP 9
-# define CHAR_INTERRUPT 			" \t<>|;&\n\"\'"
+# define CHAR_INTERRUPT 			" \t<>|;&\n"
 # define OPERATORS 					"&|;><"
 # define EXPANSION 					"$~"
 # define REDIR                      P_GREAT, P_LESS

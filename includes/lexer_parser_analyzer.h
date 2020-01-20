@@ -24,7 +24,7 @@ void        ft_printtab(char **cmd);
 **  QUOTE
 */
 
-char *quote_removing(t_token *tok);
+char *quote_removing(char *str);
 char *quote_mechanisms(char *str);
 // char *quote_removing(char *data, e_pstate id);
 char *point_de_cote(char *src, char quote);
