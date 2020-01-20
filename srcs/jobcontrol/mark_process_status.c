@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 22:32:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/17 22:32:53 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/20 22:15:02 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int8_t		mark_process_status(t_core *shell
 			{
 				process->completed = TRUE;
 				process->status = (WIFEXITED(status))
-					? WTERMSIG(status) : WEXITSTATUS(status);
+					? WEXITSTATUS(status) : WTERMSIG(status);
 				status_handler(shell, status);
 			}
 		}

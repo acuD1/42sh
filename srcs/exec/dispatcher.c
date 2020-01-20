@@ -6,13 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/19 23:01:33 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/21 00:01:37 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static void		setup_pipes(t_core *shell, t_process *process
+static void	setup_pipes(t_core *shell, t_process *process
 		, int *mypipe, int *outfile)
 {
 	*outfile = STDOUT_FILENO;
@@ -24,7 +24,7 @@ static void		setup_pipes(t_core *shell, t_process *process
 	}
 }
 
-static void		clean_pipes(int *infile, int *outfile, int *mypipe)
+static void	clean_pipes(int *infile, int *outfile, int *mypipe)
 {
 	if (*infile != STDIN_FILENO)
 		close(*infile);
@@ -34,7 +34,7 @@ static void		clean_pipes(int *infile, int *outfile, int *mypipe)
 	mypipe[0] = STDIN_FILENO;
 }
 
-static void		place_job(t_core *shell, t_job *job, int8_t foreground)
+static void	place_job(t_core *shell, t_job *job, int8_t foreground)
 {
 	if (shell->is_interactive && (job_is_completed(job) || job_is_stopped(job)))
 		return ;
@@ -50,27 +50,29 @@ static void		place_job(t_core *shell, t_job *job, int8_t foreground)
 	}
 }
 
-static int8_t	condition_fulfilled(t_core *shell, t_lst *ptr, t_lst *process)
+static void	condition_fulfilled(t_lst *process)
 {
-	int		cond;
+	t_process	*ptr;
+	int			cond;
 
-	if (ptr == process)
-		return (SUCCESS);
-	while (ptr && ptr->next != process)
-		ptr = ptr->next;
-	if (!ptr)
-		return (FAILURE);
-	cond = ((t_process*)ptr->content)->type;
+	ptr = ((t_process*)process->content);
+	cond = ptr->type;
 	if (cond != P_ANDIF && cond != P_ORIF)
-		return (SUCCESS);
-	else if (cond == P_ANDIF && shell->status == 0)
-		return (SUCCESS);
-	else if (cond == P_ORIF && shell->status != 0)
-		return (SUCCESS);
-	return (FAILURE);
+		return ;
+	else if (cond == P_ANDIF && ptr->status == 0)
+		return ;
+	else if (cond == P_ORIF && ptr->status != 0)
+		return ;
+	while (process && (ptr = ((t_process*)process->content))
+			&& (ptr->type == cond || ptr->type == P_PIPE))
+	{
+		((t_process*)process->next->content)->completed = TRUE;
+		((t_process*)process->next->content)->status = 1;
+		process = process->next;
+	}
 }
 
-void			launch_job(t_core *shell, t_job *job, int foreground)
+void		launch_job(t_core *shell, t_job *job, int foreground)
 {
 	t_process	*ptr;
 	t_lst		*process;
@@ -84,14 +86,15 @@ void			launch_job(t_core *shell, t_job *job, int foreground)
 		ptr = ((t_process*)process->content);
 		setup_pipes(shell, ptr, mypipe, &fds[1]);
 		ptr->stopped = (foreground == TRUE) ? FALSE : TRUE;
-		if (condition_fulfilled(shell, job->process_list, process) != SUCCESS)
-			break ;
-		expansion(shell, ptr);
-		add_assign_env(shell, ptr);
-		if (fds[0] == STDIN_FILENO && fds[1] == STDOUT_FILENO && foreground)
-			launch_blt(shell, ptr);
-		if (ptr->completed != TRUE)
-			exec_process(shell, job, ptr, fds);
+		if (ptr->completed == FALSE)
+		{
+			expansion(shell, ptr);
+			add_assign_env(shell, ptr);
+			launch_blt(shell, ptr, fds, foreground);
+			if (ptr->completed != TRUE)
+				exec_process(shell, job, ptr, fds);
+		}
+		condition_fulfilled(process);
 		clean_pipes(&fds[0], &fds[1], mypipe);
 		process = process->next;
 	}
