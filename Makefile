@@ -220,6 +220,7 @@ SRC			+=	$(S_PATH)$(MISC)recall.c
 SRC			+=	$(S_PATH)$(MISC)check_args.c
 SRC			+=	$(S_PATH)$(MISC)is_a_dir.c
 SRC			+=	$(S_PATH)$(MISC)quit_shell.c
+SRC			+=	$(S_PATH)$(MISC)output.c
 
 SRC			+=	$(S_PATH)$(SIGNALS)sigint.c
 SRC			+=	$(S_PATH)$(SIGNALS)init_signals.c
@@ -240,7 +241,6 @@ SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs_tools.c
 
 SRC			+=	$(S_PATH)$(CORE)42sh.c
 SRC			+=	$(S_PATH)$(CORE)shell_loader.c
-SRC			+=	$(S_PATH)$(CORE)output.c
 SRC			+=	$(S_PATH)$(CORE)free_handler.c
 
 # Headers

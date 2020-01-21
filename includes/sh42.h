@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 09:26:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 11:10:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,8 @@ jmp_buf g_exit_leaks;
 **	===========================================================================
 */
 
-int8_t		get_opt(int ac, char **av, t_core *shell);
+void		get_opt(int ac, char **av, t_core *shell);
 void		version(t_core *shell);
-void		print_opt(t_core *shell);
 void		load_i_mode(t_core *shell);
 void		load_noi_mode(t_core *shell);
 void		free_env(t_lst *env);
@@ -63,7 +62,7 @@ int8_t		dispatcher(t_core *shell, t_lst *jobs);
 
 int8_t		set_env(t_core *shell, char **argv, char **environ);
 int8_t		del_db(t_core *shell, char *key);
-void		init_shell(t_core *shell);
+int8_t		init_shell(t_core *shell, char **av, char **environ);
 t_db		*fetch_db(t_db *db, const char *s, const u_int8_t var_type);
 t_db		*modify_db(t_db	*db, char *new_value, u_int8_t new_type);
 t_db		*get_or_create_db(t_core *shell, char *key, u_int8_t var_type);

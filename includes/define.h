@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 09:32:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/21 12:46:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@
 **	Option
 */
 
-# define OPT_VERS				0x001
-# define OPT_HELP				0x002
+# define SHELL_OPT				"vhc"
 # define MAX_PATH				4096
 # define ACCESS_MAX_PATH		4096
 
@@ -70,6 +69,7 @@
 
 # define I_MODE					0x001
 # define NOI_MODE				0x002
+# define OPT_MODE				0x004
 # define CREDIT					"arsciand, fcatusse, mpivet-p and guvillat\n"
 # define S_USR_RW				(S_IRUSR | S_IWUSR)
 # define S_GRP_OTH_R			(S_IRGRP | S_IROTH)

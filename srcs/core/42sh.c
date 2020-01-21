@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 09:30:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 12:08:20 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,8 @@ int		main(int ac, char **av, char **environ)
 	t_core	shell;
 
 	ft_bzero(&shell, sizeof(t_core));
-	init_shell(&shell);
-	if (get_opt(ac, av, &shell) != SUCCESS)
+	if (init_shell(&shell, av, environ) != SUCCESS)
 		return (EXIT_FAILURE);
-	if (set_env(&shell, av, environ) != SUCCESS)
-		return (EXIT_FAILURE);
-	print_opt(&shell);
-	get_core(&shell);
-	init_signals();
 	if (setjmp(g_exit_leaks))
 	{
 		dprintf(STDOUT_FILENO, "Exited with free handling ..\n");
@@ -34,6 +28,9 @@ int		main(int ac, char **av, char **environ)
 	}
 	else
 	{
+		get_opt(ac, av, &shell);
+		get_core(&shell);
+		init_signals();
 		dprintf(STDERR_FILENO, "Entering 42sh with setjmp activated !!!\n");
 		if (isatty(STDIN_FILENO) == TRUE)
 		{

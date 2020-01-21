@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 17:09:47 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 09:31:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 10:21:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ struct						s_core
 	t_lst					*pos_vars;
 	t_lst					*lexer;
 	t_lst					*job_list;
+	u_int64_t				opt;
 	int32_t					status;
 	int32_t					heredoc;
-	u_int8_t				opt;
 };
 
 /*

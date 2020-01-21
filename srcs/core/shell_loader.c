@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 09:26:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:51:55 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		load_noi_mode(t_core *shell)
 {
-	dprintf(STDERR_FILENO, "NOI\n");
 	while (ft_getnextline(STDIN_FILENO, &shell->term.buffer))
 	{
 		lexer_parser_analyzer(shell);
