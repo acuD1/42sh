@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/07 14:57:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/21 22:04:08 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void		end_of_file(t_read *term, uint64_t value)
 	shell = get_core(NULL);
 	if (!*term->buffer && value == CTRL_D)
 	{
-		ft_putstr("exit\n");
+		ft_printf("exit\n");
 		reset_config(shell);
 		write_history(term);
 		free_history(term);

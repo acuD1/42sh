@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/15 22:29:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/21 21:52:55 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,28 @@ uint8_t		read_multiline(t_read *term, char sb)
 			else if (sb != BACKSLASH && ft_strchr(term->buffer, sb))
 				return (FALSE);
 			else if (sb != BACKSLASH)
-				term->buffer[ft_strlen(term->buffer)] = NEW_LINE;
+				term->buffer = ft_strjoinf(term->buffer, "\n", 1);
 			break ;
 		}
+	}
+	return (TRUE);
+}
+
+int8_t		check_sb_read(t_read *term, char sb)
+{
+	if (read_multiline(term, sb) == FALSE)
+	{
+		term->sub_prompt = FALSE;
+		term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
+		if (quotes_is_matching(term, &sb) == FALSE)
+		{
+			term->buffer = ft_strjoinf(term->buffer, "\n", 1);
+			ft_strdel(&term->tmp_buff);
+			term->tmp_buff = ft_strdup(term->buffer);
+			return (TRUE);
+		}
+		else
+			return (FALSE);
 	}
 	return (TRUE);
 }
@@ -55,7 +74,7 @@ uint8_t		read_multiline(t_read *term, char sb)
 void		load_subprompt(char sb, t_read *term)
 {
 	if (sb != BACKSLASH)
-		term->buffer[ft_strlen(term->buffer)] = NEW_LINE;
+		term->buffer = ft_strjoinf(term->buffer, "\n", 1);
 	term->tmp_buff = ft_strdup(term->buffer);
 	term->status = CMD_SUBPROMPT;
 	while (TRUE)
@@ -63,20 +82,8 @@ void		load_subprompt(char sb, t_read *term)
 		ft_strdel(&term->buffer);
 		term->buffer = ft_memalloc(BUFF_SIZE);
 		display_subprompt(term, PS2);
-		if (read_multiline(term, sb) == FALSE)
-		{
-			term->sub_prompt = FALSE;
-			term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
-			if (quotes_is_matching(term, &sb) == FALSE)
-			{
-				term->buffer[ft_strlen(term->buffer)] = NEW_LINE;
-				ft_strdel(&term->tmp_buff);
-				term->tmp_buff = ft_strdup(term->buffer);
-				continue ;
-			}
-			else
-				break ;
-		}
+		if (check_sb_read(term, sb) == FALSE)
+			break ;
 		if (term->status == CMD_PROMPT)
 			return ;
 		term->tmp_buff = ft_strjoinf(term->tmp_buff, term->buffer, 1);

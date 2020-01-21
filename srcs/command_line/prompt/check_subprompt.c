@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/15 21:48:59 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/21 15:27:22 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ uint8_t		check_subprompt(t_read *term)
 		if (is_heredoc(term) == TRUE)
 		{
 			load_heredoc(term);
-			save_history(term);
 			return (TRUE);
 		}
 		if (check_backslash(term, &quote) == FALSE)
@@ -91,7 +90,6 @@ uint8_t		check_subprompt(t_read *term)
 	if (quote != '\0')
 	{
 		load_subprompt(quote, term);
-		save_history(term);
 		return (TRUE);
 	}
 	return (FALSE);

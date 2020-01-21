@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/15 22:22:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/21 22:00:04 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int8_t		check_hc_reader(t_read *term)
 		if (check_eof(term) == FALSE)
 		{
 			term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
-			term->buffer[ft_strlen(term->buffer)] = NEW_LINE;
+			term->buffer = ft_strjoinf(term->buffer, "\n", 1);
 			ft_strdel(&term->tmp_buff);
 			term->tmp_buff = ft_strdup(term->buffer);
 			return (TRUE);
@@ -62,7 +62,7 @@ int8_t		check_hc_reader(t_read *term)
 
 void		load_heredoc(t_read *term)
 {
-	term->buffer[ft_strlen(term->buffer)] = NEW_LINE;
+	term->buffer = ft_strjoinf(term->buffer, "\n", 1);
 	term->tmp_buff = ft_strdup(term->buffer);
 	term->status = CMD_SUBPROMPT;
 	while (TRUE)
@@ -76,9 +76,11 @@ void		load_heredoc(t_read *term)
 			break ;
 		if (term->status == CMD_PROMPT)
 			return ;
-		term->tmp_buff = ft_strjoinf(term->tmp_buff, term->buffer, 1);
 	}
-	term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
+	term->tmp_buff = ft_strjoinf(term->tmp_buff, term->buffer, 1);
+	ft_strdel(&term->buffer);
+	term->buffer = ft_strdup(term->tmp_buff);
 	ft_strdel(&term->tmp_buff);
 	term->status = CMD_DONE;
+	term->heredoc = ft_strsplit(term->buffer, "\n");
 }

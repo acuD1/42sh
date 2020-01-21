@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 22:04:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/21 15:43:18 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 # define PS2					"> "
 # define PS3					"heredoc> "
 # define BUFF_SIZE				4096
-# define READ_SIZE				10
+# define READ_SIZE				8
 # define HISTORY_FILE			"./.42sh_history"
 # define QUOTE					'\''
 # define DQUOTE					'\"'
