@@ -1,0 +1,78 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hash_opt.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/11 15:05:40 by arsciand          #+#    #+#             */
+/*   Updated: 2020/01/13 08:34:29 by arsciand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "sh42.h"
+#include <errno.h>
+
+int8_t	hash_l(t_core *shell, t_process *process, int ac)
+{
+	(void)process;
+	(void)ac;
+	print_hash_map(shell, H_LISTED);
+	return (SUCCESS);
+}
+
+int8_t	hash_r(t_core *shell, t_process *process, int ac)
+{
+	(void)process;
+	(void)ac;
+	free_hash_map(&shell->hash);
+	return (SUCCESS);
+}
+
+int8_t	hash_p(t_core *shell, t_process *process, int ac)
+{
+	size_t	i;
+
+	i = 3;
+	if (ac == 2)
+	{
+		dprintf(STDERR_FILENO, "42sh: hash: -p: option requires an argument\n");
+		print_usage("hash", 0, "[-rl] [-p pathname] [-dt] [name ...]");
+		return (SUCCESS);
+	}
+	if (ac == 3)
+		return (FAILURE);
+	if (is_a_dir(process->av[2]) == EISDIR)
+	{
+		while (process->av[i])
+		{
+			dprintf(STDERR_FILENO, "42sh: hash: %s: Is a directoy\n",
+					process->av[2]);
+			i++;
+		}
+		return (SUCCESS);
+	}
+	hash_map_dispatcher(shell, process, H_PATH);
+	return (SUCCESS);
+}
+
+int8_t	hash_d(t_core *shell, t_process *process, int ac)
+{
+	size_t i;
+
+	i = 2;
+	if (ac == 2)
+		return (FAILURE);
+	while (process->av[i])
+		hash_key_remover(shell, process->av[i++]);
+	return (SUCCESS);
+}
+
+int8_t	hash_t(t_core *shell, t_process *process, int ac)
+{
+	if (ac > 2)
+		find_hash(shell, process, ac);
+	else
+		dprintf(STDERR_FILENO, "42sh: hash: -t: option requires an argument\n");
+	return (SUCCESS);
+}

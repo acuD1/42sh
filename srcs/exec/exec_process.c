@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/11 23:38:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 12:02:47 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 	if (is_expansion(ptr->type))
 		expansion(shell, ptr);
 	if (ptr->assign_list)
-		add_assign_env(ptr->assign_list, shell);
+		add_assign_env(ptr->assign_list, shell); // Check fonction ?
 	if (ptr->av)
 	{
-		if ((blt = is_a_blt(ptr->av[0])) != FAILURE)
+		if ((blt = is_a_blt(ptr->av[0])) != FALSE)
 		{
 			shell->status = call_builtin(shell, process, blt);
 			return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 17:21:39 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/10 21:57:07 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:29:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void			init_lexer(char *line, t_lexer *new)
 	ft_init_lex(new);
 }
 
-t_token			*fetch_token(t_token *token, e_pstate type, char *data)
+t_token			*fetch_token(t_token *token, enum e_pstate type, char *data)
 {
 	t_token		*new;
 

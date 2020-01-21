@@ -49,21 +49,21 @@ LNAME = shared_libft.a
 
 BUILD_FILE			=	.build
 BUILD_DATE			=	$$(date +'%Y%m%d')
-BUILD_BRANCH			=	$$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
-BUILD_RELEASE			=	$$(awk 'NR==3 {print $$3}' $(BUILD_FILE))
-BUILD_VERSION			=	$$(awk 'NR==4 {print $$3}' $(BUILD_FILE))
+BUILD_BRANCH		=	$$(git symbolic-ref HEAD 2>/dev/null | cut -d"/" -f 3)
+BUILD_RELEASE		=	$$(awk 'NR==3 {print $$3}' $(BUILD_FILE))
+BUILD_VERSION		=	$$(awk 'NR==4 {print $$3}' $(BUILD_FILE))
 BUILD_PATCH			=	$$(awk 'NR==5 {print $$3}' $(BUILD_FILE))
-DEFAULT_BUILD_FILE		=	"Build information, patch level is incremented at \
+DEFAULT_BUILD_FILE	=	"Build information, patch level is incremented at \
 compilation.\n\nRELEASE\t=\t0\nVERSION\t=\t0\nPATCH\t=\t0"
 
 # Dir/Files Path (Do not modify)
 
-S_PATH = srcs/
-H_PATH += includes/
-H_PATH += shared_libft/includes/
-B_PATH = build/
-O_PATH = build/objs/
-L_PATH = shared_libft/
+S_PATH		=	srcs/
+H_PATH		+=	includes/
+H_PATH		+=	shared_libft/includes/
+B_PATH		=	build/
+O_PATH		=	build/objs/
+L_PATH		=	shared_libft/
 
 ###############################################################################
 #                               Modifications                                 #
@@ -78,8 +78,8 @@ BUILTINS	=	builtins/
 BLT_FC		=	builtins/fc/
 REDIRS		=	redirections/
 COMMANDLINE	=	command_line/
-AC		=	command_line/auto_completion/
-AK		=	command_line/action_keys/
+AC			=	command_line/auto_completion/
+AK			=	command_line/action_keys/
 HISTORY		=	command_line/history/
 PROMPT		=	command_line/prompt/
 EXEC		=	exec/
@@ -88,7 +88,7 @@ PARSER		= 	lexer_parser_analyzer/parser/
 ANALYZER	= 	lexer_parser_analyzer/analyzer/
 EXPANSIONS	= 	expansions/
 MISC		=	misc/
-HASH		=	$(EXEC)hash_map/
+HASH		=	$(BUILTINS)hash/
 
 # Add previous custom dir with $(O_PATH){custom dir} to PATH varriable
 
@@ -115,52 +115,50 @@ PATHS		+=	$(O_PATH)$(PROMPT)
 
 # Files
 
-SRC		+=	$(S_PATH)$(PROMPT)prompt.c
-SRC		+=	$(S_PATH)$(PROMPT)check_subprompt.c
-SRC		+=	$(S_PATH)$(PROMPT)check_backslash.c
-SRC		+=	$(S_PATH)$(PROMPT)sub_prompt.c
+SRC			+=	$(S_PATH)$(PROMPT)prompt.c
+SRC			+=	$(S_PATH)$(PROMPT)check_subprompt.c
+SRC			+=	$(S_PATH)$(PROMPT)check_backslash.c
+SRC			+=	$(S_PATH)$(PROMPT)sub_prompt.c
 
-SRC		+=	$(S_PATH)$(EXPANSIONS)expansion.c
-SRC		+=	$(S_PATH)$(EXPANSIONS)math_expansion.c
-SRC		+=	$(S_PATH)$(EXPANSIONS)cmd_subs_expansion.c
-SRC		+=	$(S_PATH)$(EXPANSIONS)param_expansion.c
-SRC		+=	$(S_PATH)$(EXPANSIONS)tilde_expansion.c
-
+SRC			+=	$(S_PATH)$(EXPANSIONS)expansion.c
+SRC			+=	$(S_PATH)$(EXPANSIONS)math_expansion.c
+SRC			+=	$(S_PATH)$(EXPANSIONS)cmd_subs_expansion.c
+SRC			+=	$(S_PATH)$(EXPANSIONS)param_expansion.c
+SRC			+=	$(S_PATH)$(EXPANSIONS)tilde_expansion.c
 
 SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)term_config.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)utils.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)xfunctions.c
 
-SRC		+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
-SRC		+=	$(S_PATH)lexer_parser_analyzer/tmp_debug.c
+SRC			+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
+SRC			+=	$(S_PATH)lexer_parser_analyzer/tmp_debug.c
 
-SRC		+=	$(S_PATH)$(LEXER)assign_token.c
-SRC		+=	$(S_PATH)$(LEXER)init_lexer.c
-SRC		+=	$(S_PATH)$(LEXER)lexer.c
-SRC		+=	$(S_PATH)$(LEXER)name_token.c
-SRC		+=	$(S_PATH)$(LEXER)io_nbr_nwl_token.c
-SRC		+=	$(S_PATH)$(LEXER)operator_token.c
-SRC		+=	$(S_PATH)$(LEXER)expansion_token.c
-SRC		+=	$(S_PATH)$(LEXER)expansion_token_bis.c
-SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
+SRC			+=	$(S_PATH)$(LEXER)assign_token.c
+SRC			+=	$(S_PATH)$(LEXER)init_lexer.c
+SRC			+=	$(S_PATH)$(LEXER)lexer.c
+SRC			+=	$(S_PATH)$(LEXER)name_token.c
+SRC			+=	$(S_PATH)$(LEXER)io_nbr_nwl_token.c
+SRC			+=	$(S_PATH)$(LEXER)operator_token.c
+SRC			+=	$(S_PATH)$(LEXER)expansion_token.c
+SRC			+=	$(S_PATH)$(LEXER)expansion_token_bis.c
+SRC			+=	$(S_PATH)$(LEXER)tmp_debug.c
 
-SRC		+=	$(S_PATH)$(PARSER)parser.c
-SRC		+=	$(S_PATH)$(PARSER)graph.c
+SRC			+=	$(S_PATH)$(PARSER)parser.c
+SRC			+=	$(S_PATH)$(PARSER)graph.c
 
-SRC		+=	$(S_PATH)$(ANALYZER)analyze.c
-SRC		+=	$(S_PATH)$(ANALYZER)analyzer_name.c
-SRC		+=	$(S_PATH)$(ANALYZER)analyzer_assign.c
-SRC		+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
-SRC		+=	$(S_PATH)$(ANALYZER)analyzer_job.c
-SRC		+=	$(S_PATH)$(ANALYZER)analyzer_process.c
-SRC		+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
-SRC		+=	$(S_PATH)$(ANALYZER)printanalyze.c
-SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
-SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
+SRC			+=	$(S_PATH)$(ANALYZER)analyze.c
+SRC			+=	$(S_PATH)$(ANALYZER)analyzer_name.c
+SRC			+=	$(S_PATH)$(ANALYZER)analyzer_assign.c
+SRC			+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
+SRC			+=	$(S_PATH)$(ANALYZER)analyzer_job.c
+SRC			+=	$(S_PATH)$(ANALYZER)analyzer_process.c
+SRC			+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
+SRC			+=	$(S_PATH)$(ANALYZER)printanalyze.c
+SRC			+=	$(S_PATH)$(ANALYZER)init_analyzer.c
+SRC			+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
 
-
-SRC		+=	$(S_PATH)dev.c
+SRC			+=	$(S_PATH)dev.c
 SRC			+=	$(S_PATH)$(HISTORY)save_history.c
 SRC			+=	$(S_PATH)$(HISTORY)search_in_history.c
 SRC			+=	$(S_PATH)$(HISTORY)history_expansions.c
@@ -195,10 +193,19 @@ SRC			+=	$(S_PATH)$(BUILTINS)set.c
 SRC			+=	$(S_PATH)$(BUILTINS)unset.c
 SRC			+=	$(S_PATH)$(BUILTINS)export.c
 SRC			+=	$(S_PATH)$(BUILTINS)exit.c
-SRC			+=	$(S_PATH)$(BUILTINS)hash.c
 SRC			+=	$(S_PATH)$(BUILTINS)cd.c
 SRC			+=	$(S_PATH)$(BUILTINS)echo.c
 SRC			+=	$(S_PATH)$(BUILTINS)pwd.c
+
+SRC			+=	$(S_PATH)$(HASH)add_hash_map.c
+SRC			+=	$(S_PATH)$(HASH)fetch_hash_db.c
+SRC			+=	$(S_PATH)$(HASH)get_hash.c
+SRC			+=	$(S_PATH)$(HASH)locate_hash.c
+SRC			+=	$(S_PATH)$(HASH)resize_hash_map.c
+SRC			+=	$(S_PATH)$(HASH)hash.c
+SRC			+=	$(S_PATH)$(HASH)hash_handler.c
+SRC			+=	$(S_PATH)$(HASH)hash_opt.c
+SRC			+=	$(S_PATH)$(HASH)hash_opt_tools.c
 
 #SRC			+=	$(S_PATH)$(BLT_FC)fc.c
 #SRC			+=	$(S_PATH)$(BLT_FC)fc_edit.c
@@ -213,6 +220,7 @@ SRC			+=	$(S_PATH)$(MISC)recall.c
 SRC			+=	$(S_PATH)$(MISC)check_args.c
 SRC			+=	$(S_PATH)$(MISC)is_a_dir.c
 SRC			+=	$(S_PATH)$(MISC)quit_shell.c
+SRC			+=	$(S_PATH)$(MISC)output.c
 
 SRC			+=	$(S_PATH)$(SIGNALS)sigint.c
 SRC			+=	$(S_PATH)$(SIGNALS)init_signals.c
@@ -231,18 +239,8 @@ SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)exec_redirs.c
 SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs.c
 SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs_tools.c
 
-
-SRC			+=	$(S_PATH)$(HASH)add_hash_map.c
-SRC			+=	$(S_PATH)$(HASH)fetch_hash_db.c
-SRC			+=	$(S_PATH)$(HASH)get_hash.c
-SRC			+=	$(S_PATH)$(HASH)locate_hash.c
-SRC			+=	$(S_PATH)$(HASH)resize_hash_map.c
-
-
 SRC			+=	$(S_PATH)$(CORE)42sh.c
-SRC			+=	$(S_PATH)$(CORE)load_prompt.c
-SRC			+=	$(S_PATH)$(CORE)load_noi_mode.c
-SRC			+=	$(S_PATH)$(CORE)output.c
+SRC			+=	$(S_PATH)$(CORE)shell_loader.c
 SRC			+=	$(S_PATH)$(CORE)free_handler.c
 
 # Headers
@@ -253,7 +251,9 @@ HDR			+=	expansion.h
 HDR			+=	struct.h
 HDR			+=	lexer_parser_analyzer.h
 HDR			+=	command_line.h
+HDR			+=	enum.h
 HDR			+=	shared_libft.h
+
 ###############################################################################
 #                                                                             #
 ###############################################################################

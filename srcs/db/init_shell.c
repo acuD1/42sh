@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/19 10:48:49 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 11:11:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,18 @@
 **	need to be shared.
 */
 
-void	init_shell(t_core *shell)
+int8_t	init_shell(t_core *shell, char **av, char **environ)
 {
-	/*
-	**	t_build
-	*/
+	if (set_env(shell, av, environ) != SUCCESS)
+	{
+		dprintf(STDERR_FILENO, "42sh: Cannot allocate memory\n");
+		return (EXIT_FAILURE);
+	}
 	shell->build.release = BUILDR;
 	shell->build.version = BUILDV;
 	shell->build.patch = BUILDP + 1;
 	shell->build.date = DATE;
-
-	/*
-	**	hash
-	*/
 	shell->hash.size = HASH_SIZE;
 	shell->heredoc = 0;
+	return (SUCCESS);
 }

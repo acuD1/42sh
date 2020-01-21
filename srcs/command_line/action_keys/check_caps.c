@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 09:30:17 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,6 @@ void		check_keys_comb(char *buff, t_read *term, uint64_t value)
 /*
 **		Check if is EOF (CTRL+D) to exit program is buffer is empty
 */
-
-void		end_of_file(t_read *term, uint64_t value)
-{
-	t_core	*shell;
-
-	shell = get_core(NULL);
-	if (!ft_strcmp(term->buffer, "") && value == CTRL_D)
-	{
-		ft_putstr("exit\n");
-		reset_config(shell);
-		write_history(term);
-		free_history(term);
-		quit_shell(shell, 0, FALSE);
-		//exit(0);
-	}
-}
 
 uint8_t		cursor_motion(char *buff, t_read *term, uint64_t value)
 {
@@ -114,6 +98,5 @@ uint8_t		check_caps(char *buff, t_read *term)
 	}
 	else
 		check_keys_comb(buff, term, value);
-	end_of_file(term, value);
 	return (TRUE);
 }

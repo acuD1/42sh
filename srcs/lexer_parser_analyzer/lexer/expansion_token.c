@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 17:37:09 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 17:37:14 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:29:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static	const	t_token	g_exp[] =
 	{P_EXP_INTERRUPT, NULL, 0}
 };
 
-t_lst	*exp_dbparen(t_lexer *lx, e_pstate id, int len, t_lst *lst)
+t_lst	*exp_dbparen(t_lexer *lx, enum e_pstate id, int len, t_lst *lst)
 {
 	char				*str;
 	int					index;
@@ -54,7 +54,7 @@ t_lst	*exp_dbparen(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 	return (lst);
 }
 
-t_lst	*exp_hook(t_lexer *lx, e_pstate id, int len, t_lst *lst)
+t_lst	*exp_hook(t_lexer *lx, enum e_pstate id, int len, t_lst *lst)
 {
 	char				*str;
 	int					index;
@@ -83,7 +83,7 @@ t_lst	*exp_hook(t_lexer *lx, e_pstate id, int len, t_lst *lst)
 	return (lst);
 }
 
-t_lst	*new_exp(t_lexer *lexer, e_pstate id, t_lst *lst)
+t_lst	*new_exp(t_lexer *lexer, enum e_pstate id, t_lst *lst)
 {
 	int					i;
 	static t_lex_exp	lex_pex[] = {

@@ -6,23 +6,25 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 23:52:50 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/26 10:19:22 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 12:20:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void	quit_shell(t_core *shell, int exit_value, int8_t verbose)
+void	quit_shell(t_core *shell, int exit_value, int8_t v, u_int8_t mode)
 {
-	(void)exit_value;
-	reset_config(shell);
-	//MAKE SUR EVERYTHING IS FREED
-	free_prompt(shell);
-	free_env(shell->env);
-	free_hash_map(&shell->hash);
-	free_history(&shell->term);
-	if (verbose != 0)
+	if (mode & OPT_MODE)
+	{
+		free_env(shell->env);
+		longjmp(g_exit_leaks, 42); /* TEMPORARY */
+		exit(exit_value);
+	}
+	if (mode & I_MODE && shell->opt == 0)
+		reset_config(shell);
+	free_shell(shell);
+	if (v == TRUE && shell->opt == 0)
 		write(STDERR_FILENO, "exit\n", 5);
-	longjmp(exit_leaks, 42);
-	//exit(exit_value);
+	longjmp(g_exit_leaks, 42); /* TEMPORARY */
+	exit(exit_value);
 }

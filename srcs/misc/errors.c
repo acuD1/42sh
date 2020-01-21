@@ -22,7 +22,7 @@ void	print_usage(char *name, int c, char *usage)
 void	ft_perror(const char *s, const char *name, const int errnum)
 {
 	static char	*error[] = {"Undefined error: 0", 0, "No such file or directory", 0, 0, 0, 0, 0, 0
-		, 0, 0, 0, 0, "Permission denied", 0, 0, 0, 0, 0, 0, "Not a directory"
+		, 0, 0, 0, "Cannot allocate memory", "Permission denied", 0, 0, 0, 0, 0, 0, "Not a directory"
 		, "Is a directory", 0, 0, 0, 0, 0, 0, 0, 0, 0 // 30
 		, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 40
 		, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 50

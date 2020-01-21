@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:46:41 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/03 14:43:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:29:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ const t_token	g_ope[] =
 	{P_OPE_INTERRUPT, NULL, 0}
 };
 
-static t_lst	*new_ope(t_lexer *lx, e_pstate id, int len, t_lst *lst)
+static t_lst	*new_ope(t_lexer *lx, enum e_pstate id, int len, t_lst *lst)
 {
 	char *str;
 

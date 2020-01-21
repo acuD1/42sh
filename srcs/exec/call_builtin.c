@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 00:24:24 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/19 10:48:59 by arsciand         ###   ########.fr       */
+/*   Updated: 2019/12/27 13:07:08 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int8_t	is_a_blt(char *cmd)
 			return (i);
 		i++;
 	}
-	return (FAILURE);
+	return (FALSE);
 }
 
 int8_t	call_builtin(t_core *shell, t_lst *process, int blt)

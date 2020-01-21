@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/18 11:07:38 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 08:35:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int8_t	format_path(char *path, t_process *process)
 	return ((process->bin == NULL) ? FAILURE : SUCCESS);
 }
 
-static int8_t	get_bin_path(t_core *shell, t_process *process)
+int8_t	get_bin_path(t_core *shell, t_process *process)
 {
 	t_db	*db;
 	char	**split_path;
@@ -61,7 +61,7 @@ static int8_t	get_bin_path(t_core *shell, t_process *process)
 			return (FAILURE);
 		if (check_filepath(process->bin) == SUCCESS)
 		{
-			hash_map_dispatcher(shell, process, HASH_DEFAULT);
+			hash_map_dispatcher(shell, process, H_EXEC);
 			ft_tabdel(&split_path);
 			return (SUCCESS);
 		}

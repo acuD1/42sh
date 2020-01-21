@@ -1,41 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load_prompt.c                                      :+:      :+:    :+:   */
+/*   shell_loader.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/26 10:19:22 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:51:55 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-/*
-**	Ok so here we have our prompt. this is a basic one from minishell.
-**	The current format is mainly for testing purpose.
-**	free_prompt is our main fonction that free almost everythings
-**	wiches are globals variables, such as tokens, env list etc...
-*/
-
-// https://linuxconfig.org/bash-prompt-basics
-
-/*
-**	TO DO:
-*/
-
-void			load_prompt(t_core *shell)
+void		load_noi_mode(t_core *shell)
 {
-	credit(shell);
-	init_cmd_line(shell, &shell->term);
-	while (1)
+	while (ft_getnextline(STDIN_FILENO, &shell->term.buffer))
 	{
-		init_prompt(shell);
 		lexer_parser_analyzer(shell);
 		if (task_master(shell) != SUCCESS)
-			quit_shell(shell, EXIT_FAILURE, FALSE) ;
-		//print_hash_map_dev(&shell->hash);
+			return (quit_shell(shell, EXIT_FAILURE, FALSE, NOI_MODE));
+		free_prompt(shell);
+	}
+}
+
+void		load_i_mode(t_core *shell)
+{
+	version(shell);
+	init_cmd_line(shell, &shell->term); // Check return ?
+	while (1)
+	{
+		if (init_prompt(shell) != SUCCESS)
+			return ;
+		lexer_parser_analyzer(shell);
+		if (task_master(shell) != SUCCESS)
+			return (quit_shell(shell, EXIT_FAILURE, FALSE, I_MODE));
 		save_history(&shell->term);
 		free_prompt(shell);
 	}

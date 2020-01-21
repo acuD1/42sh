@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/26 10:19:22 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 09:40:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	sig_handler(int signum)
 		kill_processes(SIGHUP, shell);
 	if (message[signum - 1] != NULL)
 		dprintf(STDERR_FILENO, "\n%s: %i (42sh)\n", message[signum - 1], signum);
-	quit_shell(shell, 0, 0);
+	quit_shell(shell, EXIT_SUCCESS, FALSE, I_MODE);
 }
 
 static void	sig_exit(int signum)
@@ -38,7 +38,7 @@ static void	sig_exit(int signum)
 	t_core	*shell;
 
 	shell = get_core(NULL);
-	quit_shell(shell, 141, (signum == SIGPIPE) ? 0 : 1);
+	quit_shell(shell, 141, (signum == SIGPIPE) ? FALSE : TRUE, I_MODE);
 }
 
 static void	sigh_winch(int signum)
@@ -49,7 +49,7 @@ static void	sigh_winch(int signum)
 	fflush(stdout);
 	shell = get_core(NULL);
 	if (get_size(&(shell->term)) != SUCCESS || update_termsize(shell))
-		quit_shell(shell, 1, 1);
+		quit_shell(shell, EXIT_SUCCESS, FALSE, I_MODE);
 }
 
 void		init_signals(void)

@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load_noi_mode.c                                    :+:      :+:    :+:   */
+/*   fetch_hash_db.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 11:30:48 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/22 16:05:17 by arsciand         ###   ########.fr       */
+/*   Created: 2019/08/02 14:57:11 by arsciand          #+#    #+#             */
+/*   Updated: 2020/01/13 08:31:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			load_noi_mode(t_core *shell)
+t_db	*fetch_hash_db
+	(t_db *db, const char *key, const char *value, enum e_hash fmt)
 {
-	lexer_parser_analyzer(shell);
-	if (task_master(shell) != SUCCESS)
-		exit(1);
-	free_prompt(shell);
+	if (!(db->key = ft_strdup(key)))
+		return (NULL);
+	if (!(db->value = ft_strdup(value)))
+		return (NULL);
+	if (fmt == H_EXEC)
+		db->hit = 1;
+	if (fmt == H_PATH)
+		db->hit = 0;
+	return (db);
 }

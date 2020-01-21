@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 09:27:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,22 @@ void		display_prompt(t_read *term)
 **	  The current buffer is saved in a history list
 */
 
-void		init_prompt(t_core *shell)
+int8_t		end_of_file(char *buff, t_read *term)
+{
+	t_core	*shell;
+
+	shell = get_core(NULL);
+	if (!ft_strcmp(term->buffer, "") && get_mask(buff) == CTRL_D)
+	{
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+		reset_config(shell);
+		write_history(term);
+		return	(TRUE);
+	}
+	return (FALSE);
+}
+
+int8_t		init_prompt(t_core *shell)
 {
 	char	buff[READ_SIZE + 1];
 
@@ -67,21 +82,21 @@ void		init_prompt(t_core *shell)
 	init_config(shell);
 	init_termcaps(&shell->term);
 	display_prompt(&shell->term);
-//	while (term->status != CMD_DONE)
-//	{
-		while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
-		{
-			if (check_caps(buff, &shell->term) == TRUE)
-				ft_bzero(buff, READ_SIZE);
-			else
-				break ;
-		}
-		shell->term.status = CMD_DONE;
-		if (check_subprompt(&shell->term) == FALSE)
-		{
-			// remove_newline(term);
-			check_expansions(&shell->term);
-		}
-//	}
+	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+	{
+		if (end_of_file(buff, &shell->term) == TRUE)
+			return (FAILURE);
+		if (check_caps(buff, &shell->term) == TRUE)
+			ft_bzero(buff, READ_SIZE);
+		else
+			break ;
+	}
+	shell->term.status = CMD_DONE;
+	if (check_subprompt(&shell->term) == FALSE)
+	{
+		// remove_newline(term);
+		check_expansions(&shell->term);
+	}
 	reset_config(shell);
+	return (SUCCESS);
 }

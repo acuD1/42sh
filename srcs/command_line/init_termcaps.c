@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:31:28 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 09:38:37 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,6 @@ void			init_termcaps(t_read *term)
 	if (get_size(term) != SUCCESS)
 	{
 		//SHELL MUST LEAVE : Print message + exit
-		quit_shell(get_core(NULL), 1, 0);
+		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE, I_MODE);
 	}
 }

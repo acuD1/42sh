@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fetch_hash_db.c                                    :+:      :+:    :+:   */
+/*   output.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/02 14:57:11 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/18 09:57:33 by arsciand         ###   ########.fr       */
+/*   Created: 2019/07/20 17:20:07 by arsciand          #+#    #+#             */
+/*   Updated: 2020/01/15 11:01:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-t_db	*fetch_hash_db
-	(t_db *db, const char *key, const char *value, u_int8_t format)
+void	version(t_core *shell)
 {
-	db->key = ft_strdup(key);
-	db->value = ft_strdup(value);
-	if (format & HASH_DEFAULT)
-		db->hit = 1;
-	if (format & HASH_PATH)
-		db->hit = 0;
-	return (db);
+	dprintf(STDOUT_FILENO,
+		"%s|%sv.%d_%d_%d%s|%s 42sh%s\n\n",
+		C_G, C_X,
+		shell->build.release, shell->build.version, shell->build.patch,
+		C_G, C_Y, C_X);
 }
