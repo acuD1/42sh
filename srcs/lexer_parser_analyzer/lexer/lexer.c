@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 15:41:31 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/22 13:01:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/21 13:06:24 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_lst		*lexer(char *line)
 	while (lexer.status != L_END)
 		lexer_token = lexer.lex[lexer.status](&lexer, *head);
 	lexer_token = *head;
-	ft_printtoklist(lexer_token);
+	//ft_printtoklist(lexer_token);
 	lexer_token = *head;
 	init_lexer(NULL, &lexer);
 	return (*head);

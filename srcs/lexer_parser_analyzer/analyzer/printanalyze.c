@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printanalyze.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:55:13 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 13:55:17 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/01/21 13:05:57 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,5 @@ void			ft_printjoblst(t_lst *list)
 		}
 		job = job->next;
 	}
-	dprintf(nono("/dev/ttys002"), "\n");
+	//dprintf(nono("/dev/ttys002"), "\n");
 }
