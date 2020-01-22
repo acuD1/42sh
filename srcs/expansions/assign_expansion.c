@@ -43,21 +43,21 @@ void		expansion_assign(t_core *shell, t_process *process)
 	char *res;
 	e_pstate id;
 
-	id = P_WORD;
+	id = P_DBQUOTE;
 	if (!process->assign_list || !shell)
 		return ;
 	res = NULL;
 	lst = process->assign_list;
 	while (lst)
 	{
-		id = find_expansion(((t_db*)lst->content)->value);
-		if ((res = do_expansion(shell, ((t_db*)lst->content)->value, id)))
+		if ((res = do_exp_et_quote(shell, ((t_db*)lst->content)->value, id)))
 		{
 			ft_strdel(&((t_db*)lst->content)->value);
 			((t_db*)lst->content)->value = ft_strdup(res);
-			printf("%s\n", ((t_db*)lst->content)->value);
-			// free(res);
+			ft_strdel(&res);
 		}
+		else
+			ft_strdel(&((t_db*)lst->content)->value);
 		lst = lst->next;
 	}
 }

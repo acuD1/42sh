@@ -50,6 +50,8 @@ char		*exp_get_hook(char *string, int len);
 char		*new_exp(char *string, e_pstate id);
 e_pstate 	find_expansion(char *str);
 char		*get_expansion(char *string, e_pstate state);
+
+char *do_exp_et_quote(t_core *shell, char *data, e_pstate id);
 #endif
 
 

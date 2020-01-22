@@ -30,7 +30,7 @@ uint8_t is_expansion(e_pstate id)
 		return (7);
 	else if (id == P_DOLLAR)
 		return (8);
-	else if (id == P_DBQUOTE || id == P_BQUOTE || id == P_ASSIGN)
+	else if (id == P_WORD || id == P_ASSIGN)
 		return (9);
 	return (0);
 }
@@ -38,7 +38,8 @@ uint8_t is_expansion(e_pstate id)
 char *no_exp(char *data, t_core *shell)
 {
 	(void)shell;
-	return (data);
+	(void)data;
+	return (NULL);
 }
 
 int expelliarmus(char *src, int index, char **dst, t_core *shell)
@@ -69,20 +70,16 @@ int expelliarmus(char *src, int index, char **dst, t_core *shell)
 char *exp_dbquote(char *data, t_core *shell)
 {
 	int index;
+	int flag;
 	char *res;
 	char *tmp;
 
 	index = 0;
-	tmp = ft_strsub(data, 0, 1);
+	flag = 0;
+	tmp = NULL;
 	res = ft_strnew(0);
 	while (data[index])
 	{
-		if (data[index] == '\'')
-		{
-			index++;
-			while (data[index] && data[index] != '\'')
-				index++;
-		}
 		index = expelliarmus(data, index, &res, shell);
 		if ((size_t)index == ft_strlen(data))
 			break ;

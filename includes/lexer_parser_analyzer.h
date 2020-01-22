@@ -111,6 +111,8 @@ t_lst	 		*lexer(char *line);
 int				ft_isdigit(int c);
 int 			ft_isalpha(int c);
 
+int 	get_word_size_ntype(int i, char *str);
+
 
 t_lst			*expansion_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst 			*exp_dbparen(t_lexer *lexer, e_pstate id, int len, t_lst *lexer_token);

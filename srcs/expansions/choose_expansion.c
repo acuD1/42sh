@@ -29,6 +29,69 @@
 // 	return (P_WORD);
 // }
 
+char *quote_mechanisms(char *str)
+{
+	char *new;
+	int i;
+	int j;
+	e_pstate state;
+
+	j = 0;
+	i = 0;
+	new = NULL;
+	if (!str)
+		return (NULL);
+	new = ft_strnew(ft_strlen(str) + 1);
+	state = P_END;
+	i = 0;
+	while (str[j])
+	{
+		if (str[j] == '\"' && (state == P_DBQUOTE || state == P_END))
+		{
+			if (state == P_DBQUOTE)
+				state = P_END;
+			else if (state == P_END)
+				state = P_DBQUOTE;
+			j++;
+			if (str[j] == '\"')
+				j++;
+		}
+		else if (str[j] == '\'' && (state == P_QUOTE || state == P_END))
+		{
+			if (state == P_QUOTE)
+				state = P_END;
+			else if (state == P_END)
+				state = P_QUOTE;
+			j++;
+			if (str[j] == '\'')
+				j++;
+		}
+		new[i] = str[j];
+		i++;
+		j++;
+
+	}
+	return (ft_strdup(new));
+}
+
+char *do_exp_et_quote(t_core *shell, char *data, e_pstate id)
+{
+	char *exp;
+	char *unquoted;
+
+	exp = NULL;
+	unquoted = NULL;
+	if ((exp = do_expansion(shell, data, id)))
+	{
+		if ((unquoted = quote_mechanisms(exp)))
+		{
+			ft_strdel(&exp);
+			return (unquoted);
+		}
+	}
+	return (NULL);
+}
+
 char *do_expansion(t_core *shell, char *data, e_pstate id)
 {
 	char *res;
@@ -37,6 +100,8 @@ char *do_expansion(t_core *shell, char *data, e_pstate id)
 	init_expansionat(&exp);
 	res = NULL;
 	exp.erience = is_expansion(id);
+	if (!exp.erience)
+		return (ft_strdup(data));
 	if ((res = exp.sionat[exp.erience](data, shell)))
 		return (res);
 	return (NULL);
@@ -71,12 +136,16 @@ void		expansion_redir(t_core *shell, t_process *process)
 	res = NULL;
 	while (lst)
 	{
-		id = find_expansion(((t_redir*)lst->content)->op[1]);
-		if ((res = do_expansion(shell, ((t_redir*)lst->content)->op[1], id)))
+		if ((res = do_exp_et_quote(shell, ((t_redir*)lst->content)->op[1], P_DBQUOTE)))
 		{
 			ft_strdel(&(((t_redir*)lst->content)->op[1]));
 			((t_redir*)lst->content)->op[1] = ft_strdup(res);
-			free(res);
+			ft_strdel(&res);
+		}
+		else
+		{
+			printf("bash: %s: ambiguous redirect\n", ((t_redir*)lst->content)->op[1]);
+			return ;
 		}
 		lst = lst->next;
 	}
@@ -93,14 +162,10 @@ void		expansion_tok(t_core *shell, t_process *process)
 	lst = process->tok_list;
 	while (lst)
 	{
-		if ((res = do_expansion(shell, ((t_token*)lst->content)->data, ((t_token*)lst->content)->id)))
+		if ((res = do_exp_et_quote(shell, ((t_token*)lst->content)->data, ((t_token*)lst->content)->id)))
 		{
-
-			res = quote_removing(res);
-			printf("ttototooto %s\n", res);
-			// res = ft_strdup(quote_mechanisms(res));
 			process->av = ft_add_arg_cmd_process(process->av, res);
-			free(res);
+			ft_strdel(&res);
 		}
 		lst = lst->next;
 	}

@@ -26,34 +26,29 @@ static int		isvalid_assignement_word(char *str, size_t index)
 		else
 			return (0);
 	}
-	if (str[i + 1] && str[i + 1] == '=')
+	if (str[i + 1] && (str[i + 1] == '='))
 		return (0);
 	return (i + 1);
-}
-
-static int		get_assign_word_size(t_lexer *lex, int len)
-{
-	if (!lex || !lex->buff || !len)
-		return (lex->buf_pos);
-	while (lex->buff[len] && !ft_strchr(CHAR_INTERRUPT, lex->buff[len]))
-			len++;
-	return (len);
 }
 
 t_lst			*create_assign_token(t_lexer *lex, int len, t_lst *lexer_token)
 {
 	char		*str;
+	int 		value_len;
 
 	str = NULL;
-	len = get_assign_word_size(lex, len);
-	if (!(str = ft_strsub(lex->buff, lex->buf_pos, len - lex->buf_pos)))
+	value_len = 0;
+	value_len = get_word_size_ntype(len, lex->buff);
+	if (!value_len)
+		value_len = len;
+	if (!(str = ft_strsub(lex->buff, lex->buf_pos, value_len - lex->buf_pos)))
 		return (NULL);
 	if (!(ft_lstappend(&lexer_token,
 		ft_lstnew(fetch_token(&lex->token, P_ASSIGN, str), sizeof(t_token)))))
 		return (NULL);
 	free(str);
 	lex->ntok++;
-	lex->buf_pos = len;
+	lex->buf_pos = value_len;
 	return (lexer_token);
 }
 
