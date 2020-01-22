@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/22 13:50:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/22 15:04:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int8_t		is_heredoc(t_read *term)
 		{
 			if (term->buffer[i + 2] && term->buffer[i + 2] != '<'
 				&& !ft_strchr(term->buffer, '\n'))
-				term->cmd = ft_strsplit(term->buffer, "<<");
+				term->cmd = ft_strsplit(term->buffer, "<< ");
 			else
 				return (FALSE);
 			term->sub_prompt = TRUE;
