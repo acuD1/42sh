@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/21 21:52:55 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/22 14:19:30 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void		display_subprompt(t_read *term, char *prompt)
 	term->y = 0;
 	term->width = term->x;
 	term->x_index = term->x;
-	term->sub_prompt = 1;
 	ft_printf(term->prompt);
 }
 
@@ -68,6 +67,13 @@ int8_t		check_sb_read(t_read *term, char sb)
 		else
 			return (FALSE);
 	}
+	if (term->flag == TRUE)
+	{
+		ft_dprintf(STDERR_FILENO,
+			"42sh: unexpected EOF while looking for matching `%c'\n", sb);
+		ft_dprintf(STDERR_FILENO, "42sh: syntax error: unexpected end of file\n");
+		return (FALSE);
+	}
 	return (TRUE);
 }
 
@@ -75,8 +81,10 @@ void		load_subprompt(char sb, t_read *term)
 {
 	if (sb != BACKSLASH)
 		term->buffer = ft_strjoinf(term->buffer, "\n", 1);
+	if (sb != BACKSLASH)
+		term->status = CMD_SUBPROMPT;
 	term->tmp_buff = ft_strdup(term->buffer);
-	term->status = CMD_SUBPROMPT;
+	term->flag = FALSE;
 	while (TRUE)
 	{
 		ft_strdel(&term->buffer);

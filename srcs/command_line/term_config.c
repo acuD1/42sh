@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/13 15:08:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/22 14:57:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void			init_cmd_line(t_core *shell, t_read *term)
 	term->history_index = NULL;
 	term->shell = shell;
 	term->new_line = 0;
-	term->found = 0;
+	term->flag = 0;
 	term->sub_prompt = 0;
 	term->buffer = NULL;
 	term->tmp_buff = NULL;

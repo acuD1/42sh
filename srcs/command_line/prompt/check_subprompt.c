@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/21 15:27:22 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/22 13:50:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int8_t		is_heredoc(t_read *term)
 				term->cmd = ft_strsplit(term->buffer, "<<");
 			else
 				return (FALSE);
-			term->found = TRUE;
+			term->sub_prompt = TRUE;
 			return (TRUE);
 		}
 	}

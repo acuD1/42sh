@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/07 13:16:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/22 13:48:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void			auto_complete_mode(t_read *term)
 			read_directories(to_find, term);
 		else if (ft_isalpha(*to_find))
 			to_complete_bin(to_find, term);
-		if (term->found == FALSE)
+		if (term->flag == FALSE)
 			to_complete_buffer(to_find, term);
 	}
 	ft_strdel(&to_find);

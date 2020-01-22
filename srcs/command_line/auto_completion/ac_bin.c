@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/07 12:08:07 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/22 13:47:04 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ uint8_t			not_found(char *name, char *to_find, t_read *term)
 	ft_bzero(buff, READ_SIZE);
 	if (isstart(name, to_find))
 	{
-		term->found = TRUE;
+		term->flag = TRUE;
 		goto_prompt(term);
 		insert_bin_in_buffer(name, term);
 		if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
@@ -92,5 +92,5 @@ void			to_complete_bin(char *to_find, t_read *term)
 		closedir(dir);
 	}
 	ft_tabfree(path);
-	term->found == TRUE ? to_complete_bin(to_find, term) : 0;
+	term->flag == TRUE ? to_complete_bin(to_find, term) : 0;
 }

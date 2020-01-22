@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 10:41:55 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/13 14:33:23 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/22 13:46:40 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ typedef struct			s_read
 	int					ac;
 
 	int					new_line;
-	int					found;
+	int					flag;
 	int					sub_prompt;
 	int					status;
 

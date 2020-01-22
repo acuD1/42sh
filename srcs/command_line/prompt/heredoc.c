@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/21 22:00:04 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/22 14:51:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@
 /*     return (1); */
 /* } */
 
+uint8_t		heredoc_error(t_read *term, char *key)
+{
+	ft_dprintf(STDERR_FILENO,
+		"42sh: warning: here-document delimited by end-of-file (wanted `%s')\n", key);
+	term->sub_prompt++;
+	if (term->sub_prompt == ft_tablen(term->cmd))
+		return (FALSE);
+	return (TRUE);
+}
+
 uint8_t		check_eof(t_read *term)
 {
 	int		i;
@@ -32,12 +42,11 @@ uint8_t		check_eof(t_read *term)
 	i = -1;
 	while (term->tmp_buff[i++] && term->tmp_buff[i] != NEW_LINE)
 		;
-	if (!ft_strcmp(term->buffer, term->cmd[term->found]))
+	if (!ft_strcmp(term->buffer, term->cmd[term->sub_prompt]))
 	{
-		term->found++;
-		if (term->found < ft_tablen(term->cmd))
+		term->sub_prompt++;
+		if (term->sub_prompt < ft_tablen(term->cmd))
 			return (FALSE);
-		term->found = FALSE;
 		return (TRUE);
 	}
 	return (FALSE);
@@ -47,7 +56,8 @@ int8_t		check_hc_reader(t_read *term)
 {
 	if (read_multiline(term, FALSE) == FALSE)
 	{
-		term->sub_prompt = FALSE;
+		if (term->flag == TRUE)
+			return (heredoc_error(term, term->cmd[term->sub_prompt]));
 		if (check_eof(term) == FALSE)
 		{
 			term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
@@ -69,7 +79,7 @@ void		load_heredoc(t_read *term)
 	{
 		ft_strdel(&term->buffer);
 		term->buffer = ft_memalloc(BUFF_SIZE);
-		display_subprompt(term, PS3);
+		display_subprompt(term, PS2);
 		if (check_hc_reader(term) == TRUE)
 			continue ;
 		else
@@ -83,4 +93,5 @@ void		load_heredoc(t_read *term)
 	ft_strdel(&term->tmp_buff);
 	term->status = CMD_DONE;
 	term->heredoc = ft_strsplit(term->buffer, "\n");
+	ft_tabfree(term->cmd);
 }

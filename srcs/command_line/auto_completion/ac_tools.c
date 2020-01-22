@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/07 13:13:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/22 13:48:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void			parse_env(char **prev_b, char *to_find, t_read *term)
 			tmp = ft_strjoin("$", ((t_db *)(env->content))->key);
 			if (read_again(prev_b, NULL, tmp, term) == FALSE)
 				break ;
-			term->found = TRUE;
+			term->flag = TRUE;
 			ft_strdel(&tmp);
 		}
 		if (env->next)
 			env = env->next;
-		else if (term->found == TRUE)
+		else if (term->flag == TRUE)
 			env = head;
 	}
 	ft_strdel(&tmp);

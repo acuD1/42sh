@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/07 13:06:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/22 13:48:06 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int8_t			read_curr_dir(t_read *term, char tmp[], char curr[], DIR *dir)
 
 	while ((data = readdir(dir)) != NULL)
 	{
-		term->found++;
+		term->flag++;
 		if (is_dot(data->d_name) == FALSE)
 		{
 			ft_strcat(tmp, data->d_name);
@@ -96,7 +96,7 @@ void			display_current_directory(t_read *term, char *curr_dir)
 	char			tmp[BUFF_SIZE];
 	char			current_dir[BUFF_SIZE];
 
-	term->found = FALSE;
+	term->flag = FALSE;
 	get_current_dir(curr_dir, current_dir, term);
 	if ((dir = opendir(current_dir)) == NULL)
 		return ;
@@ -104,5 +104,5 @@ void			display_current_directory(t_read *term, char *curr_dir)
 	if (read_curr_dir(term, tmp, current_dir, dir) == FAILURE)
 		return ;
 	closedir(dir);
-	(term->found != 2) ? display_current_directory(term, curr_dir) : 0;
+	(term->flag != 2) ? display_current_directory(term, curr_dir) : 0;
 }
