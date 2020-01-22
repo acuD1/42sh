@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/22 15:04:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/22 16:09:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ uint8_t		check_subprompt(t_read *term)
 	}
 	if (quote != '\0')
 	{
+		term->sub_prompt = TRUE;
 		load_subprompt(quote, term);
 		return (TRUE);
 	}

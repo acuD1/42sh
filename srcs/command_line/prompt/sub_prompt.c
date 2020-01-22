@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/22 14:19:30 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/22 16:06:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@ void		display_subprompt(t_read *term, char *prompt)
 	term->width = term->x;
 	term->x_index = term->x;
 	ft_printf(term->prompt);
+}
+
+uint8_t		sub_prompt_error(t_read *term, char sb)
+{
+	if (term->flag == TRUE)
+	{
+		ft_dprintf(STDERR_FILENO,
+			"42sh: unexpected EOF while looking for matching `%c'\n", sb);
+		ft_dprintf(STDERR_FILENO, "42sh: syntax error: unexpected end of file\n");
+		return (TRUE);
+	}
+	if (term->status == CMD_PROMPT)
+		return (TRUE);
+	return (FALSE);
 }
 
 uint8_t		read_multiline(t_read *term, char sb)
@@ -51,30 +65,18 @@ uint8_t		read_multiline(t_read *term, char sb)
 	return (TRUE);
 }
 
-int8_t		check_sb_read(t_read *term, char sb)
+uint8_t		check_sb_read(t_read *term, char sb)
 {
-	if (read_multiline(term, sb) == FALSE)
+	term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
+	if (quotes_is_matching(term, &sb) == FALSE)
 	{
-		term->sub_prompt = FALSE;
-		term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
-		if (quotes_is_matching(term, &sb) == FALSE)
-		{
-			term->buffer = ft_strjoinf(term->buffer, "\n", 1);
-			ft_strdel(&term->tmp_buff);
-			term->tmp_buff = ft_strdup(term->buffer);
-			return (TRUE);
-		}
-		else
-			return (FALSE);
+		term->buffer = ft_strjoinf(term->buffer, "\n", 1);
+		ft_strdel(&term->tmp_buff);
+		term->tmp_buff = ft_strdup(term->buffer);
+		return (TRUE);
 	}
-	if (term->flag == TRUE)
-	{
-		ft_dprintf(STDERR_FILENO,
-			"42sh: unexpected EOF while looking for matching `%c'\n", sb);
-		ft_dprintf(STDERR_FILENO, "42sh: syntax error: unexpected end of file\n");
+	else
 		return (FALSE);
-	}
-	return (TRUE);
 }
 
 void		load_subprompt(char sb, t_read *term)
@@ -90,9 +92,14 @@ void		load_subprompt(char sb, t_read *term)
 		ft_strdel(&term->buffer);
 		term->buffer = ft_memalloc(BUFF_SIZE);
 		display_subprompt(term, PS2);
-		if (check_sb_read(term, sb) == FALSE)
-			break ;
-		if (term->status == CMD_PROMPT)
+		if (read_multiline(term, sb) == FALSE)
+		{
+			if (check_sb_read(term, sb) == TRUE)
+				continue ;
+			else
+				break ;
+		}
+		if (sub_prompt_error(term, sb) == TRUE)
 			return ;
 		term->tmp_buff = ft_strjoinf(term->tmp_buff, term->buffer, 1);
 	}
