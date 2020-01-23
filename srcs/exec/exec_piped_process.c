@@ -14,13 +14,13 @@
 
 int32_t	exec_piped_process(t_core *shell, t_lst *process)
 {
-	int		blt;
+	// int		blt;
 
 	expansion(shell, ((t_process*)process->content));
-	if (((t_process*)process->content))
-		if ((blt = is_a_blt(((t_process*)process->content)->av[0])) != FAILURE)
-			exit(call_builtin(shell, process, blt));
-	get_bin(shell, ((t_process*)process->content));
-	call_bin(shell, process);
+	// if (((t_process*)process->content))
+	// 	if ((blt = is_a_blt(((t_process*)process->content)->av[0])) != FAILURE)
+	// 		exit(call_builtin(shell, process, blt));
+	// get_bin(shell, ((t_process*)process->content));
+	// call_bin(shell, process);
 	exit(0);
 }

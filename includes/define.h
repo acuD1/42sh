@@ -149,7 +149,7 @@
 */
 
 # define NB_OF_OPE 14
-# define NB_OF_EXP 9
+# define NB_OF_EXP 12
 # define CHAR_INTERRUPT 			" \t<>|;&\n"
 # define OPERATORS 					"&|;><"
 # define EXPANSION 					"$~"
@@ -158,9 +158,9 @@
 # define REDIR_DB                   P_DGREAT
 # define HEREDC						P_DLESS, P_DLESSDASH
 # define ALL_REDIRECT               REDIR, REDIR_DB, REDIR_AND, HEREDC
-# define ALL_EXPANSION              P_PARENT, P_BRACKET, P_DBPARENT, P_DOLLAR, P_TILDE, P_TILDEP, P_TILDEM
-# define ALL_WORDS   	           	P_WORD, P_DBQUOTE, P_QUOTE, P_BQUOTE, P_PARENT, P_BRACKET, P_DBPARENT, P_DOLLAR, P_TILDE, P_TILDEP, P_TILDEM
-# define QUOTES   	           	P_DBQUOTE, P_QUOTE, P_BQUOTE
+
+# define ALL_EXPANSION              P_PARENT, P_BRACKET, P_DBPARENT, P_DOLLAR, P_TILDE, P_TILDEP, P_TILDEM, P_DBQUOTE, P_BQUOTE
+# define QUOTES   	  	         	P_DBQUOTE, P_QUOTE, P_BQUOTE
 
 # define IOFILE                     P_GREAT, P_GREATAND, P_LESS, P_LESSAND, P_DGREAT
 # define IOHERE                     P_DLESS, P_DLESSDASH

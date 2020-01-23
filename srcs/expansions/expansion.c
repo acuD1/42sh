@@ -12,25 +12,25 @@
 
 #include "sh42.h"
 
-uint8_t is_expansion(e_pstate id)
+uint8_t is_expansion(e_estate id)
 {
-	if (id == P_TILDEP)
+	if (id == E_TILDEP)
 		return (1);
-	else if (id == P_TILDEM)
+	else if (id == E_TILDEM)
 		return (2);
-	else if (id == P_TILDE)
+	else if (id == E_TILDE)
 		return (3);
-	else if ( id == P_DBPARENT)
+	else if ( id == E_DBPARENT)
 		return (4);
-	else if ( id == P_PARENT)
+	else if ( id == E_PARENT)
 		return (5);
-	else if ( id == P_BRACKET)
+	else if ( id == E_BRACKET)
 		return (6);
-	else if ( id == P_HOOK)
+	else if ( id == E_HOOK)
 		return (7);
-	else if (id == P_DOLLAR)
+	else if (id == E_DOLLAR)
 		return (8);
-	else if (id == P_WORD || id == P_ASSIGN)
+	else
 		return (9);
 	return (0);
 }
@@ -45,23 +45,23 @@ char *no_exp(char *data, t_core *shell)
 int expelliarmus(char *src, int index, char **dst, t_core *shell)
 {
 	t_expansion toto;
-	e_pstate state;
-	char *exp;
+	e_estate state;
+	char *netero;
 	char *trans;
 
-	exp = NULL;
+	netero = NULL;
 	trans = NULL;
-	state = P_EXP_INTERRUPT;
+	state = NB_EXPANSION_STATE;
 	init_expansionat(&toto);
 	if (src[index] == '$')
 	{
 		state = find_expansion(&src[index]);
 		toto.erience = is_expansion(state);
-		if ((exp = get_expansion(&src[index], state)))
-			if ((trans = toto.sionat[toto.erience](exp, shell)))
+		if ((netero = get_expansion(&src[index], state)))
+			if ((trans = toto.sionat[toto.erience](netero, shell)))
 				*dst = ft_strjoinf(*dst, trans, 4);
-		index = ft_strlen(exp) + index;
-		ft_strdel(&exp);
+		index = ft_strlen(netero) + index;
+		ft_strdel(&netero);
 		return (index);
 	}
 	return (index);
@@ -95,13 +95,13 @@ void expansion(t_core *shell, t_process *process)
 	if (!process || !shell)
 		return ;
 	
-	if (process->assign_list)
-	{
-		expansion_assign(shell, process);
-		add_assign_env(process->assign_list, shell);
-	}
+	// if (process->assign_list)
+	// {
+	// 	expansion_assign(shell, process);
+	// 	add_assign_env(process->assign_list, shell);
+	// }
 	if (process->tok_list)
 		expansion_tok(shell, process);
-	if (process->redir_list)
-		expansion_redir(shell, process);
+	// if (process->redir_list)
+		// expansion_redir(shell, process);
 }

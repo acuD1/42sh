@@ -12,7 +12,7 @@
 
 #include "sh42.h"
 
-// e_pstate ft_ffqtype(char *str)
+// e_estate ft_ffqtype(char *str)
 // {
 // 	if (!str || !(*str))
 // 		return (P_END);
@@ -34,7 +34,7 @@ char *quote_mechanisms(char *str)
 	char *new;
 	int i;
 	int j;
-	e_pstate state;
+	e_estate state;
 
 	j = 0;
 	i = 0;
@@ -42,28 +42,26 @@ char *quote_mechanisms(char *str)
 	if (!str)
 		return (NULL);
 	new = ft_strnew(ft_strlen(str) + 1);
-	state = P_END;
+	state = NB_EXPANSION_STATE;
 	i = 0;
 	while (str[j])
 	{
-		if (str[j] == '\"' && (state == P_DBQUOTE || state == P_END))
+		if (str[j] == '\"' && (state == E_DBQUOTE || state == NB_EXPANSION_STATE))
 		{
-			if (state == P_DBQUOTE)
-				state = P_END;
-			else if (state == P_END)
-				state = P_DBQUOTE;
-			j++;
-			if (str[j] == '\"')
+			while (str[j] == '\"')
 				j++;
+			if (state == E_DBQUOTE)
+				state = NB_EXPANSION_STATE;
+			else if (state == NB_EXPANSION_STATE)
+				state = E_DBQUOTE;
 		}
-		else if (str[j] == '\'' && (state == P_QUOTE || state == P_END))
+		else if (str[j] == '\'' && (state == E_QUOTE || state == NB_EXPANSION_STATE))
 		{
-			if (state == P_QUOTE)
-				state = P_END;
-			else if (state == P_END)
-				state = P_QUOTE;
-			j++;
-			if (str[j] == '\'')
+			if (state == E_QUOTE)
+				state = NB_EXPANSION_STATE;
+			else if (state == NB_EXPANSION_STATE)
+				state = E_QUOTE;
+			while (str[j] == '\'')
 				j++;
 		}
 		new[i] = str[j];
@@ -74,7 +72,7 @@ char *quote_mechanisms(char *str)
 	return (ft_strdup(new));
 }
 
-char *do_exp_et_quote(t_core *shell, char *data, e_pstate id)
+char *do_exp_et_quote(t_core *shell, char *data, e_estate id)
 {
 	char *exp;
 	char *unquoted;
@@ -92,7 +90,7 @@ char *do_exp_et_quote(t_core *shell, char *data, e_pstate id)
 	return (NULL);
 }
 
-char *do_expansion(t_core *shell, char *data, e_pstate id)
+char *do_expansion(t_core *shell, char *data, e_estate id)
 {
 	char *res;
 	t_expansion exp;
@@ -126,9 +124,7 @@ void		expansion_redir(t_core *shell, t_process *process)
 {
 	t_lst *lst;
 	char *res;
-	e_pstate id;
 
-	id = P_WORD;
 	if (!process->redir_list || !shell
 			|| !((t_redir*)process->redir_list->content)->op[1])
 		return ;
@@ -136,7 +132,7 @@ void		expansion_redir(t_core *shell, t_process *process)
 	res = NULL;
 	while (lst)
 	{
-		if ((res = do_exp_et_quote(shell, ((t_redir*)lst->content)->op[1], P_DBQUOTE)))
+		if ((res = do_exp_et_quote(shell, ((t_redir*)lst->content)->op[1], E_DBQUOTE)))
 		{
 			ft_strdel(&(((t_redir*)lst->content)->op[1]));
 			((t_redir*)lst->content)->op[1] = ft_strdup(res);
@@ -162,7 +158,7 @@ void		expansion_tok(t_core *shell, t_process *process)
 	lst = process->tok_list;
 	while (lst)
 	{
-		if ((res = do_exp_et_quote(shell, ((t_token*)lst->content)->data, ((t_token*)lst->content)->id)))
+		if ((res = do_exp_et_quote(shell, ((t_token*)lst->content)->data, E_DBQUOTE)))
 		{
 			process->av = ft_add_arg_cmd_process(process->av, res);
 			ft_strdel(&res);

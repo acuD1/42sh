@@ -43,7 +43,7 @@ typedef struct s_expansion t_expansion;
 
 typedef t_analyzer	*(*t_analyze)(t_analyzer*, t_core*);
 typedef t_analyze t_anal[NB_ANALYZER_STATE][NB_PARSER_STATE];
-typedef t_lst *(*t_lexing)(t_lexer*, t_lst *);
+typedef t_lst *(*t_lexing)(t_lexer*, t_lst*);
 typedef char *(*t_exp)(char* ,t_core*);
 
 	
@@ -94,8 +94,8 @@ typedef struct	s_hash
 
 typedef struct s_exp_size
 {
-	char 			*(*totot)(char*, e_pstate id);
-	e_pstate 		id;
+	char 			*(*acab)(char*, e_estate id);
+	e_estate 		id;
 	char 			*res;
 }		t_exp_size;
 
@@ -105,10 +105,17 @@ typedef struct s_expansion
 	t_exp 			sionat[10];
 }		t_expansion;
 
+typedef struct s_exp_token
+{
+	e_estate id;
+	char *data;
+	int len;
+}				t_exp_token;
+
 typedef struct s_lex_exp
 {
 	char 			*(*fct)(char*, int);
-	e_pstate 		id;
+	e_estate 		id;
 	int 			len;
 }		t_lex_exp;
 

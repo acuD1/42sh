@@ -20,20 +20,6 @@ int8_t 		nono(const char *path);
 void        ft_printtab(char **cmd);
 
 
-/*
-**  QUOTE
-*/
-
-char *quote_removing(char *str);
-char *quote_mechanisms(char *str);
-// char *quote_removing(char *data, e_pstate id);
-char *point_de_cote(char *src, char quote);
-
-
-
-t_analyzer	*process_word_analyze(t_analyzer *anal);
-
-
 
 
 void 		lexer_parser_analyzer(t_core *shell);
@@ -68,7 +54,7 @@ t_analyzer	*redir_wanalyze(t_analyzer *anal, t_core *shell);
 t_analyzer  *process_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer  *job_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer 	*ass_analyze(t_analyzer *analyzer);
-
+t_analyzer	*process_word_analyze(t_analyzer *anal);
 
 t_db 		*fetch_assign(t_db *assign);
 t_job       *fetch_job(t_job *job);
@@ -111,22 +97,9 @@ t_lst	 		*lexer(char *line);
 int				ft_isdigit(int c);
 int 			ft_isalpha(int c);
 
-int 	get_word_size_ntype(int i, char *str);
-
-
-t_lst			*expansion_lexer(t_lexer *lexer, t_lst *lexer_token);
-t_lst 			*exp_dbparen(t_lexer *lexer, e_pstate id, int len, t_lst *lexer_token);
-t_lst 			*exp_paren_lexer(t_lexer *lexer, e_pstate id, int len, t_lst *lexer_token);
-t_lst 			*exp_bracket_lexer(t_lexer *lexer, e_pstate id, int len, t_lst *lexer_token);
-t_lst 			*exp_dollar_lexer(t_lexer *lexer, e_pstate id, int len, t_lst *lexer_token);
-t_lst 			*exp_tilde_lexer(t_lexer *lexer, e_pstate id, int len, t_lst *lexer_token);
-t_lst 			*exp_hook(t_lexer *lexer, e_pstate id, int len, t_lst *lexer_token);
 t_lst			*start_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*end_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*name_lexer(t_lexer *lexer, t_lst *lexer_token);
-t_lst			*quote_lexer(t_lexer *lexer, t_lst *lexer_token);
-t_lst 			*dbquote_lexer(t_lexer *lexer, t_lst *lexer_token);
-t_lst 			*bquote_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*newline_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*backslash_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*number_lexer(t_lexer *lexer, t_lst *lexer_token);

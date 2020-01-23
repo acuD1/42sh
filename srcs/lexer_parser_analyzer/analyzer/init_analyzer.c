@@ -21,7 +21,6 @@ void		init_start_analyze(t_anal analyze)
 	// analyze[A_START][P_PIPE] = separator_analyze;
 	// analyze[A_START][P_SEMICOLON] = separator_analyze;
 	// analyze[A_START][P_DSEMI] = separator_analyze;
-
 	analyze[A_START][P_DLESSDASH] = redirect_analyze;
 	analyze[A_START][P_DLESS] = redirect_analyze;
 	// analyze[A_START][P_DLESSDASH] = heredoc_analyze;
@@ -32,23 +31,9 @@ void		init_start_analyze(t_anal analyze)
 	analyze[A_START][P_GREATAND] = redirect_analyze;
 	analyze[A_START][P_GREAT] = redirect_analyze;
 	analyze[A_START][P_IONUMBER] = ionbr_analyze;
-
 	analyze[A_START][P_ASSIGN] = assign_analyze;
-
-	analyze[A_START][P_ESCSEQ] = cmd_analyze;
+	// analyze[A_START][P_ESCSEQ] = cmd_analyze;
 	analyze[A_START][P_WORD] = cmd_analyze;
-	analyze[A_START][P_QUOTE] = cmd_analyze;
-	analyze[A_START][P_DBQUOTE] = cmd_analyze;
-	analyze[A_START][P_BQUOTE] = cmd_analyze;
-	analyze[A_START][P_DBPARENT] = cmd_analyze;
-	analyze[A_START][P_PARENT] = cmd_analyze;
-	analyze[A_START][P_BRACKET] = cmd_analyze;
-	analyze[A_START][P_HOOK] = cmd_analyze;
-	analyze[A_START][P_DOLLAR] = cmd_analyze;
-	analyze[A_START][P_TILDE] = cmd_analyze;
-	analyze[A_START][P_TILDEM] = cmd_analyze;
-	analyze[A_START][P_TILDEP] = cmd_analyze;
-
 	analyze[A_START][P_END] = end_analyze;
 }
 
@@ -61,42 +46,21 @@ void		init_word_analyze(t_anal analyze)
 	analyze[A_WORD][P_PIPE] = separator_analyze;
 	analyze[A_WORD][P_SEMICOLON] = separator_analyze;
 	analyze[A_WORD][P_DSEMI] = separator_analyze;
-
 	analyze[A_WORD][P_DLESSDASH] = redirect_analyze;
 	analyze[A_WORD][P_DLESS] = redirect_analyze;
 	// analyze[A_WORD][P_DLESSDASH] = heredoc_analyze;
 	// analyze[A_WORD][P_DLESS] = heredoc_analyze;
-
 	analyze[A_WORD][P_LESS] = redirect_analyze;
 	analyze[A_WORD][P_DGREAT] = redirect_analyze;
 	analyze[A_WORD][P_GREATAND] = redirect_analyze;
 	analyze[A_WORD][P_LESSAND] = redirect_analyze;
 	analyze[A_WORD][P_GREAT] = redirect_analyze;
 	analyze[A_WORD][P_IONUMBER] = ionbr_analyze;
-	
 	analyze[A_WORD][P_ASSIGN] = assign_analyze;
-	
-	analyze[A_WORD][P_ESCSEQ] = cmd_analyze;
+	// analyze[A_WORD][P_ESCSEQ] = cmd_analyze;
 	analyze[A_WORD][P_WORD] = cmd_analyze;
-	analyze[A_WORD][P_QUOTE] = cmd_analyze;
-	analyze[A_WORD][P_DBQUOTE] = cmd_analyze;
-	analyze[A_WORD][P_BQUOTE] = cmd_analyze;
-	analyze[A_WORD][P_DBPARENT] = cmd_analyze;
-	analyze[A_WORD][P_PARENT] = cmd_analyze;
-	analyze[A_WORD][P_BRACKET] = cmd_analyze;
-	analyze[A_WORD][P_HOOK] = cmd_analyze;
-	analyze[A_WORD][P_DOLLAR] = cmd_analyze;
-	analyze[A_WORD][P_TILDEM] = cmd_analyze;
-	analyze[A_WORD][P_TILDEP] = cmd_analyze;
-	analyze[A_WORD][P_TILDE] = cmd_analyze;
-
 	analyze[A_WORD][P_END] = end_analyze;
 }
-
-// static void	init_lereste(t_anal analyze)
-// {
-
-// }
 
 static void	bzero_analyze(t_anal parsing)
 {
@@ -129,7 +93,6 @@ t_analyzer	*init_analyze(t_analyzer *analyzer, t_lst *lexer)
 	init_separator_analyze(analyzer->analyze);
 	init_redirect_analyze(analyzer->analyze);
 	init_end_analyze(analyzer->analyze);
-	// init_lereste(analyzer->analyze);
 	analyzer->state = A_START;
 	analyzer->lexer = lexer;
 	analyzer->job_list = NULL;

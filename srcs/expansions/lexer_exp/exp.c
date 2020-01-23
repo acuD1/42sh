@@ -62,19 +62,20 @@ char	*exp_get_hook(char *string, int len)
 	return (NULL);
 }
 
-char	*new_exp(char *string, e_pstate id)
+char	*new_exp(char *string, e_estate id)
 {
 	int					i;
 	char 				*new;
 	static t_lex_exp	lex_pex[] = {
-		{exp_get_tildep, P_TILDEP ,2},
-		{exp_get_tildem, P_TILDEM,2},
-		{exp_get_tilde, P_TILDE ,1},
-		{exp_get_dbparen, P_DBPARENT,3},
-		{exp_get_paren, P_PARENT,2},
-		{exp_get_bracket, P_BRACKET,2},
-		{exp_get_hook, P_HOOK, 2},
-		{exp_get_dollar, P_DOLLAR, 1},
+		// {exp_get_bquote, E_BQUOTE ,1},
+		{exp_get_tildep, E_TILDEP ,2},
+		{exp_get_tildem, E_TILDEM,2},
+		{exp_get_tilde, E_TILDE ,1},
+		{exp_get_dbparen, E_DBPARENT,3},
+		{exp_get_paren, E_PARENT,2},
+		{exp_get_bracket, E_BRACKET,2},
+		{exp_get_hook, E_HOOK, 2},
+		{exp_get_dollar, E_DOLLAR, 1},
 	};
 
 	i = 0;
@@ -89,32 +90,33 @@ char	*new_exp(char *string, e_pstate id)
 	return (NULL);
 }
 
-e_pstate find_expansion(char *str)
+e_estate find_expansion(char *str)
 {
-	const	t_token	exp[] = 	{
-		{P_TILDEP, "~+", 2},
-		{P_TILDEM, "~-", 2},
-		{P_TILDE, "~", 1},
-		{P_DBPARENT, "$((", 3},
-		{P_PARENT, "$(", 2},
-		{P_BRACKET, "${", 2},
-		{P_HOOK, "$[", 2},
-		{P_DOLLAR, "$", 1},
-		{P_EXP_INTERRUPT, NULL, 0}
+	const	t_exp_token	exp[] = 	{
+		{E_BQUOTE, "'", 1},
+		{E_TILDEP, "~+", 2},
+		{E_TILDEM, "~-", 2},
+		{E_TILDE, "~", 1},
+		{E_DBPARENT, "$((", 3},
+		{E_PARENT, "$(", 2},
+		{E_BRACKET, "${", 2},
+		{E_HOOK, "$[", 2},
+		{E_DOLLAR, "$", 1},
+		{NB_EXPANSION_STATE, NULL, 0}
 	};
 	int 				i;
 
 	i = 0;
-	while (exp[i].id != P_EXP_INTERRUPT)
+	while (exp[i].id != NB_EXPANSION_STATE)
 	{
 		if (!ft_strncmp(str, exp[i].data, exp[i].len))
 			return (exp[i].id);
 		i++;
 	}
-	return (P_EXP_INTERRUPT);
+	return (NB_EXPANSION_STATE);
 }
 
-char	*get_expansion(char *string, e_pstate state)
+char	*get_expansion(char *string, e_estate state)
 {
 	char *new;
 

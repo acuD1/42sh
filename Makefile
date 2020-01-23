@@ -87,6 +87,7 @@ LEXER		= 	lexer_parser_analyzer/lexer/
 PARSER		= 	lexer_parser_analyzer/parser/
 ANALYZER	= 	lexer_parser_analyzer/analyzer/
 EXPANSIONS	= 	expansions/
+LEXER_EXP	= 	expansions/lexer_exp/
 MISC		=	misc/
 HASH		=	$(EXEC)hash_map/
 
@@ -109,6 +110,7 @@ PATHS		+=	$(O_PATH)$(LEXER)
 PATHS		+=	$(O_PATH)$(PARSER)
 PATHS		+=	$(O_PATH)$(ANALYZER)
 PATHS		+=	$(O_PATH)$(EXPANSIONS)
+PATHS		+=	$(O_PATH)$(LEXER_EXP)
 PATHS		+=	$(O_PATH)$(HASH)
 PATHS		+=	$(O_PATH)$(MISC)
 PATHS		+=	$(O_PATH)$(PROMPT)
@@ -119,6 +121,11 @@ SRC		+=	$(S_PATH)$(PROMPT)prompt.c
 SRC		+=	$(S_PATH)$(PROMPT)check_subprompt.c
 SRC		+=	$(S_PATH)$(PROMPT)check_backslash.c
 SRC		+=	$(S_PATH)$(PROMPT)sub_prompt.c
+
+SRC		+=	$(S_PATH)$(LEXER_EXP)exp.c
+SRC		+=	$(S_PATH)$(LEXER_EXP)exp_bis.c
+SRC		+=	$(S_PATH)$(LEXER_EXP)exp_tilde.c
+SRC		+=	$(S_PATH)$(LEXER_EXP)expansion_lexer.c
 
 SRC		+=	$(S_PATH)$(EXPANSIONS)expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)assign_expansion.c
@@ -145,9 +152,6 @@ SRC		+=	$(S_PATH)$(LEXER)lexer.c
 SRC		+=	$(S_PATH)$(LEXER)name_token.c
 SRC		+=	$(S_PATH)$(LEXER)io_nbr_nwl_token.c
 SRC		+=	$(S_PATH)$(LEXER)operator_token.c
-SRC		+=	$(S_PATH)$(LEXER)exp.c
-SRC		+=	$(S_PATH)$(LEXER)exp_bis.c
-SRC		+=	$(S_PATH)$(LEXER)exp_tilde.c
 SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
 
 SRC		+=	$(S_PATH)$(PARSER)parser.c

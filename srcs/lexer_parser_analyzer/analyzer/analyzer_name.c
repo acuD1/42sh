@@ -35,7 +35,7 @@ t_analyzer	*escape_sequence_analyzer(t_analyzer *analyzer)
 	// ft_strdel(&(str));
 	// analyzer->process.av = ft_add_arg_cmd_process(analyzer->process.av,
 		// ((t_token*)analyzer->lexer->content)->data);
-	((t_token*)analyzer->lexer->content)->id = P_ESCSEQ;
+	// ((t_token*)analyzer->lexer->content)->id = P_ESCSEQ;
 	return (analyzer);
 }
 

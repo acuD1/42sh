@@ -12,38 +12,38 @@
 
 #include "sh42.h"
 
-t_lst		*backslash_lexer(t_lexer *lx, t_lst *lexer_token)
-{
-	char	*str;
-	int		i;
+// t_lst		*backslash_lexer(t_lexer *lx, t_lst *lexer_token)
+// {
+// 	char	*str;
+// 	int		i;
 
-	str = NULL;
-	i = lx->buf_pos;
-	if (!lx->buff)
-	{
-		lx->status = L_END;
-		return (lexer_token);
-	}
-	if (lx->buff[i] == '\\')
-	{
-		while (lx->buff[i] == '\\')
-			i++;
-		if (lx->buff[i])
-		{
-			i++;
-		}
-		if (!(str = ft_strsub(lx->buff, lx->buf_pos, i - lx->buf_pos)))
-			return (lexer_token);
-		if (!(ft_lstappend(&lexer_token, ft_lstnew(
-			fetch_token(&lx->token, P_ESCSEQ, str), sizeof(t_token)))))
-			return (lexer_token);
-		free(str);
-		lx->ntok++;
-		lx->buf_pos = i;
-	}
-	lx->status = L_START;
-	return (lexer_token);
-}
+// 	str = NULL;
+// 	i = lx->buf_pos;
+// 	if (!lx->buff)
+// 	{
+// 		lx->status = L_END;
+// 		return (lexer_token);
+// 	}
+// 	if (lx->buff[i] == '\\')
+// 	{
+// 		while (lx->buff[i] == '\\')
+// 			i++;
+// 		if (lx->buff[i])
+// 		{
+// 			i++;
+// 		}
+// 		if (!(str = ft_strsub(lx->buff, lx->buf_pos, i - lx->buf_pos)))
+// 			return (lexer_token);
+// 		if (!(ft_lstappend(&lexer_token, ft_lstnew(
+// 			fetch_token(&lx->token, P_ESCSEQ, str), sizeof(t_token)))))
+// 			return (lexer_token);
+// 		free(str);
+// 		lx->ntok++;
+// 		lx->buf_pos = i;
+// 	}
+// 	lx->status = L_START;
+// 	return (lexer_token);
+// }
 
 t_lst		*start_lexer(t_lexer *lx, t_lst *lexer_token)
 {
@@ -56,8 +56,8 @@ t_lst		*start_lexer(t_lexer *lx, t_lst *lexer_token)
 	}
 	else if (lx->buff[lx->buf_pos] == '\n')
 		lx->status = L_NEWLINE;
-	else if (lx->buff[lx->buf_pos] == '\\')
-		lx->status = L_ESCSEQ;
+	// else if (lx->buff[lx->buf_pos] == '\\')
+	// 	lx->status = L_ESCSEQ;
 	else if (ft_strchr(OPERATORS, lx->buff[lx->buf_pos]))
 		lx->status = L_OPERATOR;
 	else if (ft_isdigit(lx->buff[lx->buf_pos]))

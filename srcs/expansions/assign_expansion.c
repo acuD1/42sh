@@ -41,9 +41,9 @@ void		expansion_assign(t_core *shell, t_process *process)
 {
 	t_lst *lst;
 	char *res;
-	e_pstate id;
+	e_estate id;
 
-	id = P_DBQUOTE;
+	id = E_DBQUOTE;
 	if (!process->assign_list || !shell)
 		return ;
 	res = NULL;
