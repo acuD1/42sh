@@ -64,7 +64,12 @@ static int8_t		get_index_expan(char *str)
 		return (0);
 	while (str[i])
 	{
-		if (str[i] == '?')
+		if (str[1] == '?')
+		{
+			i++;
+			break ;
+		}
+		if (str[1] == '$')
 		{
 			i++;
 			break ;

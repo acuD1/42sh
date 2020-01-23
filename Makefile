@@ -125,7 +125,6 @@ SRC		+=	$(S_PATH)$(PROMPT)sub_prompt.c
 SRC		+=	$(S_PATH)$(LEXER_EXP)exp.c
 SRC		+=	$(S_PATH)$(LEXER_EXP)exp_bis.c
 SRC		+=	$(S_PATH)$(LEXER_EXP)exp_tilde.c
-SRC		+=	$(S_PATH)$(LEXER_EXP)expansion_lexer.c
 
 SRC		+=	$(S_PATH)$(EXPANSIONS)expansion.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)assign_expansion.c

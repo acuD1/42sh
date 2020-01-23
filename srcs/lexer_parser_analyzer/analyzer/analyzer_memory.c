@@ -71,6 +71,7 @@ void		ft_free_processlist(t_lst **head)
 			ft_free_redirlist(&pro->redir_list);
 			if (pro->av)
 				ft_tabfree(pro->av);
+			ft_strdel(&pro->command);
 		}
 		free(process->content);
 		tmp = process;

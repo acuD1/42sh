@@ -31,7 +31,8 @@ int8_t add_assign_env(t_lst *lst, t_core *shell)
 		}
 		tmp = lst;
 		lst = lst->next;
-		free(((t_db*)tmp->content)->key);
+		ft_strdel(&((t_db*)tmp->content)->key);
+		ft_strdel(&((t_db*)tmp->content)->value);
 		free(tmp);
 	}
 	return (TRUE);

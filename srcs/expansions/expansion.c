@@ -58,14 +58,16 @@ int expelliarmus(char *src, int index, char **dst, t_core *shell)
 	init_expansionat(&toto);
 	if (src[index] == '$' || src[index] == '~' || src[index] == '`')
 	{
+		printf("#%c#\n", src[index]);
 		state = find_expansion(&src[index]);
+		printf("%c\n", src[index]);
 		toto.erience = is_expansion(state);
 		if ((hetero = get_expansion(&src[index], state)))
 			if ((trans = toto.sionat[toto.erience](hetero, shell)))
 				*dst = ft_strjoinf(*dst, trans, 4);
-		index = ft_strlen(hetero) + index;
+		index += ft_strlen(hetero);
+		printf("%d\n", index);
 		ft_strdel(&hetero);
-		return (index);
 	}
 	return (index);
 }
@@ -102,23 +104,22 @@ char *exp_dbquote(char *data, t_core *shell)
 	char *res;
 	char *tmp;
 
-	index = 0;
+	index = -1;
 	flag[0] = 0;
 	flag[1] = 0;
 	tmp = NULL;
 	res = ft_strnew(0);
-	while (data[index])
+	while (data[++index])
 	{
 		get_quotes_flags(data[index], &flag[0], &flag[1]);
-		if (!flag[1])
+		if (!flag[1] && (index = expelliarmus(data, index, &res, shell)))
 		{
-			index = expelliarmus(data, index, &res, shell);
 			if ((size_t)index == ft_strlen(data))
 				break ;
 		}
 		tmp = ft_strsub(data, index, 1);
+		printf("%s\n", tmp);
 		res = ft_strjoinf(res, tmp, 4);
-		index++;
 	}
 	return (res);
 }

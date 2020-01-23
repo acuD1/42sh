@@ -12,6 +12,33 @@
 
 #include "sh42.h"
 
+static e_estate gla_quote(char *str, int *j, e_estate state)
+{
+	int i;
+
+	i = *j;
+	if (str[i] == '\"' && (state == E_DBQUOTE || state == NB_EXPANSION_STATE))
+	{
+		while (str[i] == '\"')
+			i++;
+		if (state == E_DBQUOTE)
+			state = NB_EXPANSION_STATE;
+		else if (state == NB_EXPANSION_STATE)
+			state = E_DBQUOTE;
+	}
+	else if (str[i] == '\'' && (state == E_QUOTE || state == NB_EXPANSION_STATE))
+	{
+		if (state == E_QUOTE)
+			state = NB_EXPANSION_STATE;
+		else if (state == NB_EXPANSION_STATE)
+			state = E_QUOTE;
+		while (str[i] == '\'')
+			i++;
+	}
+	*j = i;
+	return (state);
+}
+
 char *quote_mechanisms(char *str)
 {
 	char *new;
@@ -24,35 +51,20 @@ char *quote_mechanisms(char *str)
 	new = NULL;
 	if (!str)
 		return (NULL);
-	new = ft_strnew(ft_strlen(str) + 1);
+	new = ft_strnew(ft_strlen(str));
 	state = NB_EXPANSION_STATE;
 	i = 0;
 	while (str[j])
 	{
-		if (str[j] == '\"' && (state == E_DBQUOTE || state == NB_EXPANSION_STATE))
-		{
-			while (str[j] == '\"')
-				j++;
-			if (state == E_DBQUOTE)
-				state = NB_EXPANSION_STATE;
-			else if (state == NB_EXPANSION_STATE)
-				state = E_DBQUOTE;
-		}
-		else if (str[j] == '\'' && (state == E_QUOTE || state == NB_EXPANSION_STATE))
-		{
-			if (state == E_QUOTE)
-				state = NB_EXPANSION_STATE;
-			else if (state == NB_EXPANSION_STATE)
-				state = E_QUOTE;
-			while (str[j] == '\'')
-				j++;
-		}
+		state = gla_quote(str, &j, state);
+		if (!str[j])
+			break ;
 		new[i] = str[j];
 		i++;
 		j++;
 
 	}
-	return (ft_strdup(new));
+	return (new);
 }
 
 char *do_exp_et_quote(t_core *shell, char *data)
@@ -144,4 +156,5 @@ void		expansion_tok(t_core *shell, t_process *process)
 		}
 		lst = lst->next;
 	}
+	ft_freetokenlist(&process->tok_list);
 }
