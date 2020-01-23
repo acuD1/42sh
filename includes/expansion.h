@@ -48,7 +48,7 @@ char *exp_param(char *data, t_core *shell);
 char *exp_tilde(char *data, t_core *shell);
 
 void	expansion(t_core *shell, t_process *process);
-int		expelliarmus(char *src, int index, char **dst, t_core *shell);
+int		expelliarmus(char *src, int *index, char **dst, t_core *shell);
 
 char		*exp_get_tilde(char *string, int len);
 char		*exp_get_tildep(char *string, int len);

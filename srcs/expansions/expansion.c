@@ -45,34 +45,33 @@ char *no_exp(char *data, t_core *shell)
 	return (NULL);
 }
 
-int expelliarmus(char *src, int index, char **dst, t_core *shell)
+int expelliarmus(char *src, int *index, char **dst, t_core *shell)
 {
 	t_expansion toto;
 	e_estate state;
 	char *hetero;
 	char *trans;
+	int i;
 
 	hetero = NULL;
 	trans = NULL;
 	state = NB_EXPANSION_STATE;
 	init_expansionat(&toto);
-	if (src[index] == '$' || src[index] == '~' || src[index] == '`')
+	i = *index;
+	state = find_expansion(&src[i]);
+	toto.erience = is_expansion(state);
+	if ((hetero = get_expansion(&src[i], state)))
 	{
-		printf("#%c#\n", src[index]);
-		state = find_expansion(&src[index]);
-		printf("%c\n", src[index]);
-		toto.erience = is_expansion(state);
-		if ((hetero = get_expansion(&src[index], state)))
-			if ((trans = toto.sionat[toto.erience](hetero, shell)))
-				*dst = ft_strjoinf(*dst, trans, 4);
-		index += ft_strlen(hetero);
-		printf("%d\n", index);
+		if ((trans = toto.sionat[toto.erience](hetero, shell)))
+			*dst = ft_strjoinf(*dst, trans, 4);
+		*index += ft_strlen(hetero);
+		return (0);
 		ft_strdel(&hetero);
 	}
-	return (index);
+	return (1);
 }
 
-static void get_quotes_flags(char c, int *dbquote, int *quote)
+static int get_quotes_flags(char c, int *dbquote, int *quote)
 {
 	int guill;
 	int apost;
@@ -95,31 +94,38 @@ static void get_quotes_flags(char c, int *dbquote, int *quote)
 	}
 	*dbquote = guill;
 	*quote = apost;
+	return (1);
 }
 
 char *exp_dbquote(char *data, t_core *shell)
 {
-	int index;
-	int flag[2];
+	int flag[4];
 	char *res;
 	char *tmp;
 
-	index = -1;
 	flag[0] = 0;
 	flag[1] = 0;
+	flag[2] = 0;
+	flag[3] = 1;
 	tmp = NULL;
 	res = ft_strnew(0);
-	while (data[++index])
+	while (data[flag[2]])
 	{
-		get_quotes_flags(data[index], &flag[0], &flag[1]);
-		if (!flag[1] && (index = expelliarmus(data, index, &res, shell)))
+		flag[3] = get_quotes_flags(data[flag[2]], &flag[0], &flag[1]);
+		if (!flag[1] && (data[flag[2]] == '$' || data[flag[2]] == '~' || data[flag[2]] == '`'))
 		{
-			if ((size_t)index == ft_strlen(data))
-				break ;
+			flag[3] = expelliarmus(data, &flag[2], &res, shell);
+			if ((size_t)flag[2] == ft_strlen(data))
+					break ;
+			if (!flag[3])
+				flag[2]--;
 		}
-		tmp = ft_strsub(data, index, 1);
-		printf("%s\n", tmp);
-		res = ft_strjoinf(res, tmp, 4);
+		if (flag[3])
+		{
+			tmp = ft_strsub(data, flag[2], 1);
+			res = ft_strjoinf(res, tmp, 4);
+		}
+		flag[2]++;
 	}
 	return (res);
 }
