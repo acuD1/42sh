@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/07 17:36:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/23 12:53:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void		move_right(char *buff, t_read *term)
 
 void		move_left(char *buff, t_read *term)
 {
-	int	width;
+	int		width;
 
 	(void)buff;
 	if ((term->x > term->prompt_len && term->y == 0)

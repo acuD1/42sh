@@ -6,11 +6,21 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/22 16:06:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/23 12:43:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+int8_t 		dbug(const char *path, t_read *in)
+{
+    int 	fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (-1);
+    dprintf(fd,"tmp_buff=[%s]\n buffer[%s]\n",in->tmp_buff, in->buffer);
+    return (1);
+}
 
 void		display_subprompt(t_read *term, char *prompt)
 {

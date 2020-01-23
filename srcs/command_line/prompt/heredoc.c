@@ -6,24 +6,11 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/22 15:27:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/23 12:40:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-/* int8_t 		dbug(const char *path, t_read *in) */
-/* { */
-/*     int 	fd; */
-/* 	int		i = -1; */
-/*  */
-/*     if ((fd = open(path, O_WRONLY)) < 0) */
-/*         return (-1); */
-/*     dprintf(fd,"FLAG[%d] tab[%d]\n\n tmp_buff=[%s]\n buffer[%s]\n", in->found, ft_tablen(in->cmd), in->tmp_buff, in->buffer); */
-/* 	while (in->cmd[++i]) */
-/*     	dprintf(fd,"i=[%d] >> cmd=[%s]\n", i, in->cmd[i]); */
-/*     return (1); */
-/* } */
 
 uint8_t		heredoc_error(t_read *term, char *key)
 {
@@ -92,6 +79,5 @@ void		load_heredoc(t_read *term)
 	term->buffer = ft_strdup(term->tmp_buff);
 	ft_strdel(&term->tmp_buff);
 	term->status = CMD_DONE;
-	term->heredoc = ft_strsplit(term->buffer, "\n");
 	ft_tabfree(term->cmd);
 }

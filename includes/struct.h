@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 10:41:55 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/22 13:46:40 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/23 12:11:50 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ typedef struct			s_read
 	int					ws_li;
 	int					ac;
 
-	int					new_line;
 	int					flag;
 	int					sub_prompt;
 	int					status;
@@ -126,9 +125,9 @@ typedef struct			s_read
 	char				*buffer;
 	char				*tmp_buff;
 	char				**cmd;
-	char				**heredoc;
 
 	t_core				*shell;
+	t_lst				*heredoc;
 	t_lst				*history;
 	t_lst				*history_index;
 }						t_read;

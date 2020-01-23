@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/11 03:42:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/23 13:50:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ uint8_t		get_width_last_line(t_read *term)
 
 	width = 0;
 	x = term->x + 1;
-	buff_index = term->x_index - term->prompt_len - 1;
+	buff_index = term->x_index - term->prompt_len;
 	while (--buff_index)
 	{
 		if (term->buffer[buff_index] == '\n')
