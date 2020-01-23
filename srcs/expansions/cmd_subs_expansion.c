@@ -117,5 +117,5 @@ char *exp_cmd_subs(char *data, t_core *shell)
 	(void)shell;
 	printf("EXP_CMD_SUBS [%s]\n", data);
 	// data = cmd_substitution_expansion(data, shell);
-	return (data);
+	return (NULL);
 }

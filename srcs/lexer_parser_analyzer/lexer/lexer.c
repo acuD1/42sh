@@ -56,8 +56,6 @@ t_lst		*start_lexer(t_lexer *lx, t_lst *lexer_token)
 	}
 	else if (lx->buff[lx->buf_pos] == '\n')
 		lx->status = L_NEWLINE;
-	// else if (lx->buff[lx->buf_pos] == '\\')
-	// 	lx->status = L_ESCSEQ;
 	else if (ft_strchr(OPERATORS, lx->buff[lx->buf_pos]))
 		lx->status = L_OPERATOR;
 	else if (ft_isdigit(lx->buff[lx->buf_pos]))

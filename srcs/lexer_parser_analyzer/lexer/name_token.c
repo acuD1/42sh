@@ -19,7 +19,7 @@ int 	get_word_size_ntype(int i, char *str)
 	if (!str || !str[i])
 		return (0);
 	index = i;
-	while (str[index] && (!ft_strchr(CHAR_INTERRUPT, str[index])))// && !ft_strchr(EXPANSION, str[index])))
+	while (str[index] && (!ft_strchr(CHAR_INTERRUPT, str[index])))
 	{
 		if (str[index] == '\'')
 			while (str[index++] && str[index] != '\'');
@@ -56,7 +56,7 @@ t_lst		*name_lexer(t_lexer *lexer, t_lst *lexer_token)
 	char *str;
 
 	str = NULL;
-	if (lexer->buff == '\0')
+	if (!lexer->buff)
 	{
 		lexer->status = L_END;
 		return (lexer_token);

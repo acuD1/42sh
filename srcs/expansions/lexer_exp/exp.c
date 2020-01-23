@@ -62,12 +62,38 @@ char	*exp_get_hook(char *string, int len)
 	return (NULL);
 }
 
+char	*exp_get_bquote(char *string, int len)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	str = NULL;
+	if (!ft_strncmp(string, "`", len))
+	{
+		i++;
+		while (string[i])
+		{
+			if (string[i] == '`')
+			{
+				i++;
+				break ;
+			}
+			i++;
+		}
+		if (!(str = ft_strsub(string, 0, i)))
+			return (NULL);
+		return (str);
+	}
+	return (NULL);
+}
+
 char	*new_exp(char *string, e_estate id)
 {
 	int					i;
 	char 				*new;
 	static t_lex_exp	lex_pex[] = {
-		// {exp_get_bquote, E_BQUOTE ,1},
+		{exp_get_bquote, E_BQUOTE ,1},
 		{exp_get_tildep, E_TILDEP ,2},
 		{exp_get_tildem, E_TILDEM,2},
 		{exp_get_tilde, E_TILDE ,1},
@@ -93,7 +119,7 @@ char	*new_exp(char *string, e_estate id)
 e_estate find_expansion(char *str)
 {
 	const	t_exp_token	exp[] = 	{
-		{E_BQUOTE, "'", 1},
+		{E_BQUOTE, "`", 1},
 		{E_TILDEP, "~+", 2},
 		{E_TILDEM, "~-", 2},
 		{E_TILDE, "~", 1},

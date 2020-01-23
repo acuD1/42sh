@@ -71,7 +71,6 @@ typedef enum    pstate
     P_IONUMBER,
     P_ASSIGN,
     P_WORD,
-    // P_ESCSEQ,
     P_START,
     P_END,
     P_ERROR,
@@ -82,10 +81,8 @@ typedef enum    lstate {
     L_START,
     L_NAME,
     L_NEWLINE,
-    // L_ESCSEQ,
     L_IO_NUMBER,
     L_ASSIGNEMENT_WORD,
-    L_EXPANSION,
     L_OPERATOR,
     L_END,
 	NB_LEXER_STATE

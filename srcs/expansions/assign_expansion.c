@@ -41,16 +41,14 @@ void		expansion_assign(t_core *shell, t_process *process)
 {
 	t_lst *lst;
 	char *res;
-	e_estate id;
 
-	id = E_DBQUOTE;
 	if (!process->assign_list || !shell)
 		return ;
 	res = NULL;
 	lst = process->assign_list;
 	while (lst)
 	{
-		if ((res = do_exp_et_quote(shell, ((t_db*)lst->content)->value, id)))
+		if ((res = do_exp_et_quote(shell, ((t_db*)lst->content)->value)))
 		{
 			ft_strdel(&((t_db*)lst->content)->value);
 			((t_db*)lst->content)->value = ft_strdup(res);

@@ -142,8 +142,6 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)utils.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)xfunctions.c
 
 SRC		+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
-SRC		+=	$(S_PATH)lexer_parser_analyzer/quotes_mechanisms.c
-SRC		+=	$(S_PATH)lexer_parser_analyzer/quotes_systems.c
 SRC		+=	$(S_PATH)lexer_parser_analyzer/tmp_debug.c
 
 SRC		+=	$(S_PATH)$(LEXER)assign_token.c

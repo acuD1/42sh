@@ -30,7 +30,7 @@ char *point_de_cote(char *src, char quote);
 **  EXPANSION
 */
 
-char 	*do_expansion(t_core *shell, char *data, e_estate id);
+char 	*do_expansion(t_core *shell, char *data);
 void 	init_expansionat(t_expansion 	*exp);
 uint8_t is_expansion(e_estate id);
 
@@ -62,7 +62,7 @@ char		*new_exp(char *string, e_estate id);
 e_estate 	find_expansion(char *str);
 char		*get_expansion(char *string, e_estate state);
 
-char *do_exp_et_quote(t_core *shell, char *data, e_estate id);
+char *do_exp_et_quote(t_core *shell, char *data);
 
 
 int 	get_word_size_ntype(int i, char *str);
