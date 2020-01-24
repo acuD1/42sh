@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:28:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/15 22:28:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 
 void			init_termcaps(t_read *term);
 void			init_cmd_line(t_core *shell, t_read *term);
-u_int8_t		init_config(t_core *shell);
-u_int8_t		reset_config(t_core *shell);
+int8_t			init_config(t_core *shell);
+int8_t			reset_config(t_core *shell);
 int8_t			get_size(t_read *term);
 
 /*
@@ -37,9 +37,8 @@ int8_t			get_size(t_read *term);
 
 void			init_prompt(t_core *shell);
 void			display_prompt(t_read *term);
-void			goto_prompt(t_read *term);
 void			display_subprompt(t_read *term, char *prompt);
-void			goto_subprompt(t_read *term);
+void			goto_prompt(t_read *term);
 
 /*
 **		Check Caps and Interpret
@@ -75,37 +74,39 @@ void			clr_screen(t_read *term);
 */
 
 int8_t			init_history(t_read *term);
+int8_t			write_history(t_read *term);
 void			save_history(t_read *term);
 void			research_mode(t_read *term);
-int8_t			write_history(t_read *term);
 void			check_expansions(t_read *term);
-void			call_number(t_read *term, int i);
-void			callback_number(t_read *term, int i);
-void			call_word(t_read *term, int i);
-void			last_cmd_back(t_read *term, int i);
+void			insert_content(int j, int i, t_read *term, char *content);
+int64_t			call_number(t_read *term, int i);
+int64_t			callback_number(t_read *term, int i);
+int64_t			call_word(t_read *term, int i);
+int64_t			last_cmd_back(t_read *term, int i);
 
 /*
-**		Quotes and Subprompt/Multiline
+**		Subprompt/Multiline
 */
 
 uint8_t			check_subprompt(t_read *term);
+uint8_t			check_backslash(t_read *term, char *quote);
 uint8_t			charset_count(t_read *term, char charset, int i);
 uint8_t			quotes_is_matching(t_read *term, char *quote);
-uint8_t			check_backslash(t_read *term, char *quote);
+uint8_t			read_multiline(t_read *term, char sb);
 void			load_subprompt(char quote, t_read *term);
+void			load_heredoc(t_read *term);
 
 /*
 **		Auto completion
 */
 
-void			auto_complete_mode(char *buf, t_read *term);
-void			read_directories(char *buf, char *to_find, t_read *term);
-void			to_complete_bin(char *buf, char *to_find, t_read *term);
-void			to_complete_buffer(char *last_buf, char *to_find, t_read *term);
-void			display_current_directory(char *buf, t_read *term, char *dir);
+void			auto_complete_mode(t_read *term);
+void			read_directories(char *to_find, t_read *term);
+void			to_complete_bin(char *to_find, t_read *term);
+void			to_complete_buffer(char *to_find, t_read *term);
+void			display_current_directory(t_read *term, char *dir);
 void			delete_last_cmd(char *d_name, t_read *term);
-uint8_t			is_dir(char *dir);
-void			parse_env(char *prev_b, char *to_find, t_read *term);
+void			parse_env(char **prev_b, char *to_find, t_read *term);
 char			**split_path(t_core *shell, char *str);
 uint8_t			read_again(char **prev_b, char *path, char *name, t_read *term);
 
@@ -118,7 +119,9 @@ uint8_t			get_width_last_line(t_read *term);
 uint8_t			get_width_current_line(t_read *term);
 uint64_t		get_mask(char *buff);
 int				is_dot(char *d_name);
-uint8_t			is_tab(char *buff, char *d_name, t_read *term);
+uint8_t			is_tab(char *d_name, t_read *term);
+uint8_t			is_dir(char *dir);
+uint8_t			split_cmd(char **to_find, t_read *term);
 
 /*
 **		Functions safe
@@ -127,6 +130,5 @@ uint8_t			is_tab(char *buff, char *d_name, t_read *term);
 void			xtputs(char *str, int i, int (*f)(int));
 char			*xtgetstr(char *id, char **area);
 size_t			xread(int fd, char *buff, int size);
-uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *term);
 
 #endif

@@ -6,22 +6,32 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:29:16 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/13 12:19:52 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
+int8_t debugu(const char *path, int i, char c)
+{
+    int fd;
+
+    if ((fd = open(path, O_WRONLY)) < 0)
+        return (-1);
+    dprintf(fd,"i[%d] c{%c}\n", i,c);
+    return (1);
+}
+
 void		find_expansions(t_read *term, int *i)
 {
 	if (term->buffer[*i + 1] == '!')
-		last_cmd_back(term, *i);
+		*i = last_cmd_back(term, *i);
 	else if (ft_isdigit(term->buffer[*i + 1]))
-		call_number(term, *i);
+		*i = call_number(term, *i);
 	else if (ft_isalpha(term->buffer[*i + 1]))
-		call_word(term, *i);
+		*i = call_word(term, *i);
 	else if (term->buffer[*i + 1] == '-' && ft_isdigit(term->buffer[*i + 2]))
-		callback_number(term, *i);
+		*i = callback_number(term, *i);
 }
 
 void		check_expansions(t_read *term)

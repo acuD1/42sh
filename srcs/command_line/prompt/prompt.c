@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/23 12:12:23 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		display_prompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term->sub_prompt = 0;
-	term->new_line = 0;
+	term->flag = 0;
 	ft_printf("%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 }
@@ -78,10 +78,7 @@ void		init_prompt(t_core *shell)
 		}
 		shell->term.status = CMD_DONE;
 		if (check_subprompt(&shell->term) == FALSE)
-		{
-			// remove_newline(term);
-			// check_expansions(&shell->term);
-		}
+			check_expansions(&shell->term);
 //	}
 	reset_config(shell);
 }

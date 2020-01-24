@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:20:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/22 13:48:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			parse_env(char *prev_b, char *to_find, t_read *term)
+void			parse_env(char **prev_b, char *to_find, t_read *term)
 {
 	t_lst		*env;
 	t_lst		*head;
@@ -23,19 +23,19 @@ void			parse_env(char *prev_b, char *to_find, t_read *term)
 	head = env;
 	while (env)
 	{
-		if (isstart(((t_db *)(env->content))->key, to_find + 1))
+		if (isstart(((t_db *)(env->content))->key, to_find + 1)
+			|| !ft_strcmp(to_find, "$"))
 		{
 			tmp = ft_strjoin("$", ((t_db *)(env->content))->key);
-			if (read_again(&prev_b, NULL, tmp, term) == FALSE)
+			if (read_again(prev_b, NULL, tmp, term) == FALSE)
 				break ;
-			term->found = TRUE;
+			term->flag = TRUE;
+			ft_strdel(&tmp);
 		}
 		if (env->next)
 			env = env->next;
-		else if (term->found == TRUE)
+		else if (term->flag == TRUE)
 			env = head;
-		else
-			break ;
 	}
 	ft_strdel(&tmp);
 }
@@ -63,11 +63,12 @@ char			**split_path(t_core *shell, char *str)
 	return (array);
 }
 
-uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *term)
+uint8_t			split_cmd(char **to_find, t_read *term)
 {
 	int			i;
 
 	i = -1;
+	term->ac = 0;
 	while (ft_isblank(term->buffer[++i]))
 		continue ;
 	if (term->buffer[i] == '\0')
@@ -75,10 +76,9 @@ uint8_t			split_cmd(char **last_cmd, char **to_find, t_read *term)
 	if ((term->cmd = ft_strsplit(term->buffer, SPACE)) == NULL)
 		return (FALSE);
 	term->ac = ft_tablen(term->cmd);
-	*last_cmd = ft_strdup(term->cmd[ft_tablen(term->cmd) - 1]);
 	if (term->buffer[ft_strlen(term->buffer) - 1] == ' ')
 		term->ac += 1;
-	if ((*to_find = ft_strdup(*last_cmd)) == NULL)
+	if (!(*to_find = ft_strdup(term->cmd[ft_tablen(term->cmd) - 1])))
 		return (FALSE);
 	return (TRUE);
 }

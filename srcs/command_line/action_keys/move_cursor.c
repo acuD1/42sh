@@ -6,19 +6,19 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:20:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/23 12:53:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t debugs(const char *path, t_read *in)
+int8_t debugs(const char *path, t_read *in, t_lst *w)
 {
     int fd;
 
     if ((fd = open(path, O_WRONLY)) < 0)
         return (-1);
-    dprintf(fd,"y {%d}\n", in->y);
+    dprintf(fd,"y {%d} %s\n", in->y, w->content);
     return (1);
 }
 
@@ -53,6 +53,7 @@ void		move_key_down(t_read *term)
 		}
 		else
 		{
+			term->history_index = w;
 			check_tmp_buffer(term);
 			return ;
 		}
@@ -92,7 +93,6 @@ void		move_key_up(t_read *term)
 		term->buffer = ft_memalloc(BUFF_SIZE);
 		insert_str_in_buffer((char*)w->content, term);
 	}
-	//debugs("/dev/ttys002", term);
 }
 
 /*
@@ -130,7 +130,7 @@ void		move_right(char *buff, t_read *term)
 
 void		move_left(char *buff, t_read *term)
 {
-	int	width;
+	int		width;
 
 	(void)buff;
 	if ((term->x > term->prompt_len && term->y == 0)

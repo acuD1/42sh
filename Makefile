@@ -78,9 +78,10 @@ BUILTINS	=	builtins/
 BLT_FC		=	builtins/fc/
 REDIRS		=	redirections/
 COMMANDLINE	=	command_line/
-AC		=	command_line/auto_completion/
-AK		=	command_line/action_keys/
+AC			=	command_line/auto_completion/
+AK			=	command_line/action_keys/
 HISTORY		=	command_line/history/
+HST_EXP		=	command_line/history/expansions/
 PROMPT		=	command_line/prompt/
 EXEC		=	exec/
 LEXER		= 	lexer_parser_analyzer/lexer/
@@ -102,6 +103,7 @@ PATHS		+=	$(O_PATH)$(COMMANDLINE)
 PATHS		+=	$(O_PATH)$(AC)
 PATHS		+=	$(O_PATH)$(AK)
 PATHS		+=	$(O_PATH)$(HISTORY)
+PATHS		+=	$(O_PATH)$(HST_EXP)
 PATHS		+=	$(O_PATH)$(CORE)
 PATHS		+=	$(O_PATH)$(DB)
 PATHS		+=	$(O_PATH)$(EXEC)
@@ -121,6 +123,7 @@ SRC		+=	$(S_PATH)$(PROMPT)prompt.c
 SRC		+=	$(S_PATH)$(PROMPT)check_subprompt.c
 SRC		+=	$(S_PATH)$(PROMPT)check_backslash.c
 SRC		+=	$(S_PATH)$(PROMPT)sub_prompt.c
+SRC		+=	$(S_PATH)$(PROMPT)heredoc.c
 
 SRC		+=	$(S_PATH)$(LEXER_EXP)exp.c
 SRC		+=	$(S_PATH)$(LEXER_EXP)exp_bis.c
@@ -167,11 +170,12 @@ SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
 SRC		+=	$(S_PATH)$(ANALYZER)token_to_tab.c
 
 
-SRC		+=	$(S_PATH)dev.c
+SRC			+=	$(S_PATH)dev.c
 SRC			+=	$(S_PATH)$(HISTORY)save_history.c
 SRC			+=	$(S_PATH)$(HISTORY)search_in_history.c
-SRC			+=	$(S_PATH)$(HISTORY)history_expansions.c
-SRC			+=	$(S_PATH)$(HISTORY)check_hst_expansions.c
+SRC			+=	$(S_PATH)$(HST_EXP)history_expansions.c
+SRC			+=	$(S_PATH)$(HST_EXP)check_hst_expansions.c
+SRC			+=	$(S_PATH)$(HST_EXP)replace_buffer.c
 
 SRC			+=	$(S_PATH)$(AK)check_caps.c
 SRC			+=	$(S_PATH)$(AK)del_keys.c
@@ -269,8 +273,7 @@ HDR			+=	shared_libft.h
 
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
 
-# Comment -no-pie flag if an error occured
-LIB = $(L_PATH)$(LNAME) -ltermcap #-no-pie
+LIB = $(L_PATH)$(LNAME) -ltermcap
 vpath %.h $(H_PATH)
 
 # Variables

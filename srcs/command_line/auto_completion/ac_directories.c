@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:27:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:26:59 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/22 13:48:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ uint8_t			is_exe(char *dir)
 		return (FALSE);
 }
 
-uint8_t			ac_dir(t_read *term, char *buf, char *dir, char *to_find)
+uint8_t			ac_dir(t_read *term, char *dir, char *to_find)
 {
 	char		*tmp;
 
@@ -35,7 +35,7 @@ uint8_t			ac_dir(t_read *term, char *buf, char *dir, char *to_find)
 		if (is_dir(tmp))
 			ft_strcat(dir, "/");
 		insert_str_in_buffer(dir, term);
-		term->found = TRUE;
+		term->flag = TRUE;
 		ft_strdel(&tmp);
 	}
 	else
@@ -43,31 +43,33 @@ uint8_t			ac_dir(t_read *term, char *buf, char *dir, char *to_find)
 		ft_strdel(&tmp);
 		return (SUCCESS);
 	}
-	if (is_tab(buf, dir, term) == TRUE)
+	if (is_tab(dir, term) == TRUE)
 		return (SUCCESS);
 	else
 		return (FAILURE);
 }
 
-void			read_directories(char *buf, char *to_find, t_read *term)
+void			read_directories(char *to_find, t_read *term)
 {
 	struct dirent	*data;
 	DIR				*dir;
 
+	dir = NULL;
 	if (is_dir(to_find) && (dir = opendir(to_find)))
 	{
 		while ((data = readdir(dir)) != NULL)
 		{
-			if (ac_dir(term, buf, data->d_name, to_find) == SUCCESS)
+			if (ac_dir(term, data->d_name, to_find) == SUCCESS)
 				continue ;
 			else
 			{
-				closedir(dir);
-				return ;
+				term->flag = FALSE;
+				break ;
 			}
 		}
 	}
 	else
-		return ;
-	term->found == TRUE ? read_directories(buf, to_find, term) : 0;
+		term->flag = FALSE;
+	closedir(dir);
+	term->flag == TRUE ? read_directories(to_find, term) : 0;
 }

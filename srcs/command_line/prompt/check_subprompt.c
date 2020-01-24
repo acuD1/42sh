@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:28:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/24 12:12:23 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,49 @@ uint8_t		quotes_is_matching(t_read *term, char *quote)
 	return (TRUE);
 }
 
+int8_t		is_heredoc(t_read *term)
+{
+	int		i;
+	int		j;
+	char *key;
+
+	i = -1;
+	j = 0;
+	key = NULL;
+	term->sub_prompt = TRUE;
+	while (term->buffer[++i])
+	{
+		if ((!ft_strncmp(&term->buffer[i], "<<", 2))
+				&& !ft_strchr(term->buffer, '\n'))
+		{
+			i += 2;
+			while (ft_isblank(term->buffer[i]))
+					i++;
+			j = get_word_size_ntype(i, term->buffer);
+			key = ft_strsub(term->buffer, i, j - i);
+			term->cmd = ft_add_arg_cmd_process(term->cmd, key);
+			//ft_printf("LA KEY {%s}\n", key);
+			ft_strdel(&key);
+			term->sub_prompt = FALSE;
+		}
+		// if (term->buffer[i] == '<' && term->buffer[i + 1] == '<')
+		// {
+		// 	if (term->buffer[i + 2] && term->buffer[i + 2] != '<'
+		// 		&& !ft_strchr(term->buffer, '\n'))
+		// 	{
+		// 		term->cmd = ft_strsplit(term->buffer, CHAR_INTERRUPT);				
+		// 	}
+			// else
+				// return (FALSE);
+		// }
+	}
+	if (!term->sub_prompt)
+			return (TRUE);
+	else
+		term->sub_prompt = FALSE;
+	return (FALSE);
+}
+
 uint8_t		check_subprompt(t_read *term)
 {
 	int		i;
@@ -58,13 +101,18 @@ uint8_t		check_subprompt(t_read *term)
 	quote = '\0';
 	if (quotes_is_matching(term, &quote) == TRUE)
 	{
+		if (is_heredoc(term) == TRUE)
+		{
+			load_heredoc(term);
+			return (TRUE);
+		}
 		if (check_backslash(term, &quote) == FALSE)
 			return (FALSE);
 	}
 	if (quote != '\0')
 	{
+		term->sub_prompt = TRUE;
 		load_subprompt(quote, term);
-		save_history(term);
 		return (TRUE);
 	}
 	return (FALSE);
