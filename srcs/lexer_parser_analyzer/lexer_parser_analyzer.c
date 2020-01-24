@@ -104,7 +104,7 @@ void lexer_parser_analyzer(t_core *shell)
 	if (parser(lxr_tok) == TRUE)
 	{
 		analyzer(shell, lxr_tok);
-		ft_printjoblst(shell->job_list);
+		// ft_printjoblst(shell->job_list);
 	}
 	ft_freetokenlist(&lxr_tok);
 }

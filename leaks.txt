@@ -1,0 +1,48 @@
+Invalid read of size 1
+==28171==    at 0x100011D88: ft_strlen (in ./42sh)
+==28171==    by 0x100011B14: ft_strdup (in ./42sh)
+==28171==    by 0x10000AC80: fetch_db (fetch_db.c:26)
+==28171==    by 0x10000B310: get_or_create_db (db_tools.c:50)
+==28171==    by 0x10000B52C: edit_var (db_tools.c:114)
+==28171==    by 0x1000020B0: add_assign_env (assign_expansion.c:27)
+==28171==    by 0x100001FE7: expansion (expansion.c:141)
+==28171==    by 0x10000E54E: exec_process (exec_process.c:29)
+==28171==    by 0x10000E6D3: dispatcher (dispatcher.c:64)
+==28171==    by 0x10000E422: task_master (task_master.c:22)
+==28171==    by 0x1000106EC: load_prompt (load_prompt.c:36)
+==28171==    by 0x100010627: main (42sh.c:81)
+
+
+
+
+Invalid read of size 8
+==28171==    at 0x1000108CB: free_env (free_handler.c:21)
+==28171==    by 0x10000DF08: quit_shell (quit_shell.c:21)
+==28171==    by 0x10000E31B: sig_handler (init_signals.c:33)
+==28171==    by 0x258057245: ???
+==28171==    by 0x100007FFF: end_of_file (check_caps.c:60)
+==28171==    by 0x100008220: check_caps (check_caps.c:117)
+==28171==    by 0x1000009F3: init_prompt (prompt.c:74)
+==28171==    by 0x1000106DA: load_prompt (load_prompt.c:34)
+==28171==    by 0x100010627: main (42sh.c:81)
+==28171==  Address 0x101078d40 is 0 bytes inside a block of size 32 free'
+
+
+
+
+
+
+
+Invalid read of size 8
+==28171==    at 0x100011AE0: ft_strdel (in ./42sh)
+==28171==    by 0x1000108D5: free_env (free_handler.c:21)
+==28171==    by 0x10000DF08: quit_shell (quit_shell.c:21)
+==28171==    by 0x10000E31B: sig_handler (init_signals.c:33)
+==28171==    by 0x258057245: ???
+==28171==    by 0x100007FFF: end_of_file (check_caps.c:60)
+==28171==    by 0x100008220: check_caps (check_caps.c:117)
+==28171==    by 0x1000009F3: init_prompt (prompt.c:74)
+==28171==    by 0x1000106DA: load_prompt (load_prompt.c:34)
+==28171==    by 0x100010627: main (42sh.c:81)
+==28171==  Address 0x101078da0 is 0 bytes inside a block of size 24 free'd
+==28171==    at 0x100104EAD: free (in /Users/guvillat/.brew/Cellar/valgr

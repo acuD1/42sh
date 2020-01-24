@@ -95,7 +95,7 @@ t_lst		*lexer(char *line)
 	while (lexer.status != L_END)
 		lexer_token = lexer.lex[lexer.status](&lexer, *head);
 	lexer_token = *head;
-	ft_printtoklist(lexer_token);
+	// ft_printtoklist(lexer_token);
 	lexer_token = *head;
 	init_lexer(NULL, &lexer);
 	return (*head);
