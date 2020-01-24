@@ -47,6 +47,7 @@ void		display_prompt(t_read *term)
 	term->width = term->x;
 	term->sub_prompt = 0;
 	term->flag = 0;
+	term->cmd = NULL;
 	ft_printf("%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 }
