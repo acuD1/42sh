@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/22 14:46:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/24 12:00:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@
 
 # define NB_OF_OPE 14
 # define NB_OF_EXP 9
-# define CHAR_INTERRUPT 			" \t<>$~|;&\n"
+# define CHAR_INTERRUPT 			" \t<>|;&\n"
 # define OPERATORS 					"&|;><-"
 # define EXPANSION 					"$~"
 # define REDIR                      P_GREAT, P_LESS

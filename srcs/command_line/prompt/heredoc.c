@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/23 12:40:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/24 11:51:14 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void		load_heredoc(t_read *term)
 	term->buffer = ft_strjoinf(term->buffer, "\n", 1);
 	term->tmp_buff = ft_strdup(term->buffer);
 	term->status = CMD_SUBPROMPT;
+	ft_printtab(term->cmd);
 	while (TRUE)
 	{
 		ft_strdel(&term->buffer);
