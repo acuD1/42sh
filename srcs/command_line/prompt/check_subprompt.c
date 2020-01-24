@@ -101,11 +101,11 @@ uint8_t		check_subprompt(t_read *term)
 	quote = '\0';
 	if (quotes_is_matching(term, &quote) == TRUE)
 	{
-		if (is_heredoc(term) == TRUE)
-		{
-			load_heredoc(term);
-			return (TRUE);
-		}
+		// if (is_heredoc(term) == TRUE)
+		// {
+		// 	load_heredoc(term);
+		// 	return (TRUE);
+		// }
 		if (check_backslash(term, &quote) == FALSE)
 			return (FALSE);
 	}

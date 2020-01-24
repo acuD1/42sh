@@ -59,6 +59,7 @@ t_analyzer	*redirect_analyze(t_analyzer *analyzer, t_core *shell)
 {
 	analyzer->job.command = fill_cmd_job(analyzer->lexer, analyzer->job.command);
 	analyzer->redir.type = ((t_token*)analyzer->lexer->content)->id;
+	
 	analyzer->state = A_REDIRECT;
 	(void)shell;
 	return (analyzer);
