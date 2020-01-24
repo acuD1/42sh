@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/15 22:28:53 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/24 17:46:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ uint8_t			charset_count(t_read *term, char charset, int i);
 uint8_t			quotes_is_matching(t_read *term, char *quote);
 uint8_t			read_multiline(t_read *term, char sb);
 void			load_subprompt(char quote, t_read *term);
-void			load_heredoc(t_read *term);
+char			*load_heredoc(t_core *shell, char *key);
 
 /*
 **		Auto completion

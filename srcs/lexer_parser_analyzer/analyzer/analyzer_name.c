@@ -6,7 +6,7 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:54:18 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 13:54:19 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/01/24 18:26:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,17 @@ t_analyzer *heredoc_analyzer(t_analyzer *anal, t_core *shell)
 	key = NULL;
 	value = NULL;
 	key = ft_strdup(((t_token*)anal->lexer->content)->data);
-	// value = load_heredoc(shell->term, key);
-	ft_printf("key {%s}\n", key);
-	(void)shell;
+	if (!shell->term.history_index)
+		value = load_heredoc(shell, key);
+	//ft_printf("key {%s} value [%s]\n", key, value);
+	ft_strdel(&value);
+	ft_strdel(&key);
 	anal->state = A_WORD;
 	return (anal = redir_analyze(anal, shell));
 }
 
 t_analyzer	*process_word_analyze(t_analyzer *anal)
-{	
+{
 	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
 	anal->process.command = fill_cmd_job(anal->lexer, anal->process.command);
 	ft_lstappend(&anal->process.tok_list, ft_lstnew(fetch_token(&anal->tok,
