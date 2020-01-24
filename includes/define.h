@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/24 12:00:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/24 19:21:21 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@
 # define QUOTE					'\''
 # define DQUOTE					'\"'
 # define BQUOTE					'`'
-# define NEW_LINE				'\n'
+# define NEW_LINE				"\n"
 # define SPACE					" "
 # define BACKSLASH				'\\'
 # define BRACKET_OPEN			'('

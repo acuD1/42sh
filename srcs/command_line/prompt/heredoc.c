@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/24 18:40:30 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/24 19:24:46 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ uint8_t		heredoc_error(char *key)
 {
 	ft_dprintf(STDERR_FILENO,
 		"42sh: warning: here-document delimited by eof (wanted `%s')\n", key);
-	return (FALSE);
+	return (TRUE);
 }
 
-int8_t		check_hc_reader(t_core *shell, char *key)
+int8_t		check_key(t_core *shell, char *key)
 {
 	if (read_multiline(&shell->term, FALSE) == FALSE)
 	{
@@ -29,15 +29,15 @@ int8_t		check_hc_reader(t_core *shell, char *key)
 		{
 			shell->term.buffer = ft_strjoinf(shell->term.tmp_buff,
 														shell->term.buffer, 2);
-			shell->term.buffer = ft_strjoinf(shell->term.buffer, "\n", 1);
+			shell->term.buffer = ft_strjoinf(shell->term.buffer, NEW_LINE, 1);
 			ft_strdel(&shell->term.tmp_buff);
 			shell->term.tmp_buff = ft_strdup(shell->term.buffer);
-			return (TRUE);
+			return (FALSE);
 		}
 		else
-			return (FALSE);
+			return (TRUE);
 	}
-	return (TRUE);
+	return (FALSE);
 }
 
 char		*stock_value(t_core *shell, int i)
@@ -66,7 +66,7 @@ char		*load_heredoc(t_core *shell, char *key)
 	value = NULL;
 	i = ft_strlen(shell->term.buffer) + 1;
 	init_config(shell);
-	shell->term.buffer = ft_strjoinf(shell->term.buffer, "\n", 1);
+	shell->term.buffer = ft_strjoinf(shell->term.buffer, NEW_LINE, 1);
 	shell->term.tmp_buff = ft_strdup(shell->term.buffer);
 	shell->term.status = CMD_SUBPROMPT;
 	while (TRUE)
@@ -74,7 +74,7 @@ char		*load_heredoc(t_core *shell, char *key)
 		ft_strdel(&shell->term.buffer);
 		shell->term.buffer = ft_memalloc(BUFF_SIZE);
 		display_subprompt(&shell->term, PS2);
-		if (check_hc_reader(shell, key) == TRUE)
+		if (check_key(shell, key) == FALSE)
 			continue ;
 		else
 			break ;

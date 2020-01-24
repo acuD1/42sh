@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/23 13:50:41 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/24 19:22:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ uint8_t		get_width_current_line(t_read *term)
 	buff_index = term->x_index - term->prompt_len;
 	while (term->buffer[buff_index])
 	{
-		if (term->buffer[buff_index] == NEW_LINE || x == term->ws_col - 1)
+		if (term->buffer[buff_index] == NEW_LINE[0] || x == term->ws_col - 1)
 			break ;
 		width++;
 		x++;

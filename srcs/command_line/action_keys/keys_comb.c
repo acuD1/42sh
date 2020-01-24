@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/24 19:23:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void			move_col_down(t_read *term)
 
 	nb_ofline = 0;
 	width = get_width_current_line(term) - term->x;
-	if ((nb_ofline = charset_count(term, NEW_LINE, 0)) == 0)
+	if ((nb_ofline = charset_count(term, NEW_LINE[0], 0)) == 0)
 		nb_ofline = term->width / term->ws_col;
 	if (term->y < nb_ofline)
 	{

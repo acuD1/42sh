@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/23 12:53:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/24 19:23:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ void		move_right(char *buff, t_read *term)
 		term->x_index++;
 		term->x++;
 	}
-	else if (term->x >= term->ws_col - 1 || *buff == NEW_LINE
-			|| term->buffer[buff_index] == NEW_LINE)
+	else if (term->x >= term->ws_col - 1 || *buff == NEW_LINE[0]
+			|| term->buffer[buff_index] == NEW_LINE[0])
 	{
 		xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
 		xtputs(term->tcaps[KEY_DOWN], 1, my_outc);
