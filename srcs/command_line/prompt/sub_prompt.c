@@ -68,8 +68,7 @@ uint8_t		read_multiline(t_read *term, char sb)
 
 uint8_t		check_multi_subprompt(t_read *term, char *sb)
 {
-	if (*sb != BACKSLASH)
-		term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
+	term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
 	if (quotes_is_matching(term, sb) == FALSE)
 	{
 		term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);
@@ -107,4 +106,4 @@ void		load_subprompt(char sb, t_read *term)
 	}
 	ft_strdel(&term->tmp_buff);
 	term->status = CMD_DONE;
-}
+	}

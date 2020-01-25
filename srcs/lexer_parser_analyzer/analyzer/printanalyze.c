@@ -43,6 +43,9 @@ void			ft_printredir(t_redir *redir)
 		dprintf(nono("/dev/ttys002"), "redir op[0] %s\n", tmp->op[0]);
 	if (tmp->op[1])
 		dprintf(nono("/dev/ttys002"), "redir op[1] %s\n", tmp->op[1]);
+	if (tmp->type == P_DLESS)
+		if (tmp->heredoc[0])
+			dprintf(nono("/dev/ttys002"), "redir heredoc %s\n", tmp->heredoc);
 }
 
 void			ft_printprocess(t_process *process)

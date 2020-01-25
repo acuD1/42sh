@@ -39,7 +39,7 @@ uint8_t		quotes_is_matching(t_read *term, char *quote)
 	while (term->buffer[++i])
 	{
 		if (term->buffer[i] == BACKSLASH)
-			i += 2;
+		 	i += 2;
 		if ((*quote = set_quote_type(term->buffer[i])) != '\0')
 		{
 			if (goto_next_quote(term->buffer, *quote, &i) == TRUE)

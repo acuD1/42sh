@@ -14,9 +14,11 @@
 
 void		init_redir(t_redir *new)
 {
+	ft_bzero(new, sizeof(t_redir));
 	new->op[0] = NULL;
 	new->op[1] = NULL;
 	new->type = P_START;
+	new->heredoc = NULL;
 }
 
 // t_redir		*fetch_redir(t_redir *redir)
@@ -38,10 +40,22 @@ void		init_redir(t_redir *new)
 // 	return (new);
 // }
 
+t_analyzer *heredoc_analyzer(t_analyzer *anal, t_core *shell)
+{
+	anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
+	if (!shell->term.history_index)
+		anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
+	anal->state = A_WORD;
+	return (anal = redir_analyze(anal, shell));
+}
+
 t_analyzer	*redir_wanalyze(t_analyzer *anal, t_core *shell)
 {
 	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
-	anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
+	if (anal->redir.type == P_DLESS)
+		return (heredoc_analyzer(anal, shell));
+	else
+		anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
 	anal->state = A_WORD;
 	return (anal = redir_analyze(anal, shell));
 }
