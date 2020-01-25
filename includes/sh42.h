@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/26 10:18:31 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 18:39:43 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int8_t		update_last_arg(t_core *shell, char **argv);
 int8_t		builtin_set(t_core *shell, t_process *process);
 int8_t		builtin_unset(t_core *shell, t_process *process);
 int8_t		builtin_export(t_core *shell, t_process *process);
-//int8_t		builtin_fc(t_core *shell, t_process *process);
+int8_t		builtin_fc(t_core *shell, t_process *process);
 int8_t		builtin_exit(t_core *shell, t_process *process);
 int8_t		builtin_hash(t_core *shell, t_process *process);
 int8_t		builtin_cd(t_core *shell, t_process *process);

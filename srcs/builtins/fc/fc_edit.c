@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:18:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 18:42:46 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 void		launch_editor(t_core *shell, char *ed, char *cmd)
 {
 	ft_printf("%d\n", ft_strlen(cmd) + 1);
-	ft_strcpy(shell->term->buffer, ed);
-	lexer_parser_analyzer(shell, ed);
+	ft_strdel(&shell->term.buffer);
+	shell->term.buffer = ft_strdup(ed);
+	lexer_parser_analyzer(shell);
 	if (task_master(shell) != SUCCESS)
 		exit(1);
 
 
 	ft_printf("%s\n", cmd);
-	lexer_parser_analyzer(shell, cmd);
+	ft_strdel(&shell->term.buffer);
+	shell->term.buffer = ft_strdup(cmd);
+	lexer_parser_analyzer(shell);
 	if (task_master(shell) != SUCCESS)
 		exit(1);
 }

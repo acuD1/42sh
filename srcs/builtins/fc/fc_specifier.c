@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:18:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 18:43:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,9 @@ u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd)
 	}
 	if (cmd[0] && !ft_isdigit(*cmd[0]) && !(w->next))
 		return (FAILURE);
-	ft_strdel(&shell->term->buffer);
-	shell->term->buffer = ft_strdup(w->content);
-	get_tokens(shell, shell->term->buffer);
-	ft_printf("%s\n", shell->term->buffer);
+	ft_strdel(&shell->term.buffer);
+	shell->term.buffer = ft_strdup(w->content);
+	ft_printf("%s\n", shell->term.buffer);
 	exec_process(shell, shell->env);
 	return (SUCCESS);
 }

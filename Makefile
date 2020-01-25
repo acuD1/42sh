@@ -211,11 +211,11 @@ SRC			+=	$(S_PATH)$(BUILTINS)cd.c
 SRC			+=	$(S_PATH)$(BUILTINS)echo.c
 SRC			+=	$(S_PATH)$(BUILTINS)pwd.c
 
-#SRC			+=	$(S_PATH)$(BLT_FC)fc.c
-#SRC			+=	$(S_PATH)$(BLT_FC)fc_edit.c
-#SRC			+=	$(S_PATH)$(BLT_FC)fc_reverse.c
-#SRC			+=	$(S_PATH)$(BLT_FC)fc_specifier.c
-#SRC			+=	$(S_PATH)$(BLT_FC)fc_listing.c
+SRC			+=	$(S_PATH)$(BLT_FC)fc.c
+SRC			+=	$(S_PATH)$(BLT_FC)fc_edit.c
+SRC			+=	$(S_PATH)$(BLT_FC)fc_reverse.c
+SRC			+=	$(S_PATH)$(BLT_FC)fc_specifier.c
+SRC			+=	$(S_PATH)$(BLT_FC)fc_listing.c
 
 SRC			+=	$(S_PATH)$(MISC)errors.c
 SRC			+=	$(S_PATH)$(MISC)abs_path.c

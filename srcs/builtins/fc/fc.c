@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:18:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 18:41:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ int8_t			builtin_fc(t_core *shell, t_process *process)
 	u_int64_t	opt;
 
 	(void)process;
-	if ((saved = shell->history) == NULL)
+	if ((saved = shell->term.history) == NULL)
 	{
 		ft_dprintf(2, "42sh: fc: history specification out of range\n");
 		return (FAILURE);
 	}
-	cmd = ft_strsplit(shell->term->buffer, SPACE);
+	cmd = ft_strsplit(shell->term.buffer, SPACE);
 	opt = get_options(ft_tablen(cmd), cmd, "elnrs0123456789");
 	get_range(cmd, range);
 	if (opt & (1ULL << 63))
