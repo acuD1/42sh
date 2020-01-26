@@ -6,14 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/26 10:19:22 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:50:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <signal.h>
-
-/* Peut etre un truc tricky a gerer (wait apres chaque kill ?) */
 
 void			kill_processes(int signum, t_core *shell)
 {

@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   background.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/01 03:57:59 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 20:31:39 by mpivet-p         ###   ########.fr       */
+/*   Created: 2019/12/21 18:45:14 by mpivet-p          #+#    #+#             */
+/*   Updated: 2020/01/17 00:09:08 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
 #include "sh42.h"
 
-int		check_invalid_identifiers(char *arg, char *exceptions)
+void	put_job_in_background(t_core *shell, t_job *job, int cont)
 {
-	int	i;
-
-	i = 0;
-	if (!(arg[0]))
-		return (FAILURE);
-	while (arg[i])
-	{
-		if (ft_isalnum(arg[i]) != SUCCESS
-			&& ft_strchr(exceptions, arg[i]) == NULL)
-			return (FAILURE);
-		i++;
-	}
-	return (SUCCESS);
+	if (cont && kill(-job->pgid, SIGCONT) < 0)
+		print_and_quit(shell, "42sh: kill (SIGCONT) failed\n");
 }

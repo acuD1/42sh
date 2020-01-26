@@ -6,55 +6,59 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 12:02:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/26 15:23:21 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
- **	exec_process takes for parameter t_lst *env for now because we can set
- **	a temporary environnement if we use the env builtin.
- */
+**	exec_process takes for parameter t_lst *env for now because we can set
+**	a temporary environnement if we use the env builtin.
+*/
 
-int8_t	exec_process(t_core *shell, t_lst *process)
+static int8_t	job_part_completed(t_job *job, t_process *process)
 {
-	t_process	*ptr;
-	pid_t		pid;
-	int			status;
-	int			blt;
+	t_lst	*ptr;
 
-	status = 0;
-	ptr = ((t_process*)process->content);
-	if (is_expansion(ptr->type))
-		expansion(shell, ptr);
-	if (ptr->assign_list)
-		add_assign_env(ptr->assign_list, shell); // Check fonction ?
-	if (ptr->av)
+	ptr = job->process_list;
+	while (ptr != NULL && ptr->content != process)
 	{
-		if ((blt = is_a_blt(ptr->av[0])) != FALSE)
+		if (((t_process*)ptr->content)->completed != TRUE)
+			return (FALSE);
+		ptr = ptr->next;
+	}
+	return (TRUE);
+}
+
+void			exec_process(t_core *shell, t_job *job, t_process *process
+		, int *fds)
+{
+	if (job_part_completed(job, process))
+		job->pgid = -1;
+	process->pgid = job->pgid;
+	if (process->av)
+		get_bin(shell, process);
+	if ((process->pid = fork()) == 0)
+		launch_process(shell, process, fds[0], fds[1]);
+	else if (process->pid < 0)
+		print_and_quit(shell, "42sh: fork failure\n");
+	if (shell->is_interactive)
+	{
+		if (process->pgid == -1)
+			job->pgid = process->pid;
+		process->pgid = job->pgid;
+		if (setpgid(process->pid, process->pgid) != SUCCESS)
+			print_and_quit(shell, "42sh: setpgid error\n");
+		if (process->stopped != TRUE && fds[1] == STDOUT_FILENO)
 		{
-			shell->status = call_builtin(shell, process, blt);
-			return (SUCCESS);
+			if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
+				print_and_quit(shell, "42sh: tcsetpgrp error (1)\n");
+			wait_for_process(shell, shell->job_list, process);
+			if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
+				print_and_quit(shell, "42sh: tcsetpgrp error (2)\n");
 		}
-		get_bin(shell, ptr);
+		else
+			process->stopped = FALSE;
 	}
-	if ((pid = fork()) < 0)
-	{
-		dprintf(STDERR_FILENO, "42sh: fork error\n");
-		return (FAILURE);
-	}
-	else if (pid == 0)
-		call_bin(shell, process);
-	ptr->pid = pid;
-	ft_strdel(&(ptr->bin));
-	shell->running_process = process;
-	if (waitpid(pid, &shell->status, WUNTRACED | WCONTINUED) != pid)
-	{
-		dprintf(STDERR_FILENO, "42sh: waitpid error\n");
-		return (FAILURE);
-	}
-	shell->running_process = NULL;
-	status_handler(shell, shell->status);
-	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 01:59:58 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/04 08:28:01 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:43:18 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int8_t	update_version(t_core *shell)
 	ft_strcat(version, ".");
 	ft_itoabuf(shell->build.patch, version);
 	ft_strcat(version, "-dev'");
-	if (shell && (db = get_or_create_db(shell, "PISTASH_VERSION", INTERNAL_VAR)) != NULL)
+	if (shell != NULL
+		&& (db = get_or_create_db(shell, "SH_VERSION", INTERNAL_VAR)) != NULL)
 	{
 		value = ft_strdup(version);
 		if (value && modify_db(db, value, 0) != NULL)

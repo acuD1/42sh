@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 11:10:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 12:58:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,11 @@ int8_t		edit_var(t_core *shell, char *name, char *value, u_int8_t var_type);
 **	===========================================================================
 */
 
-int32_t		exec_piped_process(t_core *shell, t_lst *process);
-int8_t		call_builtin(t_core *shell, t_lst *process, int blt);
-int8_t		exec_pipeline(t_core *shell, t_lst **process);
+int8_t		call_builtin(t_core *shell, t_process *process, int blt);
 int8_t		exec_handler(t_core *shell, u_int8_t handler);
-int8_t		exec_process(t_core *shell, t_lst *env);
-int8_t		call_bin(t_core *shell, t_lst *process);
 int8_t		get_bin_path(t_core *shell, t_process *process);
+void		exec_process(t_core *shell, t_job *job, t_process *process, int *fds);
+int8_t		call_bin(t_core *shell, t_process *process);
 int8_t		task_master(t_core *shell);
 int8_t		is_a_blt(char *cmd);
 int8_t		get_bin(t_core *shell, t_process *process);
@@ -136,7 +134,10 @@ int8_t		ft_access(char *path, int mode);
 int8_t		is_a_dir(char *path);
 void		print_usage(char *name, int c, char *usage);
 void		quit_shell(t_core *shell, int exit_value, int8_t v, u_int8_t mode);
+void		print_and_quit(t_core *shell, char *message);
 int			check_invalid_identifiers(char *arg, char *exceptions);
+char		*signal_msg(int sig);
+void		debug_job(t_job *job);
 
 /*
 **	===========================================================================
@@ -161,6 +162,7 @@ int8_t		update_shell_flags(t_core *shell);
 int8_t		update_exit_status(t_core *shell);
 int8_t		update_backgroud_pid(t_core *shell);
 int8_t		update_last_arg(t_core *shell, char **argv);
+int8_t		update_oldpwd(t_core *shell, char *oldpwd);
 
 /*
 **	===========================================================================
@@ -171,12 +173,15 @@ int8_t		update_last_arg(t_core *shell, char **argv);
 int8_t		builtin_set(t_core *shell, t_process *process);
 int8_t		builtin_unset(t_core *shell, t_process *process);
 int8_t		builtin_export(t_core *shell, t_process *process);
-//int8_t		builtin_fc(t_core *shell, t_process *process);
 int8_t		builtin_exit(t_core *shell, t_process *process);
 int8_t		builtin_hash(t_core *shell, t_process *process);
 int8_t		builtin_cd(t_core *shell, t_process *process);
 int8_t		builtin_echo(t_core *shell, t_process *process);
 int8_t		builtin_pwd(t_core *shell, t_process *process);
+int8_t		builtin_type(t_core *shell, t_process *process);
+int8_t		builtin_fg(t_core *shell, t_process *process);
+int8_t		builtin_jobs(t_core *shell, t_process *process);
+int8_t		builtin_bg(t_core *shell, t_process *process);
 
 int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
 void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
@@ -223,6 +228,41 @@ void		init_signals(void);
 ** TMP
 */
 
-void		debug_analyzer(t_core *shell);
+/*
+**	===========================================================================
+**	JOB CONTROL................................................................
+**	===========================================================================
+*/
+
+t_job		*find_job(t_lst *ptr, pid_t pgid);
+t_process	*find_process(t_lst *job, pid_t pid);
+int8_t		job_is_stopped(t_job *job);
+int8_t		job_is_completed(t_job *job);
+int8_t		put_job_in_foreground(t_core *shell, t_lst *jobs, t_job *job
+		, int cont);
+void		put_job_in_background(t_core *shell, t_job *job, int cont);
+void		mark_job_as_running(t_job *job);
+int8_t		continue_job(t_core *shell, t_job *job, int foreground);
+void		reset_signals(void);
+void		launch_process(t_core *shell, t_process *process, int infile
+		, int outfile);
+void		launch_job(t_core *shell, t_job *job, int foreground);
+int8_t		do_job_notification(t_core *shell, t_lst *job);
+void		job_background_notif(t_job *job);
+void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
+int8_t		mark_process_status(t_core *shell, t_lst *jobs, pid_t pid
+		, int status);
+int8_t		launch_blt(t_core *shell, t_process *process, int *fds
+		, int foreground);
+void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
+void		update_status(t_core *shell);
+t_job		*get_job(t_lst *jobs, char *str);
+t_job		*get_job_by_id(t_lst *jobs, int id);
+void		format_job_info(t_job *job);
+int			update_jobs(t_lst *jobs);
+void		attr_jobc_id(t_core *shell, t_job *job);
+
+/* ###########################  TEMPORARY   #################################*/
+void	debug_analyzer(t_core *shell);
 
 #endif

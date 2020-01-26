@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:51:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/21 13:06:38 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:49:41 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		ft_freejoblist(t_lst **lst)
 		node = tmp;
 		if (tmp->content)
 		{
-			ft_free_processlist(&((t_job*)tmp->content)->process_list);
+			free_process_list(&((t_job*)tmp->content)->process_list);
 			free(((t_job*)tmp->content)->command);
 			free((t_job*)tmp->content);
 		}

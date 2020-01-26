@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 12:02:33 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:45:45 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <errno.h>
 
 /*
- **	Function inside the fork where env is created, redirections occurs and where
- **
- */
+**	Function inside the fork where env is created, redirections
+*/
+
 static int8_t	check_filepath(char *filepath)
 {
 	int			ret;
@@ -28,28 +28,27 @@ static int8_t	check_filepath(char *filepath)
 	return (SUCCESS);
 }
 
-int8_t	call_bin(t_core *shell, t_lst *process)
+int8_t			call_bin(t_core *shell, t_process *process)
 {
-	t_process	*ptr;
 	char		**envp;
 	int			ret;
 
 	envp = NULL;
-	ptr = process->content; //Shortcut to ((t_process*)proces->content)
-	exec_redirs(shell, ptr->redir_list);
-	if (ptr->bin == NULL)
+	exec_redirs(shell, process->redir_list);
+	if (process->bin == NULL)
 	{
-		if (ptr->av != NULL)
-			dprintf(STDERR_FILENO, "42sh: %s: command not found\n", ptr->av[0]);
+		if (process->av != NULL)
+			dprintf(STDERR_FILENO
+				, "42sh: %s: command not found\n", process->av[0]);
 		exit(127);
 	}
 	envp = set_envp(shell);
-	if ((ret = check_filepath(ptr->bin)) != SUCCESS)
+	if ((ret = check_filepath(process->bin)) != SUCCESS)
 	{
-		ft_perror(ptr->av[0], NULL, ret);
-		exit((ret == ENOENT) ? 127: 126);
+		ft_perror(process->av[0], NULL, ret);
+		exit((ret == ENOENT) ? 127 : 126);
 	}
-	ret = execve(ptr->bin, ptr->av, envp);
+	ret = execve(process->bin, process->av, envp);
 	dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);
 	ft_tabdel(&envp);
 	exit(1);

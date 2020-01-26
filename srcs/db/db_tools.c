@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 18:21:41 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/02 16:39:36 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:47:55 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **	new_type takes a 8 bits int (0 if you don't want to modify it)
 */
 
-t_db	*modify_db(t_db	*db, char *new_value, u_int8_t new_type)
+t_db	*modify_db(t_db *db, char *new_value, u_int8_t new_type)
 {
 	if (db && new_value != NULL)
 	{
@@ -91,9 +91,6 @@ int8_t	del_db(t_core *shell, char *key)
 	}
 	if (env != NULL)
 	{
-		/*
-		**	linking the previous link (or shell->env pointer) to the next link
-		*/
 		prev->next = env->next;
 		if (prev == env)
 			shell->env = env->next;
@@ -111,7 +108,7 @@ int8_t	edit_var(t_core *shell, char *name, char *value, u_int8_t var_type)
 	t_db	*db;
 
 	db = NULL;
-	if (shell != NULL && (db = get_or_create_db(shell, name, var_type)) != NULL)
+	if (shell && (db = get_or_create_db(shell, name, var_type)) != NULL)
 	{
 		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);

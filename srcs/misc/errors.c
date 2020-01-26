@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                            :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/29 01:28:05 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/07 21:08:42 by mpivet-p         ###   ########.fr       */
+/*   Created: 2020/01/15 20:32:08 by mpivet-p          #+#    #+#             */
+/*   Updated: 2020/01/25 13:58:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,14 @@
 void	print_usage(char *name, int c, char *usage)
 {
 	if (c > 0)
-		dprintf(STDERR_FILENO, "42sh: %s: -%c: invalid option\n", name, c);
+		dprintf(STDERR_FILENO, "%s: -%c: invalid option\n", name, c);
 	dprintf(STDERR_FILENO, "%s: usage: %s\n", name, usage);
+}
+
+void	print_and_quit(t_core *shell, char *message)
+{
+	dprintf(STDERR_FILENO, "%s", message);
+	quit_shell(shell, EXIT_FAILURE, FALSE, I_MODE);
 }
 
 void	ft_perror(const char *s, const char *name, const int errnum)
@@ -29,6 +35,7 @@ void	ft_perror(const char *s, const char *name, const int errnum)
 		, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 60
 		, 0, 0, "File name too long", 0, 0, 0, 0, 0, 0, 0 // 70
 	};
+
 	if (name != NULL)
 		dprintf(STDERR_FILENO, "42sh: %s: %s: %s\n", name, s, error[errnum]);
 	else

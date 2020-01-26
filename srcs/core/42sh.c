@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 12:08:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 14:12:07 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int		main(int ac, char **av, char **environ)
 	else
 	{
 		get_opt(ac, av, &shell);
-		get_core(&shell);
-		init_signals();
 		dprintf(STDERR_FILENO, "Entering 42sh with setjmp activated !!!\n");
 		if (isatty(STDIN_FILENO) == TRUE)
 		{

@@ -72,6 +72,7 @@ L_PATH		=	shared_libft/
 # Add custom dir for .o
 
 CORE		=	core/
+JOBC		=	jobcontrol/
 SIGNALS		=	signals/
 DB			=	db/
 BUILTINS	=	builtins/
@@ -94,6 +95,7 @@ HASH		=	$(BUILTINS)hash/
 
 PATHS		+=	$(B_PATH)
 PATHS		+=	$(O_PATH)
+PATHS		+=	$(O_PATH)$(JOBC)
 PATHS		+=	$(O_PATH)$(SIGNALS)
 PATHS		+=	$(O_PATH)$(BUILTINS)
 PATHS		+=	$(O_PATH)$(BLT_FC)
@@ -131,34 +133,47 @@ SRC			+=	$(S_PATH)$(COMMANDLINE)term_config.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)utils.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)xfunctions.c
 
-SRC			+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
-SRC			+=	$(S_PATH)lexer_parser_analyzer/tmp_debug.c
+SRC		+=	$(S_PATH)lexer_parser_analyzer/lexer_parser_analyzer.c
+SRC		+=	$(S_PATH)lexer_parser_analyzer/tmp_debug.c
 
-SRC			+=	$(S_PATH)$(LEXER)assign_token.c
-SRC			+=	$(S_PATH)$(LEXER)init_lexer.c
-SRC			+=	$(S_PATH)$(LEXER)lexer.c
-SRC			+=	$(S_PATH)$(LEXER)name_token.c
-SRC			+=	$(S_PATH)$(LEXER)io_nbr_nwl_token.c
-SRC			+=	$(S_PATH)$(LEXER)operator_token.c
-SRC			+=	$(S_PATH)$(LEXER)expansion_token.c
-SRC			+=	$(S_PATH)$(LEXER)expansion_token_bis.c
-SRC			+=	$(S_PATH)$(LEXER)tmp_debug.c
+SRC		+=	$(S_PATH)$(LEXER)assign_token.c
+SRC		+=	$(S_PATH)$(LEXER)init_lexer.c
+SRC		+=	$(S_PATH)$(LEXER)lexer.c
+SRC		+=	$(S_PATH)$(LEXER)name_token.c
+SRC		+=	$(S_PATH)$(LEXER)io_nbr_nwl_token.c
+SRC		+=	$(S_PATH)$(LEXER)operator_token.c
+SRC		+=	$(S_PATH)$(LEXER)expansion_token.c
+SRC		+=	$(S_PATH)$(LEXER)expansion_token_bis.c
+SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
 
-SRC			+=	$(S_PATH)$(PARSER)parser.c
-SRC			+=	$(S_PATH)$(PARSER)graph.c
+SRC		+=	$(S_PATH)$(PARSER)parser.c
+SRC		+=	$(S_PATH)$(PARSER)graph.c
 
-SRC			+=	$(S_PATH)$(ANALYZER)analyze.c
-SRC			+=	$(S_PATH)$(ANALYZER)analyzer_name.c
-SRC			+=	$(S_PATH)$(ANALYZER)analyzer_assign.c
-SRC			+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
-SRC			+=	$(S_PATH)$(ANALYZER)analyzer_job.c
-SRC			+=	$(S_PATH)$(ANALYZER)analyzer_process.c
-SRC			+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
-SRC			+=	$(S_PATH)$(ANALYZER)printanalyze.c
-SRC			+=	$(S_PATH)$(ANALYZER)init_analyzer.c
-SRC			+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyze.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_name.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_assign.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_job.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_process.c
+SRC		+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
+SRC		+=	$(S_PATH)$(ANALYZER)printanalyze.c
+SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
+SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
+
 
 SRC			+=	$(S_PATH)dev.c
+
+SRC			+=	$(S_PATH)$(JOBC)background.c
+SRC			+=	$(S_PATH)$(JOBC)continue.c
+SRC			+=	$(S_PATH)$(JOBC)foreground.c
+SRC			+=	$(S_PATH)$(JOBC)job_utils.c
+SRC			+=	$(S_PATH)$(JOBC)launch_process.c
+SRC			+=	$(S_PATH)$(JOBC)mark_process_status.c
+SRC			+=	$(S_PATH)$(JOBC)notifications.c
+SRC			+=	$(S_PATH)$(JOBC)wait_job.c
+SRC			+=	$(S_PATH)$(JOBC)get_job.c
+SRC			+=	$(S_PATH)$(JOBC)jobc_id.c
+
 SRC			+=	$(S_PATH)$(HISTORY)save_history.c
 SRC			+=	$(S_PATH)$(HISTORY)search_in_history.c
 SRC			+=	$(S_PATH)$(HISTORY)history_expansions.c
@@ -177,13 +192,12 @@ SRC			+=	$(S_PATH)$(AC)ac_bin.c
 SRC			+=	$(S_PATH)$(AC)ac_directories.c
 SRC			+=	$(S_PATH)$(AC)ac_tools.c
 
-SRC			+=	$(S_PATH)$(DB)init_shell.c
-SRC			+=	$(S_PATH)$(DB)get_opt.c
 SRC			+=	$(S_PATH)$(DB)set_env.c
 SRC			+=	$(S_PATH)$(DB)fetch_db.c
 SRC			+=	$(S_PATH)$(DB)env_updates.c
 SRC			+=	$(S_PATH)$(DB)set_updates.c
 SRC			+=	$(S_PATH)$(DB)db_tools.c
+SRC			+=	$(S_PATH)$(DB)get_opt.c
 SRC			+=	$(S_PATH)$(DB)history.c
 SRC			+=	$(S_PATH)$(DB)version.c
 SRC			+=	$(S_PATH)$(DB)special_vars.c
@@ -195,7 +209,11 @@ SRC			+=	$(S_PATH)$(BUILTINS)export.c
 SRC			+=	$(S_PATH)$(BUILTINS)exit.c
 SRC			+=	$(S_PATH)$(BUILTINS)cd.c
 SRC			+=	$(S_PATH)$(BUILTINS)echo.c
+SRC			+=	$(S_PATH)$(BUILTINS)fg.c
+SRC			+=	$(S_PATH)$(BUILTINS)bg.c
+SRC			+=	$(S_PATH)$(BUILTINS)jobs.c
 SRC			+=	$(S_PATH)$(BUILTINS)pwd.c
+SRC			+=	$(S_PATH)$(BUILTINS)type.c
 
 SRC			+=	$(S_PATH)$(HASH)add_hash_map.c
 SRC			+=	$(S_PATH)$(HASH)fetch_hash_db.c
@@ -228,18 +246,17 @@ SRC			+=	$(S_PATH)$(SIGNALS)init_signals.c
 SRC			+=	$(S_PATH)$(EXEC)task_master.c
 SRC			+=	$(S_PATH)$(EXEC)status_handler.c
 SRC			+=	$(S_PATH)$(EXEC)exec_process.c
-SRC			+=	$(S_PATH)$(EXEC)exec_piped_process.c
 SRC			+=	$(S_PATH)$(EXEC)dispatcher.c
 SRC			+=	$(S_PATH)$(EXEC)call_bin.c
 SRC			+=	$(S_PATH)$(EXEC)call_builtin.c
 SRC			+=	$(S_PATH)$(EXEC)get_bin.c
 SRC			+=	$(S_PATH)$(EXEC)set_envp.c
-SRC			+=	$(S_PATH)$(EXEC)pipes.c
 SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)exec_redirs.c
 SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs.c
 SRC			+=	$(S_PATH)$(EXEC)$(REDIRS)redirs_tools.c
 
 SRC			+=	$(S_PATH)$(CORE)42sh.c
+SRC			+=	$(S_PATH)$(CORE)init_shell.c
 SRC			+=	$(S_PATH)$(CORE)shell_loader.c
 SRC			+=	$(S_PATH)$(CORE)free_handler.c
 

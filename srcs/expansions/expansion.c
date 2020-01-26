@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/13 08:29:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:53:41 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int8_t add_assign_env(t_lst *lst, t_core *shell)
 		}
 		tmp = lst;
 		lst = lst->next;
-		free(((t_db*)tmp->content)->key);
+		ft_strdel(&((t_db*)tmp->content)->key);
+		ft_strdel(&((t_db*)tmp->content)->value);
 		free(tmp);
 	}
 	return (TRUE);

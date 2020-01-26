@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 03:59:34 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/11/08 02:20:02 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/15 21:11:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int8_t	parse_unset(int argc, char **argv)
 	return (SUCCESS);
 }
 
-int8_t	builtin_unset(t_core *shell, t_process *process)
+int8_t			builtin_unset(t_core *shell, t_process *process)
 {
 	int		parsing_ret;
 	int		argc;
@@ -42,7 +42,8 @@ int8_t	builtin_unset(t_core *shell, t_process *process)
 		if (check_invalid_identifiers(process->av[i], "") != SUCCESS)
 		{
 			ret = 1;
-			dprintf(STDERR_FILENO, "42sh: export: `%s': not a valid identifier\n", process->av[i]);
+			dprintf(STDERR_FILENO
+			, "42sh: export: `%s': not a valid identifier\n", process->av[i]);
 		}
 		else
 			del_db(shell, process->av[i]);

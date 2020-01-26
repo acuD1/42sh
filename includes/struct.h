@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 17:09:47 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 10:21:27 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:58:15 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,13 @@ struct						s_core
 	t_lst					*pos_vars;
 	t_lst					*lexer;
 	t_lst					*job_list;
+	t_lst					*launched_jobs;
 	u_int64_t				opt;
 	int32_t					status;
 	int32_t					heredoc;
+	int8_t					is_interactive;
+	int32_t					terminal;
+	pid_t					pgid;
 };
 
 /*
@@ -132,19 +136,28 @@ struct						s_lexer
 
 typedef struct				s_job
 {
-	char					*command;
-	t_lst					*process_list;
+	struct termios			tmodes;
 	enum e_pstate			type;
+	int8_t					notified;
+	t_lst					*process_list;
+	pid_t					pgid;
+	char					*command;
+	int						jobc_id;
+	char					jobc_last;
 }							t_job;
 
 typedef struct				s_process
 {
 	enum e_pstate			type;
+	int8_t					completed;
+	int8_t					stopped;
+	int8_t					status;
 	t_lst					*assign_list;
 	t_lst					*redir_list;
+	pid_t					pid;
+	pid_t					pgid;
 	char					**av;
 	char					*bin;
-	pid_t					pid;
 }							t_process;
 
 typedef struct				s_redir

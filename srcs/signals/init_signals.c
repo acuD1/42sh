@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 09:40:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 13:50:17 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,16 @@
 
 static void	sig_handler(int signum)
 {
-	static char *message[31] = {"Hangup", NULL, "Quit", "Illegal instruction"
-		, "Trace/BPT trap", "Abort trap\n", "EMT trap"
-		, "Floating point exception", "Killed", "Bus error"
-		, "Segmentation fault", "Bad system call", NULL, "Alarm clock"
-		, "Terminated", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
-		, "Cputime limit exceeded", "Filesize limit exceeded"
-		, "Virtual timer expired", "Profiling timer expired", NULL, NULL
-		, "User defined signal 1", "User defined signal 2"};
 	t_core	*shell;
+	pid_t	pid;
 
 	shell = get_core(NULL);
-	if (signum == SIGHUP && shell->running_process)
-		kill_processes(SIGHUP, shell);
-	if (message[signum - 1] != NULL)
-		dprintf(STDERR_FILENO, "\n%s: %i (42sh)\n", message[signum - 1], signum);
-	quit_shell(shell, EXIT_SUCCESS, FALSE, I_MODE);
+	if (signum == SIGTSTP)
+		return ;
+	reset_config(shell);
+	pid = getpid();
+	signal(signum, SIG_DFL);
+	kill(pid, signum);
 }
 
 static void	sig_exit(int signum)
@@ -52,16 +46,26 @@ static void	sigh_winch(int signum)
 		quit_shell(shell, EXIT_SUCCESS, FALSE, I_MODE);
 }
 
+/*
+**	HUP INT
+**	QUIT ILL TRAP ABRT EMT
+**	FPE KILL(NULL)BUS SEGV SYS PIPE
+**	ALRM TERM URG STOP(NL) TSTP CONT
+**	CHLD TTIN TTOU IO XCPU XFSZ
+**	VTALRM PROF WINCH INFO USR1
+**	USR2
+*/
+
 void		init_signals(void)
 {
-	static void (*sighandler[31])(int) = {sig_handler, sigint_handler /* HUP INT */
-		, sig_handler, sig_handler, sig_handler, sig_handler, sig_handler /* QUIT ILL TRAP ABRT EMT */
-		, sig_handler, NULL, sig_handler, sig_handler, sig_handler, sig_exit /*FPE KILL(NULL)BUS SEGV SYS PIPE*/
-		, sig_handler, sig_handler, sig_handler, NULL, sig_handler, sig_exit/*ALRM TERM URG STOP(NL) TSTP CONT*/
-		, SIG_DFL, SIG_DFL, SIG_DFL, SIG_DFL, sig_handler, sig_handler /*CHLD TTIN TTOU IO XCPU XFSZ*/
-		, sig_handler, sig_handler, sigh_winch, NULL, sig_handler /*VTALRM PROF WINCH INFO USR1 */
-		, sig_handler}; /* USR2*/
-	int i;
+	static void	(*sighandler[31])(int) = {sig_handler, sigint_handler
+		, sig_handler, sig_handler, sig_handler, sig_handler, sig_handler
+		, sig_handler, NULL, sig_handler, sig_handler, sig_handler, sig_exit
+		, sig_handler, sig_handler, sig_handler, NULL, SIG_IGN, sig_exit
+		, SIG_DFL, SIG_IGN, SIG_IGN, SIG_DFL, sig_handler, sig_handler
+		, sig_handler, sig_handler, sigh_winch, NULL, sig_handler
+		, sig_handler};
+	int			i;
 
 	i = 1;
 	while (i <= SIGUSR2)

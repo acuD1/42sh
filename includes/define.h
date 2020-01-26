@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/21 12:46:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/25 12:57:12 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@
 
 # define SHELL_OPT				"vhc"
 # define MAX_PATH				4096
-# define ACCESS_MAX_PATH		4096
+# define OPT_VERS		1ULL << 21
+# define OPT_HELP		1ULL << 7
+# define OPT_ERROR		1ULL << 63
+# define MAX_PATH			4096
+# define ACCESS_MAX_PATH	1024
 
 /*
 **	Exec
