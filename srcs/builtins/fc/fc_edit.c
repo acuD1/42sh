@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/25 18:42:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/26 18:01:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range)
 			return (FAILURE);
 		}
 	}
-	else if (range[0])
-		set_range(&w, range);
+	/* else if (range[0]) */
+	/* 	set_range(&w, range); */
 	launch_editor(shell, ed, w->content);
 	return (SUCCESS);
 }

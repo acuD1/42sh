@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 10:41:55 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/23 12:11:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/26 20:43:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,6 @@ typedef struct	s_hash
 	u_int32_t	lenght;			// Numbers of keys
 }				t_hash;
 
-/*
-**			COMMAND_LINE
-*/
-
 typedef struct s_exp_size
 {
 	char 			*(*acab)(char*, e_estate id);
@@ -118,6 +114,16 @@ typedef struct s_lex_exp
 	e_estate 		id;
 	int 			len;
 }		t_lex_exp;
+
+typedef struct			s_cmd
+{
+	int					first;
+	int					last;
+	char				*editor;
+	int					ac;
+	char				**av;
+	int					fd;
+}						t_cmd;
 
 /*
 **			COMMAND_LINE
