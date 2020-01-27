@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/24 19:21:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/27 13:28:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@
 # define PS2					"> "
 # define BUFF_SIZE				4096
 # define READ_SIZE				8
-# define HISTORY_FILE			"./.42sh_history"
 # define QUOTE					'\''
 # define DQUOTE					'\"'
 # define BQUOTE					'`'
@@ -91,6 +90,13 @@
 # define CMD_PROMPT		0
 # define CMD_SUBPROMPT	1
 # define CMD_DONE		2
+
+/*
+**		Files name
+*/
+
+# define FC_TMP_FILE			"/tmp/42sh-fc.tmp"
+# define HISTORY_FILE			"./.42sh_history"
 
 /*
 **		Action keys hex masks

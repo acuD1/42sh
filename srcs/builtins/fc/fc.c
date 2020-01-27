@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/26 21:12:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/27 13:40:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ int8_t			fc_error(u_int64_t opt, int err_num)
 		ft_dprintf(2, "42sh: fc: history specification out of range\n");
 	else if (err_num == 1)
 		print_usage("fc", opt % 128, "fc: usage: fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]");
+	else if (err_num == 2)
+		ft_dprintf(2, "42sh: fc: -e: option requires an argument\n");
 	else
 		ft_dprintf(STDERR_FILENO,
-				"42sh: fc: failed to open or create file: %s\n", "./.fc_file");
+				"42sh: fc: failed to open or create file: %s\n", FC_TMP_FILE);
 	return (FAILURE);
 }
 
@@ -40,11 +42,13 @@ int8_t			builtin_fc(t_core *shell, t_process *process)
 	opt = get_options(ft_tablen(process->av), process->av, "elnrs0123456789");
 	if (opt & (1ULL << 63))
 		return (fc_error(opt, 1));
-	 else if (w && (opt & (1ULL << 18)))
+	else if (opt & (1ULL << 4) && ft_tablen(process->av) > 3)
+		return (fc_error(opt, 2));
+	else if (w && (opt & (1ULL << 18)))
 	 	return (select_specifier(shell, w, process->av));
 	else if (w && (opt & (1ULL << 11)))
 		listing_mode(w, process->av, opt);
-	/* else */
+	/* else if (opt & (1ULL << 4)) */
 	/* 	edit_mode(shell, w, cmd, opt); */
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:11:54 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/26 21:11:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/27 14:10:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,23 @@ void			swap(int *nb1, int *nb2)
 	*nb2 = tmp;
 }
 
-static void		print_reverse(t_lst *w, t_cmd cmd)
+static void		print_reverse(t_lst *w, t_cmd cmd, u_int64_t opt)
 {
 	int			i;
 
 	i = ft_lstlen(w);
 	while (w && i >= cmd.first)
 	{
-		if (i <= cmd.last)
+		if ((i <= cmd.last && (opt & (1ULL << 13))))
+			ft_dprintf(cmd.fd, "\t%s\n", w->content);
+		else if (i <= cmd.last)
 			ft_dprintf(cmd.fd, "%d\t%s\n", i, w->content);
 		w = w->next;
 		i--;
 	}
 }
 
-static void		print_list(t_lst *w, t_cmd cmd)
+static void		print_list(t_lst *w, t_cmd cmd, u_int64_t opt)
 {
 	int			i;
 
@@ -62,7 +64,9 @@ static void		print_list(t_lst *w, t_cmd cmd)
 		w = w->next;
 	while (w && i <= cmd.last)
 	{
-		if (i >= cmd.first)
+		if ((i >= cmd.first && (opt & (1ULL << 13))))
+			ft_dprintf(cmd.fd, "\t%s\n", w->content);
+		else if (i >= cmd.first)
 			ft_dprintf(cmd.fd, "%d\t%s\n", i, w->content);
 		w = w->prev;
 		i++;
@@ -118,8 +122,8 @@ int8_t		listing_mode(t_lst *w, char **av, u_int64_t opt)
 		swap(&cmd.first, &cmd.last);
 	}
 	if (opt & (1ULL << 17))
-		print_reverse(w, cmd);
+		print_reverse(w, cmd, opt);
 	else
-		print_list(w, cmd);
+		print_list(w, cmd, opt);
 	return (TRUE);
 }
