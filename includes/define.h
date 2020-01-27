@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/27 13:28:17 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:24:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@
 **		Files name
 */
 
-# define FC_TMP_FILE			"/tmp/42sh-fc.tmp"
+# define FC_TMP_FILE			"./42sh-fc.tmp"
 # define HISTORY_FILE			"./.42sh_history"
 
 /*

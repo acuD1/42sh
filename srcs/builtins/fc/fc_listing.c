@@ -6,13 +6,13 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:11:54 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/27 14:10:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/27 17:49:01 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static void		get_entries(t_lst *w, t_cmd *cmd)
+void		get_entries(t_lst *w, t_cmd *cmd)
 {
 	int			w_entries;
 
@@ -30,7 +30,7 @@ static void		get_entries(t_lst *w, t_cmd *cmd)
 	}
 }
 
-void			swap(int *nb1, int *nb2)
+static void		swap(int *nb1, int *nb2)
 {
 	int			tmp;
 
@@ -39,38 +39,18 @@ void			swap(int *nb1, int *nb2)
 	*nb2 = tmp;
 }
 
-static void		print_reverse(t_lst *w, t_cmd cmd, u_int64_t opt)
+void			skip_options(char ***av)
 {
-	int			i;
-
-	i = ft_lstlen(w);
-	while (w && i >= cmd.first)
+	while (++(*av) && **av)
 	{
-		if ((i <= cmd.last && (opt & (1ULL << 13))))
-			ft_dprintf(cmd.fd, "\t%s\n", w->content);
-		else if (i <= cmd.last)
-			ft_dprintf(cmd.fd, "%d\t%s\n", i, w->content);
-		w = w->next;
-		i--;
+		if (isstart(**av, "-l") || isstart(**av, "-r")
+				|| isstart(**av, "-n") || isstart(**av, "-s")
+				|| isstart(**av, "-e"))
+			continue ;
+		else
+			break ;
 	}
-}
-
-static void		print_list(t_lst *w, t_cmd cmd, u_int64_t opt)
-{
-	int			i;
-
-	i = 1;
-	while (w->next)
-		w = w->next;
-	while (w && i <= cmd.last)
-	{
-		if ((i >= cmd.first && (opt & (1ULL << 13))))
-			ft_dprintf(cmd.fd, "\t%s\n", w->content);
-		else if (i >= cmd.first)
-			ft_dprintf(cmd.fd, "%d\t%s\n", i, w->content);
-		w = w->prev;
-		i++;
-	}
+	(*av)--;
 }
 
 u_int8_t		get_range(char **av, t_cmd *cmd)
@@ -78,26 +58,21 @@ u_int8_t		get_range(char **av, t_cmd *cmd)
 	int		i;
 
 	i = 0;
-	while (*av && av[++i])
+	if ((cmd->ac = ft_tablen(av)) == 2)
+		return (TRUE);
+	skip_options(&av);
+	while (*av && av++)
 	{
-		if (isstart(av[i], "-l") || isstart(av[i], "-r")
-				|| isstart(av[i], "-n") || isstart(av[i], "-s")
-				|| isstart(av[i], "-e"))
-			continue ;
-		else if (ft_isnum(av[i]) == FALSE)
+		if (ft_isnum(*av) == FALSE)
 			return (FALSE);
 		else
 		{
-			cmd->first = ft_atoi(av[i]);
+			cmd->first = ft_atoi(*av);
 			break ;
 		}
 	}
-	cmd->av = ft_memalloc(sizeof(char**));
-	cmd->av[0] = av[i];
-	cmd->av[1] = av[i + 1];
-	if (i < ft_tablen(av) - 1)
-		cmd->last = ft_atoi(av[i + 1]);
-	cmd->ac = ft_tablen(av);
+	if (*(av + 1))
+		cmd->last = ft_atoi(*(av + 1));
 	return (TRUE);
 }
 

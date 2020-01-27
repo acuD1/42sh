@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/27 13:40:12 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:11:01 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,19 @@ int8_t			builtin_fc(t_core *shell, t_process *process)
 	if ((w = shell->term.history) == NULL)
 		return (fc_error(opt, 0));
 	opt = get_options(ft_tablen(process->av), process->av, "elnrs0123456789");
+	if (opt & (1ULL << 4))
+	{
+		if ((opt & (1ULL << 18) || (opt & (1ULL << 11)
+				|| (opt & (1ULL << 13)) || (opt & (1ULL << 17)))))
+			return (fc_error(opt, 2));
+	}
 	if (opt & (1ULL << 63))
 		return (fc_error(opt, 1));
-	else if (opt & (1ULL << 4) && ft_tablen(process->av) > 3)
-		return (fc_error(opt, 2));
 	else if (w && (opt & (1ULL << 18)))
 	 	return (select_specifier(shell, w, process->av));
 	else if (w && (opt & (1ULL << 11)))
 		listing_mode(w, process->av, opt);
-	/* else if (opt & (1ULL << 4)) */
-	/* 	edit_mode(shell, w, cmd, opt); */
+	else
+		return (edit_mode(shell, w, process->av, opt));
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:28:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:31:36 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int8_t			write_history(t_read *term)
 	while (hst)
 	{
 		if (write(fd, hst->content, ft_strlen(hst->content)) == FAILURE
-			|| write(fd, "\n", 1) == FAILURE)
+			|| write(fd, NEW_LINE, 1) == FAILURE)
 		{
 			ft_dprintf(2, "write failure\n");
 			close(fd);
