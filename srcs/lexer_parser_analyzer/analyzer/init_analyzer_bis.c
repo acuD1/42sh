@@ -21,11 +21,8 @@ void	init_assign_analyze(t_anal analyze)
 	analyze[A_ASSIGN][P_PIPE] = separator_analyze;
 	analyze[A_ASSIGN][P_SEMICOLON] = separator_analyze;
 	analyze[A_ASSIGN][P_DSEMI] = separator_analyze;
-
 	analyze[A_ASSIGN][P_DLESSDASH] = redirect_analyze;
 	analyze[A_ASSIGN][P_DLESS] = redirect_analyze;
-	// analyze[A_ASSIGN][P_DLESSDASH] = heredoc_analyze;
-	// analyze[A_ASSIGN][P_DLESS] = heredoc_analyze;
 	analyze[A_ASSIGN][P_LESS] = redirect_analyze;
 	analyze[A_ASSIGN][P_LESSAND] = redirect_analyze;
 	analyze[A_ASSIGN][P_DGREAT] = redirect_analyze;
@@ -46,7 +43,6 @@ void	init_ionumber_analyze(t_anal analyze)
 	analyze[A_IONUMBER][P_LESSAND] = redirect_analyze;
 	analyze[A_IONUMBER][P_GREAT] = redirect_analyze;
 	analyze[A_IONUMBER][P_WORD] = cmd_analyze;
-	// analyze[A_IONUMBER][P_ESCSEQ] = cmd_analyze;
 	analyze[A_IONUMBER][P_END] = end_analyze;
 }
 
@@ -55,8 +51,6 @@ void	init_redirect_analyze(t_anal analyze)
 	analyze[A_REDIRECT][P_NEWLINE] = redirect_analyze;
 	analyze[A_REDIRECT][P_DLESSDASH] = redirect_analyze;
 	analyze[A_REDIRECT][P_DLESS] = redirect_analyze;
-	// analyze[A_REDIRECT][P_DLESSDASH] = heredoc_analyze;
-	// analyze[A_REDIRECT][P_DLESS] = heredoc_analyze;
 	analyze[A_REDIRECT][P_LESS] = redirect_analyze;
 	analyze[A_REDIRECT][P_DGREAT] = redirect_analyze;
 	analyze[A_REDIRECT][P_GREATAND] = redirect_analyze;
@@ -65,7 +59,6 @@ void	init_redirect_analyze(t_anal analyze)
 	analyze[A_REDIRECT][P_IONUMBER] = ionbr_analyze;
 	analyze[A_REDIRECT][P_ASSIGN] = assign_analyze;
 	analyze[A_REDIRECT][P_WORD] = cmd_analyze;
-	// analyze[A_REDIRECT][P_ESCSEQ] = cmd_analyze;
 	analyze[A_REDIRECT][P_END] = end_analyze;
 }
 
@@ -84,7 +77,6 @@ void	init_end_analyze(t_anal analyze)
 	analyze[A_END][P_GREATAND] = redirect_analyze;
 	analyze[A_END][P_GREAT] = redirect_analyze;
 	analyze[A_END][P_WORD] = cmd_analyze;
-	// analyze[A_END][P_ESCSEQ] = cmd_analyze;
 	analyze[A_END][P_IONUMBER] = ionbr_analyze;
 	analyze[A_END][P_ASSIGN] = assign_analyze;
 	analyze[A_END][P_END] = end_analyze;
@@ -106,7 +98,6 @@ void	init_separator_analyze(t_anal analyze)
 	analyze[A_SEPARATOR][P_DLESSDASH] = redirect_analyze;
 	analyze[A_SEPARATOR][P_SEMICOLON] = separator_analyze;
 	analyze[A_SEPARATOR][P_WORD] = cmd_analyze;
-	// analyze[A_SEPARATOR][P_ESCSEQ] = cmd_analyze;
 	analyze[A_SEPARATOR][P_END] = end_analyze;
 	analyze[A_SEPARATOR][P_NEWLINE] = end_analyze;
 	analyze[A_SEPARATOR][P_IONUMBER] = ionbr_analyze;

@@ -38,7 +38,7 @@ uint8_t		check_backslash(t_read *term, char *quote)
 			return (FALSE);
 		if (charset_count(term, BACKSLASH, 0) % 2 != 0)
 		{
-			if (ft_strlen(term->buffer) > 1)
+			if (ft_strlen(term->busadaffer) > 1)
 				term->buffer = ft_strjoinf(term->buffer, ";", 1);
 			*quote = BACKSLASH;
 			return (TRUE);

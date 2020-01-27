@@ -52,7 +52,7 @@ t_analyzer *heredoc_analyzer(t_analyzer *anal, t_core *shell)
 t_analyzer	*redir_wanalyze(t_analyzer *anal, t_core *shell)
 {
 	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
-	if (anal->redir.type == P_DLESS)
+	if (anal->redir.type == P_DLESS || anal->redir.type == P_DLESSDASH)
 		return (heredoc_analyzer(anal, shell));
 	else
 		anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);

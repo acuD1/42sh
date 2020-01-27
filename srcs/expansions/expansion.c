@@ -78,6 +78,11 @@ static int get_quotes_flags(char c, int *dbquote, int *quote)
 
 	guill = *dbquote;
 	apost = *quote;
+	if (c == '\\')
+	{
+		*quote = 1;
+		return (0);
+	}
 	if (c == '\"')
 	{
 		if (!guill)

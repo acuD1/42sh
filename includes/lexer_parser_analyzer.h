@@ -101,7 +101,7 @@ t_lst			*start_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*end_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*name_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*newline_lexer(t_lexer *lexer, t_lst *lexer_token);
-t_lst			*backslash_lexer(t_lexer *lexer, t_lst *lexer_token);
+t_lst			*discard_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*number_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*assignement_word_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst			*operator_lexer(t_lexer *lexer, t_lst *lexer_token);

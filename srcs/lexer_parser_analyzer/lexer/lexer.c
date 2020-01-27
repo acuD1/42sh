@@ -12,54 +12,60 @@
 
 #include "sh42.h"
 
-// t_lst		*backslash_lexer(t_lexer *lx, t_lst *lexer_token)
+// t_lst		*escape_backslash(t_lexer *lx, t_lst *lexer_token)
 // {
-// 	char	*str;
-// 	int		i;
+// 	char *str;
 
 // 	str = NULL;
-// 	i = lx->buf_pos;
-// 	if (!lx->buff)
+// 	while (lx->buff[lx->buf_pos])
 // 	{
-// 		lx->status = L_END;
-// 		return (lexer_token);
+// 		printf("#%c#\n", lx->buff[lx->buf_pos]);
+// 		if (lx->buff[lx->buf_pos] == '\\' || lx->buff[lx->buf_pos] == '\n' || lx->buff[lx->buf_pos] == ';')
+// 			lx->buf_pos++;
+// 		else
+// 			break ;
 // 	}
-// 	if (lx->buff[i] == '\\')
-// 	{
-// 		while (lx->buff[i] == '\\')
-// 			i++;
-// 		if (lx->buff[i])
-// 		{
-// 			i++;
-// 		}
-// 		if (!(str = ft_strsub(lx->buff, lx->buf_pos, i - lx->buf_pos)))
-// 			return (lexer_token);
-// 		if (!(ft_lstappend(&lexer_token, ft_lstnew(
-// 			fetch_token(&lx->token, P_ESCSEQ, str), sizeof(t_token)))))
-// 			return (lexer_token);
-// 		free(str);
-// 		lx->ntok++;
-// 		lx->buf_pos = i;
-// 	}
-// 	lx->status = L_START;
+// 	lexer_token = word_lexer(lx, lexer_token);
 // 	return (lexer_token);
 // }
+
+
+t_lst		*discard_lexer(t_lexer *lx, t_lst *lexer_token)
+{
+
+	if (!lx->buff)
+	{
+		lx->status = L_END;
+		return (lexer_token);
+	}
+	// if (lx->buff[lx->buf_pos] == '\\')
+		// lexer_token = escape_backslash(lx, lexer_token);
+	if (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
+	{
+		while (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
+			lx->buf_pos++;
+	}
+	lx->status = L_START;
+	return (lexer_token);
+}
+
+uint8_t tokens_discarder(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\\')
+		return (1);
+	return (0);
+}
 
 t_lst		*start_lexer(t_lexer *lx, t_lst *lexer_token)
 {
 	if (lx->buff[lx->buf_pos] == '\0')
 		lexer_token = end_lexer(lx, lexer_token);
-	else if (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
-	{
-		while (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
-			lx->buf_pos++;
-	}
+	else if (tokens_discarder(lx->buff[lx->buf_pos]))
+		lx->status = L_DISCARD;
 	else if (lx->buff[lx->buf_pos] == '\n')
 		lx->status = L_NEWLINE;
 	else if (ft_strchr(OPERATORS, lx->buff[lx->buf_pos]))
 		lx->status = L_OPERATOR;
-	// else if (lx->buff[lx->buf_pos] == '\\')
-		// lx->status = L_ESCSEQ;
 	else if (ft_isdigit(lx->buff[lx->buf_pos]))
 		lx->status = L_IO_NUMBER;
 	else if (ft_strchr(&lx->buff[lx->buf_pos], '='))

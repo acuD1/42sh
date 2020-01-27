@@ -82,6 +82,7 @@ typedef enum    lstate {
     L_NAME,
     L_NEWLINE,
     L_IO_NUMBER,
+    L_DISCARD,
     L_ASSIGNEMENT_WORD,
     L_OPERATOR,
     L_END,
