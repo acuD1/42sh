@@ -42,7 +42,7 @@ void		expansion_tok(t_core *shell, t_process *process);
 
 char *exp_cmd_subs(char *data, t_core *shell);
 char *no_exp(char *data, t_core *shell);
-char *exp_dbquote(char *data, t_core *shell);
+char *infinite_expansion(char *data, t_core *shell);
 char *exp_math(char *data, t_core *shell);
 char *exp_param(char *data, t_core *shell);
 char *exp_tilde(char *data, t_core *shell);

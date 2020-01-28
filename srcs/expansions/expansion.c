@@ -71,26 +71,21 @@ int expelliarmus(char *src, int *index, char **dst, t_core *shell)
 	return (1);
 }
 
-static int get_quotes_flags(char c, int *dbquote, int *quote)
+static int get_quotes_flags(char *str, int *index, int *dbquote, int *quote)
 {
 	int guill;
 	int apost;
 
 	guill = *dbquote;
 	apost = *quote;
-	if (c == '\\')
-	{
-		*quote = 1;
-		return (0);
-	}
-	if (c == '\"')
+	if (str[*index] == '\"')
 	{
 		if (!guill)
 			guill = 1;
 		else
 			guill = 0;
 	}
-	if (c == '\'' && !guill)
+	if (str[*index] == '\'' && !guill)
 	{
 		if (!apost)
 			apost = 1;
@@ -102,7 +97,44 @@ static int get_quotes_flags(char c, int *dbquote, int *quote)
 	return (1);
 }
 
-char *exp_dbquote(char *data, t_core *shell)
+void discard_backslash(char	*data, int *i, char **res)
+{
+	int backslash_nbr;
+	int index;
+	char *tmp;
+
+	index = *i;
+	backslash_nbr = 0;
+	tmp = NULL;
+	if (data[index] == '\\')
+	{
+		while (data[index] == '\\')
+		{
+			index++;
+			backslash_nbr++;
+		}
+		backslash_nbr /= 2;
+		tmp = ft_strsub(data, index - backslash_nbr, backslash_nbr);
+		*i = index;
+		*res = ft_strjoinf(*res, tmp, 4);	
+	}
+}
+
+void expans_moica(char *data, int *index, int *expandu, char **res, t_core *shell)
+{
+	int i;
+
+	i = *index;
+	if (data[i] == '$' || data[i] == '~' || data[i] == '`')
+	{
+		*expandu = expelliarmus(data, &i, res, shell);
+		if (!*expandu)
+			i--;
+	}
+	*index = i;
+}
+
+char *infinite_expansion(char *data, t_core *shell)
 {
 	int flag[4];
 	char *res;
@@ -110,27 +142,23 @@ char *exp_dbquote(char *data, t_core *shell)
 
 	flag[0] = 0;
 	flag[1] = 0;
-	flag[2] = 0;
+	flag[2] = -1;
 	flag[3] = 1;
 	tmp = NULL;
 	res = ft_strnew(0);
-	while (data[flag[2]])
+	while (data[++flag[2]])
 	{
-		flag[3] = get_quotes_flags(data[flag[2]], &flag[0], &flag[1]);
-		if (!flag[1] && (data[flag[2]] == '$' || data[flag[2]] == '~' || data[flag[2]] == '`'))
+		flag[3] = get_quotes_flags(data, &flag[2], &flag[0], &flag[1]);
+		if (!flag[1])
 		{
-			flag[3] = expelliarmus(data, &flag[2], &res, shell);
-			if ((size_t)flag[2] == ft_strlen(data))
-					break ;
-			if (!flag[3])
-				flag[2]--;
+			expans_moica(data, &flag[2], &flag[3], &res, shell);
+			discard_backslash(data, &flag[2], &res);
 		}
 		if (flag[3])
 		{
 			tmp = ft_strsub(data, flag[2], 1);
 			res = ft_strjoinf(res, tmp, 4);
 		}
-		flag[2]++;
 	}
 	return (res);
 }

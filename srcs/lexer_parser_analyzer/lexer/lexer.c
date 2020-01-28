@@ -51,7 +51,7 @@ t_lst		*discard_lexer(t_lexer *lx, t_lst *lexer_token)
 
 uint8_t tokens_discarder(char c)
 {
-	if (c == ' ' || c == '\t' || c == '\\')
+	if (c == ' ' || c == '\t')
 		return (1);
 	return (0);
 }

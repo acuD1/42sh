@@ -84,8 +84,8 @@ void		load_subprompt(char sb, t_read *term)
 {
 	if (sb != BACKSLASH)
 		term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);
-	if (sb != BACKSLASH)
-		term->status = CMD_SUBPROMPT;
+	//if (sb != BACKSLASH)
+		// term->status = CMD_SUBPROMPT;
 	term->tmp_buff = ft_strdup(term->buffer);
 	term->flag = FALSE;
 	while (TRUE)
@@ -106,4 +106,4 @@ void		load_subprompt(char sb, t_read *term)
 	}
 	ft_strdel(&term->tmp_buff);
 	term->status = CMD_DONE;
-	}
+}

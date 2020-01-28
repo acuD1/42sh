@@ -98,7 +98,7 @@ void init_expansionat(t_expansion 	*exp)
 	exp->sionat[6] = exp_param;
 	exp->sionat[7] = exp_math;
 	exp->sionat[8] = exp_param;
-	exp->sionat[9] = exp_dbquote;
+	exp->sionat[9] = infinite_expansion;
 }
 
 char *do_expansion(t_core *shell, char *data)
