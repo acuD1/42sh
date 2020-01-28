@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:02:32 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/03 15:14:38 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:53:40 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static int8_t	dir_forward(char *path)
 
 static int8_t	dir_write(char *rel, char *abs)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	j = ft_strlen(abs);
 	i = (rel[0] == '/') ? 1 : 0;

@@ -6,15 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:46:53 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/27 18:03:04 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:47:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			ft_printtoklist(t_lst *lexer)
+void	ft_printtoklist(t_lst *lexer)
 {
-	t_token		*tmp;
+	t_token	*tmp;
 
 	tmp = NULL;
 	if (!lexer)
@@ -22,18 +22,30 @@ void			ft_printtoklist(t_lst *lexer)
 	while (lexer)
 	{
 		tmp = (t_token*)lexer->content;
-		ft_dprintf(nono("/dev/ttys002"), "{%s %u}\n",
+		ft_dprintf(nono("/dev/ttys002"), "{[%s] %u}\n",
 			((t_token*)lexer->content)->data, ((t_token*)lexer->content)->id);
 		if (!lexer->next)
 			break ;
 		lexer = lexer->next;
 	}
+	/*
+	ft_dprintf(nono("/dev/ttys002"), "RETOUR\n");
+	while (lexer)
+	{
+		tmp = (t_token*)lexer->content;
+		ft_dprintf(nono("/dev/ttys002"), "{%s %u}\n",
+			((t_token*)lexer->content)->data, ((t_token*)lexer->content)->id);
+		if (!lexer->prev)
+			break ;
+		lexer = lexer->prev;
+	}
+	*/
 }
 
-void			ft_freelexerlist(t_lst **lst)
+void	ft_freelexerlist(t_lst **lst)
 {
-	t_lst *tmp;
-	t_lst *node;
+	t_lst	*tmp;
+	t_lst	*node;
 
 	if (!*lst)
 		return ;

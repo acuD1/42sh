@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/26 15:23:21 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 19:01:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static int8_t	job_part_completed(t_job *job, t_process *process)
 	return (TRUE);
 }
 
-void			exec_process(t_core *shell, t_job *job, t_process *process
-		, int *fds)
+void			exec_process
+	(t_core *shell, t_job *job, t_process *process, int *fds)
 {
 	if (job_part_completed(job, process))
 		job->pgid = -1;

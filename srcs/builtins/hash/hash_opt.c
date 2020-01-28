@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 15:05:40 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/13 08:34:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:38:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int8_t	hash_p(t_core *shell, t_process *process, int ac)
 
 int8_t	hash_d(t_core *shell, t_process *process, int ac)
 {
-	size_t i;
+	size_t	i;
 
 	i = 2;
 	if (ac == 2)

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:46:41 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/13 08:29:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:46:42 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ const t_token	g_ope[] =
 
 static t_lst	*new_ope(t_lexer *lx, enum e_pstate id, int len, t_lst *lst)
 {
-	char *str;
+	char	*str;
 
 	str = NULL;
 	if (!(str = ft_strsub(lx->buff, lx->buf_pos, len)))
@@ -49,7 +49,7 @@ static t_lst	*new_ope(t_lexer *lx, enum e_pstate id, int len, t_lst *lst)
 
 t_lst			*operator_lexer(t_lexer *lx, t_lst *lst)
 {
-	int			i;
+	int		i;
 
 	i = 0;
 	if (!lx->buff)
@@ -66,8 +66,6 @@ t_lst			*operator_lexer(t_lexer *lx, t_lst *lst)
 		}
 		i++;
 	}
-	if (i == NB_OF_OPE)
-		lst = word_lexer(lx, lst);
 	lx->status = L_START;
 	return (lst);
 }

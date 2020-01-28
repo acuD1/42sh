@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/30 17:40:31 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/25 13:49:19 by arsciand         ###   ########.fr       */
+/*   Created: 2020/01/28 20:31:06 by arsciand          #+#    #+#             */
+/*   Updated: 2020/01/28 20:33:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		get_token(t_analyzer *analyzer)
+void	get_token(t_analyzer *analyzer)
 {
 	t_token	*tmp;
 
@@ -25,7 +25,7 @@ void		get_token(t_analyzer *analyzer)
 	analyzer->lexer = analyzer->lexer->next;
 }
 
-void		ft_free_redir(t_redir *redir)
+void	ft_free_redir(t_redir *redir)
 {
 	ft_strdel(&(redir->op[0]));
 	ft_strdel(&(redir->op[1]));
@@ -33,7 +33,7 @@ void		ft_free_redir(t_redir *redir)
 	free(redir);
 }
 
-void		ft_free_redirlist(t_lst **head)
+void	ft_free_redirlist(t_lst **head)
 {
 	t_lst	*ptr;
 	t_lst	*next;
@@ -50,22 +50,25 @@ void		ft_free_redirlist(t_lst **head)
 	}
 }
 
-void		free_process_list(t_lst **head)
+void	free_process_list(t_lst **head)
 {
-	t_lst *ptr;
-	t_lst *next;
+	t_lst	*ptr;
+	t_lst	*next;
 
 	if (head == NULL || *head == NULL)
 		return ;
-	*head = NULL;
 	ptr = *head;
+	*head = NULL;
 	while (ptr != NULL)
 	{
 		next = ptr->next;
-		ft_free_redirlist(&(((t_process*)ptr->content)->redir_list));
-		ft_tabdel(&(((t_process*)ptr->content)->av));
+		ft_free_redirlist((t_lst **)&(((t_process *)ptr->content)->redir_list));
+		ft_tabdel(&(((t_process *)ptr->content)->av));
+		ft_strdel(&(((t_process *)ptr->content)->bin));
+		ft_strdel(&(((t_process *)ptr->content)->command));
+		free(ptr->content);
+		free(ptr);
 		//free_assign_list
 		ptr = next;
 	}
-
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/25 12:57:12 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:55:00 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,11 @@
 */
 
 # define SHELL_OPT				"vhc"
+# define OPT_VERS				1ULL << 21
+# define OPT_HELP				1ULL << 7
+# define OPT_ERROR				1ULL << 63
 # define MAX_PATH				4096
-# define OPT_VERS		1ULL << 21
-# define OPT_HELP		1ULL << 7
-# define OPT_ERROR		1ULL << 63
-# define MAX_PATH			4096
-# define ACCESS_MAX_PATH	1024
+# define ACCESS_MAX_PATH		1024
 
 /*
 **	Exec
@@ -86,7 +85,7 @@
 # define QUOTE					'\''
 # define DQUOTE					'\"'
 # define BQUOTE					'`'
-# define NEW_LINE				'\n'
+# define NEW_LINE				"\n"
 # define SPACE					" "
 # define BACKSLASH				'\\'
 # define BRACKET_OPEN			'('
@@ -98,6 +97,7 @@
 # define CMD_PROMPT				0
 # define CMD_SUBPROMPT			1
 # define CMD_DONE				2
+# define HEREDOC				"<<"
 
 /*
 **	Action keys hex masks
@@ -149,18 +149,17 @@
 */
 
 # define NB_OF_OPE				14
-# define NB_OF_EXP				9
-# define CHAR_INTERRUPT			" \t<>$~|;&\n"
-# define OPERATORS				"&|;><-"
+# define NB_OF_EXP				12
+# define CHAR_INTERRUPT 		" \t<>|;&\n"
+# define OPERATORS				"&|;><"
 # define EXPANSION				"$~"
 # define REDIR					P_GREAT, P_LESS
 # define REDIR_AND				P_GREATAND, P_LESSAND
 # define REDIR_DB				P_DGREAT
 # define HEREDC					P_DLESS, P_DLESSDASH
 # define ALL_REDIRECT			REDIR, REDIR_DB, REDIR_AND, HEREDC
-# define ALL_EXPANSION			P_PARENT, P_BRACKET, P_DBPARENT, P_DOLLAR, P_TILDE, P_TILDEP, P_TILDEM
-# define ALL_WORDS				P_WORD, P_DBQUOTE, P_QUOTE, P_BQUOTE
+# define ALL_EXPANSION			P_PARENT, P_BRACKET, P_DBPARENT, P_DOLLAR, P_TILDE, P_TILDEP, P_TILDEM, P_DBQUOTE, P_BQUOTE
+# define QUOTES					P_DBQUOTE, P_QUOTE, P_BQUOTE
 # define IOFILE					P_GREAT, P_GREATAND, P_LESS, P_LESSAND, P_DGREAT
 # define IOHERE					P_DLESS, P_DLESSDASH
-
 #endif

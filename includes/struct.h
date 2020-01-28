@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 17:09:47 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/25 13:58:15 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:37:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct				s_read
 	int						sub_prompt;
 	int						status;
 
+	int						flag;
 	char					*tcaps[CAPS_NBR];
 	char					*buffer;
 	char					*tmp_buff;
@@ -152,12 +153,14 @@ typedef struct				s_process
 	int8_t					completed;
 	int8_t					stopped;
 	int8_t					status;
+	t_lst					*tok_list;
 	t_lst					*assign_list;
 	t_lst					*redir_list;
 	pid_t					pid;
 	pid_t					pgid;
 	char					**av;
 	char					*bin;
+	char					*command;
 }							t_process;
 
 typedef struct				s_redir
@@ -178,6 +181,7 @@ struct						s_analyzer
 	t_process				process;
 	t_redir					redir;
 	t_db					db;
+	t_token					tok;
 	t_lst					*job_list;
 	t_lst					*process_list;
 	t_lst					*redir_list;
@@ -187,18 +191,32 @@ struct						s_analyzer
 ** EXP
 */
 
-typedef struct				s_expan
+typedef char				*(*t_exp)(char *, t_core *);
+
+typedef struct				s_exp_size
 {
-	char					*(*machine)(char *, t_core *);
-	enum e_pstate			id;
-	int						len;
+	char					*(*acab)(char *, enum e_estate id);
+	enum e_estate			id;
+	char					*res;
+}							t_exp_size;
+
+typedef struct				s_expansion
+{
+	int						erience;
+	t_exp					sionat[10];
+}							t_expansion;
+
+typedef struct				s_exp_token
+{
+	enum e_estate			id;
 	char					*data;
-}							t_expan;
+	int						len;
+}							t_exp_token;
 
 typedef struct				s_lex_exp
 {
-	t_lst					*(*func)(t_lexer *, enum e_pstate, int, t_lst *);
-	enum e_pstate			id;
+	char					*(*fct)(char *, int);
+	enum e_estate			id;
 	int						len;
 }							t_lex_exp;
 

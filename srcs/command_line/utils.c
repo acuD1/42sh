@@ -6,27 +6,27 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:18:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:51:51 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int		my_outc(int c)
+int			my_outc(int c)
 {
 	write(0, &c, 1);
 	return (SUCCESS);
 }
 
-uint8_t		get_width_last_line(t_read *term)
+u_int8_t	get_width_last_line(t_read *term)
 {
-	int	buff_index;
-	int	width;
-	int	x;
+	int		buff_index;
+	int		width;
+	int		x;
 
 	width = 0;
 	x = term->x + 1;
-	buff_index = term->x_index - term->prompt_len - 1;
+	buff_index = term->x_index - term->prompt_len;
 	while (--buff_index)
 	{
 		if (term->buffer[buff_index] == '\n')
@@ -43,18 +43,18 @@ uint8_t		get_width_last_line(t_read *term)
 	return (width);
 }
 
-uint8_t		get_width_current_line(t_read *term)
+u_int8_t	get_width_current_line(t_read *term)
 {
-	int	buff_index;
-	int	width;
-	int	x;
+	int		buff_index;
+	int		width;
+	int		x;
 
 	width = 0;
 	x = term->x;
 	buff_index = term->x_index - term->prompt_len;
 	while (term->buffer[buff_index])
 	{
-		if (term->buffer[buff_index] == NEW_LINE || x == term->ws_col - 1)
+		if (term->buffer[buff_index] == NEW_LINE[0] || x == term->ws_col - 1)
 			break ;
 		width++;
 		x++;
@@ -64,12 +64,12 @@ uint8_t		get_width_current_line(t_read *term)
 	return (width);
 }
 
-uint64_t	get_mask(char *buff)
+u_int64_t	get_mask(char *buff)
 {
-	uint16_t	i;
-	uint16_t	shift;
-	uint64_t	value;
-	uint64_t	tmp;
+	u_int16_t	i;
+	u_int16_t	shift;
+	u_int64_t	value;
+	u_int64_t	tmp;
 
 	i = 0;
 	tmp = 0;

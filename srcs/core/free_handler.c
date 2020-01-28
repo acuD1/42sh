@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/25 13:44:23 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:57:05 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_prompt(t_core *shell)
 
 void	free_history(t_read *term)
 {
-	t_lst *tmp;
+	t_lst	*tmp;
 
 	while (term->history)
 	{

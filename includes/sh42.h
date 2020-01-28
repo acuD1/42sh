@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/25 12:58:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:58:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int8_t		edit_var(t_core *shell, char *name, char *value, u_int8_t var_type);
 int8_t		call_builtin(t_core *shell, t_process *process, int blt);
 int8_t		exec_handler(t_core *shell, u_int8_t handler);
 int8_t		get_bin_path(t_core *shell, t_process *process);
-void		exec_process(t_core *shell, t_job *job, t_process *process, int *fds);
+void		exec_process
+				(t_core *shell, t_job *job, t_process *process, int *fds);
 int8_t		call_bin(t_core *shell, t_process *process);
 int8_t		task_master(t_core *shell);
 int8_t		is_a_blt(char *cmd);
@@ -182,7 +183,6 @@ int8_t		builtin_type(t_core *shell, t_process *process);
 int8_t		builtin_fg(t_core *shell, t_process *process);
 int8_t		builtin_jobs(t_core *shell, t_process *process);
 int8_t		builtin_bg(t_core *shell, t_process *process);
-
 int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
 void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
 void		display_reverse(t_lst *w, u_int64_t opt, char **range);
@@ -206,7 +206,6 @@ int8_t		dup_ifd(t_redir *ptr);
 int8_t		dup_ofd(t_redir *ptr);
 void		close_fds(t_lst *ptr);
 int8_t		write_heredoc(t_redir *ptr);
-
 int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
 void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
 void		display_reverse(t_lst *w, u_int64_t opt, char **range);
@@ -238,22 +237,22 @@ t_job		*find_job(t_lst *ptr, pid_t pgid);
 t_process	*find_process(t_lst *job, pid_t pid);
 int8_t		job_is_stopped(t_job *job);
 int8_t		job_is_completed(t_job *job);
-int8_t		put_job_in_foreground(t_core *shell, t_lst *jobs, t_job *job
-		, int cont);
+int8_t		put_job_in_foreground
+				(t_core *shell, t_lst *jobs, t_job *job, int cont);
 void		put_job_in_background(t_core *shell, t_job *job, int cont);
 void		mark_job_as_running(t_job *job);
 int8_t		continue_job(t_core *shell, t_job *job, int foreground);
 void		reset_signals(void);
-void		launch_process(t_core *shell, t_process *process, int infile
-		, int outfile);
+void		launch_process
+				(t_core *shell, t_process *process, int infile, int outfile);
 void		launch_job(t_core *shell, t_job *job, int foreground);
 int8_t		do_job_notification(t_core *shell, t_lst *job);
 void		job_background_notif(t_job *job);
 void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
-int8_t		mark_process_status(t_core *shell, t_lst *jobs, pid_t pid
-		, int status);
-int8_t		launch_blt(t_core *shell, t_process *process, int *fds
-		, int foreground);
+int8_t		mark_process_status
+				(t_core *shell, t_lst *jobs, pid_t pid, int status);
+int8_t		launch_blt
+				(t_core *shell, t_process *process, int *fds, int foreground);
 void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
 void		update_status(t_core *shell);
 t_job		*get_job(t_lst *jobs, char *str);
@@ -262,7 +261,6 @@ void		format_job_info(t_job *job);
 int			update_jobs(t_lst *jobs);
 void		attr_jobc_id(t_core *shell, t_job *job);
 
-/* ###########################  TEMPORARY   #################################*/
-void	debug_analyzer(t_core *shell);
+void		debug_analyzer(t_core *shell);
 
 #endif

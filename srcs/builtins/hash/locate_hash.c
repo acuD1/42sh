@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:20:26 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/13 11:01:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:38:16 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int8_t	del_located_hash(t_core *shell, t_lst *node, t_process *process)
 
 int8_t			locate_hash(t_core *shell, t_process *process)
 {
-	t_lst		*sub_map;
+	t_lst	*sub_map;
 
 	shell->hash.value = get_hash(process->av[0], shell->hash.size);
 	if (shell->hash.map == NULL || shell->hash.map[shell->hash.value] == NULL)

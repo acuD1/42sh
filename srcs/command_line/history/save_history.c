@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:28:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:48:36 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,19 @@
 **	Open "./.42sh_history" file to write history datas at the end of file
 */
 
-int8_t			write_history(t_read *term)
+// Need Proper error msg
+int8_t	write_history(t_read *term)
 {
-	int			fd;
-	int			i;
-	t_lst		*hst;
+	int		fd;
+	int		i;
+	t_lst	*hst;
 
 	i = 0;
 	if (!(hst = term->history))
 		return (FAILURE);
 	if ((fd = open(HISTORY_FILE, MODE_WRITE, S_USR_RW | S_GRP_OTH_R)) == -1)
 	{
-		ft_dprintf(STDIN_FILENO, "can't open history file\n");
+		dprintf(STDIN_FILENO, "can't open history file\n");
 		return (FAILURE);
 	}
 	while (hst->next && ++i < HIST_SIZE)
@@ -40,7 +41,7 @@ int8_t			write_history(t_read *term)
 		if (write(fd, hst->content, ft_strlen(hst->content)) == FAILURE
 			|| write(fd, "\n", 1) == FAILURE)
 		{
-			ft_dprintf(2, "write failure\n");
+			dprintf(2, "write failure\n");
 			close(fd);
 			return (FAILURE);
 		}
@@ -55,9 +56,9 @@ int8_t			write_history(t_read *term)
 **	Next ptr to the last line saved
 */
 
-void			save_history(t_read *term)
+void	save_history(t_read *term)
 {
-	t_lst		*saved;
+	t_lst	*saved;
 
 	saved = NULL;
 	if (*term->buffer)
@@ -79,11 +80,11 @@ void			save_history(t_read *term)
 **	Init history list -> load datas from history file
 */
 
-int8_t			init_history(t_read *term)
+int8_t	init_history(t_read *term)
 {
-	char		*line;
-	int			fd;
-	int			i;
+	char	*line;
+	int		fd;
+	int		i;
 
 	i = 0;
 	line = NULL;

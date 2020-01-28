@@ -6,23 +6,24 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:20:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:43:20 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t debugs(const char *path, t_read *in)
+// Need remove ?
+int8_t	debugs(const char *path, t_read *in, t_lst *w)
 {
-    int fd;
+	int fd;
 
-    if ((fd = open(path, O_WRONLY)) < 0)
-        return (-1);
-    dprintf(fd,"y {%d}\n", in->y);
-    return (1);
+	if ((fd = open(path, O_WRONLY)) < 0)
+		return (-1);
+	dprintf(fd, "y {%d} %s\n", in->y, w->content);
+	return (1);
 }
 
-void		check_tmp_buffer(t_read *term)
+void	check_tmp_buffer(t_read *term)
 {
 	goto_prompt(term);
 	ft_strdel(&term->buffer);
@@ -39,7 +40,7 @@ void		check_tmp_buffer(t_read *term)
 **		Arrow down print the prev saved in history from history index
 */
 
-void		move_key_down(t_read *term)
+void	move_key_down(t_read *term)
 {
 	t_lst		*w;
 
@@ -53,6 +54,7 @@ void		move_key_down(t_read *term)
 		}
 		else
 		{
+			term->history_index = w;
 			check_tmp_buffer(term);
 			return ;
 		}
@@ -67,9 +69,9 @@ void		move_key_down(t_read *term)
 **		Arrow up print the next saved in history from history index
 */
 
-void		move_key_up(t_read *term)
+void	move_key_up(t_read *term)
 {
-	t_lst		*w;
+	t_lst	*w;
 
 	if (term->history)
 	{
@@ -92,17 +94,16 @@ void		move_key_up(t_read *term)
 		term->buffer = ft_memalloc(BUFF_SIZE);
 		insert_str_in_buffer((char*)w->content, term);
 	}
-	//debugs("/dev/ttys002", term);
 }
 
 /*
 **		Arrow right to move the cursor one char on the right
 */
 
-void		move_right(char *buff, t_read *term)
+void	move_right(char *buff, t_read *term)
 {
-	int	width;
-	int	buff_index;
+	int		width;
+	int		buff_index;
 
 	(void)buff;
 	width = get_width_current_line(term);
@@ -113,8 +114,8 @@ void		move_right(char *buff, t_read *term)
 		term->x_index++;
 		term->x++;
 	}
-	else if (term->x >= term->ws_col - 1 || *buff == NEW_LINE
-			|| term->buffer[buff_index] == NEW_LINE)
+	else if (term->x >= term->ws_col - 1 || *buff == NEW_LINE[0]
+			|| term->buffer[buff_index] == NEW_LINE[0])
 	{
 		xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
 		xtputs(term->tcaps[KEY_DOWN], 1, my_outc);
@@ -128,9 +129,9 @@ void		move_right(char *buff, t_read *term)
 **		Arrow left to move the cursor one char on the left
 */
 
-void		move_left(char *buff, t_read *term)
+void	move_left(char *buff, t_read *term)
 {
-	int	width;
+	int		width;
 
 	(void)buff;
 	if ((term->x > term->prompt_len && term->y == 0)

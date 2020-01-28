@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/25 14:11:28 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:58:00 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ int8_t	init_shell(t_core *shell, char **av, char **environ)
 	if ((shell->is_interactive = isatty(shell->terminal)))
 	{
 		while (tcgetpgrp(shell->terminal) != (shell->pgid = getpgrp()))
-			kill(- shell->pgid, SIGTTIN);
+			kill(-shell->pgid, SIGTTIN);
 		shell->pgid = getpid();
 		if (setpgid(shell->pgid, shell->pgid) < 0)
-			print_and_quit(shell, "42sh: Couldn't put the shell in its own process group\n");
+			print_and_quit(shell,
+				"42sh: Couldn't put the shell in its own process group\n");
 		init_signals();
 		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: tcsetpgrp error\n");

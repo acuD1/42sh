@@ -6,26 +6,25 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/15 09:38:51 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 22:15:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			init_cmd_line(t_core *shell, t_read *term)
+void	init_cmd_line(t_core *shell, t_read *term)
 {
 	term->history = NULL;
 	term->history_index = NULL;
 	term->shell = shell;
-	term->new_line = 0;
-	term->found = 0;
+	term->flag = 0;
 	term->sub_prompt = 0;
 	term->buffer = NULL;
 	term->tmp_buff = NULL;
+	term->cmd = NULL;
 	if (get_size(term) != SUCCESS)
 		quit_shell(shell, EXIT_FAILURE, TRUE, I_MODE);
 	init_history(term);
-	//shell->history = term->history;
 }
 
 /*
@@ -35,17 +34,17 @@ void			init_cmd_line(t_core *shell, t_read *term)
 **	- ECHO disable echo input characters
 */
 
-uint8_t				init_config(t_core *shell)
+int8_t	init_config(t_core *shell)
 {
 	if (tgetent(NULL, "xterm-256color") == FAILURE)
 	{
-		// Display error msg
-		return (FAILURE);
+		ft_perror("tgetent", NULL, 0);
+		quit_shell(shell, EXIT_FAILURE, TRUE, I_MODE);
 	}
 	if (tcgetattr(STDIN_FILENO, &(shell->old_t)) == FAILURE)
 	{
-		// Display error msg
-		return (FAILURE);
+		ft_perror("tgetattr", NULL, 0);
+		quit_shell(shell, EXIT_FAILURE, TRUE, I_MODE);
 	}
 	shell->new_t = shell->old_t;
 	shell->new_t.c_lflag &= ~(ICANON | ECHO);
@@ -53,8 +52,8 @@ uint8_t				init_config(t_core *shell)
 	shell->new_t.c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->new_t)) == FAILURE)
 	{
-		// Display error msg
-		return (FAILURE);
+		ft_perror("tcsetattr", NULL, 0);
+		quit_shell(shell, EXIT_FAILURE, TRUE, I_MODE);
 	}
 	return (SUCCESS);
 }
@@ -64,12 +63,17 @@ uint8_t				init_config(t_core *shell)
 **	Reset term when exit, before launch another shell, set term in bg..
 */
 
-uint8_t			reset_config(t_core *shell)
+int8_t	reset_config(t_core *shell)
 {
-	tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t));
-	//ft_strdel(&(term->prompt));
+	if (tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t)) == FAILURE)
+	{
+		ft_perror("tcsetattr", NULL, 0);
+		quit_shell(shell, EXIT_FAILURE, TRUE, I_MODE);
+		return (FAILURE);
+	}
 	ft_bzero(shell->term.prompt, READ_SIZE);
-//	shell->old_t.c_lflag |= (ICANON | ECHO); ??
 	ft_strdel(&shell->term.tmp_buff);
 	return (SUCCESS);
 }
+
+// Fanny t'est sur de print exit ici ?

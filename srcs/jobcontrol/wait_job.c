@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   wait_job.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 20:36:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/17 06:16:19 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:25:56 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			wait_for_job(t_core *shell, t_lst *jobs, t_job *job)
+void	wait_for_job(t_core *shell, t_lst *jobs, t_job *job)
 {
 	pid_t	pid;
 	int		status;
@@ -23,7 +23,7 @@ void			wait_for_job(t_core *shell, t_lst *jobs, t_job *job)
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
 }
 
-void			wait_for_process(t_core *shell, t_lst *jobs, t_process *process)
+void	wait_for_process(t_core *shell, t_lst *jobs, t_process *process)
 {
 	pid_t	pid;
 	int		status;

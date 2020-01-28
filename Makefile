@@ -82,12 +82,14 @@ COMMANDLINE	=	command_line/
 AC			=	command_line/auto_completion/
 AK			=	command_line/action_keys/
 HISTORY		=	command_line/history/
+HST_EXP		=	command_line/history/expansions/
 PROMPT		=	command_line/prompt/
 EXEC		=	exec/
 LEXER		= 	lexer_parser_analyzer/lexer/
 PARSER		= 	lexer_parser_analyzer/parser/
 ANALYZER	= 	lexer_parser_analyzer/analyzer/
 EXPANSIONS	= 	expansions/
+LEXER_EXP	= 	expansions/lexer_exp/
 MISC		=	misc/
 HASH		=	$(BUILTINS)hash/
 
@@ -103,6 +105,7 @@ PATHS		+=	$(O_PATH)$(COMMANDLINE)
 PATHS		+=	$(O_PATH)$(AC)
 PATHS		+=	$(O_PATH)$(AK)
 PATHS		+=	$(O_PATH)$(HISTORY)
+PATHS		+=	$(O_PATH)$(HST_EXP)
 PATHS		+=	$(O_PATH)$(CORE)
 PATHS		+=	$(O_PATH)$(DB)
 PATHS		+=	$(O_PATH)$(EXEC)
@@ -111,22 +114,30 @@ PATHS		+=	$(O_PATH)$(LEXER)
 PATHS		+=	$(O_PATH)$(PARSER)
 PATHS		+=	$(O_PATH)$(ANALYZER)
 PATHS		+=	$(O_PATH)$(EXPANSIONS)
+PATHS		+=	$(O_PATH)$(LEXER_EXP)
 PATHS		+=	$(O_PATH)$(HASH)
 PATHS		+=	$(O_PATH)$(MISC)
 PATHS		+=	$(O_PATH)$(PROMPT)
 
 # Files
 
-SRC			+=	$(S_PATH)$(PROMPT)prompt.c
-SRC			+=	$(S_PATH)$(PROMPT)check_subprompt.c
-SRC			+=	$(S_PATH)$(PROMPT)check_backslash.c
-SRC			+=	$(S_PATH)$(PROMPT)sub_prompt.c
+SRC		+=	$(S_PATH)$(PROMPT)prompt.c
+SRC		+=	$(S_PATH)$(PROMPT)check_subprompt.c
+SRC		+=	$(S_PATH)$(PROMPT)check_backslash.c
+SRC		+=	$(S_PATH)$(PROMPT)sub_prompt.c
+SRC		+=	$(S_PATH)$(PROMPT)heredoc.c
 
-SRC			+=	$(S_PATH)$(EXPANSIONS)expansion.c
-SRC			+=	$(S_PATH)$(EXPANSIONS)math_expansion.c
-SRC			+=	$(S_PATH)$(EXPANSIONS)cmd_subs_expansion.c
-SRC			+=	$(S_PATH)$(EXPANSIONS)param_expansion.c
-SRC			+=	$(S_PATH)$(EXPANSIONS)tilde_expansion.c
+SRC		+=	$(S_PATH)$(LEXER_EXP)exp.c
+SRC		+=	$(S_PATH)$(LEXER_EXP)exp_bis.c
+SRC		+=	$(S_PATH)$(LEXER_EXP)exp_tilde.c
+
+SRC		+=	$(S_PATH)$(EXPANSIONS)expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)assign_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)choose_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)math_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)cmd_subs_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)param_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)tilde_expansion.c
 
 SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)term_config.c
@@ -142,8 +153,6 @@ SRC		+=	$(S_PATH)$(LEXER)lexer.c
 SRC		+=	$(S_PATH)$(LEXER)name_token.c
 SRC		+=	$(S_PATH)$(LEXER)io_nbr_nwl_token.c
 SRC		+=	$(S_PATH)$(LEXER)operator_token.c
-SRC		+=	$(S_PATH)$(LEXER)expansion_token.c
-SRC		+=	$(S_PATH)$(LEXER)expansion_token_bis.c
 SRC		+=	$(S_PATH)$(LEXER)tmp_debug.c
 
 SRC		+=	$(S_PATH)$(PARSER)parser.c
@@ -159,10 +168,10 @@ SRC		+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
 SRC		+=	$(S_PATH)$(ANALYZER)printanalyze.c
 SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer.c
 SRC		+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
+SRC		+=	$(S_PATH)$(ANALYZER)token_to_tab.c
 
 
 SRC			+=	$(S_PATH)dev.c
-
 SRC			+=	$(S_PATH)$(JOBC)background.c
 SRC			+=	$(S_PATH)$(JOBC)continue.c
 SRC			+=	$(S_PATH)$(JOBC)foreground.c
@@ -173,11 +182,11 @@ SRC			+=	$(S_PATH)$(JOBC)notifications.c
 SRC			+=	$(S_PATH)$(JOBC)wait_job.c
 SRC			+=	$(S_PATH)$(JOBC)get_job.c
 SRC			+=	$(S_PATH)$(JOBC)jobc_id.c
-
 SRC			+=	$(S_PATH)$(HISTORY)save_history.c
 SRC			+=	$(S_PATH)$(HISTORY)search_in_history.c
-SRC			+=	$(S_PATH)$(HISTORY)history_expansions.c
-SRC			+=	$(S_PATH)$(HISTORY)check_hst_expansions.c
+SRC			+=	$(S_PATH)$(HST_EXP)history_expansions.c
+SRC			+=	$(S_PATH)$(HST_EXP)check_hst_expansions.c
+SRC			+=	$(S_PATH)$(HST_EXP)replace_buffer.c
 
 SRC			+=	$(S_PATH)$(AK)check_caps.c
 SRC			+=	$(S_PATH)$(AK)del_keys.c
@@ -279,8 +288,7 @@ HDR			+=	shared_libft.h
 
 OBJ = $(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
 
-# Comment -no-pie flag if an error occured
-LIB = $(L_PATH)$(LNAME) -ltermcap #-no-pie
+LIB = $(L_PATH)$(LNAME) -ltermcap
 vpath %.h $(H_PATH)
 
 # Variables

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:42 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/16 23:50:32 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/28 19:00:58 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int8_t	append_output(t_redir *ptr)
 
 int8_t	redir_output(t_redir *ptr)
 {
-	int	fd;
+	int		fd;
 
 	if (ptr->io_num[0] < 0)
 		ptr->io_num[0] = 1;
@@ -51,7 +51,7 @@ int8_t	redir_output(t_redir *ptr)
 
 int8_t	redir_input(t_redir *ptr)
 {
-	int	fd;
+	int		fd;
 
 	if (ptr->io_num[0] < 0)
 		ptr->io_num[0] = 0;

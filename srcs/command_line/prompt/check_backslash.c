@@ -6,15 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:44:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:49:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-uint8_t		charset_count(t_read *term, char c, int i)
+u_int8_t	charset_count(t_read *term, char c, int i)
 {
-	int	count;
+	int		count;
 
 	count = 0;
 	while (term->buffer[i])
@@ -28,7 +28,7 @@ uint8_t		charset_count(t_read *term, char c, int i)
 	return (count);
 }
 
-uint8_t		check_backslash(t_read *term, char *quote)
+u_int8_t	check_backslash(t_read *term, char *quote)
 {
 	if (!*term->buffer)
 		return (FALSE);
@@ -39,7 +39,7 @@ uint8_t		check_backslash(t_read *term, char *quote)
 		if (charset_count(term, BACKSLASH, 0) % 2 != 0)
 		{
 			if (ft_strlen(term->buffer) > 1)
-				term->buffer = ft_strjoin(term->buffer, ";");
+				term->buffer = ft_strjoinf(term->buffer, ";", 1);
 			*quote = BACKSLASH;
 			return (TRUE);
 		}

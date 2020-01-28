@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:28:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:50:00 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-uint8_t		goto_next_quote(char *buffer, char quote_type, int *i)
+u_int8_t	goto_next_quote(char *buffer, char quote_type, int *i)
 {
 	while (buffer[(*i)++] != '\0')
 		if (buffer[*i] == quote_type)
@@ -31,13 +31,15 @@ char		set_quote_type(char quote)
 	return ('\0');
 }
 
-uint8_t		quotes_is_matching(t_read *term, char *quote)
+u_int8_t	quotes_is_matching(t_read *term, char *quote)
 {
-	int	i;
+	int		i;
 
 	i = -1;
 	while (term->buffer[++i])
 	{
+		if (term->buffer[i] == BACKSLASH)
+			i += 2;
 		if ((*quote = set_quote_type(term->buffer[i])) != '\0')
 		{
 			if (goto_next_quote(term->buffer, *quote, &i) == TRUE)
@@ -49,7 +51,7 @@ uint8_t		quotes_is_matching(t_read *term, char *quote)
 	return (TRUE);
 }
 
-uint8_t		check_subprompt(t_read *term)
+u_int8_t	check_subprompt(t_read *term)
 {
 	int		i;
 	char	quote;
@@ -57,14 +59,12 @@ uint8_t		check_subprompt(t_read *term)
 	i = -1;
 	quote = '\0';
 	if (quotes_is_matching(term, &quote) == TRUE)
-	{
 		if (check_backslash(term, &quote) == FALSE)
 			return (FALSE);
-	}
 	if (quote != '\0')
 	{
+		term->sub_prompt = TRUE;
 		load_subprompt(quote, term);
-		save_history(term);
 		return (TRUE);
 	}
 	return (FALSE);

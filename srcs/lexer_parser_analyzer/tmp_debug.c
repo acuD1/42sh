@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tmp_debug.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 17:13:59 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 17:14:04 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:52:55 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t		debug_ailleurs(const char *path, const char *str)
+int8_t	debug_ailleurs(const char *path, const char *str)
 {
 	int8_t	fd;
 
@@ -22,7 +22,7 @@ int8_t		debug_ailleurs(const char *path, const char *str)
 	return (SUCCESS);
 }
 
-int8_t		nono(const char *path)
+int8_t	nono(const char *path)
 {
 	int8_t	fd;
 
@@ -31,7 +31,7 @@ int8_t		nono(const char *path)
 	return (fd);
 }
 
-void		ft_printtab(char **cmd)
+void	ft_printtab(char **cmd)
 {
 	int		i;
 	int8_t	j;
@@ -44,7 +44,7 @@ void		ft_printtab(char **cmd)
 		dprintf(nono("/dev/ttys002"), "cmd {");
 		while (cmd[i])
 		{
-			dprintf(nono("/dev/ttys002"), "%s ", cmd[i]);
+			dprintf(nono("/dev/ttys002"), "'%s'", cmd[i]);
 			i++;
 		}
 		dprintf(nono("/dev/ttys002"), "}\n");

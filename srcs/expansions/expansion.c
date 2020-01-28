@@ -6,122 +6,144 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/25 13:53:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:20:42 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-uint8_t is_expansion(enum e_pstate id)
+u_int8_t	is_expansion(enum e_estate id)
 {
-	if (id == P_TILDEP || id == P_TILDEM || id == P_TILDE
-			|| id == P_DBPARENT || id == P_PARENT || id == P_DBQUOTE
-			|| id == P_BRACKET || id == P_HOOK ||id == P_DOLLAR)
-		return (TRUE);
-	return (FALSE);
+	if (id == E_TILDEP)
+		return (1);
+	else if (id == E_TILDEM)
+		return (2);
+	else if (id == E_TILDE)
+		return (3);
+	else if (id == E_DBPARENT)
+		return (4);
+	else if (id == E_PARENT || id == E_BQUOTE)
+		return (5);
+	else if (id == E_BRACKET)
+		return (6);
+	else if (id == E_HOOK)
+		return (7);
+	else if (id == E_DOLLAR)
+		return (8);
+	else if (id == E_DBQUOTE)
+		return (9);
+	else if (id == E_QUOTE)
+		return (0);
+	return (0);
 }
 
-char *exp_error(char *data, t_core *shell)
+char		*no_exp(char *data, t_core *shell)
 {
 	(void)shell;
-	printf("EXP_ERROR [%s]\n", data);
-	return (data);
+	(void)data;
+	printf("COMMENT CA SE FESSE\n");
+	return (NULL);
 }
 
-int8_t add_assign_env(t_lst *lst, t_core *shell)
+// Heu WTF ? ^^
+int			expelliarmus(char *src, int *index, char **dst, t_core *shell)
 {
-	char	*value;
-	t_lst	*tmp;
+	t_expansion		toto;
+	enum e_estate	state;
+	char			*hetero;
+	char			*trans;
+	int				i;
 
-	if (!lst || !shell->env)
-		return (FAILURE);
-	value = NULL;
-	tmp = NULL;
-	while (lst)
+	hetero = NULL;
+	trans = NULL;
+	state = NB_EXPANSION_STATE;
+	init_expansionat(&toto);
+	i = *index;
+	state = find_expansion(&src[i]);
+	toto.erience = is_expansion(state);
+	if ((hetero = get_expansion(&src[i], state)))
 	{
-		value = ft_strdup(((t_db*)lst->content)->value);
-		if (edit_var(shell, ((t_db*)lst->content)->key, value, INTERNAL_VAR) != SUCCESS)
-		{
-			// free(value);
-			return (FAILURE);
-		}
-		tmp = lst;
-		lst = lst->next;
-		ft_strdel(&((t_db*)tmp->content)->key);
-		ft_strdel(&((t_db*)tmp->content)->value);
-		free(tmp);
+		if ((trans = toto.sionat[toto.erience](hetero, shell)))
+			*dst = ft_strjoinf(*dst, trans, 4);
+		*index += ft_strlen(hetero);
+		return (0);
+		ft_strdel(&hetero);
 	}
-	return (TRUE);
+	return (1);
 }
 
-char *start_expansion(t_core *shell, char *data)
+static int	get_quotes_flags(char c, int *dbquote, int *quote)
 {
-	int 	i;
-	t_expan expan[] = 	{
-		{exp_tilde, P_TILDE, 1, "~"},
-		{exp_tilde, P_TILDEP, 2, "~+"},
-		{exp_tilde, P_TILDEM, 2, "~-"},
-		{exp_math, P_DBPARENT, 3, "$(("},
-		{exp_cmd_subs, P_PARENT, 2, "$("},
-		{exp_param, P_BRACKET, 2, "${"},
-		{exp_math, P_HOOK, 2, "$["},
-		{exp_param, P_DOLLAR, 1, "$"},
-	};
-	i = 0;
-	if (!data || !shell->env)
-		return (data);
-	while (i < NB_OF_EXP)
+	int		guill;
+	int		apost;
+
+	guill = *dbquote;
+	apost = *quote;
+	if (c == '\"')
 	{
-		if (!(ft_strncmp(data, expan[i].data, expan[i].len)))
-			data = expan[i].machine(data, shell);
-		i++;
+		if (!guill)
+			guill = 1;
+		else
+			guill = 0;
 	}
-	return (data);
+	if (c == '\'' && !guill)
+	{
+		if (!apost)
+			apost = 1;
+		else
+			apost = 0;
+	}
+	*dbquote = guill;
+	*quote = apost;
+	return (1);
 }
 
-// char *do_exp_in_dbquote(char *str, t_cre *shell)
-// {
-// 	va parcourir la str et check a chaque ~ ou $ lexpansion si ya pas dexpansion go next et join
-// }
-
-void		find_expansion(char **tablo, t_core *shell)
+char		*exp_dbquote(char *data, t_core *shell)
 {
-	int		i;
+	int		flag[4];
+	char	*res;
 	char	*tmp;
 
-	i = -1;
+	flag[0] = 0;
+	flag[1] = 0;
+	flag[2] = 0;
+	flag[3] = 1;
 	tmp = NULL;
-	while (tablo[++i])
+	res = ft_strnew(0);
+	while (data[flag[2]])
 	{
-		tmp = ft_strdup(tablo[i]);
-		if (tablo[i][0] == '$' || tablo[i][0] == '~')
+		flag[3] = get_quotes_flags(data[flag[2]], &flag[0], &flag[1]);
+		if (!flag[1]
+			&& (data[flag[2]] == '$'
+			|| data[flag[2]] == '~' || data[flag[2]] == '`'))
 		{
-			//LEAKS
-			tmp = start_expansion(shell, tmp);
-			free(tablo[i]);
-			tablo[i] = ft_strdup(tmp);
-			ft_strdel(&tmp);
+			flag[3] = expelliarmus(data, &flag[2], &res, shell);
+			if ((size_t)flag[2] == ft_strlen(data))
+				break ;
+			if (!flag[3])
+				flag[2]--;
 		}
-		// else if (tablo[i][0] == '\"')
-		// {
-		// 	tmp = do_exp_in_dbquote(tmp, shell)
-		// 	free(tablo[i]);
-		// 	tablo[i] = ft_strdup(tmp);
-		// 	ft_strdel(&tmp);
-		// }
+		if (flag[3])
+		{
+			tmp = ft_strsub(data, flag[2], 1);
+			res = ft_strjoinf(res, tmp, 4);
+		}
+		flag[2]++;
 	}
+	return (res);
 }
 
 void		expansion(t_core *shell, t_process *process)
 {
-	char	**tablo;
-
-	tablo = NULL;
-	if (!process->av)
+	if (!process || !shell)
 		return ;
-	tablo = ft_tabcopy(tablo, process->av);
-	find_expansion(tablo, shell);
-	ft_tabfree(process->av);
-	process->av = ft_tabcopy(process->av, tablo);
-	ft_tabfree(tablo);
+	if (process->assign_list)
+	{
+		expansion_assign(shell, process);
+		add_assign_env(process->assign_list, shell);
+	}
+	if (process->tok_list)
+		expansion_tok(shell, process);
+	if (process->redir_list)
+		expansion_redir(shell, process);
 }

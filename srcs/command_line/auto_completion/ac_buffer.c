@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:26:23 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:44:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 **		Read again buff if another tab key is pressed => return TRUE
 */
 
-uint8_t			read_again(char **prev_b, char *path, char *name, t_read *term)
+u_int8_t	read_again(char **prev, char *path, char *name, t_read *term)
 {
-	uint64_t	value;
+	u_int64_t	value;
 	char		buff[READ_SIZE + 1];
 
 	ft_bzero(buff, READ_SIZE);
-	delete_last_cmd(*prev_b, term);
+	delete_last_cmd(*prev, term);
 	if (is_dir(path) == TRUE)
 		ft_strcat(name, "/");
 	insert_str_in_buffer(name, term);
@@ -32,49 +32,57 @@ uint8_t			read_again(char **prev_b, char *path, char *name, t_read *term)
 		value = get_mask(buff);
 		if (value == TAB_KEY)
 		{
-			ft_strdel(&*prev_b);
-			*prev_b = ft_strdup(name);
+			ft_strdel(&*prev);
+			*prev = ft_strdup(name);
 			return (TRUE);
 		}
 		else
+		{
+			term->flag = FALSE;
 			return (FALSE);
+		}
 	}
 	return (FALSE);
 }
 
-uint8_t			get_dir(char *prev_b, char *to_find, char *current_dir)
+u_int8_t	get_dir(t_read *term, char *current_dir)
 {
-	int			found;
-	char		*tmp;
+	int		found;
+	char	*tmp;
+	int		i;
 
+	i = 0;
 	tmp = NULL;
-	found = ft_strlen(to_find);
-	while (to_find[--found])
+	found = ft_strlen(term->cmd[0]);
+	while (--found)
 	{
-		if (to_find[found] == '/')
+		if (term->cmd[0][found] == '/')
 		{
 			ft_bzero(current_dir, BUFF_SIZE);
-			ft_strncpy(current_dir, prev_b, found + 1);
-			tmp = ft_strdup(to_find);
-			ft_strdel(&to_find);
-			to_find = ft_strdup(ft_strrchr(tmp, '/') + 1);
+			ft_strncpy(current_dir, term->cmd[1], found + 1);
+			tmp = ft_strdup(ft_strrchr(term->cmd[0], '/'));
+			ft_strdel(&term->cmd[0]);
+			i = ft_strlen(tmp);
+			term->cmd[0] = ft_strdup(tmp + 1);
 			ft_strdel(&tmp);
-			ft_strdel(&prev_b);
-			prev_b = ft_strdup(to_find);
 			return (TRUE);
 		}
 	}
 	return (FALSE);
 }
 
-DIR				*update_curr_dir(char *to_find, char *prev_b, char *curr_dir)
+DIR			*update_curr_dir(t_read *term, char *curr_dir)
 {
-	DIR			*dir;
+	DIR		*dir;
+	char	*tmp;
 
-	if (get_dir(prev_b, to_find, curr_dir))
+	tmp = NULL;
+	if (get_dir(term, curr_dir))
 	{
-		ft_strdel(&to_find);
-		to_find = ft_strdup(prev_b);
+		tmp = ft_strdup(term->cmd[0]);
+		ft_strdel(&term->cmd[1]);
+		term->cmd[1] = ft_strdup(tmp);
+		ft_strdel(&tmp);
 	}
 	else if (getcwd(curr_dir, BUFF_SIZE))
 		ft_strcat(curr_dir, "/");
@@ -90,49 +98,55 @@ DIR				*update_curr_dir(char *to_find, char *prev_b, char *curr_dir)
 **		Return FAILURE(-1) to stop reading
 */
 
-int8_t			read_dir(char **prev_b, char *to_find, t_read *term)
+void		read_dir(t_read *term, char current_dir[], DIR *dir)
 {
 	struct dirent	*data;
-	DIR				*dir;
 	char			*path;
-	char			current_dir[BUFF_SIZE];
 
 	path = NULL;
-	if ((dir = update_curr_dir(to_find, *prev_b, current_dir)) == NULL)
-		return (FAILURE);
 	while ((data = readdir(dir)) != NULL)
 	{
-		if (isstart(data->d_name, to_find))
+		ft_strdel(&path);
+		if (isstart(data->d_name, term->cmd[0]))
 		{
-			term->found = TRUE;
+			term->flag = TRUE;
 			path = ft_strjoin(current_dir, data->d_name);
-			if (read_again(prev_b, path, data->d_name, term) == TRUE)
+			if (read_again(&term->cmd[1], path, data->d_name, term) == TRUE)
 				continue ;
 			else
-			{
-				closedir(dir);
-				ft_strdel(&path);
-				return (FAILURE);
-			}
+				break ;
 		}
 	}
 	ft_strdel(&path);
-	return (term->found);
+	closedir(dir);
+	if (term->flag == TRUE)
+	{
+		dir = opendir(current_dir);
+		read_dir(term, current_dir, dir);
+	}
 }
 
 /*
 **		To complete files if char inserted match with any files in current dir
 */
 
-void			to_complete_buffer(char *prev_b, char *to_find, t_read *term)
+void		to_complete_buffer(char *to_find, t_read *term)
 {
-	term->found = FALSE;
+	char	current_dir[BUFF_SIZE];
+	DIR		*dir;
+
+	ft_bzero(current_dir, BUFF_SIZE);
+	term->flag = FALSE;
+	ft_tabfree(term->cmd);
+	term->cmd = ft_memalloc(BUFF_SIZE);
+	term->cmd[0] = ft_strdup(to_find);
+	term->cmd[1] = ft_strdup(to_find);
 	if (isstart(to_find, "$"))
 	{
-		parse_env(prev_b, to_find, term);
+		parse_env(&term->cmd[1], term->cmd[0], term);
 		return ;
 	}
-	if (read_dir(&prev_b, to_find, term) == FAILURE)
+	if ((dir = update_curr_dir(term, current_dir)) == NULL)
 		return ;
-	term->found == TRUE ? to_complete_buffer(prev_b, to_find, term) : 0;
+	read_dir(term, current_dir, dir);
 }

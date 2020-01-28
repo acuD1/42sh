@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/25 13:50:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:58:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void			kill_processes(int signum, t_core *shell)
 	shell->running_process = NULL;
 }
 
-static	void	erase_line(t_core *shell)
+static void		erase_line(t_core *shell)
 {
 	if (shell->term.status == CMD_PROMPT)
 	{

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/26 15:24:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:25:10 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		reset_signals(void)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (i++ < SIGUSR2)
@@ -48,8 +48,8 @@ static void	redir_pipes(int *infile, int *outfile)
 	}
 }
 
-int8_t		launch_blt(t_core *shell, t_process *process, int *fds
-		, int foreground)
+int8_t		launch_blt
+	(t_core *shell, t_process *process, int *fds, int foreground)
 {
 	int		blt;
 
@@ -64,8 +64,8 @@ int8_t		launch_blt(t_core *shell, t_process *process, int *fds
 	return (FAILURE);
 }
 
-void		launch_process(t_core *shell
-		, t_process *process, int infile, int outfile)
+void		launch_process
+	(t_core *shell, t_process *process, int infile, int outfile)
 {
 	int		fds[2];
 
@@ -81,7 +81,6 @@ void		launch_process(t_core *shell
 	{
 		if (launch_blt(shell, process, fds, TRUE) != FAILURE)
 			exit(process->status);
-		//get_bin(shell, process);
 	}
 	call_bin(shell, process);
 }

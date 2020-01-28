@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/15 09:27:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 22:13:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 **	  - `clr_inputs' => to clear input from the cursor and following inputs
 */
 
-void		goto_prompt(t_read *term)
+void	goto_prompt(t_read *term)
 {
 	while (term->y-- > 0)
 		xtputs(term->tcaps[KEY_UP], 1, my_outc);
@@ -36,7 +36,7 @@ void		goto_prompt(t_read *term)
 **	  Store some datas for pressed keys
 */
 
-void		display_prompt(t_read *term)
+void	display_prompt(t_read *term)
 {
 	ft_bzero(term->prompt, 10);
 	ft_strcpy(term->prompt, PS1);
@@ -46,7 +46,8 @@ void		display_prompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term->sub_prompt = 0;
-	term->new_line = 0;
+	term->flag = 0;
+	term->cmd = NULL;
 	ft_printf("%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 }
@@ -57,7 +58,8 @@ void		display_prompt(t_read *term)
 **	  The current buffer is saved in a history list
 */
 
-int8_t		end_of_file(char *buff, t_read *term)
+
+int8_t	end_of_file(char *buff, t_read *term)
 {
 	t_core	*shell;
 
@@ -65,14 +67,14 @@ int8_t		end_of_file(char *buff, t_read *term)
 	if (!ft_strcmp(term->buffer, "") && get_mask(buff) == CTRL_D)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-		reset_config(shell);
+		//reset_config(shell); // Y'a un bug la
 		write_history(term);
-		return	(TRUE);
+		return (TRUE);
 	}
 	return (FALSE);
 }
 
-int8_t		init_prompt(t_core *shell)
+int8_t	init_prompt(t_core *shell)
 {
 	char	buff[READ_SIZE + 1];
 
@@ -93,10 +95,7 @@ int8_t		init_prompt(t_core *shell)
 	}
 	shell->term.status = CMD_DONE;
 	if (check_subprompt(&shell->term) == FALSE)
-	{
-		// remove_newline(term);
 		check_expansions(&shell->term);
-	}
 	reset_config(shell);
 	return (SUCCESS);
 }

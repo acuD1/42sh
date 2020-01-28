@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer_assign.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:53:37 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 13:53:43 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:28:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,29 @@ t_db		*fetch_assign(t_db *assign)
 	return (new);
 }
 
-t_analyzer	*ass_analyze(t_analyzer *analyzer)
+// PUTIN WTF
+t_analyzer	*ass_analyze(t_analyzer *anal)
 {
-	analyzer->db.value = ft_strdup(((t_token*)analyzer->lexer->content)->data);
-	analyzer->state = A_START;
-	ft_lstappend(&analyzer->process.assign_list,
-		ft_lstnew(fetch_assign(&analyzer->db), sizeof(t_db)));
-	init_assign(&analyzer->db);
-	return (analyzer);
+	int		i;
+	int		j;
+	char	*str;
+
+	i = 0;
+	j = 0;
+	str = ((t_token*)anal->lexer->content)->data;
+	while (str[i] != '=')
+		i++;
+	anal->db.key = ft_strsub(str, 0, i);
+	j = i++;
+	while (str[j])
+		j++;
+	anal->db.value = ft_strsub(str, i, j - i);
+	ft_lstappend(&anal->process.assign_list,
+		ft_lstnew(&anal->db, sizeof(t_db)));
+	init_assign(&anal->db);
+	anal->process.type = ((t_token*)anal->lexer->content)->id;
+	anal->state = A_ASSIGN;
+	return (anal);
 }
 
 t_analyzer	*assign_analyze(t_analyzer *anal, t_core *shell)
@@ -51,24 +66,16 @@ t_analyzer	*assign_analyze(t_analyzer *anal, t_core *shell)
 	char	*tmp;
 
 	tmp = NULL;
-	anal->job.command = fill_cmd_job(anal, 0);
 	if (((t_token*)anal->lexer->content)->id == P_ASSIGN
 		&& ((anal->state != A_WORD)))
 	{
-		anal->db.key = ft_strsub(((t_token*)anal->lexer->content)->data, 0,
-			ft_strlen(((t_token*)anal->lexer->content)->data) - 1);
-		anal->process.type = ((t_token*)anal->lexer->content)->id;
-		anal->state = A_ASSIGN;
+		anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
+		return (anal = ass_analyze(anal));
 	}
 	else
 	{
-		tmp = ft_strdup(((t_token*)anal->lexer->content)->data);
-		get_token(anal);
-		anal->job.command = fill_cmd_job(anal, 0);
-		tmp = ft_strjoinf(tmp, ((t_token*)anal->lexer->content)->data, 1);
-		anal->process.av = ft_add_arg_cmd_process(anal->process.av, tmp);
+		anal = process_word_analyze(anal);
 		anal->state = A_WORD;
-		free(tmp);
 	}
 	(void)shell;
 	return (anal);

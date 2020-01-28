@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   job_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 16:42:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/20 20:48:10 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:23:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_process	*find_process(t_lst *job, pid_t pid)
 {
-	t_lst *process;
+	t_lst	*process;
 
 	while (job != NULL)
 	{
@@ -72,7 +72,7 @@ int8_t		job_is_completed(t_job *job)
 
 void		debug_job(t_job *job)
 {
-	t_lst *ptr;
+	t_lst	*ptr;
 
 	ptr = job->process_list;
 	printf(" ** JOB **\n");

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/15 09:30:17 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 22:12:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 **	CTRL + F to jump one word forward
 */
 
-void		check_keys_comb(char *buff, t_read *term, uint64_t value)
+void		check_keys_comb(char *buff, t_read *term, u_int64_t value)
 {
 	int		i;
 
@@ -42,11 +42,7 @@ void		check_keys_comb(char *buff, t_read *term, uint64_t value)
 		jump_words(buff, term, value);
 }
 
-/*
-**		Check if is EOF (CTRL+D) to exit program is buffer is empty
-*/
-
-uint8_t		cursor_motion(char *buff, t_read *term, uint64_t value)
+u_int8_t	cursor_motion(char *buff, t_read *term, uint64_t value)
 {
 	if (value == ARROW_UP)
 		move_key_up(term);
@@ -75,9 +71,10 @@ uint8_t		cursor_motion(char *buff, t_read *term, uint64_t value)
 **		Backspace/Delete keys to delete character in input
 */
 
-uint8_t		check_caps(char *buff, t_read *term)
+
+u_int8_t	check_caps(char *buff, t_read *term)
 {
-	uint64_t	value;
+	u_int64_t	value;
 
 	value = get_mask(buff);
 	if (is_print(*buff))
@@ -86,7 +83,7 @@ uint8_t		check_caps(char *buff, t_read *term)
 		research_mode(term);
 	if (value == TAB_KEY)
 	{
-		auto_complete_mode(buff, term);
+		auto_complete_mode(term);
 		value = get_mask(buff);
 	}
 	if (cursor_motion(buff, term, value))

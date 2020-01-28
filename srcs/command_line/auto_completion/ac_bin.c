@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:26:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:44:17 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@
 ** 	Function to save in buffer the current bin found at buffer[0]
 */
 
-void			insert_bin_in_buffer(char *d_name, t_read *term)
+void		insert_bin_in_buffer(char *d_name, t_read *term)
 {
-	int			i;
-	int			buf_index;
+	int		i;
+	int		buf_index;
 
 	i = -1;
 	buf_index = 0;
-	ft_bzero(term->buffer, ft_strlen(term->buffer));
+	ft_strdel(&term->buffer);
+	term->buffer = ft_memalloc(BUFF_SIZE);
 	while (d_name[++i])
 	{
 		insert_char_in_buffer(d_name[i], term, buf_index);
@@ -36,18 +37,21 @@ void			insert_bin_in_buffer(char *d_name, t_read *term)
 ** 	Return true if another tab key is pressed or no match found
 */
 
-uint8_t			not_found(char *name, char *to_find, char *buf, t_read *term)
+u_int8_t	not_found(char *name, char *to_find, t_read *term)
 {
-	uint64_t	value;
+	u_int64_t	value;
+	char		buff[READ_SIZE + 1];
 
+	value = 0;
+	ft_bzero(buff, READ_SIZE);
 	if (isstart(name, to_find))
 	{
-		term->found = 1;
+		term->flag = TRUE;
 		goto_prompt(term);
 		insert_bin_in_buffer(name, term);
-		if (xread(STDIN_FILENO, buf, READ_SIZE) > 0)
+		if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 		{
-			value = get_mask(buf);
+			value = get_mask(buff);
 			if (value == TAB_KEY)
 				return (TRUE);
 			else
@@ -62,7 +66,7 @@ uint8_t			not_found(char *name, char *to_find, char *buf, t_read *term)
 ** 	Check if an exe bin already exists with the curr buffer inserted
 */
 
-void			to_complete_bin(char *buf, char *to_find, t_read *term)
+void		to_complete_bin(char *to_find, t_read *term)
 {
 	struct dirent	*data;
 	DIR				*dir;
@@ -76,7 +80,7 @@ void			to_complete_bin(char *buf, char *to_find, t_read *term)
 		dir = opendir(path[i]);
 		while ((data = readdir(dir)) != NULL)
 		{
-			if (not_found(data->d_name, to_find, buf, term))
+			if (not_found(data->d_name, to_find, term))
 				continue ;
 			else
 			{
@@ -87,5 +91,6 @@ void			to_complete_bin(char *buf, char *to_find, t_read *term)
 		}
 		closedir(dir);
 	}
-	term->found == 1 ? to_complete_bin(buf, to_find, term) : 0;
+	ft_tabfree(path);
+	term->flag == TRUE ? to_complete_bin(to_find, term) : 0;
 }

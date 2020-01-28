@@ -6,18 +6,18 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:45:53 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/03 14:43:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:42:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int		isvalid_assignement_word(char *str, size_t index)
+static int	isvalid_assignement_word(char *str, size_t index)
 {
-	int			i;
+	int		i;
 
 	i = index;
-	if (!str || ft_isdigit(str[0]) || str[0] == '=')
+	if (!str || ft_isdigit(str[i]) || str[i] == '=')
 		return (0);
 	while (str[i] != '=')
 	{
@@ -26,30 +26,35 @@ static int		isvalid_assignement_word(char *str, size_t index)
 		else
 			return (0);
 	}
-	if (str[i + 1] && str[i + 1] == '=')
+	if (str[i + 1] && (str[i + 1] == '='))
 		return (0);
 	return (i + 1);
 }
 
-t_lst			*create_assign_token(t_lexer *lex, int len, t_lst *lexer_token)
+t_lst		*create_assign_token(t_lexer *lex, int len, t_lst *lexer_token)
 {
-	char		*str;
+	char	*str;
+	int		value_len;
 
 	str = NULL;
-	if (!(str = ft_strsub(lex->buff, lex->buf_pos, len - lex->buf_pos)))
+	value_len = 0;
+	value_len = get_word_size_ntype(len, lex->buff);
+	if (!value_len)
+		value_len = len;
+	if (!(str = ft_strsub(lex->buff, lex->buf_pos, value_len - lex->buf_pos)))
 		return (NULL);
 	if (!(ft_lstappend(&lexer_token,
 		ft_lstnew(fetch_token(&lex->token, P_ASSIGN, str), sizeof(t_token)))))
 		return (NULL);
 	free(str);
 	lex->ntok++;
-	lex->buf_pos = len;
+	lex->buf_pos = value_len;
 	return (lexer_token);
 }
 
-t_lst			*assignement_word_lexer(t_lexer *lexer, t_lst *lexer_token)
+t_lst		*assignement_word_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
-	int			i;
+	int		i;
 
 	i = 0;
 	if (!lexer->buff)

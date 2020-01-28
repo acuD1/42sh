@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/25 14:14:31 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/27 18:58:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	free_job(t_core *shell, t_lst *job)
 	{
 		shell->job_list = job->next;
 	}
-	free_process_list(job->content);
+	free_process_list(&(((t_job*)job->content)->process_list));
 	ft_strdel(&(((t_job*)job->content)->command));
 	free(job->content);
 	free(job);

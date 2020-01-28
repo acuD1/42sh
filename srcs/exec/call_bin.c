@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/25 13:45:45 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 19:01:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static int8_t	check_filepath(char *filepath)
 
 int8_t			call_bin(t_core *shell, t_process *process)
 {
-	char		**envp;
-	int			ret;
+	char	**envp;
+	int		ret;
 
 	envp = NULL;
 	exec_redirs(shell, process->redir_list);

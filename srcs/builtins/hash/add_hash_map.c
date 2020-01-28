@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:38:40 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/26 15:25:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:37:25 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int8_t	fill_path
 
 static int8_t	is_hashed(t_core *shell, t_process *process, size_t i)
 {
-	t_lst		*sub_map;
+	t_lst	*sub_map;
 
 	if (ft_strchr(process->av[i], '/'))
 		return (SUCCESS);

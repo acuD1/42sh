@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:20:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:42:40 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 **	- `save_cr' => save cursor position
 */
 
-void		clear_all_lines(t_read *term)
+void	clear_all_lines(t_read *term)
 {
 	xtputs(term->tcaps[DEL_CR], 1, my_outc);
 	xtputs(term->tcaps[SAVE_CR], 1, my_outc);
@@ -29,7 +29,7 @@ void		clear_all_lines(t_read *term)
 	goto_prompt(term);
 }
 
-void		del_key(t_read *term)
+void	del_key(t_read *term)
 {
 	int		i;
 	int		x;
@@ -61,7 +61,7 @@ void		del_key(t_read *term)
 **	Call del_key function to delete char from cursor position
 */
 
-void		bs_key(char *buf, t_read *term)
+void	bs_key(char *buf, t_read *term)
 {
 	if ((term->y > 0 && term->x >= 0) || term->x > term->prompt_len)
 	{

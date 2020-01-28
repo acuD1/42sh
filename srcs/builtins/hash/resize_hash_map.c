@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:01:15 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/13 11:01:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:38:23 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 static int8_t	fill_new_hash_map
 	(t_core *shell, t_lst **map, t_lst **new_map)
 {
-	t_lst		*sub_map;
-	size_t		i;
+	t_lst	*sub_map;
+	size_t	i;
 
 	i = 0;
 	while (i < shell->hash.size)

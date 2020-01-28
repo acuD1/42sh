@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:18:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:59:21 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void			get_range(char **cmd, char **range)
 
 	i = 0;
 	j = -1;
-//	ft_bzero(range, sizeof(range));
-//	ft_bzero(range[1], sizeof(range[1]));
+	// ft_bzero(range, sizeof(range));
+	// ft_bzero(range[1], sizeof(range[1]));
 	while (j < 2 && cmd && cmd[++i])
 	{
 		if (isstart(cmd[i], "-l") || isstart(cmd[i], "-r")
@@ -37,7 +37,7 @@ void			get_range(char **cmd, char **range)
 
 /*
 **	Fix Command builtin have 2 modes :
-**		Editing (default) & Listing (-lnr options)
+**	Editing (default) & Listing (-lnr options)
 */
 
 int8_t			builtin_fc(t_core *shell, t_process *process)

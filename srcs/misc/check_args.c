@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 03:57:59 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 20:31:39 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:54:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		check_invalid_identifiers(char *arg, char *exceptions)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	if (!(arg[0]))

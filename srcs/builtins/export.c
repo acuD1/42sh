@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/25 12:59:19 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:41:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ static int8_t	parse_export(int argc, char **argv)
 	return (SUCCESS);
 }
 
+static void		export_hash_handler(t_core *shell, char *str)
+{
+	if (ft_strequ(str, "PATH") == TRUE)
+		free_hash_map(&shell->hash);
+}
+
 static int8_t	export(t_core *shell, char *arg, int *ret)
 {
 	t_db	*db;
@@ -33,8 +39,7 @@ static int8_t	export(t_core *shell, char *arg, int *ret)
 
 	len = ft_strclen(arg, '=');
 	str = ft_strsub(arg, 0, len);
-	if (ft_strequ(str, "PATH") == TRUE)
-		free_hash_map(&shell->hash); // Need testing, also we need it when we assign variable without export
+	export_hash_handler(shell, str);
 	if (str && (check_invalid_identifiers(str, "=")
 			|| ft_isdigit(arg[0]) != SUCCESS))
 	{

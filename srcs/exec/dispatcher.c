@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/25 14:15:55 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 17:34:04 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,15 @@ void		launch_job(t_core *shell, t_job *job, int foreground)
 	int			fds[2];
 
 	fds[0] = STDIN_FILENO;
+	mypipe[0] = STDIN_FILENO;
 	process = job->process_list;
-	while (process)
+	while (process && (ptr = ((t_process*)process->content)))
 	{
-		ptr = ((t_process*)process->content);
 		setup_pipes(shell, ptr, mypipe, &fds[1]);
 		ptr->stopped = (foreground == TRUE) ? FALSE : TRUE;
+		expansion(shell, ptr);
 		if (ptr->completed == FALSE)
 		{
-			expansion(shell, ptr);
-			add_assign_env(ptr->assign_list, shell);
 			launch_blt(shell, ptr, fds, foreground);
 			if (ptr->completed != TRUE)
 				exec_process(shell, job, ptr, fds);

@@ -6,30 +6,20 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:21:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:40:58 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t debug(const char *path, int buff, t_read *in)
-{
-    int fd;
-
-    if ((fd = open(path, O_WRONLY)) < 0)
-        return (-1);
-    dprintf(fd,"[%c] {%d}\n", buff, in->x);
-    return (1);
-}
-
 /*
 **	To insert a char in buffer at the end of line
 */
 
-void		insert_char_in_buffer(char buff, t_read *term, int buff_index)
+void	insert_char_in_buffer(char buff, t_read *term, int buff_index)
 {
-	dprintf(STDIN_FILENO, "%c", buff);
-	if (buff == NEW_LINE || term->x >= term->ws_col)
+	ft_dprintf(STDIN_FILENO, "%c", buff);
+	if (buff == NEW_LINE[0] || term->x >= term->ws_col)
 	{
 		term->x = 0;
 		term->y++;
@@ -40,7 +30,7 @@ void		insert_char_in_buffer(char buff, t_read *term, int buff_index)
 	term->x_index++;
 }
 
-void		insert_at_index(t_read *term, int buff_index, char *buff)
+void	insert_at_index(t_read *term, int buff_index, char *buff)
 {
 	int		j;
 
@@ -57,7 +47,7 @@ void		insert_at_index(t_read *term, int buff_index, char *buff)
 **			`clr_lines' => to clear all following lines from cursor
 */
 
-void		insert_inline_char(char *buff, t_read *term, int buff_index)
+void	insert_inline_char(char *buff, t_read *term, int buff_index)
 {
 	char	*tmp;
 	int		x;
@@ -80,7 +70,7 @@ void		insert_inline_char(char *buff, t_read *term, int buff_index)
 **	To insert a string in buffer at the end of line
 */
 
-void		insert_str_in_buffer(char *d_name, t_read *term)
+void	insert_str_in_buffer(char *d_name, t_read *term)
 {
 	int		buff_index;
 	int		i;
@@ -103,7 +93,7 @@ void		insert_str_in_buffer(char *d_name, t_read *term)
 **	If cursor position is under the width of line => insert inline
 */
 
-void		insert_in_buffer(char *buff, t_read *term)
+void	insert_in_buffer(char *buff, t_read *term)
 {
 	int		buff_index;
 	int		increase_len;

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:17:17 by arsciand          #+#    #+#             */
-/*   Updated: 2019/12/17 08:44:56 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:58:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_hash_map_dev(t_hash *hash)
 
 void	debug_analyzer(t_core *shell)
 {
-	t_lst *tmp;
+	t_lst	*tmp;
 
 	tmp = NULL;
 	if (shell->job_list)

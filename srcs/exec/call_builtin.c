@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 00:24:24 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/25 13:46:33 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 21:03:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int8_t	is_a_blt(char *cmd)
 {
-	static char		*blt_names[12] = {"set", "unset", "export", "exit", "cd"
-		, "echo", "pwd", "type", "fg", "jobs", "bg", "hash"};
-	int				i;
+	static char	*blt_names[12] = {"set", "unset", "export", "exit", "cd"
+	, "echo", "pwd", "type", "fg", "jobs", "bg", "hash"};
+	int			i;
 
 	i = 0;
 	while (i < 12)

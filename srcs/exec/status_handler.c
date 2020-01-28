@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   status_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:31:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 21:29:44 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/28 19:03:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*signal_msg(int sig)
 {
-	static char *message[32] = {"Done", "Hangup: 1\n", "Interrupt: 2"
+	static char	*message[32] = {"Done", "Hangup: 1\n", "Interrupt: 2"
 		, "Quit: 3\n", "Illegal instruction: 4\n", "Trace/BPT trap: 5\n"
 		, "Abort trap: 6\n", "EMT trap: 7\n", "Floating point exception: 8\n"
 		, "Killed: 9\n", "Bus error: 10\n", "Segmentation fault: 11\n"

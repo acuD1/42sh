@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/26 15:24:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 19:02:39 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int8_t	check_filepath(char *filepath)
 {
-	int			ret;
+	int		ret;
 
 	if ((ret = ft_access(filepath, F_OK | X_OK)) != SUCCESS)
 		return (ret);
@@ -44,7 +44,7 @@ static int8_t	format_path(char *path, t_process *process)
 	return ((process->bin == NULL) ? FAILURE : SUCCESS);
 }
 
-int8_t	get_bin_path(t_core *shell, t_process *process)
+int8_t			get_bin_path(t_core *shell, t_process *process)
 {
 	t_db	*db;
 	char	**split_path;

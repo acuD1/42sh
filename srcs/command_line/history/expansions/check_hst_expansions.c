@@ -6,25 +6,36 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:29:16 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:46:59 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		find_expansions(t_read *term, int *i)
+//Need remove ?
+int8_t	debugu(const char *path, int i, char c)
 {
-	if (term->buffer[*i + 1] == '!')
-		last_cmd_back(term, *i);
-	else if (ft_isdigit(term->buffer[*i + 1]))
-		call_number(term, *i);
-	else if (ft_isalpha(term->buffer[*i + 1]))
-		call_word(term, *i);
-	else if (term->buffer[*i + 1] == '-' && ft_isdigit(term->buffer[*i + 2]))
-		callback_number(term, *i);
+	int fd;
+
+	if ((fd = open(path, O_WRONLY)) < 0)
+		return (-1);
+	dprintf(fd, "i[%d] c{%c}\n", i, c);
+	return (1);
 }
 
-void		check_expansions(t_read *term)
+void	find_expansions(t_read *term, int *i)
+{
+	if (term->buffer[*i + 1] == '!')
+		*i = last_cmd_back(term, *i);
+	else if (ft_isdigit(term->buffer[*i + 1]))
+		*i = call_number(term, *i);
+	else if (ft_isalpha(term->buffer[*i + 1]))
+		*i = call_word(term, *i);
+	else if (term->buffer[*i + 1] == '-' && ft_isdigit(term->buffer[*i + 2]))
+		*i = callback_number(term, *i);
+}
+
+void	check_expansions(t_read *term)
 {
 	int		i;
 	int		buff_len;

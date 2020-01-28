@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   notifications.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/19 23:07:37 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:25:46 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void		job_background_notif(t_job *job)
 
 int8_t		do_job_notification(t_core *shell, t_lst *job)
 {
-	t_lst *jnext;
-	t_job *ptr;
+	t_lst	*jnext;
+	t_job	*ptr;
 
 	update_status(shell);
 	while (job)
