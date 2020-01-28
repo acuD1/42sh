@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/20 23:02:43 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/22 01:46:33 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ int8_t		builtin_type(t_core *shell, t_process *process);
 int8_t		builtin_fg(t_core *shell, t_process *process);
 int8_t		builtin_jobs(t_core *shell, t_process *process);
 int8_t		builtin_bg(t_core *shell, t_process *process);
+int8_t		builtin_test(t_core *shell, t_process *process);
 
 int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
 void		listing_mode(t_lst *saved, u_int64_t opt, char **range);

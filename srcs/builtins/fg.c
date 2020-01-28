@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:59:13 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/14 23:30:14 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/22 17:10:45 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int8_t	builtin_fg(t_core *shell, t_process *process)
 	t_job	*job;
 	int		i;
 
-	i = (process->av[1] && ft_strcmp(process->av[1], "--")) ? 1 : 2;
+	i = (process->av[1] && ft_strcmp(process->av[1], "--") == 0) ? 2 : 1;
 	if (process->av[i] && process->av[i][0] == '-' && process->av[i][1] != 0)
 		dprintf(STDERR_FILENO
 		, "42sh: fg: -%c: invalid option\nfg: usage: fg [jobspec]\n"

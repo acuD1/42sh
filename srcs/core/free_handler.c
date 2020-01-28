@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/07 18:50:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/22 16:23:49 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_env(t_lst *env)
 void	free_prompt(t_core *shell, char *line)
 {
 	(void)line;
-//	ft_freejoblist(&shell->job_list);
+	ft_strdel(&(shell->cmd_line.buffer));
 	shell->job_list = NULL;
 }
 

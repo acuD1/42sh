@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/21 00:01:37 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/27 19:31:29 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void		launch_job(t_core *shell, t_job *job, int foreground)
 
 	fds[0] = STDIN_FILENO;
 	process = job->process_list;
-	while (process)
+	mypipe[0] = STDIN_FILENO;
+	while (process && (ptr = ((t_process*)process->content)))
 	{
-		ptr = ((t_process*)process->content);
 		setup_pipes(shell, ptr, mypipe, &fds[1]);
 		ptr->stopped = (foreground == TRUE) ? FALSE : TRUE;
 		if (ptr->completed == FALSE)
