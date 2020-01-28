@@ -6,7 +6,7 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:55:13 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 13:55:17 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/01/28 12:14:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void			ft_printprocess(t_process *process)
 		ft_printtab(tmp->av);
 	if (tmp->tok_list)
 	{
-		ttp = tmp->tok_list; 
+		ttp = tmp->tok_list;
 		while (ttp)
 		{
 			tok = ttp->content;
@@ -94,21 +94,21 @@ void			ft_printjoblst(t_lst *list)
 	job = list;
 	while (job)
 	{
-		ft_printjob((t_job*)job->content);
+	//	ft_printjob((t_job*)job->content);
 		process = ((t_job*)job->content)->process_list;
 		while (process)
 		{
-			ft_printprocess((t_process*)process->content);
+		//	ft_printprocess((t_process*)process->content);
 			redir = ((t_process*)process->content)->redir_list;
 			while (redir)
 			{
-				ft_printredir((t_redir*)redir->content);
+			//	ft_printredir((t_redir*)redir->content);
 				redir = redir->next;
 			}
-			ft_printassignlist(((t_process*)process->content)->assign_list);
+		//	ft_printassignlist(((t_process*)process->content)->assign_list);
 			process = process->next;
 		}
 		job = job->next;
 	}
-	dprintf(nono("/dev/ttys002"), "\n");
+//	dprintf(nono("/dev/ttys002"), "\n");
 }

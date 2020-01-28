@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/22 13:48:15 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:00:58 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ uint8_t			read_again(char **prev, char *path, char *name, t_read *term)
 		}
 		else
 		{
+			term->tmp_buff = ft_strdup(buff);
 			term->flag = FALSE;
 			return (FALSE);
 		}
@@ -54,7 +55,7 @@ uint8_t			get_dir(t_read *term, char *current_dir)
 	i = 0;
 	tmp = NULL;
 	found = ft_strlen(term->cmd[0]);
-	while (--found)
+	while (found--)
 	{
 		if (term->cmd[0][found] == '/')
 		{
@@ -121,7 +122,8 @@ void			read_dir(t_read *term, char current_dir[], DIR *dir)
 	closedir(dir);
 	if (term->flag == TRUE)
 	{
-		dir = opendir(current_dir);
+		if ((dir = opendir(current_dir)) == NULL)
+			return ;
 		read_dir(term, current_dir, dir);
 	}
 }

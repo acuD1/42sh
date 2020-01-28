@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:51:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:19:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 12:17:57 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void lexer_parser_analyzer(t_core *shell)
 	if (parser(lxr_tok) == TRUE)
 	{
 		analyzer(shell, lxr_tok);
-		ft_printjoblst(shell->job_list);
+//		ft_printjoblst(shell->job_list);
 	}
 	ft_freetokenlist(&lxr_tok);
 }

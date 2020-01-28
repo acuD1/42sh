@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/23 12:13:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/28 13:26:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ int8_t			reset_config(t_core *shell)
 	}
 	ft_bzero(shell->term.prompt, READ_SIZE);
 	ft_strdel(&shell->term.tmp_buff);
+	shell->term.cmd = NULL;
 	return (SUCCESS);
 }

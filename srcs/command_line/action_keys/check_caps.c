@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/22 13:46:30 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/28 19:06:08 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,25 +101,28 @@ uint8_t		check_caps(char *buff, t_read *term)
 	uint64_t	value;
 
 	value = get_mask(buff);
-	if (is_print(*buff))
-		insert_in_buffer(buff, term);
-	if (value == CTRL_R)
-		research_mode(term);
+	if (end_of_file(term, value) == FALSE)
+		return (FALSE);
 	if (value == TAB_KEY)
 	{
 		auto_complete_mode(term);
-		value = get_mask(buff);
+		value = get_mask(term->tmp_buff);
+	//	if (value >= 2000000000000000 || value <= 7e00000000000000)
+	//		insert_in_buffer(term->tmp_buff, term);
+		ft_strdel(&term->tmp_buff);
 	}
+	else if (is_print(*buff))
+		insert_in_buffer(buff, term);
+	if (value == CTRL_R)
+		research_mode(term);
 	if (cursor_motion(buff, term, value))
 		return (TRUE);
 	if (value == RETURN_KEY)
 	{
-		ft_putchar('\n');
+		ft_putchar(NEW_LINE[0]);
 		return (FALSE);
 	}
 	else
 		check_keys_comb(buff, term, value);
-	if (end_of_file(term, value) == FALSE)
-		return (FALSE);
 	return (TRUE);
 }

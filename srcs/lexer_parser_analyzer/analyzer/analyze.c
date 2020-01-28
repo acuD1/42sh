@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:52:47 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/22 13:01:10 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/28 12:19:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ t_analyzer			*ionbr_analyze(t_analyzer *anal, t_core *shell)
 
 t_analyzer			*error_analyze(t_analyzer *anal, t_core *shell)
 {
-	printf("JE DOIS GERER CE CAS LA %s %u\n",
-	((t_token*)anal->lexer->content)->data, anal->state);
+//	printf("JE DOIS GERER CE CAS LA %s %u\n",
+//	((t_token*)anal->lexer->content)->data, anal->state);
 	if (anal->lexer->next
 		&& !ft_strcmp("(null)", ((t_token*)anal->lexer->next->content)->data))
 		anal->state = A_STOP;

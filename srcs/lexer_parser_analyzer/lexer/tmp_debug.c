@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:46:53 by guvillat          #+#    #+#             */
-/*   Updated: 2019/11/27 13:52:49 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/28 12:19:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void			ft_printtoklist(t_lst *lexer)
 	while (lexer)
 	{
 		tmp = (t_token*)lexer->content;
-		ft_dprintf(nono("/dev/ttys002"), "{[%s] %u}\n",
-			((t_token*)lexer->content)->data, ((t_token*)lexer->content)->id);
+	//	ft_dprintf(nono("/dev/ttys002"), "{[%s] %u}\n",
+	//		((t_token*)lexer->content)->data, ((t_token*)lexer->content)->id);
 		if (!lexer->next)
 			break ;
 		lexer = lexer->next;

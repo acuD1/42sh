@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 15:06:02 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/27 15:06:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:17:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void		print_list(t_lst *w, t_cmd cmd, u_int64_t opt)
 		w = w->next;
 	while (w && i <= cmd.last)
 	{
+		printf("[%d] [%d]\n", i, cmd.first);
 		if ((i >= cmd.first && (opt & (1ULL << 13))))
 			ft_dprintf(cmd.fd, "\t%s\n", w->content);
 		else if (i >= cmd.first)

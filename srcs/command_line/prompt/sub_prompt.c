@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/24 19:56:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/28 13:53:04 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ uint8_t		read_multiline(t_read *term, char sb)
 
 uint8_t		check_multi_subprompt(t_read *term, char *sb)
 {
-	if (*sb != BACKSLASH)
-		term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
+	term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
 	if (quotes_is_matching(term, sb) == FALSE)
 	{
 		term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/27 18:30:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/28 20:19:48 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void		launch_editor(t_core *shell, char *ed, char *cmd)
 {
+	(void)ed;
+	(void)shell;
 	ft_printf("%d\n", ft_strlen(cmd) + 1);
-	ft_strdel(&shell->term.buffer);
-	shell->term.buffer = ft_strdup(ed);
-	lexer_parser_analyzer(shell);
-	if (task_master(shell) != SUCCESS)
-		exit(1);
+	//lexer_parser_analyzer(shell);
+	//if (task_master(shell) != SUCCESS)
+	//	exit(1);
 	//ft_printf("%s\n", cmd);
 }
 
@@ -43,7 +43,7 @@ int8_t		edit_mode(t_core *shell, t_lst *w, char **av, u_int64_t opt)
 	(void)shell;
 	(void)w;
 	ft_bzero(&cmd, sizeof(t_cmd));
-	skip_options(&av);
+	get_range(av, &cmd);
 	if (opt & (1ULL << 4) && cmd.ac == 2)
 		return (fc_error(opt, 2));
 	else
@@ -53,13 +53,12 @@ int8_t		edit_mode(t_core *shell, t_lst *w, char **av, u_int64_t opt)
 	if ((cmd.fd = open(FC_TMP_FILE, MODE_WRITE, S_USR_RW | S_GRP_OTH_R)) == FAILURE)
 		return (fc_error(opt, 3));
 
-
-
-
+	ft_printtab(av);
 	printf("[%s] [%d] [%d]\n", editor, cmd.first, cmd.last);
 
 
-//printf("[%s]\n", editor);
+	print_list(w, cmd, opt);
+
 	launch_editor(shell, editor, w->content);
 	return (SUCCESS);
 }

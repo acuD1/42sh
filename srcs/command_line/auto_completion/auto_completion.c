@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/22 13:48:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/28 18:30:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void			delete_last_cmd(char *d_name, t_read *term)
 
 	tmp = NULL;
 	i = term->width - term->prompt_len - ft_strlen(d_name);
+	ft_strdel(&tmp);
 	tmp = ft_strsub(term->buffer, 0, i);
 	goto_prompt(term);
 	ft_strdel(&term->buffer);
@@ -35,9 +36,14 @@ void			delete_last_cmd(char *d_name, t_read *term)
 uint8_t			is_dir(char *dir)
 {
 	struct stat	buf;
+	char		pwd[BUFF_SIZE];
 
+	if (!getcwd(pwd, BUFF_SIZE))
+		return (FALSE);
 	if (!dir)
 		return (FALSE);
+	if (isstart(dir, "./") && lstat(ft_strcat(pwd, dir), &buf))
+		return (TRUE);
 	if (lstat(dir, &buf) == FAILURE)
 		return (FALSE);
 	if (S_ISDIR(buf.st_mode) && !is_dot(dir))
