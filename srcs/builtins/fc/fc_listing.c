@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:11:54 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/27 17:49:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/29 20:08:19 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ u_int8_t		get_range(char **av, t_cmd *cmd)
 	if ((cmd->ac = ft_tablen(av)) == 2)
 		return (TRUE);
 	skip_options(&av);
+	if (ft_tabchr(av, "-e"))
+		av++;
 	while (*av && av++)
 	{
 		if (ft_isnum(*av) == FALSE)

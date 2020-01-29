@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 20:27:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/29 18:43:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ int8_t		select_specifier(t_core *shell, t_lst *w, char **av)
 		return (fc_error(0, 0));
 
 	/* re-executing cmd specified */
-	lexer_parser_analyzer(shell);
-	if (task_master(shell) != SUCCESS)
-		exit(1);
+	/* lexer_parser_analyzer(shell); */
+	/* if (task_master(shell) != SUCCESS) */
+	/* 	exit(1); */
 
 //	get_pat_and_rep(&av, &pat, &rep);
 	return (SUCCESS);

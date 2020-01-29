@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 19:52:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/29 18:58:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ int8_t		builtin_cd(t_core *shell, t_process *process);
 int8_t		builtin_echo(t_core *shell, t_process *process);
 int8_t		builtin_pwd(t_core *shell, t_process *process);
 
-int8_t		edit_mode(t_core *shell, t_lst *w, char **av, u_int64_t opt);
+int8_t		edit_mode(t_core *shell, t_process *process, u_int64_t opt);
 int8_t		listing_mode(t_lst *w, char **av, u_int64_t opt);
 int8_t		select_specifier(t_core *shell, t_lst *w, char **av);
 int8_t		fc_error(u_int64_t opt, int err_num);
