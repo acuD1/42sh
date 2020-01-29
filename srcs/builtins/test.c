@@ -6,15 +6,16 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 17:50:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/28 21:05:21 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/30 00:42:58 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/stat.h>
 #include "sh42.h"
 
 static int32_t	get_opt(int argc, char **argv, int diff)
 {
-	static char	*test_op[NB_TESTBLT] = {"-b", "-c", "-d", "-e", "-f", "-g", "-L"
+	static char	*op[NB_TESTBLT] = {"-b", "-c", "-d", "-e", "-f", "-g", "-L"
 		, "-p", "-r", "-S", "-s", "-u", "-W", "-x", "-z", "=", "!=", "-eq"
 			, "-ne", "-ge", "-lt", "-le"};
 	int			i;
@@ -24,7 +25,7 @@ static int32_t	get_opt(int argc, char **argv, int diff)
 	{
 		while (i <= NB_TESTBLT)
 		{
-			if (ft_strcmp(test_op[i], argv[(i <= Z_UNATEST) ? 1 : 2 + diff]) == 0)
+			if (ft_strcmp(op[i], argv[((i <= Z_UNATEST) ? 1 : 2) + diff]) == 0)
 				return (i);
 			i++;
 		}
@@ -35,14 +36,21 @@ static int32_t	get_opt(int argc, char **argv, int diff)
 static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 {
 	*opt = get_opt(argc, argv, diff);
-	printf("%i\n", *opt);
+	if (*opt > DIFF_BINTEST
+	&& ((argc > 2 + diff && is_number(argv[1 + diff]) != 0)
+		|| (argc > 3 + diff && is_number(argv[3 + diff]) != 0)))
+	{
+		dprintf(STDERR_FILENO, "42sh: test: %s: integer expression expected\n"
+		, (is_number(argv[1 + diff]) != 0) ? argv[1 + diff] :  argv[3 + diff]);
+		return (FAILURE);
+	}
 	if ((argc > 4 + diff && *opt > Z_UNATEST)
 		|| (argc > 3 + diff && *opt <= Z_UNATEST && *opt >= 0))
 	{
 		dprintf(STDERR_FILENO, "42sh: test: too many arguments\n");
 		return (FAILURE);
 	}
-	else if (*opt < 0 || (*opt > Z_UNATEST && argc < 4 + diff)
+	if (*opt < 0 || (*opt > Z_UNATEST && argc < 4 + diff)
 		|| (*opt <= Z_UNATEST && *opt >= 0 && argc > 3 + diff))
 	{
 		dprintf(STDERR_FILENO, "42sh: test: %s: %s operator expected\n"
@@ -51,7 +59,62 @@ static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 	}
 	return (SUCCESS);
 }
-	//	dprintf(STDERR_FILENO, "42sh: test: %s: integer expression expected\n");
+
+static int8_t	path_tests(char *path, int opt)
+{
+	struct stat	buf;
+	char		buffer[MAX_PATH + 1];
+
+	if (get_canonical_path(path, buffer) != SUCCESS)
+		return (1);
+	if (((opt == LL_UNATEST) ? lstat(path, &buf) : stat(path, &buf)) < 0)
+		return (1);
+	if (opt == B_UNATEST)
+		return (S_ISBLK(buf.st_mode) ^ 1);
+	if (opt == C_UNATEST)
+		return (S_ISCHR(buf.st_mode) ^ 1);
+	if (opt == D_UNATEST)
+		return (S_ISDIR(buf.st_mode) ^ 1);
+	if (opt == F_UNATEST)
+		return (S_ISREG(buf.st_mode) ^ 1);
+//	if (opt == G_UNATEST)
+//		return (S_ISREG(buf.st_mode) ^ 1);
+	if (opt == LL_UNATEST)
+		return (S_ISLNK(buf.st_mode) ^ 1);
+	if (opt == P_UNATEST)
+		return (S_ISFIFO(buf.st_mode) ^ 1);
+	if (opt == R_UNATEST)
+		return ((buf.st_mode & S_IRUSR) ^ 1);
+	if (opt == SS_UNATEST)
+		return (S_ISSOCK(buf.st_mode) ^ 1);
+	if (opt == S_UNATEST)
+		return ((buf.st_size > 0) ? 0 : 1);
+//	if (opt == U_UNATEST)
+//		return ((buf.st_mode & S_IWUSR) ^ 1);
+	if (opt == W_UNATEST)
+		return ((buf.st_mode & S_IWUSR) ^ 1);
+	if (opt == X_UNATEST)
+		return ((buf.st_mode & S_IXUSR) ^ 1);
+	return ((path[0] == 0) ? 0 : 1);
+}
+
+static int8_t	comp_tests(char *s1, char *s2, int opt)
+{
+	int	n1;
+	int	n2;
+
+	if (opt == SAME_BINTEST || opt == DIFF_BINTEST)
+		return (((ft_strcmp(s1, s2) == 0) ? 1 : 0 ) ^ (DIFF_BINTEST - opt));
+	n1 = ft_atoi(s1);
+	n2 = ft_atoi(s2);
+	if (opt == EQ_BINTEST || opt == NE_BINTEST)
+		return ((n1 == n2) ^ (NE_BINTEST - opt));
+	if (opt == GE_BINTEST || opt == LT_BINTEST)
+		return ((n1 >= n2) ^ (LT_BINTEST - opt));
+	if (n1 <= n2)
+		return (0);
+	return (1);
+}
 
 int8_t			builtin_test(t_core *shell, t_process *process)
 {
@@ -64,7 +127,11 @@ int8_t			builtin_test(t_core *shell, t_process *process)
 	diff = (argc > 1 && process->av[1]
 	&& ft_strcmp(process->av[1], "!") == 0) ? 1 : 0;
 	if (argc < 3 + diff)
-		return ((argc < 2 + diff) ? 1 ^ diff : 0 ^ diff);
+		return (((argc < 2 + diff || process->av[1 + diff][0] == 0) ? 1 : 0) ^ diff);
 	parse_testblt(argc, process->av, diff, &opt);
-	return ((opt == FAILURE) ? 2 : 0);
+	if (opt <= Z_UNATEST && opt != FAILURE)
+		return (path_tests(process->av[2 + diff], opt) ^ diff);
+	if (opt != FAILURE)
+		return (comp_tests(process->av[1 + diff], process->av[3 + diff], opt) ^ diff);
+	return (2);
 }
