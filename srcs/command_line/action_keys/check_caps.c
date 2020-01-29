@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 19:06:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/29 17:01:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ uint8_t		check_caps(char *buff, t_read *term)
 	{
 		auto_complete_mode(term);
 		value = get_mask(term->tmp_buff);
-	//	if (value >= 2000000000000000 || value <= 7e00000000000000)
-	//		insert_in_buffer(term->tmp_buff, term);
+		if (term->tmp_buff && is_print(*term->tmp_buff))
+			insert_in_buffer(term->tmp_buff, term);
 		ft_strdel(&term->tmp_buff);
 	}
 	else if (is_print(*buff))

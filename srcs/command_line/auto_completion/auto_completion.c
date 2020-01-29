@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:30:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/29 17:24:12 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,9 @@ void			delete_last_cmd(char *d_name, t_read *term)
 uint8_t			is_dir(char *dir)
 {
 	struct stat	buf;
-	char		pwd[BUFF_SIZE];
 
-	if (!getcwd(pwd, BUFF_SIZE))
-		return (FALSE);
 	if (!dir)
 		return (FALSE);
-	if (isstart(dir, "./") && lstat(ft_strcat(pwd, dir), &buf))
-		return (TRUE);
 	if (lstat(dir, &buf) == FAILURE)
 		return (FALSE);
 	if (S_ISDIR(buf.st_mode) && !is_dot(dir))
@@ -78,10 +73,13 @@ void			auto_complete_mode(t_read *term)
 	else if (term->ac == 1)
 	{
 		if (is_dir(term->buffer) || isstart(term->buffer, "/"))
+		{
+			puts("OK");
 			read_directories(to_find, term);
+		}
 		else if (ft_isalpha(*to_find))
 			to_complete_bin(to_find, term);
-		if (term->flag == FALSE)
+		else if (term->flag == FALSE)
 			to_complete_buffer(to_find, term);
 	}
 	ft_strdel(&to_find);
