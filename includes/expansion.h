@@ -34,7 +34,7 @@ char 	*do_expansion(t_core *shell, char *data);
 void 	init_expansionat(t_expansion 	*exp);
 uint8_t is_expansion(e_estate id);
 
-int8_t		add_assign_env(t_lst *lst, t_core *shell);
+int8_t		add_assign_env(t_core *shell, char *key, char *value);
 void		expansion_assign(t_core *shell, t_process *process);
 
 void		expansion_redir(t_core *shell, t_process *process);

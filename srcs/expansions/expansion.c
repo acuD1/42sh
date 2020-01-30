@@ -73,27 +73,20 @@ int expelliarmus(char *src, int *index, char **dst, t_core *shell)
 
 static int get_quotes_flags(char *str, int *index, int *dbquote, int *quote)
 {
-	int guill;
-	int apost;
-
-	guill = *dbquote;
-	apost = *quote;
 	if (str[*index] == '\"')
 	{
-		if (!guill)
-			guill = 1;
+		if (!*dbquote)
+			*dbquote = 1;
 		else
-			guill = 0;
+			*dbquote = 0;
 	}
-	if (str[*index] == '\'' && !guill)
+	if (str[*index] == '\'' && !*dbquote)
 	{
-		if (!apost)
-			apost = 1;
+		if (!*quote)
+			*quote = 1;
 		else
-			apost = 0;	
+			*quote = 0;
 	}
-	*dbquote = guill;
-	*quote = apost;
 	return (1);
 }
 
@@ -134,16 +127,21 @@ void expans_moica(char *data, int *index, int *expandu, char **res, t_core *shel
 	*index = i;
 }
 
+void init_infinite_flags(int flag[4])
+{
+	flag[0] = 0;
+	flag[1] = 0;
+	flag[2] = -1;
+	flag[3] = 1;
+}
+
 char *infinite_expansion(char *data, t_core *shell)
 {
 	int flag[4];
 	char *res;
 	char *tmp;
 
-	flag[0] = 0;
-	flag[1] = 0;
-	flag[2] = -1;
-	flag[3] = 1;
+	init_infinite_flags(flag);
 	tmp = NULL;
 	res = ft_strnew(0);
 	while (data[++flag[2]])
@@ -156,6 +154,7 @@ char *infinite_expansion(char *data, t_core *shell)
 		}
 		if (flag[3])
 		{
+			printf("#%c# {%d ; %d}\n", data[flag[2]], flag[0], flag[1]);
 			tmp = ft_strsub(data, flag[2], 1);
 			res = ft_strjoinf(res, tmp, 4);
 		}

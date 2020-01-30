@@ -26,7 +26,7 @@ static e_estate gla_quote(char *str, int *j, e_estate state)
 		else if (state == NB_EXPANSION_STATE)
 			state = E_DBQUOTE;
 	}
-	else if (str[i] == '\'' && (state == E_QUOTE || state == NB_EXPANSION_STATE))
+	if (str[i] == '\'' && (state == E_QUOTE || state == NB_EXPANSION_STATE))
 	{
 		if (state == E_QUOTE)
 			state = NB_EXPANSION_STATE;
@@ -62,7 +62,6 @@ char *quote_mechanisms(char *str)
 		new[i] = str[j];
 		i++;
 		j++;
-
 	}
 	return (new);
 }

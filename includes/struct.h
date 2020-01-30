@@ -92,13 +92,6 @@ typedef struct	s_hash
 **			COMMAND_LINE
 */
 
-typedef struct s_exp_size
-{
-	char 			*(*acab)(char*, e_estate id);
-	e_estate 		id;
-	char 			*res;
-}		t_exp_size;
-
 typedef struct s_expansion
 {
 	int 			erience;
