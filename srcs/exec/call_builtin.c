@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 00:24:24 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/27 16:17:40 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:47:59 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int8_t	call_builtin(t_core *shell, t_process *process, int blt)
 
 	exec_redirs(shell, process->redir_list);
 	ret = blt_call[blt](shell, process);
-	printf("\e[1;31m$%i$\e[0m\n", ret);
 	close_fds(process->redir_list);
 	return (ret);
 }

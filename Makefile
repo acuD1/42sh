@@ -215,6 +215,7 @@ SRC			+=	$(S_PATH)$(BUILTINS)jobs.c
 SRC			+=	$(S_PATH)$(BUILTINS)pwd.c
 SRC			+=	$(S_PATH)$(BUILTINS)type.c
 SRC			+=	$(S_PATH)$(BUILTINS)test.c
+SRC			+=	$(S_PATH)$(BUILTINS)path_tests.c
 
 #SRC			+=	$(S_PATH)$(BLT_FC)fc.c
 #SRC			+=	$(S_PATH)$(BLT_FC)fc_edit.c

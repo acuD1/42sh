@@ -6,11 +6,10 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 17:50:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/30 00:42:58 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:00:55 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/stat.h>
 #include "sh42.h"
 
 static int32_t	get_opt(int argc, char **argv, int diff)
@@ -60,43 +59,6 @@ static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 	return (SUCCESS);
 }
 
-static int8_t	path_tests(char *path, int opt)
-{
-	struct stat	buf;
-	char		buffer[MAX_PATH + 1];
-
-	if (get_canonical_path(path, buffer) != SUCCESS)
-		return (1);
-	if (((opt == LL_UNATEST) ? lstat(path, &buf) : stat(path, &buf)) < 0)
-		return (1);
-	if (opt == B_UNATEST)
-		return (S_ISBLK(buf.st_mode) ^ 1);
-	if (opt == C_UNATEST)
-		return (S_ISCHR(buf.st_mode) ^ 1);
-	if (opt == D_UNATEST)
-		return (S_ISDIR(buf.st_mode) ^ 1);
-	if (opt == F_UNATEST)
-		return (S_ISREG(buf.st_mode) ^ 1);
-//	if (opt == G_UNATEST)
-//		return (S_ISREG(buf.st_mode) ^ 1);
-	if (opt == LL_UNATEST)
-		return (S_ISLNK(buf.st_mode) ^ 1);
-	if (opt == P_UNATEST)
-		return (S_ISFIFO(buf.st_mode) ^ 1);
-	if (opt == R_UNATEST)
-		return ((buf.st_mode & S_IRUSR) ^ 1);
-	if (opt == SS_UNATEST)
-		return (S_ISSOCK(buf.st_mode) ^ 1);
-	if (opt == S_UNATEST)
-		return ((buf.st_size > 0) ? 0 : 1);
-//	if (opt == U_UNATEST)
-//		return ((buf.st_mode & S_IWUSR) ^ 1);
-	if (opt == W_UNATEST)
-		return ((buf.st_mode & S_IWUSR) ^ 1);
-	if (opt == X_UNATEST)
-		return ((buf.st_mode & S_IXUSR) ^ 1);
-	return ((path[0] == 0) ? 0 : 1);
-}
 
 static int8_t	comp_tests(char *s1, char *s2, int opt)
 {
@@ -127,11 +89,13 @@ int8_t			builtin_test(t_core *shell, t_process *process)
 	diff = (argc > 1 && process->av[1]
 	&& ft_strcmp(process->av[1], "!") == 0) ? 1 : 0;
 	if (argc < 3 + diff)
-		return (((argc < 2 + diff || process->av[1 + diff][0] == 0) ? 1 : 0) ^ diff);
+		return (((argc < 2 + diff
+		|| process->av[1 + diff][0] == 0) ? 1 : 0) ^ diff);
 	parse_testblt(argc, process->av, diff, &opt);
 	if (opt <= Z_UNATEST && opt != FAILURE)
 		return (path_tests(process->av[2 + diff], opt) ^ diff);
 	if (opt != FAILURE)
-		return (comp_tests(process->av[1 + diff], process->av[3 + diff], opt) ^ diff);
+		return (comp_tests(process->av[1 + diff]
+		, process->av[3 + diff], opt) ^ diff);
 	return (2);
 }
