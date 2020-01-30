@@ -154,7 +154,6 @@ char *infinite_expansion(char *data, t_core *shell)
 		}
 		if (flag[3])
 		{
-			printf("#%c# {%d ; %d}\n", data[flag[2]], flag[0], flag[1]);
 			tmp = ft_strsub(data, flag[2], 1);
 			res = ft_strjoinf(res, tmp, 4);
 		}
@@ -168,10 +167,7 @@ void expansion(t_core *shell, t_process *process)
 		return ;
 	
 	if (process->assign_list)
-	{
 		expansion_assign(shell, process);
-		// add_assign_env(process->assign_list, shell);
-	}
 	if (process->tok_list)
 		expansion_tok(shell, process);
 	if (process->redir_list)

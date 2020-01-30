@@ -47,5 +47,5 @@ void		expansion_assign(t_core *shell, t_process *process)
 		ft_strdel(&((t_db*)tmp->content)->value);
 	}
 	process->envp = set_envp(shell);
-	ft_printtab(process->envp);
+	// ft_printtab(process->envp);
 }

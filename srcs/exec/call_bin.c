@@ -31,10 +31,8 @@ static int8_t	check_filepath(char *filepath)
 int8_t	call_bin(t_core *shell, t_lst *process)
 {
 	t_process	*ptr;
-	char		**envp;
 	int			ret;
 
-	envp = NULL;
 	ptr = process->content; //Shortcut to ((t_process*)proces->content)
 	exec_redirs(shell, ptr->redir_list);
 	if (ptr->bin == NULL)
@@ -43,14 +41,14 @@ int8_t	call_bin(t_core *shell, t_lst *process)
 			dprintf(STDERR_FILENO, "42sh: %s: command not found\n", ptr->av[0]);
 		exit(127);
 	}
-	envp = set_envp(shell);
+	if (!ptr->envp)
+		ptr->envp = set_envp(shell);
 	if ((ret = check_filepath(ptr->bin)) != SUCCESS)
 	{
 		ft_perror(ptr->av[0], NULL, ret);
 		exit((ret == ENOENT) ? 127: 126);
 	}
-	ret = execve(ptr->bin, ptr->av, envp);
+	ret = execve(ptr->bin, ptr->av, ptr->envp);
 	dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);
-	ft_tabdel(&envp);
 	exit(1);
 }

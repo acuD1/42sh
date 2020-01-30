@@ -30,6 +30,7 @@ typedef enum estate
     E_BRACKET,
     E_HOOK,
     E_DOLLAR,
+    E_QUOTED,
     NB_EXPANSION_STATE
 }           e_estate;
 

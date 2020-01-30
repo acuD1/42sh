@@ -60,6 +60,7 @@ char *quote_mechanisms(char *str)
 		if (!str[j])
 			break ;
 		new[i] = str[j];
+		printf("%c    %d      %u\n", new[i], j, state);
 		i++;
 		j++;
 	}
