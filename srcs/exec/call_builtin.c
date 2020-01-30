@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 00:24:24 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/30 19:15:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:37:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int8_t	is_a_blt(char *cmd)
 	int			i;
 
 	i = 0;
-	while (i < 14)
+	while (i < 13)
 	{
 		if (ft_strcmp(blt_names[i], cmd) == 0)
 			return (i);

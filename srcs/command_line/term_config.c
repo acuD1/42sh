@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/30 19:25:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:37:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int8_t	init_config(t_core *shell)
 		ft_perror("tgetattr", NULL, 0);
 		quit_shell(shell, EXIT_FAILURE, TRUE, I_MODE);
 	}
-	printf("before [%p]\n", &shell->old_t);
 	shell->new_t = shell->old_t;
 	shell->new_t.c_lflag &= ~(ICANON | ECHO);
 	shell->new_t.c_cc[VMIN] = 1;
@@ -66,11 +65,9 @@ int8_t	init_config(t_core *shell)
 
 int8_t	reset_config(t_core *shell)
 {
-	printf("[%p]\n", &shell->old_t);
 	if (tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t)) == FAILURE)
 	{
 		ft_perror("tcsetattr", NULL, 0);
-		quit_shell(shell, EXIT_FAILURE, TRUE, I_MODE);
 		return (FAILURE);
 	}
 	ft_bzero(shell->term.prompt, READ_SIZE);
