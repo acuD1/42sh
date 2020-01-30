@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/11 17:09:47 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 18:37:06 by arsciand         ###   ########.fr       */
+/*   Created: 2019/12/19 10:41:55 by arsciand          #+#    #+#             */
+/*   Updated: 2020/01/30 19:04:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,16 @@ struct						s_analyzer
 	t_lst					*process_list;
 	t_lst					*redir_list;
 };
+
+typedef struct			s_cmd
+{
+	int					first;
+	int					last;
+	char				*editor;
+	int					ac;
+	char				**av;
+	int					fd;
+}						t_cmd;
 
 /*
 ** EXP

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 18:55:00 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:02:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@
 # define PS1					"42sh-2.0$ "
 # define PS2					"> "
 # define BUFF_SIZE				4096
-# define READ_SIZE				10
-# define HISTORY_FILE			"./.42sh_history"
+# define READ_SIZE				8
 # define QUOTE					'\''
 # define DQUOTE					'\"'
 # define BQUOTE					'`'
@@ -100,7 +99,14 @@
 # define HEREDOC				"<<"
 
 /*
-**	Action keys hex masks
+**		Files name
+*/
+
+# define FC_TMP_FILE			"./42sh-fc.tmp"
+# define HISTORY_FILE			"./.42sh_history"
+
+/*
+**		Action keys hex masks
 */
 
 # define ARROW_UP				0x1b5b410000000000

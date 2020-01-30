@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 17:58:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:03:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,12 +183,17 @@ int8_t		builtin_type(t_core *shell, t_process *process);
 int8_t		builtin_fg(t_core *shell, t_process *process);
 int8_t		builtin_jobs(t_core *shell, t_process *process);
 int8_t		builtin_bg(t_core *shell, t_process *process);
-int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
-void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
-void		display_reverse(t_lst *w, u_int64_t opt, char **range);
-u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd);
-void		swap_range(char **r1, char **r2);
-u_int16_t	set_range(t_lst **w, char **range);
+int8_t		builtin_fc(t_core *shell, t_process *process);
+
+int8_t		edit_mode(t_core *shell, t_process *process, u_int64_t opt);
+int8_t		listing_mode(t_lst *w, char **av, u_int64_t opt);
+int8_t		select_specifier(t_core *shell, t_lst *w, char **av);
+int8_t		fc_error(u_int64_t opt, int err_num);
+u_int8_t	get_range(char **av, t_cmd *cmd);
+void		get_entries(t_lst *w, t_cmd *cmd);
+void		print_list(t_lst *w, t_cmd cmd, u_int64_t opt);
+void		print_reverse(t_lst *w, t_cmd cmd, u_int64_t opt);
+void		skip_options(char ***av);
 
 /*
 **	===========================================================================
@@ -206,12 +211,6 @@ int8_t		dup_ifd(t_redir *ptr);
 int8_t		dup_ofd(t_redir *ptr);
 void		close_fds(t_lst *ptr);
 int8_t		write_heredoc(t_redir *ptr);
-int8_t		edit_mode(t_core *shell, t_lst *w, u_int64_t opt, char **range);
-void		listing_mode(t_lst *saved, u_int64_t opt, char **range);
-void		display_reverse(t_lst *w, u_int64_t opt, char **range);
-u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd);
-void		swap_range(char **r1, char **r2);
-u_int16_t	set_range(t_lst **w, char **range);
 
 /*
 **	===========================================================================

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 22:13:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:12:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	display_prompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term->sub_prompt = 0;
-	term->flag = 0;
-	term->cmd = NULL;
+//	term->flag = 0;
 	ft_printf("%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 }
@@ -64,7 +63,7 @@ int8_t	end_of_file(char *buff, t_read *term)
 	t_core	*shell;
 
 	shell = get_core(NULL);
-	if (!ft_strcmp(term->buffer, "") && get_mask(buff) == CTRL_D)
+	if (!*term->buffer && get_mask(buff) == CTRL_D)
 	{
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		//reset_config(shell); // Y'a un bug la
