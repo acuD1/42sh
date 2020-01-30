@@ -170,7 +170,7 @@ void expansion(t_core *shell, t_process *process)
 	if (process->assign_list)
 	{
 		expansion_assign(shell, process);
-		add_assign_env(process->assign_list, shell);
+		// add_assign_env(process->assign_list, shell);
 	}
 	if (process->tok_list)
 		expansion_tok(shell, process);
