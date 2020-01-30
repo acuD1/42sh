@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 17:50:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/30 16:00:55 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/01/30 20:15:07 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 		|| (argc > 3 + diff && is_number(argv[3 + diff]) != 0)))
 	{
 		dprintf(STDERR_FILENO, "42sh: test: %s: integer expression expected\n"
-		, (is_number(argv[1 + diff]) != 0) ? argv[1 + diff] :  argv[3 + diff]);
+		, (is_number(argv[1 + diff]) != 0) ? argv[1 + diff] : argv[3 + diff]);
 		return (FAILURE);
 	}
 	if ((argc > 4 + diff && *opt > Z_UNATEST)
@@ -59,14 +59,13 @@ static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 	return (SUCCESS);
 }
 
-
 static int8_t	comp_tests(char *s1, char *s2, int opt)
 {
 	int	n1;
 	int	n2;
 
 	if (opt == SAME_BINTEST || opt == DIFF_BINTEST)
-		return (((ft_strcmp(s1, s2) == 0) ? 1 : 0 ) ^ (DIFF_BINTEST - opt));
+		return (((ft_strcmp(s1, s2) == 0) ? 1 : 0) ^ (DIFF_BINTEST - opt));
 	n1 = ft_atoi(s1);
 	n2 = ft_atoi(s2);
 	if (opt == EQ_BINTEST || opt == NE_BINTEST)
@@ -89,13 +88,17 @@ int8_t			builtin_test(t_core *shell, t_process *process)
 	diff = (argc > 1 && process->av[1]
 	&& ft_strcmp(process->av[1], "!") == 0) ? 1 : 0;
 	if (argc < 3 + diff)
+	{
 		return (((argc < 2 + diff
-		|| process->av[1 + diff][0] == 0) ? 1 : 0) ^ diff);
+			|| process->av[1 + diff][0] == 0) ? 1 : 0) ^ diff);
+	}
 	parse_testblt(argc, process->av, diff, &opt);
 	if (opt <= Z_UNATEST && opt != FAILURE)
 		return (path_tests(process->av[2 + diff], opt) ^ diff);
 	if (opt != FAILURE)
+	{
 		return (comp_tests(process->av[1 + diff]
-		, process->av[3 + diff], opt) ^ diff);
+			, process->av[3 + diff], opt) ^ diff);
+	}
 	return (2);
 }
