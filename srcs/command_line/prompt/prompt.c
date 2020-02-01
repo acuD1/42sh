@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/30 19:31:30 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/01 14:05:37 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,18 @@ void	display_prompt(t_read *term)
 */
 
 
-int8_t	end_of_file(char *buff, t_read *term)
+int8_t	end_of_file(t_core *shell, char *buff)
 {
-	t_core	*shell;
-
-	shell = get_core(NULL);
-	if (!*term->buffer && get_mask(buff) == CTRL_D)
+	if (!*(shell->term).buffer && get_mask(buff) == CTRL_D)
 	{
+		if (shell->term.status == CMD_SUBPROMPT)
+		{
+				shell->term.flag = TRUE;
+				return (FALSE);
+		}
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-		//reset_config(shell); // Y'a un bug la
-		write_history(term);
+		reset_config(shell);
+		write_history(&shell->term);
 		return (TRUE);
 	}
 	return (FALSE);
@@ -85,7 +87,7 @@ int8_t	init_prompt(t_core *shell)
 	display_prompt(&shell->term);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
-		if (end_of_file(buff, &shell->term) == TRUE)
+		if (end_of_file(shell, buff) == TRUE)
 			return (FAILURE);
 		if (check_caps(buff, &shell->term) == TRUE)
 			ft_bzero(buff, READ_SIZE);
