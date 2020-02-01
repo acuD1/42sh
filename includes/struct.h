@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>		  +#+  +:+	   +#+		*/
 /*												+#+#+#+#+#+   +#+		   */
 /*   Created: 2019/06/15 16:43:36 by arsciand		  #+#	#+#			 */
-/*   Updated: 2019/12/28 17:43:15 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/01 18:02:52 by mpivet-p         ###   ########.fr       */
 /*																			*/
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ typedef struct	s_redir
 	char				*heredoc;
 	char				*op[2];
 	int					io_num[2];
-	int					dup_fd;
+	int					dup_fd[2];
 }				t_redir;
 
 typedef struct			s_process

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:42 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/30 19:57:43 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/01 20:09:38 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,12 @@ int8_t	dup_ifd(t_redir *ptr)
 		ptr->io_num[0] = 0;
 	if (ft_strcmp(ptr->op[1], "-") == 0)
 	{
+		ptr->dup_fd[0] = dup(ptr->io_num[0]);
 		close(ptr->io_num[0]);
 		return (SUCCESS);
 	}
-	ptr->dup_fd = ft_atoi(ptr->op[1]);
-	if ((ptr->dup_fd = dup2(ptr->dup_fd, ptr->io_num[0])) < 0)
+	ptr->dup_fd[0] = ft_atoi(ptr->op[1]);
+	if ((ptr->dup_fd[0] = dup2(ptr->dup_fd[0], ptr->io_num[0])) < 0)
 		return (FAILURE);
 	return (SUCCESS);
 }
@@ -91,13 +92,14 @@ int8_t	dup_ofd(t_redir *ptr)
 		ptr->io_num[0] = 1;
 	if (ft_strcmp(ptr->op[1], "-") == 0)
 	{
+		ptr->dup_fd[0] = dup(ptr->io_num[0]);
 		close(ptr->io_num[0]);
 		return (SUCCESS);
 	}
 	if (is_number(ptr->op[1]) == SUCCESS)
 	{
-		ptr->dup_fd = ft_atoi(ptr->op[1]);
-		if ((ptr->dup_fd = dup2(ptr->dup_fd, ptr->io_num[0])) < 0)
+		ptr->dup_fd[0] = dup(ft_atoi(ptr->op[1]));
+		if ((ptr->dup_fd[0] = dup2(ptr->dup_fd[0], ptr->io_num[0])) < 0)
 			return (FAILURE);
 		return (SUCCESS);
 	}

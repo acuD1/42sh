@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/18 21:20:31 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/01 19:17:35 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ static void	print_longjob(t_job *job)
 	}
 }
 
-static void	print_job(t_job *job, uint64_t opt)
+static void	print_job(t_job *job, uint64_t opt, char *name)
 {
 	if (!job)
+	{
+		dprintf(STDERR_FILENO, "42sh: jobs: %s: no such job\n", name);
 		return ;
+	}
 	if (opt & (1ULL << 15))
 		printf("%d\n", job->pgid);
 	else if (opt & (1ULL << 11))
@@ -47,28 +50,28 @@ static void	print_job(t_job *job, uint64_t opt)
 int8_t		builtin_jobs(t_core *shell, t_process *process)
 {
 	uint64_t	opt;
-	t_lst		*job;
+	t_lst		*job_list;
+	t_job		*job;
 	int			argc;
 	int			i;
 
 	argc = ft_tablen(process->av);
-	job = shell->launched_jobs;
+	job_list = shell->launched_jobs;
 	i = (process->av[1] && ft_strcmp(process->av[1], "--") == 0) ? 2 : 1;
 	if (shell->launched_jobs)
 		update_status(shell);
 	if ((opt = get_options(argc, process->av, "lp")) & OPT_ERROR)
 		print_usage("42sh: jobs", opt & 0xFF, "jobs [-lp] [jobspec ...]");
 	if (i == argc)
-		while (job)
+		while (job_list)
 		{
-			print_job(job->content, opt);
-			job = job->next;
+			print_job(job_list->content, opt, NULL);
+			job_list = job_list->next;
 		}
-	else
-		while (i < argc)
-		{
-			job->content = get_job(shell->launched_jobs, process->av[i++]);
-			print_job(job->content, opt);
-		}
+	while (i < argc)
+	{
+		job = get_job(shell->launched_jobs, process->av[i]);
+		print_job(job, opt, process->av[i++]);
+	}
 	return (SUCCESS);
 }
