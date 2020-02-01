@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:50:00 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/01 14:00:44 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ u_int8_t	quotes_is_matching(t_read *term, char *quote)
 	while (term->buffer[++i])
 	{
 		if (term->buffer[i] == BACKSLASH)
-			i += 2;
+		{
+			i++;
+			continue ;
+		}
 		if ((*quote = set_quote_type(term->buffer[i])) != '\0')
 		{
 			if (goto_next_quote(term->buffer, *quote, &i) == TRUE)
