@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 10:41:55 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/30 19:04:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/01 15:08:23 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct				s_hash
 
 typedef struct				s_read
 {
-	char					prompt[10];
+	char					*prompt;
 	int						prompt_len;
 	int						x_index;
 	int						x;

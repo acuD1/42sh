@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/01 14:05:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/01 15:56:35 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	goto_prompt(t_read *term)
 	xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 	if (term->sub_prompt > 0)
-		display_subprompt(term, PS2);
+		display_subprompt(term);
 	else
 		display_prompt(term);
 }
@@ -36,10 +36,8 @@ void	goto_prompt(t_read *term)
 **	  Store some datas for pressed keys
 */
 
-void	display_prompt(t_read *term)
+void		display_prompt(t_read *term)
 {
-	ft_bzero(term->prompt, 10);
-	ft_strcpy(term->prompt, PS1);
 	term->prompt_len = ft_strlen(term->prompt);
 	term->x = term->prompt_len;
 	term->x_index = term->x;
@@ -58,7 +56,7 @@ void	display_prompt(t_read *term)
 */
 
 
-int8_t	end_of_file(t_core *shell, char *buff)
+int8_t		end_of_file(t_core *shell, char *buff)
 {
 	if (!*(shell->term).buffer && get_mask(buff) == CTRL_D)
 	{
@@ -75,7 +73,20 @@ int8_t	end_of_file(t_core *shell, char *buff)
 	return (FALSE);
 }
 
-int8_t	init_prompt(t_core *shell)
+void		get_prompt_value(t_core *shell, char *key)
+{
+	t_db	*db;
+
+	db = NULL;
+	if ((db = search_db(shell->env, key)) == NULL)
+	{
+		shell->term.prompt = ft_strnew(0);
+		return ;
+	}
+	shell->term.prompt = ft_strdup(db->value);
+}
+
+int8_t		init_prompt(t_core *shell)
 {
 	char	buff[READ_SIZE + 1];
 
@@ -83,7 +94,9 @@ int8_t	init_prompt(t_core *shell)
 	ft_bzero(buff, READ_SIZE);
 	shell->term.buffer = ft_memalloc(BUFF_SIZE);
 	init_config(shell);
-	init_termcaps(&shell->term);
+	if (init_termcaps(&shell->term) == FAILURE)
+		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE, I_MODE);
+	get_prompt_value(shell, "PS1");
 	display_prompt(&shell->term);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
@@ -91,11 +104,12 @@ int8_t	init_prompt(t_core *shell)
 			return (FAILURE);
 		if (check_caps(buff, &shell->term) == TRUE)
 			ft_bzero(buff, READ_SIZE);
-		else
+		else if (*shell->term.prompt
+			|| (!*shell->term.prompt && shell->term.buffer))
 			break ;
 	}
 	shell->term.status = CMD_DONE;
-	if (check_subprompt(&shell->term) == FALSE)
+	if (check_subprompt(shell) == FALSE)
 		check_expansions(&shell->term);
 	reset_config(shell);
 	return (SUCCESS);

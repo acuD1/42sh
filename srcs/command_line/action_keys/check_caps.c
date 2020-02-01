@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/30 19:06:19 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/01 15:54:48 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ u_int8_t	check_caps(char *buff, t_read *term)
 		return (TRUE);
 	if (value == RETURN_KEY)
 	{
-		ft_putchar(NEW_LINE[0]);
+		if (*term->prompt || (!*term->prompt && *term->buffer))
+			ft_putchar(NEW_LINE[0]);
 		return (FALSE);
 	}
 	else

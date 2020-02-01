@@ -6,15 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/30 19:07:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/01 15:59:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		display_subprompt(t_read *term, char *prompt)
+void		display_subprompt(t_read *term)
 {
-	ft_strcpy(term->prompt, prompt);
 	term->prompt_len = ft_strlen(term->prompt);
 	term->x = term->prompt_len;
 	term->y = 0;
@@ -92,12 +91,13 @@ void		load_subprompt(char sb, t_read *term)
 	{
 		ft_strdel(&term->buffer);
 		term->buffer = ft_memalloc(BUFF_SIZE);
-		display_subprompt(term, PS2);
+		display_subprompt(term);
 		if (read_multiline(term, sb) == FALSE)
 		{
 			if (check_multi_subprompt(term, &sb) == TRUE)
 				continue ;
-			else
+			else if (*term->prompt
+				|| (!*term->prompt && term->buffer))
 				break ;
 		}
 		if (sub_prompt_error(term, sb) == TRUE)

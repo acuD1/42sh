@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/30 20:09:04 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/01 14:18:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void		launch_editor(t_core *shell, t_cmd cmd)
 	//ft_lstappend(&job->process_list, ft_lstnew(&process, sizeof(t_process)));
 	if (get_bin_path(shell, &process) != SUCCESS)
 		ft_dprintf(STDERR_FILENO, "42sh: %s: not found\n", cmd.editor);
+	call_bin(shell, &process);
 	ft_strdel(&command);
 	ft_tabdel(&process.av);
 	//ft_printf("%d\n", ft_strlen(cmd) + 1);
