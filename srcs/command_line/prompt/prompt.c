@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/01 13:58:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/01 17:10:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,21 @@ void	display_prompt(t_read *term)
 **	  The current buffer is saved in a history list
 */
 
-int8_t	end_of_file(t_core *shell, char *buff)
+int8_t	end_of_file(char *buff, t_read *term)
 {
-	if (!*shell->term.buffer && get_mask(buff) == CTRL_D)
+	t_core	*shell;
+
+	shell = get_core(NULL);
+	if (!*term->buffer && get_mask(buff) == CTRL_D)
 	{
-		if (shell->term.status == CMD_SUBPROMPT)
+		if (term->status == CMD_SUBPROMPT)
 		{
-			shell->term.flag = TRUE;
+			term->flag = TRUE;
 			return (FALSE);
 		}
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-		write_history(&shell->term);
 		reset_config(shell);
+		write_history(term);
 		return (TRUE);
 	}
 	return (FALSE);
@@ -87,7 +90,7 @@ int8_t	init_prompt(t_core *shell)
 	display_prompt(&shell->term);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
-		if (end_of_file(shell, buff) == TRUE)
+		if (end_of_file(buff, &shell->term) == TRUE)
 			return (FAILURE);
 		if (check_caps(buff, &shell->term) == TRUE)
 			ft_bzero(buff, READ_SIZE);
