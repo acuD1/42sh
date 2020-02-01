@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/01 15:59:45 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/01 19:24:15 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ u_int8_t	read_multiline(t_read *term, char sb)
 	ft_bzero(buff, READ_SIZE);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
+	//	if (end_of_file(shell, buff) == TRUE)
+	//		return (TRUE);
 		if (check_caps(buff, term) == TRUE)
 		{
 			ft_bzero(buff, READ_SIZE);
@@ -83,11 +85,10 @@ void		load_subprompt(char sb, t_read *term)
 {
 	if (sb != BACKSLASH)
 		term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);
-	if (sb != BACKSLASH)
-		term->status = CMD_SUBPROMPT;
+	term->status = CMD_SUBPROMPT;
 	term->tmp_buff = ft_strdup(term->buffer);
 	term->flag = FALSE;
-	while (TRUE)
+	while (term->status == CMD_SUBPROMPT && TRUE)
 	{
 		ft_strdel(&term->buffer);
 		term->buffer = ft_memalloc(BUFF_SIZE);

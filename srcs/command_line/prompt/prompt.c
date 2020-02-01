@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/01 17:30:36 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/01 18:22:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		display_prompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term->sub_prompt = 0;
+//	term->flag = 0;
 	ft_printf("%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 }
@@ -82,7 +83,12 @@ void		get_prompt_value(t_core *shell, char *key)
 		shell->term.prompt = ft_strnew(0);
 		return ;
 	}
-	shell->term.prompt = ft_strdup(db->value);
+	if (!ft_strcmp(db->value, PS1))
+		shell->term.prompt = ft_strsub(db->value, 1, 10);
+	else if  (!ft_strcmp(db->value, PS2))
+		shell->term.prompt = ft_strsub(db->value, 1, 2);
+	else
+		shell->term.prompt = ft_strdup(db->value);
 }
 
 int8_t		init_prompt(t_core *shell)
