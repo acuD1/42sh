@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:20:42 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:38:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char		*no_exp(char *data, t_core *shell)
 }
 
 // Heu WTF ? ^^
-int			expelliarmus(char *src, int *index, char **dst, t_core *shell)
+static int	expelliarmus(char *src, int *index, char **dst, t_core *shell)
 {
 	t_expansion		toto;
 	enum e_estate	state;

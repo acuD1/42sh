@@ -6,13 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:55:13 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:39:30 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:04:10 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void	ft_printassignlist(t_lst *lst)
+//Need Remov
+/*
+static void	ft_printassignlist(t_lst *lst)
 {
 	t_lst	*assign;
 	int		x;
@@ -30,8 +32,11 @@ void	ft_printassignlist(t_lst *lst)
 		x++;
 	}
 }
+*/
 
-void	ft_printredir(t_redir *redir)
+//Need Remov
+/*
+static void	ft_printredir(t_redir *redir)
 {
 	t_redir	*tmp;
 
@@ -47,8 +52,11 @@ void	ft_printredir(t_redir *redir)
 		if (tmp->heredoc[0])
 			dprintf(nono("/dev/ttys002"), "redir heredoc %s\n", tmp->heredoc);
 }
+*/
 
-void	ft_printprocess(t_process *process)
+//Need Remov
+/*
+static void	ft_printprocess(t_process *process)
 {
 	t_process	*tmp;
 	t_token		*tok;
@@ -72,8 +80,11 @@ void	ft_printprocess(t_process *process)
 		}
 	}
 }
+*/
 
-void	ft_printjob(t_job *job)
+//Need Remov
+/*
+static void	ft_printjob(t_job *job)
 {
 	t_job	*tmp;
 
@@ -84,8 +95,11 @@ void	ft_printjob(t_job *job)
 	if (tmp->command)
 		dprintf(nono("/dev/ttys002"), "job cmd {%s}\n", tmp->command);
 }
+*/
 
-void	ft_printjoblst(t_lst *list)
+//Need Remov
+/*
+static void	ft_printjoblst(t_lst *list)
 {
 	t_lst	*job;
 	t_lst	*process;
@@ -114,3 +128,4 @@ void	ft_printjoblst(t_lst *list)
 	}
 	//dprintf(nono("/dev/ttys002"), "\n");
 }
+*/

@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:13:53 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 19:07:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:37:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char			*exp_get_dbparen(char *string, int len)
+static char		*exp_get_dbparen(char *string, int len)
 {
 	char	*str;
 	int		index;
@@ -40,7 +40,7 @@ char			*exp_get_dbparen(char *string, int len)
 	return (NULL);
 }
 
-char			*exp_get_hook(char *string, int len)
+static char		*exp_get_hook(char *string, int len)
 {
 	char	*str;
 	int		index;
@@ -62,7 +62,7 @@ char			*exp_get_hook(char *string, int len)
 	return (NULL);
 }
 
-char			*exp_get_bquote(char *string, int len)
+static char		*exp_get_bquote(char *string, int len)
 {
 	int		i;
 	char	*str;
@@ -88,7 +88,7 @@ char			*exp_get_bquote(char *string, int len)
 	return (NULL);
 }
 
-char			*new_exp(char *string, enum e_estate id)
+static char		*new_exp(char *string, enum e_estate id)
 {
 	int					i;
 	char				*new;

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:43:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:11:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int8_t	debugs(const char *path, t_read *in, t_lst *w)
 	return (1);
 }
 
-void	check_tmp_buffer(t_read *term)
+static void	check_tmp_buffer(t_read *term)
 {
 	goto_prompt(term);
 	ft_strdel(&term->buffer);
@@ -40,7 +40,7 @@ void	check_tmp_buffer(t_read *term)
 **		Arrow down print the prev saved in history from history index
 */
 
-void	move_key_down(t_read *term)
+void		move_key_down(t_read *term)
 {
 	t_lst		*w;
 
@@ -69,7 +69,7 @@ void	move_key_down(t_read *term)
 **		Arrow up print the next saved in history from history index
 */
 
-void	move_key_up(t_read *term)
+void		move_key_up(t_read *term)
 {
 	t_lst	*w;
 
@@ -100,7 +100,7 @@ void	move_key_up(t_read *term)
 **		Arrow right to move the cursor one char on the right
 */
 
-void	move_right(char *buff, t_read *term)
+void		move_right(char *buff, t_read *term)
 {
 	int		width;
 	int		buff_index;
@@ -129,7 +129,7 @@ void	move_right(char *buff, t_read *term)
 **		Arrow left to move the cursor one char on the left
 */
 
-void	move_left(char *buff, t_read *term)
+void		move_left(char *buff, t_read *term)
 {
 	int		width;
 

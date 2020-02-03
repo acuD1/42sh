@@ -6,13 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:46:53 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:47:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:00:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void	ft_printtoklist(t_lst *lexer)
+//Need Remov
+/*
+static void	ft_printtoklist(t_lst *lexer)
 {
 	t_token	*tmp;
 
@@ -28,7 +30,6 @@ void	ft_printtoklist(t_lst *lexer)
 			break ;
 		lexer = lexer->next;
 	}
-	/*
 	ft_dprintf(nono("/dev/ttys002"), "RETOUR\n");
 	while (lexer)
 	{
@@ -39,10 +40,12 @@ void	ft_printtoklist(t_lst *lexer)
 			break ;
 		lexer = lexer->prev;
 	}
-	*/
-}
 
-void	ft_freelexerlist(t_lst **lst)
+}*/
+
+//Need Remov
+/*
+static void	ft_freelexerlist(t_lst **lst)
 {
 	t_lst	*tmp;
 	t_lst	*node;
@@ -67,3 +70,4 @@ void	ft_freelexerlist(t_lst **lst)
 		free(node);
 	}
 }
+*/

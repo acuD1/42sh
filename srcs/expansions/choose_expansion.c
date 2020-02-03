@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:14:39 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:32:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:37:57 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static enum e_estate	gla_quote(char *str, int *j, enum e_estate state)
 	return (state);
 }
 
-char					*quote_mechanisms(char *str)
+static char				*quote_mechanisms(char *str)
 {
 	char			*new;
 	int				i;

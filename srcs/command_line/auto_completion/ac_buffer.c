@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:44:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:12:25 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **		Read again buff if another tab key is pressed => return TRUE
 */
 
-u_int8_t	read_again(char **prev, char *path, char *name, t_read *term)
+u_int8_t		read_again(char **prev, char *path, char *name, t_read *term)
 {
 	u_int64_t	value;
 	char		buff[READ_SIZE + 1];
@@ -45,7 +45,7 @@ u_int8_t	read_again(char **prev, char *path, char *name, t_read *term)
 	return (FALSE);
 }
 
-u_int8_t	get_dir(t_read *term, char *current_dir)
+static u_int8_t	get_dir(t_read *term, char *current_dir)
 {
 	int		found;
 	char	*tmp;
@@ -71,7 +71,7 @@ u_int8_t	get_dir(t_read *term, char *current_dir)
 	return (FALSE);
 }
 
-DIR			*update_curr_dir(t_read *term, char *curr_dir)
+static DIR		*update_curr_dir(t_read *term, char *curr_dir)
 {
 	DIR		*dir;
 	char	*tmp;
@@ -98,7 +98,7 @@ DIR			*update_curr_dir(t_read *term, char *curr_dir)
 **		Return FAILURE(-1) to stop reading
 */
 
-void		read_dir(t_read *term, char current_dir[], DIR *dir)
+static void		read_dir(t_read *term, char current_dir[], DIR *dir)
 {
 	struct dirent	*data;
 	char			*path;
@@ -130,7 +130,7 @@ void		read_dir(t_read *term, char current_dir[], DIR *dir)
 **		To complete files if char inserted match with any files in current dir
 */
 
-void		to_complete_buffer(char *to_find, t_read *term)
+void			to_complete_buffer(char *to_find, t_read *term)
 {
 	char	current_dir[BUFF_SIZE];
 	DIR		*dir;

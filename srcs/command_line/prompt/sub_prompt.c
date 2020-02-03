@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:56:22 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:19:55 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		display_subprompt(t_read *term, char *prompt)
+void			display_subprompt(t_read *term, char *prompt)
 {
 	ft_strcpy(term->prompt, prompt);
 	term->prompt_len = ft_strlen(term->prompt);
@@ -23,7 +23,7 @@ void		display_subprompt(t_read *term, char *prompt)
 	ft_printf(term->prompt);
 }
 
-u_int8_t	sub_prompt_error(t_read *term, char sb)
+static u_int8_t	sub_prompt_error(t_read *term, char sb)
 {
 	if (term->flag == TRUE)
 	{
@@ -38,7 +38,7 @@ u_int8_t	sub_prompt_error(t_read *term, char sb)
 	return (FALSE);
 }
 
-u_int8_t	read_multiline(t_read *term, char sb)
+u_int8_t		read_multiline(t_read *term, char sb)
 {
 	char	buff[READ_SIZE + 1];
 
@@ -66,7 +66,7 @@ u_int8_t	read_multiline(t_read *term, char sb)
 	return (TRUE);
 }
 
-u_int8_t	check_multi_subprompt(t_read *term, char *sb)
+static u_int8_t	check_multi_subprompt(t_read *term, char *sb)
 {
 	term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
 	if (quotes_is_matching(term, sb) == FALSE)
@@ -80,7 +80,7 @@ u_int8_t	check_multi_subprompt(t_read *term, char *sb)
 		return (FALSE);
 }
 
-void		load_subprompt(char sb, t_read *term)
+void			load_subprompt(char sb, t_read *term)
 {
 	if (sb != BACKSLASH)
 		term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);

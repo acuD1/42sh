@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:51:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 20:52:35 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:59:04 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void	ft_freejoblist(t_lst **lst)
+void		ft_freejoblist(t_lst **lst)
 {
 	t_lst	*tmp;
 	t_lst	*node;
@@ -40,7 +40,7 @@ void	ft_freejoblist(t_lst **lst)
 	*lst = NULL;
 }
 
-void	ft_freetokenlist(t_lst **lst)
+void		ft_freetokenlist(t_lst **lst)
 {
 	t_lst	*tmp;
 	t_lst	*node;
@@ -67,7 +67,8 @@ void	ft_freetokenlist(t_lst **lst)
 	}
 }
 
-void	ft_freedblist(t_lst **lst)
+/*
+static void	ft_freedblist(t_lst **lst)
 {
 	t_lst	*tmp;
 	t_lst	*node;
@@ -92,9 +93,9 @@ void	ft_freedblist(t_lst **lst)
 		tmp = tmp->next;
 		free(node);
 	}
-}
+}*/
 
-void	lexer_parser_analyzer(t_core *shell)
+void		lexer_parser_analyzer(t_core *shell)
 {
 	t_lst	*lxr_tok;
 

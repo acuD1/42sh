@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 13:31:35 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:20:19 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 **	Store datas of terminal's line/column
 */
 
-int8_t	get_size(t_read *term)
+int8_t			get_size(t_read *term)
 {
 	struct winsize	size;
 
@@ -41,7 +41,7 @@ int8_t	get_size(t_read *term)
 **	Stock termcaps capabilities in a static array
 */
 
-int8_t	stock_termcaps(t_read *term)
+static int8_t	stock_termcaps(t_read *term)
 {
 	static char	*termcaps[CAPS_NBR] = {"dc", "sc", "rc", "do", "up", "nd"
 		, "le", "cr", "ho", "cl", "cd", "ce"};
@@ -61,7 +61,7 @@ int8_t	stock_termcaps(t_read *term)
 */
 
 // Need rework here this is UGLY
-void	init_termcaps(t_read *term)
+void			init_termcaps(t_read *term)
 {
 	char	*sh;
 	char	bp[1024];

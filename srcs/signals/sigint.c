@@ -6,14 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/28 20:58:32 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:58:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <signal.h>
 
-void			kill_processes(int signum, t_core *shell)
+static void		kill_processes(int signum, t_core *shell)
 {
 	t_lst	*ptr;
 

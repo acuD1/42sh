@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 16:34:39 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/03 14:00:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:24:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void	print_shell_usage(int option, int fd)
+static void	print_shell_usage(int option, int fd)
 {
 	if (fd == STDERR_FILENO)
 		dprintf(fd, "42sh: -%c: invalid option\n", option);
@@ -20,7 +20,7 @@ void	print_shell_usage(int option, int fd)
 	dprintf(fd, "Shell options:\n\t-vh or -c command\n");
 }
 
-void	opt_h(int ac, char **av, t_core *shell)
+static void	opt_h(int ac, char **av, t_core *shell)
 {
 	(void)ac;
 	(void)av;
@@ -29,7 +29,7 @@ void	opt_h(int ac, char **av, t_core *shell)
 	print_shell_usage(0, STDOUT_FILENO);
 }
 
-void	opt_v(int ac, char **av, t_core *shell)
+static void	opt_v(int ac, char **av, t_core *shell)
 {
 	(void)ac;
 	(void)av;
@@ -37,7 +37,7 @@ void	opt_v(int ac, char **av, t_core *shell)
 		shell->build.release, shell->build.version, shell->build.patch);
 }
 
-void	opt_c(int ac, char **av, t_core *shell)
+static void	opt_c(int ac, char **av, t_core *shell)
 {
 	(void)ac;
 	if (!av[2])

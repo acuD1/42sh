@@ -6,19 +6,21 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:53:37 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:28:32 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:01:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		init_assign(t_db *db)
+void				init_assign(t_db *db)
 {
 	db->key = NULL;
 	db->value = NULL;
 }
 
-t_db		*fetch_assign(t_db *assign)
+// ??
+/*
+static t_db			*fetch_assign(t_db *assign)
 {
 	t_db	*new;
 
@@ -34,10 +36,10 @@ t_db		*fetch_assign(t_db *assign)
 	else
 		new->value = NULL;
 	return (new);
-}
+}*/
 
 // PUTIN WTF
-t_analyzer	*ass_analyze(t_analyzer *anal)
+static t_analyzer	*ass_analyze(t_analyzer *anal)
 {
 	int		i;
 	int		j;

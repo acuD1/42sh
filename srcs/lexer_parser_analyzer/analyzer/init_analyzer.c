@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_analyzer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 17:29:49 by guvillat          #+#    #+#             */
-/*   Updated: 2019/12/02 13:54:57 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:52:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		init_start_analyze(t_anal analyze)
+static void	init_start_analyze(t_anal analyze)
 {
 	analyze[A_START][P_NEWLINE] = separator_analyze;
 	// analyze[A_START][P_ANDIF] = separator_analyze;
@@ -37,7 +37,7 @@ void		init_start_analyze(t_anal analyze)
 	analyze[A_START][P_END] = end_analyze;
 }
 
-void		init_word_analyze(t_anal analyze)
+static void	init_word_analyze(t_anal analyze)
 {
 	analyze[A_WORD][P_NEWLINE] = separator_analyze;
 	analyze[A_WORD][P_ANDIF] = separator_analyze;

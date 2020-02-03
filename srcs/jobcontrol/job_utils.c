@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 16:42:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/28 20:23:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:05:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-t_process	*find_process(t_lst *job, pid_t pid)
+t_process		*find_process(t_lst *job, pid_t pid)
 {
 	t_lst	*process;
 
@@ -30,7 +30,9 @@ t_process	*find_process(t_lst *job, pid_t pid)
 	return (NULL);
 }
 
-t_job		*find_job(t_lst *job, pid_t pgid)
+// Need remov
+/*
+static t_job	*find_job(t_lst *job, pid_t pgid)
 {
 	while (job != NULL)
 	{
@@ -39,9 +41,9 @@ t_job		*find_job(t_lst *job, pid_t pgid)
 		job = job->next;
 	}
 	return (NULL);
-}
+}*/
 
-int8_t		job_is_stopped(t_job *job)
+int8_t			job_is_stopped(t_job *job)
 {
 	t_lst	*ptr;
 
@@ -56,7 +58,7 @@ int8_t		job_is_stopped(t_job *job)
 	return (TRUE);
 }
 
-int8_t		job_is_completed(t_job *job)
+int8_t			job_is_completed(t_job *job)
 {
 	t_lst	*ptr;
 
@@ -70,7 +72,8 @@ int8_t		job_is_completed(t_job *job)
 	return (TRUE);
 }
 
-void		debug_job(t_job *job)
+// NEED REMOVE
+void			debug_job(t_job *job)
 {
 	t_lst	*ptr;
 

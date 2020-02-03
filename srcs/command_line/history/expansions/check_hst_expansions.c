@@ -6,14 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:46:59 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:15:10 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 //Need remove ?
-int8_t	debugu(const char *path, int i, char c)
+int8_t		debugu(const char *path, int i, char c)
 {
 	int fd;
 
@@ -23,7 +23,7 @@ int8_t	debugu(const char *path, int i, char c)
 	return (1);
 }
 
-void	find_expansions(t_read *term, int *i)
+static void	find_expansions(t_read *term, int *i)
 {
 	if (term->buffer[*i + 1] == '!')
 		*i = last_cmd_back(term, *i);

@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:27:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:45:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:14:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-uint8_t	is_exe(char *dir)
+static u_int8_t	is_exe(char *dir)
 {
 	struct stat	buff;
 
@@ -25,7 +25,7 @@ uint8_t	is_exe(char *dir)
 		return (FALSE);
 }
 
-uint8_t	ac_dir(t_read *term, char *dir, char *to_find)
+static u_int8_t	ac_dir(t_read *term, char *dir, char *to_find)
 {
 	char	*tmp;
 
@@ -49,7 +49,7 @@ uint8_t	ac_dir(t_read *term, char *dir, char *to_find)
 		return (FAILURE);
 }
 
-void	read_directories(char *to_find, t_read *term)
+void			read_directories(char *to_find, t_read *term)
 {
 	struct dirent	*data;
 	DIR				*dir;

@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 21:06:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:56:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		init_start_graph(t_graph *graph)
+static void		init_start_graph(t_graph *graph)
 {
 	static enum e_pstate	tab_good_type[] = {P_WORD, ALL_REDIRECT, P_ASSIGN
 		, P_IONUMBER, P_END, P_START, P_ERROR};
@@ -23,7 +23,7 @@ void		init_start_graph(t_graph *graph)
 	graph[P_ANDIF].good_type = tab_good_type;
 }
 
-t_parser	*ft_init_graph(t_parser *parser)
+static t_parser	*ft_init_graph(t_parser *parser)
 {
 	init_start_graph(parser->graph);
 	init_redirect_graph(parser->graph);
@@ -33,7 +33,7 @@ t_parser	*ft_init_graph(t_parser *parser)
 	return (parser);
 }
 
-u_int8_t	graph(enum e_pstate *c, enum e_pstate n, enum e_pstate ps[])
+static u_int8_t	graph(enum e_pstate *c, enum e_pstate n, enum e_pstate ps[])
 {
 	u_int8_t	i;
 

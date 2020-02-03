@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:45:53 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:42:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:53:38 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int	isvalid_assignement_word(char *str, size_t index)
+static int		isvalid_assignement_word(char *str, size_t index)
 {
 	int		i;
 
@@ -31,7 +31,7 @@ static int	isvalid_assignement_word(char *str, size_t index)
 	return (i + 1);
 }
 
-t_lst		*create_assign_token(t_lexer *lex, int len, t_lst *lexer_token)
+static t_lst	*create_assign_token(t_lexer *lex, int len, t_lst *lexer_token)
 {
 	char	*str;
 	int		value_len;
@@ -52,7 +52,7 @@ t_lst		*create_assign_token(t_lexer *lex, int len, t_lst *lexer_token)
 	return (lexer_token);
 }
 
-t_lst		*assignement_word_lexer(t_lexer *lexer, t_lst *lexer_token)
+t_lst			*assignement_word_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	int		i;
 

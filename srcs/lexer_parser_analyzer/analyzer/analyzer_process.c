@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:54:30 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:36:49 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:02:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		init_process(t_process *new)
+void	init_process(t_process *new)
 {
 	ft_bzero(new, sizeof(t_process));
 	new->command = NULL;

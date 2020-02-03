@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/01 17:10:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:19:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 **	  - `clr_inputs' => to clear input from the cursor and following inputs
 */
 
-void	goto_prompt(t_read *term)
+void			goto_prompt(t_read *term)
 {
 	while (term->y-- > 0)
 		xtputs(term->tcaps[KEY_UP], 1, my_outc);
@@ -36,7 +36,7 @@ void	goto_prompt(t_read *term)
 **	  Store some datas for pressed keys
 */
 
-void	display_prompt(t_read *term)
+void			display_prompt(t_read *term)
 {
 	ft_bzero(term->prompt, 10);
 	ft_strcpy(term->prompt, PS1);
@@ -58,7 +58,7 @@ void	display_prompt(t_read *term)
 **	  The current buffer is saved in a history list
 */
 
-int8_t	end_of_file(char *buff, t_read *term)
+static int8_t	end_of_file(char *buff, t_read *term)
 {
 	t_core	*shell;
 
@@ -78,7 +78,7 @@ int8_t	end_of_file(char *buff, t_read *term)
 	return (FALSE);
 }
 
-int8_t	init_prompt(t_core *shell)
+int8_t			init_prompt(t_core *shell)
 {
 	char	buff[READ_SIZE + 1];
 

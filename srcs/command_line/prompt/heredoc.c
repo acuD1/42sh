@@ -6,20 +6,19 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:50:15 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:18:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-u_int8_t	heredoc_error(char *key)
+static u_int8_t	heredoc_error(char *key)
 {
 	ft_dprintf(STDERR_FILENO,
 		"42sh: warning: here-document delimited by eof (wanted `%s')\n", key);
 	return (TRUE);
 }
-
-int8_t		check_key(t_core *shell, char *key)
+static int8_t	check_key(t_core *shell, char *key)
 {
 	if (read_multiline(&shell->term, FALSE) == FALSE)
 	{
@@ -40,7 +39,7 @@ int8_t		check_key(t_core *shell, char *key)
 	return (FALSE);
 }
 
-char		*stock_value(t_core *shell, int i)
+static char		*stock_value(t_core *shell, int i)
 {
 	char	*value;
 	char	*buffer;
@@ -58,7 +57,7 @@ char		*stock_value(t_core *shell, int i)
 	return (value);
 }
 
-char		*load_heredoc(t_core *shell, char *key)
+char			*load_heredoc(t_core *shell, char *key)
 {
 	char	*value;
 	int		i;

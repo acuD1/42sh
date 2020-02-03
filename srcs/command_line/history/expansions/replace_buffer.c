@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 04:02:43 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:48:12 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:16:12 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void	replace_buffer(t_read *term, char *begin, char *end, char *content)
+static void	replace_buffer(t_read *term, char *begin, char *end, char *content)
 {
 	char	*tmp;
 
@@ -34,7 +34,7 @@ void	replace_buffer(t_read *term, char *begin, char *end, char *content)
 **		To insert in buffer the content found from the hst lst
 */
 
-void	insert_content(int j, int i, t_read *term, char *content)
+void		insert_content(int j, int i, t_read *term, char *content)
 {
 	char	*begin;
 	char	*end;

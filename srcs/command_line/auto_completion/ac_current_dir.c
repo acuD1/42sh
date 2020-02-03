@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:45:23 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:13:04 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Return only TRUE if tab key is pressed
 */
 
-u_int8_t	is_tab(char *d_name, t_read *term)
+u_int8_t		is_tab(char *d_name, t_read *term)
 {
 	u_int64_t	value;
 	char		buff[READ_SIZE + 1];
@@ -36,7 +36,7 @@ u_int8_t	is_tab(char *d_name, t_read *term)
 	return (FALSE);
 }
 
-int			is_dot(char *d_name)
+int				is_dot(char *d_name)
 {
 	if (!ft_strcmp(d_name, ".") || isstart(d_name, "."))
 		return (TRUE);
@@ -45,7 +45,7 @@ int			is_dot(char *d_name)
 	return (FALSE);
 }
 
-char		*get_current_dir(char *curr_dir, char *tmp_curr, t_read *term)
+static char		*get_current_dir(char *curr_dir, char *tmp_curr, t_read *term)
 {
 	if (term->ac > 1 && is_dir(curr_dir))
 		ft_strcpy(tmp_curr, curr_dir);
@@ -58,7 +58,7 @@ char		*get_current_dir(char *curr_dir, char *tmp_curr, t_read *term)
 	return (tmp_curr);
 }
 
-int8_t		read_curr_dir(t_read *term, char tmp[], char curr[], DIR *dir)
+static int8_t	read_curr_dir(t_read *term, char tmp[], char curr[], DIR *dir)
 {
 	struct dirent	*data;
 

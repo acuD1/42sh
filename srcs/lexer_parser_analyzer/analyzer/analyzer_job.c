@@ -6,13 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:53:51 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:29:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 18:02:48 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		init_job(t_job *new)
+// ??
+
+void	init_job(t_job *new)
 {
 	ft_bzero(new, sizeof(t_job));
 	new->type = P_END;

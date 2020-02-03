@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 17:55:48 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:42:59 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:54:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-t_lst	*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token, int i)
+static t_lst	*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token, int i)
 {
 	char	*str;
 
@@ -33,7 +33,7 @@ t_lst	*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token, int i)
 	return (lexer_token);
 }
 
-t_lst	*number_lexer(t_lexer *lexer, t_lst *lexer_token)
+t_lst			*number_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	int		i;
 
@@ -50,7 +50,7 @@ t_lst	*number_lexer(t_lexer *lexer, t_lst *lexer_token)
 	return (lexer_token);
 }
 
-t_lst	*newline_lexer(t_lexer *lexer, t_lst *lexer_token)
+t_lst			*newline_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	char	*str;
 

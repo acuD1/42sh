@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   continue.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 15:51:08 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/09 14:57:47 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:45:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void	mark_job_as_running(t_job *job)
+static void	mark_job_as_running(t_job *job)
 {
 	t_lst	*ptr;
 
@@ -25,7 +25,7 @@ void	mark_job_as_running(t_job *job)
 	job->notified = FALSE;
 }
 
-int8_t	continue_job(t_core *shell, t_job *job, int foreground)
+int8_t		continue_job(t_core *shell, t_job *job, int foreground)
 {
 	mark_job_as_running(job);
 	if (foreground)

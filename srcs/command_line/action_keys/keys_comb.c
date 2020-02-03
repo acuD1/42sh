@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:43:51 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:10:21 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void	clr_screen(t_read *term)
+void		clr_screen(t_read *term)
 {
 	int		i;
 
@@ -31,7 +31,7 @@ void	clr_screen(t_read *term)
 **				`nd' to move the cursor on right
 */
 
-void	move_col_up(t_read *term)
+static void	move_col_up(t_read *term)
 {
 	int		width;
 
@@ -59,7 +59,7 @@ void	move_col_up(t_read *term)
 **	Termcaps capabilities : `down' to move cursor down at beginning of input
 */
 
-void	move_col_down(t_read *term)
+static void	move_col_down(t_read *term)
 {
 	int		width;
 	int		nb_ofline;
@@ -77,7 +77,7 @@ void	move_col_down(t_read *term)
 	}
 }
 
-void	move_in_column(uint64_t value, t_read *term)
+static void	move_in_column(uint64_t value, t_read *term)
 {
 	if (value == ALT_AW_UP && term->y > 0)
 		move_col_up(term);
@@ -90,7 +90,7 @@ void	move_in_column(uint64_t value, t_read *term)
 **	(CTRL+B) to jump one word backward
 */
 
-void	jump_words(char *buff, t_read *term, u_int64_t value)
+void		jump_words(char *buff, t_read *term, u_int64_t value)
 {
 	if (value == CTRL_F)
 	{

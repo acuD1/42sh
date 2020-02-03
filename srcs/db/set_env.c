@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 21:02:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:25:04 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 **	Setup all required variables for the shell
 */
 
-int8_t	init_env(t_core *shell)
+static int8_t	init_env(t_core *shell)
 {
 	static int8_t	(*inits[14])(t_core *shell) = {increment_shlvl, update_pwd
 		, update_ifs, update_termsize, create_term, update_histfile
@@ -41,7 +41,7 @@ int8_t	init_env(t_core *shell)
 **	- Modify Inherited vars from the parent shell
 */
 
-int8_t	set_env(t_core *shell, char **argv, char **environ)
+int8_t			set_env(t_core *shell, char **argv, char **environ)
 {
 	size_t	i;
 

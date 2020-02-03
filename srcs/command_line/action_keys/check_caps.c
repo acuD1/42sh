@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 22:12:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:02:07 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 **	CTRL + F to jump one word forward
 */
 
-void		check_keys_comb(char *buff, t_read *term, u_int64_t value)
+static void		check_keys_comb(char *buff, t_read *term, u_int64_t value)
 {
 	int		i;
 
@@ -42,7 +42,7 @@ void		check_keys_comb(char *buff, t_read *term, u_int64_t value)
 		jump_words(buff, term, value);
 }
 
-u_int8_t	cursor_motion(char *buff, t_read *term, uint64_t value)
+static u_int8_t	cursor_motion(char *buff, t_read *term, uint64_t value)
 {
 	if (value == ARROW_UP)
 		move_key_up(term);
@@ -72,7 +72,7 @@ u_int8_t	cursor_motion(char *buff, t_read *term, uint64_t value)
 */
 
 
-u_int8_t	check_caps(char *buff, t_read *term)
+u_int8_t		check_caps(char *buff, t_read *term)
 {
 	u_int64_t	value;
 

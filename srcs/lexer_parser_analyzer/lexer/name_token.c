@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:15:08 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:46:04 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:54:47 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int		get_word_size_ntype(int i, char *str)
+int				get_word_size_ntype(int i, char *str)
 {
 	int		index;
 
@@ -33,7 +33,7 @@ int		get_word_size_ntype(int i, char *str)
 	return (index);
 }
 
-t_lst	*word_lexer(t_lexer *lexer, t_lst *lexer_token)
+static t_lst	*word_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	int		i;
 	char	*str;
@@ -52,7 +52,7 @@ t_lst	*word_lexer(t_lexer *lexer, t_lst *lexer_token)
 	return (lexer_token);
 }
 
-t_lst	*name_lexer(t_lexer *lexer, t_lst *lexer_token)
+t_lst			*name_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
 	char	*str;
 
