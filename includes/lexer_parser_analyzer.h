@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 16:53:44 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 18:36:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 15:05:36 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void		init_redir(t_redir *new);
 void		init_process(t_process *new);
 void		init_job(t_job *new);
 void		init_assign(t_db *db);
-void		init_start_analyze(t_anal analyze);
-void		init_word_analyze(t_anal analyze);
+//void		init_start_analyze(t_anal analyze);
+//void		init_word_analyze(t_anal analyze);
 void		init_assign_analyze(t_anal analyze);
 void		init_ionumber_analyze(t_anal analyze);
 void		init_redirect_analyze(t_anal analyze);
@@ -46,18 +46,18 @@ t_analyzer	*redir_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer	*redir_wanalyze(t_analyzer *anal, t_core *shell);
 t_analyzer	*process_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer	*job_analyze(t_analyzer *analyzer, t_core *shell);
-t_analyzer	*ass_analyze(t_analyzer *analyzer);
+//t_analyzer	*ass_analyze(t_analyzer *analyzer);
 t_analyzer	*process_word_analyze(t_analyzer *anal);
-t_db		*fetch_assign(t_db *assign);
-t_job		*fetch_job(t_job *job);
-t_redir		*fetch_redir(t_redir *redir);
-t_process	*fetch_process(t_process *process);
-void		get_token(t_analyzer *analyzer);
+//t_db		*fetch_assign(t_db *assign);
+//t_job		*fetch_job(t_job *job);
+//t_redir		*fetch_redir(t_redir *redir);
+//t_process	*fetch_process(t_process *process);
+//void		get_token(t_analyzer *analyzer);
 void		free_process_list(t_lst **head);
-void		ft_free_redirlist(t_lst **head);
-void		ft_free_redir(t_redir *redir);
+//void		ft_free_redirlist(t_lst **head);
+//void		ft_free_redir(t_redir *redir);
 char		*fill_cmd_job(t_lst *tok_lst, char *cmd);
-char		**fill_cmd_process(char *str);
+//char		**fill_cmd_process(char *str);
 char		**ft_add_arg_cmd_process(char **tablo, char *str);
 
 /*
@@ -68,33 +68,33 @@ u_int8_t	parser(t_lst *lexer);
 void		init_word_graph(t_graph *graph);
 void		init_redirect_graph(t_graph *graph);
 void		init_process_graph(t_graph *graph);
-void		init_assign_graph(t_graph *graph);
+//void		init_assign_graph(t_graph *graph);
 void		init_ionumber_graph(t_graph *graph);
-void		init_start_graph(t_graph *graph);
-t_parser	*ft_init_graph(t_parser *parser);
+//void		init_start_graph(t_graph *graph);
+//t_parser	*ft_init_graph(t_parser *parser);
 
 /*
 **	LEXER
 */
 
 t_lst		*lexer(char *line);
-int			ft_isdigit(int c);
-int			ft_isalpha(int c);
+//int			ft_isdigit(int c);
+//int			ft_isalpha(int c);
 t_lst		*start_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst		*end_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst		*name_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst		*newline_lexer(t_lexer *lexer, t_lst *lexer_token);
-t_lst		*backslash_lexer(t_lexer *lexer, t_lst *lexer_token);
+//t_lst		*backslash_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst		*number_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst		*assignement_word_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst		*operator_lexer(t_lexer *lexer, t_lst *lexer_token);
-t_lst		*word_lexer(t_lexer *lexer, t_lst *lexer_token);
+//t_lst		*word_lexer(t_lexer *lexer, t_lst *lexer_token);
 void		init_lexer(char *line, t_lexer *new);
-void		init_token(t_token *token);
+//void		init_token(t_token *token);
 t_token		*fetch_token(t_token *token, enum e_pstate type, char *data);
-void		ft_printtoklist(t_lst *lexer);
+//void		ft_printtoklist(t_lst *lexer);
 void		ft_freejoblist(t_lst **lst);
 void		ft_freetokenlist(t_lst **lst);
-void		ft_freedblist(t_lst **lst);
+//void		ft_freedblist(t_lst **lst);
 
 #endif

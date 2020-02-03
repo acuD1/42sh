@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2019/12/26 10:18:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:46:56 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		launch_editor(t_core *shell, char *ed, char *cmd)
+void	launch_editor(t_core *shell, char *ed, char *cmd)
 {
 	ft_printf("%d\n", ft_strlen(cmd) + 1);
 	ft_strcpy(shell->term->buffer, ed);

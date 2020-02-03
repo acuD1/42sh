@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 17:09:47 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/03 13:43:52 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 16:41:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ typedef struct				s_read
 	int						x_index;
 	int						x;
 	int						y;
-	int						y_li;
+//	int						y_li;
 	int						width;
 	int						ws_col;
 	int						ws_li;
 	int						ac;
 
-	int						new_line;
-	int						found;
+//	int						new_line;
+//	int						found;
 	int						sub_prompt;
 	int						status;
 
@@ -86,7 +86,7 @@ struct						s_core
 	t_lst					*running_process;
 	t_lst					*env;
 	t_lst					*pos_vars;
-	t_lst					*lexer;
+//	t_lst					*lexer;
 	t_lst					*job_list;
 	t_lst					*launched_jobs;
 	u_int64_t				opt;
@@ -137,7 +137,7 @@ struct						s_lexer
 
 typedef struct				s_job
 {
-	struct termios			tmodes;
+//	struct termios			tmodes;
 	enum e_pstate			type;
 	int8_t					notified;
 	t_lst					*process_list;
@@ -219,17 +219,5 @@ typedef struct				s_lex_exp
 	enum e_estate			id;
 	int						len;
 }							t_lex_exp;
-
-/*
-**	INTERN VAR
-*/
-
-typedef struct				s_process_var
-{
-	char					*name;
-	pid_t					pid;
-	u_int16_t				bck_order;
-	u_int16_t				bck_id;
-}							t_process_var;
 
 #endif

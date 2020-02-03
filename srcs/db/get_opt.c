@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 16:34:39 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/03 13:38:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 14:00:37 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	get_opt(int ac, char **av, t_core *shell)
 		return ;
 	shell->mode |= OPT_MODE;
 	opt = get_options(ac, av, SHELL_OPT);
-	if (opt & (1ULL << 63))
+	if (opt & OPT_ERROR)
 	{
 		print_shell_usage(opt % 128, STDERR_FILENO);
 		quit_shell(shell, EXIT_FAILURE, FALSE);
