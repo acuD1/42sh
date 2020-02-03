@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 17:58:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:30:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void		ft_perror(const char *s, const char *name, const int errnum);
 int8_t		ft_access(char *path, int mode);
 int8_t		is_a_dir(char *path);
 void		print_usage(char *name, int c, char *usage);
-void		quit_shell(t_core *shell, int exit_value, int8_t v, u_int8_t mode);
+void		quit_shell(t_core *shell, int exit_value, int8_t v);
 void		print_and_quit(t_core *shell, char *message);
 int			check_invalid_identifiers(char *arg, char *exceptions);
 char		*signal_msg(int sig);

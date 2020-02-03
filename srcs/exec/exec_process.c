@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 19:01:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:41:31 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void			exec_process
 		launch_process(shell, process, fds[0], fds[1]);
 	else if (process->pid < 0)
 		print_and_quit(shell, "42sh: fork failure\n");
-	if (shell->is_interactive)
+	if (shell->mode & I_MODE)
 	{
 		if (process->pgid == -1)
 			job->pgid = process->pid;

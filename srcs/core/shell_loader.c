@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 18:57:17 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:33:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	load_noi_mode(t_core *shell)
 	{
 		lexer_parser_analyzer(shell);
 		if (task_master(shell) != SUCCESS)
-			return (quit_shell(shell, EXIT_FAILURE, FALSE, NOI_MODE));
+			return (quit_shell(shell, EXIT_FAILURE, FALSE));
 		free_prompt(shell);
 	}
 }
@@ -33,7 +33,7 @@ void	load_i_mode(t_core *shell)
 			return ;
 		lexer_parser_analyzer(shell);
 		if (task_master(shell) != SUCCESS)
-			return (quit_shell(shell, EXIT_FAILURE, FALSE, I_MODE));
+			return (quit_shell(shell, EXIT_FAILURE, FALSE));
 		save_history(&shell->term);
 		free_prompt(shell);
 	}

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:51:28 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:31:35 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int8_t	get_size(t_read *term)
 		if ((term->ws_col = tgetnum("co")) < 0 || (term->ws_li = tgetnum("li")) < 0)
 		{
 			ft_perror("Ioctl and Tgetnum error", NULL, 0);
-			quit_shell(get_core(NULL), EXIT_FAILURE, FALSE, I_MODE);
+			quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
 			return (FAILURE);
 		}
 		return (SUCCESS);
@@ -69,21 +69,21 @@ void	init_termcaps(t_read *term)
 	if (stock_termcaps(term) == FAILURE)
 	{
 		ft_perror("Get termcaps failed", NULL, 0);
-		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE, I_MODE);
+		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
 	}
 	if (!(sh = getenv("TERM")))
 	{
 		ft_perror("Getenv error", NULL, 0);
-		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE, I_MODE);
+		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
 	}
 	if (tgetent(bp, sh) == FAILURE)
 	{
 		ft_perror("Tgetent error", NULL, 0);
-		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE, I_MODE);
+		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
 	}
 	if (get_size(term) != SUCCESS)
 	{
 		ft_perror("Get term size failed", NULL, 0);
-		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE, I_MODE);
+		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
 	}
 }

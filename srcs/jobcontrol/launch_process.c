@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/28 20:25:10 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:41:57 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		launch_process
 {
 	int		fds[2];
 
-	if (shell->is_interactive)
+	if (shell->mode & I_MODE)
 	{
 		reset_signals();
 		put_process_in_grp(shell, process);

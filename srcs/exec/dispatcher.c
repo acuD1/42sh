@@ -6,14 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/28 17:34:04 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:42:59 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static void	setup_pipes(t_core *shell, t_process *process
-		, int *mypipe, int *outfile)
+static void	setup_pipes
+	(t_core *shell, t_process *process, int *mypipe, int *outfile)
 {
 	*outfile = STDOUT_FILENO;
 	if (process->type == P_PIPE)
@@ -36,9 +36,9 @@ static void	clean_pipes(int *infile, int *outfile, int *mypipe)
 
 static void	place_job(t_core *shell, t_job *job, int8_t foreground)
 {
-	if (shell->is_interactive && (job_is_completed(job) || job_is_stopped(job)))
+	if (shell->mode & I_MODE && (job_is_completed(job) || job_is_stopped(job)))
 		return ;
-	if (!shell->is_interactive)
+	if (shell->mode & NOI_MODE)
 		wait_for_job(shell, shell->job_list, job);
 	else if (foreground == TRUE && !job_is_stopped(job))
 		put_job_in_foreground(shell, shell->job_list, job, FALSE);

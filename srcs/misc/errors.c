@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 20:32:08 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/28 21:09:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:33:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_usage(char *name, int c, char *usage)
 void	print_and_quit(t_core *shell, char *message)
 {
 	dprintf(STDERR_FILENO, "%s", message);
-	quit_shell(shell, EXIT_FAILURE, FALSE, I_MODE);
+	quit_shell(shell, EXIT_FAILURE, FALSE);
 }
 
 void	ft_perror(const char *s, const char *name, const int errnum)

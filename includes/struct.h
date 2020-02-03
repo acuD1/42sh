@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 17:09:47 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 18:37:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:43:52 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ struct						s_core
 	u_int64_t				opt;
 	int32_t					status;
 	int32_t					heredoc;
-	int8_t					is_interactive;
 	int32_t					terminal;
+	u_int8_t				mode;
 	pid_t					pgid;
 };
 

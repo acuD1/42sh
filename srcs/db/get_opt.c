@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 16:34:39 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/25 13:45:35 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:38:07 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ void	opt_c(int ac, char **av, t_core *shell)
 		dprintf(STDERR_FILENO, "42sh: -c: option requires an argument\n");
 		return ;
 	}
+	shell->mode |= NOI_MODE;
 	shell->term.buffer = ft_strdup(av[2]);
 	lexer_parser_analyzer(shell);
 	if (task_master(shell) != SUCCESS)
-		return (quit_shell(shell, EXIT_FAILURE, FALSE, NOI_MODE));
-	quit_shell(shell, EXIT_SUCCESS, FALSE, NOI_MODE);
+		return (quit_shell(shell, EXIT_FAILURE, FALSE));
+	quit_shell(shell, EXIT_SUCCESS, FALSE);
 }
 
 void	get_opt(int ac, char **av, t_core *shell)
@@ -60,11 +61,12 @@ void	get_opt(int ac, char **av, t_core *shell)
 
 	if (!av[1])
 		return ;
+	shell->mode |= OPT_MODE;
 	opt = get_options(ac, av, SHELL_OPT);
 	if (opt & (1ULL << 63))
 	{
 		print_shell_usage(opt % 128, STDERR_FILENO);
-		quit_shell(shell, EXIT_FAILURE, FALSE, OPT_MODE);
+		quit_shell(shell, EXIT_FAILURE, FALSE);
 	}
 	i = 0;
 	while (i < 3)
@@ -72,7 +74,7 @@ void	get_opt(int ac, char **av, t_core *shell)
 		if (opt & (1ULL << (SHELL_OPT[i] - 97)))
 		{
 			shell_opt[i](ac, av, shell);
-			quit_shell(shell, EXIT_SUCCESS, FALSE, OPT_MODE);
+			quit_shell(shell, EXIT_SUCCESS, FALSE);
 		}
 		i++;
 	}

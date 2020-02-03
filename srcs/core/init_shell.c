@@ -6,19 +6,29 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 18:58:00 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:44:15 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include "sh42.h"
 
-/*
-**	Global variable are initialized here. We need to figure it out wich ones
-**	need to be shared.
-*/
+static void	init_shell_pgid(t_core *shell)
+{
+	while (tcgetpgrp(shell->terminal) != (shell->pgid = getpgrp()))
+		kill(-shell->pgid, SIGTTIN);
+	shell->pgid = getpid();
+	if (setpgid(shell->pgid, shell->pgid) < 0)
+		print_and_quit(shell,
+			"42sh: Couldn't put the shell in its own process group\n");
+	init_signals();
+	if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
+		print_and_quit(shell, "42sh: tcsetpgrp error\n");
+	if (tcgetattr(shell->terminal, &(shell->old_t)) != SUCCESS)
+		print_and_quit(shell, "42sh: tcgetattr error\n");
+}
 
-int8_t	init_shell(t_core *shell, char **av, char **environ)
+int8_t		init_shell(t_core *shell, char **av, char **environ)
 {
 	shell->build = (struct s_build){BUILDR, BUILDV, BUILDP + 1, DATE};
 	shell->hash.size = HASH_SIZE;
@@ -29,19 +39,12 @@ int8_t	init_shell(t_core *shell, char **av, char **environ)
 		dprintf(STDERR_FILENO, "42sh: Cannot allocate memory\n");
 		return (EXIT_FAILURE);
 	}
-	if ((shell->is_interactive = isatty(shell->terminal)))
+	if (isatty(shell->terminal) == TRUE)
 	{
-		while (tcgetpgrp(shell->terminal) != (shell->pgid = getpgrp()))
-			kill(-shell->pgid, SIGTTIN);
-		shell->pgid = getpid();
-		if (setpgid(shell->pgid, shell->pgid) < 0)
-			print_and_quit(shell,
-				"42sh: Couldn't put the shell in its own process group\n");
-		init_signals();
-		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
-			print_and_quit(shell, "42sh: tcsetpgrp error\n");
-		if (tcgetattr(shell->terminal, &(shell->old_t)) != SUCCESS)
-			print_and_quit(shell, "42sh: tcgetattr error\n");
+		shell->mode |= I_MODE;
+		init_shell_pgid(shell);
 	}
+	else
+		shell->mode |= NOI_MODE;
 	return (SUCCESS);
 }

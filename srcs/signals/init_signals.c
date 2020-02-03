@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/25 13:50:17 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 13:35:07 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	sig_exit(int signum)
 	t_core	*shell;
 
 	shell = get_core(NULL);
-	quit_shell(shell, 141, (signum == SIGPIPE) ? FALSE : TRUE, I_MODE);
+	quit_shell(shell, 141, (signum == SIGPIPE) ? FALSE : TRUE);
 }
 
 static void	sigh_winch(int signum)
@@ -43,7 +43,7 @@ static void	sigh_winch(int signum)
 	fflush(stdout);
 	shell = get_core(NULL);
 	if (get_size(&(shell->term)) != SUCCESS || update_termsize(shell))
-		quit_shell(shell, EXIT_SUCCESS, FALSE, I_MODE);
+		quit_shell(shell, EXIT_SUCCESS, FALSE);
 }
 
 /*
