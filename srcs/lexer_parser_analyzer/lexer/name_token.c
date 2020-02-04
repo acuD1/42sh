@@ -12,9 +12,9 @@
 
 #include "sh42.h"
 
-int 	get_word_size_ntype(int i, char *str)
+int			get_word_size_ntype(int i, char *str)
 {
-	int index;
+	int		index;
 
 	if (!str || !str[i])
 		return (0);
@@ -22,11 +22,14 @@ int 	get_word_size_ntype(int i, char *str)
 	while (str[index] && (!ft_strchr(CHAR_INTERRUPT, str[index])))
 	{
 		if (str[index] == '\'')
-			while (str[index++] && str[index] != '\'');
+			while (str[index] && str[index] != '\'')
+				index++;
 		if (str[index] == '`')
-			while (str[index++] && str[index] != '`');
+			while (str[index] && str[index] != '`')
+				index++;
 		if (str[index] == '\"')
-			while (str[index++] && str[index] != '\"');
+			while (str[index] && str[index] != '\"')
+				index++;
 		index++;
 	}
 	return (index);

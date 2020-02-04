@@ -14,7 +14,8 @@
 
 void			init_start_graph(t_graph *graph)
 {
-	static e_pstate tab_good_type[] = {P_WORD, ALL_REDIRECT, P_ASSIGN, P_IONUMBER, P_END, P_START, P_ERROR};
+	static e_pstate tab_good_type[] = {P_WORD, ALL_REDIRECT, P_ASSIGN,
+		P_IONUMBER, P_END, P_START, P_ERROR};
 
 	graph[P_START].good_type = tab_good_type;
 	graph[P_NEWLINE].good_type = tab_good_type;
@@ -70,10 +71,7 @@ uint8_t			parser(t_lst *lexer)
 	{
 		if (!(graph(&parser->state, ((t_token*)tok_lst->content)->id,
 			parser->graph[parser->state].good_type)))
-		{
-			ft_printf("42sh: syntax error near unexpected token `%s'\n", ((t_token*)tok_lst->content)->data);
 			return (FALSE);
-		}
 		tok_lst = tok_lst->next;
 	}
 	lexer = *head;

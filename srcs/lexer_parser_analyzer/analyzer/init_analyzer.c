@@ -15,12 +15,12 @@
 void		init_start_analyze(t_anal analyze)
 {
 	analyze[A_START][P_NEWLINE] = separator_analyze;
-	// analyze[A_START][P_ANDIF] = separator_analyze;
-	// analyze[A_START][P_AND] = separator_analyze;
-	// analyze[A_START][P_ORIF] = separator_analyze;
-	// analyze[A_START][P_PIPE] = separator_analyze;
-	// analyze[A_START][P_SEMICOLON] = separator_analyze;
-	// analyze[A_START][P_DSEMI] = separator_analyze;
+	analyze[A_START][P_ANDIF] = separator_analyze;
+	analyze[A_START][P_AND] = separator_analyze;
+	analyze[A_START][P_ORIF] = separator_analyze;
+	analyze[A_START][P_PIPE] = separator_analyze;
+	analyze[A_START][P_SEMICOLON] = separator_analyze;
+	analyze[A_START][P_DSEMI] = separator_analyze;
 	analyze[A_START][P_DLESSDASH] = redirect_analyze;
 	analyze[A_START][P_DLESS] = redirect_analyze;
 	analyze[A_START][P_LESSAND] = redirect_analyze;

@@ -34,7 +34,7 @@ static int		isvalid_assignement_word(char *str, size_t index)
 t_lst			*create_assign_token(t_lexer *lex, int len, t_lst *lexer_token)
 {
 	char		*str;
-	int 		value_len;
+	int			value_len;
 
 	str = NULL;
 	value_len = 0;

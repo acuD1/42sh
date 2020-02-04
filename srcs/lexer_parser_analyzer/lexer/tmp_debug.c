@@ -12,16 +12,6 @@
 
 #include "sh42.h"
 
-int				ft_isalpha(int c)
-{
-	return (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) ? 1 : 0);
-}
-
-int				ft_isdigit(int c)
-{
-	return ((c >= '0' && c <= '9') ? 1 : 0);
-}
-
 void			ft_printtoklist(t_lst *lexer)
 {
 	t_token		*tmp;
@@ -38,16 +28,6 @@ void			ft_printtoklist(t_lst *lexer)
 			break ;
 		lexer = lexer->next;
 	}
-	// ft_dprintf(nono("/dev/ttys002"), "RETOUR\n");
-	// while (lexer)
-	// {
-	// 	tmp = (t_token*)lexer->content;
-	// 	ft_dprintf(nono("/dev/ttys002"), "{%s %u}\n",
-	// 		((t_token*)lexer->content)->data, ((t_token*)lexer->content)->id);
-	// 	if (!lexer->prev)
-	// 		break ;
-	// 	lexer = lexer->prev;
-	// }
 }
 
 void			ft_freelexerlist(t_lst **lst)

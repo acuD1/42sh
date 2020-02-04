@@ -58,6 +58,7 @@ char		*exp_get_bracket(char *string, int len);
 char		*exp_get_dollar(char *string, int len);
 char		*exp_get_dbparen(char *string, int len);
 char		*exp_get_hook(char *string, int len);
+char		*exp_get_bquote(char *string, int len);
 char		*new_exp(char *string, e_estate id);
 e_estate 	find_expansion(char *str);
 char		*get_expansion(char *string, e_estate state);

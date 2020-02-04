@@ -51,8 +51,8 @@ void			ft_printredir(t_redir *redir)
 void			ft_printprocess(t_process *process)
 {
 	t_process	*tmp;
-	t_token 	*tok;
-	t_lst 		*ttp;
+	t_token		*tok;
+	t_lst		*ttp;
 
 	if (!process)
 		return ;
@@ -63,11 +63,12 @@ void			ft_printprocess(t_process *process)
 		ft_printtab(tmp->av);
 	if (tmp->tok_list)
 	{
-		ttp = tmp->tok_list; 
+		ttp = tmp->tok_list;
 		while (ttp)
 		{
 			tok = ttp->content;
-			dprintf(nono("/dev/ttys002"), "data /%s/ id %u \n", tok->data ,tok->id);
+			dprintf(nono("/dev/ttys002"),
+				"data /%s/ id %u \n", tok->data, tok->id);
 			ttp = ttp->next;
 		}
 	}
@@ -82,8 +83,7 @@ void			ft_printjob(t_job *job)
 	tmp = job;
 	dprintf(nono("/dev/ttys002"), "job state %u\n", tmp->type);
 	if (tmp->command)
-			dprintf(nono("/dev/ttys002"), "job cmd {%s}\n", tmp->command);
-
+		dprintf(nono("/dev/ttys002"), "job cmd {%s}\n", tmp->command);
 }
 
 void			ft_printjoblst(t_lst *list)
@@ -113,5 +113,4 @@ void			ft_printjoblst(t_lst *list)
 		}
 		job = job->next;
 	}
-	dprintf(nono("/dev/ttys002"), "\n");
 }

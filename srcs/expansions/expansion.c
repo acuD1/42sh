@@ -12,7 +12,7 @@
 
 #include "sh42.h"
 
-uint8_t is_expansion(e_estate id)
+uint8_t			is_expansion(e_estate id)
 {
 	if (id == E_TILDEP)
 		return (1);
@@ -20,13 +20,13 @@ uint8_t is_expansion(e_estate id)
 		return (2);
 	else if (id == E_TILDE)
 		return (3);
-	else if ( id == E_DBPARENT)
+	else if (id == E_DBPARENT)
 		return (4);
-	else if ( id == E_PARENT || id == E_BQUOTE)
+	else if (id == E_PARENT || id == E_BQUOTE)
 		return (5);
-	else if ( id == E_BRACKET)
+	else if (id == E_BRACKET)
 		return (6);
-	else if ( id == E_HOOK)
+	else if (id == E_HOOK)
 		return (7);
 	else if (id == E_DOLLAR)
 		return (8);
@@ -37,21 +37,13 @@ uint8_t is_expansion(e_estate id)
 	return (0);
 }
 
-char *no_exp(char *data, t_core *shell)
+int				expelliarmus(char *src, int *index, char **dst, t_core *shell)
 {
-	(void)shell;
-	(void)data;
-	printf("COMMENT CA SE FESSE\n");
-	return (NULL);
-}
-
-int expelliarmus(char *src, int *index, char **dst, t_core *shell)
-{
-	t_expansion toto;
-	e_estate state;
-	char *hetero;
-	char *trans;
-	int i;
+	t_expansion	toto;
+	e_estate	state;
+	char		*hetero;
+	char		*trans;
+	int			i;
 
 	hetero = NULL;
 	trans = NULL;
@@ -71,97 +63,7 @@ int expelliarmus(char *src, int *index, char **dst, t_core *shell)
 	return (1);
 }
 
-static int get_quotes_flags(char *str, int *index, int *dbquote, int *quote)
-{
-	if (str[*index] == '\"')
-	{
-		if (!*dbquote)
-			*dbquote = 1;
-		else
-			*dbquote = 0;
-	}
-	if (str[*index] == '\'' && !*dbquote)
-	{
-		if (!*quote)
-			*quote = 1;
-		else
-			*quote = 0;
-	}
-	return (1);
-}
-
-void discard_backslash(char	*data, int *i, char **res)
-{
-	int backslash_nbr;
-	int index;
-	char *tmp;
-
-	index = *i;
-	backslash_nbr = 0;
-	tmp = NULL;
-	if (data[index] == '\\')
-	{
-		while (data[index] == '\\')
-		{
-			index++;
-			backslash_nbr++;
-		}
-		backslash_nbr /= 2;
-		tmp = ft_strsub(data, index - backslash_nbr, backslash_nbr);
-		*i = index;
-		*res = ft_strjoinf(*res, tmp, 4);	
-	}
-}
-
-void expans_moica(char *data, int *index, int *expandu, char **res, t_core *shell)
-{
-	int i;
-
-	i = *index;
-	if (data[i] == '$' || data[i] == '~' || data[i] == '`')
-	{
-		*expandu = expelliarmus(data, &i, res, shell);
-		if (!*expandu)
-			i--;
-	}
-	*index = i;
-}
-
-void init_infinite_flags(int flag[4])
-{
-	flag[0] = 0;
-	flag[1] = 0;
-	flag[2] = -1;
-	flag[3] = 1;
-}
-
-char *infinite_expansion(char *data, t_core *shell)
-{
-	int flag[4];
-	char *res;
-	char *tmp;
-
-	init_infinite_flags(flag);
-	tmp = NULL;
-	res = ft_strnew(0);
-	while (data[++flag[2]])
-	{
-		flag[3] = get_quotes_flags(data, &flag[2], &flag[0], &flag[1]);
-		if (!flag[1])
-		{
-			expans_moica(data, &flag[2], &flag[3], &res, shell);
-			discard_backslash(data, &flag[2], &res);
-		}
-		if (flag[3])
-		{
-			tmp = ft_strsub(data, flag[2], 1);
-			res = ft_strjoinf(res, tmp, 4);
-		}
-	}
-	return (res);
-}
-
-void expansion(t_core *shell, t_process *process)
+void			expansion(t_core *shell, t_process *process)
 {
 	if (!process || !shell)
 		return ;

@@ -1,21 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exp_bis.c                                          :+:      :+:    :+:   */
+/*   lexer_param_cmds_exp.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/14 16:14:07 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/14 16:14:09 by guvillat         ###   ########.fr       */
+/*   Created: 2020/02/04 20:46:13 by guvillat          #+#    #+#             */
+/*   Updated: 2020/02/04 20:46:18 by guvillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char		*exp_get_paren(char *string, int len)
+char				*exp_get_bquote(char *string, int len)
 {
-	char	*str;
-	int		index;
+	int				i;
+	char			*str;
+
+	i = 0;
+	str = NULL;
+	if (!ft_strncmp(string, "`", len))
+	{
+		i++;
+		while (string[i])
+		{
+			if (string[i] == '`')
+			{
+				i++;
+				break ;
+			}
+			i++;
+		}
+		if (!(str = ft_strsub(string, 0, i)))
+			return (NULL);
+		return (str);
+	}
+	return (NULL);
+}
+
+char				*exp_get_paren(char *string, int len)
+{
+	char			*str;
+	int				index;
 
 	str = NULL;
 	index = 0;
@@ -35,10 +61,10 @@ char		*exp_get_paren(char *string, int len)
 	return (NULL);
 }
 
-char		*exp_get_bracket(char *string, int len)
+char				*exp_get_bracket(char *string, int len)
 {
-	char	*str;
-	int		index;
+	char			*str;
+	int				index;
 
 	index = 0;
 	str = NULL;
@@ -82,10 +108,10 @@ static int8_t		get_index_expan(char *str)
 	return (i);
 }
 
-char		*exp_get_dollar(char *string, int len)
+char				*exp_get_dollar(char *string, int len)
 {
-	char	*str;
-	int		index;
+	char			*str;
+	int				index;
 
 	index = len;
 	str = NULL;

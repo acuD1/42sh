@@ -12,28 +12,28 @@
 
 #include "sh42.h"
 
-static char *get_brace_param(char *str)
+static char		*get_brace_param(char *str)
 {
-	int i;
-	char *tmp;
+	int			i;
+	char		*tmp;
 
 	i = 0;
 	tmp = NULL;
 	while (str[++i])
 	{
 		if (str[i] == '}')
-			break;
+			break ;
 	}
 	if (!(tmp = ft_strsub(str, 2, i - 2)))
 		return (NULL);
 	return (tmp);
 }
 
-char *exp_param(char *data, t_core *shell)
+char			*exp_param(char *data, t_core *shell)
 {
-	t_db *db_tmp;
-	char *tmp;
-	int i;
+	t_db		*db_tmp;
+	char		*tmp;
+	int			i;
 
 	i = ft_strlen(data);
 	tmp = NULL;

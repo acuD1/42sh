@@ -80,8 +80,6 @@ void	init_end_analyze(t_anal analyze)
 	analyze[A_END][P_IONUMBER] = ionbr_analyze;
 	analyze[A_END][P_ASSIGN] = assign_analyze;
 	analyze[A_END][P_END] = end_analyze;
-
-
 	analyze[A_END][P_LESSAND] = redirect_analyze;
 }
 

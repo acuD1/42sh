@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   choose_expansion.c                                 :+:      :+:    :+:   */
+/*   do_exp_and_quotes.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/14 16:14:39 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/04 19:20:18 by guvillat         ###   ########.fr       */
+/*   Created: 2020/02/04 19:35:57 by guvillat          #+#    #+#             */
+/*   Updated: 2020/02/04 19:35:59 by guvillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static e_estate gla_quote(char *str, int *j, e_estate state)
+static e_estate	gla_quote(char *str, int *j, e_estate state)
 {
-	if ((str[*j] == '\"' && state == E_QUOTE) || (str[*j] == '\'' && state == E_DBQUOTE))
+	if ((str[*j] == '\"' && state == E_QUOTE)
+		|| (str[*j] == '\'' && state == E_DBQUOTE))
 		return (state);
 	if (str[*j] == '\"' && (state == E_DBQUOTE || state == NB_EXPANSION_STATE))
 	{
@@ -39,12 +40,12 @@ static e_estate gla_quote(char *str, int *j, e_estate state)
 	return (state);
 }
 
-char	*quote_mechanisms(char *str)
+char			*quote_mechanisms(char *str)
 {
-	char *new;
-	int i;
-	int j;
-	e_estate state;
+	char		*new;
+	int			i;
+	int			j;
+	e_estate	state;
 
 	j = 0;
 	i = 0;
@@ -67,10 +68,10 @@ char	*quote_mechanisms(char *str)
 	return (new);
 }
 
-char	*do_exp_et_quote(t_core *shell, char *data)
+char			*do_exp_et_quote(t_core *shell, char *data)
 {
-	char *exp;
-	char *unquoted;
+	char		*exp;
+	char		*unquoted;
 
 	exp = NULL;
 	unquoted = NULL;
@@ -80,8 +81,7 @@ char	*do_exp_et_quote(t_core *shell, char *data)
 	return (NULL);
 }
 
-
-void	init_expansionat(t_expansion 	*exp)
+void			init_expansionat(t_expansion *exp)
 {
 	exp->erience = 0;
 	exp->sionat[0] = no_exp;
@@ -96,9 +96,9 @@ void	init_expansionat(t_expansion 	*exp)
 	exp->sionat[9] = infinite_expansion;
 }
 
-char *do_expansion(t_core *shell, char *data)
+char			*do_expansion(t_core *shell, char *data)
 {
-	char *res;
+	char		*res;
 	t_expansion exp;
 
 	init_expansionat(&exp);
@@ -109,46 +109,4 @@ char *do_expansion(t_core *shell, char *data)
 	if ((res = exp.sionat[exp.erience](data, shell)))
 		return (res);
 	return (NULL);
-}
-
-void		expansion_redir(t_core *shell, t_process *process)
-{
-	t_lst *lst;
-	char *res;
-
-	if (!process->redir_list || !shell
-			|| !((t_redir*)process->redir_list->content)->op[1])
-		return ;
-	lst = process->redir_list;
-	res = NULL;
-	while (lst)
-	{
-		if ((res = do_exp_et_quote(shell, ((t_redir*)lst->content)->op[1])))
-		{
-			ft_strdel(&(((t_redir*)lst->content)->op[1]));
-			((t_redir*)lst->content)->op[1] = ft_strdup(res);
-			ft_strdel(&res);
-		}
-		lst = lst->next;
-	}
-}
-
-void		expansion_tok(t_core *shell, t_process *process)
-{
-	t_lst *lst;
-	char *res;
-
-	if (!process->tok_list || !shell)
-		return ;
-	res = NULL;
-	lst = process->tok_list;
-	while (lst)
-	{
-		res = do_exp_et_quote(shell, ((t_token*)lst->content)->data);
-		if (*res != '\0')
-			process->av = ft_add_arg_cmd_process(process->av, res);
-		ft_strdel(&res);
-		lst = lst->next;
-	}
-	ft_freetokenlist(&process->tok_list);
 }

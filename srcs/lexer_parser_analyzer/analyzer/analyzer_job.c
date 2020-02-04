@@ -19,25 +19,6 @@ void		init_job(t_job *new)
 	new->process_list = NULL;
 }
 
-// t_job		*fetch_job(t_job *job)
-// {
-// 	t_job	*new;
-
-// 	if (!job)
-// 		return (NULL);
-// 	new = job;
-// 	new->type = job->type;
-// 	if (job->command)
-// 		new->command = job->command;
-// 	else
-// 		new->command = NULL;
-// 	if (job->process_list)
-// 		new->process_list = job->process_list;
-// 	else
-// 		new->process_list = NULL;
-// 	return (new);
-// }
-
 t_analyzer	*job_analyze(t_analyzer *anal, t_core *shell)
 {
 	anal = process_analyze(anal, shell);
@@ -46,10 +27,6 @@ t_analyzer	*job_analyze(t_analyzer *anal, t_core *shell)
 		ft_lstnew(&anal->job, sizeof(t_job)));
 	anal->process_list = NULL;
 	init_job(&anal->job);
-	if (anal->lexer->next
-		&& !ft_strcmp("(null)", ((t_token*)anal->lexer->next->content)->data))
-		anal->state = A_STOP;
-	else
-		anal->state = A_START;
+	anal->state = A_START;
 	return (anal);
 }

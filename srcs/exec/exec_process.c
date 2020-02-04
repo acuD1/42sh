@@ -47,6 +47,7 @@ int8_t	exec_process(t_core *shell, t_lst *process)
 		call_bin(shell, process);
 	ptr->pid = pid;
 	ft_strdel(&(ptr->bin));
+	ft_tabfree(ptr->envp);
 	shell->running_process = process;
 	if (waitpid(pid, &shell->status, WUNTRACED | WCONTINUED) != pid)
 	{

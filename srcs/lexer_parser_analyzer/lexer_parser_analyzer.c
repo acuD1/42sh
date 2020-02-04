@@ -94,17 +94,14 @@ void		ft_freedblist(t_lst **lst)
 	}
 }
 
-void lexer_parser_analyzer(t_core *shell)
+void		lexer_parser_analyzer(t_core *shell)
 {
-	t_lst *lxr_tok;
+	t_lst	*lxr_tok;
 
 	lxr_tok = lexer(shell->term.buffer);
 	if (lxr_tok == NULL)
 		return ;
 	if (parser(lxr_tok) == TRUE)
-	{
 		analyzer(shell, lxr_tok);
-		// ft_printjoblst(shell->job_list);
-	}
 	ft_freetokenlist(&lxr_tok);
 }

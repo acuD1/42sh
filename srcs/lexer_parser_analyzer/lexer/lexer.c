@@ -12,34 +12,13 @@
 
 #include "sh42.h"
 
-// t_lst		*escape_backslash(t_lexer *lx, t_lst *lexer_token)
-// {
-// 	char *str;
-
-// 	str = NULL;
-// 	while (lx->buff[lx->buf_pos])
-// 	{
-// 		printf("#%c#\n", lx->buff[lx->buf_pos]);
-// 		if (lx->buff[lx->buf_pos] == '\\' || lx->buff[lx->buf_pos] == '\n' || lx->buff[lx->buf_pos] == ';')
-// 			lx->buf_pos++;
-// 		else
-// 			break ;
-// 	}
-// 	lexer_token = word_lexer(lx, lexer_token);
-// 	return (lexer_token);
-// }
-
-
 t_lst		*discard_lexer(t_lexer *lx, t_lst *lexer_token)
 {
-
 	if (!lx->buff)
 	{
 		lx->status = L_END;
 		return (lexer_token);
 	}
-	// if (lx->buff[lx->buf_pos] == '\\')
-		// lexer_token = escape_backslash(lx, lexer_token);
 	if (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
 	{
 		while (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
@@ -49,7 +28,7 @@ t_lst		*discard_lexer(t_lexer *lx, t_lst *lexer_token)
 	return (lexer_token);
 }
 
-uint8_t tokens_discarder(char c)
+uint8_t		tokens_discarder(char c)
 {
 	if (c == ' ' || c == '\t')
 		return (1);
@@ -102,8 +81,6 @@ t_lst		*lexer(char *line)
 	head = &lexer_token;
 	while (lexer.status != L_END)
 		lexer_token = lexer.lex[lexer.status](&lexer, *head);
-	lexer_token = *head;
-	ft_printtoklist(lexer_token);
 	lexer_token = *head;
 	init_lexer(NULL, &lexer);
 	return (*head);

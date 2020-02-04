@@ -41,8 +41,6 @@ int8_t	call_bin(t_core *shell, t_lst *process)
 			dprintf(STDERR_FILENO, "42sh: %s: command not found\n", ptr->av[0]);
 		exit(127);
 	}
-	if (!ptr->envp)
-		ptr->envp = set_envp(shell);
 	if ((ret = check_filepath(ptr->bin)) != SUCCESS)
 	{
 		ft_perror(ptr->av[0], NULL, ret);
