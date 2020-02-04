@@ -6,7 +6,7 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:14:39 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/14 16:14:44 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/02/04 19:20:18 by guvillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,32 @@
 
 static e_estate gla_quote(char *str, int *j, e_estate state)
 {
-	int i;
-
-	i = *j;
-	if (str[i] == '\"' && (state == E_DBQUOTE || state == NB_EXPANSION_STATE))
+	if ((str[*j] == '\"' && state == E_QUOTE) || (str[*j] == '\'' && state == E_DBQUOTE))
+		return (state);
+	if (str[*j] == '\"' && (state == E_DBQUOTE || state == NB_EXPANSION_STATE))
 	{
-		while (str[i] == '\"')
-			i++;
+		if (str[*j] == '\"')
+			*j += 1;
 		if (state == E_DBQUOTE)
 			state = NB_EXPANSION_STATE;
 		else if (state == NB_EXPANSION_STATE)
 			state = E_DBQUOTE;
 	}
-	if (str[i] == '\'' && (state == E_QUOTE || state == NB_EXPANSION_STATE))
+	if (str[*j] == '\'' && (state == E_QUOTE || state == NB_EXPANSION_STATE))
 	{
 		if (state == E_QUOTE)
 			state = NB_EXPANSION_STATE;
 		else if (state == NB_EXPANSION_STATE)
 			state = E_QUOTE;
-		while (str[i] == '\'')
-			i++;
+		if (str[*j] == '\'')
+			*j += 1;
 	}
-	*j = i;
+	if (str[*j] == '\'' || str[*j] == '\"')
+		gla_quote(str, j, state);
 	return (state);
 }
 
-char *quote_mechanisms(char *str)
+char	*quote_mechanisms(char *str)
 {
 	char *new;
 	int i;
@@ -60,14 +60,14 @@ char *quote_mechanisms(char *str)
 		if (!str[j])
 			break ;
 		new[i] = str[j];
-		printf("%c    %d      %u\n", new[i], j, state);
 		i++;
 		j++;
 	}
+	ft_strdel(&str);
 	return (new);
 }
 
-char *do_exp_et_quote(t_core *shell, char *data)
+char	*do_exp_et_quote(t_core *shell, char *data)
 {
 	char *exp;
 	char *unquoted;
@@ -75,18 +75,13 @@ char *do_exp_et_quote(t_core *shell, char *data)
 	exp = NULL;
 	unquoted = NULL;
 	if ((exp = do_expansion(shell, data)))
-	{
 		if ((unquoted = quote_mechanisms(exp)))
-		{
-			ft_strdel(&exp);
 			return (unquoted);
-		}
-	}
 	return (NULL);
 }
 
 
-void init_expansionat(t_expansion 	*exp)
+void	init_expansionat(t_expansion 	*exp)
 {
 	exp->erience = 0;
 	exp->sionat[0] = no_exp;
@@ -149,11 +144,10 @@ void		expansion_tok(t_core *shell, t_process *process)
 	lst = process->tok_list;
 	while (lst)
 	{
-		if ((res = do_exp_et_quote(shell, ((t_token*)lst->content)->data)))
-		{
+		res = do_exp_et_quote(shell, ((t_token*)lst->content)->data);
+		if (*res != '\0')
 			process->av = ft_add_arg_cmd_process(process->av, res);
-			ft_strdel(&res);
-		}
+		ft_strdel(&res);
 		lst = lst->next;
 	}
 	ft_freetokenlist(&process->tok_list);
