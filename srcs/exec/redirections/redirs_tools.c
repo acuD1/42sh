@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:29:40 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/16 23:49:43 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/01 18:55:53 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@ int8_t	dup_output(int fd, t_redir *ptr)
 {
 	int		tmp;
 
+	ptr->dup_fd[0] = dup(ptr->io_num[0]);
 	tmp = dup2(fd, ptr->io_num[0]);
-	ptr->dup_fd = 0;
-	if (ptr->io_num[1] != -1 && tmp > 0)
+	if (ptr->io_num[1] != -1 && tmp >= 0)
 	{
-		ptr->dup_fd = dup2(tmp, ptr->io_num[1]);
+		ptr->dup_fd[1] = dup(ptr->io_num[1]);
+		dup2(tmp, ptr->io_num[1]);
 		close(tmp);
 	}
 	close(fd);
@@ -29,21 +30,35 @@ int8_t	dup_output(int fd, t_redir *ptr)
 	return (SUCCESS);
 }
 
-void	close_fds(t_lst *ptr)
+void	close_fds(t_lst *redirs)
 {
-	while (ptr)
+	t_redir	*ptr;
+
+	while (redirs)
 	{
-		if (((t_redir*)ptr->content)->dup_fd >= 0)
-			close(((t_redir*)ptr->content)->dup_fd);
-		ptr = ptr->next;
+		ptr = ((t_redir*)redirs->content);
+		if (ptr->dup_fd[0] >= 0)
+		{
+			dup2(ptr->dup_fd[0], ptr->io_num[0]);
+			close(ptr->dup_fd[0]);
+		}
+		if (ptr->dup_fd[1] >= 0)
+		{
+			dup2(ptr->dup_fd[1], ptr->io_num[1]);
+			close(ptr->dup_fd[1]);
+		}
+		redirs = redirs->next;
 	}
 }
 
 int8_t	dup_input(int fd, t_redir *ptr)
 {
-	ptr->dup_fd = dup2(fd, ptr->io_num[0]);
+	int		tmp;
+
+	ptr->dup_fd[0] = dup(ptr->io_num[0]);
+	tmp = dup2(fd, ptr->io_num[0]);
 	close(fd);
-	if (ptr->dup_fd < 0)
+	if (tmp < 0)
 		return (FAILURE);
 	return (SUCCESS);
 }
@@ -56,7 +71,7 @@ int8_t	write_heredoc(t_redir *ptr)
 
 	ft_bzero(filename, 24);
 	ft_strcat(filename, "/tmp/.tmphdoc");
-	ft_itoabuf(ptr->dup_fd, filename);
+	ft_itoabuf(ptr->dup_fd[0], filename);
 	if ((fd = open(path, O_WRONLY | O_TRUNC | O_CREAT
 					, S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR)) < 0)
 		return (FAILURE);

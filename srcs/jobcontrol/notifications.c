@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/28 20:25:46 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/22 16:28:02 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ int8_t		do_job_notification(t_core *shell, t_lst *job)
 		jnext = job->next;
 		if (job_is_completed(ptr))
 		{
-			free_job(shell, job);
 			format_job_info(ptr);
+			free_job(shell, job);
 			job = shell->launched_jobs;
 			ptr = NULL;
 		}

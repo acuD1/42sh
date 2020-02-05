@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 19:25:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/19 22:57:43 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/01 19:02:24 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ t_job			*get_job(t_lst *jobs, char *str)
 	t_job	*job;
 
 	job = NULL;
-	if (!jobs)
+	if (jobs == NULL)
 		return (job);
 	if (!str || ft_strcmp("%%", str) == 0)
 		job = get_last_job(jobs);
 	else if (str && str[0] == '%')
 		job = get_job_by_id(jobs, ft_atoi(str + 1));
-	else
+	else if (str)
 		job = get_job_by_name(jobs, str);
 	return (job);
 }

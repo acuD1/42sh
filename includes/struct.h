@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/11 17:09:47 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/03 16:41:13 by arsciand         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   struct.h										   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: arsciand <arsciand@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2019/06/15 16:43:36 by arsciand		  #+#	#+#			 */
+/*   Updated: 2020/02/01 18:02:52 by mpivet-p         ###   ########.fr       */
+/*																			*/
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
@@ -169,7 +169,7 @@ typedef struct				s_redir
 	char					*heredoc;
 	char					*op[2];
 	int						io_num[2];
-	int						dup_fd;
+	int						dup_fd[2];
 }							t_redir;
 
 struct						s_analyzer

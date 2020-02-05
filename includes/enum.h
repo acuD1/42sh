@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enum.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/28 17:45:33 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 17:45:40 by arsciand         ###   ########.fr       */
+/*   Created: 2019/11/18 15:28:30 by fcatusse          #+#    #+#             */
+/*   Updated: 2020/01/29 23:48:43 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,4 +123,11 @@ enum	e_tcaps
 	CAPS_NBR
 };
 
+typedef enum	e_unary
+{
+	B_UNATEST, C_UNATEST, D_UNATEST, E_UNATEST, F_UNATEST
+	, G_UNATEST, LL_UNATEST, P_UNATEST, R_UNATEST, SS_UNATEST, S_UNATEST
+	, U_UNATEST, W_UNATEST, X_UNATEST, Z_UNATEST, SAME_BINTEST, DIFF_BINTEST, EQ_BINTEST, NE_BINTEST, GE_BINTEST
+	, LT_BINTEST, LE_BINTEST, NB_TESTBLT
+}				t_binary;
 #endif

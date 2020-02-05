@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/03 13:41:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/22 18:43:13 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void		launch_process
 	(t_core *shell, t_process *process, int infile, int outfile)
 {
 	int		fds[2];
+	int		blt;
 
 	if (shell->mode & I_MODE)
 	{
@@ -79,8 +80,9 @@ void		launch_process
 	fds[1] = outfile;
 	if (process->av)
 	{
-		if (launch_blt(shell, process, fds, TRUE) != FAILURE)
-			exit(process->status);
+		if ((blt = is_a_blt(process->av[0])) != FAILURE)
+			exit (call_builtin(shell, process, blt));
+		//get_bin(shell, process);
 	}
 	call_bin(shell, process);
 }

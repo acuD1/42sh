@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/03 16:21:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/30 16:00:47 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void		print_and_quit(t_core *shell, char *message);
 int			check_invalid_identifiers(char *arg, char *exceptions);
 char		*signal_msg(int sig);
 //void		debug_job(t_job *job);
+int8_t		path_tests(char *path, int opt);
 
 /*
 **	===========================================================================
@@ -189,6 +190,7 @@ int8_t		builtin_bg(t_core *shell, t_process *process);
 //u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd);
 //void		swap_range(char **r1, char **r2);
 //u_int16_t	set_range(t_lst **w, char **range);
+int8_t		builtin_test(t_core *shell, t_process *process);
 
 /*
 **	===========================================================================

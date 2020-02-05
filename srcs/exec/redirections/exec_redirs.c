@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:01 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/16 23:47:15 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/01 18:50:28 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static void		get_io_number(t_redir *ptr)
 {
 	ptr->io_num[0] = -1;
 	ptr->io_num[1] = -1;
+	ptr->dup_fd[0] = -1;
+	ptr->dup_fd[1] = -1;
 	if (ptr->op[0] && ft_strcmp(ptr->op[0], "&") != 0)
 		ptr->io_num[0] = ft_atoi(ptr->op[0]);
 	else if (ptr->op[0])
@@ -52,9 +54,9 @@ int8_t			exec_redirs(t_core *shell, t_lst *head)
 	while (redirs != NULL)
 	{
 		if (((t_redir*)redirs->content)->type == P_DLESS)
-			((t_redir*)redirs->content)->dup_fd = shell->heredoc++;
+			((t_redir*)redirs->content)->dup_fd[0] = shell->heredoc++;
 		if (get_fd(((t_redir*)redirs->content)) != SUCCESS)
-			exit(1);
+			print_and_quit(shell, "42sh: redirections failure\n");
 		redirs = redirs->next;
 	}
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/03 13:35:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/03 17:13:01 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,24 @@ static void	sigh_winch(int signum)
 
 void		init_signals(void)
 {
-	static void	(*sighandler[31])(int) = {sig_handler, sigint_handler
+	static int	signals[27] = {SIGHUP, SIGINT, SIGQUIT, SIGILL, SIGTRAP
+			, SIGABRT, SIGFPE, SIGBUS, SIGSEGV, SIGSYS, SIGPIPE, SIGALRM
+			, SIGTERM, SIGURG, SIGTSTP, SIGCONT, SIGCHLD, SIGTTIN, SIGTTOU
+			, SIGIO, SIGXCPU, SIGXFSZ, SIGVTALRM, SIGPROF, SIGWINCH, SIGUSR1
+			, SIGUSR2};
+	static void	(*sighandler[27])(int) = {sig_handler, sigint_handler
 		, sig_handler, sig_handler, sig_handler, sig_handler, sig_handler
-		, sig_handler, NULL, sig_handler, sig_handler, sig_handler, sig_exit
-		, sig_handler, sig_handler, sig_handler, NULL, SIG_IGN, sig_exit
-		, SIG_DFL, SIG_IGN, SIG_IGN, SIG_DFL, sig_handler, sig_handler
-		, sig_handler, sig_handler, sigh_winch, NULL, sig_handler
-		, sig_handler};
+		, sig_handler, sig_handler, sig_handler, sig_exit, sig_handler
+		, sig_handler, sig_handler, sig_handler, sig_exit, SIG_DFL, SIG_IGN
+		, SIG_IGN, SIG_DFL, sig_handler, sig_handler, sig_handler, sig_handler
+		, sigh_winch, sig_handler, sig_handler};
 	int			i;
 
-	i = 1;
-	while (i <= SIGUSR2)
+	i = 0;
+	while (i < 27)
 	{
-		if (sighandler[i - 1] != NULL)
-			if (signal(i, sighandler[i - 1]) != 0)
-				dprintf(STDERR_FILENO, "%i\n", i);
+		if (sighandler[i] != NULL)
+			signal(signals[i], sighandler[i]);
 		i++;
 	}
 }
