@@ -6,18 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/01 15:30:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:47:37 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COMMAND_LINE_H
 # define COMMAND_LINE_H
-
-# include <stdint.h>
-# include <termios.h>
-# include <term.h>
-# include <termcap.h>
-# include <dirent.h>
 
 /*
 **		Configuration

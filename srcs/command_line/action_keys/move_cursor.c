@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 17:11:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 18:37:03 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
 #include "sh42.h"
 
-// Need remove ?
 int8_t	debugs(const char *path, t_read *in, t_lst *w)
 {
 	int fd;

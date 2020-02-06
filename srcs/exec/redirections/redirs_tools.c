@@ -6,10 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:29:40 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/01 18:55:53 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/06 18:39:47 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
 #include "sh42.h"
 
 int8_t	dup_output(int fd, t_redir *ptr)

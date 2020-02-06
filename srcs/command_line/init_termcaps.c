@@ -6,10 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/01 14:13:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:48:28 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/ioctl.h>
+#include <termcap.h>
 #include "sh42.h"
 
 /*

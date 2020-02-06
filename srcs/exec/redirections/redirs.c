@@ -6,12 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:42 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/01 20:09:38 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/06 18:39:20 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include "sh42.h"
-#include "errno.h"
 
 int8_t	append_output(t_redir *ptr)
 {

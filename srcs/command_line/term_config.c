@@ -6,10 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/01 17:06:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:48:33 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <term.h>
 #include "sh42.h"
 
 void	init_cmd_line(t_core *shell, t_read *term)

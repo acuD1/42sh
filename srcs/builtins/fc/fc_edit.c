@@ -6,11 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/06 19:17:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:56:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <fcntl.h>
 
 void		launch_editor(t_core *shell, t_cmd cmd)
 {

@@ -6,10 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:27:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/30 19:06:59 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:48:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/stat.h>
+#include <dirent.h>
 #include "sh42.h"
 
 static u_int8_t	is_exe(char *dir)

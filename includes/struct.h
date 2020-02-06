@@ -6,15 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>		  +#+  +:+	   +#+		*/
 /*												+#+#+#+#+#+   +#+		   */
 /*   Created: 2019/06/15 16:43:36 by arsciand		  #+#	#+#			 */
-/*   Updated: 2020/02/01 18:02:52 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/06 19:28:49 by mpivet-p         ###   ########.fr       */
 /*																			*/
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# include "enum.h"
 # include <termios.h>
+# include "enum.h"
 
 /*
 ** CORE
@@ -53,14 +53,11 @@ typedef struct				s_read
 	int						x_index;
 	int						x;
 	int						y;
-//	int						y_li;
 	int						width;
 	int						ws_col;
 	int						ws_li;
 	int						ac;
 
-//	int						new_line;
-//	int						found;
 	int						sub_prompt;
 	int						status;
 
@@ -86,7 +83,6 @@ struct						s_core
 	t_lst					*running_process;
 	t_lst					*env;
 	t_lst					*pos_vars;
-//	t_lst					*lexer;
 	t_lst					*job_list;
 	t_lst					*launched_jobs;
 	u_int64_t				opt;
@@ -137,7 +133,6 @@ struct						s_lexer
 
 typedef struct				s_job
 {
-//	struct termios			tmodes;
 	enum e_pstate			type;
 	int8_t					notified;
 	t_lst					*process_list;
