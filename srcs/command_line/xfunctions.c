@@ -6,12 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 12:13:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 13:32:23 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 19:23:09 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <term.h>
 #include "sh42.h"
-#include <curses.h>
 
 /*
 **	Some functions safe/protected
@@ -22,11 +22,7 @@ void	xtputs(char *str, int i, int (*f)(int))
 	t_core	*shell;
 
 	shell = get_core(NULL);
-	if (tputs(str, i, f) == ERR)
-	{
-		ft_perror("tputs", NULL, 0);
-		quit_shell(shell, EXIT_FAILURE, TRUE);
-	}
+	tputs(str, i, f);
 }
 
 char	*xtgetstr(char *id, char **area)
@@ -37,7 +33,7 @@ char	*xtgetstr(char *id, char **area)
 	shell = get_core(NULL);
 	if ((str = tgetstr(id, area)) == NULL)
 	{
-		ft_perror("tgetstr", NULL, 0);
+		dprintf(STDERR_FILENO, "42sh: tgetstr errror\n");
 		quit_shell(shell, EXIT_FAILURE, TRUE);
 	}
 	return (str);
@@ -53,7 +49,7 @@ size_t	xread(int fd, char *buff, int size)
 	{
 		if (ret == FAILURE)
 		{
-			ft_perror("read", NULL, 0);
+			dprintf(STDERR_FILENO, "42sh: read errror\n");
 			quit_shell(shell, EXIT_FAILURE, TRUE);
 		}
 	}

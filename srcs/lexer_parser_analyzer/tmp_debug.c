@@ -6,10 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 17:13:59 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:52:55 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 18:35:23 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
 #include "sh42.h"
 
 int8_t	debug_ailleurs(const char *path, const char *str)

@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 17:15:10 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 18:36:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
 #include "sh42.h"
 
-//Need remove ?
 int8_t		debugu(const char *path, int i, char c)
 {
 	int fd;

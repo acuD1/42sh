@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/30 16:00:47 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/06 18:33:35 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,6 @@
 # include "enum.h"
 # include "lexer_parser_analyzer.h"
 # include "expansion.h"
-# include <sys/wait.h>
-# include <sys/ioctl.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <stdlib.h>
-# include <stdint.h>
-# include <unistd.h>
 
 /*
 **	DEBUG
@@ -76,7 +69,6 @@ int8_t		edit_var(t_core *shell, char *name, char *value, u_int8_t var_type);
 */
 
 int8_t		call_builtin(t_core *shell, t_process *process, int blt);
-//int8_t		exec_handler(t_core *shell, u_int8_t handler);
 int8_t		get_bin_path(t_core *shell, t_process *process);
 void		exec_process
 				(t_core *shell, t_job *job, t_process *process, int *fds);
@@ -128,7 +120,6 @@ void		hash_error(t_hash *hash);
 */
 
 t_core		*get_core(t_core *core);
-//int			check_invalid_identifiers(char *arg, char *exceptions);
 int8_t		get_canonical_path(char *path, char *buffer);
 void		ft_perror(const char *s, const char *name, const int errnum);
 int8_t		ft_access(char *path, int mode);
@@ -138,7 +129,6 @@ void		quit_shell(t_core *shell, int exit_value, int8_t v);
 void		print_and_quit(t_core *shell, char *message);
 int			check_invalid_identifiers(char *arg, char *exceptions);
 char		*signal_msg(int sig);
-//void		debug_job(t_job *job);
 int8_t		path_tests(char *path, int opt);
 
 /*
@@ -149,7 +139,6 @@ int8_t		path_tests(char *path, int opt);
 
 int8_t		increment_shlvl(t_core *shell);
 int8_t		update_pwd(t_core *shell);
-//int8_t		update_(t_core *shell);
 int8_t		update_ifs(t_core *shell);
 int8_t		update_termsize(t_core *shell);
 int8_t		create_term(t_core *shell);
@@ -162,7 +151,6 @@ int8_t		update_process_id(t_core *shell);
 int8_t		update_shell_name(t_core *shell);
 int8_t		update_shell_flags(t_core *shell);
 int8_t		update_exit_status(t_core *shell);
-//int8_t		update_backgroud_pid(t_core *shell);
 int8_t		update_last_arg(t_core *shell, char **argv);
 int8_t		update_oldpwd(t_core *shell, char *oldpwd);
 
@@ -215,7 +203,6 @@ int8_t		write_heredoc(t_redir *ptr);
 **	===========================================================================
 */
 
-//void		kill_processes(int signum, t_core *shell);
 void		sigint_handler(int sig_num);
 void		init_signals(void);
 
@@ -229,20 +216,17 @@ void		init_signals(void);
 **	===========================================================================
 */
 
-//t_job		*find_job(t_lst *ptr, pid_t pgid);
 t_process	*find_process(t_lst *job, pid_t pid);
 int8_t		job_is_stopped(t_job *job);
 int8_t		job_is_completed(t_job *job);
 int8_t		put_job_in_foreground
 				(t_core *shell, t_lst *jobs, t_job *job, int cont);
 void		put_job_in_background(t_core *shell, t_job *job, int cont);
-//void		mark_job_as_running(t_job *job);
 int8_t		continue_job(t_core *shell, t_job *job, int foreground);
 void		reset_signals(void);
 void		launch_process
 				(t_core *shell, t_process *process, int infile, int outfile);
 void		launch_job(t_core *shell, t_job *job, int foreground);
-//int8_t		do_job_notification(t_core *shell, t_lst *job);
 void		job_background_notif(t_job *job);
 void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
 int8_t		mark_process_status

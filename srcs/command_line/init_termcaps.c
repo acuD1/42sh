@@ -6,10 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 17:20:19 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 18:49:28 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/ioctl.h>
+#include <termcap.h>
 #include "sh42.h"
 
 /*
