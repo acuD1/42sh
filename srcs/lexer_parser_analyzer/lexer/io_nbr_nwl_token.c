@@ -33,20 +33,20 @@ static t_lst	*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token, int i)
 	return (lexer_token);
 }
 
-t_lst			*number_lexer(t_lexer *lexer, t_lst *lexer_token)
+t_lst		*number_lexer(t_lexer *lx, t_lst *lexer_token)
 {
 	int		i;
 
-	i = lexer->buf_pos;
-	if (!lexer->buff[lexer->buf_pos] || !ft_isdigit(lexer->buff[lexer->buf_pos]))
+	i = lx->buf_pos;
+	if (!lx->buff[lx->buf_pos] || !ft_isdigit(lx->buff[lx->buf_pos]))
 	{
-		lexer->status = L_END;
+		lx->status = L_END;
 		return (lexer_token);
 	}
-	while (ft_isdigit(lexer->buff[i]) && lexer->buff[i])
+	while (ft_isdigit(lx->buff[i]) && lx->buff[i])
 		i++;
-	lexer_token = isvalid_ionumber(lexer, lexer_token, i);
-	lexer->status = L_START;
+	lexer_token = isvalid_ionumber(lx, lexer_token, i);
+	lx->status = L_START;
 	return (lexer_token);
 }
 

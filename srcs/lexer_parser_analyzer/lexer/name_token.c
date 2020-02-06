@@ -12,7 +12,16 @@
 
 #include "sh42.h"
 
-int				get_word_size_ntype(int i, char *str)
+void		loop_till_next_quote(char *str, int *index, char quote)
+{
+	if (!str[*index])
+		return ;
+	*index += 1;
+	while (str[*index] != quote)
+		*index += 1;
+}
+
+int			get_word_size_ntype(int i, char *str)
 {
 	int		index;
 
@@ -23,11 +32,11 @@ int				get_word_size_ntype(int i, char *str)
 	while (str[index] && (!ft_strchr(CHAR_INTERRUPT, str[index])))
 	{
 		if (str[index] == '\'')
-			while (str[index++] && str[index] != '\'');
+			loop_till_next_quote(str, &index, '\'');
 		if (str[index] == '`')
-			while (str[index++] && str[index] != '`');
+			loop_till_next_quote(str, &index, '`');
 		if (str[index] == '\"')
-			while (str[index++] && str[index] != '\"');
+			loop_till_next_quote(str, &index, '\"');
 		index++;
 	}
 	return (index);

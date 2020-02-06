@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:54:43 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/03 18:03:02 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:18:40 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,7 @@ void			init_redir(t_redir *new)
 	new->heredoc = NULL;
 }
 
-/*
-t_redir		*fetch_redir(t_redir *redir)
-{
-	t_redir *new;
-
-	if (!redir)
-		return (NULL);
-	new = redir;
-	if (redir->op[0])
-		new->op[0] = redir->op[0];
-	else
-		new->op[0] = NULL;
-	if (redir->op[1])
-		new->op[1] = redir->op[1];
-	else
-		new->op[1] = NULL;
-	new->type = redir->type;
-	return (new);
-}
-*/
-
-static t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
+t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 {
 	anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
 	if (!shell->term.history_index)
@@ -54,7 +33,7 @@ static t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 t_analyzer			*redir_wanalyze(t_analyzer *anal, t_core *shell)
 {
 	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
-	if (anal->redir.type == P_DLESS)
+	if (anal->redir.type == P_DLESS || anal->redir.type == P_DLESSDASH)
 		return (heredoc_analyzer(anal, shell));
 	else
 		anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
@@ -74,7 +53,8 @@ t_analyzer			*redir_analyze(t_analyzer *anal, t_core *shell)
 t_analyzer			*redirect_analyze(t_analyzer *analyzer, t_core *shell)
 {
 	(void)shell;
-	analyzer->job.command = fill_cmd_job(analyzer->lexer, analyzer->job.command);
+	analyzer->job.command = fill_cmd_job(analyzer->lexer,
+		analyzer->job.command);
 	analyzer->redir.type = ((t_token*)analyzer->lexer->content)->id;
 	analyzer->state = A_REDIRECT;
 	return (analyzer);

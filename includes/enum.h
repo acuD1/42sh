@@ -90,15 +90,15 @@ enum	e_pstate
 	NB_PARSER_STATE
 };
 
-enum	e_lstate
-{
-	L_START,
-	L_NAME,
-	L_NEWLINE,
-	L_IO_NUMBER,
-	L_ASSIGNEMENT_WORD,
-	L_OPERATOR,
-	L_END,
+enum    e_lstate {
+    L_START,
+    L_NAME,
+    L_NEWLINE,
+    L_IO_NUMBER,
+    L_DISCARD,
+    L_ASSIGNEMENT_WORD,
+    L_OPERATOR,
+    L_END,
 	NB_LEXER_STATE
 };
 

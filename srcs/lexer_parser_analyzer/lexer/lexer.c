@@ -12,58 +12,39 @@
 
 #include "sh42.h"
 
-/*
-t_lst		*backslash_lexer(t_lexer *lx, t_lst *lexer_token)
+t_lst		*discard_lexer(t_lexer *lx, t_lst *lexer_token)
 {
-	char	*str;
-	int		i;
-
-	str = NULL;
-	i = lx->buf_pos;
 	if (!lx->buff)
 	{
 		lx->status = L_END;
 		return (lexer_token);
 	}
-	if (lx->buff[i] == '\\')
+	if (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
 	{
-		while (lx->buff[i] == '\\')
-			i++;
-		if (lx->buff[i])
-		{
-			i++;
-		}
-		if (!(str = ft_strsub(lx->buff, lx->buf_pos, i - lx->buf_pos)))
-			return (lexer_token);
-		if (!(ft_lstappend(&lexer_token, ft_lstnew(
-			fetch_token(&lx->token, P_ESCSEQ, str), sizeof(t_token)))))
-			return (lexer_token);
-		free(str);
-		lx->ntok++;
-		lx->buf_pos = i;
+		while (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
+			lx->buf_pos++;
 	}
 	lx->status = L_START;
 	return (lexer_token);
 }
-*/
+
+uint8_t		tokens_discarder(char c)
+{
+	if (c == ' ' || c == '\t')
+		return (1);
+	return (0);
+}
 
 t_lst	*start_lexer(t_lexer *lx, t_lst *lexer_token)
 {
 	if (lx->buff[lx->buf_pos] == '\0')
 		lexer_token = end_lexer(lx, lexer_token);
-	else if (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
-	{
-		while (lx->buff[lx->buf_pos] == ' ' || lx->buff[lx->buf_pos] == '\t')
-			lx->buf_pos++;
-	}
+	else if (tokens_discarder(lx->buff[lx->buf_pos]))
+		lx->status = L_DISCARD;
 	else if (lx->buff[lx->buf_pos] == '\n')
 		lx->status = L_NEWLINE;
 	else if (ft_strchr(OPERATORS, lx->buff[lx->buf_pos]))
 		lx->status = L_OPERATOR;
-	/*
-	else if (lx->buff[lx->buf_pos] == '\\')
-		lx->status = L_ESCSEQ;
-	*/
 	else if (ft_isdigit(lx->buff[lx->buf_pos]))
 		lx->status = L_IO_NUMBER;
 	else if (ft_strchr(&lx->buff[lx->buf_pos], '='))
@@ -100,8 +81,6 @@ t_lst	*lexer(char *line)
 	head = &lexer_token;
 	while (lexer.status != L_END)
 		lexer_token = lexer.lex[lexer.status](&lexer, *head);
-	lexer_token = *head;
-	// ft_printtoklist(lexer_token);
 	lexer_token = *head;
 	init_lexer(NULL, &lexer);
 	return (*head);

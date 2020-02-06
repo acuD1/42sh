@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 20:31:06 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/03 18:01:42 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:33:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void		free_process_list(t_lst **head)
 		next = ptr->next;
 		ft_free_redirlist((t_lst **)&(((t_process *)ptr->content)->redir_list));
 		ft_tabdel(&(((t_process *)ptr->content)->av));
+		ft_tabdel(&(((t_process *)ptr->content)->envp));
 		ft_strdel(&(((t_process *)ptr->content)->bin));
 		ft_strdel(&(((t_process *)ptr->content)->command));
 		free(ptr->content);

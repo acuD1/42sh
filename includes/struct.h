@@ -158,6 +158,7 @@ typedef struct				s_process
 	t_lst					*redir_list;
 	pid_t					pid;
 	pid_t					pgid;
+	char					**envp;
 	char					**av;
 	char					*bin;
 	char					*command;

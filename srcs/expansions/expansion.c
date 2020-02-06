@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/03 17:38:49 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:12:01 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,13 @@ u_int8_t	is_expansion(enum e_estate id)
 	return (0);
 }
 
-char		*no_exp(char *data, t_core *shell)
+int				expelliarmus(char *src, int *index, char **dst, t_core *shell)
 {
-	(void)shell;
-	(void)data;
-	printf("COMMENT CA SE FESSE\n");
-	return (NULL);
-}
-
-// Heu WTF ? ^^
-static int	expelliarmus(char *src, int *index, char **dst, t_core *shell)
-{
-	t_expansion		toto;
+	t_expansion	toto;
 	enum e_estate	state;
-	char			*hetero;
-	char			*trans;
-	int				i;
+	char		*hetero;
+	char		*trans;
+	int			i;
 
 	hetero = NULL;
 	trans = NULL;
@@ -72,78 +63,15 @@ static int	expelliarmus(char *src, int *index, char **dst, t_core *shell)
 	return (1);
 }
 
-static int	get_quotes_flags(char c, int *dbquote, int *quote)
-{
-	int		guill;
-	int		apost;
-
-	guill = *dbquote;
-	apost = *quote;
-	if (c == '\"')
-	{
-		if (!guill)
-			guill = 1;
-		else
-			guill = 0;
-	}
-	if (c == '\'' && !guill)
-	{
-		if (!apost)
-			apost = 1;
-		else
-			apost = 0;
-	}
-	*dbquote = guill;
-	*quote = apost;
-	return (1);
-}
-
-char		*exp_dbquote(char *data, t_core *shell)
-{
-	int		flag[4];
-	char	*res;
-	char	*tmp;
-
-	flag[0] = 0;
-	flag[1] = 0;
-	flag[2] = 0;
-	flag[3] = 1;
-	tmp = NULL;
-	res = ft_strnew(0);
-	while (data[flag[2]])
-	{
-		flag[3] = get_quotes_flags(data[flag[2]], &flag[0], &flag[1]);
-		if (!flag[1]
-			&& (data[flag[2]] == '$'
-			|| data[flag[2]] == '~' || data[flag[2]] == '`'))
-		{
-			flag[3] = expelliarmus(data, &flag[2], &res, shell);
-			if ((size_t)flag[2] == ft_strlen(data))
-				break ;
-			if (!flag[3])
-				flag[2]--;
-		}
-		if (flag[3])
-		{
-			tmp = ft_strsub(data, flag[2], 1);
-			res = ft_strjoinf(res, tmp, 4);
-		}
-		flag[2]++;
-	}
-	return (res);
-}
-
-void		expansion(t_core *shell, t_process *process)
+void			expansion(t_core *shell, t_process *process)
 {
 	if (!process || !shell)
 		return ;
-	if (process->assign_list)
-	{
-		expansion_assign(shell, process);
-		add_assign_env(process->assign_list, shell);
-	}
+	process->envp = set_envp(shell);
 	if (process->tok_list)
 		expansion_tok(shell, process);
+	if (process->assign_list)
+		expansion_assign(shell, process);
 	if (process->redir_list)
 		expansion_redir(shell, process);
 }

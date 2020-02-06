@@ -50,6 +50,5 @@ int8_t			call_bin(t_core *shell, t_process *process)
 	}
 	ret = execve(process->bin, process->av, envp);
 	dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);
-	ft_tabdel(&envp);
 	exit(1);
 }

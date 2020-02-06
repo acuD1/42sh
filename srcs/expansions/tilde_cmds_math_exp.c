@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tilde_expansion.c                                  :+:      :+:    :+:   */
+/*   tilde_cmds_math_exp.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,14 +12,31 @@
 
 #include "sh42.h"
 
-char	*exp_tilde(char *data, t_core *shell)
+char		*no_exp(char *data, t_core *shell)
+{
+	(void)shell;
+	(void)data;
+	return (NULL);
+}
+
+char		*exp_math(char *data, t_core *shell)
+{
+	(void)shell;
+	(void)data;
+	return (NULL);
+}
+
+char		*exp_tilde(char *data, t_core *shell)
 {
 	t_db	*db_tmp;
-	char	*path[] = {"HOME", "OLDPWD", "PWD"};
+	char	*path[3];
 	int		i;
 
 	i = 0;
 	db_tmp = NULL;
+	path[0] = "HOME";
+	path[1] = "OLDPWD";
+	path[2] = "PWD";
 	if (!data && !data[0])
 		return (NULL);
 	if (data[0] == '~' && data[1] && data[1] == '+')
@@ -30,5 +47,12 @@ char	*exp_tilde(char *data, t_core *shell)
 		i = 0;
 	if ((db_tmp = search_db(shell->env, path[i])))
 		return (ft_strdup(db_tmp->value));
+	return (NULL);
+}
+
+char		*exp_cmd_subs(char *data, t_core *shell)
+{
+	(void)data;
+	(void)shell;
 	return (NULL);
 }

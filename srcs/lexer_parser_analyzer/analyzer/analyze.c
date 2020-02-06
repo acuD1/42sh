@@ -30,11 +30,8 @@ t_analyzer	*ionbr_analyze(t_analyzer *anal, t_core *shell)
 
 t_analyzer	*error_analyze(t_analyzer *anal, t_core *shell)
 {
-//	printf("JE DOIS GERER CE CAS LA %s %u\n",
-//	((t_token*)anal->lexer->content)->data, anal->state);
-	if (anal->lexer->next
-		&& !ft_strcmp("(null)", ((t_token*)anal->lexer->next->content)->data))
-		anal->state = A_STOP;
+	printf("JE DOIS GERER CE CAS LA %s %u\n",
+	((t_token*)anal->lexer->content)->data, anal->state);
 	anal->state = A_STOP;
 	(void)shell;
 	return (anal);
@@ -56,7 +53,8 @@ t_analyzer	*separator_analyze(t_analyzer *anal, t_core *shell)
 		anal->process.type = state;
 		anal->state = A_SEPARATOR;
 		anal = process_analyze(anal, shell);
-		anal->process.command = fill_cmd_job(anal->lexer, anal->process.command);
+		anal->process.command = fill_cmd_job(anal->lexer,
+			anal->process.command);
 	}
 	else if (state == P_NEWLINE || state == P_END)
 	{

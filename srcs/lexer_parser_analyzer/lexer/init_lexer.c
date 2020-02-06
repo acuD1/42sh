@@ -19,7 +19,7 @@ static void	ft_init_lex(t_lexer *lexer)
 	lexer->lex[L_NAME] = name_lexer;
 	lexer->lex[L_IO_NUMBER] = number_lexer;
 	lexer->lex[L_NEWLINE] = newline_lexer;
-	// lexer->lex[L_ESCSEQ] = backslash_lexer;
+	lexer->lex[L_DISCARD] = discard_lexer;
 	lexer->lex[L_ASSIGNEMENT_WORD] = assignement_word_lexer;
 	lexer->lex[L_END] = end_lexer;
 }

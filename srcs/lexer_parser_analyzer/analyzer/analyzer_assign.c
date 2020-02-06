@@ -18,28 +18,7 @@ void				init_assign(t_db *db)
 	db->value = NULL;
 }
 
-// ??
-/*
-static t_db			*fetch_assign(t_db *assign)
-{
-	t_db	*new;
-
-	if (!assign)
-		return (NULL);
-	new = assign;
-	if (assign->key)
-		new->key = assign->key;
-	else
-		new->key = NULL;
-	if (assign->value)
-		new->value = assign->value;
-	else
-		new->value = NULL;
-	return (new);
-}*/
-
-// PUTIN WTF
-static t_analyzer	*ass_analyze(t_analyzer *anal)
+t_analyzer	*ass_analyze(t_analyzer *anal)
 {
 	int		i;
 	int		j;

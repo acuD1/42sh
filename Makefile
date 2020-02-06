@@ -127,17 +127,16 @@ SRC		+=	$(S_PATH)$(PROMPT)check_backslash.c
 SRC		+=	$(S_PATH)$(PROMPT)sub_prompt.c
 SRC		+=	$(S_PATH)$(PROMPT)heredoc.c
 
-SRC		+=	$(S_PATH)$(LEXER_EXP)exp.c
-SRC		+=	$(S_PATH)$(LEXER_EXP)exp_bis.c
-SRC		+=	$(S_PATH)$(LEXER_EXP)exp_tilde.c
+SRC		+=	$(S_PATH)$(LEXER_EXP)lexer_exp.c
+SRC		+=	$(S_PATH)$(LEXER_EXP)lexer_param_cmds_exp.c
+SRC		+=	$(S_PATH)$(LEXER_EXP)lexer_tilde_math_exp.c
 
 SRC		+=	$(S_PATH)$(EXPANSIONS)expansion.c
-SRC		+=	$(S_PATH)$(EXPANSIONS)assign_expansion.c
-SRC		+=	$(S_PATH)$(EXPANSIONS)choose_expansion.c
-SRC		+=	$(S_PATH)$(EXPANSIONS)math_expansion.c
-SRC		+=	$(S_PATH)$(EXPANSIONS)cmd_subs_expansion.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)assign_redir_tok_exp.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)infinite_exp.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)tilde_cmds_math_exp.c
+SRC		+=	$(S_PATH)$(EXPANSIONS)do_exp_and_quotes.c
 SRC		+=	$(S_PATH)$(EXPANSIONS)param_expansion.c
-SRC		+=	$(S_PATH)$(EXPANSIONS)tilde_expansion.c
 
 SRC			+=	$(S_PATH)$(COMMANDLINE)init_termcaps.c
 SRC			+=	$(S_PATH)$(COMMANDLINE)term_config.c

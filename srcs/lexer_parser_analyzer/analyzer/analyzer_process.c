@@ -19,36 +19,7 @@ void	init_process(t_process *new)
 	new->type = P_START;
 }
 
-/*
-t_process		*fetch_process(t_process *process)
-{
-	t_process	*new;
-
-	new = NULL;
-	new = process;
-	if (!process)
-		return (NULL);
-	if (process->av)
-		new->av = process->av;
-	else
-		new->av = NULL;
-	if (process->type)
-		new->type = process->type;
-	else
-		new->type = P_START;
-	if (process->assign_list)
-		new->assign_list = process->assign_list;
-	else
-		new->assign_list = NULL;
-	if (process->redir_list)
-		new->redir_list = process->redir_list;
-	else
-		new->redir_list = NULL;
-	return (new);
-}
-*/
-
-t_analyzer	*process_analyze(t_analyzer *anal, t_core *shell)
+t_analyzer		*process_analyze(t_analyzer *anal, t_core *shell)
 {
 	(void)shell;
 	anal->process.redir_list = anal->redir_list;
@@ -57,5 +28,6 @@ t_analyzer	*process_analyze(t_analyzer *anal, t_core *shell)
 	anal->redir_list = NULL;
 	init_process(&anal->process);
 	anal->state = A_SEPARATOR;
+	(void)shell;
 	return (anal);
 }
