@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 13:58:25 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/01 15:30:58 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 **		Configuration
 */
 
-void		init_termcaps(t_read *term);
+int8_t		init_termcaps(t_read *term);
 void		init_cmd_line(t_core *shell, t_read *term);
 int8_t		init_config(t_core *shell);
 int8_t		reset_config(t_core *shell);
@@ -35,8 +35,9 @@ int8_t		get_size(t_read *term);
 
 int8_t		init_prompt(t_core *shell);
 void		display_prompt(t_read *term);
-void		display_subprompt(t_read *term, char *prompt);
+void		display_subprompt(t_read *term);
 void		goto_prompt(t_read *term);
+void		get_prompt_value(t_core *shell, char *key);
 
 /*
 **		Check Caps and Interpret
@@ -86,7 +87,7 @@ int64_t		last_cmd_back(t_read *term, int i);
 **		Subprompt/Multiline
 */
 
-u_int8_t	check_subprompt(t_read *term);
+u_int8_t	check_subprompt(t_core *shell);
 u_int8_t	check_backslash(t_read *term, char *quote);
 u_int8_t	charset_count(t_read *term, char charset, int i);
 u_int8_t	quotes_is_matching(t_read *term, char *quote);

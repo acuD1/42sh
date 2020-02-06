@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/03 16:53:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/01 18:05:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,11 @@
 # define CREDIT					"arsciand, fcatusse, mpivet-p and guvillat\n"
 # define S_USR_RW				(S_IRUSR | S_IWUSR)
 # define S_GRP_OTH_R			(S_IRGRP | S_IROTH)
-# define MODE_WRITE				(O_CREAT | O_WRONLY | O_TRUNC)
-# define PS1					"42sh-0.1$ "
-# define PS2					"> "
+# define MODE_WRITE				(O_CREAT | O_WRONLY | O_APPEND)
+# define PS1					"'42sh-0.1$ '"
+# define PS2					"'> '"
 # define BUFF_SIZE				4096
-# define READ_SIZE				10
-# define HISTORY_FILE			"./.42sh_history"
+# define READ_SIZE				8
 # define QUOTE					'\''
 # define DQUOTE					'\"'
 # define BQUOTE					'`'
@@ -98,7 +97,14 @@
 //# define HEREDOC				"<<"
 
 /*
-**	Action keys hex masks
+**		Files name
+*/
+
+# define FC_TMP_FILE			"./42sh-fc.tmp"
+# define HISTORY_FILE			"./.42sh_history"
+
+/*
+**		Action keys hex masks
 */
 
 # define ARROW_UP				0x1b5b410000000000

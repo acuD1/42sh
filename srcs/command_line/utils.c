@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:51:51 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:08:06 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ u_int64_t	get_mask(char *buff)
 	tmp = 0;
 	value = 0;
 	shift = 56;
-	while (i < 8 && buff[i])
+	while (i < 8 && buff && buff[i])
 	{
 		value = buff[i];
 		value <<= shift;

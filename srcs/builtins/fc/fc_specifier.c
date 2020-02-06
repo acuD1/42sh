@@ -6,39 +6,90 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 20:59:38 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:42:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
+/* static void			get_pat_and_rep(char ***av, char **pat,	char **rep) */
+/* { */
+/* 	char			*str; */
+/*  */
+/* 	str = NULL; */
+/* 	if (**av == NULL) */
+/* 		return ; */
+/* 	while (**av && (*av)++) */
+/* 	{ */
+/* 		if (isstart(**av, "-l") || isstart(**av, "-r") */
+/* 			|| isstart(**av, "-n") || isstart(**av, "-s") */
+/* 			|| isstart(**av, "-e")) */
+/* 			continue ; */
+/* 		else */
+/* 		{ */
+/* 			str = ft_strdup(**av); */
+/* 			break ; */
+/* 		} */
+/* 	} */
+/* 	*rep = ft_strchr(str, '='); */
+/* 	if (*rep == NULL) */
+/* 		return ; */
+/* 	**rep = '\0'; */
+/* 	(*rep)++; */
+/* 	(*pat) = str; */
+/* } */
+
+char			*get_entry(t_lst *w, t_cmd cmd)
+{
+	int			i;
+
+	i = ft_lstlen(w);
+	if (cmd.ac == 2)
+		cmd.first = i;
+	else if (cmd.first > i)
+		cmd.first = i;
+	else if (cmd.first < -i)
+		cmd.first = i;
+	while (w && i >= cmd.first)
+	{
+		if (i == cmd.first)
+		{
+			ft_dprintf(cmd.fd, "%s\n", w->content);
+			return (w->content);
+		}
+		w = w->next;
+		i--;
+	}
+	return (NULL);
+}
+
 /*
 **	[fc -s [old=new] [specifier]]
-**	=> select specifier in history to reenter
-**	=> if new is specified history lst and file will b edit
+**		=> select specifier in history to re-enter
+**		=> if new is specified history lst and file will b edit
 */
 
-u_int8_t	select_specifier(t_core *shell, t_lst *w, char **cmd)
+int8_t		select_specifier(t_core *shell, t_lst *w, char **av)
 {
-	if (cmd[0] && !ft_strchr(cmd[0], '='))
-	{
-		if (ft_atoi(cmd[0]) < 0)
-			cmd[0] = ft_itoa(ft_lstlen(w) + ft_atoi(cmd[0]));
-		while (ft_atoi(cmd[0]) != 0 && w->next)
-		{
-			if (!ft_isdigit(*cmd[0]) && isstart((char *)w->content, cmd[0]))
-				break ;
-			else if (ft_atoi(cmd[0]) == (int)w->content_size)
-				break ;
-			w = w->next;
-		}
-	}
-	if (cmd[0] && !ft_isdigit(*cmd[0]) && !(w->next))
-		return (FAILURE);
-	ft_strdel(&shell->term->buffer);
-	shell->term->buffer = ft_strdup(w->content);
-	get_tokens(shell, shell->term->buffer);
-	ft_printf("%s\n", shell->term->buffer);
-	exec_process(shell, shell->env);
+	t_cmd	cmd;
+	char	*pat;
+	char	*rep;
+
+	pat = NULL;
+	rep = NULL;
+	if (get_range(av, &cmd) == FALSE)
+		return (fc_error(0, 0));
+	cmd.fd = STDOUT_FILENO;
+	get_entries(w, &cmd);
+	ft_strdel(&shell->term.buffer);
+	if ((shell->term.buffer = ft_strdup(get_entry(w, cmd))) == NULL)
+		return (fc_error(0, 0));
+
+	/* re-executing cmd specified */
+	/* lexer_parser_analyzer(shell); */
+	/* if (task_master(shell) != SUCCESS) */
+	/* 	exit(1); */
+
+//	get_pat_and_rep(&av, &pat, &rep);
 	return (SUCCESS);
 }

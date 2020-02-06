@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 17:18:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/01 15:58:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,16 @@ char			*load_heredoc(t_core *shell, char *key)
 	shell->term.buffer = ft_strjoinf(shell->term.buffer, NEW_LINE, 1);
 	shell->term.tmp_buff = ft_strdup(shell->term.buffer);
 	shell->term.status = CMD_SUBPROMPT;
+	get_prompt_value(shell, "PS2");
 	while (TRUE)
 	{
 		ft_strdel(&shell->term.buffer);
 		shell->term.buffer = ft_memalloc(BUFF_SIZE);
-		display_subprompt(&shell->term, PS2);
+		display_subprompt(&shell->term);
 		if (check_key(shell, key) == FALSE)
 			continue ;
-		else
+		else if (*shell->term.prompt
+			|| (!*shell->term.prompt && shell->term.buffer))
 			break ;
 		if (shell->term.status == CMD_PROMPT)
 			return (NULL);

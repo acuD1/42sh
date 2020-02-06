@@ -6,15 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 17:19:55 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/01 19:24:15 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			display_subprompt(t_read *term, char *prompt)
+void		display_subprompt(t_read *term)
 {
-	ft_strcpy(term->prompt, prompt);
 	term->prompt_len = ft_strlen(term->prompt);
 	term->x = term->prompt_len;
 	term->y = 0;
@@ -45,6 +44,8 @@ u_int8_t		read_multiline(t_read *term, char sb)
 	ft_bzero(buff, READ_SIZE);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
+	//	if (end_of_file(shell, buff) == TRUE)
+	//		return (TRUE);
 		if (check_caps(buff, term) == TRUE)
 		{
 			ft_bzero(buff, READ_SIZE);
@@ -84,20 +85,20 @@ void			load_subprompt(char sb, t_read *term)
 {
 	if (sb != BACKSLASH)
 		term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);
-	if (sb != BACKSLASH)
-		term->status = CMD_SUBPROMPT;
+	term->status = CMD_SUBPROMPT;
 	term->tmp_buff = ft_strdup(term->buffer);
 	term->flag = FALSE;
-	while (TRUE)
+	while (term->status == CMD_SUBPROMPT && TRUE)
 	{
 		ft_strdel(&term->buffer);
 		term->buffer = ft_memalloc(BUFF_SIZE);
-		display_subprompt(term, PS2);
+		display_subprompt(term);
 		if (read_multiline(term, sb) == FALSE)
 		{
 			if (check_multi_subprompt(term, &sb) == TRUE)
 				continue ;
-			else
+			else if (*term->prompt
+				|| (!*term->prompt && term->buffer))
 				break ;
 		}
 		if (sub_prompt_error(term, sb) == TRUE)

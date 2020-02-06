@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 17:18:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/01 19:25:21 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ u_int8_t		quotes_is_matching(t_read *term, char *quote)
 	while (term->buffer[++i])
 	{
 		if (term->buffer[i] == BACKSLASH)
-			i += 2;
+		{
+			i++;
+			continue ;
+		}
 		if ((*quote = set_quote_type(term->buffer[i])) != '\0')
 		{
 			if (goto_next_quote(term->buffer, *quote, &i) == TRUE)
@@ -51,20 +54,22 @@ u_int8_t		quotes_is_matching(t_read *term, char *quote)
 	return (TRUE);
 }
 
-u_int8_t		check_subprompt(t_read *term)
+u_int8_t	check_subprompt(t_core *shell)
 {
 	int		i;
 	char	quote;
 
 	i = -1;
 	quote = '\0';
-	if (quotes_is_matching(term, &quote) == TRUE)
-		if (check_backslash(term, &quote) == FALSE)
+	if (quotes_is_matching(&shell->term, &quote) == TRUE)
+		if (check_backslash(&shell->term, &quote) == FALSE)
 			return (FALSE);
 	if (quote != '\0')
 	{
-		term->sub_prompt = TRUE;
-		load_subprompt(quote, term);
+		shell->term.sub_prompt = TRUE;
+		ft_strdel(&shell->term.prompt);
+		get_prompt_value(shell, "PS2");
+		load_subprompt(quote, &shell->term);
 		return (TRUE);
 	}
 	return (FALSE);

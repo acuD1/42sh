@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 17:20:19 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/01 14:13:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int8_t	stock_termcaps(t_read *term)
 */
 
 // Need rework here this is UGLY
-void			init_termcaps(t_read *term)
+int8_t		init_termcaps(t_read *term)
 {
 	char	*sh;
 	char	bp[1024];
@@ -69,21 +69,22 @@ void			init_termcaps(t_read *term)
 	if (stock_termcaps(term) == FAILURE)
 	{
 		ft_perror("Get termcaps failed", NULL, 0);
-		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
+		return (FAILURE);
 	}
 	if (!(sh = getenv("TERM")))
 	{
 		ft_perror("Getenv error", NULL, 0);
-		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
+		return (FAILURE);
 	}
 	if (tgetent(bp, sh) == FAILURE)
 	{
 		ft_perror("Tgetent error", NULL, 0);
-		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
+		return (FAILURE);
 	}
 	if (get_size(term) != SUCCESS)
 	{
 		ft_perror("Get term size failed", NULL, 0);
-		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
+		return (FAILURE);
 	}
+	return (SUCCESS);
 }

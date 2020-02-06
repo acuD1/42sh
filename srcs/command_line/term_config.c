@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 13:32:05 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/01 17:06:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_cmd_line(t_core *shell, t_read *term)
 	term->buffer = NULL;
 	term->tmp_buff = NULL;
 	term->cmd = NULL;
+	term->prompt = NULL;
 	if (get_size(term) != SUCCESS)
 		quit_shell(shell, EXIT_FAILURE, TRUE);
 	init_history(term);
@@ -38,12 +39,12 @@ int8_t	init_config(t_core *shell)
 {
 	if (tgetent(NULL, "xterm-256color") == FAILURE)
 	{
-		ft_perror("tgetent", NULL, 0);
+		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr error\n");
 		quit_shell(shell, EXIT_FAILURE, TRUE);
 	}
 	if (tcgetattr(STDIN_FILENO, &(shell->old_t)) == FAILURE)
 	{
-		ft_perror("tgetattr", NULL, 0);
+		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr error\n");
 		quit_shell(shell, EXIT_FAILURE, TRUE);
 	}
 	shell->new_t = shell->old_t;
@@ -52,7 +53,7 @@ int8_t	init_config(t_core *shell)
 	shell->new_t.c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->new_t)) == FAILURE)
 	{
-		ft_perror("tcsetattr", NULL, 0);
+		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr error\n");
 		quit_shell(shell, EXIT_FAILURE, TRUE);
 	}
 	return (SUCCESS);
@@ -71,9 +72,8 @@ int8_t	reset_config(t_core *shell)
 		quit_shell(shell, EXIT_FAILURE, TRUE);
 		return (FAILURE);
 	}
-	ft_bzero(shell->term.prompt, READ_SIZE);
 	ft_strdel(&shell->term.tmp_buff);
+	ft_strdel(&shell->term.prompt);
+	shell->term.cmd = NULL;
 	return (SUCCESS);
 }
-
-// Fanny t'est sur de print exit ici ?

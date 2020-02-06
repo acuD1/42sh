@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:48:36 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/01 17:09:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int8_t	write_history(t_read *term)
 		return (FAILURE);
 	if ((fd = open(HISTORY_FILE, MODE_WRITE, S_USR_RW | S_GRP_OTH_R)) == -1)
 	{
-		dprintf(STDIN_FILENO, "can't open history file\n");
+		ft_dprintf(STDIN_FILENO, "42sh: can't open history file\n");
 		return (FAILURE);
 	}
 	while (hst->next && ++i < HIST_SIZE)
@@ -39,9 +39,9 @@ int8_t	write_history(t_read *term)
 	while (hst)
 	{
 		if (write(fd, hst->content, ft_strlen(hst->content)) == FAILURE
-			|| write(fd, "\n", 1) == FAILURE)
+			|| write(fd, NEW_LINE, 1) == FAILURE)
 		{
-			dprintf(2, "write failure\n");
+			ft_dprintf(2, "42sh: write failure\n");
 			close(fd);
 			return (FAILURE);
 		}

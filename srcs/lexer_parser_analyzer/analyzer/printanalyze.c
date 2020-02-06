@@ -110,18 +110,18 @@ static void	ft_printjoblst(t_lst *list)
 	job = list;
 	while (job)
 	{
-		ft_printjob((t_job*)job->content);
+	//	ft_printjob((t_job*)job->content);
 		process = ((t_job*)job->content)->process_list;
 		while (process)
 		{
-			ft_printprocess((t_process*)process->content);
+		//	ft_printprocess((t_process*)process->content);
 			redir = ((t_process*)process->content)->redir_list;
 			while (redir)
 			{
-				ft_printredir((t_redir*)redir->content);
+			//	ft_printredir((t_redir*)redir->content);
 				redir = redir->next;
 			}
-			ft_printassignlist(((t_process*)process->content)->assign_list);
+		//	ft_printassignlist(((t_process*)process->content)->assign_list);
 			process = process->next;
 		}
 		job = job->next;

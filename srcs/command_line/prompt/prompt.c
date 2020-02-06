@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 17:19:18 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 19:15:25 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void			goto_prompt(t_read *term)
 	xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 	if (term->sub_prompt > 0)
-		display_subprompt(term, PS2);
+		display_subprompt(term);
 	else
 		display_prompt(term);
 }
@@ -38,16 +38,13 @@ void			goto_prompt(t_read *term)
 
 void			display_prompt(t_read *term)
 {
-	ft_bzero(term->prompt, 10);
-	ft_strcpy(term->prompt, PS1);
 	term->prompt_len = ft_strlen(term->prompt);
 	term->x = term->prompt_len;
 	term->x_index = term->x;
 	term->y = 0;
 	term->width = term->x;
 	term->sub_prompt = 0;
-	term->flag = 0;
-	term->cmd = NULL;
+//	term->flag = 0;
 	ft_printf("%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 }
@@ -58,27 +55,42 @@ void			display_prompt(t_read *term)
 **	  The current buffer is saved in a history list
 */
 
-static int8_t	end_of_file(char *buff, t_read *term)
+int8_t		end_of_file(t_core *shell, char *buff)
 {
-	t_core	*shell;
-
-	shell = get_core(NULL);
-	if (!*term->buffer && get_mask(buff) == CTRL_D)
+	if (!*(shell->term).buffer && get_mask(buff) == CTRL_D)
 	{
-		if (term->status == CMD_SUBPROMPT)
+		if (shell->term.status == CMD_SUBPROMPT)
 		{
-			term->flag = TRUE;
-			return (FALSE);
+				shell->term.flag = TRUE;
+				return (FALSE);
 		}
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		reset_config(shell);
-		write_history(term);
+		write_history(&shell->term);
 		return (TRUE);
 	}
 	return (FALSE);
 }
 
-int8_t			init_prompt(t_core *shell)
+void		get_prompt_value(t_core *shell, char *key)
+{
+	t_db	*db;
+
+	db = NULL;
+	if ((db = search_db(shell->env, key)) == NULL)
+	{
+		shell->term.prompt = ft_strnew(0);
+		return ;
+	}
+	if (!ft_strcmp(db->value, PS1))
+		shell->term.prompt = ft_strsub(db->value, 1, 10);
+	else if  (!ft_strcmp(db->value, PS2))
+		shell->term.prompt = ft_strsub(db->value, 1, 2);
+	else
+		shell->term.prompt = ft_strdup(db->value);
+}
+
+int8_t		init_prompt(t_core *shell)
 {
 	char	buff[READ_SIZE + 1];
 
@@ -86,19 +98,22 @@ int8_t			init_prompt(t_core *shell)
 	ft_bzero(buff, READ_SIZE);
 	shell->term.buffer = ft_memalloc(BUFF_SIZE);
 	init_config(shell);
-	init_termcaps(&shell->term);
+	if (init_termcaps(&shell->term) == FAILURE)
+		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
+	get_prompt_value(shell, "PS1");
 	display_prompt(&shell->term);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
-		if (end_of_file(buff, &shell->term) == TRUE)
+		if (end_of_file(shell, buff) == TRUE)
 			return (FAILURE);
 		if (check_caps(buff, &shell->term) == TRUE)
 			ft_bzero(buff, READ_SIZE);
-		else
+		else if (*shell->term.prompt
+			|| (!*shell->term.prompt && shell->term.buffer))
 			break ;
 	}
 	shell->term.status = CMD_DONE;
-	if (check_subprompt(&shell->term) == FALSE)
+	if (check_subprompt(shell) == FALSE)
 		check_expansions(&shell->term);
 	reset_config(shell);
 	return (SUCCESS);

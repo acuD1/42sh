@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 17:17:26 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/01 17:50:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void		goto_reverse(t_read *term, char *buff_tmp, int8_t mode)
 
 static void		walking_history(char *buff_tmp, t_read *term, t_lst **history)
 {
-	while ((*history)->next)
+	while ((*history)->next && *buff_tmp)
 	{
 		if (ft_strstr((*history)->content, buff_tmp))
 		{
@@ -52,23 +52,23 @@ static int8_t	insert_in_search(t_read *term, int64_t *i, char buff[])
 		term->tmp_buff[++(*i)] = *buff;
 		goto_reverse(term, term->tmp_buff, SUCCESS);
 	}
-	else if (value == BS_KEY)
+	else if (value == BS_KEY && *term->tmp_buff)
 	{
 		term->tmp_buff[*i] = 0;
 		if (*i <= -1)
 			return (SUCCESS);
 		(*i)--;
 	}
-	else if (value != CTRL_R)
+	else if (value != CTRL_R && value != BS_KEY)
 		return (FAILURE);
 	return (SUCCESS);
 }
 
 static void		search_in_history(t_read *term)
 {
-	char	buff[READ_SIZE + 1];
-	int64_t	i;
-	t_lst	*history;
+	char		buff[READ_SIZE + 1];
+	int64_t		i;
+	t_lst		*history;
 
 	i = -1;
 	term->tmp_buff = ft_memalloc(BUFF_SIZE);
@@ -87,7 +87,7 @@ static void		search_in_history(t_read *term)
 
 void			research_mode(t_read *term)
 {
-	char	*saved;
+	char		*saved;
 
 	saved = NULL;
 	if (term->tmp_buff)

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:56:46 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:07:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void		delete_last_cmd(char *d_name, t_read *term)
 
 	tmp = NULL;
 	i = term->width - term->prompt_len - ft_strlen(d_name);
+	ft_strdel(&tmp);
 	tmp = ft_strsub(term->buffer, 0, i);
 	goto_prompt(term);
 	ft_strdel(&term->buffer);
@@ -35,13 +36,25 @@ void		delete_last_cmd(char *d_name, t_read *term)
 u_int8_t	is_dir(char *dir)
 {
 	struct stat	buf;
+	char		*tmp;
 
 	if (!dir)
 		return (FALSE);
-	if (lstat(dir, &buf) == FAILURE)
+	if (!isstart(dir, "/"))
+		tmp = ft_strjoin("./", dir);
+	else
+		tmp = ft_strdup(dir);
+	if (lstat(tmp, &buf) == FAILURE)
+	{
+		ft_strdel(&tmp);
 		return (FALSE);
+	}
 	if (S_ISDIR(buf.st_mode) && !is_dot(dir))
+	{
+		ft_strdel(&tmp);
 		return (TRUE);
+	}
+	ft_strdel(&tmp);
 	return (FALSE);
 }
 
@@ -75,7 +88,7 @@ void		auto_complete_mode(t_read *term)
 			read_directories(to_find, term);
 		else if (ft_isalpha(*to_find))
 			to_complete_bin(to_find, term);
-		if (term->flag == FALSE)
+		else if (term->flag == FALSE)
 			to_complete_buffer(to_find, term);
 	}
 	ft_strdel(&to_find);

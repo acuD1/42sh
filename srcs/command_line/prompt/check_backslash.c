@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:44:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/28 18:49:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:07:30 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,8 @@ u_int8_t	check_backslash(t_read *term, char *quote)
 		return (FALSE);
 	if (term->buffer[ft_strlen(term->buffer) - 1] == BACKSLASH)
 	{
-		if (term->buffer[ft_strlen(term->buffer) - 1] != BACKSLASH)
-			return (FALSE);
 		if (charset_count(term, BACKSLASH, 0) % 2 != 0)
 		{
-			if (ft_strlen(term->buffer) > 1)
-				term->buffer = ft_strjoinf(term->buffer, ";", 1);
 			*quote = BACKSLASH;
 			return (TRUE);
 		}

@@ -48,7 +48,7 @@ typedef struct				s_hash
 
 typedef struct				s_read
 {
-	char					prompt[10];
+	char					*prompt;
 	int						prompt_len;
 	int						x_index;
 	int						x;
@@ -186,6 +186,16 @@ struct						s_analyzer
 	t_lst					*process_list;
 	t_lst					*redir_list;
 };
+
+typedef struct			s_cmd
+{
+	int					first;
+	int					last;
+	char				*editor;
+	int					ac;
+	char				**av;
+	int					fd;
+}						t_cmd;
 
 /*
 ** EXP

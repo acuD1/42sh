@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/03 17:11:42 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/01/30 19:06:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ static u_int8_t	not_found(char *name, char *to_find, t_read *term)
 			if (value == TAB_KEY)
 				return (TRUE);
 			else
+			{
+				term->tmp_buff = ft_strdup(buff);
 				return (FALSE);
+			}
 		}
 	}
 	return (TRUE);
