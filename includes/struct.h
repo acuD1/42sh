@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   struct.h										   :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: arsciand <arsciand@student.42.fr>		  +#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2019/06/15 16:43:36 by arsciand		  #+#	#+#			 */
-/*   Updated: 2020/02/06 19:28:49 by mpivet-p         ###   ########.fr       */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   struct.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
+/*   Updated: 2020/02/06 21:52:26 by arsciand         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
@@ -26,16 +26,16 @@ typedef struct				s_db
 {
 	char					*key;
 	char					*value;
-	u_int8_t				type;
 	u_int32_t				hit;
+	u_int8_t				type;
 }							t_db;
 
 typedef struct				s_build
 {
+	u_int32_t				date;
+	u_int16_t				patch;
 	u_int8_t				release;
 	u_int8_t				version;
-	u_int16_t				patch;
-	u_int32_t				date;
 }							t_build;
 
 typedef struct				s_hash
@@ -48,7 +48,14 @@ typedef struct				s_hash
 
 typedef struct				s_read
 {
+	t_core					*shell;
+	t_lst					*history;
+	t_lst					*history_index;
+	char					**cmd;
 	char					*prompt;
+	char					*tcaps[CAPS_NBR];
+	char					*buffer;
+	char					*tmp_buff;
 	int						prompt_len;
 	int						x_index;
 	int						x;
@@ -57,19 +64,9 @@ typedef struct				s_read
 	int						ws_col;
 	int						ws_li;
 	int						ac;
-
 	int						sub_prompt;
 	int						status;
-
 	int						flag;
-	char					*tcaps[CAPS_NBR];
-	char					*buffer;
-	char					*tmp_buff;
-	char					**cmd;
-
-	t_core					*shell;
-	t_lst					*history;
-	t_lst					*history_index;
 }							t_read;
 
 struct						s_core
@@ -86,11 +83,11 @@ struct						s_core
 	t_lst					*job_list;
 	t_lst					*launched_jobs;
 	u_int64_t				opt;
+	pid_t					pgid;
 	int32_t					status;
 	int32_t					heredoc;
 	int32_t					terminal;
 	u_int8_t				mode;
-	pid_t					pgid;
 };
 
 /*
@@ -110,8 +107,8 @@ typedef struct				s_graph
 
 typedef struct				s_parser
 {
-	t_graph					graph[NB_PARSER_STATE];
 	enum e_pstate			state;
+	t_graph					graph[NB_PARSER_STATE];
 }							t_parser;
 
 typedef struct				s_token
@@ -133,37 +130,37 @@ struct						s_lexer
 
 typedef struct				s_job
 {
-	enum e_pstate			type;
-	int8_t					notified;
 	t_lst					*process_list;
-	pid_t					pgid;
 	char					*command;
-	int						jobc_id;
 	char					jobc_last;
+	enum e_pstate			type;
+	pid_t					pgid;
+	int8_t					notified;
+	int						jobc_id;
 }							t_job;
 
 typedef struct				s_process
 {
-	enum e_pstate			type;
-	int8_t					completed;
-	int8_t					stopped;
-	int8_t					status;
 	t_lst					*tok_list;
 	t_lst					*assign_list;
 	t_lst					*redir_list;
-	pid_t					pid;
-	pid_t					pgid;
 	char					**envp;
 	char					**av;
 	char					*bin;
 	char					*command;
+	enum e_pstate			type;
+	pid_t					pid;
+	pid_t					pgid;
+	int8_t					completed;
+	int8_t					stopped;
+	int8_t					status;
 }							t_process;
 
 typedef struct				s_redir
 {
-	enum e_pstate			type;
 	char					*heredoc;
 	char					*op[2];
+	enum e_pstate			type;
 	int						io_num[2];
 	int						dup_fd[2];
 }							t_redir;
@@ -171,27 +168,27 @@ typedef struct				s_redir
 struct						s_analyzer
 {
 	t_anal					analyze;
-	enum e_astate			state;
-	t_lst					*lexer;
 	t_job					job;
 	t_process				process;
 	t_redir					redir;
 	t_db					db;
 	t_token					tok;
+	t_lst					*lexer;
 	t_lst					*job_list;
 	t_lst					*process_list;
 	t_lst					*redir_list;
+	enum e_astate			state;
 };
 
-typedef struct			s_cmd
+typedef struct				s_cmd
 {
-	int					first;
-	int					last;
-	char				*editor;
-	int					ac;
-	char				**av;
-	int					fd;
-}						t_cmd;
+	char					**av;
+	char					*editor;
+	int						first;
+	int						last;
+	int						ac;
+	int						fd;
+}							t_cmd;
 
 /*
 ** EXP
@@ -201,15 +198,15 @@ typedef char				*(*t_exp)(char *, t_core *);
 
 typedef struct				s_exp_size
 {
-	char					*(*acab)(char *, enum e_estate id);
 	enum e_estate			id;
+	char					*(*acab)(char *, enum e_estate id);
 	char					*res;
 }							t_exp_size;
 
 typedef struct				s_expansion
 {
-	int						erience;
 	t_exp					sionat[10];
+	int						erience;
 }							t_expansion;
 
 typedef struct				s_exp_token

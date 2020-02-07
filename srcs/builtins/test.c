@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 17:50:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/30 20:15:07 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/07 01:20:55 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 {
 	*opt = get_opt_test(argc, argv, diff);
 	if (*opt > DIFF_BINTEST
-	&& ((argc > 2 + diff && is_number(argv[1 + diff]) != 0)
-		|| (argc > 3 + diff && is_number(argv[3 + diff]) != 0)))
+	&& ((argc > 2 + diff && ft_is_number(argv[1 + diff]) != 0)
+		|| (argc > 3 + diff && ft_is_number(argv[3 + diff]) != 0)))
 	{
 		dprintf(STDERR_FILENO, "42sh: test: %s: integer expression expected\n"
-		, (is_number(argv[1 + diff]) != 0) ? argv[1 + diff] : argv[3 + diff]);
+		, (ft_is_number(argv[1 + diff]) != 0) ? argv[1 + diff] : argv[3 + diff]);
 		return (FAILURE);
 	}
 	if ((argc > 4 + diff && *opt > Z_UNATEST)

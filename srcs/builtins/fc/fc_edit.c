@@ -6,14 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/06 20:56:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 22:16:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <fcntl.h>
 
-void		launch_editor(t_core *shell, t_cmd cmd)
+void	launch_editor(t_core *shell, t_cmd cmd)
 {
 	t_process	process;
 	t_job 		job;
@@ -33,7 +33,7 @@ void		launch_editor(t_core *shell, t_cmd cmd)
 	//ft_printf("%s\n", cmd);
 }
 
-char		*get_editor(char **av, u_int64_t opt)
+char	*get_editor(char **av, u_int64_t opt)
 {
 	char	*editor;
 
@@ -46,13 +46,13 @@ char		*get_editor(char **av, u_int64_t opt)
 	return (editor);
 }
 
-int8_t		edit_mode(t_core *shell, t_process *process, u_int64_t opt)
+int8_t	edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 {
 	t_cmd	cmd;
 
 	ft_bzero(&cmd, sizeof(t_cmd));
 	cmd.editor = get_editor(process->av, opt);
-	if ((cmd.fd = open(FC_TMP_FILE, MODE_WRITE, S_USR_RW)) == FAILURE)
+	if ((cmd.fd = open(FC_TMP_FILE, (O_CREAT | O_WRONLY | O_APPEND), (S_IRUSR | S_IWUSR))) == FAILURE)
 		return (fc_error(opt, 3));
 	get_range(process->av, &cmd);
 //	ft_printtab(av);

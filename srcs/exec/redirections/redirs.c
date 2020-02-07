@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:42 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/06 18:39:20 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/07 01:25:33 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int8_t	dup_ofd(t_redir *ptr)
 		close(ptr->io_num[0]);
 		return (SUCCESS);
 	}
-	if (is_number(ptr->op[1]) == SUCCESS)
+	if (ft_is_number(ptr->op[1]) == SUCCESS)
 	{
 		ptr->dup_fd[0] = dup(ft_atoi(ptr->op[1]));
 		if ((ptr->dup_fd[0] = dup2(ptr->dup_fd[0], ptr->io_num[0])) < 0)

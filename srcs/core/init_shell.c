@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/03 13:44:15 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 21:51:48 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	init_shell_pgid(t_core *shell)
 
 int8_t		init_shell(t_core *shell, char **av, char **environ)
 {
-	shell->build = (struct s_build){BUILDR, BUILDV, BUILDP + 1, DATE};
+	shell->build = (struct s_build){DATE, BUILDP + 1, BUILDR, BUILDV};
 	shell->hash.size = HASH_SIZE;
 	shell->terminal = STDIN_FILENO;
 	get_core(shell);

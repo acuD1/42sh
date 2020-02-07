@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/06 20:47:52 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 02:11:17 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ void		load_i_mode(t_core *shell);
 void		load_noi_mode(t_core *shell);
 void		free_env(t_lst *env);
 void		free_prompt(t_core *shell);
-//void		free_history(t_read *term);
 void		free_shell(t_core *shell);
 void		reset_hash(t_hash *hash);
-//int8_t		dispatcher(t_core *shell, t_lst *jobs);
 
 /*
 **	===========================================================================
@@ -85,7 +83,7 @@ void		status_handler(t_core *shell, int status);
 **	===========================================================================
 */
 
-u_int32_t	get_hash(char *line, u_int32_t size);
+u_int32_t	get_hash(const char *line, u_int32_t size);
 int8_t		locate_hash(t_core *shell, t_process *process);
 void		hash_map_dispatcher
 				(t_core *shell, t_process *process, enum e_hash fmt);
@@ -106,15 +104,6 @@ void		hash_error(t_hash *hash);
 
 /*
 **	===========================================================================
-**	DEV........................................................................
-**	===========================================================================
-*/
-
-//void		print_env(t_core *shell);
-//void		print_hash_map_dev(t_hash *hash);
-
-/*
-**	===========================================================================
 **	MISC.......................................................................
 **	===========================================================================
 */
@@ -123,7 +112,7 @@ t_core		*get_core(t_core *core);
 int8_t		get_canonical_path(char *path, char *buffer);
 void		ft_perror(const char *s, const char *name, const int errnum);
 int8_t		ft_access(char *path, int mode);
-int8_t		is_a_dir(char *path);
+int8_t		is_a_dir(const char *path);
 void		print_usage(char *name, int c, char *usage);
 void		quit_shell(t_core *shell, int exit_value, int8_t v);
 void		print_and_quit(t_core *shell, char *message);
@@ -177,7 +166,6 @@ int8_t		builtin_jobs(t_core *shell, t_process *process);
 int8_t		builtin_bg(t_core *shell, t_process *process);
 int8_t		builtin_fc(t_core *shell, t_process *process);
 int8_t		builtin_test(t_core *shell, t_process *process);
-
 int8_t		edit_mode(t_core *shell, t_process *process, u_int64_t opt);
 int8_t		listing_mode(t_lst *w, char **av, u_int64_t opt);
 int8_t		select_specifier(t_core *shell, t_lst *w, char **av);
@@ -215,10 +203,6 @@ void		sigint_handler(int sig_num);
 void		init_signals(void);
 
 /*
-** TMP
-*/
-
-/*
 **	===========================================================================
 **	JOB CONTROL................................................................
 **	===========================================================================
@@ -248,7 +232,5 @@ t_job		*get_job_by_id(t_lst *jobs, int id);
 void		format_job_info(t_job *job);
 int			update_jobs(t_lst *jobs);
 void		attr_jobc_id(t_core *shell, t_job *job);
-
-//void		debug_analyzer(t_core *shell);
 
 #endif

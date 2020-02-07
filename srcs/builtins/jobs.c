@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   jobs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/01 19:17:35 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/07 01:20:11 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int8_t		builtin_jobs(t_core *shell, t_process *process)
 	i = (process->av[1] && ft_strcmp(process->av[1], "--") == 0) ? 2 : 1;
 	if (shell->launched_jobs)
 		update_status(shell);
-	if ((opt = get_options(argc, process->av, "lp")) & OPT_ERROR)
+	if ((opt = ft_get_options(argc, process->av, "lp")) & (1ULL << 63))
 		print_usage("42sh: jobs", opt & 0xFF, "jobs [-lp] [jobspec ...]");
 	if (i == argc)
 		while (job_list)

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 15:12:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/13 08:34:48 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 02:02:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		hash_key_remover(t_core *shell, char *process)
 	free_hash_key(&shell->hash, map);
 }
 
-static int	get_hash_t_pad(char *key)
+static int	get_hash_t_pad(const char *key)
 {
 	int	pad;
 

@@ -6,16 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 16:53:44 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/06 20:28:58 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 01:50:35 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_PARSER_ANALYZER_H
 # define LEXER_PARSER_ANALYZER_H
 
-int8_t		debug_ailleurs(const char *path, const char *str);
-int8_t		nono(const char *path);
-void		ft_printtab(char **cmd);
 void		lexer_parser_analyzer(t_core *shell);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/06 19:10:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 22:35:45 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	load_noi_mode(t_core *shell)
 void	load_i_mode(t_core *shell)
 {
 	version(shell);
-	init_cmd_line(shell, &shell->term); // Check return ?
+	init_cmd_line(shell, &shell->term);
 	while (1)
 	{
 		if (init_prompt(shell) != SUCCESS)

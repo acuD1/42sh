@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 14:50:10 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/11 15:20:12 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 02:03:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int8_t	hash_opt_parser(t_core *shell, int ac, t_process *process)
 	u_int64_t		options;
 	size_t			i;
 
-	options = get_options(ac, process->av, HASH_OPT);
+	options = ft_get_options(ac, process->av, HASH_OPT);
 	i = 0;
 	while (i < 5)
 	{
@@ -33,7 +33,7 @@ static int8_t	hash_opt_parser(t_core *shell, int ac, t_process *process)
 
 int8_t			builtin_hash(t_core *shell, t_process *process)
 {
-	int	ac;
+	int		ac;
 
 	ac = ft_tablen(process->av);
 	if (ac > 1 && process->av[1][0] != '-')

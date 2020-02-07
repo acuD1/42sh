@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 03:59:34 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/28 18:42:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 01:21:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int8_t	parse_unset(int argc, char **argv)
 {
 	u_int64_t	options;
 
-	options = get_options(argc, argv, "");
+	options = ft_get_options(argc, argv, "");
 	if (options & (1ULL << 63))
 	{
 		print_usage("unset", options % 128, "unset [name ...]");

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/30 19:42:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/06 22:06:55 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 /* 	(*pat) = str; */
 /* } */
 
-char			*get_entry(t_lst *w, t_cmd cmd)
+char		*get_entry(t_lst *w, t_cmd cmd)
 {
 	int			i;
 

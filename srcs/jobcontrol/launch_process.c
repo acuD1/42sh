@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/22 18:43:13 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/06 22:43:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,7 @@ void		launch_process
 	if (process->av)
 	{
 		if ((blt = is_a_blt(process->av[0])) != FAILURE)
-			exit (call_builtin(shell, process, blt));
-		//get_bin(shell, process);
+			exit(call_builtin(shell, process, blt));
 	}
 	call_bin(shell, process);
 }

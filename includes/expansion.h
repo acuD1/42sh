@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 18:43:16 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/06 20:26:16 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 01:57:51 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void			expansion_redir(t_core *shell, t_process *process);
 void			expansion_tok(t_core *shell, t_process *process);
 char			*exp_cmd_subs(char *data, t_core *shell);
 char			*no_exp(char *data, t_core *shell);
-char			*exp_dbquote(char *data, t_core *shell);
 char			*exp_math(char *data, t_core *shell);
 char			*exp_param(char *data, t_core *shell);
 char			*exp_tilde(char *data, t_core *shell);
@@ -41,7 +40,5 @@ char			*get_expansion(char *string, enum e_estate state);
 char			*infinite_expansion(char *data, t_core *shell);
 char			*do_exp_et_quote(t_core *shell, char *data);
 int				get_word_size_ntype(int i, char *str);
-t_lst			*exp_dbparen
-					(t_lexer *lexer, enum e_estate id, int len, t_lst *l_tok);
 
 #endif

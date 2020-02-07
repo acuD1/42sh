@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 20:32:08 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/03 13:33:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 22:53:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_perror(const char *s, const char *name, const int errnum)
 	static char	*error[] = {"Undefined error: 0", 0, "No such file or directory"
 		, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Cannot allocate memory"
 		, "Permission denied", 0, 0, 0, 0, 0, 0, "Not a directory"
-		, "Is a directory", 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0, 0, 0, 0, 0, 0, 0
+		, "Is a directory", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 		, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 		, 0, "File name too long", 0, 0, 0, 0, 0, 0, 0};
 

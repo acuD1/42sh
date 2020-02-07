@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/06 20:47:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/06 21:23:19 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ u_int8_t	check_caps(char *buf, t_read *term);
 void		insert_in_buffer(char *buf, t_read *term);
 void		insert_char_in_buffer(char buf, t_read *term, int buf_index);
 void		insert_str_in_buffer(char *d_name, t_read *term);
-//void		insert_newline_in_buff(t_read *term);
 
 /*
 **		Cursor Motion
@@ -51,7 +50,6 @@ void		move_right(char *buf, t_read *term);
 void		move_left(char *buf, t_read *term);
 void		move_key_up(t_read *term);
 void		move_key_down(t_read *term);
-//void		move_in_column(uint64_t value, t_read *term);
 void		jump_words(char *buf, t_read *term, uint64_t value);
 
 /*

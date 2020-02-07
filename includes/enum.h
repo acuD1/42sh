@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enum.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:28:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/29 23:48:43 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/06 21:27:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define ENUM_H
 
 /*
-** HASH
+**	HASH
 */
 
 enum	e_hash
@@ -27,7 +27,7 @@ enum	e_hash
 };
 
 /*
-**  EXPANSION
+**	EXPANSION
 */
 
 enum	e_estate
@@ -47,7 +47,7 @@ enum	e_estate
 };
 
 /*
-** 	LEXER_PARSER_ANALYZER
+**	LEXER_PARSER_ANALYZER
 */
 
 enum	e_astate
@@ -90,15 +90,16 @@ enum	e_pstate
 	NB_PARSER_STATE
 };
 
-enum    e_lstate {
-    L_START,
-    L_NAME,
-    L_NEWLINE,
-    L_IO_NUMBER,
-    L_DISCARD,
-    L_ASSIGNEMENT_WORD,
-    L_OPERATOR,
-    L_END,
+enum	e_lstate
+{
+	L_START,
+	L_NAME,
+	L_NEWLINE,
+	L_IO_NUMBER,
+	L_DISCARD,
+	L_ASSIGNEMENT_WORD,
+	L_OPERATOR,
+	L_END,
 	NB_LEXER_STATE
 };
 
@@ -123,11 +124,31 @@ enum	e_tcaps
 	CAPS_NBR
 };
 
-typedef enum	e_unary
+enum	e_unary
 {
-	B_UNATEST, C_UNATEST, D_UNATEST, E_UNATEST, F_UNATEST
-	, G_UNATEST, LL_UNATEST, P_UNATEST, R_UNATEST, SS_UNATEST, S_UNATEST
-	, U_UNATEST, W_UNATEST, X_UNATEST, Z_UNATEST, SAME_BINTEST, DIFF_BINTEST, EQ_BINTEST, NE_BINTEST, GE_BINTEST
-	, LT_BINTEST, LE_BINTEST, NB_TESTBLT
-}				t_binary;
+	B_UNATEST,
+	C_UNATEST,
+	D_UNATEST,
+	E_UNATEST,
+	F_UNATEST,
+	G_UNATEST,
+	LL_UNATEST,
+	P_UNATEST,
+	R_UNATEST,
+	SS_UNATEST,
+	S_UNATEST,
+	U_UNATEST,
+	W_UNATEST,
+	X_UNATEST,
+	Z_UNATEST,
+	SAME_BINTEST,
+	DIFF_BINTEST,
+	EQ_BINTEST,
+	NE_BINTEST,
+	GE_BINTEST,
+	LT_BINTEST,
+	LE_BINTEST,
+	NB_TESTBLT
+};
+
 #endif

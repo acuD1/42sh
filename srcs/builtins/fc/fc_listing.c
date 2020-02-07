@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fc_listing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:11:54 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/30 19:40:34 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/07 01:21:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		get_entries(t_lst *w, t_cmd *cmd)
 {
-	int			w_entries;
+	int		w_entries;
 
 	w_entries = ft_lstlen(w);
 	if (cmd->first <= 0)
@@ -30,22 +30,22 @@ void		get_entries(t_lst *w, t_cmd *cmd)
 	}
 }
 
-static void		swap(int *nb1, int *nb2)
+static void	swap(int *nb1, int *nb2)
 {
-	int			tmp;
+	int		tmp;
 
 	tmp = *nb1;
 	*nb1 = *nb2;
 	*nb2 = tmp;
 }
 
-void			skip_options(char ***av)
+void		skip_options(char ***av)
 {
 	while (++(*av) && **av)
 	{
-		if (isstart(**av, "-l") || isstart(**av, "-r")
-				|| isstart(**av, "-n") || isstart(**av, "-s")
-				|| isstart(**av, "-e"))
+		if (ft_isstart(**av, "-l") || ft_isstart(**av, "-r")
+				|| ft_isstart(**av, "-n") || ft_isstart(**av, "-s")
+				|| ft_isstart(**av, "-e"))
 			continue ;
 		else
 			break ;
@@ -53,7 +53,7 @@ void			skip_options(char ***av)
 	(*av)--;
 }
 
-u_int8_t		get_range(char **av, t_cmd *cmd)
+u_int8_t	get_range(char **av, t_cmd *cmd)
 {
 	int		i;
 

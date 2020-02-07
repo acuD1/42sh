@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 22:37:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/25 12:59:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 01:20:28 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int8_t	parse_set(int argc, char **argv)
 {
 	u_int64_t	options;
 
-	options = get_options(argc, argv, "");
+	options = ft_get_options(argc, argv, "");
 	if (options & (1ULL << 63))
 	{
 		print_usage("set", options % 128, "set [arg ...]");
@@ -36,7 +36,7 @@ static void		print_internal_vars(t_core *shell)
 				|| ((t_db*)ptr->content)->type & INTERNAL_VAR)
 		{
 			dprintf(STDOUT_FILENO, "%s=%s\n", ((t_db*)ptr->content)->key
-					, ((t_db*)ptr->content)->value); //ADD FT_
+					, ((t_db*)ptr->content)->value);
 		}
 		ptr = ptr->next;
 	}

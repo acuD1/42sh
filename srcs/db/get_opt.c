@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 16:34:39 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/03 17:24:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 01:24:45 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	opt_c(int ac, char **av, t_core *shell)
 	quit_shell(shell, EXIT_SUCCESS, FALSE);
 }
 
-void	get_opt(int ac, char **av, t_core *shell)
+void		get_opt(int ac, char **av, t_core *shell)
 {
 	static void	(*shell_opt[3])() = {opt_v, opt_h, opt_c};
 	size_t		i;
@@ -62,8 +62,8 @@ void	get_opt(int ac, char **av, t_core *shell)
 	if (!av[1])
 		return ;
 	shell->mode |= OPT_MODE;
-	opt = get_options(ac, av, SHELL_OPT);
-	if (opt & OPT_ERROR)
+	opt = ft_get_options(ac, av, SHELL_OPT);
+	if (opt & (1ULL << 63))
 	{
 		print_shell_usage(opt % 128, STDERR_FILENO);
 		quit_shell(shell, EXIT_FAILURE, FALSE);
