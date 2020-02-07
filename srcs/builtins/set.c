@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 22:37:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 01:20:28 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:22:05 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void		print_internal_vars(t_core *shell)
 	}
 }
 
-static int8_t	new_positional_var(t_core *shell, char *arg, int count)
+static int8_t	new_positional_var(t_core *shell, const char *arg, int count)
 {
 	shell->db.key = ft_itoa(count);
 	shell->db.value = ft_strdup(arg);

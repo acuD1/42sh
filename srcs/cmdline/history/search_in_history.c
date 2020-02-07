@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 01:24:19 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:35:42 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static void		goto_reverse(t_read *term, char *buff_tmp, int8_t mode)
+static void		goto_reverse(t_read *term, const char *buff_tmp, int8_t mode)
 {
 	goto_prompt(term);
 	xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
@@ -23,7 +23,8 @@ static void		goto_reverse(t_read *term, char *buff_tmp, int8_t mode)
 		ft_dprintf(STDIN_FILENO, "(failed reverse-i-search)`%s': ", buff_tmp);
 }
 
-static void		walking_history(char *buff_tmp, t_read *term, t_lst **history)
+static void		walking_history
+	(const char *buff_tmp, t_read *term, t_lst **history)
 {
 	while ((*history)->next && *buff_tmp)
 	{
@@ -42,7 +43,7 @@ static void		walking_history(char *buff_tmp, t_read *term, t_lst **history)
 	goto_reverse(term, buff_tmp, FAILURE);
 }
 
-static int8_t	insert_in_search(t_read *term, int64_t *i, char buff[])
+static int8_t	insert_in_search(t_read *term, int64_t *i, const char buff[])
 {
 	u_int64_t	value;
 

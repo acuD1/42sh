@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 01:23:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:04:40 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		parse_env(char **prev_b, char *to_find, t_read *term)
+void		parse_env(char **prev_b, const char *to_find, t_read *term)
 {
 	t_lst	*env;
 	t_lst	*head;
@@ -44,7 +44,7 @@ void		parse_env(char **prev_b, char *to_find, t_read *term)
 **		Split all bin/sbin directories in an array
 */
 
-char		**split_path(t_core *shell, char *str)
+char		**split_path(t_core *shell, const char *str)
 {
 	char	**array;
 	t_lst	*env;

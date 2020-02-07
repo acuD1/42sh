@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/06 22:24:59 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:17:20 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void		move_key_up(t_read *term)
 **		Arrow right to move the cursor one char on the right
 */
 
-void		move_right(char *buff, t_read *term)
+void		move_right(const char *buff, t_read *term)
 {
 	int		width;
 	int		buff_index;
@@ -119,7 +119,7 @@ void		move_right(char *buff, t_read *term)
 **		Arrow left to move the cursor one char on the left
 */
 
-void		move_left(char *buff, t_read *term)
+void		move_left(const char *buff, t_read *term)
 {
 	int		width;
 

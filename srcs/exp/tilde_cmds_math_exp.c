@@ -6,27 +6,27 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:16:13 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:22:36 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:26:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char		*no_exp(char *data, t_core *shell)
+char	*no_exp(const char *data, t_core *shell)
 {
 	(void)shell;
 	(void)data;
 	return (NULL);
 }
 
-char		*exp_math(char *data, t_core *shell)
+char	*exp_math(const char *data, t_core *shell)
 {
 	(void)shell;
 	(void)data;
 	return (NULL);
 }
 
-char		*exp_tilde(char *data, t_core *shell)
+char	*exp_tilde(const char *data, t_core *shell)
 {
 	t_db	*db_tmp;
 	char	*path[3];
@@ -50,7 +50,7 @@ char		*exp_tilde(char *data, t_core *shell)
 	return (NULL);
 }
 
-char		*exp_cmd_subs(char *data, t_core *shell)
+char	*exp_cmd_subs(const char *data, t_core *shell)
 {
 	(void)data;
 	(void)shell;

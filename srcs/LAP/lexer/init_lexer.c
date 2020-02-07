@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 17:21:39 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:42:25 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:51:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		init_lexer(char *line, t_lexer *new)
 	ft_init_lex(new);
 }
 
-t_token		*fetch_token(t_token *token, enum e_pstate type, char *data)
+t_token		*fetch_token(t_token *token, enum e_pstate type, const char *data)
 {
 	t_token	*new;
 

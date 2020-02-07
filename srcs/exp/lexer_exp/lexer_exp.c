@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:45:32 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/06 22:41:10 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:25:56 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char			*new_exp(char *string, enum e_estate id)
+static char		*new_exp(const char *string, enum e_estate id)
 {
 	int					i;
 	char				*new;
@@ -40,7 +40,7 @@ char			*new_exp(char *string, enum e_estate id)
 	return (NULL);
 }
 
-enum e_estate	find_expansion(char *str)
+enum e_estate	find_expansion(const char *str)
 {
 	int					i;
 	const t_exp_token	exp[] = {
@@ -66,7 +66,7 @@ enum e_estate	find_expansion(char *str)
 	return (NB_EXPANSION_STATE);
 }
 
-char			*get_expansion(char *string, enum e_estate state)
+char			*get_expansion(const char *string, enum e_estate state)
 {
 	char	*new;
 

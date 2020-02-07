@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/06 22:40:22 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:33:25 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ u_int8_t	is_expansion(enum e_estate id)
 	return (0);
 }
 
-int			expelliarmus(char *src, int *index, char **dst, t_core *shell)
+int			expelliarmus(const char *src, int *index, char **dst, t_core *shell)
 {
 	t_expansion		toto;
 	enum e_estate	state;

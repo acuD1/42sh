@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 19:35:57 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/04 19:35:59 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:47:24 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static enum e_estate	gla_quote(char *str, int *j, enum e_estate state)
+static enum e_estate	gla_quote(const char *str, int *j, enum e_estate state)
 {
 	if ((str[*j] == '\"' && state == E_QUOTE)
 		|| (str[*j] == '\'' && state == E_DBQUOTE))
@@ -68,7 +68,7 @@ static char				*quote_mechanisms(char *str)
 	return (new);
 }
 
-char					*do_exp_et_quote(t_core *shell, char *data)
+char					*do_exp_et_quote(t_core *shell, const char *data)
 {
 	char	*exp;
 	char	*unquoted;
@@ -96,7 +96,7 @@ void					init_expansionat(t_expansion *exp)
 	exp->sionat[9] = infinite_expansion;
 }
 
-char					*do_expansion(t_core *shell, char *data)
+char					*do_expansion(t_core *shell, const char *data)
 {
 	char		*res;
 	t_expansion	exp;

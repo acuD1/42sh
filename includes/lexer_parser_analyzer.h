@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 16:53:44 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/07 01:50:35 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:03:51 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_analyzer	*job_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer	*process_word_analyze(t_analyzer *anal);
 void		free_process_list(t_lst **head);
 char		*fill_cmd_job(t_lst *tok_lst, char *cmd);
-char		**ft_add_arg_cmd_process(char **tablo, char *str);
+char		**ft_add_arg_cmd_process(char **tablo, const char *str);
 
 /*
 **	PARSER
@@ -70,7 +70,7 @@ t_lst		*number_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst		*assignement_word_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst		*operator_lexer(t_lexer *lexer, t_lst *lexer_token);
 void		init_lexer(char *line, t_lexer *new);
-t_token		*fetch_token(t_token *token, enum e_pstate type, char *data);
+t_token		*fetch_token(t_token *token, enum e_pstate type, const char *data);
 void		ft_freejoblist(t_lst **lst);
 void		ft_freetokenlist(t_lst **lst);
 

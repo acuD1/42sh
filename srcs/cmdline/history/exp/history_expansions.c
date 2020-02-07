@@ -6,22 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 01:24:32 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:58:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "sh42.h"
-
-int8_t	debugo(const char *path, t_read *in, char *str, char *tmp)
-{
-	int		fd;
-
-	if ((fd = open(path, O_WRONLY)) < 0)
-		return (-1);
-	dprintf(fd, "buffer (%s) tmp \"%s\" tmp_first[%s]\n", in->buffer, str, tmp);
-	return (1);
-}
 
 /*
 **		"!word" expansion search the word to find from the end of hst lst

@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:45:53 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/03 17:53:38 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:50:04 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int		isvalid_assignement_word(char *str, size_t index)
+static int		isvalid_assignement_word(const char *str, size_t index)
 {
 	int		i;
 

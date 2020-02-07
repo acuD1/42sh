@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_updates.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 21:06:15 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:25:31 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int8_t	update_last_arg(t_core *shell, char **argv)
 	return (FAILURE);
 }
 
-int8_t	update_oldpwd(t_core *shell, char *oldpwd)
+int8_t	update_oldpwd(t_core *shell, const char *oldpwd)
 {
 	t_db	*db;
 	char	*value;

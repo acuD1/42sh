@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 00:18:54 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 02:10:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:07:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "sys/stat.h"
 #include "errno.h"
 
-static int8_t	access_file(char *path, int mode)
+static int8_t	access_file(const char *path, int mode)
 {
 	struct stat	file;
 
@@ -27,10 +27,10 @@ static int8_t	access_file(char *path, int mode)
 	return (EACCES);
 }
 
-static int32_t	dir_depth(char *path, char *buffer, int depth)
+static int32_t	dir_depth(const char *path, char *buffer, int depth)
 {
-	char	*ptr;
-	int		i;
+	const char	*ptr;
+	int			i;
 
 	i = 0;
 	ptr = path;
@@ -51,7 +51,7 @@ static int32_t	dir_depth(char *path, char *buffer, int depth)
 	return (ft_strlen(buffer));
 }
 
-int8_t			ft_access(char *path, int mode)
+int8_t			ft_access(const char *path, int mode)
 {
 	char	buffer[MAX_PATH + 1];
 	int		path_len;

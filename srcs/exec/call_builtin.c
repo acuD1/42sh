@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 00:24:24 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/06 19:09:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:24:47 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t	is_a_blt(char *cmd)
+int8_t	is_a_blt(const char *cmd)
 {
 	static char	*blt_names[14] = {"set", "unset", "export", "exit", "cd"
 	, "echo", "pwd", "type", "fg", "jobs", "bg", "hash", "fc", "test"};

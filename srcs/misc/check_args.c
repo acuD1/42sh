@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 03:57:59 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/28 20:54:02 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:06:24 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int		check_invalid_identifiers(char *arg, char *exceptions)
+int		check_invalid_identifiers(const char *arg, const char *exceptions)
 {
 	int		i;
 

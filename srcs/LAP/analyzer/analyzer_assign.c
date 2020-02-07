@@ -6,19 +6,19 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:53:37 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/06 22:45:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:28:16 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		init_assign(t_db *db)
+void				init_assign(t_db *db)
 {
 	db->key = NULL;
 	db->value = NULL;
 }
 
-t_analyzer	*ass_analyze(t_analyzer *anal)
+static t_analyzer	*ass_analyze(t_analyzer *anal)
 {
 	int		i;
 	int		j;
@@ -42,7 +42,7 @@ t_analyzer	*ass_analyze(t_analyzer *anal)
 	return (anal);
 }
 
-t_analyzer	*assign_analyze(t_analyzer *anal, t_core *shell)
+t_analyzer			*assign_analyze(t_analyzer *anal, t_core *shell)
 {
 	char	*tmp;
 

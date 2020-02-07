@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 01:20:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:21:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	print_longjob(t_job *job)
 	}
 }
 
-static void	print_job(t_job *job, uint64_t opt, char *name)
+static void	print_job(t_job *job, uint64_t opt, const char *name)
 {
 	if (!job)
 	{

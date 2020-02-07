@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:02:32 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 02:10:15 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:05:46 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int8_t	dir_forward(char *path)
 	return (SUCCESS);
 }
 
-static int8_t	dir_write(char *rel, char *abs)
+static int8_t	dir_write(const char *rel, char *abs)
 {
 	int		i;
 	int		j;
@@ -68,7 +68,7 @@ static int8_t	dir_write(char *rel, char *abs)
 **	Check if distance between two '/' is <= 255 and is canonical path <= 1024
 */
 
-static int8_t	check_filename_length(char *str)
+static int8_t	check_filename_length(const char *str)
 {
 	int		filename;
 	int		i;
@@ -92,7 +92,7 @@ static int8_t	check_filename_length(char *str)
 **	.././bar to /foo/bar etc.
 */
 
-int8_t			get_canonical_path(char *path, char *abs)
+int8_t			get_canonical_path(const char *path, char *abs)
 {
 	char	rel[MAX_PATH + 1];
 

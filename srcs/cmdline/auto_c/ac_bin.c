@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 01:22:42 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:16:10 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** 	Function to save in buffer the current bin found at buffer[0]
 */
 
-static void		insert_bin_in_buffer(char *d_name, t_read *term)
+static void		insert_bin_in_buffer(const char *d_name, t_read *term)
 {
 	int		i;
 	int		buf_index;
@@ -38,7 +38,7 @@ static void		insert_bin_in_buffer(char *d_name, t_read *term)
 ** 	Return true if another tab key is pressed or no match found
 */
 
-static u_int8_t	not_found(char *name, char *to_find, t_read *term)
+static u_int8_t	not_found(const char *name, const char *to_find, t_read *term)
 {
 	u_int64_t	value;
 	char		buff[READ_SIZE + 1];
@@ -70,7 +70,7 @@ static u_int8_t	not_found(char *name, char *to_find, t_read *term)
 ** 	Check if an exe bin already exists with the curr buffer inserted
 */
 
-void			to_complete_bin(char *to_find, t_read *term)
+void			to_complete_bin(const char *to_find, t_read *term)
 {
 	struct dirent	*data;
 	DIR				*dir;

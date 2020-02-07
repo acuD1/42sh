@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   assign_redir_tok_exp.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:47:03 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/04 20:47:06 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:22:30 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t		add_assign_env(t_core *shell, char *key, char *value)
+static int8_t	add_assign_env(t_core *shell, const char *key, char *value)
 {
 	if (!key || !shell->env)
 		return (FAILURE);
@@ -21,7 +21,7 @@ int8_t		add_assign_env(t_core *shell, char *key, char *value)
 	return (TRUE);
 }
 
-void		add_assign_envp(char *key, char *value, char ***envp)
+static void		add_assign_envp(const char *key, char *value, char ***envp)
 {
 	char	*tmp;
 	char	**tablo;
@@ -35,7 +35,7 @@ void		add_assign_envp(char *key, char *value, char ***envp)
 	ft_strdel(&tmp);
 }
 
-void		expansion_assign(t_core *shell, t_process *process)
+void			expansion_assign(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
 	t_lst	*tmp;
@@ -60,7 +60,7 @@ void		expansion_assign(t_core *shell, t_process *process)
 	}
 }
 
-void		expansion_redir(t_core *shell, t_process *process)
+void			expansion_redir(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
 	char	*res;
@@ -82,7 +82,7 @@ void		expansion_redir(t_core *shell, t_process *process)
 	}
 }
 
-void		expansion_tok(t_core *shell, t_process *process)
+void			expansion_tok(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
 	char	*res;

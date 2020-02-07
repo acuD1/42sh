@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/28 19:01:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:29:37 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	Function inside the fork where env is created, redirections
 */
 
-static int8_t	check_filepath(char *filepath)
+static int8_t	check_filepath(const char *filepath)
 {
 	int			ret;
 

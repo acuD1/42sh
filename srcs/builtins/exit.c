@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 23:42:04 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/06 22:49:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:09:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int8_t	ft_atol(char *s, int64_t *result)
+static int8_t	ft_atol(const char *s, int64_t *result)
 {
 	size_t	i;
 	int8_t	sign;

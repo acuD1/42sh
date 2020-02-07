@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:27:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 01:23:17 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:07:01 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <dirent.h>
 #include "sh42.h"
 
-static u_int8_t	is_exe(char *dir)
+static u_int8_t	is_exe(const char *dir)
 {
 	struct stat	buff;
 
@@ -27,7 +27,7 @@ static u_int8_t	is_exe(char *dir)
 		return (FALSE);
 }
 
-static u_int8_t	ac_dir(t_read *term, char *dir, char *to_find)
+static u_int8_t	ac_dir(t_read *term, char *dir, const char *to_find)
 {
 	char	*tmp;
 
@@ -51,7 +51,7 @@ static u_int8_t	ac_dir(t_read *term, char *dir, char *to_find)
 		return (FAILURE);
 }
 
-void			read_directories(char *to_find, t_read *term)
+void			read_directories(const char *to_find, t_read *term)
 {
 	struct dirent	*data;
 	DIR				*dir;

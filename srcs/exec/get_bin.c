@@ -6,14 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/28 19:02:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:29:08 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
 #include "sh42.h"
 
-static int8_t	check_filepath(char *filepath)
+static int8_t	check_filepath(const char *filepath)
 {
 	int		ret;
 
@@ -24,7 +24,7 @@ static int8_t	check_filepath(char *filepath)
 	return (SUCCESS);
 }
 
-static int8_t	format_path(char *path, t_process *process)
+static int8_t	format_path(const char *path, t_process *process)
 {
 	char	*tmp;
 	int		i;

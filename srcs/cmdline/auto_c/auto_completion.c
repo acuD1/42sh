@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 01:24:02 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:02:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **		Termcaps `clr_end' => clear from the cursor to the end of the line
 */
 
-void		delete_last_cmd(char *d_name, t_read *term)
+void		delete_last_cmd(const char *d_name, t_read *term)
 {
 	int		i;
 	char	*tmp;
@@ -34,7 +34,7 @@ void		delete_last_cmd(char *d_name, t_read *term)
 	ft_strdel(&tmp);
 }
 
-u_int8_t	is_dir(char *dir)
+u_int8_t	is_dir(const char *dir)
 {
 	struct stat	buf;
 	char		*tmp;

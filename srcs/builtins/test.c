@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 17:50:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 01:20:55 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:22:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 	return (SUCCESS);
 }
 
-static int8_t	comp_tests(char *s1, char *s2, int opt)
+static int8_t	comp_tests(const char *s1, const char *s2, int opt)
 {
 	int	n1;
 	int	n2;

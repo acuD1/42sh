@@ -6,14 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 02:10:46 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:09:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
 #include "sh42.h"
 
-static int8_t	cd_check_path(char *path)
+static int8_t	cd_check_path(const char *path)
 {
 	int		errnum;
 
@@ -26,7 +26,7 @@ static int8_t	cd_check_path(char *path)
 	return (errnum);
 }
 
-static int8_t	change_dir(t_core *shell, char *path)
+static int8_t	change_dir(t_core *shell, const char *path)
 {
 	char	buffer[MAX_PATH + 1];
 	char	oldpwd[MAX_PATH + 1];
@@ -82,5 +82,4 @@ int8_t			builtin_cd(t_core *shell, t_process *process)
 	if (ft_strcmp(process->av[1], "-") == 0)
 		return (cd_oldpwd(shell));
 	return (change_dir(shell, process->av[1]));
-	return (SUCCESS);
 }

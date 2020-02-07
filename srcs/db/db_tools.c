@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   db_tools.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 18:21:41 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 16:47:55 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:18:57 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_db	*modify_db(t_db *db, char *new_value, u_int8_t new_type)
 **	to the t_db or create it if not existing. (variant of search_db function)
 */
 
-t_db	*get_or_create_db(t_core *shell, char *key, u_int8_t var_type)
+t_db	*get_or_create_db(t_core *shell, const char *key, u_int8_t var_type)
 {
 	t_db	*db;
 
@@ -58,7 +58,7 @@ t_db	*get_or_create_db(t_core *shell, char *key, u_int8_t var_type)
 **	to the t_db or NULL ifnot existing
 */
 
-t_db	*search_db(t_lst *env, char *key)
+t_db	*search_db(t_lst *env, const char *key)
 {
 	t_db	*db;
 
@@ -77,7 +77,7 @@ t_db	*search_db(t_lst *env, char *key)
 **	Delete the variable corresponding to the key
 */
 
-int8_t	del_db(t_core *shell, char *key)
+int8_t	del_db(t_core *shell, const char *key)
 {
 	t_lst	*prev;
 	t_lst	*env;
@@ -103,7 +103,8 @@ int8_t	del_db(t_core *shell, char *key)
 	return (FAILURE);
 }
 
-int8_t	edit_var(t_core *shell, char *name, char *value, u_int8_t var_type)
+int8_t	edit_var
+	(t_core *shell, const char *name, char *value, u_int8_t var_type)
 {
 	t_db	*db;
 

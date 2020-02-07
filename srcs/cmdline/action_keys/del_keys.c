@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 01:59:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:20:52 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		del_key(t_read *term)
 **	Call del_key function to delete char from cursor position
 */
 
-void		bs_key(char *buf, t_read *term)
+void		bs_key(const char *buf, t_read *term)
 {
 	if ((term->y > 0 && term->x >= 0) || term->x > term->prompt_len)
 	{

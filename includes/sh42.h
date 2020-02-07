@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/07 02:11:17 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:20:01 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,14 @@ void		reset_hash(t_hash *hash);
 */
 
 int8_t		set_env(t_core *shell, char **argv, char **environ);
-int8_t		del_db(t_core *shell, char *key);
+int8_t		del_db(t_core *shell, const char *key);
 int8_t		init_shell(t_core *shell, char **av, char **environ);
-t_db		*fetch_db(t_db *db, const char *s, const u_int8_t var_type);
+t_db		*fetch_db(t_db *db, const char *s, const u_int8_t v_type);
 t_db		*modify_db(t_db	*db, char *new_value, u_int8_t new_type);
-t_db		*get_or_create_db(t_core *shell, char *key, u_int8_t var_type);
-t_db		*search_db(t_lst *env, char *key);
-int8_t		edit_var(t_core *shell, char *name, char *value, u_int8_t var_type);
+t_db		*get_or_create_db(t_core *shell, const char *key, u_int8_t v_type);
+t_db		*search_db(t_lst *env, const char *key);
+int8_t		edit_var
+				(t_core *shell, const char *name, char *value, u_int8_t v_type);
 
 /*
 **	===========================================================================
@@ -72,7 +73,7 @@ void		exec_process
 				(t_core *shell, t_job *job, t_process *process, int *fds);
 int8_t		call_bin(t_core *shell, t_process *process);
 int8_t		task_master(t_core *shell);
-int8_t		is_a_blt(char *cmd);
+int8_t		is_a_blt(const char *cmd);
 int8_t		get_bin(t_core *shell, t_process *process);
 char		**set_envp(t_core *shell);
 void		status_handler(t_core *shell, int status);
@@ -109,16 +110,16 @@ void		hash_error(t_hash *hash);
 */
 
 t_core		*get_core(t_core *core);
-int8_t		get_canonical_path(char *path, char *buffer);
-void		ft_perror(const char *s, const char *name, const int errnum);
-int8_t		ft_access(char *path, int mode);
+int8_t		get_canonical_path(const char *path, char *buffer);
+void		ft_perror(const char *s, const char *name, int errnum);
+int8_t		ft_access(const char *path, int mode);
 int8_t		is_a_dir(const char *path);
-void		print_usage(char *name, int c, char *usage);
+void		print_usage(const char *name, int c, const char *usage);
 void		quit_shell(t_core *shell, int exit_value, int8_t v);
-void		print_and_quit(t_core *shell, char *message);
-int			check_invalid_identifiers(char *arg, char *exceptions);
+void		print_and_quit(t_core *shell, const char *message);
+int			check_invalid_identifiers(const char *arg, const char *exceptions);
 char		*signal_msg(int sig);
-int8_t		path_tests(char *path, int opt);
+int8_t		path_tests(const char *path, int opt);
 
 /*
 **	===========================================================================
@@ -144,7 +145,7 @@ int8_t		update_backgroud_pid(t_core *shell);
 int8_t		update_ps1(t_core *shell);
 int8_t		update_ps2(t_core *shell);
 int8_t		update_last_arg(t_core *shell, char **argv);
-int8_t		update_oldpwd(t_core *shell, char *oldpwd);
+int8_t		update_oldpwd(t_core *shell, const char *oldpwd);
 
 /*
 **	===========================================================================

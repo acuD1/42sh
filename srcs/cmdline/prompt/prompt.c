@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/06 22:34:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:32:58 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void			display_prompt(t_read *term)
 **	  The current buffer is saved in a history list
 */
 
-int8_t			end_of_file(t_core *shell, char *buff)
+static int8_t	end_of_file(t_core *shell, const char *buff)
 {
 	if (!*(shell->term).buffer && get_mask(buff) == CTRL_D)
 	{
@@ -71,7 +71,7 @@ int8_t			end_of_file(t_core *shell, char *buff)
 	return (FALSE);
 }
 
-void			get_prompt_value(t_core *shell, char *key)
+void			get_prompt_value(t_core *shell, const char *key)
 {
 	t_db	*db;
 

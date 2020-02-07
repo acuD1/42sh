@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 01:19:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:11:07 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ static int8_t	parse_export(int argc, char **argv)
 	return (SUCCESS);
 }
 
-static void		export_hash_handler(t_core *shell, char *str)
+static void		export_hash_handler(t_core *shell, const char *str)
 {
 	if (ft_strequ(str, "PATH") == TRUE)
 		free_hash_map(&shell->hash);
 }
 
-static int8_t	export(t_core *shell, char *arg, int *ret)
+static int8_t	export(t_core *shell, const char *arg, int *ret)
 {
 	t_db	*db;
 	char	*str;

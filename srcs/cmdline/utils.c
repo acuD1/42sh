@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/30 19:08:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:28:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ u_int8_t	get_width_current_line(t_read *term)
 	return (width);
 }
 
-u_int64_t	get_mask(char *buff)
+u_int64_t	get_mask(const char *buff)
 {
 	u_int16_t	i;
 	u_int16_t	shift;

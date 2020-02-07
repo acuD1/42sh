@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   path_tests.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 20:12:52 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/30 20:12:53 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/07 04:23:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/stat.h>
 #include "sh42.h"
 
-static int8_t	other_tests(char *path, int opt, struct stat buf)
+static int8_t	other_tests(const char *path, int opt, struct stat buf)
 {
 	if (opt == R_UNATEST)
 		return ((buf.st_mode & S_IRUSR) ^ 1);
@@ -30,7 +30,7 @@ static int8_t	other_tests(char *path, int opt, struct stat buf)
 	return ((path[0] == 0) ? 0 : 1);
 }
 
-int8_t			path_tests(char *path, int opt)
+int8_t			path_tests(const char *path, int opt)
 {
 	struct stat	buf;
 	char		buffer[MAX_PATH + 1];

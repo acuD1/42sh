@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:16:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:21:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:32:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static char	*get_brace_param(char *str)
+static char	*get_brace_param(const char *str)
 {
 	int		i;
 	char	*tmp;
@@ -29,7 +29,7 @@ static char	*get_brace_param(char *str)
 	return (tmp);
 }
 
-char		*exp_param(char *data, t_core *shell)
+char		*exp_param(const char *data, t_core *shell)
 {
 	t_db	*db_tmp;
 	char	*tmp;

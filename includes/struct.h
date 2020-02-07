@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/06 21:52:26 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:44:05 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ typedef struct				s_cmd
 ** EXP
 */
 
-typedef char				*(*t_exp)(char *, t_core *);
+typedef char				*(*t_exp)(const char *, t_core *);
 
 typedef struct				s_exp_size
 {
@@ -218,7 +218,7 @@ typedef struct				s_exp_token
 
 typedef struct				s_lex_exp
 {
-	char					*(*fct)(char *, int);
+	char					*(*fct)(const char *, int);
 	enum e_estate			id;
 	int						len;
 }							t_lex_exp;

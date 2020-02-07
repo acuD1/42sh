@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:15:08 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/06 22:50:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:31:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			loop_till_next_quote(char *str, int *index, char quote)
+static void		loop_till_next_quote(const char *str, int *index, char quote)
 {
 	if (!str[*index])
 		return ;
@@ -21,7 +21,7 @@ void			loop_till_next_quote(char *str, int *index, char quote)
 		*index += 1;
 }
 
-int				get_word_size_ntype(int i, char *str)
+int				get_word_size_ntype(int i, const char *str)
 {
 	int		index;
 

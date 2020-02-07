@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 01:59:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:18:42 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	move_col_down(t_read *term)
 	}
 }
 
-static void	move_in_column(uint64_t value, t_read *term)
+static void	move_in_column(u_int64_t value, t_read *term)
 {
 	if (value == ALT_AW_UP && term->y > 0)
 		move_col_up(term);
@@ -90,7 +90,7 @@ static void	move_in_column(uint64_t value, t_read *term)
 **	(CTRL+B) to jump one word backward
 */
 
-void		jump_words(char *buff, t_read *term, u_int64_t value)
+void		jump_words(const char *buff, t_read *term, u_int64_t value)
 {
 	if (value == CTRL_F)
 	{

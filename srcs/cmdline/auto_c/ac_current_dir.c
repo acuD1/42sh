@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/06 22:24:30 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:36:12 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** Return only TRUE if tab key is pressed
 */
 
-u_int8_t		is_tab(char *d_name, t_read *term)
+u_int8_t		is_tab(const char *d_name, t_read *term)
 {
 	u_int64_t	value;
 	char		buff[READ_SIZE + 1];
@@ -40,7 +40,7 @@ u_int8_t		is_tab(char *d_name, t_read *term)
 	return (FALSE);
 }
 
-int				is_dot(char *d_name)
+int				is_dot(const char *d_name)
 {
 	if (!ft_strcmp(d_name, "."))
 		return (TRUE);
@@ -49,7 +49,8 @@ int				is_dot(char *d_name)
 	return (FALSE);
 }
 
-static char		*get_current_dir(char *curr_dir, char *tmp_curr, t_read *term)
+static char		*get_current_dir
+	(const char *curr_dir, char *tmp_curr, t_read *term)
 {
 	if (term->ac > 1 && is_dir(curr_dir))
 		ft_strcpy(tmp_curr, curr_dir);
@@ -62,7 +63,8 @@ static char		*get_current_dir(char *curr_dir, char *tmp_curr, t_read *term)
 	return (tmp_curr);
 }
 
-static int8_t	read_curr_dir(t_read *term, char tmp[], char curr[], DIR *dir)
+static int8_t	read_curr_dir
+	(t_read *term, char tmp[], const char curr[], DIR *dir)
 {
 	struct dirent	*data;
 
@@ -94,7 +96,7 @@ static int8_t	read_curr_dir(t_read *term, char tmp[], char curr[], DIR *dir)
 **		Display all files in current directory if no any char is inserted
 */
 
-void			display_current_directory(t_read *term, char *curr_dir)
+void			display_current_directory(t_read *term, const char *curr_dir)
 {
 	DIR		*dir;
 	char	tmp[BUFF_SIZE];

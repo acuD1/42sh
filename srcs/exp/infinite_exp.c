@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   infinite_exp.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:47:24 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/04 20:47:26 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:35:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int		get_quote_flag(char *str, int *index, int *dbquote, int *quote)
+static int	get_quote_flag
+	(const char *str, int *index, int *dbquote, int *quote)
 {
 	if (str[*index] == '\"')
 	{
@@ -31,11 +32,11 @@ static int		get_quote_flag(char *str, int *index, int *dbquote, int *quote)
 	return (1);
 }
 
-void			discard_backslash(char *data, int *i, char **res)
+static void	discard_backslash(const char *data, int *i, char **res)
 {
-	int			backslash_nbr;
-	int			index;
-	char		*tmp;
+	int		backslash_nbr;
+	int		index;
+	char	*tmp;
 
 	index = *i;
 	backslash_nbr = 0;
@@ -54,10 +55,10 @@ void			discard_backslash(char *data, int *i, char **res)
 	}
 }
 
-void			sortilege_dexpansion(char *data,
-	int flag[4], char **res, t_core *shell)
+static void	sortilege_dexpansion
+	(const char *data, int flag[4], char **res, t_core *shell)
 {
-	int			i;
+	int		i;
 
 	i = flag[2];
 	if (data[i] == '$' || data[i] == '~' || data[i] == '`')
@@ -69,7 +70,7 @@ void			sortilege_dexpansion(char *data,
 	flag[2] = i;
 }
 
-void			init_infinite_flags(int flag[4])
+static void	init_infinite_flags(int flag[4])
 {
 	flag[0] = 0;
 	flag[1] = 0;
@@ -77,11 +78,11 @@ void			init_infinite_flags(int flag[4])
 	flag[3] = 1;
 }
 
-char			*infinite_expansion(char *data, t_core *shell)
+char		*infinite_expansion(const char *data, t_core *shell)
 {
-	int			flag[4];
-	char		*res;
-	char		*tmp;
+	int		flag[4];
+	char	*res;
+	char	*tmp;
 
 	init_infinite_flags(flag);
 	tmp = NULL;

@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:46:13 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/06 22:41:51 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 05:34:52 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char			*exp_get_bquote(char *string, int len)
+char			*exp_get_bquote(const char *string, int len)
 {
 	int		i;
 	char	*str;
@@ -38,7 +38,7 @@ char			*exp_get_bquote(char *string, int len)
 	return (NULL);
 }
 
-char			*exp_get_paren(char *string, int len)
+char			*exp_get_paren(const char *string, int len)
 {
 	char	*str;
 	int		index;
@@ -61,7 +61,7 @@ char			*exp_get_paren(char *string, int len)
 	return (NULL);
 }
 
-char			*exp_get_bracket(char *string, int len)
+char			*exp_get_bracket(const char *string, int len)
 {
 	char	*str;
 	int		index;
@@ -81,7 +81,7 @@ char			*exp_get_bracket(char *string, int len)
 	return (NULL);
 }
 
-static int8_t	get_index_expan(char *str)
+static int8_t	get_index_expan(const char *str)
 {
 	int		i;
 
@@ -108,7 +108,7 @@ static int8_t	get_index_expan(char *str)
 	return (i);
 }
 
-char			*exp_get_dollar(char *string, int len)
+char			*exp_get_dollar(const char *string, int len)
 {
 	char	*str;
 	int		index;

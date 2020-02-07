@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/06 21:23:19 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:17:31 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,33 +31,33 @@ int8_t		init_prompt(t_core *shell);
 void		display_prompt(t_read *term);
 void		display_subprompt(t_read *term);
 void		goto_prompt(t_read *term);
-void		get_prompt_value(t_core *shell, char *key);
+void		get_prompt_value(t_core *shell, const char *key);
 
 /*
 **		Check Caps and Interpret
 */
 
-u_int8_t	check_caps(char *buf, t_read *term);
-void		insert_in_buffer(char *buf, t_read *term);
-void		insert_char_in_buffer(char buf, t_read *term, int buf_index);
-void		insert_str_in_buffer(char *d_name, t_read *term);
+u_int8_t	check_caps(const char *buf, t_read *term);
+void		insert_in_buffer(const char *buf, t_read *term);
+void		insert_char_in_buffer(const char buf, t_read *term, int buf_index);
+void		insert_str_in_buffer(const char *d_name, t_read *term);
 
 /*
 **		Cursor Motion
 */
 
-void		move_right(char *buf, t_read *term);
-void		move_left(char *buf, t_read *term);
+void		move_right(const char *buf, t_read *term);
+void		move_left(const char *buf, t_read *term);
 void		move_key_up(t_read *term);
 void		move_key_down(t_read *term);
-void		jump_words(char *buf, t_read *term, uint64_t value);
+void		jump_words(const char *buf, t_read *term, u_int64_t value);
 
 /*
 **		Delete Keys
 */
 
 void		del_key(t_read *term);
-void		bs_key(char *buf, t_read *term);
+void		bs_key(const char *buf, t_read *term);
 void		clr_screen(t_read *term);
 
 /*
@@ -83,23 +83,24 @@ u_int8_t	check_subprompt(t_core *shell);
 u_int8_t	check_backslash(t_read *term, char *quote);
 u_int8_t	charset_count(t_read *term, char charset, int i);
 u_int8_t	quotes_is_matching(t_read *term, char *quote);
-u_int8_t	read_multiline(t_read *term, char sb);
+u_int8_t	read_multiline(t_read *term, const char sb);
 void		load_subprompt(char quote, t_read *term);
-char		*load_heredoc(t_core *shell, char *key);
+char		*load_heredoc(t_core *shell, const char *key);
 
 /*
 **		Auto completion
 */
 
 void		auto_complete_mode(t_read *term);
-void		read_directories(char *to_find, t_read *term);
-void		to_complete_bin(char *to_find, t_read *term);
-void		to_complete_buffer(char *to_find, t_read *term);
-void		display_current_directory(t_read *term, char *dir);
-void		delete_last_cmd(char *d_name, t_read *term);
-void		parse_env(char **prev_b, char *to_find, t_read *term);
-char		**split_path(t_core *shell, char *str);
-uint8_t		read_again(char **prev_b, char *path, char *name, t_read *term);
+void		read_directories(const char *to_find, t_read *term);
+void		to_complete_bin(const char *to_find, t_read *term);
+void		to_complete_buffer(const char *to_find, t_read *term);
+void		display_current_directory(t_read *term, const char *dir);
+void		delete_last_cmd(const char *d_name, t_read *term);
+void		parse_env(char **prev_b, const char *to_find, t_read *term);
+char		**split_path(t_core *shell, const char *str);
+u_int8_t	read_again
+				(char **prev_b, const char *path, char *name, t_read *term);
 
 /*
 **		Utils/Tools
@@ -108,10 +109,10 @@ uint8_t		read_again(char **prev_b, char *path, char *name, t_read *term);
 int			my_outc(int c);
 u_int8_t	get_width_last_line(t_read *term);
 u_int8_t	get_width_current_line(t_read *term);
-u_int64_t	get_mask(char *buff);
-int			is_dot(char *d_name);
-u_int8_t	is_tab(char *d_name, t_read *term);
-u_int8_t	is_dir(char *dir);
+u_int64_t	get_mask(const char *buff);
+int			is_dot(const char *d_name);
+u_int8_t	is_tab(const char *d_name, t_read *term);
+u_int8_t	is_dir(const char *dir);
 u_int8_t	split_cmd(char **to_find, t_read *term);
 
 /*

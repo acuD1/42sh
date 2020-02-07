@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:54:18 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/28 20:40:16 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 06:03:45 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static char	**create_tablo(char *str)
+static char	**create_tablo(const char *str)
 {
 	char	**tablo;
 
@@ -26,7 +26,7 @@ static char	**create_tablo(char *str)
 	return (tablo);
 }
 
-char		**ft_add_arg_cmd_process(char **tablo, char *str)
+char		**ft_add_arg_cmd_process(char **tablo, const char *str)
 {
 	char	**tb;
 	int		j;
