@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh42.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/07 02:11:17 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/08 02:07:14 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,8 +223,7 @@ void		job_background_notif(t_job *job);
 void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
 int8_t		mark_process_status
 				(t_core *shell, t_lst *jobs, pid_t pid, int status);
-int8_t		launch_blt
-				(t_core *shell, t_process *process, int *fds, int foreground);
+int8_t		launch_blt(t_core *shell, t_process *process, int *fds);
 void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
 void		update_status(t_core *shell);
 t_job		*get_job(t_lst *jobs, char *str);
@@ -232,5 +231,6 @@ t_job		*get_job_by_id(t_lst *jobs, int id);
 void		format_job_info(t_job *job);
 int			update_jobs(t_lst *jobs);
 void		attr_jobc_id(t_core *shell, t_job *job);
+int8_t		do_job_notification(t_core *shell, t_lst *job);
 
 #endif

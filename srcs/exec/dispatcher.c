@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dispatcher.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/06 19:10:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/08 02:21:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,6 @@ static void	place_job(t_core *shell, t_job *job, int8_t foreground)
 		wait_for_job(shell, shell->job_list, job);
 	else if (foreground == TRUE && !job_is_stopped(job))
 		put_job_in_foreground(shell, shell->job_list, job, FALSE);
-	else
-	{
-		job->jobc_id = update_jobs(shell->launched_jobs);
-		job_background_notif(job);
-		put_job_in_background(shell, job, FALSE);
-	}
 }
 
 static void	condition_fulfilled(t_lst *process)
@@ -72,6 +66,14 @@ static void	condition_fulfilled(t_lst *process)
 	}
 }
 
+void	wait_for_bg(t_process *process)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = waitpid(process->pid, &status, WUNTRACED);
+}
+
 void		launch_job(t_core *shell, t_job *job, int foreground)
 {
 	t_process	*ptr;
@@ -89,7 +91,7 @@ void		launch_job(t_core *shell, t_job *job, int foreground)
 		expansion(shell, ptr);
 		if (ptr->completed == FALSE)
 		{
-			launch_blt(shell, ptr, fds, foreground);
+			launch_blt(shell, ptr, fds);
 			if (ptr->completed != TRUE)
 				exec_process(shell, job, ptr, fds);
 		}
