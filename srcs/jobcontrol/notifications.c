@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/08 05:11:07 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/08 20:58:44 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void		update_status(t_core *shell)
 	if (!shell->launched_jobs)
 		return ;
 	pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
-	printf("cc %i\n", pid);
 	while (pid > 0
 		&& !mark_process_status(shell, shell->launched_jobs, pid, status))
 	{
