@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/08 02:21:30 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/08 03:57:19 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,6 @@ static void	clean_pipes(int *infile, int *outfile, int *mypipe)
 	mypipe[0] = STDIN_FILENO;
 }
 
-static void	place_job(t_core *shell, t_job *job, int8_t foreground)
-{
-	if (shell->mode & I_MODE && (job_is_completed(job) || job_is_stopped(job)))
-		return ;
-	if (shell->mode & NOI_MODE)
-		wait_for_job(shell, shell->job_list, job);
-	else if (foreground == TRUE && !job_is_stopped(job))
-		put_job_in_foreground(shell, shell->job_list, job, FALSE);
-}
-
 static void	condition_fulfilled(t_lst *process)
 {
 	t_process	*ptr;
@@ -66,14 +56,6 @@ static void	condition_fulfilled(t_lst *process)
 	}
 }
 
-void	wait_for_bg(t_process *process)
-{
-	pid_t	pid;
-	int		status;
-
-	pid = waitpid(process->pid, &status, WUNTRACED);
-}
-
 void		launch_job(t_core *shell, t_job *job, int foreground)
 {
 	t_process	*ptr;
@@ -92,12 +74,11 @@ void		launch_job(t_core *shell, t_job *job, int foreground)
 		if (ptr->completed == FALSE)
 		{
 			launch_blt(shell, ptr, fds);
-			if (ptr->completed != TRUE)
+			if (ptr->completed == FALSE)
 				exec_process(shell, job, ptr, fds);
 		}
 		condition_fulfilled(process);
 		clean_pipes(&fds[0], &fds[1], mypipe);
 		process = process->next;
 	}
-	place_job(shell, job, foreground);
 }

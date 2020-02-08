@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/08 02:30:39 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/08 04:50:13 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	a temporary environnement if we use the env builtin.
 */
 
-static int8_t job_part_completed(t_job *job, t_process *process)
+static int8_t	job_part_completed(t_job *job, t_process *process)
 {
 	t_lst *ptr;
 
@@ -31,7 +31,8 @@ static int8_t job_part_completed(t_job *job, t_process *process)
 	return (TRUE);
 }
 
-static void control_process(t_core *shell, t_job *job, t_process *process, int *fds)
+static void		control_process
+	(t_core *shell, t_job *job, t_process *process, int *fds)
 {
 	if (process->pgid == -1)
 		job->pgid = process->pid;
@@ -41,10 +42,10 @@ static void control_process(t_core *shell, t_job *job, t_process *process, int *
 		if (setpgid(process->pid, process->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: setpgid error\n");
 		if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
-			print_and_quit(shell, "42sh: tcsetpgrp error (1)\n");
+			print_and_quit(shell, "42sh: tcsetpgrp error\n");
 		wait_for_process(shell, shell->job_list, process);
-		if (process->stopped == FALSE && tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
-			print_and_quit(shell, "42sh: tcsetpgrp error (2)\n");
+		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
+			print_and_quit(shell, "42sh: tcsetpgrp error\n");
 	}
 	else if (fds[1] == STDOUT_FILENO)
 		wait_for_process(shell, shell->job_list, process);
@@ -52,7 +53,8 @@ static void control_process(t_core *shell, t_job *job, t_process *process, int *
 		process->stopped = FALSE;
 }
 
-void exec_process(t_core *shell, t_job *job, t_process *process, int *fds)
+void			exec_process
+	(t_core *shell, t_job *job, t_process *process, int *fds)
 {
 	if (job_part_completed(job, process))
 		job->pgid = -1;
@@ -64,7 +66,5 @@ void exec_process(t_core *shell, t_job *job, t_process *process, int *fds)
 	else if (process->pid < 0)
 		print_and_quit(shell, "42sh: fork failure\n");
 	if (shell->mode & I_MODE)
-	{
 		control_process(shell, job, process, fds);
-	}
 }
