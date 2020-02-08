@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/08 04:59:50 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/08 05:37:05 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	cond_test(t_core *shell, t_job *job, int foreground)
 		shell->pgid = getpid();
 		job->pgid = shell->pgid;
 		if (setpgid(shell->pgid, shell->pgid) < 0)
-			print_and_quit(shell, "42sh: Couldn't put the shell in its own process group\n");
+			exit(1);
 		launch_job(shell, job, foreground);
 		exit(0);
 	}
@@ -84,7 +84,7 @@ int8_t		task_master(t_core *shell)
 	{
 		foreground = (((t_job*)job->content)->type == P_AND) ? FALSE : TRUE;
 		next = job->next;
-		cond_test(shell, job->content, foreground);
+		(shell, job->content, foreground);
 		place_job(shell, job->content, foreground);
 		if (job_is_completed(job->content))
 			free_job(shell, job);

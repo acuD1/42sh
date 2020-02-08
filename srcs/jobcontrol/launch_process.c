@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/08 02:06:34 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/08 05:34:09 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	put_process_in_grp(t_core *shell, t_process *process)
 	process->pid = getpid();
 	if (process->pgid == -1)
 		process->pgid = process->pid;
-	if (process->stopped == FALSE && setpgid(process->pid, process->pgid) != SUCCESS)
+	if (process->stopped == FALSE
+	&& setpgid(process->pid, process->pgid) != SUCCESS)
 	{
 		dprintf(STDERR_FILENO, "42sh: setpgid error\n");
 		exit(EXIT_FAILURE);
