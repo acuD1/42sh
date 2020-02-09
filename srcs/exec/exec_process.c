@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/08 21:19:46 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/09 06:01:24 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ static void		control_process
 			print_and_quit(shell, "42sh: tcsetpgrp error\n");
 	}
 	else if (fds[1] == STDOUT_FILENO)
+	{
+		if (setpgid(process->pid, process->pgid) != SUCCESS)
+			print_and_quit(shell, "42sh: setpgid error\n");
 		wait_for_process(shell, shell->job_list, process);
+	}
 	else
 		process->stopped = FALSE;
 }

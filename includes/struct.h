@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/06 21:52:26 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/09 06:11:03 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ struct						s_core
 	t_build					build;
 	t_hash					hash;
 	t_db					db;
-	t_lst					*running_process;
 	t_lst					*env;
 	t_lst					*pos_vars;
 	t_lst					*job_list;

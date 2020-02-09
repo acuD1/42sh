@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 17:50:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 01:20:55 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/09 06:30:09 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 		|| (argc > 3 + diff && ft_is_number(argv[3 + diff]) != 0)))
 	{
 		dprintf(STDERR_FILENO, "42sh: test: %s: integer expression expected\n"
-		, (ft_is_number(argv[1 + diff]) != 0) ? argv[1 + diff] : argv[3 + diff]);
+		, (ft_is_number(argv[1 + diff]) != 0)
+			? argv[1 + diff] : argv[3 + diff]);
 		return (FAILURE);
 	}
 	if ((argc > 4 + diff && *opt > Z_UNATEST)

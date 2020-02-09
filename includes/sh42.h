@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/08 22:06:44 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/09 05:49:11 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,5 +233,6 @@ void		format_job_info(t_job *job);
 int			update_jobs(t_lst *jobs);
 void		attr_jobc_id(t_core *shell, t_job *job);
 int8_t		do_job_notification(t_core *shell, t_lst *job);
+int			cond(t_lst *process);
 
 #endif

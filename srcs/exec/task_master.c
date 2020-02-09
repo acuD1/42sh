@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/08 22:07:06 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/09 06:10:05 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,24 @@ static void	place_job(t_core *shell, t_job *job, int8_t foreground)
 	}
 }
 
+int			cond(t_lst *process)
+{
+	while (process)
+	{
+		if (((t_process*)process->content)->type == P_ANDIF
+			|| ((t_process*)process->content)->type == P_ORIF)
+			return (TRUE);
+		process = process->next;
+	}
+	return (FALSE);
+}
+
 static void	handle_background_job(t_core *shell, t_job *job, int foreground)
 {
 	pid_t	pid;
 
 	pid = -1;
-	if (foreground == FALSE && (pid = fork()) == 0)
+	if (foreground == FALSE && cond(job->process_list) && (pid = fork()) == 0)
 	{
 		shell->pgid = getpid();
 		job->pgid = shell->pgid;
