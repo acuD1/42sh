@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   jobs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 01:20:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/09 04:26:31 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static void	print_longjob(t_job *job)
 		process = ((t_process *)ptr->content);
 		if (ptr == job->process_list)
 			printf("[%d]%c %d %-24s %s\n", job->jobc_id, job->jobc_last
-			, process->pid, signal_msg(process->status), "process->cmd");
+			, process->pid, signal_msg(process->status), process->command);
 		else
 			printf("     %d %24s%s\n", process->pid
-			, signal_msg(process->status), "process->command");
+			, signal_msg(process->status), process->command);
 		ptr = ptr->next;
 	}
 }
@@ -57,7 +57,7 @@ int8_t		builtin_jobs(t_core *shell, t_process *process)
 
 	argc = ft_tablen(process->av);
 	job_list = shell->launched_jobs;
-	i = (process->av[1] && ft_strcmp(process->av[1], "--") == 0) ? 2 : 1;
+	i = skip_opt(process->av) + 1;
 	if (shell->launched_jobs)
 		update_status(shell);
 	if ((opt = ft_get_options(argc, process->av, "lp")) & (1ULL << 63))
