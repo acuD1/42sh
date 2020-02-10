@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/09 06:10:05 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/10 03:25:28 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int8_t		task_master(t_core *shell)
 		else
 			ft_lstappend(&(shell->launched_jobs), job);
 		job = next;
+		if (job && ((t_job*)job->content)->type != P_END)
+			break ;
 	}
 	shell->job_list = NULL;
 	return (SUCCESS);
