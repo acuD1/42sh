@@ -79,7 +79,7 @@ void		analyzer(t_core *shell, t_lst *lexer)
 			[((t_token*)anal->lexer->content)->id](anal, shell);
 		anal->lexer = anal->lexer->next;
 	}
-	free(anal->job.command);
+	free(anal->job.command); // pas sur de ce free mais je le laisse a check plus tard
 	shell->job_list = anal->job_list;
 	free(anal);
 }

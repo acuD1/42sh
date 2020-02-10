@@ -18,7 +18,7 @@ void				init_assign(t_db *db)
 	db->value = NULL;
 }
 
-static t_analyzer	*ass_analyze(t_analyzer *anal)
+static t_analyzer	*split_and_create_assign_token(t_analyzer *anal)
 {
 	int		i;
 	int		j;
@@ -44,14 +44,11 @@ static t_analyzer	*ass_analyze(t_analyzer *anal)
 
 t_analyzer			*assign_analyze(t_analyzer *anal, t_core *shell)
 {
-	char	*tmp;
-
-	tmp = NULL;
 	if (((t_token*)anal->lexer->content)->id == P_ASSIGN
 		&& ((anal->state != A_WORD)))
 	{
 		anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
-		return (anal = ass_analyze(anal));
+		return (anal = split_and_create_assign_token(anal));
 	}
 	else
 	{

@@ -15,7 +15,6 @@
 void		init_process(t_process *new)
 {
 	ft_bzero(new, sizeof(t_process));
-	new->command = NULL;
 	new->type = P_START;
 }
 

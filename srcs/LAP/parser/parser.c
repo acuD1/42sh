@@ -57,7 +57,6 @@ u_int8_t		parser(t_lst *lexer)
 {
 	t_parser	*parser;
 	t_lst		*tok_lst;
-	t_lst		**head;
 
 	parser = NULL;
 	if (!lexer)
@@ -66,16 +65,17 @@ u_int8_t		parser(t_lst *lexer)
 		return (FALSE);
 	parser->state = P_START;
 	tok_lst = lexer;
-	head = &lexer;
 	parser = ft_init_graph(parser);
-	while (((t_token*)tok_lst->content)->id != P_END)
+	while (tok_lst)
 	{
 		if (!(graph(&parser->state, ((t_token*)tok_lst->content)->id,
 			parser->graph[parser->state].good_type)))
+		{
+			ft_printf("42sh: syntax error near unexpected token `%s'\n", ((t_token*)tok_lst->content)->data);
 			return (FALSE);
+		}
 		tok_lst = tok_lst->next;
 	}
-	lexer = *head;
 	free(parser);
 	return (TRUE);
 }

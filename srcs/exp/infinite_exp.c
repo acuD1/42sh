@@ -55,7 +55,7 @@ static void	discard_backslash(const char *data, int *i, char **res)
 	}
 }
 
-static void	sortilege_dexpansion
+static void	check_if_we_shall_exp
 	(const char *data, int flag[4], char **res, t_core *shell)
 {
 	int		i;
@@ -63,7 +63,7 @@ static void	sortilege_dexpansion
 	i = flag[2];
 	if (data[i] == '$' || data[i] == '~' || data[i] == '`')
 	{
-		flag[3] = expelliarmus(data, &i, res, shell);
+		flag[3] = get_exp(data, &i, res, shell);
 		if (!flag[3])
 			i--;
 	}
@@ -92,7 +92,7 @@ char		*infinite_expansion(const char *data, t_core *shell)
 		flag[3] = get_quote_flag(data, &flag[2], &flag[0], &flag[1]);
 		if (!flag[1])
 		{
-			sortilege_dexpansion(data, flag, &res, shell);
+			check_if_we_shall_exp(data, flag, &res, shell);
 			discard_backslash(data, &flag[2], &res);
 		}
 		if (flag[3])

@@ -64,7 +64,7 @@ static void	condition_fulfilled(t_lst *process)
 	else if (cond == P_ORIF && ptr->status != 0)
 		return ;
 	while (process && (ptr = ((t_process*)process->content))
-			&& (ptr->type == cond || ptr->type == P_PIPE))
+			&& (ptr->type == (enum e_pstate)cond || ptr->type == P_PIPE))
 	{
 		((t_process*)process->next->content)->completed = TRUE;
 		((t_process*)process->next->content)->status = 1;

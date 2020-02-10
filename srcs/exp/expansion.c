@@ -37,28 +37,28 @@ u_int8_t	is_expansion(enum e_estate id)
 	return (0);
 }
 
-int			expelliarmus(const char *src, int *index, char **dst, t_core *shell)
+int			get_exp(const char *src, int *index, char **dst, t_core *shell)
 {
-	t_expansion		toto;
+	t_expansion		exp;
 	enum e_estate	state;
-	char			*hetero;
-	char			*trans;
+	char			*exp_tok;
+	char			*exp_res;
 	int				i;
 
-	hetero = NULL;
-	trans = NULL;
+	exp_tok = NULL;
+	exp_res = NULL;
 	state = NB_EXPANSION_STATE;
-	init_expansionat(&toto);
+	init_expansionat(&exp);
 	i = *index;
 	state = find_expansion(&src[i]);
-	toto.erience = is_expansion(state);
-	if ((hetero = get_expansion(&src[i], state)))
+	exp.erience = is_expansion(state);
+	if ((exp_tok = get_expansion(&src[i], state)))
 	{
-		if ((trans = toto.sionat[toto.erience](hetero, shell)))
-			*dst = ft_strjoinf(*dst, trans, 4);
-		*index += ft_strlen(hetero);
+		if ((exp_res = exp.sionat[exp.erience](exp_tok, shell)))
+			*dst = ft_strjoinf(*dst, exp_res, 4);
+		*index += ft_strlen(exp_tok);
+		ft_strdel(&exp_tok);
 		return (0);
-		ft_strdel(&hetero);
 	}
 	return (1);
 }

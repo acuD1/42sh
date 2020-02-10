@@ -12,7 +12,7 @@
 
 #include "sh42.h"
 
-static enum e_estate	gla_quote(const char *str, int *j, enum e_estate state)
+static enum e_estate	skip_quotes(const char *str, int *j, enum e_estate state)
 {
 	if ((str[*j] == '\"' && state == E_QUOTE)
 		|| (str[*j] == '\'' && state == E_DBQUOTE))
@@ -36,7 +36,7 @@ static enum e_estate	gla_quote(const char *str, int *j, enum e_estate state)
 			*j += 1;
 	}
 	if (str[*j] == '\'' || str[*j] == '\"')
-		gla_quote(str, j, state);
+		skip_quotes(str, j, state);
 	return (state);
 }
 
@@ -57,7 +57,7 @@ static char				*quote_mechanisms(char *str)
 	i = 0;
 	while (str[j])
 	{
-		state = gla_quote(str, &j, state);
+		state = skip_quotes(str, &j, state);
 		if (!str[j])
 			break ;
 		new[i] = str[j];
