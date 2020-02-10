@@ -12,7 +12,7 @@
 
 #include "sh42.h"
 
-static int8_t	add_assign_env(t_core *shell, const char *key, char *value)
+int8_t			add_assign_env(t_core *shell, const char *key, char *value)
 {
 	if (!key || !shell->env)
 		return (FAILURE);

@@ -12,10 +12,63 @@
 
 #include "sh42.h"
 
-static char	*get_brace_param(const char *str)
+/*
+*** CE FICHIER N"EST NI NORME NI LEAK_FREE NI FINIT
+*/
+
+char			*error_format_param_exp(char *data)
 {
-	int		i;
-	char	*tmp;
+	dprintf(STDERR_FILENO, "42sh: %s : mauvaise substitution\n", data);
+	return (NULL);
+}
+
+char			*simple_format(char *str, t_core *shell)
+{
+	t_db		*db_tmp;
+	
+	db_tmp = NULL;
+	if ((db_tmp = search_db(shell->env, str)))
+	{
+		ft_strdel(&str);
+		return (ft_strdup(db_tmp->value));
+	}
+	return (NULL);
+}
+
+char			*length_format(char *str, t_core *shell)
+{
+	t_db		*db_tmp;
+	
+	db_tmp = NULL;
+	if (ft_strchr(str, ':') || ft_strchr(str, '%') || ft_strchr(&str[1], '#'))
+		return (error_format_param_exp(str));
+	if ((db_tmp = search_db(shell->env, &str[1])))
+	{
+		ft_strdel(&str);
+		return(ft_itoa(ft_strlen(db_tmp->value)));
+	}
+	return (ft_strdup("0"));
+}
+
+char			*format_supplementaires(char *str, t_core *shell)
+{
+	if (!shell || !str || str[0] == ':' || str[0] == '%' || str[0] == '$')
+		return (error_format_param_exp(str));
+	else if (str[0] == '#')
+		return (length_format(str, shell));
+	else if (ft_strchr(str, ':'))
+		return (moar_format_plz(str, shell));
+	else if ((ft_strchr(str, '%')))
+		return (percent_format(str, shell));
+	else if ((ft_strchr(str, '#')))
+		return (hashtag_format(str, shell));
+	return (simple_format(str, shell));
+}
+
+static char	*get_brace_param(const char *str, t_core *shell)
+{
+	int			i;
+	char		*tmp;
 
 	i = 0;
 	tmp = NULL;
@@ -26,27 +79,20 @@ static char	*get_brace_param(const char *str)
 	}
 	if (!(tmp = ft_strsub(str, 2, i - 2)))
 		return (NULL);
-	return (tmp);
+	return (format_supplementaires(tmp, shell));
 }
 
 char		*exp_param(const char *data, t_core *shell)
 {
-	t_db	*db_tmp;
-	char	*tmp;
-	int		i;
+	char		*tmp;
 
-	i = ft_strlen(data);
 	tmp = NULL;
-	db_tmp = NULL;
 	if (data[0] == '$' && data[1] == '{')
-		tmp = get_brace_param(data);
+		return (tmp = get_brace_param(data, shell));
 	else if (data[0] == '$')
-		tmp = ft_strsub(data, 1, i - 1);
-	if ((db_tmp = search_db(shell->env, tmp)))
 	{
-		free(tmp);
-		return (ft_strdup(db_tmp->value));
+		tmp = ft_strsub(data, 1, ft_strlen(data) - 1);
+		return (simple_format(tmp, shell));
 	}
-	free(tmp);
 	return (NULL);
 }

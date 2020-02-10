@@ -219,6 +219,7 @@ SRC					+=	$(S_PATH)$(EXPANSIONS)do_exp_and_quotes.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)expansion.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)infinite_exp.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)param_expansion.c
+SRC					+=	$(S_PATH)$(EXPANSIONS)param_exp_opt.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)tilde_cmds_math_exp.c
 
 # ?
