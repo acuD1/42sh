@@ -52,16 +52,23 @@ char			*length_format(char *str, t_core *shell)
 
 char			*format_supplementaires(char *str, t_core *shell)
 {
+	int			i;
+
+	i = 0;
 	if (!shell || !str || str[0] == ':' || str[0] == '%' || str[0] == '$')
 		return (error_format_param_exp(str));
-	else if (str[0] == '#')
+	if(str[i] == '#')
 		return (length_format(str, shell));
-	else if (ft_strchr(str, ':'))
-		return (moar_format_plz(str, shell));
-	else if ((ft_strchr(str, '%')))
-		return (percent_format(str, shell));
-	else if ((ft_strchr(str, '#')))
-		return (hashtag_format(str, shell));
+	while (str[i])
+	{
+		if (str[i] == ':')
+			return (moar_format_plz(str, shell));
+		else if (str[i] == '%')
+			return (suffix_format(str, shell));
+		else if (str[i] == '#')
+			return (prefix_format(str, shell));
+		i++;
+	}
 	return (simple_format(str, shell));
 }
 

@@ -58,6 +58,9 @@ char		*fill_cmd_job(t_lst *tok_lst, char *cmd)
 	if (!cmd)
 		cmd = ft_strdup(((t_token*)tok_lst->content)->data);
 	else
+	{
+		cmd = ft_strjoinf(cmd, " ", 1);
 		cmd = ft_strjoinf(cmd, ((t_token*)tok_lst->content)->data, 1);
+	}
 	return (cmd);
 }

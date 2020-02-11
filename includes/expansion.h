@@ -41,8 +41,13 @@ char			*infinite_expansion(const char *data, t_core *shell);
 char			*do_exp_et_quote(t_core *shell, const char *data);
 int				get_word_size_ntype(int i, const char *str);
 char			*moar_format_plz(char *data, t_core *shell);
-char			*percent_format(char *data, t_core *shell);
-char			*hashtag_format(char *data, t_core *shell);
+char			*suffix_format(char *data, t_core *shell);
+char			*prefix_format(char *data, t_core *shell);
 int8_t			add_assign_env(t_core *shell, const char *key, char *value);
 char			*error_format_param_exp(char *data);
+
+
+
+char		*check_env_key(char *key, t_core *shell);
+
 #endif
