@@ -12,32 +12,32 @@
 
 #include "sh42.h"
 
-static enum e_estate	skip_quotes(const char *str, int *j, enum e_estate state)
+static enum e_estate	skip_quotes(const char *str, int *j, enum e_estate st)
 {
-	if (!str || ((str[*j] == '\"' && state == E_QUOTE)
-		|| (str[*j] == '\'' && state == E_DBQUOTE)))
-		return (state);
-	if (str[*j] == '\"' && (state == E_DBQUOTE || state == NB_EXPANSION_STATE))
+	if (!str || ((str[*j] == '\"' && st == E_QUOTE)
+		|| (str[*j] == '\'' && st == E_DBQUOTE)))
+		return (st);
+	if (str[*j] == '\"' && (st == E_DBQUOTE || st == NB_EXPANSION_STATE))
 	{
 		if (str[*j] == '\"')
 			*j += 1;
-		if (state == E_DBQUOTE)
-			state = NB_EXPANSION_STATE;
-		else if (state == NB_EXPANSION_STATE)
-			state = E_DBQUOTE;
+		if (st == E_DBQUOTE)
+			st = NB_EXPANSION_STATE;
+		else if (st == NB_EXPANSION_STATE)
+			st = E_DBQUOTE;
 	}
-	if (str[*j] == '\'' && (state == E_QUOTE || state == NB_EXPANSION_STATE))
+	if (str[*j] == '\'' && (st == E_QUOTE || st == NB_EXPANSION_STATE))
 	{
-		if (state == E_QUOTE)
-			state = NB_EXPANSION_STATE;
-		else if (state == NB_EXPANSION_STATE)
-			state = E_QUOTE;
+		if (st == E_QUOTE)
+			st = NB_EXPANSION_STATE;
+		else if (st == NB_EXPANSION_STATE)
+			st = E_QUOTE;
 		if (str[*j] == '\'')
 			*j += 1;
 	}
 	if (str[*j] == '\'' || str[*j] == '\"')
-		skip_quotes(str, j, state);
-	return (state);
+		skip_quotes(str, j, st);
+	return (st);
 }
 
 static char				*quote_mechanisms(char *str)

@@ -43,7 +43,14 @@ char			*moar_format_plz(char *data, t_core *shell);
 char			*suffix_format(char *data, t_core *shell);
 char			*prefix_format(char *data, t_core *shell);
 int8_t			add_assign_env(t_core *shell, const char *key, char *value);
+
 char			*length_format(char *str, t_core *shell);
 char			*check_env_key(char *key, t_core *shell);
-
+char			*questionmark_format(char **tablo, t_core *shell);
+char			*error_moar_format_third(char **tablo, char *data);
+char			*check_env_key(char *key, t_core *shell);
+char 			*double_two_point_param(char **tablo, t_core *shell);
+char 			*error_moar_format_bis(char *data);
+char			*error_moar_format_param(char **tablo, char *data);
+char			*get_two_point_param_exp(char **tablo, t_core *shell);
 #endif

@@ -21,7 +21,7 @@ static void		loop_till_next_quote(const char *str, int *index, char quote)
 		*index += 1;
 }
 
-void		check_all_quotes(char *str, int *index)
+void			check_all_quotes(char *str, int *index)
 {
 	if (str[*index] == '\'')
 		loop_till_next_quote(str, index, '\'');
@@ -33,8 +33,6 @@ void		check_all_quotes(char *str, int *index)
 		loop_till_next_quote(str, index, '}');
 	if (str[*index] == '(')
 		loop_till_next_quote(str, index, ')');
-	// if (str[*index] == '[')
-		// loop_till_next_quote(str, index, ']');
 }
 
 int				get_word_size_ntype(int i, char *str)

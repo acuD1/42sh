@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prefix_suffixe_format.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/11 15:29:47 by guvillat          #+#    #+#             */
+/*   Updated: 2020/02/11 15:29:48 by guvillat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sh42.h"
 
-char 		*smallest_suffix_param(char *value, char *pattern)
+char		*smallest_suffix_param(char *value, char *pattern)
 {
 	int		pattern_size;
 
@@ -27,35 +39,32 @@ char		*suffix_format(char *data, t_core *shell)
 		value = check_env_key(tablo[0], shell);
 		if (!value || !*value)
 		{
-			ft_tabfree(tablo);
-			return (NULL);
+			if (!tablo[1])
+				resultat = ft_strdup(value);
+			else
+				resultat = smallest_suffix_param(value, tablo[1]);
 		}
-		if (!tablo[1])
-			resultat = ft_strdup(value);
-		else
-			resultat = smallest_suffix_param(value, tablo[1]);
 	}
 	ft_strdel(&data);
 	ft_tabfree(tablo);
 	return (resultat);
 }
 
-
 char		*smallest_prefix_param(char *value, char *pattern)
 {
-	int		pattern_size;
+	int		size;
 
-	pattern_size = ft_strlen(pattern);
-	if (ft_strnequ(value, pattern, pattern_size))
-		return (ft_strsub(value, pattern_size, ft_strlen(value) - pattern_size));
+	size = ft_strlen(pattern);
+	if (ft_strnequ(value, pattern, size))
+		return (ft_strsub(value, size, ft_strlen(value) - size));
 	return (ft_strdup(value));
 }
 
 char		*prefix_format(char *data, t_core *shell)
 {
-	char 	*tmp;
-	char 	*value;
-	char 	**tablo;
+	char	*tmp;
+	char	*value;
+	char	**tablo;
 	char	*resultat;
 
 	tmp = NULL;
@@ -66,15 +75,13 @@ char		*prefix_format(char *data, t_core *shell)
 	{
 		tablo = ft_strsplit(data, "#");
 		value = check_env_key(tablo[0], shell);
-		if (!value || !*value)
+		if (value && *value)
 		{
-			ft_tabfree(tablo);
-			return (NULL);
+			if (!tablo[1])
+				resultat = ft_strdup(value);
+			else
+				resultat = smallest_prefix_param(value, tablo[1]);
 		}
-		if (!tablo[1])
-			resultat = ft_strdup(value);
-		else
-			resultat = smallest_prefix_param(value, tablo[1]);
 	}
 	ft_strdel(&data);
 	ft_tabfree(tablo);

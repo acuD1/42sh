@@ -25,7 +25,8 @@ static t_analyzer	*split_and_create_assign_token(t_analyzer *anal)
 
 	i = 0;
 	j = 0;
-	anal->db = fetch_db(&anal->db,((t_token*)anal->lexer->content)->data, ENV_VAR)
+	anal->db = *fetch_db(&anal->db,
+		((t_token*)anal->lexer->content)->data, ENV_VAR);
 	ft_lstappend(&anal->process.assign_list,
 		ft_lstnew(&anal->db, sizeof(t_db)));
 	init_assign(&anal->db);

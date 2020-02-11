@@ -71,7 +71,8 @@ u_int8_t		parser(t_lst *lexer)
 		if (!(graph(&parser->state, ((t_token*)tok_lst->content)->id,
 			parser->graph[parser->state].good_type)))
 		{
-			ft_printf("42sh: syntax error near unexpected token `%s'\n", ((t_token*)tok_lst->content)->data);
+			ft_printf("42sh: syntax error near unexpected token `%s'\n",
+				((t_token*)tok_lst->content)->data);
 			return (FALSE);
 		}
 		tok_lst = tok_lst->next;

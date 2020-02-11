@@ -12,10 +12,10 @@
 
 #include "sh42.h"
 
-char		*moar_format_plz(char *data, t_core *shell)
+char			*moar_format_plz(char *data, t_core *shell)
 {
-	char	**tablo;
-	int		tablen;
+	char		**tablo;
+	int			tablen;
 
 	tablo = NULL;
 	tablen = 0;
@@ -26,12 +26,12 @@ char		*moar_format_plz(char *data, t_core *shell)
 		tablen = ft_tablen(tablo);
 		if (tablen > 3)
 			return (error_moar_format_param(tablo, data));
-		else if	(tablen == 3)
+		else if (tablen == 3)
 		{
 			if (ft_strisdigit(tablo[1]) && ft_strisdigit(tablo[2]))
 				return (double_two_point_param(tablo, shell));
 		}
-		else if	(tablen == 2)
+		else if (tablen == 2)
 			return (get_two_point_param_exp(tablo, shell));
 	}
 	ft_dprintf(STDERR_FILENO, "42sh: %s : mauvaise substitution\n", tablo[0]);
@@ -42,7 +42,7 @@ char		*moar_format_plz(char *data, t_core *shell)
 char			*simple_format(char *str, t_core *shell)
 {
 	t_db		*db_tmp;
-	
+
 	db_tmp = NULL;
 	if ((db_tmp = search_db(shell->env, str)))
 	{
@@ -62,7 +62,7 @@ char			*format_supplementaires(char *str, t_core *shell)
 		ft_dprintf(STDERR_FILENO, "42sh: %s : mauvaise substitution\n", str);
 		return (NULL);
 	}
-	if(str[i] == '#')
+	if (str[i] == '#')
 		return (length_format(str, shell));
 	while (str[i])
 	{

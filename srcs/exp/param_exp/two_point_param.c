@@ -12,10 +12,10 @@
 
 #include "sh42.h"
 
-char *dash_format(char **tablo, t_core *shell)
+char		*dash_format(char **tablo, t_core *shell)
 {
-	char *value;
-	char *word;
+	char	*value;
+	char	*word;
 
 	word = NULL;
 	value = check_env_key(tablo[0], shell);
@@ -29,10 +29,10 @@ char *dash_format(char **tablo, t_core *shell)
 	return (ft_strdup(word));
 }
 
-char *plus_format(char **tablo, t_core *shell)
+char		*plus_format(char **tablo, t_core *shell)
 {
-	char *value;
-	char *word;
+	char	*value;
+	char	*word;
 
 	word = NULL;
 	value = check_env_key(tablo[0], shell);
@@ -46,10 +46,10 @@ char *plus_format(char **tablo, t_core *shell)
 	return (NULL);
 }
 
-char *egal_format(char **tablo, t_core *shell)
+char		*egal_format(char **tablo, t_core *shell)
 {
-	char *value;
-	char *word;
+	char	*value;
+	char	*word;
 
 	word = NULL;
 	value = check_env_key(tablo[0], shell);
@@ -64,10 +64,10 @@ char *egal_format(char **tablo, t_core *shell)
 	return (word);
 }
 
-char *underniercaspourlaroute(char **tablo, t_core *shell)
+char		*underniercaspourlaroute(char **tablo, t_core *shell)
 {
-	char *value;
-	char *word;
+	char	*value;
+	char	*word;
 
 	value = check_env_key(tablo[0], shell);
 	word = NULL;
@@ -86,7 +86,7 @@ char *underniercaspourlaroute(char **tablo, t_core *shell)
 	return (NULL);
 }
 
-char *get_two_point_param_exp(char **tablo, t_core *shell)
+char		*get_two_point_param_exp(char **tablo, t_core *shell)
 {
 	if (tablo[1][0] == '-')
 		return (dash_format(tablo, shell));
@@ -97,7 +97,7 @@ char *get_two_point_param_exp(char **tablo, t_core *shell)
 	else if (tablo[1][0] == '?')
 		return (questionmark_format(tablo, shell));
 	else
-		return (underniercaspourlaroute(tablo,shell));
+		return (underniercaspourlaroute(tablo, shell));
 	ft_tabfree(tablo);
 	return (NULL);
 }
