@@ -29,13 +29,20 @@ char			*moar_format_plz(char *data, t_core *shell)
 		else if (tablen == 3)
 		{
 			if (ft_strisdigit(tablo[1]) && ft_strisdigit(tablo[2]))
+			{
+				ft_strdel(&data);
 				return (double_two_point_param(tablo, shell));
+			}
 		}
 		else if (tablen == 2)
+		{
+			ft_strdel(&data);
 			return (get_two_point_param_exp(tablo, shell));
+		}
 	}
 	ft_dprintf(STDERR_FILENO, "42sh: %s : mauvaise substitution\n", tablo[0]);
 	ft_tabfree(tablo);
+	ft_strdel(&data);
 	return (NULL);
 }
 

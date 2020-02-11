@@ -55,8 +55,6 @@ void			expansion_assign(t_core *shell, t_process *process)
 			add_assign_envp(((t_db*)lst->content)->key, res, &process->envp);
 		tmp = lst;
 		lst = lst->next;
-		ft_strdel(&((t_db*)tmp->content)->key);
-		ft_strdel(&((t_db*)tmp->content)->value);
 	}
 }
 

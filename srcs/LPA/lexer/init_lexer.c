@@ -39,15 +39,12 @@ void		init_lexer(char *line, t_lexer *new)
 
 t_token		*fetch_token(t_token *token, enum e_pstate type, const char *data)
 {
-	t_token	*new;
-
-	new = token;
-	new->id = type;
-	if (!(new->data = ft_strdup(data)))
-		new->data = NULL;
-	if (new->data)
-		new->len = ft_strlen(new->data);
+	token->id = type;
+	if (!(token->data = ft_strdup(data)))
+		token->data = NULL;
+	if (token->data)
+		token->len = ft_strlen(token->data);
 	else
-		new->len = 0;
-	return (new);
+		token->len = 0;
+	return (token);
 }
