@@ -60,6 +60,7 @@ void		init_ionumber_graph(t_graph *graph);
 **	LEXER
 */
 
+int			get_word_size_ntype(int i, char *str);
 t_lst		*lexer(char *line);
 t_lst		*start_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst		*end_lexer(t_lexer *lexer, t_lst *lexer_token);

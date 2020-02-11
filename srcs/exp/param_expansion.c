@@ -16,12 +16,6 @@
 *** CE FICHIER N"EST NI NORME NI LEAK_FREE NI FINIT
 */
 
-char			*error_format_param_exp(char *data)
-{
-	dprintf(STDERR_FILENO, "42sh: %s : mauvaise substitution\n", data);
-	return (NULL);
-}
-
 char			*simple_format(char *str, t_core *shell)
 {
 	t_db		*db_tmp;
@@ -35,28 +29,16 @@ char			*simple_format(char *str, t_core *shell)
 	return (NULL);
 }
 
-char			*length_format(char *str, t_core *shell)
-{
-	t_db		*db_tmp;
-	
-	db_tmp = NULL;
-	if (ft_strchr(str, ':') || ft_strchr(str, '%') || ft_strchr(&str[1], '#'))
-		return (error_format_param_exp(str));
-	if ((db_tmp = search_db(shell->env, &str[1])))
-	{
-		ft_strdel(&str);
-		return(ft_itoa(ft_strlen(db_tmp->value)));
-	}
-	return (ft_strdup("0"));
-}
-
 char			*format_supplementaires(char *str, t_core *shell)
 {
 	int			i;
 
 	i = 0;
-	if (!shell || !str || str[0] == ':' || str[0] == '%' || str[0] == '$')
-		return (error_format_param_exp(str));
+	if (str[0] == ':' || str[0] == '%' || str[0] == '$')
+	{
+		ft_dprintf(STDERR_FILENO, "42sh: %s : mauvaise substitution\n", str);
+		return (NULL);
+	}
 	if(str[i] == '#')
 		return (length_format(str, shell));
 	while (str[i])

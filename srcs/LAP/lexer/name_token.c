@@ -21,7 +21,23 @@ static void		loop_till_next_quote(const char *str, int *index, char quote)
 		*index += 1;
 }
 
-int				get_word_size_ntype(int i, const char *str)
+void		check_all_quotes(char *str, int *index)
+{
+	if (str[*index] == '\'')
+		loop_till_next_quote(str, index, '\'');
+	if (str[*index] == '`')
+		loop_till_next_quote(str, index, '`');
+	if (str[*index] == '\"')
+		loop_till_next_quote(str, index, '\"');
+	if (str[*index] == '{')
+		loop_till_next_quote(str, index, '}');
+	if (str[*index] == '(')
+		loop_till_next_quote(str, index, ')');
+	// if (str[*index] == '[')
+		// loop_till_next_quote(str, index, ']');
+}
+
+int				get_word_size_ntype(int i, char *str)
 {
 	int		index;
 
@@ -30,12 +46,7 @@ int				get_word_size_ntype(int i, const char *str)
 	index = i;
 	while (str[index] && (!ft_strchr(CHAR_INTERRUPT, str[index])))
 	{
-		if (str[index] == '\'')
-			loop_till_next_quote(str, &index, '\'');
-		if (str[index] == '`')
-			loop_till_next_quote(str, &index, '`');
-		if (str[index] == '\"')
-			loop_till_next_quote(str, &index, '\"');
+		check_all_quotes(str, &index);
 		index++;
 	}
 	return (index);

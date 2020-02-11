@@ -1,61 +1,55 @@
 #include "sh42.h"
 
-char *smallest_suffix_param(char *data, t_core *shell)
+char *smallest_suffix_param(char *value, char *pattern)
 {
-	char *value;
-	char **tablo;
 	int		pattern_size;
 
-	tablo = NULL;
-	pattern_size = 0;
-	tablo = ft_strsplit(data, "%");
-	value = check_env_key(tablo[0], shell);
-	pattern_size = ft_strlen(value) - ft_strlen(tablo[1]);
-	if (ft_strequ(value + pattern_size, tablo[1]))
-	{
-		ft_tabfree(tablo);
+	pattern_size = ft_strlen(value) - ft_strlen(pattern);
+	if (ft_strequ(value + pattern_size, pattern))
 		return (ft_strsub(value, 0, pattern_size));
-	}
-	else
-	{
-		ft_tabfree(tablo);
-		return (ft_strdup(value));
-	}
-	return (NULL);
+	return (ft_strdup(value));
 }
 
-char *largest_suffix_param(char *data, t_core *shell)
+char *largest_suffix_param(char *value, char *pattern)
 {
-	char *value;
-	char **tablo;
-
-	tablo = NULL;
-	tablo = ft_strsplit(data, "%");
-	value = check_env_key(tablo[0], shell);
-	printf("2 suffix key %s value %s\n", tablo[0], value);
+	printf("2 suffix pattern %s value %s\n", pattern, value);
 	return (NULL);
 }
 
 char		*suffix_format(char *data, t_core *shell)
 {
-	//	x=file.c
-	//	affiche du debut jusquau pattern si ca match sinn affiche tout
-		//	echo ${x%.c} => file
-			//	garde le plus petit pattern qui a match
-		//	echo ${x%%.c} => file
-			//	garde le plus grand pattern qui a match
 	char *tmp;
+	char *value;
+	char **tablo;
+	char *resultat;
 
 	tmp = NULL;
+	value = NULL;
+	resultat = NULL;
+	tablo = NULL;
 	if ((tmp = ft_strchr(data, '%')))
 	{
-		if (tmp[0] == '%')
+		tablo = ft_strsplit(data, "%");
+		value = check_env_key(tablo[0], shell);
+		if (!value || !*value)
 		{
-			if (tmp[1] == '%')
-				return (largest_suffix_param(data, shell));
-			else
-				return (smallest_suffix_param(data, shell));
+			ft_tabfree(tablo);
+			return (NULL);
+		}
+		if (!tablo[1])
+			resultat = ft_strdup(value);
+		else
+		{
+			if (tmp[0] == '%')
+			{
+				if (tmp[1] == '%')
+					resultat = largest_suffix_param(value, tablo[1]);
+				else
+					resultat = smallest_suffix_param(value, tablo[1]);
+			}
 		}
 	}
-	return (NULL);
+	ft_strdel(&data);
+	ft_tabfree(tablo);
+	return (resultat);
 }

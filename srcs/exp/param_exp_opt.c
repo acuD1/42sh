@@ -16,6 +16,24 @@
 *** CE FICHIER N"EST NI NORME NI LEAK_FREE NI FINIT
 */
 
+char			*length_format(char *str, t_core *shell)
+{
+	t_db		*db_tmp;
+	
+	db_tmp = NULL;
+	if (ft_strchr(str, ':') || ft_strchr(str, '%') || ft_strchr(&str[1], '#'))
+	{
+		ft_dprintf(STDERR_FILENO, "42sh: %s : mauvaise substitution\n", str);
+		return (NULL);
+	}
+	if ((db_tmp = search_db(shell->env, &str[1])))
+	{
+		ft_strdel(&str);
+		return(ft_itoa(ft_strlen(db_tmp->value)));
+	}
+	return (ft_strdup("0"));
+}
+
 char		*check_env_key(char *key, t_core *shell)
 {
 	t_db *db;
@@ -221,7 +239,7 @@ char		*moar_format_plz(char *data, t_core *shell)
 		else if	(tablen == 2)
 			return (get_two_point_param_exp(tablo, shell));
 	}
-	error_format_param_exp(tablo[0]);
+	ft_dprintf(STDERR_FILENO, "42sh: %s : mauvaise substitution\n", tablo[0]);
 	ft_tabfree(tablo);
 	return (NULL);
 }

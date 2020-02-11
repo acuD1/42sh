@@ -12,63 +12,56 @@ int	ft_strnequ(char const *s1, char const *s2, size_t n)
 	return (1);
 }	
 
-char *smallest_prefix_param(char *data, t_core *shell)
+char *smallest_prefix_param(char *value, char *pattern)
 {
-	char *value;
-	char **tablo;
 	int		pattern_size;
 
-	tablo = NULL;
-	pattern_size = 0;
-	tablo = ft_strsplit(data, "#");
-	value = check_env_key(tablo[0], shell);
-	if (!tablo[1])
-	{
-		ft_tabfree(tablo);
-		return (ft_strdup(value));
-	}
-	pattern_size = ft_strlen(tablo[1]);
-	if (ft_strnequ(value, tablo[1], pattern_size))
-	{
-		ft_tabfree(tablo);
+	pattern_size = ft_strlen(pattern);
+	if (ft_strnequ(value, pattern, pattern_size))
 		return (ft_strsub(value, pattern_size, ft_strlen(value) - pattern_size));
-	}
-	ft_tabfree(tablo);
 	return (ft_strdup(value));
 }
 
-char *largest_prefix_param(char *data, t_core *shell)
+char *largest_prefix_param(char *value, char *pattern)
 {
-	char *value;
-	char **tablo;
-
-	tablo = NULL;
-	tablo = ft_strsplit(data, "#");
-	value = check_env_key(tablo[0], shell);
-	printf("2 prefix key %s value %s\n", tablo[0], value);
+	printf("2 prefix pattern %s value %s\n", pattern, value);
 	return (NULL);
 }
 
 char		*prefix_format(char *data, t_core *shell)
 {
-	//	x=file.c
-	//	affiche du pattern jusqua la fin si ca match sinn affiche tout
-		//	echo ${x#file} => .c  
-			//	garde le plus petit pattern qui a match
-		//	echo ${x##fil} => e.c
-			//	garde le plus grand pattern qui a match
 	char *tmp;
+	char *value;
+	char **tablo;
+	char *resultat;
 
 	tmp = NULL;
+	value = NULL;
+	resultat = NULL;
+	tablo = NULL;
 	if ((tmp = ft_strchr(data, '#')))
 	{
-		if (tmp[0] == '#')
+		tablo = ft_strsplit(data, "#");
+		value = check_env_key(tablo[0], shell);
+		if (!value || !*value)
 		{
-			if (tmp[1] == '#')
-				return (largest_prefix_param(data, shell));
-			else
-				return (smallest_prefix_param(data, shell));
+			ft_tabfree(tablo);
+			return (NULL);
+		}
+		if (!tablo[1])
+			resultat = ft_strdup(value);
+		else
+		{
+			if (tmp[0] == '#')
+			{
+				if (tmp[1] == '#')
+					resultat = largest_prefix_param(value, tablo[1]);
+				else
+					resultat = smallest_prefix_param(value, tablo[1]);
+			}
 		}
 	}
-	return (NULL);
+	ft_strdel(&data);
+	ft_tabfree(tablo);
+	return (resultat);
 }
