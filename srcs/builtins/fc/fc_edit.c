@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/06 22:16:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/08 20:24:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,18 @@
 void	launch_editor(t_core *shell, t_cmd cmd)
 {
 	t_process	process;
-	t_job 		job;
+	t_job		job;
 	char		*command;
 
 	ft_bzero(&process, sizeof(t_process));
 	ft_bzero(&job, sizeof(t_job));
 	command = ft_strjoin(cmd.editor, FC_TMP_FILE);
 	process.av = ft_strsplit(command, SPACE);
-	//ft_lstappend(&job->process_list, ft_lstnew(&process, sizeof(t_process)));
 	if (get_bin_path(shell, &process) != SUCCESS)
 		ft_dprintf(STDERR_FILENO, "42sh: %s: not found\n", cmd.editor);
 	call_bin(shell, &process);
 	ft_strdel(&command);
 	ft_tabdel(&process.av);
-	//ft_printf("%d\n", ft_strlen(cmd) + 1);
-	//ft_printf("%s\n", cmd);
 }
 
 char	*get_editor(char **av, u_int64_t opt)
@@ -52,12 +49,10 @@ int8_t	edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 
 	ft_bzero(&cmd, sizeof(t_cmd));
 	cmd.editor = get_editor(process->av, opt);
-	if ((cmd.fd = open(FC_TMP_FILE, (O_CREAT | O_WRONLY | O_APPEND), (S_IRUSR | S_IWUSR))) == FAILURE)
+	if ((cmd.fd = open(FC_TMP_FILE,
+		(O_CREAT | O_WRONLY | O_APPEND), (S_IRUSR | S_IWUSR))) == FAILURE)
 		return (fc_error(opt, 3));
 	get_range(process->av, &cmd);
-//	ft_printtab(av);
-//	printf("[%s] [%d] [%d]\n", cmd.editor, cmd.first, cmd.last);
-//	print_list(w, cmd, opt);
 	launch_editor(shell, cmd);
 	return (SUCCESS);
 }

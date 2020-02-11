@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:32:46 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/15 21:30:21 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/08 20:43:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,25 @@
 **	SOME=VALUE to a binary, and having a correct environnement.
 */
 
-char	**set_envp(t_core *shell)
+static void	check_env(t_lst *env, char **envp, size_t *i, int join_it)
+{
+	while (env != NULL)
+	{
+		if (((t_db*)env->content)->type & ENV_VAR)
+		{
+			if (join_it == TRUE)
+			{
+				envp[*i] = ft_strjoinf(
+								ft_strjoin(((t_db*)(env->content))->key, "=")
+								, ((t_db*)(env->content))->value, 1);
+			}
+			*i += 1;
+		}
+		env = env->next;
+	}
+}
+
+char		**set_envp(t_core *shell)
 {
 	t_lst	*env;
 	char	**envp;
@@ -27,26 +45,12 @@ char	**set_envp(t_core *shell)
 
 	i = 0;
 	env = shell->env;
-	while (env != NULL)
-	{
-		if (((t_db*)env->content)->type & ENV_VAR)
-			i++;
-		env = env->next;
-	}
+	check_env(env, NULL, &i, FALSE);
 	if (!(envp = ft_memalloc(sizeof(envp) * (i + 1))))
 		return (NULL);
 	env = shell->env;
 	i = 0;
-	while (env)
-	{
-		if (((t_db*)env->content)->type & ENV_VAR)
-		{
-			envp[i] = ft_strjoinf(ft_strjoin(((t_db*)(env->content))->key, "=")
-					, ((t_db*)(env->content))->value, 1);
-			i++;
-		}
-		env = env->next;
-	}
+	check_env(env, envp, &i, TRUE);
 	envp[i] = NULL;
 	return (envp);
 }

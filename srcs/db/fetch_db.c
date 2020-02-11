@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:13:44 by arsciand          #+#    #+#             */
-/*   Updated: 2019/10/04 06:22:22 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/08 21:27:23 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 **	and {var_type} (env, set or intern)
 */
 
-t_db	*fetch_db(t_db *db, const char *s, const u_int8_t var_type)
+t_db	*fetch_db(t_db *db, const char *s, u_int8_t var_type)
 {
 	size_t	len;
 

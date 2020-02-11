@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/07 05:33:25 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/08 21:18:41 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int			expelliarmus(const char *src, int *index, char **dst, t_core *shell)
 		if ((trans = toto.sionat[toto.erience](hetero, shell)))
 			*dst = ft_strjoinf(*dst, trans, 4);
 		*index += ft_strlen(hetero);
-		return (0);
 		ft_strdel(&hetero);
+		return (0);
 	}
 	return (1);
 }

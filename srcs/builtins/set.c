@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 22:37:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 04:22:05 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/08 21:04:38 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int8_t	get_positional_vars(t_core *shell, t_process *process, int argc)
 	int		i;
 
 	i = (process->av[1][0] != '-') ? 1 : 2;
-	free_env(shell->pos_vars);
+	free_db(shell->pos_vars);
 	shell->pos_vars = NULL;
 	while (i < argc)
 	{

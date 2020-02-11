@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/07 06:20:01 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/08 21:27:39 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		get_opt(int ac, char **av, t_core *shell);
 void		version(t_core *shell);
 void		load_i_mode(t_core *shell);
 void		load_noi_mode(t_core *shell);
-void		free_env(t_lst *env);
+void		free_db(t_lst *env);
 void		free_prompt(t_core *shell);
 void		free_shell(t_core *shell);
 void		reset_hash(t_hash *hash);
@@ -54,7 +54,7 @@ void		reset_hash(t_hash *hash);
 int8_t		set_env(t_core *shell, char **argv, char **environ);
 int8_t		del_db(t_core *shell, const char *key);
 int8_t		init_shell(t_core *shell, char **av, char **environ);
-t_db		*fetch_db(t_db *db, const char *s, const u_int8_t v_type);
+t_db		*fetch_db(t_db *db, const char *s, u_int8_t v_type);
 t_db		*modify_db(t_db	*db, char *new_value, u_int8_t new_type);
 t_db		*get_or_create_db(t_core *shell, const char *key, u_int8_t v_type);
 t_db		*search_db(t_lst *env, const char *key);

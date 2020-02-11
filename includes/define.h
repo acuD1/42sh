@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/06 22:04:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/08 20:26:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 */
 
 # define SHELL_OPT				"vhc"
+# define FC_OPT					"elnrs0123456789"
 # define MAX_PATH				4096
 # define ACCESS_MAX_PATH		1024
 

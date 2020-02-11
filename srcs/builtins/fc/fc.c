@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 01:21:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/08 20:26:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ int8_t			fc_error(u_int64_t opt, int err_num)
 	if (err_num == 0)
 		ft_dprintf(2, "42sh: fc: history specification out of range\n");
 	else if (err_num == 1)
-		print_usage("fc", opt % 128, "fc: usage: fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]");
+		print_usage("fc", opt % 128, "fc: usage: fc [-e ename] [-lnr] [first] \
+		[last] or fc -s [pat=rep] [command]");
 	else if (err_num == 2)
 	{
 		ft_dprintf(2, "42sh: fc: -e: option requires an argument\n");
-		ft_dprintf(STDERR_FILENO, "fc: usage: fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]\n");
+		ft_dprintf(STDERR_FILENO, "fc: usage: fc [-e ename] \
+		[-lnr] [first] [last] or fc -s [pat=rep] [command]\n");
 	}
 	else
 		ft_dprintf(STDERR_FILENO,
@@ -56,7 +58,7 @@ int8_t			builtin_fc(t_core *shell, t_process *process)
 	opt = 0;
 	if ((w = shell->term.history) == NULL)
 		return (fc_error(opt, 0));
-	opt = ft_get_options(ft_tablen(process->av), process->av, "elnrs0123456789");
+	opt = ft_get_options(ft_tablen(process->av), process->av, FC_OPT);
 	if (opt & (1ULL << 63))
 		return (fc_error(opt, 1));
 	if (fc_options(process->av, opt) == FALSE)

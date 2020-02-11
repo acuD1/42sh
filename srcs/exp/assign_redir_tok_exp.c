@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:47:03 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/07 06:22:30 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/08 21:31:01 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int8_t	add_assign_env(t_core *shell, const char *key, char *value)
 {
 	if (!key || !shell->env)
 		return (FAILURE);
+	dprintf(STDERR_FILENO, "KEY |%s| VALUE |%s|\n", key, value);
 	if (edit_var(shell, key, value, INTERNAL_VAR) != SUCCESS)
 		return (FAILURE);
 	return (TRUE);

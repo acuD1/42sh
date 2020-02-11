@@ -6,23 +6,23 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/22 16:23:49 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/08 21:05:00 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		free_env(t_lst *env)
+void		free_db(t_lst *db)
 {
 	t_lst	*tmp;
 
-	while (env)
+	while (db)
 	{
-		ft_strdel(&((t_db*)(env->content))->key);
-		ft_strdel(&((t_db*)(env->content))->value);
-		free(env->content);
-		tmp = env;
-		env = env->next;
+		ft_strdel(&((t_db*)(db->content))->key);
+		ft_strdel(&((t_db*)(db->content))->value);
+		free(db->content);
+		tmp = db;
+		db = db->next;
 		free(tmp);
 	}
 }
@@ -49,7 +49,7 @@ static void	free_history(t_read *term)
 
 void		free_shell(t_core *shell)
 {
-	free_env(shell->env);
+	free_db(shell->env);
 	free_prompt(shell);
 	free_history(&shell->term);
 	free_hash_map(&shell->hash);

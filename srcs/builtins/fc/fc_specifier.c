@@ -6,38 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/06 22:06:55 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/08 20:23:17 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-/* static void			get_pat_and_rep(char ***av, char **pat,	char **rep) */
-/* { */
-/* 	char			*str; */
-/*  */
-/* 	str = NULL; */
-/* 	if (**av == NULL) */
-/* 		return ; */
-/* 	while (**av && (*av)++) */
-/* 	{ */
-/* 		if (isstart(**av, "-l") || isstart(**av, "-r") */
-/* 			|| isstart(**av, "-n") || isstart(**av, "-s") */
-/* 			|| isstart(**av, "-e")) */
-/* 			continue ; */
-/* 		else */
-/* 		{ */
-/* 			str = ft_strdup(**av); */
-/* 			break ; */
-/* 		} */
-/* 	} */
-/* 	*rep = ft_strchr(str, '='); */
-/* 	if (*rep == NULL) */
-/* 		return ; */
-/* 	**rep = '\0'; */
-/* 	(*rep)++; */
-/* 	(*pat) = str; */
-/* } */
 
 char		*get_entry(t_lst *w, t_cmd cmd)
 {
@@ -84,12 +57,5 @@ int8_t		select_specifier(t_core *shell, t_lst *w, char **av)
 	ft_strdel(&shell->term.buffer);
 	if ((shell->term.buffer = ft_strdup(get_entry(w, cmd))) == NULL)
 		return (fc_error(0, 0));
-
-	/* re-executing cmd specified */
-	/* lexer_parser_analyzer(shell); */
-	/* if (task_master(shell) != SUCCESS) */
-	/* 	exit(1); */
-
-//	get_pat_and_rep(&av, &pat, &rep);
 	return (SUCCESS);
 }
