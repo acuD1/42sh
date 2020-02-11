@@ -44,8 +44,6 @@ char			*suffix_format(char *data, t_core *shell);
 char			*prefix_format(char *data, t_core *shell);
 int8_t			add_assign_env(t_core *shell, const char *key, char *value);
 char			*length_format(char *str, t_core *shell);
-
-
-char		*check_env_key(char *key, t_core *shell);
+char			*check_env_key(char *key, t_core *shell);
 
 #endif

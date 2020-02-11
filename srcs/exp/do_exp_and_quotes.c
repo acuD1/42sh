@@ -14,8 +14,8 @@
 
 static enum e_estate	skip_quotes(const char *str, int *j, enum e_estate state)
 {
-	if ((str[*j] == '\"' && state == E_QUOTE)
-		|| (str[*j] == '\'' && state == E_DBQUOTE))
+	if (!str || ((str[*j] == '\"' && state == E_QUOTE)
+		|| (str[*j] == '\'' && state == E_DBQUOTE)))
 		return (state);
 	if (str[*j] == '\"' && (state == E_DBQUOTE || state == NB_EXPANSION_STATE))
 	{

@@ -26,7 +26,8 @@ t_analyzer	*job_analyze(t_analyzer *anal, t_core *shell)
 		ft_lstnew(&anal->job, sizeof(t_job)));
 	anal->process_list = NULL;
 	init_job(&anal->job);
-	if (anal->lexer->next && ((t_token*)anal->lexer->next->content)->id == P_END)
+	if (anal->lexer->next
+		&& ((t_token*)anal->lexer->next->content)->id == P_END)
 		anal->state = A_STOP;
 	else
 		anal->state = A_START;

@@ -89,10 +89,10 @@ EXPANSIONS			=	exp/
 LEXER_EXP			=	$(EXPANSIONS)lexer_exp/
 PARAM_EXP			=	$(EXPANSIONS)param_exp/
 JOBC				=	jobcontrol/
-LAP					=	LAP/
-LEXER				=	$(LAP)lexer/
-PARSER				=	$(LAP)parser/
-ANALYZER			=	$(LAP)analyzer/
+LPA					=	LPA/
+LEXER				=	$(LPA)lexer/
+PARSER				=	$(LPA)parser/
+ANALYZER			=	$(LPA)analyzer/
 MISC				=	misc/
 SIGNALS				=	signals/
 
@@ -117,7 +117,7 @@ PATHS				+=	$(O_PATH)$(EXPANSIONS)
 PATHS				+=	$(O_PATH)$(LEXER_EXP)
 PATHS				+=	$(O_PATH)$(PARAM_EXP)
 PATHS				+=	$(O_PATH)$(JOBC)
-PATHS				+=	$(O_PATH)$(LAP)
+PATHS				+=	$(O_PATH)$(LPA)
 PATHS				+=	$(O_PATH)$(LEXER)
 PATHS				+=	$(O_PATH)$(PARSER)
 PATHS				+=	$(O_PATH)$(ANALYZER)
@@ -221,25 +221,16 @@ SRC					+=	$(S_PATH)$(EXPANSIONS)assign_redir_tok_exp.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)do_exp_and_quotes.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)expansion.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)infinite_exp.c
-SRC					+=	$(S_PATH)$(EXPANSIONS)param_expansion.c
-SRC					+=	$(S_PATH)$(EXPANSIONS)param_exp_opt.c
+
 SRC					+=	$(S_PATH)$(EXPANSIONS)tilde_cmds_math_exp.c
-
-# en gros avant je lexais l'expansion dans le lexer, puis jai mutualisé les ptr sur fct quand je me suis rendu compte que je devais re lexer dans l'exp
-# du coup lorsque j'ai arrete de les lexer dans le lexer car je le faisais 2 fois pour r
-# j'ai mis les fichier dans le dossier de l'expansion et vu que c'est le bordel jai fais un sous dossier
-
 SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_exp.c
 SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_param_cmds_exp.c
 SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_tilde_math_exp.c
-
-
-# sinon je rajoute un sous dossier pour le param_expansion
-# l'expansion en au final est un module de transition entre l'analyzer et l'exec qui appel plusieurs module d'expansion
-# du coup les sous dossier son justifié
-
-SRC					+=	$(S_PATH)$(PARAM_EXP)prefix_format.c
-SRC					+=	$(S_PATH)$(PARAM_EXP)suffix_format.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)prefix_suffixe_format.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)error_param_exp.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)two_point_param.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)error_param_format.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)param_expansion.c
 
 SRC					+=	$(S_PATH)$(JOBC)background.c
 SRC					+=	$(S_PATH)$(JOBC)continue.c
@@ -252,7 +243,7 @@ SRC					+=	$(S_PATH)$(JOBC)mark_process_status.c
 SRC					+=	$(S_PATH)$(JOBC)notifications.c
 SRC					+=	$(S_PATH)$(JOBC)wait_job.c
 
-SRC					+=	$(S_PATH)$(LAP)lexer_parser_analyzer.c
+SRC					+=	$(S_PATH)$(LPA)lexer_parser_analyzer.c
 
 SRC					+=	$(S_PATH)$(ANALYZER)analyze.c
 SRC					+=	$(S_PATH)$(ANALYZER)analyzer_assign.c

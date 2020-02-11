@@ -22,18 +22,10 @@ static t_analyzer	*split_and_create_assign_token(t_analyzer *anal)
 {
 	int		i;
 	int		j;
-	char	*str;
 
 	i = 0;
 	j = 0;
-	str = ((t_token*)anal->lexer->content)->data;
-	while (str[i] != '=')
-		i++;
-	anal->db.key = ft_strsub(str, 0, i);
-	j = i++;
-	while (str[j])
-		j++;
-	anal->db.value = ft_strsub(str, i, j - i);
+	anal->db = fetch_db(&anal->db,((t_token*)anal->lexer->content)->data, ENV_VAR)
 	ft_lstappend(&anal->process.assign_list,
 		ft_lstnew(&anal->db, sizeof(t_db)));
 	init_assign(&anal->db);
