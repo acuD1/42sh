@@ -3,16 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   mark_process_status.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 22:32:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/28 20:25:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/08 05:33:38 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t	mark_process_status(t_core *shell, t_lst *jobs, pid_t pid, int status)
+static void	background_jobs(t_lst *jobs, pid_t pid, int status)
+{
+	t_job	*ptr;
+	t_lst	*process;
+
+	while (jobs)
+	{
+		ptr = jobs->content;
+		if (ptr->pgid == pid && ptr->type == P_AND)
+		{
+			process = ptr->process_list;
+			while (process)
+			{
+				((t_process*)process->content)->completed =
+				(WIFSIGNALED(status) || WIFEXITED(status)) ? TRUE : FALSE;
+				process = process->next;
+			}
+			return ;
+		}
+		jobs = jobs->next;
+	}
+}
+
+int8_t		mark_process_status
+	(t_core *shell, t_lst *jobs, pid_t pid, int status)
 {
 	t_process	*process;
 
@@ -34,9 +58,9 @@ int8_t	mark_process_status(t_core *shell, t_lst *jobs, pid_t pid, int status)
 				status_handler(shell, status);
 			}
 		}
+		else
+			background_jobs(jobs, pid, status);
 		return (SUCCESS);
 	}
-	else if (pid != 0)
-		dprintf(STDERR_FILENO, "42sh: waitpid error (mark_process_status)\n");
 	return (FAILURE);
 }

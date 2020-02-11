@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/08 20:56:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/11 15:41:59 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,42 @@
 
 static int8_t	job_part_completed(t_job *job, t_process *process)
 {
-	t_lst	*ptr;
+	t_lst *ptr;
 
 	ptr = job->process_list;
 	while (ptr != NULL && ptr->content != process)
 	{
-		if (((t_process*)ptr->content)->completed != TRUE)
+		if (((t_process *)ptr->content)->completed != TRUE)
 			return (FALSE);
 		ptr = ptr->next;
 	}
 	return (TRUE);
+}
+
+static void		control_process
+	(t_core *shell, t_job *job, t_process *process, int *fds)
+{
+	if (process->pgid == -1)
+		job->pgid = process->pid;
+	process->pgid = job->pgid;
+	if (process->stopped != TRUE && fds[1] == STDOUT_FILENO)
+	{
+		if (setpgid(process->pid, process->pgid) != SUCCESS)
+			print_and_quit(shell, "42sh: setpgid error\n");
+		if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
+			print_and_quit(shell, "42sh: tcsetpgrp error\n");
+		wait_for_process(shell, shell->job_list, process);
+		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
+			print_and_quit(shell, "42sh: tcsetpgrp error\n");
+	}
+	else if (fds[1] == STDOUT_FILENO && cond(job->process_list))
+	{
+		if (setpgid(process->pid, process->pgid) != SUCCESS)
+			print_and_quit(shell, "42sh: setpgid error\n");
+		wait_for_process(shell, shell->job_list, process);
+	}
+	else
+		process->stopped = FALSE;
 }
 
 void			exec_process
@@ -44,21 +70,5 @@ void			exec_process
 	else if (process->pid < 0)
 		print_and_quit(shell, "42sh: fork failure\n");
 	if (shell->mode & I_MODE)
-	{
-		if (process->pgid == -1)
-			job->pgid = process->pid;
-		process->pgid = job->pgid;
-		if (setpgid(process->pid, process->pgid) != SUCCESS)
-			print_and_quit(shell, "42sh: setpgid error\n");
-		if (process->stopped != TRUE && fds[1] == STDOUT_FILENO)
-		{
-			if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
-				print_and_quit(shell, "42sh: tcsetpgrp error (1)\n");
-			wait_for_process(shell, shell->job_list, process);
-			if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
-				print_and_quit(shell, "42sh: tcsetpgrp error (2)\n");
-		}
-		else
-			process->stopped = FALSE;
-	}
+		control_process(shell, job, process, fds);
 }

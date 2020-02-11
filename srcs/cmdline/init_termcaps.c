@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/06 22:27:56 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/07 03:17:12 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,8 @@ int8_t			init_termcaps(t_read *term)
 		ft_perror("Get termcaps failed", NULL, 0);
 		return (FAILURE);
 	}
-	if (!(sh = getenv("TERM")))
-	{
-		ft_perror("Getenv error", NULL, 0);
-		return (FAILURE);
-	}
-	if (tgetent(bp, sh) == FAILURE)
+	sh = getenv("TERM");
+	if (tgetent(bp, (sh) ? sh : "dumb") == FAILURE)
 	{
 		ft_perror("Tgetent error", NULL, 0);
 		return (FAILURE);

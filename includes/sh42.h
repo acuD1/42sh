@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/08 21:27:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/11 15:40:26 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int8_t		update_process_id(t_core *shell);
 int8_t		update_shell_name(t_core *shell);
 int8_t		update_shell_flags(t_core *shell);
 int8_t		update_exit_status(t_core *shell);
-int8_t		update_backgroud_pid(t_core *shell);
+int8_t		update_background_pid(t_core *shell);
 int8_t		update_ps1(t_core *shell);
 int8_t		update_ps2(t_core *shell);
 int8_t		update_last_arg(t_core *shell, char **argv);
@@ -224,8 +224,8 @@ void		job_background_notif(t_job *job);
 void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
 int8_t		mark_process_status
 				(t_core *shell, t_lst *jobs, pid_t pid, int status);
-int8_t		launch_blt
-				(t_core *shell, t_process *process, int *fds, int foreground);
+void		mark_job_as_stopped(t_job *job, int stopped);
+int8_t		launch_blt(t_core *shell, t_job *job, t_process *process, int *fds);
 void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
 void		update_status(t_core *shell);
 t_job		*get_job(t_lst *jobs, char *str);
@@ -233,5 +233,7 @@ t_job		*get_job_by_id(t_lst *jobs, int id);
 void		format_job_info(t_job *job);
 int			update_jobs(t_lst *jobs);
 void		attr_jobc_id(t_core *shell, t_job *job);
+int8_t		do_job_notification(t_core *shell, t_lst *job);
+int			cond(t_lst *process);
 
 #endif
