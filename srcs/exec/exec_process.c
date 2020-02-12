@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/12 14:22:24 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:52:11 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,25 +37,20 @@ static void		control_process
 	if (process->pgid == -1)
 		job->pgid = process->pid;
 	process->pgid = job->pgid;
+	if ((process->stopped != TRUE || !cond(job->process_list))
+		&& fds[1] == STDOUT_FILENO
+		&& setpgid(process->pid, process->pgid) != SUCCESS)
+		print_and_quit(shell, "42sh: setpgid error\n");
 	if (process->stopped != TRUE && fds[1] == STDOUT_FILENO)
 	{
-		if (setpgid(process->pid, process->pgid) != SUCCESS)
-			print_and_quit(shell, "42sh: setpgid error\n");
 		if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: tcsetpgrp error\n");
 		wait_for_process(shell, shell->job_list, process);
 		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: tcsetpgrp error\n");
 	}
-	else if (fds[1] == STDOUT_FILENO && !cond(job->process_list))
-	{
-		if (setpgid(process->pid, process->pgid) != SUCCESS)
-			print_and_quit(shell, "42sh: setpgid error\n");
-	}
-	else if (fds[1] == STDOUT_FILENO)
-	{
+	else if (fds[1] == STDOUT_FILENO && cond(job->process_list))
 		wait_for_process(shell, shell->job_list, process);
-	}
 	else
 		process->stopped = FALSE;
 }
