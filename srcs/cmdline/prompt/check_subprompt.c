@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 04:38:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/12 10:03:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char		set_quote_type(char quote)
 
 u_int8_t		quotes_is_matching(t_read *term, char *quote)
 {
-	int		i;
+	int			i;
 
 	i = -1;
 	while (term->buffer[++i])
@@ -56,10 +56,8 @@ u_int8_t		quotes_is_matching(t_read *term, char *quote)
 
 u_int8_t		check_subprompt(t_core *shell)
 {
-	int		i;
-	char	quote;
+	char		quote;
 
-	i = -1;
 	quote = '\0';
 	if (quotes_is_matching(&shell->term, &quote) == TRUE)
 		if (check_backslash(&shell->term, &quote) == FALSE)
