@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:54:43 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/06 22:50:22 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/12 11:02:07 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void		init_redir(t_redir *new)
 t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 {
 	anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
-	if (!shell->term.history_index)
-		anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
+	anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
 	anal->state = A_WORD;
 	return (anal = redir_analyze(anal, shell));
 }

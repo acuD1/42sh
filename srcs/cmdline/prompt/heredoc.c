@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 04:41:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/12 12:51:23 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,20 @@ static int8_t	check_key(t_core *shell, const char *key)
 	return (FALSE);
 }
 
-static char		*stock_value(t_core *shell, int i)
+static char		*stock_value(t_core *shell)
 {
 	char	*value;
 	char	*buffer;
+	int		i;
 
 	value = NULL;
-	buffer = ft_strdup(shell->term.buffer);
-	shell->term.tmp_buff = ft_strjoinf(shell->term.tmp_buff, buffer, 3);
 	buffer = ft_strdup(shell->term.tmp_buff);
+	ft_strdel(&shell->term.tmp_buff);
+	i = ft_strlen_to(buffer, NEW_LINE[0]);
 	shell->term.status = CMD_DONE;
-	value = ft_strsub(buffer, i, ft_strlen(buffer));
+	value = ft_strsub(buffer, i + 1, ft_strlen(buffer));
 	ft_strdel(&shell->term.buffer);
-	shell->term.buffer = ft_strdup(buffer);
+	shell->term.buffer = ft_strsub(buffer, 0, i);
 	ft_strdel(&buffer);
 	reset_config(shell);
 	return (value);
@@ -61,10 +62,8 @@ static char		*stock_value(t_core *shell, int i)
 char			*load_heredoc(t_core *shell, const char *key)
 {
 	char	*value;
-	int		i;
 
 	value = NULL;
-	i = ft_strlen(shell->term.buffer) + 1;
 	init_config(shell);
 	shell->term.buffer = ft_strjoinf(shell->term.buffer, NEW_LINE, 1);
 	shell->term.tmp_buff = ft_strdup(shell->term.buffer);
@@ -83,6 +82,6 @@ char			*load_heredoc(t_core *shell, const char *key)
 		if (shell->term.status == CMD_PROMPT)
 			return (NULL);
 	}
-	value = stock_value(shell, i);
+	value = stock_value(shell);
 	return (value);
 }
