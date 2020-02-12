@@ -6,11 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 20:36:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/28 20:25:56 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/12 08:33:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <sys/wait.h>
 
 void	wait_for_job(t_core *shell, t_lst *jobs, t_job *job)
 {

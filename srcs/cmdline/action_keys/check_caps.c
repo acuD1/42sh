@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 05:23:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/12 08:59:19 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,15 @@ static u_int8_t	cursor_motion(const char *buff, t_read *term, uint64_t value)
 	return (TRUE);
 }
 
+static void		tab_key(t_read *term, u_int64_t *value)
+{
+		auto_complete_mode(term);
+		*value = get_mask(term->tmp_buff);
+		if (term->tmp_buff && ft_is_print(*term->tmp_buff))
+			insert_in_buffer(term->tmp_buff, term);
+		ft_strdel(&term->tmp_buff);
+}
+
 /*
 **		Interpret and insert char in bufffer
 **		CTRL+R to launch history research
@@ -76,14 +85,14 @@ u_int8_t		check_caps(const char *buff, t_read *term)
 	u_int64_t	value;
 
 	value = get_mask(buff);
-	if (value == TAB_KEY)
+	if (value == CTRL_D)
 	{
-		auto_complete_mode(term);
-		value = get_mask(term->tmp_buff);
-		if (term->tmp_buff && ft_is_print(*term->tmp_buff))
-			insert_in_buffer(term->tmp_buff, term);
-		ft_strdel(&term->tmp_buff);
+		if (term->status == CMD_SUBPROMPT)
+			term->flag = TRUE;
+		return (FALSE);
 	}
+	if (value == TAB_KEY)
+		tab_key(term, &value);
 	else if (ft_is_print(*buff))
 		insert_in_buffer(buff, term);
 	if (value == CTRL_R)

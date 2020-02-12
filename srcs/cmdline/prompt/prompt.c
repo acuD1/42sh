@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 04:32:58 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/12 08:59:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,6 @@ static int8_t	end_of_file(t_core *shell, const char *buff)
 {
 	if (!*(shell->term).buffer && get_mask(buff) == CTRL_D)
 	{
-		if (shell->term.status == CMD_SUBPROMPT)
-		{
-			shell->term.flag = TRUE;
-			return (FALSE);
-		}
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		reset_config(shell);
 		write_history(&shell->term);
