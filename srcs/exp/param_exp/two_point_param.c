@@ -26,6 +26,8 @@ char		*dash_format(char **tablo, t_core *shell)
 	}
 	word = check_env_key(&tablo[1][1], shell);
 	ft_tabfree(tablo);
+	if (!word)
+		return (NULL);
 	return (ft_strdup(word));
 }
 
@@ -40,6 +42,8 @@ char		*plus_format(char **tablo, t_core *shell)
 	{
 		word = check_env_key(&tablo[1][1], shell);
 		ft_tabfree(tablo);
+		if (!word)
+			return (NULL);
 		return (ft_strdup(word));
 	}
 	ft_tabfree(tablo);
@@ -58,10 +62,10 @@ char		*egal_format(char **tablo, t_core *shell)
 		ft_tabfree(tablo);
 		return (ft_strdup(value));
 	}
-	add_assign_env(shell, tablo[0], &tablo[1][1]);
 	word = ft_strdup(&tablo[1][1]);
+	add_assign_env(shell, tablo[0], word);
 	ft_tabfree(tablo);
-	return (word);
+	return (NULL);
 }
 
 char		*underniercaspourlaroute(char **tablo, t_core *shell)

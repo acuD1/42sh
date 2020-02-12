@@ -70,7 +70,6 @@ int8_t	reset_config(t_core *shell)
 	if (tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t)) == FAILURE)
 	{
 		ft_perror("tcsetattr", NULL, 0);
-		quit_shell(shell, EXIT_FAILURE, TRUE);
 		return (FAILURE);
 	}
 	ft_strdel(&shell->term.tmp_buff);

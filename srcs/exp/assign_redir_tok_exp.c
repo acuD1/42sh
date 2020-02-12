@@ -59,35 +59,30 @@ void			expansion_assign(t_core *shell, t_process *process)
 	}
 }
 
-int8_t			expansion_redir(t_core *shell, t_process *process)
+void			expansion_redir(t_core *shell, t_process *process)
 {
+	t_lst	*lst;
 	char	*res;
 
 	if (!process->redir_list || !shell
 			|| !((t_redir*)process->redir_list->content)->op[1])
-		return (FAILURE);
+		return ;
+	lst = process->redir_list;
 	res = NULL;
-	while (process->redir_list)
+	while (lst)
 	{
-		if ((res = do_exp_et_quote(shell, ((t_redir*)process->redir_list->content)->op[1])))
+		if ((res = do_exp_et_quote(shell, ((t_redir*)lst->content)->op[1])))
 		{
 			if (!*res)
-			{
-				ft_dprintf(STDERR_FILENO, "42sh: %s : ambiguous redirect\n",
-					(((t_redir*)process->redir_list->content)->op[1]));
-				ft_strdel(&res);
-				ft_strdel(&(((t_redir*)process->redir_list->content)->op[1]));
-				return (FALSE);
-			}
-			ft_strdel(&(((t_redir*)process->redir_list->content)->op[1]));
-			((t_redir*)process->redir_list->content)->op[1] = ft_strdup(res);
+				ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n", ((t_redir*)lst->content)->op[1]);
+			ft_strdel(&(((t_redir*)lst->content)->op[1]));
+			((t_redir*)lst->content)->op[1] = ft_strdup(res);
 			ft_strdel(&res);
 		}
-		process->redir_list = process->redir_list->next;	
+		lst = lst->next;
 	}
-	return (SUCCESS);
 }
-
+	
 void			expansion_tok(t_core *shell, t_process *process)
 {
 	t_lst	*lst;

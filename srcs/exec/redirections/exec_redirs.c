@@ -30,6 +30,8 @@ static void		get_io_number(t_redir *ptr)
 static int8_t	get_fd(t_redir *redir)
 {
 	get_io_number(redir);
+	if (!*redir->op[1])
+		return (FAILURE);
 	if (redir->type == P_GREAT && redir_output(redir) != SUCCESS)
 		return (FAILURE);
 	if (redir->type == P_DGREAT && append_output(redir) != SUCCESS)

@@ -48,6 +48,7 @@ char		*length_format(char *str, t_core *shell)
 	if (ft_strchr(str, ':') || ft_strchr(str, '%') || ft_strchr(&str[1], '#'))
 	{
 		ft_dprintf(STDERR_FILENO, "42sh: %s : mauvaise substitution\n", str);
+		ft_strdel(&str);
 		return (NULL);
 	}
 	if ((db_tmp = search_db(shell->env, &str[1])))
@@ -55,28 +56,37 @@ char		*length_format(char *str, t_core *shell)
 		ft_strdel(&str);
 		return (ft_itoa(ft_strlen(db_tmp->value)));
 	}
+	ft_strdel(&str);
 	return (ft_strdup("0"));
 }
 
 char		*double_two_point_param(char **tablo, t_core *shell)
 {
-	int		start;
-	int		size;
-	char	*tmp;
-	char	*value;
+	int		flag[3];
+	char	*tmp[2];
 
-	start = 0;
-	size = 0;
-	tmp = NULL;
-	value = check_env_key(tablo[0], shell);
-	if (value && *value)
+	flag[0] = 0;
+	flag[1] = 0;
+	flag[2] = 0;
+	tmp[0] = NULL;
+	tmp[1] = check_env_key(tablo[0], shell);
+	if (tmp[1])
 	{
-		start = ft_atoi(tablo[1]);
-		size = ft_atoi(tablo[2]);
-		tmp = ft_strsub(value, start, size);
-		ft_tabfree(tablo);
-		return (tmp);
+		flag[1] = ft_strlen(tmp[1]) - 1;
+		if (flag[2] < flag[1])
+			flag[2] = ft_atoi(tablo[2]);
+		else
+			flag[2] = flag[1];
+		if (flag[0] < flag[1])
+			flag[0] = ft_atoi(tablo[1]);
+		else
+		{
+			ft_tabfree(tablo);
+			return (NULL);
+		}
+		if (!(tmp[0] = ft_strsub(tmp[1], flag[0], flag[2])))
+			return (NULL);
 	}
 	ft_tabfree(tablo);
-	return (NULL);
+	return (tmp[0]);
 }
