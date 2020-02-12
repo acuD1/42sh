@@ -23,7 +23,7 @@ t_db	*fetch_db(t_db *db, const char *s, const u_int8_t var_type)
 
 	len = ft_strclen(s, '=');
 	db->key = ft_strsub(s, 0, len);
-	db->value = ft_strdup(s + len + 1);
+	db->value = ft_strsub(s, len + 1 , ft_strlen(s) - len);
 	db->type = var_type;
 	if (!db->value || !db->key)
 	{

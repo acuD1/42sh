@@ -50,9 +50,10 @@ void			expansion_assign(t_core *shell, t_process *process)
 	{
 		res = do_exp_et_quote(shell, ((t_db*)lst->content)->value);
 		if (!process->av)
-			add_assign_env(shell, ((t_db*)lst->content)->key, res);
+			add_assign_env(shell, ((t_db*)lst->content)->key, ft_strdup(res));
 		else
-			add_assign_envp(((t_db*)lst->content)->key, res, &process->envp);
+			add_assign_envp(((t_db*)lst->content)->key, ft_strdup(res), &process->envp);
+		ft_strdel(&res);
 		tmp = lst;
 		lst = lst->next;
 	}

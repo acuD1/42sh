@@ -24,8 +24,7 @@ void		init_redir(t_redir *new)
 t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 {
 	anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
-	if (!shell->term.history_index)
-		anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
+	anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
 	anal->state = A_WORD;
 	return (anal = redir_analyze(anal, shell));
 }
@@ -55,6 +54,14 @@ t_analyzer	*redirect_analyze(t_analyzer *analyzer, t_core *shell)
 	(void)shell;
 	analyzer->job.command = fill_cmd_job(analyzer->lexer,
 		analyzer->job.command);
+	if ((((t_token*)analyzer->lexer->content)->id == P_DLESS
+		|| ((t_token*)analyzer->lexer->content)->id == P_DLESSDASH)
+		&& ((t_token*)analyzer->lexer->next->content)->id == P_LESS)
+	{
+		analyzer->lexer = analyzer->lexer->next;
+		analyzer->job.command = fill_cmd_job(analyzer->lexer,
+			analyzer->job.command);
+	}
 	analyzer->redir.type = ((t_token*)analyzer->lexer->content)->id;
 	analyzer->state = A_REDIRECT;
 	return (analyzer);

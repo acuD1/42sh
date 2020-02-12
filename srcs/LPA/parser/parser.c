@@ -73,6 +73,7 @@ u_int8_t		parser(t_lst *lexer)
 		{
 			ft_printf("42sh: syntax error near unexpected token `%s'\n",
 				((t_token*)tok_lst->content)->data);
+			free(parser);
 			return (FALSE);
 		}
 		tok_lst = tok_lst->next;
