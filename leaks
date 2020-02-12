@@ -14,35 +14,8 @@
 
 ------------------------------------------------------------------------------
 
+REDONDANT MAIS insister ca ne fait pas de mal hein ?!
 
-42sh-0.1$ ls << a << b <<< c
-> a
-==30504== Invalid read of size 1
-==30504==    at 0x100019314: ft_strsub (ft_strsub.c:26)
-==30504==    by 0x10000AE99: stock_value (heredoc.c:53)
-==30504==    by 0x10000ACC1: load_heredoc (heredoc.c:86)
-==30504==    by 0x100013D55: heredoc_analyzer (analyzer_redir.c:27)
-==30504==    by 0x100013E64: redir_wanalyze (analyzer_redir.c:36)
-==30504==    by 0x100013BAD: cmd_analyze (analyzer_name.c:28)
-==30504==    by 0x1000135CE: analyzer (analyze.c:78)
-==30504==    by 0x1000132B1: lexer_parser_analyzer (lexer_parser_analyzer.c:224)
-==30504==    by 0x10000BF7D: load_i_mode (shell_loader.c:34)
-==30504==    by 0x10000BE21: main (main.c:34)
-==30504==  Address 0x1030b75d5 is 0 bytes after a block of size 21 alloc'd
-==30504==    at 0x100114AD5: malloc (in /Users/guvillat/.brew/Cellar/valgrind/HEAD-60ab74a/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
-==30504==    by 0x1000181CC: ft_memalloc (ft_memalloc.c:21)
-==30504==    by 0x1000186E8: ft_strdup (ft_strdup.c:21)
-==30504==    by 0x10000AE5E: stock_value (heredoc.c:51)
-==30504==    by 0x10000ACC1: load_heredoc (heredoc.c:86)
-==30504==    by 0x100013D55: heredoc_analyzer (analyzer_redir.c:27)
-==30504==    by 0x100013E64: redir_wanalyze (analyzer_redir.c:36)
-==30504==    by 0x100013BAD: cmd_analyze (analyzer_name.c:28)
-==30504==    by 0x1000135CE: analyzer (analyze.c:78)
-==30504==    by 0x1000132B1: lexer_parser_analyzer (lexer_parser_analyzer.c:224)
-==30504==    by 0x10000BF7D: load_i_mode (shell_loader.c:34)
-==30504==    by 0x10000BE21: main (main.c:34)
-==30504==
-> b
 ==30590== Syscall param open(filename) points to uninitialised byte(s)
 ==30590==    at 0x1005641EE: open (in /usr/lib/system/libsystem_kernel.dylib)
 ==30590==    by 0x10000EC93: write_heredoc (redirs_tools.c:76)
@@ -143,3 +116,27 @@
 ==39711==    by 0x10000BF43: load_i_mode (shell_loader.c:32)
 ==39711==    by 0x10000BE01: main (main.c:34)
 ==39711==
+
+
+
+
+
+
+---------------------------------------------------------------------------
+
+pb redir heredoc ls <<< a << b << c
+
+==3419== Syscall param open(filename) points to uninitialised byte(s)
+==3419==    at 0x1005641EE: open (in /usr/lib/system/libsystem_kernel.dylib)
+==3419==    by 0x10000EC83: write_heredoc (redirs_tools.c:76)
+==3419==    by 0x10000EEFB: redir_input (redirs.c:60)
+==3419==    by 0x10000E911: get_fd (exec_redirs.c:38)
+==3419==    by 0x10000E838: exec_redirs (exec_redirs.c:58)
+==3419==    by 0x10000D6E0: call_bin (call_bin.c:35)
+==3419==    by 0x10001244D: launch_process (launch_process.c:86)
+==3419==    by 0x10000DE23: exec_process (exec_process.c:43)
+==3419==    by 0x10000DA09: launch_job (dispatcher.c:94)
+==3419==    by 0x10000E66D: task_master (task_master.c:45)
+==3419==    by 0x10000BF66: load_i_mode (shell_loader.c:35)
+==3419==    by 0x10000BE01: main (main.c:34)
+==3419==  Address 0x10490b4e0 is on thread 1's stack

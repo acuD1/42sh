@@ -40,20 +40,14 @@ static int8_t	check_key(t_core *shell, const char *key)
 	return (FALSE);
 }
 
-static char		*stock_value(t_core *shell, int i)
+static char		*stock_value(t_core *shell)
 {
 	char	*value;
-	char	*buffer;
 
-	value = NULL;
-	buffer = ft_strdup(shell->term.buffer);
-	shell->term.tmp_buff = ft_strjoinf(shell->term.tmp_buff, buffer, 3);
-	buffer = ft_strdup(shell->term.tmp_buff);
+	shell->term.tmp_buff = ft_strjoinf(shell->term.tmp_buff, shell->term.buffer, 3);
+	value = ft_strdup(shell->term.tmp_buff);
 	shell->term.status = CMD_DONE;
-	value = ft_strsub(buffer, i, ft_strlen(buffer));
-	ft_strdel(&shell->term.buffer);
-	shell->term.buffer = ft_strdup(buffer);
-	ft_strdel(&buffer);
+	shell->term.buffer = ft_strdup(value);
 	reset_config(shell);
 	return (value);
 }
@@ -61,10 +55,8 @@ static char		*stock_value(t_core *shell, int i)
 char			*load_heredoc(t_core *shell, const char *key)
 {
 	char	*value;
-	int		i;
 
 	value = NULL;
-	i = ft_strlen(shell->term.buffer) + 1;
 	init_config(shell);
 	shell->term.buffer = ft_strjoinf(shell->term.buffer, NEW_LINE, 1);
 	shell->term.tmp_buff = ft_strdup(shell->term.buffer);
@@ -83,6 +75,6 @@ char			*load_heredoc(t_core *shell, const char *key)
 		if (shell->term.status == CMD_PROMPT)
 			return (NULL);
 	}
-	value = stock_value(shell, i);
+	value = stock_value(shell);
 	return (value);
 }
