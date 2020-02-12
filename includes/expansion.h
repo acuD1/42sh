@@ -17,7 +17,7 @@ u_int8_t		is_expansion(enum e_estate id);
 char			*do_expansion(t_core *shell, const char *data);
 void			init_expansionat(t_expansion *exp);
 void			expansion_assign(t_core *shell, t_process *process);
-void			expansion_redir(t_core *shell, t_process *process);
+int8_t			expansion_redir(t_core *shell, t_process *process);
 void			expansion_tok(t_core *shell, t_process *process);
 char			*exp_cmd_subs(const char *data, t_core *shell);
 char			*no_exp(const char *data, t_core *shell);
@@ -43,7 +43,6 @@ char			*moar_format_plz(char *data, t_core *shell);
 char			*suffix_format(char *data, t_core *shell);
 char			*prefix_format(char *data, t_core *shell);
 int8_t			add_assign_env(t_core *shell, const char *key, char *value);
-
 char			*length_format(char *str, t_core *shell);
 char			*check_env_key(char *key, t_core *shell);
 char			*questionmark_format(char **tablo, t_core *shell);

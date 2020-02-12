@@ -73,5 +73,12 @@ void		expansion(t_core *shell, t_process *process)
 	if (process->assign_list)
 		expansion_assign(shell, process);
 	if (process->redir_list)
-		expansion_redir(shell, process);
+	{
+		if (!expansion_redir(shell, process))
+		{
+			if (process->av)
+				ft_tabdel(&process->av);
+			process->completed = TRUE;
+		}
+	}
 }
