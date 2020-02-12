@@ -46,6 +46,7 @@ static char		*stock_value(t_core *shell)
 	
 	shell->term.tmp_buff = ft_strjoinf(shell->term.tmp_buff, shell->term.buffer, 3);
 	value = ft_strdup(shell->term.tmp_buff);
+	shell->term.status = CMD_DONE;
 	shell->term.buffer = ft_strdup(value);
 	reset_config(shell);
 	return (value);
