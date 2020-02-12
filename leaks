@@ -123,4 +123,23 @@
 
 -----------------------------------------------------------------------------
 
+ CTRL V
 
+ 
+42sh-0.1$ ==39711== Conditional jump or move depends on uninitialised value(s)
+==39711==    at 0x1000189CC: ft_strlen (ft_strlen.c:20)
+==39711==    by 0x100006E72: insert_in_buffer (insert_in_buffer.c:108)
+==39711==    by 0x1000065D8: check_caps (check_caps.c:88)
+==39711==    by 0x10000B2AB: init_prompt (prompt.c:108)
+==39711==    by 0x10000BF43: load_i_mode (shell_loader.c:32)
+==39711==    by 0x10000BE01: main (main.c:34)
+==39711==
+==39711== Conditional jump or move depends on uninitialised value(s)
+==39711==    at 0x1000189CC: ft_strlen (ft_strlen.c:20)
+==39711==    by 0x100006C88: insert_str_in_buffer (insert_in_buffer.c:78)
+==39711==    by 0x100006E89: insert_in_buffer (insert_in_buffer.c:110)
+==39711==    by 0x1000065D8: check_caps (check_caps.c:88)
+==39711==    by 0x10000B2AB: init_prompt (prompt.c:108)
+==39711==    by 0x10000BF43: load_i_mode (shell_loader.c:32)
+==39711==    by 0x10000BE01: main (main.c:34)
+==39711==
