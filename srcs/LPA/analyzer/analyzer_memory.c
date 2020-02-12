@@ -50,13 +50,13 @@ void		free_process_list(t_lst **head)
 	{
 		next = ptr->next;
 		ft_free_redirlist((t_lst **)&(((t_process *)ptr->content)->redir_list));
+		free_env((((t_process *)ptr->content)->assign_list));
 		ft_tabdel(&(((t_process *)ptr->content)->av));
 		ft_tabdel(&(((t_process *)ptr->content)->envp));
 		ft_strdel(&(((t_process *)ptr->content)->bin));
 		ft_strdel(&(((t_process *)ptr->content)->command));
 		free(ptr->content);
 		free(ptr);
-		//free_assign_list
 		ptr = next;
 	}
 }

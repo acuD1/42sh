@@ -54,6 +54,14 @@ t_analyzer	*redirect_analyze(t_analyzer *analyzer, t_core *shell)
 	(void)shell;
 	analyzer->job.command = fill_cmd_job(analyzer->lexer,
 		analyzer->job.command);
+	if ((((t_token*)analyzer->lexer->content)->id == P_DLESS
+		|| ((t_token*)analyzer->lexer->content)->id == P_DLESSDASH)
+		&& ((t_token*)analyzer->lexer->next->content)->id == P_LESS)
+	{
+		analyzer->lexer = analyzer->lexer->next;
+		analyzer->job.command = fill_cmd_job(analyzer->lexer,
+			analyzer->job.command);
+	}
 	analyzer->redir.type = ((t_token*)analyzer->lexer->content)->id;
 	analyzer->state = A_REDIRECT;
 	return (analyzer);

@@ -38,13 +38,17 @@ void			check_all_quotes(char *str, int *index)
 int				get_word_size_ntype(int i, char *str)
 {
 	int		index;
+	int		flag;
 
+	index = 0;
+	flag = 0;
 	if (!str || !str[i])
 		return (0);
 	index = i;
 	while (str[index] && (!ft_strchr(CHAR_INTERRUPT, str[index])))
 	{
-		check_all_quotes(str, &index);
+		if (index >= 1 && str[index - 1] != '\\')
+			check_all_quotes(str, &index);
 		index++;
 	}
 	return (index);

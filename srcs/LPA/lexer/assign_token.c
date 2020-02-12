@@ -41,12 +41,12 @@ static t_lst	*create_assign_token(t_lexer *lex, int len, t_lst *lexer_token)
 	value_len = get_word_size_ntype(len, lex->buff);
 	if (!value_len)
 		value_len = len;
-	if (!(str = ft_strsub(lex->buff, lex->buf_pos, value_len - lex->buf_pos)))
+	if (!(str = ft_strsub(lex->buff, lex->buf_pos, value_len - lex->buf_pos + 1)))
 		return (NULL);
 	if (!(ft_lstappend(&lexer_token,
 		ft_lstnew(fetch_token(&lex->token, P_ASSIGN, str), sizeof(t_token)))))
 		return (NULL);
-	free(str);
+	ft_strdel(&str);
 	lex->ntok++;
 	lex->buf_pos = value_len;
 	return (lexer_token);
