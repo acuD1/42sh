@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/10 03:50:19 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:15:52 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int8_t		launch_blt(t_core *shell, t_job *job, t_process *process, int *fds)
 {
 	int		blt;
 
-	if (fds[0] == STDIN_FILENO && fds[1] == STDOUT_FILENO
-		&& cond(job->process_list) && process->av
+	(void)job;
+	if (fds[0] == STDIN_FILENO && fds[1] == STDOUT_FILENO && process->av
 		&& (blt = is_a_blt(process->av[0])) != FAILURE)
 	{
 		process->status = call_builtin(shell, process, blt);
