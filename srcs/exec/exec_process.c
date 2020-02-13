@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/13 23:10:26 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/13 23:51:02 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void		control_process
 		job->pgid = process->pid;
 	process->pgid = job->pgid;
 	if ((process->stopped != TRUE || !cond(job->process_list))
-		&& fds[1] == STDOUT_FILENO
 		&& setpgid(process->pid, process->pgid) != SUCCESS)
 		print_and_quit(shell, "42sh: setpgid error\n");
 	if (process->stopped != TRUE && fds[1] == STDOUT_FILENO)
@@ -60,23 +59,24 @@ static void		check_filepath(t_core *shell, t_process *process)
 {
 	int			ret;
 
+	if (process->av == NULL)
+	{
+		process->completed = TRUE;
+		process->status = 0;
+		return ;
+	}
 	if (process->bin == NULL)
 	{
 		dprintf(STDERR_FILENO, "42sh: %s: command not found\n", process->av[0]);
 		process->status = 127;
 	}
 	else if ((ret = ft_access(process->bin, F_OK | X_OK)) != SUCCESS)
-	{
 		ft_perror(process->av[0], NULL, ret);
-		process->status = 126;
-	}
 	else if (is_dir(process->bin))
-	{
 		ft_perror(process->av[0], NULL, EISDIR);
-		process->status = 126;
-	}
 	else
 		return ;
+	process->status = (process->status == 127) ? 127 : 126;
 	shell->status = process->status;
 	process->completed = TRUE;
 }
@@ -92,9 +92,7 @@ void			exec_process
 	if (process->av)
 		get_bin(shell, process);
 	check_filepath(shell, process);
-	if (process->completed)
-		return ;
-	else if (process->bin != NULL)
+	if (process->completed != TRUE)
 	{
 		if ((process->pid = fork()) == 0)
 			launch_process(shell, process, fds[0], fds[1]);

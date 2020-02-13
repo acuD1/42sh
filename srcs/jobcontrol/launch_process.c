@@ -6,12 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/13 22:58:13 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/13 23:38:27 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <signal.h>
+#include <errno.h>
 
 void		reset_signals(void)
 {
@@ -22,15 +23,15 @@ void		reset_signals(void)
 		signal(i, SIG_DFL);
 }
 
-static void	put_process_in_grp(t_core *shell, t_process *process)
+static void	put_process_in_grp(t_process *process)
 {
-	(void)shell;
 	process->pid = getpid();
 	if (process->pgid == -1)
 		process->pgid = process->pid;
 	if (process->stopped == FALSE
-	&& setpgid(process->pid, process->pgid) != SUCCESS)
+		&& setpgid(process->pid, process->pgid) != SUCCESS)
 	{
+		perror("test");
 		dprintf(STDERR_FILENO, "42sh: setpgid error\n");
 		exit(EXIT_FAILURE);
 	}
@@ -50,11 +51,10 @@ static void	redir_pipes(int *infile, int *outfile)
 	}
 }
 
-int8_t		launch_blt(t_core *shell, t_job *job, t_process *process, int *fds)
+int8_t		launch_blt(t_core *shell, t_process *process, int *fds)
 {
 	int		blt;
 
-	(void)job;
 	if (fds[0] == STDIN_FILENO && fds[1] == STDOUT_FILENO && process->av
 		&& (blt = is_a_blt(process->av[0])) != FAILURE)
 	{
@@ -76,7 +76,7 @@ void		launch_process
 	if (shell->mode & I_MODE)
 	{
 		reset_signals();
-		put_process_in_grp(shell, process);
+		put_process_in_grp(process);
 	}
 	redir_pipes(&infile, &outfile);
 	fds[0] = infile;
@@ -86,7 +86,6 @@ void		launch_process
 		if ((blt = is_a_blt(process->av[0])) != FAILURE)
 			exit(call_builtin(shell, process, blt));
 	}
-	call_bin(shell, process);
 	ret = execve(process->bin, process->av, process->envp);
 	dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);
 	exit(1);
