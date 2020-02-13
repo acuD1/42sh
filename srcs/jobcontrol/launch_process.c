@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/12 08:33:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/13 22:58:13 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void		launch_process
 {
 	int		fds[2];
 	int		blt;
+	int		ret;
 
 	if (shell->mode & I_MODE)
 	{
@@ -86,4 +87,7 @@ void		launch_process
 			exit(call_builtin(shell, process, blt));
 	}
 	call_bin(shell, process);
+	ret = execve(process->bin, process->av, process->envp);
+	dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);
+	exit(1);
 }

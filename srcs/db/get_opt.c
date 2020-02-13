@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_opt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 16:34:39 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/07 01:24:45 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/13 21:09:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	opt_h(int ac, char **av, t_core *shell)
 {
 	(void)ac;
 	(void)av;
-	dprintf(STDOUT_FILENO, "42sh, version %d.%d.%d\n",
+	dprintf(STDERR_FILENO, "42sh, version %d.%d.%d\n",
 		shell->build.release, shell->build.version, shell->build.patch);
 	print_shell_usage(0, STDOUT_FILENO);
 }

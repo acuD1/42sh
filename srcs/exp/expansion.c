@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/08 21:18:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/13 20:52:50 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,6 @@ void		expansion(t_core *shell, t_process *process)
 		expansion_assign(shell, process);
 	if (process->redir_list)
 		expansion_redir(shell, process);
+	if (process->av)
+		update_last_arg(shell, process->av);
 }

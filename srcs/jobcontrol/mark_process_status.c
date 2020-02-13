@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mark_process_status.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 22:32:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/13 18:41:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/13 22:55:47 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int8_t		mark_process_status
 								: WTERMSIG(status);
 			status_handler(shell, status);
 		}
-		update_exit_status(shell);
 	}
 	else if (pid > 0)
 		background_jobs(jobs, pid, status);

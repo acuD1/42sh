@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/13 14:15:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/13 21:06:06 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void			display_prompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term->sub_prompt = 0;
-	ft_printf("%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
+	ft_dprintf(STDERR_FILENO, "%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 }
 
@@ -58,7 +58,7 @@ static int8_t	end_of_file(t_core *shell, const char *buff)
 {
 	if (!*(shell->term).buffer && get_mask(buff) == CTRL_D)
 	{
-		ft_putstr_fd("exit\n", STDOUT_FILENO);
+		ft_putstr_fd("exit\n", STDERR_FILENO);
 		reset_config(shell);
 		write_history(&shell->term);
 		return (TRUE);

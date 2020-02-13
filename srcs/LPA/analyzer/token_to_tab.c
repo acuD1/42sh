@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:54:18 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/07 06:03:45 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/13 20:45:08 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char		**ft_add_arg_cmd_process(char **tablo, const char *str)
 	while (tablo[j])
 	{
 		tb[j] = ft_strdup(tablo[j]);
-		free(tablo[j]);
+		ft_strdel(&(tablo[j]));
 		j++;
 	}
 	tb[j] = ft_strdup(str);
