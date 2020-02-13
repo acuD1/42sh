@@ -67,7 +67,7 @@ char			*format_supplementaires(char *str, t_core *shell)
 	i = 0;
 	if (str[0] == ':' || str[0] == '%' || str[0] == '$')
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: %s : mauvaise substitution\n", str);
+		ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
 		return (NULL);
 	}
 	if (str[i] == '#')
@@ -94,6 +94,8 @@ static char		*get_brace_param(const char *str, t_core *shell)
 	tmp = NULL;
 	while (str[++i])
 	{
+		if (str[i] == '\n')
+			ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
 		if (str[i] == '}')
 			break ;
 	}
