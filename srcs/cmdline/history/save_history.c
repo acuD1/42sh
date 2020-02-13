@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_history.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/06 22:31:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/13 19:47:08 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,14 @@ int8_t			init_history(t_read *term)
 		return (FAILURE);
 	while (ft_getnextline(fd, &line) > 0)
 	{
-		term->buffer = ft_strdup(line);
-		save_history(term);
-		term->history->content_size = ++i;
-		free(line);
-		free(term->buffer);
+		if (line && line[0] != '\0')
+		{
+			term->buffer = ft_strdup(line);
+			save_history(term);
+			term->history->content_size = ++i;
+			ft_strdel(&(term->buffer));
+		}
+		ft_strdel(&line);
 	}
 	free(line);
 	close(fd);
