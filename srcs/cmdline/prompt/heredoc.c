@@ -51,7 +51,7 @@ static char		*stock_value(t_core *shell)
 	ft_strdel(&shell->term.tmp_buff);
 	i = ft_strlen_to(buffer, NEW_LINE[0]);
 	shell->term.status = CMD_DONE;
-	value = ft_strsub(buffer, i + 1, ft_strlen(buffer));
+	value = ft_strsub(buffer, i, ft_strlen(buffer) - i);
 	ft_strdel(&shell->term.buffer);
 	shell->term.buffer = ft_strsub(buffer, 0, i);
 	ft_strdel(&buffer);

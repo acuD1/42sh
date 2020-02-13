@@ -73,13 +73,9 @@ char		*double_two_point_param(char **tablo, t_core *shell)
 	if (tmp[1])
 	{
 		flag[1] = ft_strlen(tmp[1]) - 1;
-		if (flag[2] < flag[1])
-			flag[2] = ft_atoi(tablo[2]);
-		else
+		if ((flag[2] = ft_atoi(tablo[2])) < 0)
 			flag[2] = flag[1];
-		if (flag[0] < flag[1])
-			flag[0] = ft_atoi(tablo[1]);
-		else
+		if ((flag[0] = ft_atoi(tablo[1])) < 0)
 		{
 			ft_tabfree(tablo);
 			return (NULL);

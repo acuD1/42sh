@@ -37,7 +37,7 @@ char		*suffix_format(char *data, t_core *shell)
 	{
 		tablo = ft_strsplit(data, "%");
 		value = check_env_key(tablo[0], shell);
-		if (!value || !*value)
+		if (value && *value)
 		{
 			if (!tablo[1])
 				resultat = ft_strdup(value);

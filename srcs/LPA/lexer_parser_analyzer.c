@@ -86,7 +86,7 @@ void			ft_printredir(t_redir *redir)
 		dprintf(nono("/dev/ttys002"), "redir op[1] %s\n", tmp->op[1]);
 	if (tmp->type == P_DLESS)
 		if (tmp->heredoc[0])
-			dprintf(nono("/dev/ttys002"), "redir heredoc %s\n", tmp->heredoc);
+			dprintf(nono("/dev/ttys002"), "redir heredoc '%s`\n", tmp->heredoc);
 }
 
 void			ft_printprocess(t_process *process)
@@ -222,7 +222,7 @@ void		lexer_parser_analyzer(t_core *shell)
 	if (parser(lxr_tok) == TRUE)
 	{
 		analyzer(shell, lxr_tok);
-		// ft_printjoblst(shell->job_list);
+		ft_printjoblst(shell->job_list);
 	}
 	ft_freetokenlist(&lxr_tok);
 }
