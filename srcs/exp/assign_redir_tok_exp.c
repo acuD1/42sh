@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:47:03 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/07 06:22:30 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/13 18:17:00 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void			expansion_redir(t_core *shell, t_process *process)
 		lst = lst->next;
 	}
 }
-	
+
 void			expansion_tok(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
