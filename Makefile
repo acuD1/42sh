@@ -323,7 +323,7 @@ DEBUG 				=
 ifeq ($(DEBUG), g)
 	CFLAG = -g
 else ifeq ($(DEBUG), fsanitize)
-	CFLAG = -fsanitize=address
+	CFLAG = -fsanitize=address -g3
 else ifeq ($(DEBUG), dev)
 	CFLAG =
 else
