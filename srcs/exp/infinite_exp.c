@@ -32,7 +32,7 @@ static int	get_quote_flag
 	return (1);
 }
 
-static void	discard_backslash(const char *data, int *i, char **res)
+void	discard_backslash(const char *data, int *i, char **res)
 {
 	int		backslash_nbr;
 	int		index;
@@ -50,6 +50,8 @@ static void	discard_backslash(const char *data, int *i, char **res)
 		}
 		backslash_nbr /= 2;
 		tmp = ft_strsub(data, index - backslash_nbr, backslash_nbr);
+		if (data[index] == '\n')
+			index++;
 		*i = index;
 		*res = ft_strjoinf(*res, tmp, 4);
 	}
@@ -61,6 +63,11 @@ static void	check_if_we_shall_exp
 	int		i;
 
 	i = flag[2];
+	// if (data[i] == '\\')
+	// {
+	// 	if (data[i + 1] && (data[i + 1] == '$' || data[i + 1] == '~' || data[i + 1] == '`'))
+			
+	// }
 	if (data[i] == '$' || data[i] == '~' || data[i] == '`')
 	{
 		flag[3] = get_exp(data, &i, res, shell);
@@ -70,7 +77,7 @@ static void	check_if_we_shall_exp
 	flag[2] = i;
 }
 
-static void	init_infinite_flags(int flag[4])
+static void	init_infinite_flags(int flag[5])
 {
 	flag[0] = 0;
 	flag[1] = 0;
@@ -101,5 +108,6 @@ char		*infinite_expansion(const char *data, t_core *shell)
 			res = ft_strjoinf(res, tmp, 4);
 		}
 	}
+	printf("#%s#\n", res);
 	return (res);
 }

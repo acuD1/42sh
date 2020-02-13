@@ -57,6 +57,7 @@ void			expansion_assign(t_core *shell, t_process *process)
 		tmp = lst;
 		lst = lst->next;
 	}
+	process->status = 0;
 }
 
 void			expansion_redir(t_core *shell, t_process *process)

@@ -51,7 +51,7 @@ REDONDANT MAIS insister ca ne fait pas de mal hein ?!
 ==32144==    by 0x10000B9E4: free_env (free_handler.c:26)
 ==32144==    by 0x10000BA4B: free_shell (free_handler.c:52)
 ==32144==    by 0x10000BE33: main (main.c:38)
-==32144==  Block was alloc'd at
+==32144==  Block was alloc'd at7
 ==32144==    at 0x100114AD5: malloc (in /Users/guvillat/.brew/Cellar/valgrind/HEAD-60ab74a/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
 ==32144==    by 0x1000181CC: ft_memalloc (ft_memalloc.c:21)
 ==32144==    by 0x1000180AE: ft_lstnew (ft_lstnew.c:20)
@@ -561,3 +561,22 @@ pb redir heredoc ls <<< a << b << c
 ==56474==    by 0x10000FC03: infinite_expansion (infinite_exp.c:95)
 ==56474==    by 0x10000F4F2: do_expansion (do_exp_and_quotes.c:109)
 ==56474==
+
+
+
+
+----------------------------------------------------------------------------------
+
+ctrl v de ca 
+echo toto 2>&- 1>&2
+
+==52440== 1 bytes in 1 blocks are definitely lost in loss record 1 of 57
+==52440==    at 0x100114AD5: malloc (in /Users/guvillat/.brew/Cellar/valgrind/HEAD-60ab74a/lib/valgrind/vgpreload_memcheck-amd64-darwin.so)
+==52440==    by 0x1000180EC: ft_memalloc (ft_memalloc.c:21)
+==52440==    by 0x100018608: ft_strdup (ft_strdup.c:21)
+==52440==    by 0x100007586: move_key_up (move_cursor.c:78)
+==52440==    by 0x100006470: cursor_motion (check_caps.c:48)
+==52440==    by 0x100006313: check_caps (check_caps.c:100)
+==52440==    by 0x10000B01B: init_prompt (prompt.c:103)
+==52440==    by 0x10000BCE3: load_i_mode (shell_loader.c:32)
+==52440==    by 0x10000BBA1: main (main.c:34)
