@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/12 12:51:23 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:11:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static u_int8_t	heredoc_error(const char *key)
 
 static int8_t	check_key(t_core *shell, const char *key)
 {
-	if (read_multiline(&shell->term, FALSE) == FALSE)
+	if (read_multiline(&shell->term, NULL) == FALSE)
 	{
 		if (shell->term.flag == TRUE)
 			return (heredoc_error(key));

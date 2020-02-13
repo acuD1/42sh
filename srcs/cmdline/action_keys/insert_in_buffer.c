@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 05:22:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/13 17:22:08 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void		insert_char_in_buffer(const char buff, t_read *term, int buff_index)
 	ft_dprintf(STDIN_FILENO, "%c", buff);
 	if (buff == NEW_LINE[0] || term->x >= term->ws_col)
 	{
-		term->x = 0;
+		if (buff == NEW_LINE[0])
+			term->x = -1;
+		else
+			term->x = 0;
 		term->y++;
 	}
 	term->x++;
