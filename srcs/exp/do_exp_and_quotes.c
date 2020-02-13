@@ -14,6 +14,7 @@
 
 static enum e_estate	skip_quotes(const char *str, int *j, enum e_estate st)
 {
+	// printf("%c %u\n", str[*j], st);
 	if (!str || ((str[*j] == '\"' && st == E_QUOTE)
 		|| (str[*j] == '\'' && st == E_DBQUOTE)))
 		return (st);
@@ -36,7 +37,7 @@ static enum e_estate	skip_quotes(const char *str, int *j, enum e_estate st)
 			*j += 1;
 	}
 	if (str[*j] == '\'' || str[*j] == '\"')
-		skip_quotes(str, j, st);
+		st = skip_quotes(str, j, st);
 	return (st);
 }
 

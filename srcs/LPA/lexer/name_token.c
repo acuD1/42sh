@@ -12,27 +12,31 @@
 
 #include "sh42.h"
 
-static void		loop_till_next_quote(const char *str, int *index, char quote)
+static int		loop_till_next_quote(const char *str, int index, char quote)
 {
-	if (!str[*index])
-		return ;
-	*index += 1;
-	while (str[*index] != quote)
-		*index += 1;
+	if (!str[index])
+		return (index);
+	while (str[index] && str[index] != quote)
+		index++;
+	return (index);
 }
 
 void			check_all_quotes(char *str, int *index)
 {
-	if (str[*index] == '\'')
-		loop_till_next_quote(str, index, '\'');
-	if (str[*index] == '`')
-		loop_till_next_quote(str, index, '`');
-	if (str[*index] == '\"')
-		loop_till_next_quote(str, index, '\"');
-	if (str[*index] == '{')
-		loop_till_next_quote(str, index, '}');
-	if (str[*index] == '(')
-		loop_till_next_quote(str, index, ')');
+	int			i;
+
+	i = *index;
+	if (str[i] == '\'')
+		i = loop_till_next_quote(str, i + 1, '\'');
+	if (str[i] == '`')
+		i = loop_till_next_quote(str, i + 1, '`');
+	if (str[i] == '\"')
+		i = loop_till_next_quote(str, i + 1, '\"');
+	if (str[i] == '{')
+		i = loop_till_next_quote(str, i, '}');
+	if (str[i] == '(')
+		i = loop_till_next_quote(str, i, ')');
+	*index = i;
 }
 
 int				get_word_size_ntype(int i, char *str)

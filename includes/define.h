@@ -133,7 +133,7 @@
 */
 
 # define NB_OF_EXP				12
-# define CHAR_INTERRUPT 		" \t<>|;&\n"
+# define CHAR_INTERRUPT 		" \t<>|;&"
 # define OPERATORS				"&|;><"
 
 #endif
