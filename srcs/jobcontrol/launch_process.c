@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   launch_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
 /*   Updated: 2020/02/12 08:33:08 by fcatusse         ###   ########.fr       */
@@ -28,7 +28,8 @@ static void	put_process_in_grp(t_core *shell, t_process *process)
 	process->pid = getpid();
 	if (process->pgid == -1)
 		process->pgid = process->pid;
-	if (setpgid(process->pid, process->pgid) != SUCCESS)
+	if (process->stopped == FALSE
+	&& setpgid(process->pid, process->pgid) != SUCCESS)
 	{
 		dprintf(STDERR_FILENO, "42sh: setpgid error\n");
 		exit(EXIT_FAILURE);
@@ -49,13 +50,13 @@ static void	redir_pipes(int *infile, int *outfile)
 	}
 }
 
-int8_t		launch_blt
-	(t_core *shell, t_process *process, int *fds, int foreground)
+int8_t		launch_blt(t_core *shell, t_job *job, t_process *process, int *fds)
 {
 	int		blt;
 
-	if (fds[0] == STDIN_FILENO && fds[1] == STDOUT_FILENO && foreground
-		&& process->av && (blt = is_a_blt(process->av[0])) != FAILURE)
+	(void)job;
+	if (fds[0] == STDIN_FILENO && fds[1] == STDOUT_FILENO && process->av
+		&& (blt = is_a_blt(process->av[0])) != FAILURE)
 	{
 		process->status = call_builtin(shell, process, blt);
 		process->completed = TRUE;

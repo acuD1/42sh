@@ -240,6 +240,7 @@ SRC					+=	$(S_PATH)$(JOBC)job_utils.c
 SRC					+=	$(S_PATH)$(JOBC)jobc_id.c
 SRC					+=	$(S_PATH)$(JOBC)launch_process.c
 SRC					+=	$(S_PATH)$(JOBC)mark_process_status.c
+SRC					+=	$(S_PATH)$(JOBC)mark_job_as_stopped.c
 SRC					+=	$(S_PATH)$(JOBC)notifications.c
 SRC					+=	$(S_PATH)$(JOBC)wait_job.c
 
@@ -328,7 +329,7 @@ DEBUG 				=
 ifeq ($(DEBUG), g)
 	CFLAG = -g
 else ifeq ($(DEBUG), fsanitize)
-	CFLAG = -fsanitize=address
+	CFLAG = -fsanitize=address -g3
 else ifeq ($(DEBUG), dev)
 	CFLAG =
 else

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   sigint.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
 /*   Updated: 2020/02/13 14:31:37 by fcatusse         ###   ########.fr       */
@@ -12,24 +12,6 @@
 
 #include "sh42.h"
 #include <signal.h>
-
-static void		kill_processes(int signum, t_core *shell)
-{
-	t_lst	*ptr;
-
-	ptr = shell->running_process->next;
-	kill(((t_process*)shell->running_process->content)->pid, signum);
-	if (ptr && ((t_process*)ptr->content)->type == P_PIPE)
-	{
-		while (ptr && ((t_process*)ptr->content)->type == P_PIPE)
-		{
-			kill(((t_process*)ptr->content)->pid, signum);
-			ptr = ptr->next;
-		}
-		kill(((t_process*)ptr->content)->pid, signum);
-	}
-	shell->running_process = NULL;
-}
 
 static void		erase_line(t_core *shell)
 {
@@ -64,11 +46,5 @@ void			sigint_handler(int signum)
 	(void)signum;
 	shell = get_core(NULL);
 	signal(SIGINT, sigint_handler);
-	if (shell->running_process != NULL)
-	{
-		kill_processes(signum, shell);
-		write(2, "\n", 1);
-	}
-	else
-		erase_line(shell);
+	erase_line(shell);
 }

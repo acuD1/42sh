@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dispatcher.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/06 19:10:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/10 03:50:59 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,6 @@ static void	clean_pipes(int *infile, int *outfile, int *mypipe)
 		close(*outfile);
 	*infile = mypipe[0];
 	mypipe[0] = STDIN_FILENO;
-}
-
-static void	place_job(t_core *shell, t_job *job, int8_t foreground)
-{
-	if (shell->mode & I_MODE && (job_is_completed(job) || job_is_stopped(job)))
-		return ;
-	if (shell->mode & NOI_MODE)
-		wait_for_job(shell, shell->job_list, job);
-	else if (foreground == TRUE && !job_is_stopped(job))
-		put_job_in_foreground(shell, shell->job_list, job, FALSE);
-	else
-	{
-		job->jobc_id = update_jobs(shell->launched_jobs);
-		job_background_notif(job);
-		put_job_in_background(shell, job, FALSE);
-	}
 }
 
 static void	condition_fulfilled(t_lst *process)
@@ -89,13 +73,12 @@ void		launch_job(t_core *shell, t_job *job, int foreground)
 		expansion(shell, ptr);
 		if (ptr->completed == FALSE)
 		{
-			launch_blt(shell, ptr, fds, foreground);
-			if (ptr->completed != TRUE)
+			launch_blt(shell, job, ptr, fds);
+			if (ptr->completed == FALSE)
 				exec_process(shell, job, ptr, fds);
 		}
 		condition_fulfilled(process);
 		clean_pipes(&fds[0], &fds[1], mypipe);
 		process = process->next;
 	}
-	place_job(shell, job, foreground);
 }

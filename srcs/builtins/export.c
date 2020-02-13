@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 04:11:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/11 15:40:47 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,20 @@ static int8_t	export(t_core *shell, const char *arg, int *ret)
 	return (SUCCESS);
 }
 
+static void		export_display(t_core *shell)
+{
+	t_lst *db;
+
+	db = shell->env;
+	while (db)
+	{
+		if (((t_db*)db->content)->type == ENV_VAR)
+			printf("export %s=\"%s\"\n"
+			, ((t_db*)db->content)->key, ((t_db*)db->content)->value);
+		db = db->next;
+	}
+}
+
 int8_t			builtin_export(t_core *shell, t_process *process)
 {
 	int		argc;
@@ -67,7 +81,12 @@ int8_t			builtin_export(t_core *shell, t_process *process)
 	int		i;
 
 	argc = ft_tablen(process->av);
-	i = (argc > 1 && process->av[1][0] != '-') ? 1 : 2;
+	i = (argc > 1 && ft_strcmp("--", process->av[1]) != 0) ? 1 : 2;
+	if (i == argc + 1)
+	{
+		export_display(shell);
+		return (0);
+	}
 	if ((ret = parse_export(argc, process->av)) != SUCCESS)
 		return (ret);
 	ret = 0;

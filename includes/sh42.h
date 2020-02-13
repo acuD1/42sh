@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/07 06:20:01 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/11 15:40:26 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		get_opt(int ac, char **av, t_core *shell);
 void		version(t_core *shell);
 void		load_i_mode(t_core *shell);
 void		load_noi_mode(t_core *shell);
-void		free_env(t_lst *env);
+void		free_db(t_lst *env);
 void		free_prompt(t_core *shell);
 void		free_shell(t_core *shell);
 void		reset_hash(t_hash *hash);
@@ -54,7 +54,7 @@ void		reset_hash(t_hash *hash);
 int8_t		set_env(t_core *shell, char **argv, char **environ);
 int8_t		del_db(t_core *shell, const char *key);
 int8_t		init_shell(t_core *shell, char **av, char **environ);
-t_db		*fetch_db(t_db *db, const char *s, const u_int8_t v_type);
+t_db		*fetch_db(t_db *db, const char *s, u_int8_t v_type);
 t_db		*modify_db(t_db	*db, char *new_value, u_int8_t new_type);
 t_db		*get_or_create_db(t_core *shell, const char *key, u_int8_t v_type);
 t_db		*search_db(t_lst *env, const char *key);
@@ -141,7 +141,7 @@ int8_t		update_process_id(t_core *shell);
 int8_t		update_shell_name(t_core *shell);
 int8_t		update_shell_flags(t_core *shell);
 int8_t		update_exit_status(t_core *shell);
-int8_t		update_backgroud_pid(t_core *shell);
+int8_t		update_background_pid(t_core *shell);
 int8_t		update_ps1(t_core *shell);
 int8_t		update_ps2(t_core *shell);
 int8_t		update_last_arg(t_core *shell, char **argv);
@@ -224,8 +224,8 @@ void		job_background_notif(t_job *job);
 void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
 int8_t		mark_process_status
 				(t_core *shell, t_lst *jobs, pid_t pid, int status);
-int8_t		launch_blt
-				(t_core *shell, t_process *process, int *fds, int foreground);
+void		mark_job_as_stopped(t_job *job, int stopped);
+int8_t		launch_blt(t_core *shell, t_job *job, t_process *process, int *fds);
 void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
 void		update_status(t_core *shell);
 t_job		*get_job(t_lst *jobs, char *str);
@@ -233,5 +233,7 @@ t_job		*get_job_by_id(t_lst *jobs, int id);
 void		format_job_info(t_job *job);
 int			update_jobs(t_lst *jobs);
 void		attr_jobc_id(t_core *shell, t_job *job);
+int8_t		do_job_notification(t_core *shell, t_lst *job);
+int			cond(t_lst *process);
 
 #endif

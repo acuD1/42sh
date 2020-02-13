@@ -17,7 +17,7 @@
 **	and {var_type} (env, set or intern)
 */
 
-t_db	*fetch_db(t_db *db, const char *s, const u_int8_t var_type)
+t_db	*fetch_db(t_db *db, const char *s, u_int8_t var_type)
 {
 	size_t	len;
 

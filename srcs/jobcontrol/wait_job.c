@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   wait_job.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 20:36:16 by mpivet-p          #+#    #+#             */
 /*   Updated: 2020/02/12 08:33:45 by fcatusse         ###   ########.fr       */

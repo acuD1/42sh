@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 20:31:06 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/13 18:36:02 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/08 21:07:37 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static void	ft_free_redir(t_redir *redir)
+static void	free_redir(t_redir *redir)
 {
 	ft_strdel(&(redir->op[0]));
 	ft_strdel(&(redir->op[1]));
@@ -20,7 +20,7 @@ static void	ft_free_redir(t_redir *redir)
 	free(redir);
 }
 
-static void	ft_free_redirlist(t_lst **head)
+static void	free_redirlist(t_lst **head)
 {
 	t_lst	*ptr;
 	t_lst	*next;
@@ -31,7 +31,7 @@ static void	ft_free_redirlist(t_lst **head)
 	while (ptr)
 	{
 		next = ptr->next;
-		ft_free_redir(ptr->content);
+		free_redir(ptr->content);
 		free(ptr);
 		ptr = next;
 	}
@@ -49,7 +49,7 @@ void		free_process_list(t_lst **head)
 	while (ptr != NULL)
 	{
 		next = ptr->next;
-		ft_free_redirlist((t_lst **)&(((t_process *)ptr->content)->redir_list));
+		free_redirlist((t_lst **)&(((t_process *)ptr->content)->redir_list));
 		free_db((((t_process *)ptr->content)->assign_list));
 		ft_tabdel(&(((t_process *)ptr->content)->av));
 		ft_tabdel(&(((t_process *)ptr->content)->envp));
