@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 05:04:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/13 14:28:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void		parse_env(char **prev_b, const char *to_find, t_read *term)
 	tmp = NULL;
 	env = term->shell->env;
 	head = env;
-	while (env)
+	term->flag = FALSE;
+	while (env->next)
 	{
 		if (ft_isstart(((t_db *)(env->content))->key, to_find + 1)
 			|| !ft_strcmp(to_find, "$"))
@@ -32,12 +33,10 @@ void		parse_env(char **prev_b, const char *to_find, t_read *term)
 			term->flag = TRUE;
 			ft_strdel(&tmp);
 		}
-		if (env->next)
-			env = env->next;
-		else if (term->flag == TRUE)
-			env = head;
+		env = env->next;
 	}
 	ft_strdel(&tmp);
+	(term->flag == TRUE) ? parse_env(prev_b, to_find, term) : 0;
 }
 
 /*
