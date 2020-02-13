@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:29:40 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/12 03:24:09 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/13 16:52:45 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ void	close_fds(t_lst *redirs)
 {
 	t_redir	*ptr;
 
-	while (redirs)
+	if (redirs)
 	{
+		close_fds(redirs->next);
 		ptr = ((t_redir*)redirs->content);
 		if (ptr->dup_fd[0] >= 0)
 		{
@@ -48,7 +49,6 @@ void	close_fds(t_lst *redirs)
 			dup2(ptr->dup_fd[1], ptr->io_num[1]);
 			close(ptr->dup_fd[1]);
 		}
-		redirs = redirs->next;
 	}
 }
 
