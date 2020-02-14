@@ -101,6 +101,7 @@ tags
 .history
 .42sh_history
 truc
+test
 
 ### DEBUG ###
 srcs/debug.c

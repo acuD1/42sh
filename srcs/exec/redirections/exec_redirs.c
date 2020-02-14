@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:01 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/13 16:42:50 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/14 03:56:28 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,23 @@ static int8_t	get_fd(t_redir *redir)
 	return (SUCCESS);
 }
 
-int8_t			exec_redirs(t_core *shell, t_lst *head)
+int8_t			exec_redirs(t_core *shell, t_process *process)
 {
 	t_lst	*redirs;
 	int		i;
 
 	i = 0;
-	redirs = head;
+	redirs = process->redir_list;
 	while (redirs != NULL)
 	{
 		if (((t_redir*)redirs->content)->type == P_DLESS)
 			((t_redir*)redirs->content)->dup_fd[0] = shell->heredoc++;
 		if (get_fd(((t_redir*)redirs->content)) != SUCCESS)
-			return (1);
+		{
+			process->status = 1;
+			process->completed = TRUE;
+			return (FAILURE);
+		}
 		redirs = redirs->next;
 	}
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/13 23:39:28 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/14 03:57:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ void		skip_options(char ***av);
 **	===========================================================================
 */
 
-int8_t		exec_redirs(t_core *shell, t_lst *redirs);
+int8_t		exec_redirs(t_core *shell, t_process *process);
 int8_t		dup_output(int fd, t_redir *ptr);
 int8_t		dup_input(int fd, t_redir *ptr);
 int8_t		append_output(t_redir *ptr);
