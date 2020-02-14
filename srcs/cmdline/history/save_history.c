@@ -90,18 +90,20 @@ int8_t			init_history(t_read *term)
 	char	*line;
 	int		fd;
 	int		i;
-
 	i = 0;
 	line = NULL;
 	if ((fd = open(HISTORY_FILE, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)
 		return (FAILURE);
 	while (ft_getnextline(fd, &line) > 0)
 	{
-		term->buffer = ft_strdup(line);
-		save_history(term);
-		term->history->content_size = ++i;
-		free(line);
-		free(term->buffer);
+		if (line && line[0] != '\0')
+		{
+			term->buffer = ft_strdup(line);
+			save_history(term);
+			term->history->content_size = ++i;
+			ft_strdel(&(term->buffer));
+		}
+		ft_strdel(&line);
 	}
 	free(line);
 	close(fd);

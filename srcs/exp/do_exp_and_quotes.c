@@ -12,9 +12,8 @@
 
 #include "sh42.h"
 
-static enum e_estate	skip_quotes(const char *str, int *j, enum e_estate st)
+enum e_estate	skip_quotes(const char *str, int *j, enum e_estate st)
 {
-	// printf("%c %u\n", str[*j], st);
 	if (!str || ((str[*j] == '\"' && st == E_QUOTE)
 		|| (str[*j] == '\'' && st == E_DBQUOTE)))
 		return (st);
@@ -27,7 +26,7 @@ static enum e_estate	skip_quotes(const char *str, int *j, enum e_estate st)
 		else if (st == NB_EXPANSION_STATE)
 			st = E_DBQUOTE;
 	}
-	if (str[*j] == '\'' && (st == E_QUOTE || st == NB_EXPANSION_STATE))
+	else if (str[*j] == '\'' && (st == E_QUOTE || st == NB_EXPANSION_STATE))
 	{
 		if (st == E_QUOTE)
 			st = NB_EXPANSION_STATE;
@@ -41,44 +40,13 @@ static enum e_estate	skip_quotes(const char *str, int *j, enum e_estate st)
 	return (st);
 }
 
-static char				*quote_mechanisms(char *str)
-{
-	char			*new;
-	int				i;
-	int				j;
-	enum e_estate	state;
-
-	j = 0;
-	i = 0;
-	new = NULL;
-	if (!str)
-		return (NULL);
-	new = ft_strnew(ft_strlen(str));
-	state = NB_EXPANSION_STATE;
-	i = 0;
-	while (str[j])
-	{
-		state = skip_quotes(str, &j, state);
-		if (!str[j])
-			break ;
-		new[i] = str[j];
-		i++;
-		j++;
-	}
-	ft_strdel(&str);
-	return (new);
-}
-
 char					*do_exp_et_quote(t_core *shell, const char *data)
 {
 	char	*exp;
-	char	*unquoted;
 
 	exp = NULL;
-	unquoted = NULL;
 	if ((exp = do_expansion(shell, data)))
-		if ((unquoted = quote_mechanisms(exp)))
-			return (unquoted);
+		return (exp);
 	return (NULL);
 }
 

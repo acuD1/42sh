@@ -40,7 +40,7 @@ char			*moar_format_plz(char *data, t_core *shell)
 			return (get_two_point_param_exp(tablo, shell));
 		}
 	}
-	ft_dprintf(STDERR_FILENO, "42sh: %s : mauvaise substitution\n", tablo[0]);
+	ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", tablo[0]);
 	ft_tabfree(tablo);
 	ft_strdel(&data);
 	return (NULL);
@@ -112,7 +112,7 @@ char			*exp_param(const char *data, t_core *shell)
 	tmp = NULL;
 	if (data[0] == '$' && data[1] == '{')
 		return (tmp = get_brace_param(data, shell));
-	else if (data[0] == '$')
+	else if (data[0] == '$' && data[1])
 	{
 		tmp = ft_strsub(data, 1, ft_strlen(data) - 1);
 		return (simple_format(tmp, shell));
