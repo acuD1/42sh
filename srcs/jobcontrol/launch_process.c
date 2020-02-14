@@ -6,13 +6,12 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/13 23:38:27 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/14 00:04:38 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <signal.h>
-#include <errno.h>
 
 void		reset_signals(void)
 {
@@ -31,7 +30,6 @@ static void	put_process_in_grp(t_process *process)
 	if (process->stopped == FALSE
 		&& setpgid(process->pid, process->pgid) != SUCCESS)
 	{
-		perror("test");
 		dprintf(STDERR_FILENO, "42sh: setpgid error\n");
 		exit(EXIT_FAILURE);
 	}

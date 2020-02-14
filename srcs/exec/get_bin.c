@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_bin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/07 05:29:08 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/14 02:27:23 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,23 @@ static int8_t	format_path(const char *path, t_process *process)
 	return ((process->bin == NULL) ? FAILURE : SUCCESS);
 }
 
+static int8_t	valid_path(t_core *shell, t_process *process, char ***splt_path)
+{
+	if (check_filepath(process->bin) == SUCCESS)
+	{
+		hash_map_dispatcher(shell, process, H_EXEC);
+		ft_tabdel(splt_path);
+		return (SUCCESS);
+	}
+	if (access(process->bin, F_OK) != 0)
+		ft_strdel(&process->bin);
+	return (FAILURE);
+}
+
 int8_t			get_bin_path(t_core *shell, t_process *process)
 {
-	t_db	*db;
 	char	**split_path;
+	t_db	*db;
 	int		i;
 
 	i = 0;
@@ -57,15 +70,14 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 		return (FAILURE);
 	while (split_path[i] != NULL)
 	{
-		if (format_path(split_path[i], process) != SUCCESS)
-			return (FAILURE);
-		if (check_filepath(process->bin) == SUCCESS)
-		{
-			hash_map_dispatcher(shell, process, H_EXEC);
-			ft_tabdel(&split_path);
-			return (SUCCESS);
-		}
 		ft_strdel(&process->bin);
+		if (access(split_path[i], X_OK | F_OK) == 0)
+		{
+			if (format_path(split_path[i], process) != SUCCESS)
+				return (FAILURE);
+			if (valid_path(shell, process, &split_path) == SUCCESS)
+				return (SUCCESS);
+		}
 		i++;
 	}
 	ft_tabdel(&split_path);

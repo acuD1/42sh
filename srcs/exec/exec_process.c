@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/13 23:51:02 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/14 00:25:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void		check_filepath(t_core *shell, t_process *process)
 		process->status = 127;
 	}
 	else if ((ret = ft_access(process->bin, F_OK | X_OK)) != SUCCESS)
-		ft_perror(process->av[0], NULL, ret);
+		ft_perror(process->bin, NULL, ret);
 	else if (is_dir(process->bin))
 		ft_perror(process->av[0], NULL, EISDIR);
 	else
