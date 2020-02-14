@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 03:59:34 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 01:21:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/14 14:34:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ static int8_t	parse_unset(int argc, char **argv)
 		return (2);
 	}
 	return (SUCCESS);
+}
+
+static void		unset_hash_handler(t_core *shell, const char *str)
+{
+	if (ft_strequ(str, "PATH") == TRUE)
+		free_hash_map(&shell->hash);
 }
 
 int8_t			builtin_unset(t_core *shell, t_process *process)
@@ -43,10 +49,13 @@ int8_t			builtin_unset(t_core *shell, t_process *process)
 		{
 			ret = 1;
 			dprintf(STDERR_FILENO
-			, "42sh: export: `%s': not a valid identifier\n", process->av[i]);
+			, "42sh: unset: `%s': not a valid identifier\n", process->av[i]);
 		}
 		else
+		{
+			unset_hash_handler(shell, process->av[i]);
 			del_db(shell, process->av[i]);
+		}
 		i++;
 	}
 	return (ret);
