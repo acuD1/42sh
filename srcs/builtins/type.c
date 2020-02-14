@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 05:41:09 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 04:27:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/14 20:14:15 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int8_t	type(t_core *shell, char *path)
 {
 	t_process	process;
 
+	ft_bzero(&process, sizeof(t_process));
+	process.blt = TRUE;
 	if (is_a_blt(path) != FAILURE)
 	{
 		printf("%s is a shell builtin\n", path);
@@ -31,8 +33,8 @@ static int8_t	type(t_core *shell, char *path)
 		printf("%s is %s\n", path, process.bin);
 	else
 		dprintf(STDERR_FILENO, "42sh: type: %s: not found\n", path);
+	ft_strdel(&process.bin);
 	free(process.av);
-	process.av[0] = NULL;
 	return (SUCCESS);
 }
 

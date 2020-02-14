@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/11 15:40:38 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/14 20:07:24 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ typedef struct				s_process
 	int8_t					completed;
 	int8_t					stopped;
 	int8_t					status;
+	int8_t					blt;
 }							t_process;
 
 typedef struct				s_redir

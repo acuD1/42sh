@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/08 20:26:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/14 20:06:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,17 @@
 # define ACCESS_MAX_PATH		1024
 
 /*
-**	Command Line
+**	Core
 */
 
 # define I_MODE					0x001
 # define NOI_MODE				0x002
 # define OPT_MODE				0x004
+
+/*
+** Command Line
+*/
+
 # define CREDIT					"arsciand, fcatusse, mpivet-p and guvillat\n"
 # define PS1					"'42sh-0.1$ '"
 # define PS2					"'> '"

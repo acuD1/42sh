@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_bin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/14 02:27:23 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/14 21:03:45 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ static int8_t	format_path(const char *path, t_process *process)
 	return ((process->bin == NULL) ? FAILURE : SUCCESS);
 }
 
-static int8_t	valid_path(t_core *shell, t_process *process, char ***splt_path)
+static int8_t	valid_path(t_process *process, char ***splt_path)
 {
 	if (check_filepath(process->bin) == SUCCESS)
 	{
-		hash_map_dispatcher(shell, process, H_EXEC);
 		ft_tabdel(splt_path);
 		return (SUCCESS);
 	}
@@ -65,17 +64,20 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 
 	i = 0;
 	if (!(db = search_db(shell->env, "PATH")))
-		return (1);
+	{
+		process->bin = ft_strdup(process->av[0]);
+		return (SUCCESS);
+	}
 	if (!(split_path = ft_strsplit(db->value, ":")))
 		return (FAILURE);
 	while (split_path[i] != NULL)
 	{
-		ft_strdel(&process->bin);
+		ft_strdel(&(process->bin));
 		if (access(split_path[i], X_OK | F_OK) == 0)
 		{
 			if (format_path(split_path[i], process) != SUCCESS)
 				return (FAILURE);
-			if (valid_path(shell, process, &split_path) == SUCCESS)
+			if (valid_path(process, &split_path) == SUCCESS)
 				return (SUCCESS);
 		}
 		i++;
@@ -100,7 +102,10 @@ int8_t			get_bin(t_core *shell, t_process *process)
 	}
 	if (locate_hash(shell, process) == SUCCESS)
 		return (SUCCESS);
-	if ((ret = get_bin_path(shell, process)) == 1)
+	ret = get_bin_path(shell, process);
+	if (!process->blt)
+		hash_map_dispatcher(shell, process, H_EXEC);
+	if (ret == 1)
 		return (FAILURE);
 	return (SUCCESS);
 }
