@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:38:40 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/07 02:01:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/14 14:57:19 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ static int8_t	fill_default
 	t_process	process_tmp;
 
 	(void)fmt;
-	if (is_hashed(shell, process, i) == SUCCESS)
+
+	if ((is_a_blt(process->av[i]) != FAILURE)
+		|| (is_hashed(shell, process, i) == SUCCESS))
 		return (SUCCESS);
 	ft_bzero(&process_tmp, sizeof(t_process));
 	if (!(process_tmp.av = malloc(sizeof(char *) * (2))))
