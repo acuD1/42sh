@@ -108,6 +108,5 @@ char		*infinite_expansion(const char *data, t_core *shell)
 			res = ft_strjoinf(res, tmp, 4);
 		}
 	}
-	printf("#%s#\n", res);
 	return (res);
 }
