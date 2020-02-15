@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/15 16:19:17 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/15 18:01:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void		control_process
 	process->pgid = job->pgid;
 	if ((process->stopped != TRUE || !cond(job->process_list))
 		&& setpgid(process->pid, process->pgid) != SUCCESS)
-		print_and_quit(shell, "42sh: setpgid error\n");
+		print_and_quit(shell, "42sh: setpgid error (1)\n");
 	if (process->stopped != TRUE && fds[1] == STDOUT_FILENO)
 	{
 		if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
