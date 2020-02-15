@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/13 16:11:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/15 15:56:35 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,15 @@ char			*load_heredoc(t_core *shell, const char *key)
 	shell->term.tmp_buff = ft_strdup(shell->term.buffer);
 	shell->term.status = CMD_SUBPROMPT;
 	get_prompt_value(shell, "PS2");
-	while (TRUE)
+	while (TRUE && shell->term.status == CMD_SUBPROMPT)
 	{
 		ft_strdel(&shell->term.buffer);
 		shell->term.buffer = ft_memalloc(BUFF_SIZE);
 		display_subprompt(&shell->term);
 		if (check_key(shell, key) == FALSE)
+		{
 			continue ;
+		}
 		else if (*shell->term.prompt
 			|| (!*shell->term.prompt && shell->term.buffer))
 			break ;
@@ -83,5 +85,6 @@ char			*load_heredoc(t_core *shell, const char *key)
 			return (NULL);
 	}
 	value = stock_value(shell);
+	shell->term.status = CMD_DONE;
 	return (value);
 }

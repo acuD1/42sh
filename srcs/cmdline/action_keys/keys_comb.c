@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 05:18:42 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/15 15:51:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void	move_in_column(u_int64_t value, t_read *term)
 
 void		jump_words(const char *buff, t_read *term, u_int64_t value)
 {
-	if (value == CTRL_F)
+	if (value == CTRL_B)
 	{
 		if (term->buffer[term->x_index - term->prompt_len] != ' ')
 			move_left(buff, term);
@@ -103,7 +103,7 @@ void		jump_words(const char *buff, t_read *term, u_int64_t value)
 			&& term->buffer[term->x_index - term->prompt_len - 1] != ' ')
 			move_left(buff, term);
 	}
-	else if (value == CTRL_B)
+	else if (value == CTRL_F)
 	{
 		if (term->buffer[term->x_index - term->prompt_len] != ' ')
 			move_right(buff, term);

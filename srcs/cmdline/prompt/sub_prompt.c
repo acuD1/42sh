@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/13 18:24:12 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/15 17:28:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,17 @@ u_int8_t		read_multiline(t_read *term, char *sb)
 	char	buff[READ_SIZE + 1];
 
 	ft_bzero(buff, READ_SIZE);
-	while (term->status == CMD_SUBPROMPT
-						&& xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		if (check_caps(buff, term) == TRUE)
 		{
 			ft_bzero(buff, READ_SIZE);
 			continue ;
 		}
-		else if (term->status == CMD_SUBPROMPT)
+		else
 		{
+			if (term->status != CMD_SUBPROMPT)
+				return (TRUE);
 			if (!sb)
 				return (FALSE);
 			else if (*sb == BACKSLASH && check_backslash(term, sb) == FALSE)

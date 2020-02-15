@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/13 17:22:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/15 15:48:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void		move_key_up(t_read *term)
 		}
 		else
 		{
-			if ((*term).buffer)
+			if (term->buffer)
 				term->tmp_buff = ft_strdup(term->buffer);
 			term->history_index = term->history;
 			w = term->history;
