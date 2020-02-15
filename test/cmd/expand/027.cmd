@@ -1,1 +1,0 @@
-echo ${TEST:=LOL} ${HOME:=/bin} ${TEST1:=$PWD}

@@ -1,2 +1,0 @@
-echo "coucou #"
-echo "'" "\"" '\' \' \" \$PWD \\

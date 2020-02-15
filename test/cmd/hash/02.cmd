@@ -1,2 +1,0 @@
-hash /bin/ls
-hash

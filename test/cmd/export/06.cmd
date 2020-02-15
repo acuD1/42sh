@@ -1,1 +1,0 @@
-LALA=test2; export LALA

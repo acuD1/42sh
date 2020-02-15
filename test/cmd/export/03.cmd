@@ -1,1 +1,0 @@
-export testdd=plot; echo $testdd

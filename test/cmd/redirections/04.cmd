@@ -1,3 +1,0 @@
-cat << k
-test
-k

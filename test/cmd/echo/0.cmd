@@ -1,1 +1,0 @@
-echo coucou les amis

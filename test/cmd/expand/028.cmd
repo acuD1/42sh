@@ -1,1 +1,0 @@
-echo ${PWD:+LOL} ${MDR:+LOL} ${MDR:+$PWD}
