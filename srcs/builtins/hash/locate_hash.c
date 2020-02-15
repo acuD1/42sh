@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:20:26 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/14 18:49:52 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/15 17:09:19 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int8_t			locate_hash(t_core *shell, t_process *process)
 		if (ft_strequ(process->av[0], ((t_db*)sub_map->content)->key))
 		{
 			if (ft_access(((t_db*)sub_map->content)->value,
-				F_OK) != SUCCESS)
+				F_OK | X_OK) != SUCCESS)
 				return (del_located_hash(shell, sub_map, process));
 			process->bin = ft_strdup(((t_db*)sub_map->content)->value);
 			((t_db*)sub_map->content)->hit += 1;
