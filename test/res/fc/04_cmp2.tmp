@@ -1,0 +1,2 @@
+bash: line 1: fc: -k: invalid option
+fc: usage: fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]

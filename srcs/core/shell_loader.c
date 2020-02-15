@@ -25,7 +25,7 @@ void	load_noi_mode(t_core *shell)
 
 void	load_i_mode(t_core *shell)
 {
-	version(shell);
+	// version(shell);
 	init_cmd_line(shell, &shell->term);
 	while (1)
 	{

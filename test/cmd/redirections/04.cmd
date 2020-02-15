@@ -1,0 +1,3 @@
+cat << k
+test
+k

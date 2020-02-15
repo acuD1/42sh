@@ -1,0 +1,213 @@
+# Used to for supressing OSX loading leaks
+{
+   osx_1080_loader_false_positive_1
+   Memcheck:Leak
+   ...
+   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEjRNS_21InitializerTimingListE
+   ...
+}
+{
+   osx_1080_loader_false_positive_2
+   Memcheck:Leak
+   ...
+   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+   ...
+}
+{
+   osx_1080_loader_false_positive_3
+   Memcheck:Leak
+   ...
+   fun:map_images_nolock
+   ...
+}
+{
+   osx_1080_loader_false_positive_4
+   Memcheck:Leak
+   ...
+   fun:_objc_fetch_pthread_data
+   fun:_ZL27_fetchInitializingClassLista
+   fun:_class_initialize
+   fun:_class_initialize
+   fun:_class_initialize
+   fun:_class_initialize
+   fun:prepareForMethodLookup
+   fun:lookUpMethod
+   fun:objc_msgSend
+   fun:_libxpc_initializer
+   fun:libSystem_initializer
+}
+{
+   osx_1080_loader_false_positive_5
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:_nc_table_new
+   fun:_notify_init_globals
+   fun:_os_once
+   fun:_os_alloc_once
+   fun:_notify_fork_child
+   fun:libSystem_atfork_child
+   fun:fork
+}
+{
+   osx_1080_loader_false_positive_6
+   Memcheck:Leak
+   match-leak-kinds: indirect
+   fun:calloc
+   fun:_nc_table_new
+   fun:_notify_init_globals
+   fun:_os_once
+   fun:_os_alloc_once
+   fun:_notify_fork_child
+   fun:libSystem_atfork_child
+   fun:fork
+}
+{
+   osx_1080_loader_false_positive_7
+   Memcheck:Leak
+   match-leak-kinds: indirect
+   fun:calloc
+   fun:_nc_table_new
+   fun:_notify_init_globals
+   fun:_os_once
+   fun:_os_alloc_once
+   fun:_notify_fork_child
+   fun:libSystem_atfork_child
+   fun:fork
+}
+{
+   osx_1080_loader_false_positive_8
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:calloc
+   fun:map_images_nolock
+   fun:map_images
+   fun:_ZN4dyldL18notifyBatchPartialE17dyld_image_statesbPFPKcS0_jPK15dyld_image_infoEbb
+   fun:_ZN4dyld21registerObjCNotifiersEPFvjPKPKcPKPK11mach_headerEPFvS1_S6_ESC_
+   fun:_dyld_objc_notify_register
+   fun:_objc_init
+   fun:_os_object_init
+   fun:libdispatch_init
+   fun:libSystem_initializer
+   fun:_ZN16ImageLoaderMachO18doModInitFunctionsERKN11ImageLoader11LinkContextE
+   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+}
+{
+   osx_1080_loader_false_positive_9
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:class_createInstance
+   fun:_os_object_alloc_realized
+   fun:_xpc_pipe_create
+   fun:xpc_pipe_create
+   fun:_od_xpc_pipe
+   fun:_od_running
+   fun:ds_user_byname
+   fun:search_user_byname
+   fun:getpwnam
+   fun:retrieve_home
+   fun:init_intern
+}
+{
+   osx_1080_loader_false_positive_10
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:_nc_table_new
+   fun:_notify_init_globals
+   fun:_os_once
+   fun:_os_alloc_once
+   fun:notify_register_check
+   fun:__si_module_static_ds_block_invoke
+   fun:_dispatch_client_callout
+   fun:dispatch_once_f
+   fun:si_module_static_ds
+   fun:si_module_with_name
+   fun:si_module_config_modules_for_category
+}
+{
+   osx_1080_loader_false_positive_11
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:_nc_table_new
+   fun:_notify_init_globals
+   fun:_os_once
+   fun:_os_alloc_once
+   fun:notify_register_check
+   fun:__si_module_static_ds_block_invoke
+   fun:_dispatch_client_callout
+   fun:dispatch_once_f
+   fun:si_module_static_ds
+   fun:si_module_with_name
+   fun:si_module_config_modules_for_category
+}
+{
+   osx_1080_loader_false_positive_12
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:calloc
+   fun:map_images_nolock
+   fun:map_images
+   fun:_ZN4dyldL18notifyBatchPartialE17dyld_image_statesbPFPKcS0_jPK15dyld_image_infoEbb
+   fun:_ZN4dyld21registerObjCNotifiersEPFvjPKPKcPKPK11mach_headerEPFvS1_S6_ESC_
+   fun:_dyld_objc_notify_register
+   fun:_objc_init
+   fun:_os_object_init
+   fun:libdispatch_init
+   fun:libSystem_initializer
+   fun:_ZN16ImageLoaderMachO18doModInitFunctionsERKN11ImageLoader11LinkContextE
+   fun:_ZN16ImageLoaderMachO16doInitializationERKN11ImageLoader11LinkContextE
+}
+{
+   osx_1080_loader_false_positive_13
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:calloc
+   fun:class_createInstance
+   fun:_os_object_alloc_realized
+   fun:_xpc_pipe_create
+   fun:xpc_pipe_create
+   fun:_od_xpc_pipe
+   fun:_od_running
+   fun:ds_user_byname
+   fun:search_user_byname
+   fun:getpwnam
+   fun:retrieve_home
+   fun:init_intern
+}
+{
+   osx_1080_loader_false_positive_14
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:_nc_table_new
+   fun:_notify_init_globals
+   fun:_os_once
+   fun:_os_alloc_once
+   fun:notify_register_check
+   fun:__si_module_static_ds_block_invoke
+   fun:_dispatch_client_callout
+   fun:dispatch_once_f
+   fun:si_module_static_ds
+   fun:si_module_with_name
+   fun:si_module_config_modules_for_category
+}
+{
+   osx_1080_loader_false_positive_15
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:_nc_table_new
+   fun:_notify_init_globals
+   fun:_os_once
+   fun:_os_alloc_once
+   fun:notify_register_check
+   fun:__si_module_static_ds_block_invoke
+   fun:_dispatch_client_callout
+   fun:dispatch_once_f
+   fun:si_module_static_ds
+   fun:si_module_with_name
+   fun:si_module_config_modules_for_category
+}

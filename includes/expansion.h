@@ -38,7 +38,6 @@ char			*exp_get_hook(const char *string, int len);
 enum e_estate	find_expansion(const char *str);
 char			*get_expansion(const char *string, enum e_estate state);
 char			*infinite_expansion(const char *data, t_core *shell);
-char			*do_exp_et_quote(t_core *shell, const char *data);
 char			*moar_format_plz(char *data, t_core *shell);
 char			*suffix_format(char *data, t_core *shell);
 char			*prefix_format(char *data, t_core *shell);

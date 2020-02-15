@@ -1,0 +1,1 @@
+unset HOME && cd / && cd ~;pwd

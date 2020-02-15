@@ -1,0 +1,1 @@
+lalala=popopo;echo $lalala

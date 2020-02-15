@@ -21,21 +21,21 @@ int		main(int ac, char **av, char **environ)
 	ft_bzero(&shell, sizeof(t_core));
 	if (init_shell(&shell, av, environ) != SUCCESS)
 		return (EXIT_FAILURE);
-	if (setjmp(g_exit_leaks))
-	{
-		dprintf(STDOUT_FILENO, "Exited with free handling ..\n");
-		return (EXIT_SUCCESS);
-	}
-	else
-	{
+	// if (setjmp(g_exit_leaks))
+	// {
+	// 	dprintf(STDOUT_FILENO, "Exited with free handling ..\n");
+	// 	return (EXIT_SUCCESS);
+	// }
+	// else
+	// {
 		get_opt(ac, av, &shell);
-		dprintf(STDERR_FILENO, "Entering 42sh with setjmp activated !!!\n");
+		// dprintf(STDERR_FILENO, "Entering 42sh with setjmp activated !!!\n");
 		if (shell.mode & I_MODE)
 			load_i_mode(&shell);
 		else
 			load_noi_mode(&shell);
-	}
+	// }
 	free_shell(&shell);
-	dprintf(STDERR_FILENO, "%sEXIT_SUCCESS%s\n", C_G, C_X);
+	// dprintf(STDERR_FILENO, "%sEXIT_SUCCESS%s\n", C_G, C_X);
 	return (EXIT_SUCCESS);
 }

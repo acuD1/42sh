@@ -12,23 +12,23 @@
 
 #include "sh42.h"
 
-void			ft_printtoklist(t_lst *lexer)
-{
-	t_token		*tmp;
+// void			ft_printtoklist(t_lst *lexer)
+// {
+// 	t_token		*tmp;
 
-	tmp = NULL;
-	if (!lexer)
-		return ;
-	while (lexer)
-	{
-		tmp = (t_token*)lexer->content;
-		ft_printf("{[%s] %u}\n",
-			((t_token*)lexer->content)->data, ((t_token*)lexer->content)->id);
-		if (!lexer->next)
-			break ;
-		lexer = lexer->next;
-	}
-}
+// 	tmp = NULL;
+// 	if (!lexer)
+// 		return ;
+// 	while (lexer)
+// 	{
+// 		tmp = (t_token*)lexer->content;
+// 		ft_printf("{[%s] %u}\n",
+// 			((t_token*)lexer->content)->data, ((t_token*)lexer->content)->id);
+// 		if (!lexer->next)
+// 			break ;
+// 		lexer = lexer->next;
+// 	}
+// }
 
 t_lst			*discard_lexer(t_lexer *lx, t_lst *lexer_token)
 {
@@ -100,7 +100,7 @@ t_lst			*lexer(char *line)
 	while (lexer.status != L_END)
 		lexer_token = lexer.lex[lexer.status](&lexer, *head);
 	lexer_token = *head;
-	ft_printtoklist(lexer_token);
+	// ft_printtoklist(lexer_token);
 	init_lexer(NULL, &lexer);
 	return (*head);
 }

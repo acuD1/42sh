@@ -1,0 +1,1 @@
+NEWPATH=$PATH:$HOME/.bin; echo ${NEWPATH#"$PATH:$HOME/"}

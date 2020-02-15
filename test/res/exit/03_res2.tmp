@@ -1,0 +1,2 @@
+bash: exit: too many arguments
+42sh: waitpid error (mark_process_status)

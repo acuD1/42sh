@@ -1,0 +1,3 @@
+42sh: waitpid error (mark_process_status)
+42sh: foo parameter null or not set
+42sh: waitpid error (mark_process_status)

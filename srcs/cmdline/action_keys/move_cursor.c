@@ -74,7 +74,7 @@ void		move_key_up(t_read *term)
 		}
 		else
 		{
-			if ((*term).buffer)
+			if (term->buffer)
 				term->tmp_buff = ft_strdup(term->buffer);
 			term->history_index = term->history;
 			w = term->history;

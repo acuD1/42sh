@@ -17,7 +17,7 @@ void	quit_shell(t_core *shell, int exit_value, int8_t v)
 	if (shell->mode & OPT_MODE)
 	{
 		free_env(shell->env);
-		longjmp(g_exit_leaks, 42); /* TEMPORARY */
+		// longjmp(g_exit_leaks, 42); /* TEMPORARY */
 		exit(exit_value);
 	}
 	if (shell->mode & I_MODE && shell->opt == 0)
@@ -25,6 +25,6 @@ void	quit_shell(t_core *shell, int exit_value, int8_t v)
 	free_shell(shell);
 	if (v == TRUE && shell->opt == 0)
 		write(STDERR_FILENO, "exit\n", 5);
-	longjmp(g_exit_leaks, 42); /* TEMPORARY */
+	// longjmp(g_exit_leaks, 42); /* TEMPORARY */
 	exit(exit_value);
 }

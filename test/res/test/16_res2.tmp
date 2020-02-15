@@ -1,0 +1,4 @@
+42sh: test: -w: binary operator expected
+42sh: waitpid error (mark_process_status)
+42sh: test: -w: binary operator expected
+42sh: waitpid error (mark_process_status)

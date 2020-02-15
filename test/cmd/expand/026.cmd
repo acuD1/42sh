@@ -1,0 +1,1 @@
+echo ${PWDD:-LOL} ${PWD:-LOL} ${PWDD:-$PWD}

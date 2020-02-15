@@ -40,16 +40,6 @@ enum e_estate	skip_quotes(const char *str, int *j, enum e_estate st)
 	return (st);
 }
 
-char					*do_exp_et_quote(t_core *shell, const char *data)
-{
-	char	*exp;
-
-	exp = NULL;
-	if ((exp = do_expansion(shell, data)))
-		return (exp);
-	return (NULL);
-}
-
 void					init_expansionat(t_expansion *exp)
 {
 	exp->erience = 0;

@@ -1,0 +1,4 @@
+echo "\
+coucou \
+ls \
+amis"

@@ -71,7 +71,11 @@ void		expansion(t_core *shell, t_process *process)
 	if (process->tok_list)
 		expansion_tok(shell, process);
 	if (process->assign_list)
+	{
+		process->status = 0;
+		shell->status = 0;
 		expansion_assign(shell, process);
+	}
 	if (process->redir_list)
 		expansion_redir(shell, process);
 }

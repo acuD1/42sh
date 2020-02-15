@@ -1,0 +1,2 @@
+bash: line 1: export: -D: invalid option
+export: usage: export [-fn] [name[=value] ...] or export -p

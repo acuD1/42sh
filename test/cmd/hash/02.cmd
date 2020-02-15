@@ -1,0 +1,2 @@
+hash /bin/ls
+hash

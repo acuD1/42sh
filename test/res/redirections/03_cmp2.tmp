@@ -1,0 +1,2 @@
+bash: line 1: syntax error near unexpected token `newline'
+bash: line 1: `ls >>'

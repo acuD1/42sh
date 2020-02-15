@@ -48,7 +48,7 @@ void			expansion_assign(t_core *shell, t_process *process)
 	lst = process->assign_list;
 	while (lst)
 	{
-		res = do_exp_et_quote(shell, ((t_db*)lst->content)->value);
+		res = do_expansion(shell, ((t_db*)lst->content)->value);
 		if (!process->av)
 			add_assign_env(shell, ((t_db*)lst->content)->key, ft_strdup(res));
 		else
@@ -57,7 +57,6 @@ void			expansion_assign(t_core *shell, t_process *process)
 		tmp = lst;
 		lst = lst->next;
 	}
-	process->status = 0;
 }
 
 void			expansion_redir(t_core *shell, t_process *process)
@@ -72,7 +71,7 @@ void			expansion_redir(t_core *shell, t_process *process)
 	res = NULL;
 	while (lst)
 	{
-		if ((res = do_exp_et_quote(shell, ((t_redir*)lst->content)->op[1])))
+		if ((res = do_expansion(shell, ((t_redir*)lst->content)->op[1])))
 		{
 			if (!*res)
 				ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n", ((t_redir*)lst->content)->op[1]);
@@ -95,7 +94,7 @@ void			expansion_tok(t_core *shell, t_process *process)
 	lst = process->tok_list;
 	while (lst)
 	{
-		res = do_exp_et_quote(shell, ((t_token*)lst->content)->data);
+		res = do_expansion(shell, ((t_token*)lst->content)->data);
 		if (*res != '\0')
 			process->av = ft_add_arg_cmd_process(process->av, res);
 		ft_strdel(&res);

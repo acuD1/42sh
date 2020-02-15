@@ -1,0 +1,2 @@
+42sh: test: -Z: binary operator expected
+42sh: waitpid error (mark_process_status)
