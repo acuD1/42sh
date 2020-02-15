@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:42 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/14 03:59:29 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:20:14 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ int8_t	dup_ifd(t_redir *ptr)
 			STDERR_FILENO, "42sh: %s: Bad file descriptor\n", ptr->op[1]);
 		return (FAILURE);
 	}
-	ptr->dup_fd[0] = dup(ft_atoi(ptr->op[1]));
-	if (dup2(ptr->dup_fd[0], ptr->io_num[0]) < 0)
+	ptr->dup_fd[0] = ft_atoi(ptr->op[1]);
+	if ((ptr->dup_fd[0] = dup2(ptr->dup_fd[0], ptr->io_num[0])) < 0)
 		return (FAILURE);
 	return (SUCCESS);
 }
@@ -104,16 +104,16 @@ int8_t	dup_ofd(t_redir *ptr)
 		close(ptr->io_num[0]);
 		return (SUCCESS);
 	}
+	if (ft_atoi(ptr->op[1]) > 2)
+	{
+		dprintf(
+			STDERR_FILENO, "42sh: %s: Bad file descriptor\n", ptr->op[1]);
+		return (FAILURE);
+	}
 	if (ft_is_number(ptr->op[1]) == SUCCESS)
 	{
-		if (ft_atoi(ptr->op[1]) > 2)
-		{
-			dprintf(
-				STDERR_FILENO, "42sh: %s: Bad file descriptor\n", ptr->op[1]);
-			return (FAILURE);
-		}
-		ptr->dup_fd[0] = dup(ft_atoi(ptr->op[0]));
-		if (dup2(ptr->dup_fd[0], ft_atoi(ptr->op[1])) < 0)
+		ptr->dup_fd[0] = dup(ft_atoi(ptr->op[1]));
+		if ((ptr->dup_fd[0] = dup2(ptr->dup_fd[0], ptr->io_num[0])) < 0)
 			return (FAILURE);
 		return (SUCCESS);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh42.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/14 20:06:35 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:21:44 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ void		skip_options(char ***av);
 **	===========================================================================
 */
 
-int8_t		exec_redirs(t_core *shell, t_process *process);
+int8_t		exec_redirs(t_core *shell, t_process *process, t_lst *redirs);
 int8_t		dup_output(int fd, t_redir *ptr);
 int8_t		dup_input(int fd, t_redir *ptr);
 int8_t		append_output(t_redir *ptr);
@@ -225,7 +225,7 @@ void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
 int8_t		mark_process_status
 				(t_core *shell, t_lst *jobs, pid_t pid, int status);
 void		mark_job_as_stopped(t_job *job, int stopped);
-int8_t		launch_blt(t_core *shell, t_process *process, int *fds);
+int8_t		launch_blt(t_core *shell, t_job *job, t_process *process, int *fds);
 void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
 void		update_status(t_core *shell);
 t_job		*get_job(t_lst *jobs, char *str);

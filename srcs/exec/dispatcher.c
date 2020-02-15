@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/14 03:57:11 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:16:53 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,9 @@ void		launch_job(t_core *shell, t_job *job, int foreground)
 		expansion(shell, ptr);
 		if (ptr->completed == FALSE)
 		{
-			exec_redirs(shell, ptr);
-			launch_blt(shell, ptr, fds);
-			exec_process(shell, job, ptr, fds);
-			close_fds(ptr->redir_list);
+			launch_blt(shell, job, ptr, fds);
+			if (ptr->completed == FALSE)
+				exec_process(shell, job, ptr, fds);
 		}
 		update_exit_status(shell);
 		condition_fulfilled(process);

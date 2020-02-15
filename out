@@ -1,0 +1,85 @@
+srcs/LPA/lexer/assign_token.c:		lexer->status = L_END;
+srcs/LPA/lexer/assign_token.c:	lexer->status = L_START;
+srcs/LPA/lexer/init_lexer.c:	new->status = L_START;
+srcs/LPA/lexer/io_nbr_nwl_token.c:		lx->status = L_END;
+srcs/LPA/lexer/io_nbr_nwl_token.c:	lx->status = L_START;
+srcs/LPA/lexer/io_nbr_nwl_token.c:		lexer->status = L_END;
+srcs/LPA/lexer/io_nbr_nwl_token.c:	lexer->status = L_START;
+srcs/LPA/lexer/lexer.c:		lx->status = L_END;
+srcs/LPA/lexer/lexer.c:	lx->status = L_START;
+srcs/LPA/lexer/lexer.c:		lx->status = L_DISCARD;
+srcs/LPA/lexer/lexer.c:		lx->status = L_NEWLINE;
+srcs/LPA/lexer/lexer.c:		lx->status = L_OPERATOR;
+srcs/LPA/lexer/lexer.c:		lx->status = L_IO_NUMBER;
+srcs/LPA/lexer/lexer.c:		lx->status = L_ASSIGNEMENT_WORD;
+srcs/LPA/lexer/lexer.c:		lx->status = L_NAME;
+srcs/LPA/lexer/lexer.c:	lexer->status = L_END;
+srcs/LPA/lexer/lexer.c:	while (lexer.status != L_END)
+srcs/LPA/lexer/lexer.c:		lexer_token = lexer.lex[lexer.status](&lexer, *head);
+srcs/LPA/lexer/name_token.c:		lexer->status = L_END;
+srcs/LPA/lexer/name_token.c:	lexer->status = L_START;
+srcs/LPA/lexer/operator_token.c:	lx->status = L_START;
+srcs/LPA/lexer/operator_token.c:		lx->status = L_END;
+srcs/LPA/lexer/operator_token.c:	lx->status = L_START;
+srcs/builtins/jobs.c:			, process->pid, signal_msg(process->status), process->command);
+srcs/builtins/jobs.c:			, signal_msg(process->status), process->command);
+srcs/builtins/jobs.c:		update_status(shell);
+srcs/cmdline/action_keys/check_caps.c:		if (term->status == CMD_SUBPROMPT)
+srcs/cmdline/prompt/heredoc.c:	shell->term.status = CMD_DONE;
+srcs/cmdline/prompt/heredoc.c:	shell->term.status = CMD_SUBPROMPT;
+srcs/cmdline/prompt/heredoc.c:		if (shell->term.status == CMD_PROMPT)
+srcs/cmdline/prompt/prompt.c:	shell->term.status = CMD_PROMPT;
+srcs/cmdline/prompt/prompt.c:	shell->term.status = CMD_DONE;
+srcs/cmdline/prompt/sub_prompt.c:	if (term->status == CMD_PROMPT)
+srcs/cmdline/prompt/sub_prompt.c:	term->status = CMD_SUBPROMPT;
+srcs/cmdline/prompt/sub_prompt.c:	while (term->status == CMD_SUBPROMPT && TRUE)
+srcs/cmdline/prompt/sub_prompt.c:	term->status = CMD_DONE;
+srcs/core/shell_loader.c:	quit_shell(shell, shell->status, FALSE);
+srcs/db/set_env.c:		, update_shell_flags, update_exit_status, update_ps1, update_ps2};
+srcs/db/special_vars.c:**	Update the $? special variable containing the last process exit status
+srcs/db/special_vars.c:int8_t	update_exit_status(t_core *shell)
+srcs/db/special_vars.c:		value = ft_itoa(shell->status);
+srcs/exec/dispatcher.c:	else if (cond == P_ANDIF && ptr->status == 0)
+srcs/exec/dispatcher.c:	else if (cond == P_ORIF && ptr->status != 0)
+srcs/exec/dispatcher.c:		((t_process*)process->next->content)->status = 1;
+srcs/exec/dispatcher.c:		update_exit_status(shell);
+srcs/exec/redirections/exec_redirs.c:			process->status = 1;
+srcs/exec/status_handler.c:/*   status_handler.c                                   :+:      :+:    :+:   */
+srcs/exec/status_handler.c:void	status_handler(t_core *shell, int status)
+srcs/exec/status_handler.c:	if (WIFSIGNALED(status))
+srcs/exec/status_handler.c:		msg = signal_msg(status);
+srcs/exec/status_handler.c:		if (msg != NULL && status != 2)
+srcs/exec/status_handler.c:		shell->status = status + 128;
+srcs/exec/status_handler.c:		shell->status = WEXITSTATUS(status);
+srcs/exec/task_master.c:		shell->status = 0;
+srcs/jobcontrol/launch_process.c:		process->status = call_builtin(shell, process, blt);
+srcs/jobcontrol/launch_process.c:		shell->status = process->status;
+srcs/jobcontrol/mark_process_status.c:/*   mark_process_status.c                              :+:      :+:    :+:   */
+srcs/jobcontrol/mark_process_status.c:static void	background_jobs(t_lst *jobs, pid_t pid, int status)
+srcs/jobcontrol/mark_process_status.c:				(WIFSIGNALED(status) || WIFEXITED(status)) ? TRUE : FALSE;
+srcs/jobcontrol/mark_process_status.c:int8_t		mark_process_status
+srcs/jobcontrol/mark_process_status.c:	(t_core *shell, t_lst *jobs, pid_t pid, int status)
+srcs/jobcontrol/mark_process_status.c:		if (WIFSTOPPED(status))
+srcs/jobcontrol/mark_process_status.c:			process->status = 18;
+srcs/jobcontrol/mark_process_status.c:			shell->status = 128 + 18;
+srcs/jobcontrol/mark_process_status.c:			process->status = (WIFEXITED(status))
+srcs/jobcontrol/mark_process_status.c:								? WEXITSTATUS(status)
+srcs/jobcontrol/mark_process_status.c:								: WTERMSIG(status);
+srcs/jobcontrol/mark_process_status.c:			status_handler(shell, status);
+srcs/jobcontrol/mark_process_status.c:		background_jobs(jobs, pid, status);
+srcs/jobcontrol/notifications.c:void		update_status(t_core *shell)
+srcs/jobcontrol/notifications.c:	int		status;
+srcs/jobcontrol/notifications.c:	pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
+srcs/jobcontrol/notifications.c:		&& !mark_process_status(shell, shell->launched_jobs, pid, status))
+srcs/jobcontrol/notifications.c:		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
+srcs/jobcontrol/notifications.c:	update_status(shell);
+srcs/jobcontrol/wait_job.c:	int		status;
+srcs/jobcontrol/wait_job.c:	pid = waitpid(WAIT_ANY, &status, WUNTRACED);
+srcs/jobcontrol/wait_job.c:	while (!mark_process_status(shell, jobs, pid, status)
+srcs/jobcontrol/wait_job.c:		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
+srcs/jobcontrol/wait_job.c:	int		status;
+srcs/jobcontrol/wait_job.c:	pid = waitpid(process->pid, &status, WUNTRACED);
+srcs/jobcontrol/wait_job.c:	mark_process_status(shell, jobs, pid, status);
+srcs/signals/sigint.c:	if (shell->term.status == CMD_PROMPT)
+srcs/signals/sigint.c:	else if (shell->term.status == CMD_SUBPROMPT)
+srcs/signals/sigint.c:		shell->term.status = CMD_PROMPT;

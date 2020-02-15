@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/13 21:09:04 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/15 17:00:52 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ int		main(int ac, char **av, char **environ)
 	ft_bzero(&shell, sizeof(t_core));
 	if (init_shell(&shell, av, environ) != SUCCESS)
 		return (EXIT_FAILURE);
-	if (setjmp(g_exit_leaks))
-	{
-		dprintf(STDOUT_FILENO, "Exited with free handling ..\n");
-		return (EXIT_SUCCESS);
-	}
-	else
-	{
+//	if (setjmp(g_exit_leaks))
+//	{
+//		dprintf(STDOUT_FILENO, "Exited with free handling ..\n");
+//		return (EXIT_SUCCESS);
+//	}
+//	else
+//	{
 		get_opt(ac, av, &shell);
-		dprintf(STDERR_FILENO, "Entering 42sh with setjmp activated !!!\n");
+//		dprintf(STDERR_FILENO, "Entering 42sh with setjmp activated !!!\n");
 		if (shell.mode & I_MODE)
 			load_i_mode(&shell);
 		else
 			load_noi_mode(&shell);
-	}
+//	}
 	free_shell(&shell);
-	dprintf(STDERR_FILENO, "%sEXIT_SUCCESS%s\n", C_G, C_X);
-	return (EXIT_SUCCESS);
+//	dprintf(STDERR_FILENO, "%sEXIT_SUCCESS%s\n", C_G, C_X);
+	return (shell.status);
 }

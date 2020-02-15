@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:01 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/14 03:56:28 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:18:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ static int8_t	get_fd(t_redir *redir)
 	return (SUCCESS);
 }
 
-int8_t			exec_redirs(t_core *shell, t_process *process)
+int8_t			exec_redirs(t_core *shell, t_process *process, t_lst *head)
 {
 	t_lst	*redirs;
 	int		i;
 
 	i = 0;
-	redirs = process->redir_list;
+	redirs = head;
 	while (redirs != NULL)
 	{
 		if (((t_redir*)redirs->content)->type == P_DLESS)

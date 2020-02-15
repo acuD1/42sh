@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quit_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 23:52:50 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/08 21:06:12 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:21:12 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	quit_shell(t_core *shell, int exit_value, int8_t v)
 	if (shell->mode & OPT_MODE)
 	{
 		free_db(shell->env);
-		longjmp(g_exit_leaks, 42); /* TEMPORARY */
+//		longjmp(g_exit_leaks, 42); /* TEMPORARY */
 		exit(exit_value);
 	}
 	if (shell->mode & I_MODE && shell->opt == 0)
@@ -25,6 +25,6 @@ void	quit_shell(t_core *shell, int exit_value, int8_t v)
 	free_shell(shell);
 	if (v == TRUE && shell->opt == 0)
 		write(STDERR_FILENO, "exit\n", 5);
-	longjmp(g_exit_leaks, 42); /* TEMPORARY */
+//	longjmp(g_exit_leaks, 42); /* TEMPORARY */
 	exit(exit_value);
 }

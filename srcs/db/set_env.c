@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/01 15:33:51 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:16:10 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ int8_t			set_env(t_core *shell, char **argv, char **environ)
 	i = 0;
 	while (*environ && environ[i])
 	{
-		ft_lstappend(&shell->env,
-			ft_lstnew(fetch_db(&shell->db, environ[i], ENV_VAR), sizeof(t_db)));
+		if (ft_strncmp("OLDPWD", environ[i], 6) != 0)
+		{
+			ft_lstappend(&shell->env,
+				ft_lstnew(
+					fetch_db(&shell->db, environ[i], ENV_VAR), sizeof(t_db)));
+		}
 		i++;
 	}
 	if (update_last_arg(shell, argv) != SUCCESS)

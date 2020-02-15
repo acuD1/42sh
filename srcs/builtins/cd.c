@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 04:09:02 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:12:45 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static int8_t	cd_home(t_core *shell)
 		write(STDERR_FILENO, "42sh: cd: HOME not set\n", 23);
 		return (1);
 	}
-	dprintf(STDERR_FILENO, "%s\n", var->value);
 	return (change_dir(shell, var->value));
 }
 
@@ -68,7 +67,7 @@ static int8_t	cd_oldpwd(t_core *shell)
 		return (1);
 	}
 	if (cd_check_path(var->value) == SUCCESS)
-		dprintf(STDERR_FILENO, "%s\n", var->value);
+		dprintf(STDOUT_FILENO, "%s\n", var->value);
 	return (change_dir(shell, var->value));
 }
 

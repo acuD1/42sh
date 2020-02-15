@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/14 19:29:55 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/15 16:19:17 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,50 +55,18 @@ static void		control_process
 		process->stopped = FALSE;
 }
 
-static void		check_filepath(t_core *shell, t_process *process)
-{
-	int			ret;
-
-	if (process->av == NULL)
-	{
-		process->completed = TRUE;
-		process->status = 0;
-		return ;
-	}
-	if (process->bin == NULL)
-	{
-		dprintf(STDERR_FILENO, "42sh: %s: command not found\n", process->av[0]);
-		process->status = 127;
-	}
-	else if ((ret = ft_access(process->bin, F_OK | X_OK)) != SUCCESS)
-		ft_perror(process->bin, NULL, ret);
-	else if (is_dir(process->bin))
-		ft_perror(process->av[0], NULL, EISDIR);
-	else
-		return ;
-	process->status = (process->status == 127) ? 127 : 126;
-	shell->status = process->status;
-	process->completed = TRUE;
-}
-
 void			exec_process
 	(t_core *shell, t_job *job, t_process *process, int *fds)
 {
 	if (job_part_completed(job, process))
 		job->pgid = -1;
 	process->pgid = job->pgid;
-	if (process->completed)
-		return ;
 	if (process->av)
 		get_bin(shell, process);
-	check_filepath(shell, process);
-	if (process->completed != TRUE)
-	{
-		if ((process->pid = fork()) == 0)
-			launch_process(shell, process, fds[0], fds[1]);
-		else if (process->pid < 0)
-			print_and_quit(shell, "42sh: fork failure\n");
-		if (shell->mode & I_MODE)
-			control_process(shell, job, process, fds);
-	}
+	if ((process->pid = fork()) == 0)
+		launch_process(shell, process, fds[0], fds[1]);
+	else if (process->pid < 0)
+		print_and_quit(shell, "42sh: fork failure\n");
+	if (shell->mode & I_MODE)
+		control_process(shell, job, process, fds);
 }
