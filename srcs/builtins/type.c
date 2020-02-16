@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 05:41:09 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/14 20:14:15 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/16 22:42:39 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static int8_t	type(t_core *shell, char *path)
 	process.av[1] = NULL;
 	if (locate_hash(shell, &process) == SUCCESS)
 		printf("%s is hashed (%s)\n", path, process.bin);
-	else if (get_bin(shell, &process) == SUCCESS)
+	else if (get_bin(shell, &process) == SUCCESS
+		&& access(process.bin, F_OK | X_OK) == 0)
 		printf("%s is %s\n", path, process.bin);
 	else
 		dprintf(STDERR_FILENO, "42sh: type: %s: not found\n", path);
