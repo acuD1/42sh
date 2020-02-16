@@ -90,7 +90,6 @@ int8_t			init_history(t_read *term)
 	char	*line;
 	int		fd;
 	int		i;
-
 	i = 0;
 	line = NULL;
 	if ((fd = open(HISTORY_FILE, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)

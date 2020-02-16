@@ -42,7 +42,7 @@ void	init_process_graph(t_graph *graph)
 {
 	static enum e_pstate tab_good_type[] = {P_WORD, P_GREAT, P_LESS, P_DGREAT
 		, P_GREATAND, P_LESSAND, P_DLESS, P_DLESSDASH, P_ASSIGN, P_NEWLINE
-		, P_ERROR};
+		, P_END, P_ERROR};
 
 	graph[P_PIPE].good_type = tab_good_type;
 	graph[P_AND].good_type = tab_good_type;

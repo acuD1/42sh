@@ -47,7 +47,7 @@ char		*length_format(char *str, t_core *shell)
 	db_tmp = NULL;
 	if (ft_strchr(str, ':') || ft_strchr(str, '%') || ft_strchr(&str[1], '#'))
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: %s : mauvaise substitution\n", str);
+		ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
 		ft_strdel(&str);
 		return (NULL);
 	}
