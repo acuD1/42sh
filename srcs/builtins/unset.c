@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 03:59:34 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/14 14:34:32 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/16 22:33:29 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ int8_t			builtin_unset(t_core *shell, t_process *process)
 
 	ret = 0;
 	argc = ft_tablen(process->av);
-	i = (argc > 1 && process->av[1][0] != '-') ? 1 : 2;
+	i = (argc > 1 && process->av[1][0] != '-') ? 0 : 1;
 	if ((parsing_ret = parse_unset(argc, process->av) > 0))
 		return (parsing_ret);
-	while (i < argc)
+	while (++i < argc)
 	{
 		if (check_invalid_identifiers(process->av[i], "") != SUCCESS)
 		{
@@ -56,7 +56,6 @@ int8_t			builtin_unset(t_core *shell, t_process *process)
 			unset_hash_handler(shell, process->av[i]);
 			del_db(shell, process->av[i]);
 		}
-		i++;
 	}
 	return (ret);
 }

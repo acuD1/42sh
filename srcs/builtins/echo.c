@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:59:13 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 04:10:18 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/16 22:38:13 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ int8_t	builtin_echo(t_core *shell, t_process *process)
 	argc = ft_tablen(process->av);
 	while (i < argc)
 	{
-		ft_putstr(process->av[i]);
+		if (write(STDOUT_FILENO, process->av[i], ft_strlen(process->av[i])) < 0)
+		{
+			dprintf(STDERR_FILENO
+			, "42sh: echo: write error: Bad file descriptor\n");
+			return (1);
+		}
 		i++;
 		if (i < argc)
 			write(1, " ", 1);

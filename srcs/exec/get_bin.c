@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   get_bin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/15 17:23:36 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/16 22:26:09 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <errno.h>
 #include "sh42.h"
@@ -63,17 +62,15 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 	t_db	*db;
 	int		i;
 
-	i = 0;
-	// Temp
-	db = search_db(shell->env, "PATH");
-	if (db == NULL)
+	i = -1;
+	if ((db = search_db(shell->env, "PATH")) == NULL)
 	{
 		process->bin = ft_strdup(process->av[0]);
 		return (SUCCESS);
 	}
 	if (!(split_path = ft_strsplit(db->value, ":")))
 		return (FAILURE);
-	while (split_path[i] != NULL)
+	while (split_path[++i] != NULL)
 	{
 		ft_strdel(&(process->bin));
 		if (access(split_path[i], X_OK | F_OK) == 0)
@@ -83,7 +80,6 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 			if (valid_path(process, &split_path) == SUCCESS)
 				return (SUCCESS);
 		}
-		i++;
 	}
 	ft_tabdel(&split_path);
 	return (1);

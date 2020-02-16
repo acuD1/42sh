@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 19:25:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/01 19:02:24 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/16 21:21:51 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ static t_job	*get_job_by_name(t_lst *jobs, char *str)
 		i = 0;
 		while (str[i] == ptr->command[i])
 		{
+			i++;
 			if (str[i] == 0)
 				return (ptr);
-			i++;
 		}
 		jobs = jobs->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 16:34:39 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/13 21:09:32 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/16 22:21:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	opt_h(int ac, char **av, t_core *shell)
 	dprintf(STDERR_FILENO, "42sh, version %d.%d.%d\n",
 		shell->build.release, shell->build.version, shell->build.patch);
 	print_shell_usage(0, STDOUT_FILENO);
+	quit_shell(shell, EXIT_SUCCESS, FALSE);
 }
 
 static void	opt_v(int ac, char **av, t_core *shell)
@@ -43,7 +44,7 @@ static void	opt_c(int ac, char **av, t_core *shell)
 	if (!av[2])
 	{
 		dprintf(STDERR_FILENO, "42sh: -c: option requires an argument\n");
-		return ;
+		quit_shell(shell, 2, FALSE);
 	}
 	shell->mode |= NOI_MODE;
 	shell->term.buffer = ft_strdup(av[2]);
@@ -55,7 +56,6 @@ static void	opt_c(int ac, char **av, t_core *shell)
 
 void		get_opt(int ac, char **av, t_core *shell)
 {
-	static void	(*shell_opt[3])() = {opt_v, opt_h, opt_c};
 	size_t		i;
 	u_int64_t	opt;
 
@@ -69,13 +69,10 @@ void		get_opt(int ac, char **av, t_core *shell)
 		quit_shell(shell, EXIT_FAILURE, FALSE);
 	}
 	i = 0;
-	while (i < 3)
-	{
-		if (opt & (1ULL << (SHELL_OPT[i] - 97)))
-		{
-			shell_opt[i](ac, av, shell);
-			quit_shell(shell, EXIT_SUCCESS, FALSE);
-		}
-		i++;
-	}
+	if (opt & (1ULL << ('h' - 97)))
+		opt_h(ac, av, shell);
+	if (opt & (1ULL << ('v' - 97)))
+		opt_v(ac, av, shell);
+	if (opt & (1ULL << ('c' - 97)))
+		opt_c(ac, av, shell);
 }

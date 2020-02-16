@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/15 18:04:12 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/16 22:26:42 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int8_t			call_bin(t_core *shell, t_process *process)
 
 	ret = 0;
 	if (exec_redirs(shell, process, process->redir_list) != SUCCESS)
-		exit (1);
+		exit(1);
 	if (process->bin == NULL)
 	{
 		if (process->av != NULL)
@@ -57,7 +57,7 @@ int8_t			call_bin(t_core *shell, t_process *process)
 	{
 		ret = execve(process->bin, process->av, process->envp);
 		dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);
-		exit (1);
+		exit(1);
 	}
-	exit (ret);
+	exit(ret);
 }
