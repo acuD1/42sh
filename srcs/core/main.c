@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/15 17:00:52 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/16 01:28:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ int		main(int ac, char **av, char **environ)
 	t_core	shell;
 
 	ft_bzero(&shell, sizeof(t_core));
-	if (init_shell(&shell, av, environ) != SUCCESS)
-		return (EXIT_FAILURE);
+	if (read(STDIN_FILENO, NULL, 0) < 0
+		|| init_shell(&shell, av, environ) != SUCCESS)
+		return (0);
 //	if (setjmp(g_exit_leaks))
 //	{
 //		dprintf(STDOUT_FILENO, "Exited with free handling ..\n");
