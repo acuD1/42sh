@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 05:20:52 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/15 20:01:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		del_key(t_read *term)
 	int		y;
 	int		w;
 
-	if (term->x >= term->prompt_len * (term->y == 0 ? 1 : 0)
+	if (term->x > term->prompt_len * (term->y == 0 ? 1 : 0)
 		&& term->x <= term->width)
 	{
 		i = term->x_index - term->prompt_len - 1;

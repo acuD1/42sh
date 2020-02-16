@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/12 10:01:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/15 17:28:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,18 @@ static u_int8_t	sub_prompt_error(t_read *term, char sb)
 			"42sh: unexpected EOF while looking for matching `%c'\n", sb);
 		ft_dprintf(STDERR_FILENO,
 							"42sh: syntax error: unexpected end of file\n");
+		term->status = CMD_DONE;
 		return (TRUE);
 	}
-	if (term->status == CMD_PROMPT)
+	if (term->status != CMD_SUBPROMPT)
+	{
+		term->status = CMD_DONE;
 		return (TRUE);
+	}
 	return (FALSE);
 }
 
-u_int8_t		read_multiline(t_read *term, char sb)
+u_int8_t		read_multiline(t_read *term, char *sb)
 {
 	char	buff[READ_SIZE + 1];
 
@@ -51,13 +55,18 @@ u_int8_t		read_multiline(t_read *term, char sb)
 		}
 		else
 		{
-			if (sb == BACKSLASH && check_backslash(term, &sb) == FALSE)
+			if (term->status != CMD_SUBPROMPT)
+				return (TRUE);
+			if (!sb)
 				return (FALSE);
-			else if (sb == FALSE)
+			else if (*sb == BACKSLASH && check_backslash(term, sb) == FALSE)
 				return (FALSE);
-			else if (sb != BACKSLASH && ft_strchr(term->buffer, sb))
-				return (FALSE);
-			else if (sb != BACKSLASH)
+			else if (*sb != BACKSLASH && ft_strchr(term->buffer, *sb))
+			{
+				if (!check_backslash(term, sb))
+					return (FALSE);
+			}
+			else if (*sb != BACKSLASH)
 				term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);
 			break ;
 		}
@@ -78,6 +87,8 @@ static u_int8_t	check_multi_subprompt(t_read *term, char *sb)
 		term->tmp_buff = ft_strdup(term->buffer);
 		return (TRUE);
 	}
+	else if (!*sb || *sb == BACKSLASH)
+		term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
 	return (FALSE);
 }
 
@@ -88,12 +99,12 @@ void			load_subprompt(char sb, t_read *term)
 	term->status = CMD_SUBPROMPT;
 	term->tmp_buff = ft_strdup(term->buffer);
 	term->flag = FALSE;
-	while (term->status == CMD_SUBPROMPT && TRUE)
+	while (TRUE)
 	{
 		ft_strdel(&term->buffer);
 		term->buffer = ft_memalloc(BUFF_SIZE);
 		display_subprompt(term);
-		if (read_multiline(term, sb) == FALSE)
+		if (read_multiline(term, &sb) == FALSE)
 		{
 			if (check_multi_subprompt(term, &sb) == TRUE)
 				continue ;

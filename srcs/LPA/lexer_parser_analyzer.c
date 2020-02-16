@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:51:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/13 18:12:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/15 15:13:29 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 #include <fcntl.h>
 
-int8_t		debug_ailleurs(const char *path, const char *str)
+int8_t		debug_ailleurs(const char *path, t_read *str, int i)
 {
 	int8_t	fd;
 
 	if ((fd = open(path, O_WRONLY)) < 0)
 		return (FAILURE);
-	dprintf(fd, "{%s}\n", str);
+	dprintf(fd, "x{%d} y(%d) xi[%d] b[%s]\n i[%d]\n", str->x, str->y, str->x_index, str->buffer, i);
 	return (SUCCESS);
 }
 
@@ -50,25 +50,6 @@ void		ft_printtab(char **cmd)
 			i++;
 		}
 		dprintf(nono("/dev/ttys002"), "}\n");
-	}
-}
-
-void			ft_printassignlist(t_lst *lst)
-{
-	t_lst		*assign;
-	int			x;
-
-	x = 0;
-	if (!lst)
-		return ;
-	assign = lst;
-	while (assign)
-	{
-		debug_ailleurs("/dev/ttys002", "============= ASSIGN ============\n");
-		debug_ailleurs("/dev/ttys002", ((t_db*)assign->content)->key);
-		debug_ailleurs("/dev/ttys002", ((t_db*)assign->content)->value);
-		assign = assign->next;
-		x++;
 	}
 }
 
@@ -149,7 +130,6 @@ void			ft_printjoblst(t_lst *list)
 				ft_printredir((t_redir*)redir->content);
 				redir = redir->next;
 			}
-			ft_printassignlist(((t_process*)process->content)->assign_list);
 			process = process->next;
 		}
 		job = job->next;

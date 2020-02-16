@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/13 19:47:08 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/15 19:57:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int8_t			write_history(t_read *term)
 	i = 0;
 	if (!(hst = term->history))
 		return (FAILURE);
-	if ((fd = open(HISTORY_FILE, (O_CREAT | O_WRONLY | O_APPEND)
+	if ((fd = open(HISTORY_FILE, (O_CREAT | O_WRONLY | O_TRUNC)
 				, (S_IRUSR | S_IWUSR) | (S_IRGRP | S_IROTH))) == -1)
 	{
 		ft_dprintf(STDIN_FILENO, "42sh: can't open history file\n");
