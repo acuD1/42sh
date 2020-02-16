@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/15 17:23:36 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/16 18:32:46 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 	int		i;
 
 	i = 0;
-	// Temp
-	db = search_db(shell->env, "PATH");
-	if (db == NULL)
+	if ((db = search_db(shell->env, "PATH")) == NULL)
 	{
+		if (process->blt)
+			return (FAILURE);
 		process->bin = ft_strdup(process->av[0]);
 		return (SUCCESS);
 	}
