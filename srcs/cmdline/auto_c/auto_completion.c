@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 05:02:27 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:19:01 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ u_int8_t	is_dir(const char *dir)
 	struct stat	buf;
 	char		*tmp;
 
-	if (!dir)
+	if (!*dir || !dir)
 		return (FALSE);
 	if (!ft_isstart(dir, "/"))
 		tmp = ft_strjoin("./", dir);
@@ -74,8 +74,7 @@ void		auto_complete_mode(t_read *term)
 
 	i = ft_strlen(term->buffer) - 1;
 	to_find = NULL;
-	if (split_cmd(&to_find, term) == FALSE)
-		return ;
+	split_cmd(&to_find, term);
 	if (term->ac > 1)
 	{
 		if (term->buffer[i] == ' ' || is_dir(to_find))
@@ -83,11 +82,11 @@ void		auto_complete_mode(t_read *term)
 		else
 			to_complete_buffer(to_find, term);
 	}
-	else if (term->ac == 1)
+	else if (term->ac <= 1)
 	{
 		if (is_dir(term->buffer) || ft_isstart(term->buffer, "/"))
 			read_directories(to_find, term);
-		else if (ft_isalpha(*to_find))
+		else if (!*term->buffer || ft_isalpha(*to_find))
 			to_complete_bin(to_find, term);
 		else if (term->flag == FALSE)
 			to_complete_buffer(to_find, term);

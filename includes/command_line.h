@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/13 16:08:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:34:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ u_int64_t	get_mask(const char *buff);
 int			is_dot(const char *d_name);
 u_int8_t	is_tab(const char *d_name, t_read *term);
 u_int8_t	is_dir(const char *dir);
-u_int8_t	split_cmd(char **to_find, t_read *term);
+void		split_cmd(char **to_find, t_read *term);
+void		free_lst(t_lst *lst);
 
 /*
 **		Functions safe

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 05:16:10 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:37:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,55 @@
 ** 	Function to save in buffer the current bin found at buffer[0]
 */
 
-static void		insert_bin_in_buffer(const char *d_name, t_read *term)
+static void		insert_bin_in_buffer(const char *bin, t_read *term)
 {
 	int		i;
-	int		buf_index;
+	int		buff_index;
 
 	i = -1;
-	buf_index = 0;
+	buff_index = 0;
 	ft_strdel(&term->buffer);
 	term->buffer = ft_memalloc(BUFF_SIZE);
-	while (d_name[++i])
+	while (bin[++i])
 	{
-		insert_char_in_buffer(d_name[i], term, buf_index);
-		buf_index++;
+		insert_char_in_buffer(bin[i], term, buff_index);
+		buff_index++;
 	}
+	insert_char_in_buffer(SPACE[0], term, buff_index);
+}
+
+static void		add_builtin_lst(t_lst **bin, const char *cmd)
+{
+	static char	*blt_names[8] = {"set", "unset", "export", "exit", "type",
+														"jobs", "hash", "test"};
+	int			i;
+
+	i = 0;
+	while (i < 8)
+	{
+		if (!*cmd || ft_isstart(blt_names[i], cmd))
+			ft_lstappend(&(*bin), ft_lstnew(blt_names[i],
+							sizeof(char *) * (ft_strlen(blt_names[i]) + 1)));
+		i++;
+	}
+}
+
+int8_t			is_completion(t_read *term)
+{
+	u_int64_t	value;
+	char		buff[READ_SIZE + 1];
+
+	value = 0;
+	ft_bzero(buff, READ_SIZE);
+	if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+	{
+		value = get_mask(buff);
+		if (value == TAB_KEY)
+			return (TRUE);
+		else
+			term->tmp_buff = ft_strdup(buff);
+	}
+	return (FALSE);
 }
 
 /*
@@ -38,31 +73,26 @@ static void		insert_bin_in_buffer(const char *d_name, t_read *term)
 ** 	Return true if another tab key is pressed or no match found
 */
 
-static u_int8_t	not_found(const char *name, const char *to_find, t_read *term)
+static void		display_bin(t_lst *bin, t_read *term)
 {
-	u_int64_t	value;
-	char		buff[READ_SIZE + 1];
+	t_lst		*head;
 
-	value = 0;
-	ft_bzero(buff, READ_SIZE);
-	if (ft_isstart(name, to_find))
+	head = NULL;
+	head = bin;
+	while (bin)
 	{
-		term->flag = TRUE;
 		goto_prompt(term);
-		insert_bin_in_buffer(name, term);
-		if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+		insert_bin_in_buffer(bin->content, term);
+		if (is_completion(term) == TRUE)
 		{
-			value = get_mask(buff);
-			if (value == TAB_KEY)
-				return (TRUE);
+			if (!bin->next)
+				bin = head;
 			else
-			{
-				term->tmp_buff = ft_strdup(buff);
-				return (FALSE);
-			}
+				bin = bin->next;
 		}
+		else
+			break ;
 	}
-	return (TRUE);
 }
 
 /*
@@ -76,25 +106,25 @@ void			to_complete_bin(const char *to_find, t_read *term)
 	DIR				*dir;
 	char			**path;
 	int				i;
+	t_lst			*bin;
 
 	i = -1;
+	bin = NULL;
 	path = split_path(term->shell, "PATH");
 	while (path && path[++i])
 	{
 		dir = opendir(path[i]);
 		while ((data = readdir(dir)) != NULL)
 		{
-			if (not_found(data->d_name, to_find, term))
-				continue ;
-			else
-			{
-				ft_tabfree(path);
-				closedir(dir);
-				return ;
-			}
+			if ((!*to_find || ft_isstart(data->d_name, to_find))
+										&& !ft_isstart(data->d_name, "."))
+				ft_lstappend(&bin, ft_lstnew(data->d_name,
+						sizeof(char *) * (ft_strlen(data->d_name) + 1)));
 		}
 		closedir(dir);
 	}
 	ft_tabfree(path);
-	term->flag == TRUE ? to_complete_bin(to_find, term) : 0;
+	add_builtin_lst(&bin, to_find);
+	display_bin(bin, term);
+	free_lst(bin);
 }

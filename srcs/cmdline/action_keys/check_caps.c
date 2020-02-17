@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/15 17:24:16 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/17 13:20:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,9 @@ u_int8_t		check_caps(const char *buff, t_read *term)
 	u_int64_t	value;
 
 	value = get_mask(buff);
-	if (value == CTRL_D)
+	if (value == CTRL_D && term->status == CMD_SUBPROMPT)
 	{
-		if (term->status == CMD_SUBPROMPT)
-			term->flag = TRUE;
+		term->flag = TRUE;
 		return (FALSE);
 	}
 	if (value == TAB_KEY)

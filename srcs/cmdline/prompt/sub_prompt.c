@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/15 17:28:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:08:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void			display_subprompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term->x_index = term->x;
-	ft_printf(term->prompt);
+	ft_dprintf(STDERR_FILENO, term->prompt);
 }
 
 static u_int8_t	sub_prompt_error(t_read *term, char sb)

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/13 14:28:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/17 13:36:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char		**split_path(t_core *shell, const char *str)
 	return (array);
 }
 
-u_int8_t	split_cmd(char **to_find, t_read *term)
+void		split_cmd(char **to_find, t_read *term)
 {
 	int		i;
 
@@ -71,13 +71,16 @@ u_int8_t	split_cmd(char **to_find, t_read *term)
 	while (ft_isblank(term->buffer[++i]))
 		continue ;
 	if (term->buffer[i] == '\0')
-		return (FALSE);
+	{
+		*to_find = ft_strnew(0);
+		term->cmd = ft_memalloc(BUFF_SIZE);
+		return ;
+	}
 	if ((term->cmd = ft_strsplit(term->buffer, SPACE)) == NULL)
-		return (FALSE);
+		return ;
 	term->ac = ft_tablen(term->cmd);
 	if (term->buffer[ft_strlen(term->buffer) - 1] == ' ')
 		term->ac += 1;
 	if (!(*to_find = ft_strdup(term->cmd[ft_tablen(term->cmd) - 1])))
-		return (FALSE);
-	return (TRUE);
+		return ;
 }
