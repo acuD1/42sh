@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/15 15:56:35 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/17 22:45:08 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char		*stock_value(t_core *shell)
 	ft_strdel(&shell->term.tmp_buff);
 	i = ft_strlen_to(buffer, NEW_LINE[0]);
 	shell->term.status = CMD_DONE;
-	value = ft_strsub(buffer, i, ft_strlen(buffer) - i);
+	value = ft_strsub(buffer, i + 1, ft_strlen(buffer) - i);
 	ft_strdel(&shell->term.buffer);
 	shell->term.buffer = ft_strsub(buffer, 0, i);
 	ft_strdel(&buffer);
