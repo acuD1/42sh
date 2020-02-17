@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/11 15:40:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:05:56 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,27 +49,35 @@ static int8_t	export(t_core *shell, const char *arg, int *ret)
 		ft_strdel(&str);
 		return (SUCCESS);
 	}
-	else if (!str || !(db = get_or_create_db(shell, str, ENV_VAR)))
+	else if (!str
+	|| !(db = get_or_create_db(shell, str, EXPORT_VAR | INTERNAL_VAR)))
 	{
 		ft_strdel(&str);
 		return (FAILURE);
 	}
 	ft_strdel(&str);
 	str = ((int)ft_strlen(arg) > len) ? ft_strdup(arg + len + 1) : NULL;
-	modify_db(db, str, ENV_VAR);
+	modify_db(db, str, db->type | EXPORT_VAR);
 	return (SUCCESS);
 }
 
 static void		export_display(t_core *shell)
 {
-	t_lst *db;
+	t_lst	*db;
+	t_db	*ptr;
 
 	db = shell->env;
 	while (db)
 	{
-		if (((t_db*)db->content)->type == ENV_VAR)
-			printf("export %s=\"%s\"\n"
-			, ((t_db*)db->content)->key, ((t_db*)db->content)->value);
+		ptr = ((t_db*)db->content);
+		if (ptr->type & EXPORT_VAR)
+		{
+			if (ptr->value)
+				printf("export %s=\"%s\"\n", ptr->key, ptr->value);
+			else
+				printf("export %s\n", ptr->key);
+
+		}
 		db = db->next;
 	}
 }

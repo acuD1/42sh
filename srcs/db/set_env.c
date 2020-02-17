@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/15 16:16:10 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:11:09 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int8_t			set_env(t_core *shell, char **argv, char **environ)
 		{
 			ft_lstappend(&shell->env,
 				ft_lstnew(
-					fetch_db(&shell->db, environ[i], ENV_VAR), sizeof(t_db)));
+					fetch_db(&shell->db, environ[i]
+					, EXPORT_VAR | INTERNAL_VAR), sizeof(t_db)));
 		}
 		i++;
 	}

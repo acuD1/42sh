@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_envp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:32:46 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/08 20:43:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:12:01 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	check_env(t_lst *env, char **envp, size_t *i, int join_it)
 {
 	while (env != NULL)
 	{
-		if (((t_db*)env->content)->type & ENV_VAR)
+		if (((t_db*)env->content)->type & (EXPORT_VAR | INTERNAL_VAR))
 		{
 			if (join_it == TRUE)
 			{

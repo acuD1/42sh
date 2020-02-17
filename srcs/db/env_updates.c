@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/17 16:21:24 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:07:50 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int8_t	increment_shlvl(t_core *shell)
 
 	shlvl = NULL;
 	db = NULL;
-	if (shell && (db = get_or_create_db(shell, "SHLVL", ENV_VAR)) != NULL)
+	if (shell && (db = get_or_create_db(
+		shell, "SHLVL", EXPORT_VAR | INTERNAL_VAR)) != NULL)
 	{
 		if (ft_atol(db->value, &value) != SUCCESS)
 			new_value = 0;
@@ -61,7 +62,8 @@ int8_t	update_pwd(t_core *shell)
 	db = NULL;
 	value = NULL;
 	ft_bzero(buf, MAX_PATH + 1);
-	if (shell != NULL && (db = get_or_create_db(shell, "PWD", ENV_VAR)) != NULL)
+	if (shell != NULL && (db = get_or_create_db(
+		shell, "PWD", EXPORT_VAR | INTERNAL_VAR)) != NULL)
 	{
 		getcwd(buf, MAX_PATH);
 		value = ft_strdup(buf);
@@ -88,7 +90,8 @@ int8_t	update_last_arg(t_core *shell, char **argv)
 	value = NULL;
 	if ((tablen = ft_tablen(argv)) <= 0)
 		return (SUCCESS);
-	if (shell != NULL && (db = get_or_create_db(shell, "_", ENV_VAR)) != NULL)
+	if (shell != NULL && (db = get_or_create_db(
+		shell, "_", INTERNAL_VAR)) != NULL)
 	{
 		value = ft_strdup(argv[tablen - 1]);
 		if (value && modify_db(db, value, 0) != NULL)
@@ -105,7 +108,8 @@ int8_t	update_oldpwd(t_core *shell, const char *oldpwd)
 
 	db = NULL;
 	value = NULL;
-	if (shell && (db = get_or_create_db(shell, "OLDPWD", ENV_VAR)) != NULL)
+	if (shell && (db = get_or_create_db(
+		shell, "OLDPWD", EXPORT_VAR | INTERNAL_VAR)) != NULL)
 	{
 		value = ft_strdup(oldpwd);
 		if (value && modify_db(db, value, 0) != NULL)

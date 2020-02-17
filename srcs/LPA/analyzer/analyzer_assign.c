@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer_assign.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:53:37 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/07 06:28:16 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:12:15 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_analyzer	*split_and_create_assign_token(t_analyzer *anal)
 {
 	ft_lstappend(&anal->process.assign_list,
 		ft_lstnew(fetch_db(&anal->db,
-		((t_token*)anal->lexer->content)->data, ENV_VAR), sizeof(t_db)));
+		((t_token*)anal->lexer->content)->data, EXPORT_VAR | INTERNAL_VAR), sizeof(t_db)));
 	init_assign(&anal->db);
 	anal->process.type = ((t_token*)anal->lexer->content)->id;
 	anal->state = A_ASSIGN;

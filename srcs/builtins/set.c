@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 22:37:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/08 21:04:38 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/17 19:05:02 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ static void		print_internal_vars(t_core *shell)
 	ptr = shell->env;
 	while (ptr != NULL)
 	{
-		if (((t_db*)ptr->content)->type & ENV_VAR
-				|| ((t_db*)ptr->content)->type & INTERNAL_VAR)
+		if (((t_db*)ptr->content)->type & INTERNAL_VAR)
 		{
 			dprintf(STDOUT_FILENO, "%s=%s\n", ((t_db*)ptr->content)->key
 					, ((t_db*)ptr->content)->value);

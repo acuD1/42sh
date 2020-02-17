@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   define.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/13 15:57:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/17 17:59:51 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@
 **	Intern shell variables
 */
 
-# define ENV_VAR				0x001
+# define EXPORT_VAR				0x001
 # define INTERNAL_VAR			0x002
 # define SPECIAL_VAR			0x004
 # define HIST_SIZE				500
