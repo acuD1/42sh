@@ -90,12 +90,9 @@ static int8_t	get_index_expan(const char *str)
 		return (0);
 	while (str[i])
 	{
-		if (str[1] == '?')
-		{
-			i++;
-			break ;
-		}
-		if (str[1] == '$')
+		if (str[1] == '?' || str[1] == '$'
+			|| str[1] == '!' || str[1] == '-'
+			|| str[1] == '@' || str[1] == '*')
 		{
 			i++;
 			break ;

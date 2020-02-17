@@ -36,8 +36,8 @@ void		del_key(t_read *term)
 	int		y;
 	int		w;
 
-	if (term->x > term->prompt_len * (term->y == 0 ? 1 : 0)
-		&& term->x <= term->width)
+	if (term->buffer && term->x >= term->prompt_len * (term->y == 0 ? 1 : 0)
+		&& term->x < term->width)
 	{
 		i = term->x_index - term->prompt_len - 1;
 		while (term->buffer[++i])

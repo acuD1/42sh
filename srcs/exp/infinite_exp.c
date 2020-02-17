@@ -32,7 +32,7 @@ static int	get_quote_flag
 	return (1);
 }
 
-void		discard_backslash(const char *data, int *i, char **res)
+int		discard_backslash(const char *data, int *i, char **res)
 {
 	int		backslash_nbr;
 	int		index;
@@ -55,10 +55,11 @@ void		discard_backslash(const char *data, int *i, char **res)
 		*i = index;
 		*res = ft_strjoinf(*res, tmp, 4);
 	}
+	return (backslash_nbr % 2);
 }
 
 static void	check_if_we_shall_exp
-	(const char *data, int flag[4], char **res, t_core *shell)
+	(const char *data, int flag[5], char **res, t_core *shell)
 {
 	int		i;
 
@@ -79,30 +80,57 @@ static void	init_infinite_flags
 	flag[1] = 0;
 	flag[2] = -1;
 	flag[3] = 1;
+	flag[4] = 0;
 	*resultat = ft_strnew(0);
 	*tmp = NULL;
 	*state = NB_EXPANSION_STATE;
 }
 
+char		*quote_backslash_discarder(const char *data)
+{
+	char			*res;
+	char			*tmp;
+	int				index;
+	enum e_estate	st;
+
+	st = NB_EXPANSION_STATE;
+	tmp = NULL;
+	res = ft_strnew(0);
+	index = 0;
+	while (data[index])
+	{
+		st = skip_quotes(data, &index, st);
+		if (st != E_QUOTE)
+			discard_backslash(data, &index, &res);
+		tmp = ft_strsub(data, index, 1);
+		res = ft_strjoinf(res, tmp, 4);
+		index++;
+	}
+	return (res);
+}
+
 char		*infinite_expansion(const char *data, t_core *shell)
 {
-	int				flag[4];
+	int				flag[5];
 	char			*res;
 	char			*tmp;
 	enum e_estate	st;
 
 	init_infinite_flags(flag, &tmp, &res, &st);
+	if (!data || !*data)
+		return (NULL);
 	while (data[++flag[2]])
 	{
 		flag[3] = get_quote_flag(data, &flag[2], &flag[0], &flag[1]);
-		st = skip_quotes(data, &flag[2], st);
-		if (!data[flag[2]])
-			break ;
 		if (!flag[1])
 		{
 			check_if_we_shall_exp(data, flag, &res, shell);
-			discard_backslash(data, &flag[2], &res);
+			flag[4] = discard_backslash(data, &flag[2], &res);
 		}
+		if (!flag[4])
+			st = skip_quotes(data, &flag[2], st);
+		if (!data[flag[2]])
+			break ;
 		if (flag[3])
 		{
 			tmp = ft_strsub(data, flag[2], 1);

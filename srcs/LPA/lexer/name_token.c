@@ -16,7 +16,7 @@ static int		loop_till_next_quote(const char *str, int index, char quote)
 {
 	if (!str[index])
 		return (index);
-	while (str[index] != quote)
+	while (str[index] && str[index] != quote)
 		index += 1;
 	return (index);
 }

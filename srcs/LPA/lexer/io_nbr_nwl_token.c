@@ -12,12 +12,28 @@
 
 #include "sh42.h"
 
+int				filename_checker(t_lst *lst)
+{
+	enum e_pstate id;
+
+	if (!lst || !lst->content)
+		return (1);
+	while (lst->next)
+		lst = lst->next;
+	id = ((t_token*)lst->content)->id;
+	if (id == P_DLESSDASH || id == P_DLESS || id == P_LESS
+		|| id == P_LESSAND || id == P_DGREAT || id == P_GREATAND || id == P_GREAT)
+		return (0);
+	return (1);
+}
+
 static t_lst	*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token, int i)
 {
 	char	*str;
 
 	str = NULL;
-	if ((lexer->buff[i] == '<' || lexer->buff[i] == '>'))
+	if ((lexer->buff[i] == '<' || lexer->buff[i] == '>')
+		&& filename_checker(lexer_token))
 	{
 		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
 			return (NULL);

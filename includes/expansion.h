@@ -52,4 +52,5 @@ char			*error_moar_format_bis(char *data);
 char			*error_moar_format_param(char **tablo, char *data);
 char			*get_two_point_param_exp(char **tablo, t_core *shell);
 enum e_estate	skip_quotes(const char *str, int *j, enum e_estate st);
+char			*quote_backslash_discarder(const char *data);
 #endif

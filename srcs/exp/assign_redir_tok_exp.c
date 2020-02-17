@@ -64,8 +64,7 @@ void			expansion_redir(t_core *shell, t_process *process)
 	t_lst	*lst;
 	char	*res;
 
-	if (!process->redir_list || !shell
-			|| !((t_redir*)process->redir_list->content)->op[1])
+	if (!process->redir_list || !shell)
 		return ;
 	lst = process->redir_list;
 	res = NULL;
@@ -77,6 +76,12 @@ void			expansion_redir(t_core *shell, t_process *process)
 				ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n", ((t_redir*)lst->content)->op[1]);
 			ft_strdel(&(((t_redir*)lst->content)->op[1]));
 			((t_redir*)lst->content)->op[1] = ft_strdup(res);
+			ft_strdel(&res);
+		}
+		if ((res = do_expansion(shell, ((t_redir*)lst->content)->heredoc)))
+		{
+			ft_strdel(&(((t_redir*)lst->content)->heredoc));
+			((t_redir*)lst->content)->heredoc = ft_strdup(res);
 			ft_strdel(&res);
 		}
 		lst = lst->next;
