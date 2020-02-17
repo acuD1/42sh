@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/17 19:37:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/17 22:02:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void		add_builtin_lst(t_lst **bin, const char *cmd)
 	{
 		if (!*cmd || ft_isstart(blt_names[i], cmd))
 			ft_lstappend(&(*bin), ft_lstnew(blt_names[i],
-							sizeof(char *) * (ft_strlen(blt_names[i]) + 1)));
+							sizeof(char) * (ft_strlen(blt_names[i] + 1))));
 		i++;
 	}
 }
@@ -60,7 +60,7 @@ int8_t			is_completion(t_read *term)
 	if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		value = get_mask(buff);
-		if (value == TAB_KEY)
+		if (value == TAB_KEY || value == 0x909000000000000)
 			return (TRUE);
 		else
 			term->tmp_buff = ft_strdup(buff);
@@ -114,12 +114,12 @@ void			to_complete_bin(const char *to_find, t_read *term)
 	while (path && path[++i])
 	{
 		dir = opendir(path[i]);
-		while ((data = readdir(dir)) != NULL)
+		while (dir && (data = readdir(dir)) != NULL)
 		{
 			if ((!*to_find || ft_isstart(data->d_name, to_find))
 										&& !ft_isstart(data->d_name, "."))
 				ft_lstappend(&bin, ft_lstnew(data->d_name,
-						sizeof(char *) * (ft_strlen(data->d_name) + 1)));
+							sizeof(char) * (ft_strlen(data->d_name) + 1)));
 		}
 		closedir(dir);
 	}
