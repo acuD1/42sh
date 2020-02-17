@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/13 18:22:12 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:40:47 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	load_noi_mode(t_core *shell)
 
 void	load_i_mode(t_core *shell)
 {
-//	version(shell);
 	init_cmd_line(shell, &shell->term);
 	while (1)
 	{

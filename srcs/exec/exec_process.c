@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/15 18:01:36 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/17 12:11:01 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ void			exec_process
 	if (process->av)
 		get_bin(shell, process);
 	if ((process->pid = fork()) == 0)
+	{
+		shell->mode = NOI_MODE;
 		launch_process(shell, process, fds[0], fds[1]);
+	}
 	else if (process->pid < 0)
 		print_and_quit(shell, "42sh: fork failure\n");
 	if (shell->mode & I_MODE)

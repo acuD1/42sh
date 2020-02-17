@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_updates.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 05:25:31 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:21:24 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 int8_t	increment_shlvl(t_core *shell)
 {
+	int64_t	value;
+	int32_t	new_value;
 	char	*shlvl;
 	t_db	*db;
 
@@ -26,7 +28,17 @@ int8_t	increment_shlvl(t_core *shell)
 	db = NULL;
 	if (shell && (db = get_or_create_db(shell, "SHLVL", ENV_VAR)) != NULL)
 	{
-		shlvl = ft_itoa(ft_atoi(db->value) + 1);
+		if (ft_atol(db->value, &value) != SUCCESS)
+			new_value = 0;
+		else if (value < 0 || value > 999)
+			new_value = -1;
+		else
+			new_value = ((value & 8000000000000000) >> 32) + value & 0xFFF;
+		if (value > 999)
+			dprintf(STDERR_FILENO
+			, "42sh: warning: shell level (%lli) too high, resetting to 1\n"
+			, value);
+		shlvl = (value == 999) ? ft_strnew(0) : ft_itoa(new_value + 1);
 		if (shlvl && modify_db(db, shlvl, 0))
 			return (SUCCESS);
 		ft_strdel(&shlvl);
