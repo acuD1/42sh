@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/17 22:45:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/18 19:41:43 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,7 @@ char			*load_heredoc(t_core *shell, const char *key)
 		shell->term.buffer = ft_memalloc(BUFF_SIZE);
 		display_subprompt(&shell->term);
 		if (check_key(shell, key) == FALSE)
-		{
 			continue ;
-		}
 		else if (*shell->term.prompt
 			|| (!*shell->term.prompt && shell->term.buffer))
 			break ;

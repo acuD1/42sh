@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/18 15:50:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/18 19:40:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,24 @@ static void		tab_key(t_read *term, u_int64_t *value)
 }
 
 /*
+**		CTRL+D del char on cursor if buffer isnt empty
+*/
+
+static int8_t	ctrl_delete(t_read *term)
+{
+	if (term->status == CMD_SUBPROMPT)
+	{
+		if (!*term->buffer)
+		{
+			term->flag = TRUE;
+			return (FALSE);
+		}
+	}
+	del_key(term);
+	return (TRUE);
+}
+
+/*
 **		Interpret and insert char in bufffer
 **		CTRL+R to launch history research
 **		Tab key to turn on auto complete mode
@@ -85,11 +103,8 @@ u_int8_t		check_caps(const char *buff, t_read *term)
 	u_int64_t	value;
 
 	value = get_mask(buff);
-	if (value == CTRL_D && term->status == CMD_SUBPROMPT)
-	{
-		term->flag = TRUE;
-		return (FALSE);
-	}
+	if (value == CTRL_D)
+		return (ctrl_delete(term));
 	if (value == TAB_KEY)
 		tab_key(term, &value);
 	else if (ft_is_print(*buff))
