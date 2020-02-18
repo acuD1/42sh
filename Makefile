@@ -172,6 +172,7 @@ SRC					+=	$(S_PATH)$(AC)ac_buffer.c
 SRC					+=	$(S_PATH)$(AC)ac_current_dir.c
 SRC					+=	$(S_PATH)$(AC)ac_directories.c
 SRC					+=	$(S_PATH)$(AC)ac_tools.c
+SRC					+=	$(S_PATH)$(AC)ac_var.c
 SRC					+=	$(S_PATH)$(AC)auto_completion.c
 
 SRC					+=	$(S_PATH)$(HISTORY)save_history.c
