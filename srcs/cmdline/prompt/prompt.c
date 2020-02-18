@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/15 16:20:14 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/18 19:44:52 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ static int8_t	end_of_file(t_core *shell, const char *buff)
 	if (!*(shell->term).buffer && get_mask(buff) == CTRL_D)
 	{
 		ft_putstr_fd("exit\n", STDERR_FILENO);
+		if (are_jobs_done(shell, shell->launched_jobs) != TRUE)
+		{
+			write(STDERR_FILENO, "There are stopped jobs.\n", 24);
+			return (FALSE);
+		}
 		reset_config(shell);
 		write_history(&shell->term);
 		return (TRUE);

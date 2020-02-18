@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit_shell.c                                       :+:      :+:    :+:   */
+/*   are_job_done.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/26 23:52:50 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/18 18:55:29 by mpivet-p         ###   ########.fr       */
+/*   Created: 2020/02/18 18:31:48 by mpivet-p          #+#    #+#             */
+/*   Updated: 2020/02/18 18:53:38 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void	quit_shell(t_core *shell, int exit_value, int8_t v)
+int8_t	are_jobs_done(t_core *shell, t_lst *jobs)
 {
-//		longjmp(g_exit_leaks, 42); /* TEMPORARY */
-	if (shell->is_interactive)
-		reset_config(shell);
-	free_shell(shell);
-	if (shell->is_interactive && v == TRUE)
-		write(STDERR_FILENO, "exit\n", 5);
-//	longjmp(g_exit_leaks, 42); /* TEMPORARY */
-	exit(exit_value);
+	t_job	*job;
+	if (shell->notified != TRUE)
+	{
+		shell->notified = TRUE;
+		while (jobs)
+		{
+			job = jobs->content;
+			if (!(job_is_completed(job)) && job_is_stopped(job))
+				return (FALSE);
+			jobs = jobs->next;
+		}
+	}
+	return (TRUE);
 }

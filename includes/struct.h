@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/17 23:54:48 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 18:44:42 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ struct						s_core
 	int32_t					status;
 	int32_t					heredoc;
 	int32_t					terminal;
-	u_int8_t				is_interactive;
+	int8_t					is_interactive;
+	int8_t					notified;
 };
 
 /*
