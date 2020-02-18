@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_caps.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/15 17:24:16 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/18 15:52:05 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ u_int8_t		check_caps(const char *buff, t_read *term)
 	if (value == RETURN_KEY)
 	{
 		if (*term->prompt || (!*term->prompt && *term->buffer))
-			ft_putchar(NEW_LINE[0]);
+			write(STDERR_FILENO, "\n", 1);
 		return (FALSE);
 	}
 	check_keys_comb(buff, term, value);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   term_config.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/12 20:10:08 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 15:27:23 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int8_t	init_config(t_core *shell)
 
 int8_t	reset_config(t_core *shell)
 {
-	if (tcsetattr(STDOUT_FILENO, TCSANOW, &(shell->old_t)) == FAILURE)
+	if (tcsetattr(STDIN_FILENO, TCSADRAIN, &(shell->old_t)) == FAILURE)
 	{
 		dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
 		return (FAILURE);
