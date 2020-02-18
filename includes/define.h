@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/17 17:59:51 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/17 23:54:26 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,6 @@
 # define FC_OPT					"elnrs0123456789"
 # define MAX_PATH				4096
 # define ACCESS_MAX_PATH		1024
-
-/*
-**	Core
-*/
-
-# define I_MODE					0x001
-# define NOI_MODE				0x002
-# define OPT_MODE				0x004
 
 /*
 ** Command Line

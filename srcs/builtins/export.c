@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/17 19:05:56 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 01:48:49 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,11 @@ static int8_t	export(t_core *shell, const char *arg, int *ret)
 	len = ft_strclen(arg, '=');
 	str = ft_strsub(arg, 0, len);
 	export_hash_handler(shell, str);
-	if (str && (check_invalid_identifiers(str, "=")
-			|| ft_isdigit(arg[0]) != SUCCESS))
+	if (str && (check_invalid_identifiers(str, "=") || ft_isdigit(arg[0]) != 0))
 	{
 		*ret = 1;
 		dprintf(STDERR_FILENO
-			, "42sh: export: `%s': not a valid identifier\n", arg);
+		, "42sh: export: `%s': not a valid identifier\n", arg);
 		ft_strdel(&str);
 		return (SUCCESS);
 	}
@@ -76,7 +75,6 @@ static void		export_display(t_core *shell)
 				printf("export %s=\"%s\"\n", ptr->key, ptr->value);
 			else
 				printf("export %s\n", ptr->key);
-
 		}
 		db = db->next;
 	}

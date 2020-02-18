@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/17 19:07:50 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 01:41:15 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int8_t	increment_shlvl(t_core *shell)
 	char	*shlvl;
 	t_db	*db;
 
-	shlvl = NULL;
 	db = NULL;
 	if (shell && (db = get_or_create_db(
 		shell, "SHLVL", EXPORT_VAR | INTERNAL_VAR)) != NULL)
@@ -108,8 +107,8 @@ int8_t	update_oldpwd(t_core *shell, const char *oldpwd)
 
 	db = NULL;
 	value = NULL;
-	if (shell && (db = get_or_create_db(
-		shell, "OLDPWD", EXPORT_VAR | INTERNAL_VAR)) != NULL)
+	if (shell && (db = get_or_create_db(shell, "OLDPWD"
+	, EXPORT_VAR | INTERNAL_VAR)) != NULL)
 	{
 		value = ft_strdup(oldpwd);
 		if (value && modify_db(db, value, 0) != NULL)

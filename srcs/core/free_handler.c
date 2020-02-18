@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/08 21:05:00 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/17 23:58:45 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	free_history(t_read *term)
 {
 	t_lst	*tmp;
 
-	while (term->history)
+	while (term && term->history)
 	{
 		free(term->history->content);
 		tmp = term->history;

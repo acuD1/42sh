@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/16 01:28:30 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 00:09:18 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int		main(int ac, char **av, char **environ)
 //	{
 		get_opt(ac, av, &shell);
 //		dprintf(STDERR_FILENO, "Entering 42sh with setjmp activated !!!\n");
-		if (shell.mode & I_MODE)
+		if (shell.is_interactive)
 			load_i_mode(&shell);
 		else
 			load_noi_mode(&shell);

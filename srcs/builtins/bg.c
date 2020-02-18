@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:59:13 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/16 21:42:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 00:03:37 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	can_bg_run(t_core *shell, char **argv)
 	int	argc;
 
 	argc = ft_tablen(argv);
-	if (!(shell->mode & I_MODE))
+	if (!(shell->is_interactive))
 		dprintf(STDERR_FILENO, "42sh: bg: no job control\n");
 	else if ((argc == 1 || (argc == 2 && ft_strcmp(argv[1], "--") == 0))
 		&& get_job(shell->launched_jobs, NULL) == NULL)

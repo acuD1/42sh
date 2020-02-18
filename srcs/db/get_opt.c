@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 16:34:39 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/16 22:21:36 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 00:50:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	opt_c(int ac, char **av, t_core *shell)
 		dprintf(STDERR_FILENO, "42sh: -c: option requires an argument\n");
 		quit_shell(shell, 2, FALSE);
 	}
-	shell->mode |= NOI_MODE;
+	shell->is_interactive = FALSE;
 	shell->term.buffer = ft_strdup(av[2]);
 	lexer_parser_analyzer(shell);
 	if (task_master(shell) != SUCCESS)
@@ -61,7 +61,6 @@ void		get_opt(int ac, char **av, t_core *shell)
 
 	if (!av[1])
 		return ;
-	shell->mode |= OPT_MODE;
 	opt = ft_get_options(ac, av, SHELL_OPT);
 	if (opt & (1ULL << 63))
 	{

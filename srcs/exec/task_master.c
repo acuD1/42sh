@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/12 15:37:21 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 00:08:40 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static void	free_job(t_core *shell, t_lst *job)
 
 static void	place_job(t_core *shell, t_job *job, int8_t foreground)
 {
-	if (shell->mode & I_MODE && job_is_completed(job))
+	if (shell->is_interactive && job_is_completed(job))
 		return ;
-	if (shell->mode & NOI_MODE)
+	if (!(shell->is_interactive))
 		wait_for_job(shell, shell->job_list, job);
 	else if (foreground == TRUE && !job_is_stopped(job))
 		put_job_in_foreground(shell, shell->job_list, job, FALSE);

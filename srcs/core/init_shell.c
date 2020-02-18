@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/08 01:50:09 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 00:06:24 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ int8_t		init_shell(t_core *shell, char **av, char **environ)
 	}
 	if (isatty(shell->terminal) == TRUE)
 	{
-		shell->mode |= I_MODE;
+		shell->is_interactive = TRUE;
 		init_shell_pgid(shell);
 	}
 	else
-		shell->mode |= NOI_MODE;
+		shell->is_interactive = FALSE;
 	return (SUCCESS);
 }

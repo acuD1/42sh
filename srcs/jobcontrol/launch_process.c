@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/15 16:23:52 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 00:08:59 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void		launch_process
 	int		fds[2];
 	int		blt;
 
-	if (shell->mode & I_MODE)
+	if (shell->is_interactive)
 	{
 		reset_signals();
 		put_process_in_grp(shell, process);

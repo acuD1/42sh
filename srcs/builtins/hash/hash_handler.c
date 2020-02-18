@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 17:21:14 by arsciand          #+#    #+#             */
-/*   Updated: 2020/01/13 08:34:16 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/17 23:59:03 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_hash_map(t_hash *hash)
 	size_t	i;
 
 	i = 0;
-	if (!hash->map)
+	if (!hash || !hash->map)
 		return ;
 	while (i < hash->size)
 	{

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/17 19:11:09 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 01:47:42 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,15 @@ int8_t			set_env(t_core *shell, char **argv, char **environ)
 	size_t	i;
 
 	i = 0;
+	fetch_db(&shell->db, "OLDPWD", EXPORT_VAR);
+	ft_strdel(&(shell->db.value));
+	ft_lstappend(&shell->env, ft_lstnew(&(shell->db), sizeof(t_db)));
 	while (*environ && environ[i])
 	{
 		if (ft_strncmp("OLDPWD", environ[i], 6) != 0)
 		{
-			ft_lstappend(&shell->env,
-				ft_lstnew(
-					fetch_db(&shell->db, environ[i]
-					, EXPORT_VAR | INTERNAL_VAR), sizeof(t_db)));
+			ft_lstappend(&shell->env, ft_lstnew(fetch_db(&shell->db
+				, environ[i], EXPORT_VAR | INTERNAL_VAR), sizeof(t_db)));
 		}
 		i++;
 	}
