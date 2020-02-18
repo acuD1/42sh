@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/15 16:16:10 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 14:10:35 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 static int8_t	init_env(t_core *shell)
 {
-	static int8_t	(*inits[16])(t_core *shell) = {increment_shlvl, update_pwd
+	static int8_t	(*inits[16])() = {increment_shlvl, update_pwd
 		, update_ifs, update_termsize, create_term, update_histfile
 		, update_hist_size, update_histfile_size, update_version
 		, update_sharp_var, update_process_id, update_shell_name

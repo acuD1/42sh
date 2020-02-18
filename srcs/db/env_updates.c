@@ -6,11 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 05:25:31 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/18 15:26:19 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <sys/stat.h>
 
 /*
 **	Increment SHLVL : search SHLVL in the env list, increment the value
@@ -40,8 +41,9 @@ int8_t	increment_shlvl(t_core *shell)
 **	and then assign the current working dir path to value.
 */
 
-int8_t	update_pwd(t_core *shell)
+int8_t	update_pwd(t_core *shell, const char *pwd)
 {
+	struct stat	db_stat;
 	char	buf[MAX_PATH + 1];
 	t_db	*db;
 	char	*value;
@@ -51,8 +53,15 @@ int8_t	update_pwd(t_core *shell)
 	ft_bzero(buf, MAX_PATH + 1);
 	if (shell != NULL && (db = get_or_create_db(shell, "PWD", ENV_VAR)) != NULL)
 	{
-		getcwd(buf, MAX_PATH);
-		value = ft_strdup(buf);
+		lstat(pwd, &db_stat);
+		if ((shell && shell->job_list && ((t_process *)(shell->job_list)->content)->no_symbolic == TRUE)
+			|| S_ISLNK(db_stat.st_mode) == FALSE)
+		{
+			getcwd(buf, MAX_PATH);
+			value = ft_strdup(buf);
+		}
+		else
+			value = ft_strdup(pwd);
 		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);
 		ft_strdel(&value);
@@ -86,17 +95,21 @@ int8_t	update_last_arg(t_core *shell, char **argv)
 	return (FAILURE);
 }
 
-int8_t	update_oldpwd(t_core *shell, const char *oldpwd)
+int8_t	update_oldpwd(t_core *shell)
 {
-	t_db	*db;
+	t_db	*db_pwd;
+	t_db	*db_oldpwd;
 	char	*value;
 
-	db = NULL;
+	db_pwd = NULL;
+	db_oldpwd = NULL;
 	value = NULL;
-	if (shell && (db = get_or_create_db(shell, "OLDPWD", ENV_VAR)) != NULL)
+	if (shell
+		&& (db_pwd = get_or_create_db(shell, "OLDPWD", ENV_VAR)) != NULL
+		&& (db_oldpwd = get_or_create_db(shell, "PWD", ENV_VAR)) != NULL)
 	{
-		value = ft_strdup(oldpwd);
-		if (value && modify_db(db, value, 0) != NULL)
+		value = ft_strdup(db_oldpwd->value);
+		if (value && modify_db(db_pwd, value, 0) != NULL)
 			return (SUCCESS);
 		ft_strdel(&value);
 	}

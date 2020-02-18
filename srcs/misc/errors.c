@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 20:32:08 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 06:10:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/18 15:03:30 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_usage(const char *name, int c, const char *usage)
 {
 	if (c > 0)
-		dprintf(STDERR_FILENO, "%s: -%c: invalid option\n", name, c);
+		dprintf(STDERR_FILENO, "42sh: %s: -%c: invalid option\n", name, c);
 	dprintf(STDERR_FILENO, "%s: usage: %s\n", name, usage);
 }
 

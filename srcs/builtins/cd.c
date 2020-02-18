@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/15 16:12:45 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 16:27:12 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
 #include "sh42.h"
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 static int8_t	cd_check_path(const char *path)
 {
@@ -30,18 +34,18 @@ static int8_t	change_dir(t_core *shell, const char *path)
 {
 	char	buffer[MAX_PATH + 1];
 	char	oldpwd[MAX_PATH + 1];
+	char	pwd[MAX_PATH + 1];
 
 	ft_bzero(oldpwd, MAX_PATH + 1);
 	ft_bzero(buffer, MAX_PATH + 1);
-	getcwd(oldpwd, MAX_PATH);
 	get_canonical_path(path, buffer);
 	if (chdir(buffer) != SUCCESS)
 	{
 		ft_perror(path, "cd", cd_check_path(buffer));
 		return (1);
 	}
-	update_oldpwd(shell, oldpwd);
-	update_pwd(shell);
+	update_oldpwd(shell);
+	update_pwd(shell, buffer);
 	return (SUCCESS);
 }
 
@@ -71,6 +75,26 @@ static int8_t	cd_oldpwd(t_core *shell)
 	return (change_dir(shell, var->value));
 }
 
+static int8_t	cd_opt_parser(t_core *shell, int ac, t_process *process)
+{
+	char		string[MAX_PATH + 1];
+	u_int64_t	options;
+
+	ft_bzero(string, MAX_PATH + 1);
+	options = ft_get_options(ac, process->av, CD_OPT);
+	if (!process->av[2])
+		return (cd_home(shell));
+	if (options & (1ULL << 37))
+		return (change_dir(shell, process->av[2]));
+	if (options & (1ULL << 41))
+	{
+		((t_process *)(shell->job_list)->content)->no_symbolic = TRUE;
+		return (change_dir(shell, process->av[2]));
+	}
+	print_usage("cd", options % 128, CD_USAGE);
+	return (SUCCESS);
+}
+
 int8_t			builtin_cd(t_core *shell, t_process *process)
 {
 	int		argc;
@@ -78,7 +102,10 @@ int8_t			builtin_cd(t_core *shell, t_process *process)
 	argc = ft_tablen(process->av);
 	if (argc == 1 || ft_strcmp(process->av[1], "--") == 0)
 		return (cd_home(shell));
-	if (ft_strcmp(process->av[1], "-") == 0)
+	if (ft_strcmp(process->av[1], "-") == 0 && !process->av[1][1])
 		return (cd_oldpwd(shell));
-	return (change_dir(shell, process->av[1]));
+	if (argc > 2)
+		return (cd_opt_parser(shell, argc, process));
+	change_dir(shell, process->av[1]);
+	return (SUCCESS);
 }

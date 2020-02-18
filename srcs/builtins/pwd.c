@@ -3,29 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:51:46 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/07 21:05:56 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/18 16:39:15 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
 #include "sh42.h"
 
+static int8_t	pwd_opt_parser(int ac, t_process *process, t_db *db, char *pwd)
+{
+	u_int64_t	options;
+
+	options = ft_get_options(ac, process->av, "LP");
+	if (options & (1ULL << 37))
+		dprintf(STDOUT_FILENO, "%s\n", db->value);
+	else if (options & (1ULL << 41))
+		dprintf(STDOUT_FILENO, "%s\n", getcwd(pwd, MAX_PATH));
+	else
+		print_usage("pwd", options % 128, PWD_USAGE);
+	return (SUCCESS);
+}
+
 int8_t	builtin_pwd(t_core *shell, t_process *process)
 {
+	t_db	*db;
 	char	pwd[MAX_PATH + 1];
+	int		ac;
 
-	(void)shell;
-	(void)process;
 	ft_bzero(pwd, MAX_PATH + 1);
 	if (getcwd(pwd, MAX_PATH) == NULL)
 	{
-		ft_perror(pwd, "pwd", ENOENT);
-		return (1);
+		shell->pwd_error = TRUE;
+		dprintf(STDERR_FILENO, "pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
+		return (SUCCESS);
 	}
-	write(STDOUT_FILENO, pwd, ft_strlen(pwd));
-	write(STDOUT_FILENO, "\n", 1);
+	ac = ft_tablen(process->av);
+	db = get_or_create_db(shell, "PWD", ENV_VAR);
+	if (ac > 1)
+		return (pwd_opt_parser(ac, process, db, pwd));
+	dprintf(STDOUT_FILENO, "%s\n", db->value);
 	return (SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh42.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/15 20:28:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/18 15:22:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int8_t		path_tests(const char *path, int opt);
 */
 
 int8_t		increment_shlvl(t_core *shell);
-int8_t		update_pwd(t_core *shell);
+int8_t		update_pwd(t_core *shell, const char *pwd);
 int8_t		update_ifs(t_core *shell);
 int8_t		update_termsize(t_core *shell);
 int8_t		create_term(t_core *shell);
@@ -145,7 +145,7 @@ int8_t		update_background_pid(t_core *shell);
 int8_t		update_ps1(t_core *shell);
 int8_t		update_ps2(t_core *shell);
 int8_t		update_last_arg(t_core *shell, char **argv);
-int8_t		update_oldpwd(t_core *shell, const char *oldpwd);
+int8_t		update_oldpwd(t_core *shell);
 
 /*
 **	===========================================================================
