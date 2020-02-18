@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/17 18:39:48 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/18 20:16:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,9 @@ static char		*get_current_dir
 	if (term->ac > 1 && is_dir(curr_dir))
 		ft_strcpy(tmp_curr, curr_dir);
 	else
-	{
-		if (!getcwd(tmp_curr, BUFF_SIZE))
-			return (NULL);
 		ft_strcat(tmp_curr, "/");
-	}
+	if (!getcwd(tmp_curr, BUFF_SIZE))
+		return (NULL);
 	return (tmp_curr);
 }
 
