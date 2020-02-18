@@ -25,8 +25,9 @@ t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 {
 	char	*line;
 
-	line = NULL;
-	anal->redir.op[1] = quote_backslash_discarder(((t_token*)anal->lexer->content)->data);
+	line = ft_strdup(((t_token*)anal->lexer->content)->data);
+	anal->redir.op[1] = quote_backslash_discarder(line);
+	ft_strdel(&line);
 	if (shell->mode & I_MODE)
 		anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
 	else
@@ -45,13 +46,14 @@ t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 		ft_strdel(&line);
 	}
 	anal->state = A_WORD;
+	shell->term.flag = FALSE;
+	shell->term.status = CMD_DONE;
 	return (anal = redir_analyze(anal, shell));
 }
 
 t_analyzer	*redir_wanalyze(t_analyzer *anal, t_core *shell)
 {
 	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
-	// if (anal->state == A_REDIRECT)
 	if (anal->redir.type == P_DLESS || anal->redir.type == P_DLESSDASH)
 		return (heredoc_analyzer(anal, shell));
 	else
@@ -69,20 +71,31 @@ t_analyzer	*redir_analyze(t_analyzer *anal, t_core *shell)
 	return (anal);
 }
 
-t_analyzer	*redirect_analyze(t_analyzer *analyzer, t_core *shell)
+t_analyzer	*load_heredoc_fromline(t_analyzer *anal, t_core *shell)
+{
+	char *tmp;
+
+	tmp = NULL;
+	anal->redir.type = ((t_token*)anal->lexer->content)->id;
+	anal->lexer = anal->lexer->next;
+	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
+	anal->lexer = anal->lexer->next;
+	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
+	tmp = ft_strdup(((t_token*)anal->lexer->content)->data);
+	anal->redir.op[1] = quote_backslash_discarder(tmp);
+	anal->redir.heredoc = ft_strjoin(anal->redir.op[1], "\n");
+	anal->state = A_WORD;
+	return (anal = redir_analyze(anal, shell));
+}
+
+t_analyzer	*redirect_analyze(t_analyzer *anal, t_core *shell)
 {
 	(void)shell;
-	analyzer->job.command = fill_cmd_job(analyzer->lexer,
-		analyzer->job.command);
-	// if ((((t_token*)analyzer->lexer->content)->id == P_DLESS
-	// 	|| ((t_token*)analyzer->lexer->content)->id == P_DLESSDASH)
-	// 	&& ((t_token*)analyzer->lexer->next->content)->id == P_LESS)
-	// {
-	// 	// analyzer->lexer = analyzer->lexer->next;
-	// 	analyzer->job.command = fill_cmd_job(analyzer->lexer,
-	// 		analyzer->job.command);
-	// }
-	analyzer->redir.type = ((t_token*)analyzer->lexer->content)->id;
-	analyzer->state = A_REDIRECT;
-	return (analyzer);
+	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
+	if ((((t_token*)anal->lexer->content)->id == P_DLESS && anal->lexer->next
+		&& ((t_token*)anal->lexer->next->content)->id == P_LESS))
+		return (anal = load_heredoc_fromline(anal, shell));
+	anal->redir.type = ((t_token*)anal->lexer->content)->id;
+	anal->state = A_REDIRECT;
+	return (anal);
 }

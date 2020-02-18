@@ -36,11 +36,13 @@ int		discard_backslash(const char *data, int *i, char **res)
 {
 	int		backslash_nbr;
 	int		index;
+	int		ret;
 	char	*tmp;
 
 	index = *i;
 	backslash_nbr = 0;
 	tmp = NULL;
+	ret = 0;
 	if (data[index] == '\\')
 	{
 		while (data[index] == '\\')
@@ -48,6 +50,7 @@ int		discard_backslash(const char *data, int *i, char **res)
 			index++;
 			backslash_nbr++;
 		}
+		ret = backslash_nbr % 2;
 		backslash_nbr /= 2;
 		tmp = ft_strsub(data, index - backslash_nbr, backslash_nbr);
 		if (data[index] == '\n')
@@ -55,7 +58,7 @@ int		discard_backslash(const char *data, int *i, char **res)
 		*i = index;
 		*res = ft_strjoinf(*res, tmp, 4);
 	}
-	return (backslash_nbr % 2);
+	return (ret);
 }
 
 static void	check_if_we_shall_exp
@@ -64,7 +67,7 @@ static void	check_if_we_shall_exp
 	int		i;
 
 	i = flag[2];
-	if (data[i] == '$' || data[i] == '~' || data[i] == '`')
+	if ((data[i] == '$' || data[i] == '~' || data[i] == '`'))
 	{
 		flag[3] = get_exp(data, &i, res, shell);
 		if (!flag[3])
@@ -94,16 +97,25 @@ char		*quote_backslash_discarder(const char *data)
 	enum e_estate	st;
 
 	st = NB_EXPANSION_STATE;
+	if (!data)
+		return (NULL);
 	tmp = NULL;
-	res = ft_strnew(0);
+	res = NULL;
 	index = 0;
 	while (data[index])
 	{
 		st = skip_quotes(data, &index, st);
+		if (!data[index])
+			break ;
 		if (st != E_QUOTE)
 			discard_backslash(data, &index, &res);
-		tmp = ft_strsub(data, index, 1);
-		res = ft_strjoinf(res, tmp, 4);
+		if (res)
+		{
+			tmp = ft_strsub(data, index, 1);
+			res = ft_strjoinf(res, tmp, 4);
+		}
+		else
+			res = ft_strsub(data, index, 1);
 		index++;
 	}
 	return (res);
@@ -116,19 +128,19 @@ char		*infinite_expansion(const char *data, t_core *shell)
 	char			*tmp;
 	enum e_estate	st;
 
-	init_infinite_flags(flag, &tmp, &res, &st);
 	if (!data || !*data)
 		return (NULL);
+	init_infinite_flags(flag, &tmp, &res, &st);
 	while (data[++flag[2]])
 	{
 		flag[3] = get_quote_flag(data, &flag[2], &flag[0], &flag[1]);
+		st = skip_quotes(data, &flag[2], st);
+		if (!data[flag[2]])
+			break ;
 		if (!flag[1])
-		{
-			check_if_we_shall_exp(data, flag, &res, shell);
-			flag[4] = discard_backslash(data, &flag[2], &res);
-		}
-		if (!flag[4])
-			st = skip_quotes(data, &flag[2], st);
+			if (!discard_backslash(data, &flag[2], &res))
+				check_if_we_shall_exp(data, flag, &res, shell);
+		st = skip_quotes(data, &flag[2], st);
 		if (!data[flag[2]])
 			break ;
 		if (flag[3])

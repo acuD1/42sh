@@ -38,23 +38,23 @@ static void		add_assign_envp(const char *key, char *value, char ***envp)
 void			expansion_assign(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
-	t_lst	*tmp;
 	char	*res;
 
 	if (!process->assign_list || !shell)
 		return ;
 	res = NULL;
-	tmp = NULL;
 	lst = process->assign_list;
 	while (lst)
 	{
-		res = do_expansion(shell, ((t_db*)lst->content)->value);
-		if (!process->av)
-			add_assign_env(shell, ((t_db*)lst->content)->key, ft_strdup(res));
-		else
-			add_assign_envp(((t_db*)lst->content)->key, ft_strdup(res), &process->envp);
-		ft_strdel(&res);
-		tmp = lst;
+		if (((t_db*)lst->content)->value)
+		{
+			res = do_expansion(shell, ((t_db*)lst->content)->value);
+			if (!process->av)
+				add_assign_env(shell, ((t_db*)lst->content)->key, ft_strdup(res));
+			else
+				add_assign_envp(((t_db*)lst->content)->key, ft_strdup(res), &process->envp);
+			ft_strdel(&res);
+		}
 		lst = lst->next;
 	}
 }
@@ -70,7 +70,7 @@ void			expansion_redir(t_core *shell, t_process *process)
 	res = NULL;
 	while (lst)
 	{
-		if ((res = do_expansion(shell, ((t_redir*)lst->content)->op[1])))
+		if ((((t_redir*)lst->content)->op[1]) && (res = do_expansion(shell, ((t_redir*)lst->content)->op[1])))
 		{
 			if (!*res)
 				ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n", ((t_redir*)lst->content)->op[1]);
@@ -78,7 +78,7 @@ void			expansion_redir(t_core *shell, t_process *process)
 			((t_redir*)lst->content)->op[1] = ft_strdup(res);
 			ft_strdel(&res);
 		}
-		if ((res = do_expansion(shell, ((t_redir*)lst->content)->heredoc)))
+		if ((((t_redir*)lst->content)->heredoc) && (res = do_expansion(shell, ((t_redir*)lst->content)->heredoc)))
 		{
 			ft_strdel(&(((t_redir*)lst->content)->heredoc));
 			((t_redir*)lst->content)->heredoc = ft_strdup(res);
@@ -86,6 +86,26 @@ void			expansion_redir(t_core *shell, t_process *process)
 		}
 		lst = lst->next;
 	}
+}
+
+char			**add_underscore_envp(char **envp, char *data)
+{
+	int			i;
+
+	i = 0;
+	if (!*envp || !data)
+		return (envp);
+	while (envp[i])
+	{
+		if (envp[i][0] == '_' && envp[i][1] == '=')
+			break ;
+		i++;
+	}
+	// printf("%s     #%s#\n", envp[i], data);
+	ft_strdel(&(envp[i]));
+	envp[i] = ft_strjoin("_=", data);
+	// printf("%s\n", envp[i]);
+	return (envp);
 }
 
 void			expansion_tok(t_core *shell, t_process *process)
@@ -99,10 +119,15 @@ void			expansion_tok(t_core *shell, t_process *process)
 	lst = process->tok_list;
 	while (lst)
 	{
-		res = do_expansion(shell, ((t_token*)lst->content)->data);
-		if (*res != '\0')
-			process->av = ft_add_arg_cmd_process(process->av, res);
-		ft_strdel(&res);
+		if (((t_token*)lst->content)->data)
+		{
+			res = do_expansion(shell, ((t_token*)lst->content)->data);
+			if (*res != '\0')
+				process->av = ft_add_arg_cmd_process(process->av, res);
+			if (!lst->next)
+				process->envp = add_underscore_envp(process->envp, res);
+			ft_strdel(&res);
+		}
 		lst = lst->next;
 	}
 	ft_freetokenlist(&process->tok_list);
