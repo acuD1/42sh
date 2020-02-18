@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/17 13:20:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/18 15:50:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ u_int8_t		check_caps(const char *buff, t_read *term)
 	if (value == RETURN_KEY)
 	{
 		if (*term->prompt || (!*term->prompt && *term->buffer))
-			ft_putchar(NEW_LINE[0]);
+			ft_dprintf(STDERR_FILENO, "\n");
 		return (FALSE);
 	}
 	check_keys_comb(buff, term, value);
