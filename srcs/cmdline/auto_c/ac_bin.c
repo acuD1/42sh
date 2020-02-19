@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/17 22:02:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:42:21 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void		add_builtin_lst(t_lst **bin, const char *cmd)
 	{
 		if (!*cmd || ft_isstart(blt_names[i], cmd))
 			ft_lstappend(&(*bin), ft_lstnew(blt_names[i],
-							sizeof(char) * (ft_strlen(blt_names[i] + 1))));
+							sizeof(char) * (ft_strlen(blt_names[i]) + 1)));
 		i++;
 	}
 }
@@ -111,7 +111,7 @@ void			to_complete_bin(const char *to_find, t_read *term)
 	i = -1;
 	bin = NULL;
 	path = split_path(term->shell, "PATH");
-	while (path && path[++i])
+	while (path && path[++i] && is_dir(path[i]))
 	{
 		dir = opendir(path[i]);
 		while (dir && (data = readdir(dir)) != NULL)

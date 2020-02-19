@@ -6,33 +6,52 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/19 14:32:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:21:06 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <fcntl.h>
 
-void	launch_editor(t_core *shell, t_cmd cmd)
+static int8_t	fc_exec_cmd(t_core *shell, t_cmd cmd)
 {
-	t_process	process;
-	t_job		job;
-	char		*command;
-
-	ft_bzero(&process, sizeof(t_process));
-	ft_bzero(&job, sizeof(t_job));
-	command = ft_strjoin(cmd.editor, FC_TMP_FILE);
-	process.av = ft_strsplit(command, SPACE);
-	if (get_bin_path(shell, &process) != SUCCESS)
-		ft_dprintf(STDERR_FILENO, "42sh: %s: not found\n", cmd.editor);
-	call_bin(shell, &process);
-	ft_strdel(&command);
-	ft_tabdel(&process.av);
+	while (ft_getnextline(cmd.fd, &shell->term.buffer) > 0)
+	{
+		lexer_parser_analyzer(shell);
+		do_job_notification(shell, shell->launched_jobs);
+		if (task_master(shell) != SUCCESS)
+		{
+			close(cmd.fd);
+			return (FAILURE);
+		}
+		save_history(&shell->term);
+		ft_strdel(&shell->term.buffer);
+	}
+	close(cmd.fd);
+	ft_strdel(&shell->term.buffer);
+	shell->term.buffer = ft_memalloc(BUFF_SIZE);
+	return (SUCCESS);
 }
 
-char	*get_editor(char **av, u_int64_t opt)
+static int8_t	fc_editor(t_core *shell, t_cmd cmd)
 {
-	char	*editor;
+	char		*command;
+
+	command = ft_strjoin(cmd.editor, FC_TMP_FILE);
+	if ((cmd.fd = open(FC_TMP_FILE, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)
+		return (FAILURE);
+	if (fc_launch_editor(shell, ft_strsplit(command, SPACE)) == FAILURE)
+		return (FAILURE);
+	ft_strdel(&command);
+	ft_strdel(&shell->term.buffer);
+	if (fc_exec_cmd(shell, cmd) == FAILURE)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+char			*get_editor(char **av, u_int64_t opt)
+{
+	char		*editor;
 
 	editor = NULL;
 	skip_options(&av);
@@ -43,9 +62,9 @@ char	*get_editor(char **av, u_int64_t opt)
 	return (editor);
 }
 
-int8_t	edit_mode(t_core *shell, t_process *process, u_int64_t opt)
+int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 {
-	t_cmd	cmd;
+	t_cmd		cmd;
 
 	ft_bzero(&cmd, sizeof(t_cmd));
 	cmd.editor = get_editor(process->av, opt);
@@ -53,8 +72,7 @@ int8_t	edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 		(O_CREAT | O_WRONLY | O_TRUNC), (S_IRUSR | S_IWUSR))) == FAILURE)
 		return (fc_error(opt, 3));
 	get_range(process->av, &cmd);
-	get_entries(shell->term.history, &cmd);
+	get_entries(shell->term.history, &cmd, opt);
 	sort_print_cmd(cmd, shell->term.history, opt);
-	launch_editor(shell, cmd);
-	return (SUCCESS);
+	return (fc_editor(shell, cmd));
 }

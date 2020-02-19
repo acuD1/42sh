@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/19 16:09:59 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/19 16:13:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int8_t			init_history(t_core *shell)
 	ft_strdel(&history_file);
 	while (ft_getnextline(fd, &line) > 0)
 	{
-		if (line && ft_str_isprint(line) && line[0] != '\0')
+		if (ft_str_isprint(line))
 		{
 			shell->term.buffer = ft_strdup(line);
 			save_history(&shell->term);

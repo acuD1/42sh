@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/19 14:48:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:21:37 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,13 @@ int8_t		select_specifier(t_core *shell, t_lst *w, char **av)
 	if (get_range(av, &cmd) == FALSE)
 		return (fc_error(0, 0));
 	cmd.fd = STDERR_FILENO;
-	get_entries(w, &cmd);
+	get_entries(w, &cmd, 0);
 	ft_strdel(&shell->term.buffer);
 	if ((shell->term.buffer = ft_strdup(get_entry(w, cmd))) == NULL)
 		return (fc_error(0, 0));
+	lexer_parser_analyzer(shell);
+	do_job_notification(shell, shell->launched_jobs);
+	if (task_master(shell) != SUCCESS)
+		return (FAILURE);
 	return (SUCCESS);
 }

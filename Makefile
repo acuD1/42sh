@@ -141,6 +141,7 @@ SRC					+=	$(S_PATH)$(BUILTINS)type.c
 SRC					+=	$(S_PATH)$(BUILTINS)unset.c
 
 SRC					+=	$(S_PATH)$(FC)fc_edit.c
+SRC					+=	$(S_PATH)$(FC)fc_launcher.c
 SRC					+=	$(S_PATH)$(FC)fc_listing.c
 SRC					+=	$(S_PATH)$(FC)fc_print.c
 SRC					+=	$(S_PATH)$(FC)fc_specifier.c

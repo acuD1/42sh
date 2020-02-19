@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 12:13:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 04:31:30 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/19 16:58:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*xtgetstr(char *id, char **area)
 	shell = get_core(NULL);
 	if ((str = tgetstr(id, area)) == NULL)
 	{
-		dprintf(STDERR_FILENO, "42sh: tgetstr errror\n");
+		ft_dprintf(STDERR_FILENO, "42sh: error: tgetstr failure\n");
 		quit_shell(shell, EXIT_FAILURE, TRUE);
 	}
 	return (str);
@@ -49,7 +49,7 @@ size_t	xread(int fd, char *buff, int size)
 	{
 		if (ret == FAILURE)
 		{
-			dprintf(STDERR_FILENO, "42sh: read errror\n");
+			ft_dprintf(STDERR_FILENO, "42sh: error: read failure\n");
 			quit_shell(shell, EXIT_FAILURE, TRUE);
 		}
 	}
