@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/18 15:47:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:56:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	init_cmd_line(t_core *shell, t_read *term)
 	term->prompt = NULL;
 	if (get_size(term) != SUCCESS)
 		quit_shell(shell, EXIT_FAILURE, TRUE);
-	init_history(term);
+	shell->term.history = term->history;
+	init_history(shell);
 }
 
 /*
@@ -69,7 +70,7 @@ int8_t	reset_config(t_core *shell)
 {
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->old_t)) == FAILURE)
 	{
-		dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
+		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
 		return (FAILURE);
 	}
 	ft_strdel(&shell->term.tmp_buff);

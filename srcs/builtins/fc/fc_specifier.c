@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/08 20:23:17 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/19 14:48:46 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int8_t		select_specifier(t_core *shell, t_lst *w, char **av)
 	rep = NULL;
 	if (get_range(av, &cmd) == FALSE)
 		return (fc_error(0, 0));
-	cmd.fd = STDOUT_FILENO;
+	cmd.fd = STDERR_FILENO;
 	get_entries(w, &cmd);
 	ft_strdel(&shell->term.buffer);
 	if ((shell->term.buffer = ft_strdup(get_entry(w, cmd))) == NULL)

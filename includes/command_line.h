@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/18 15:21:19 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:53:50 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void		clr_screen(t_read *term);
 **		History
 */
 
-int8_t		init_history(t_read *term);
-int8_t		write_history(t_read *term);
+int8_t		init_history(t_core *shell);
+int8_t		write_history(t_core *shell);
 void		save_history(t_read *term);
 void		research_mode(t_read *term);
 void		check_expansions(t_read *term);

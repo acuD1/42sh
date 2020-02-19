@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/15 20:28:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/19 14:32:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void		get_entries(t_lst *w, t_cmd *cmd);
 void		print_list(t_lst *w, t_cmd cmd, u_int64_t opt);
 void		print_reverse(t_lst *w, t_cmd cmd, u_int64_t opt);
 void		skip_options(char ***av);
+void		sort_print_cmd(t_cmd cmd, t_lst *w, u_int64_t opt);
 
 /*
 **	===========================================================================

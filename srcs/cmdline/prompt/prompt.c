@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/19 12:09:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:51:16 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static int8_t	end_of_file(t_core *shell, const char *buff)
 	if (!*(shell->term).buffer && get_mask(buff) == CTRL_D)
 	{
 		ft_dprintf(STDERR_FILENO, "exit\n");
+		write_history(shell);
 		reset_config(shell);
-		write_history(&shell->term);
 		return (TRUE);
 	}
 	return (FALSE);
