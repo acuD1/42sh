@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/19 16:02:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/19 16:09:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@
 **	Open ".42sh_history" file to write history datas at the end of file
 */
 
-static int8_t	history_writer(t_lst *hst, int fd, int i)
+static int8_t	history_writer(t_lst *hst, int fd)
 {
+	int			i;
+
+	i = 0;
 	while (hst->next && ++i < HIST_SIZE)
 		hst = hst->next;
 	while (hst)
@@ -28,7 +31,7 @@ static int8_t	history_writer(t_lst *hst, int fd, int i)
 		if (write(fd, hst->content, ft_strlen(hst->content)) == FAILURE
 			|| write(fd, NEW_LINE, 1) == FAILURE)
 		{
-			ft_dprintf(STDERR_FILENO, "42sh: write failure\n");
+			ft_dprintf(STDERR_FILENO, "42sh: write failure in history file\n");
 			close(fd);
 			return (FAILURE);
 		}
@@ -58,9 +61,7 @@ int8_t			write_history(t_core *shell)
 {
 	char	*history_file;
 	int		fd;
-	int		i;
 
-	i = 0;
 	history_file = get_home_value(shell);
 	if (!shell->term.history)
 		return (FAILURE);
@@ -70,7 +71,8 @@ int8_t			write_history(t_core *shell)
 		ft_dprintf(STDERR_FILENO, "42sh: can't open history file\n");
 		return (FAILURE);
 	}
-	return (history_writer(shell->term.history, fd, i));
+	ft_strdel(&history_file);
+	return (history_writer(shell->term.history, fd));
 }
 
 /*
@@ -114,6 +116,7 @@ int8_t			init_history(t_core *shell)
 	history_file = get_home_value(shell);
 	if ((fd = open(history_file, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)
 		return (FAILURE);
+	ft_strdel(&history_file);
 	while (ft_getnextline(fd, &line) > 0)
 	{
 		if (line && ft_str_isprint(line) && line[0] != '\0')
