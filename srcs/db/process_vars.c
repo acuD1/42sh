@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_vars.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:51:00 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/13 18:37:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/19 02:49:27 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,12 @@ int8_t	update_background_pid(t_core *shell)
 	db = NULL;
 	value = NULL;
 	job = get_job(shell->launched_jobs, "%%");
-	if (shell && job && (db = get_or_create_db(shell, "!", SPECIAL_VAR)))
+	if (shell && (db = get_or_create_db(shell, "!", SPECIAL_VAR)))
 	{
-		value = ft_itoa(job->pgid);
+		if (job)
+			value = ft_itoa(job->pgid);
+		else
+			value = ft_strdup("0");
 		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);
 		ft_strdel(&value);

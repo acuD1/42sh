@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/18 00:10:08 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/19 00:42:15 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void		control_process
 	if (process->pgid == -1)
 		job->pgid = process->pid;
 	process->pgid = job->pgid;
-	if ((process->stopped != TRUE || !cond(job->process_list))
+	if (process->stopped != TRUE
 		&& setpgid(process->pid, process->pgid) != SUCCESS)
 		print_and_quit(shell, "42sh: setpgid error (1)\n");
 	if (process->stopped != TRUE && fds[1] == STDOUT_FILENO)
@@ -49,8 +49,6 @@ static void		control_process
 		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: tcsetpgrp error\n");
 	}
-	else if (fds[1] == STDOUT_FILENO && cond(job->process_list))
-		wait_for_process(shell, shell->job_list, process);
 	else
 		process->stopped = FALSE;
 }
@@ -72,4 +70,6 @@ void			exec_process
 		print_and_quit(shell, "42sh: fork failure\n");
 	if (shell->is_interactive == TRUE)
 		control_process(shell, job, process, fds);
+	else if (fds[1] == STDOUT_FILENO)
+		wait_for_process(shell, shell->job_list, process);
 }

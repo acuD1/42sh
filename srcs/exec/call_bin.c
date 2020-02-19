@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/16 22:26:42 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/19 00:26:47 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ static int8_t	check_filepath(t_process *process)
 		ft_perror(process->av[0], NULL, EISDIR);
 	else
 		return (0);
-	ret = (ret == 127) ? 127 : 126;
-	return (ret);
+	return ((ret == 127) ? 127 : 126);
 }
 
 int8_t			call_bin(t_core *shell, t_process *process)
