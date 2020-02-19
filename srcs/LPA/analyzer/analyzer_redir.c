@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:54:43 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/19 12:13:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/19 13:18:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 	anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
 	anal->state = A_WORD;
 	shell->term.status = CMD_DONE;
+	shell->term.flag = FALSE;
 	return (anal = redir_analyze(anal, shell));
 }
 
