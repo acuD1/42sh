@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/18 19:29:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/19 11:53:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,23 @@
 
 void		clr_screen(t_read *term)
 {
+	char	*tmp;
+	int		x_saved;
 	int		i;
 
-	i = term->x;
+	i = 0;
+	x_saved = term->x_index;
+	tmp = ft_strdup(term->buffer);
 	xtputs(term->tcaps[CLEAR], 1, my_outc);
 	ft_dprintf(STDERR_FILENO, "%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
-	ft_putstr(term->buffer);
-	xtputs(term->tcaps[UP_LEFT_CORNER], 1, my_outc);
+	goto_prompt(term);
+	ft_strdel(&term->buffer);
+	term->buffer = ft_memalloc(BUFF_SIZE);
+	insert_str_in_buffer(tmp, term);
+	ft_strdel(&tmp);
+	i = term->x_index - x_saved;
 	while (i--)
-		xtputs(term->tcaps[KEY_RIGHT], 1, my_outc);
+		move_left(NULL, term);
 }
 
 /*
