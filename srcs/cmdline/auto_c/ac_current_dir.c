@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/18 20:16:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:16:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ int				is_dot(const char *d_name)
 	return (FALSE);
 }
 
-static char		*get_current_dir
-	(const char *curr_dir, char *tmp_curr, t_read *term)
+static int8_t	get_dir(t_read *term, const char *av, char *new_dir)
 {
-	if (term->ac > 1 && is_dir(curr_dir))
-		ft_strcpy(tmp_curr, curr_dir);
-	else
-		ft_strcat(tmp_curr, "/");
-	if (!getcwd(tmp_curr, BUFF_SIZE))
-		return (NULL);
-	return (tmp_curr);
+	if (!getcwd(new_dir, BUFF_SIZE))
+		return (FAILURE);
+	if (term->ac > 1 && is_dir(av))
+	{
+		ft_strcpy(new_dir, av);
+		return (SUCCESS);
+	}
+	return (SUCCESS);
 }
 
 static int8_t	read_curr_dir
@@ -94,19 +94,20 @@ static int8_t	read_curr_dir
 **		Display all files in current directory if no any char is inserted
 */
 
-void			display_current_directory(t_read *term, const char *curr_dir)
+void			display_current_directory(t_read *term, const char *av)
 {
 	DIR		*dir;
 	char	tmp[BUFF_SIZE];
-	char	current_dir[BUFF_SIZE];
+	char	new_dir[BUFF_SIZE];
 
 	term->flag = FALSE;
-	get_current_dir(curr_dir, current_dir, term);
-	if ((dir = opendir(current_dir)) == NULL)
+	if (get_dir(term, av, new_dir) == FAILURE)
 		return ;
-	ft_strcpy(tmp, current_dir);
-	if (read_curr_dir(term, tmp, current_dir, dir) == FAILURE)
+	if ((dir = opendir(new_dir)) == NULL)
+		return ;
+	ft_strcpy(tmp, new_dir);
+	if (read_curr_dir(term, tmp, new_dir, dir) == FAILURE)
 		return ;
 	closedir(dir);
-	(term->flag != 2) ? display_current_directory(term, curr_dir) : 0;
+	(term->flag != 2) ? display_current_directory(term, av) : 0;
 }

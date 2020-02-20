@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/17 19:19:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:26:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ void		auto_complete_mode(t_read *term)
 	split_cmd(&to_find, term);
 	if (term->ac > 1)
 	{
-		if (term->buffer[i] == ' ' || is_dir(to_find))
+		if (term->buffer[i] == ' ' || (is_dir(to_find)
+			&& !is_dot(&to_find[ft_strlen(to_find) - 1])))
 			display_current_directory(term, to_find);
 		else
 			to_complete_buffer(to_find, term);
