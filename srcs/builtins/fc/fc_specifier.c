@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/20 16:09:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/20 16:12:37 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int8_t		select_specifier(t_core *shell, char **av)
 	if (shell->term.history == NULL)
 		return (fc_error(0, 0));
 	get_pat_and_rep(av, &pat, &rep);
-	replace_pattern(shell, pat, rep);
+	while (replace_pattern(shell, pat, rep) == SUCCESS)
+		;
 	lexer_parser_analyzer(shell);
 	do_job_notification(shell, shell->launched_jobs);
 	if (task_master(shell) != SUCCESS)
