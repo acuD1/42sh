@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/18 19:18:52 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/20 19:43:35 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ int8_t		edit_var
 
 int8_t		call_builtin(t_core *shell, t_process *process, int blt);
 int8_t		get_bin_path(t_core *shell, t_process *process);
-void		exec_process
-				(t_core *shell, t_job *job, t_process *process, int *fds);
+void		exec_process(t_core *shell, t_job *job, t_process *process);
 int8_t		call_bin(t_core *shell, t_process *process);
 int8_t		task_master(t_core *shell);
 int8_t		is_a_blt(const char *cmd);
@@ -217,15 +216,14 @@ int8_t		put_job_in_foreground
 void		put_job_in_background(t_core *shell, t_job *job, int cont);
 int8_t		continue_job(t_core *shell, t_job *job, int foreground);
 void		reset_signals(void);
-void		launch_process
-				(t_core *shell, t_process *process, int infile, int outfile);
+void		launch_process(t_core *shell, t_process *process);
 void		launch_job(t_core *shell, t_job *job, int foreground);
 void		job_background_notif(t_job *job);
 void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
 int8_t		mark_process_status
 				(t_core *shell, t_lst *jobs, pid_t pid, int status);
 void		mark_job_as_stopped(t_job *job, int stopped);
-int8_t		launch_blt(t_core *shell, t_job *job, t_process *process, int *fds);
+int8_t		launch_blt(t_core *shell, t_process *process);
 void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
 void		update_status(t_core *shell);
 t_job		*get_job(t_lst *jobs, char *str);

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/18 16:31:22 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:25:07 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,38 @@ static void	put_process_in_grp(t_core *shell, t_process *process)
 	}
 }
 
-static void	redir_pipes(int *infile, int *outfile)
+static void	redir_pipes(t_process *process)
 {
-	if (*infile != STDIN_FILENO)
+	if (process->pipe[0] != STDIN_FILENO)
 	{
-		dup2(*infile, STDIN_FILENO);
-		close(*infile);
+		dprintf(STDERR_FILENO, "%s -> dup(%i, stdin)\n", process->command, process->pipe[0]);
+		dup2(process->pipe[0], STDIN_FILENO);
+		close(process->pipe[0]);
 	}
-	if (*outfile != STDOUT_FILENO)
+	if (process->pipe[1] != STDOUT_FILENO)
 	{
-		dup2(*outfile, STDOUT_FILENO);
-		close(*outfile);
+		dprintf(STDERR_FILENO, "%s -> dup(%i, stdout)\n", process->command, process->pipe[1]);
+		dup2(process->pipe[1], STDOUT_FILENO);
+		close(process->pipe[1]);
+	}
+	if (process->close[0] != -1)
+	{
+		dprintf(STDERR_FILENO, "fork close([0]) %s\n", process->command);
+		close(process->close[0]);
+	}
+	if (process->close[1] != -1)
+	{
+		dprintf(STDERR_FILENO, "fork close([1]) %s\n", process->command);
+		close(process->close[1]);
 	}
 }
 
-int8_t		launch_blt(t_core *shell, t_job *job, t_process *process, int *fds)
+int8_t		launch_blt(t_core *shell, t_process *process)
 {
 	int		blt;
 
-	(void)job;
-	if (fds[0] == STDIN_FILENO && fds[1] == STDOUT_FILENO && process->av
-		&& (blt = is_a_blt(process->av[0])) != FAILURE)
+	if (process->pipe[0] == STDIN_FILENO && process->pipe[1] == STDOUT_FILENO
+		&& process->av && (blt = is_a_blt(process->av[0])) != FAILURE)
 	{
 		process->status = 1;
 		if (exec_redirs(shell, process, process->redir_list) == SUCCESS)
@@ -69,10 +80,8 @@ int8_t		launch_blt(t_core *shell, t_job *job, t_process *process, int *fds)
 	return (FAILURE);
 }
 
-void		launch_process
-	(t_core *shell, t_process *process, int infile, int outfile)
+void		launch_process(t_core *shell, t_process *process)
 {
-	int		fds[2];
 	int		blt;
 
 	if (shell->is_interactive)
@@ -80,9 +89,7 @@ void		launch_process
 		reset_signals();
 		put_process_in_grp(shell, process);
 	}
-	redir_pipes(&infile, &outfile);
-	fds[0] = infile;
-	fds[1] = outfile;
+	redir_pipes(process);
 	if (process->av)
 	{
 		if ((blt = is_a_blt(process->av[0])) != FAILURE)

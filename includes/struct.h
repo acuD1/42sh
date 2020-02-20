@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/18 18:44:42 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/20 18:13:51 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,8 @@ typedef struct				s_process
 	int8_t					stopped;
 	int8_t					status;
 	int8_t					blt;
+	int						pipe[2];
+	int						close[2];
 }							t_process;
 
 typedef struct				s_redir

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/19 00:42:15 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:20:13 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int8_t	job_part_completed(t_job *job, t_process *process)
 }
 
 static void		control_process
-	(t_core *shell, t_job *job, t_process *process, int *fds)
+	(t_core *shell, t_job *job, t_process *process)
 {
 	if (process->pgid == -1)
 		job->pgid = process->pid;
@@ -41,20 +41,19 @@ static void		control_process
 	if (process->stopped != TRUE
 		&& setpgid(process->pid, process->pgid) != SUCCESS)
 		print_and_quit(shell, "42sh: setpgid error (1)\n");
-	if (process->stopped != TRUE && fds[1] == STDOUT_FILENO)
+	if (process->stopped != TRUE && process->type != P_PIPE)
 	{
 		if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
-			print_and_quit(shell, "42sh: tcsetpgrp error\n");
+			print_and_quit(shell, "42sh: tcsetpgrp error (1)\n");
 		wait_for_process(shell, shell->job_list, process);
 		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
-			print_and_quit(shell, "42sh: tcsetpgrp error\n");
+			print_and_quit(shell, "42sh: tcsetpgrp error (2)\n");
 	}
 	else
 		process->stopped = FALSE;
 }
 
-void			exec_process
-	(t_core *shell, t_job *job, t_process *process, int *fds)
+void			exec_process(t_core *shell, t_job *job, t_process *process)
 {
 	if (job_part_completed(job, process))
 		job->pgid = -1;
@@ -64,12 +63,16 @@ void			exec_process
 	if ((process->pid = fork()) == 0)
 	{
 		shell->is_interactive = TRUE;
-		launch_process(shell, process, fds[0], fds[1]);
+		launch_process(shell, process);
 	}
 	else if (process->pid < 0)
 		print_and_quit(shell, "42sh: fork failure\n");
+	if (process->pipe[1] != STDOUT_FILENO)
+		close(process->pipe[1]);
+	if (process->pipe[0] != STDIN_FILENO)
+		close(process->pipe[0]);
 	if (shell->is_interactive == TRUE)
-		control_process(shell, job, process, fds);
-	else if (fds[1] == STDOUT_FILENO)
+		control_process(shell, job, process);
+	else if (process->type != P_PIPE)
 		wait_for_process(shell, shell->job_list, process);
 }
