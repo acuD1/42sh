@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/18 15:22:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/19 17:30:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ void		hash_error(t_hash *hash);
 */
 
 t_core		*get_core(t_core *core);
-int8_t		get_canonical_path(const char *path, char *buffer);
+int8_t		get_canonical_path
+	(t_core *shell, const char *path, char *buffer, char *pwd);
 void		ft_perror(const char *s, const char *name, int errnum);
 int8_t		ft_access(const char *path, int mode);
 int8_t		is_a_dir(const char *path);
@@ -128,7 +129,7 @@ int8_t		path_tests(const char *path, int opt);
 */
 
 int8_t		increment_shlvl(t_core *shell);
-int8_t		update_pwd(t_core *shell, const char *pwd);
+int8_t		update_pwd(t_core *shell, const char *pwd, const char *path);
 int8_t		update_ifs(t_core *shell);
 int8_t		update_termsize(t_core *shell);
 int8_t		create_term(t_core *shell);

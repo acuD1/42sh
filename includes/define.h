@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/18 15:05:55 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/20 18:47:46 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,10 @@
 # define CD_OPT					"LP"
 # define PWD_USAGE				"pwd [-LP]"
 # define PWD_OPT				"LP"
+# define CHECKING				2
+# define CHDIR_ERR				"chdir: error retrieving current directory:"
+# define CD_ERR					"cd: error retrieving current directory:"
+# define GETCWD_ERR				"getcwd: cannot access parent directories:"
 
 /*
 **	Intern shell variables

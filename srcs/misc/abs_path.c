@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:02:32 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/17 17:55:32 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/20 17:34:17 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static int8_t	check_filename_length(const char *str)
 **	.././bar to /foo/bar etc.
 */
 
-int8_t			get_canonical_path(const char *path, char *abs)
+int8_t			get_canonical_path(t_core *shell, const char *path, char *abs, char *pwd)
 {
 	char	rel[MAX_PATH + 1];
 
@@ -101,7 +101,13 @@ int8_t			get_canonical_path(const char *path, char *abs)
 	if (path[0] == '/')
 		abs[0] = '/';
 	else
-		getcwd(abs, MAX_PATH);
+	{
+		if (shell && shell->pwd_error == TRUE)
+			ft_strcpy(abs, pwd);
+		else
+			getcwd(abs, MAX_PATH);
+	}
+	//dprintf(STDERR_FILENO, "get_path abs |%s|\n", abs);
 	ft_strcpy(rel, path);
 	while (rel[0] != 0)
 	{
@@ -112,5 +118,12 @@ int8_t			get_canonical_path(const char *path, char *abs)
 		if (dir_forward(rel) != SUCCESS)
 			return (FAILURE);
 	}
-	return (check_filename_length(abs));
+	if (check_filename_length(abs) == FAILURE)
+		return (FAILURE);
+	if (shell && shell->pwd_error == TRUE)
+	{
+		ft_bzero(pwd, MAX_PATH + 1);
+		ft_strcpy(pwd, abs);
+	}
+	return (SUCCESS);
 }

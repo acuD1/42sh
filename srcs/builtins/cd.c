@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/18 16:27:12 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/20 19:42:15 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,48 +30,93 @@ static int8_t	cd_check_path(const char *path)
 	return (errnum);
 }
 
+
 static int8_t	change_dir(t_core *shell, const char *path)
 {
-	char	buffer[MAX_PATH + 1];
-	char	oldpwd[MAX_PATH + 1];
-	char	pwd[MAX_PATH + 1];
+	char		buffer[MAX_PATH + 1];
+	char		tmp[MAX_PATH + 1];
+	static char pwd[MAX_PATH + 1];
+	t_db		*db;
 
-	ft_bzero(oldpwd, MAX_PATH + 1);
 	ft_bzero(buffer, MAX_PATH + 1);
-	get_canonical_path(path, buffer);
+	ft_bzero(tmp, MAX_PATH + 1);
+	if (shell->pwd_error == TRUE && ft_strlen(pwd) < 1)
+	{
+		ft_bzero(pwd, MAX_PATH + 1);
+		db = get_or_create_db(shell, "PWD", ENV_VAR);
+		ft_strcpy(pwd, db->value);
+		dprintf(STDERR_FILENO, "%s %s No such file or directory\n", CHDIR_ERR, GETCWD_ERR);
+		get_canonical_path(shell, path, buffer, pwd);
+		update_oldpwd(shell);
+		update_pwd(shell, buffer, path);
+		return (SUCCESS);
+	}
+//	dprintf(STDERR_FILENO, "STATIC |%s|\n", pwd);
+	get_canonical_path(shell, path, buffer, pwd);
+//	dprintf(STDERR_FILENO, "path = |%s| buffer = |%s| pwd = |%s|\n", path, buffer, pwd);
 	if (chdir(buffer) != SUCCESS)
 	{
-		ft_perror(path, "cd", cd_check_path(buffer));
-		return (1);
+		if (getcwd(tmp, MAX_PATH) == NULL && shell->pwd_error == TRUE)
+			dprintf(STDERR_FILENO, "%s %s No such file or directory\n", CD_ERR, GETCWD_ERR);
+		else
+		{
+			ft_perror(path, "cd", cd_check_path(buffer));
+			return (1);
+		}
 	}
 	update_oldpwd(shell);
-	update_pwd(shell, buffer);
+	update_pwd(shell, buffer, path);
 	return (SUCCESS);
+}
+
+
+static int8_t	cd_oldpwd(t_core *shell)
+{
+	t_db	*db_pwd;
+	t_db	*db_oldpwd;
+	int		errnum;
+	char	*tmp;
+
+	tmp = NULL;
+	if ((db_oldpwd = search_db(shell->env, "OLDPWD")) == NULL)
+	{
+		write(STDERR_FILENO, "42sh: cd: OLDPWD not set\n", 25);
+		return (1);
+	}
+	if ((errnum = cd_check_path(db_oldpwd->value)) == SUCCESS)
+	{
+		db_pwd = search_db(shell->env, "PWD");
+		//shell->pwd_error = FALSE;
+		tmp = ft_strdup(db_oldpwd->value);
+		tmp = ft_strjoinf(tmp, "/", 1);
+		tmp = ft_strjoinf(tmp, db_pwd->value, 1);
+		dprintf(STDOUT_FILENO, "%s |%s|\n", db_oldpwd->value, tmp);
+		change_dir(shell, tmp);
+		ft_strdel(&tmp);
+		return (SUCCESS);
+	}
+	else
+	{
+		ft_perror(db_oldpwd->value, "cd", errnum);
+		return (1);
+	}
+	return (change_dir(shell, db_oldpwd->value));
 }
 
 static int8_t	cd_home(t_core *shell)
 {
+	char	pwd[MAX_PATH + 1];
 	t_db	*var;
 
+	ft_bzero(pwd, MAX_PATH);
+	if (getcwd(pwd, MAX_PATH) == NULL && shell->pwd_error == TRUE)
+		dprintf(STDERR_FILENO, "%s %s No such file or directory\n", CHDIR_ERR, GETCWD_ERR);
 	if ((var = search_db(shell->env, "HOME")) == NULL)
 	{
 		write(STDERR_FILENO, "42sh: cd: HOME not set\n", 23);
 		return (1);
 	}
-	return (change_dir(shell, var->value));
-}
-
-static int8_t	cd_oldpwd(t_core *shell)
-{
-	t_db	*var;
-
-	if ((var = search_db(shell->env, "OLDPWD")) == NULL)
-	{
-		write(STDERR_FILENO, "42sh: cd: OLDPWD not set\n", 25);
-		return (1);
-	}
-	if (cd_check_path(var->value) == SUCCESS)
-		dprintf(STDOUT_FILENO, "%s\n", var->value);
+	shell->pwd_error = FALSE;
 	return (change_dir(shell, var->value));
 }
 
@@ -97,7 +142,8 @@ static int8_t	cd_opt_parser(t_core *shell, int ac, t_process *process)
 
 int8_t			builtin_cd(t_core *shell, t_process *process)
 {
-	int		argc;
+	int			argc;
+	//static char	pwd[MAX_PATH + 1];
 
 	argc = ft_tablen(process->av);
 	if (argc == 1 || ft_strcmp(process->av[1], "--") == 0)

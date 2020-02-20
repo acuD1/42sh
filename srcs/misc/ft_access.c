@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 00:18:54 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 04:07:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/19 17:42:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int8_t			ft_access(const char *path, int mode)
 	ft_bzero(buffer, MAX_PATH + 1);
 	getcwd(buffer, MAX_PATH);
 	if (ft_strlen(path) + ft_strlen(buffer) > ACCESS_MAX_PATH
-			|| get_canonical_path(path, buffer) != SUCCESS)
+			|| get_canonical_path(NULL, path, buffer, NULL) != SUCCESS)
 		return (ENAMETOOLONG);
 	path_len = ft_strlen(buffer);
 	while (dir_depth(path, buffer, depth) < path_len)
