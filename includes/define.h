@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/19 17:04:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/20 12:11:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@
 */
 
 # define FC_TMP_FILE			"/tmp/42sh_fc.tmp"
-# define HISTORY_FILE			"/.42sh_history"
+# define HISTORY_FILE			"./.42sh_history"
 
 /*
 **	Action keys hex masks

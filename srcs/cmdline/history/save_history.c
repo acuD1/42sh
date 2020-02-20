@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/19 16:13:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/20 12:18:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,14 @@ char			*get_home_value(t_core *shell)
 	db = NULL;
 	path = NULL;
 	if ((db = search_db(shell->env, "HOME")) == NULL)
-		return (path = ft_strjoin(".", HISTORY_FILE));
+		return (path = ft_strdup(HISTORY_FILE));
 	else if (!is_dir(db->value))
-		return (path = ft_strjoin(".", HISTORY_FILE));
+		return (path = ft_strdup(HISTORY_FILE));
 	else
-		path = ft_strjoin(db->value, HISTORY_FILE);
+	{
+		path = ft_strjoin(db->value, "/");
+		path = ft_strjoinf(path, HISTORY_FILE, 1);
+	}
 	return (path);
 }
 

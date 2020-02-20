@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 15:06:02 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/19 19:28:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/20 12:20:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		print_list(t_lst *w, t_cmd cmd, u_int64_t opt)
 	{
 		if ((i >= cmd.first && (opt & (1ULL << 13))))
 			ft_dprintf(cmd.fd, "\t%s\n", w->content);
-		else if ((i <= cmd.last && (opt & (1ULL << 4))))
+		else if ((i >= cmd.first && (opt & (1ULL << 4))))
 			ft_dprintf(cmd.fd, "%s\n", w->content);
 		else if (i >= cmd.first)
 			ft_dprintf(cmd.fd, "%d\t%s\n", i, w->content);
