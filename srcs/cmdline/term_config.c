@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/20 21:34:17 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:27:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int8_t	init_config(t_core *shell)
 
 int8_t	reset_config(t_core *shell)
 {
-	if (tcsetattr(STDIN_FILENO, TCSADRAIN, &(shell->old_t)) == FAILURE)
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->old_t)) == FAILURE)
 	{
 		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
 		return (FAILURE);

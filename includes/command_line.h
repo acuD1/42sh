@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/19 15:53:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/21 15:23:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void		display_prompt(t_read *term);
 void		display_subprompt(t_read *term);
 void		goto_prompt(t_read *term);
 void		get_prompt_value(t_core *shell, const char *key);
+u_int8_t	sub_prompt_error(t_read *term, char sb);
 
 /*
 **		Check Caps and Interpret

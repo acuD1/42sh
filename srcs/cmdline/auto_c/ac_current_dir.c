@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/20 21:16:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:11:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ u_int8_t		is_tab(const char *d_name, t_read *term)
 		}
 		else
 		{
-			term->tmp_buff = ft_strdup(buff);
+			term->ac_tmp = ft_strdup(buff);
 			return (FALSE);
 		}
 	}

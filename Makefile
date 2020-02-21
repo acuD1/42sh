@@ -81,6 +81,7 @@ AK					=	$(CMDLINE)action_keys/
 HISTORY				=	$(CMDLINE)history/
 HST_EXP				=	$(HISTORY)exp/
 PROMPT				=	$(CMDLINE)prompt/
+SUB_PROMPT			=	$(CMDLINE)sub_prompt/
 CORE				=	core/
 DB					=	db/
 EXEC				=	exec/
@@ -109,6 +110,7 @@ PATHS				+=	$(O_PATH)$(AK)
 PATHS				+=	$(O_PATH)$(HISTORY)
 PATHS				+=	$(O_PATH)$(HST_EXP)
 PATHS				+=	$(O_PATH)$(PROMPT)
+PATHS				+=	$(O_PATH)$(SUB_PROMPT)
 PATHS				+=	$(O_PATH)$(CORE)
 PATHS				+=	$(O_PATH)$(DB)
 PATHS				+=	$(O_PATH)$(EXEC)
@@ -183,11 +185,13 @@ SRC					+=	$(S_PATH)$(HST_EXP)check_hst_exp.c
 SRC					+=	$(S_PATH)$(HST_EXP)history_expansions.c
 SRC					+=	$(S_PATH)$(HST_EXP)replace_buffer.c
 
-SRC					+=	$(S_PATH)$(PROMPT)check_backslash.c
-SRC					+=	$(S_PATH)$(PROMPT)check_subprompt.c
-SRC					+=	$(S_PATH)$(PROMPT)heredoc.c
 SRC					+=	$(S_PATH)$(PROMPT)prompt.c
-SRC					+=	$(S_PATH)$(PROMPT)sub_prompt.c
+
+SRC					+=	$(S_PATH)$(SUB_PROMPT)check_backslash.c
+SRC					+=	$(S_PATH)$(SUB_PROMPT)check_subprompt.c
+SRC					+=	$(S_PATH)$(SUB_PROMPT)heredoc.c
+SRC					+=	$(S_PATH)$(SUB_PROMPT)sub_prompt.c
+SRC					+=	$(S_PATH)$(SUB_PROMPT)subprompt_tools.c
 
 SRC					+=	$(S_PATH)$(CORE)free_handler.c
 SRC					+=	$(S_PATH)$(CORE)init_shell.c

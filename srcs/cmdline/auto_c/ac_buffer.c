@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/18 20:27:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:13:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ u_int8_t		read_again
 		}
 		else
 		{
-			term->tmp_buff = ft_strdup(buff);
+			term->ac_tmp = ft_strdup(buff);
 			term->flag = FALSE;
 			return (FALSE);
 		}

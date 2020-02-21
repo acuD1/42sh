@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/18 19:51:19 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:10:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ static u_int8_t	cursor_motion(const char *buff, t_read *term, uint64_t value)
 static void		tab_key(t_read *term, u_int64_t *value)
 {
 	auto_complete_mode(term);
-	*value = get_mask(term->tmp_buff);
-	if (term->tmp_buff && ft_is_print(*term->tmp_buff))
-		insert_in_buffer(term->tmp_buff, term);
-	ft_strdel(&term->tmp_buff);
+	*value = get_mask(term->ac_tmp);
+	if (term->tmp_buff && ft_is_print(*term->ac_tmp))
+		insert_in_buffer(term->ac_tmp, term);
+	ft_strdel(&term->ac_tmp);
 }
 
 /*

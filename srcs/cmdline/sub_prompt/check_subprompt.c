@@ -6,11 +6,21 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/20 17:31:48 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:30:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+/* #include <fcntl.h> */
+/* void			dbug(const char *path, char *buffer, char quote) */
+/* { */
+/* 	int			fd; */
+/*  */
+/* 	if ((fd = open(path, O_WRONLY)) == FAILURE) */
+/* 		return ; */
+/* 	dprintf(fd, "buff=[%s] buff[i]=[%c] quote=[%c]\n\n", buffer, *buffer, quote); */
+/* } */
 
 static u_int8_t	goto_next_quote(char *buffer, char quote_type, int *i)
 {
@@ -36,11 +46,14 @@ u_int8_t		quotes_is_matching(t_read *term, char *quote)
 	int			i;
 
 	i = -1;
+	term->flag = FALSE;
 	while (term->buffer[++i])
 	{
-		if (term->buffer[i] == BACKSLASH)
+		if (term->buffer[i + 1] == BACKSLASH
+			&& ((*quote = set_quote_type(term->buffer[i])) != QUOTE))
 		{
-			i++;
+			if (term->buffer[i + 3] == '\0')
+				return (FALSE);
 			continue ;
 		}
 		if ((*quote = set_quote_type(term->buffer[i])) != '\0')
@@ -48,9 +61,11 @@ u_int8_t		quotes_is_matching(t_read *term, char *quote)
 			if (goto_next_quote(term->buffer, *quote, &i) == TRUE)
 				continue ;
 			else
-				return (FALSE);
+				term->flag = TRUE;
 		}
 	}
+	if (term->flag == TRUE)
+		return (FALSE);
 	return (TRUE);
 }
 
