@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:51:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/15 15:13:29 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/21 01:32:52 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 #include <fcntl.h>
 
-// int8_t		debug_ailleurs(const char *path, const char *str)
-// {
-// 	int8_t	fd;
+ int8_t		debug_ailleurs(const char *path, const char *str)
+{
+	int8_t	fd;
 
-// 	if ((fd = open(path, O_WRONLY)) < 0)
-// 		return (FAILURE);
-// 	dprintf(fd, "{%s}\n", str);
-// 	return (SUCCESS);
-// }
+	if ((fd = open(path, O_WRONLY)) < 0)
+		return (FAILURE);
+	dprintf(fd, "{%s}\n", str);
+	return (SUCCESS);
+}
 
 // int8_t		nono(const char *path)
 // {

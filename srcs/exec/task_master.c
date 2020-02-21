@@ -6,11 +6,12 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/19 00:37:01 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/21 02:16:26 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <signal.h>
 
 static void	free_job(t_core *shell, t_lst *job)
 {

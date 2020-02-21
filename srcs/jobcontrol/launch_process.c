@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/20 21:25:07 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/21 02:43:02 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ static void	put_process_in_grp(t_core *shell, t_process *process)
 	process->pid = getpid();
 	if (process->pgid == -1)
 		process->pgid = process->pid;
-	if (process->stopped == FALSE
-	&& setpgid(process->pid, process->pgid) != SUCCESS)
+	if (setpgid(process->pid, process->pgid) != SUCCESS)
 	{
 		dprintf(STDERR_FILENO, "42sh: setpgid error\n");
 		exit(EXIT_FAILURE);
@@ -40,26 +39,18 @@ static void	redir_pipes(t_process *process)
 {
 	if (process->pipe[0] != STDIN_FILENO)
 	{
-		dprintf(STDERR_FILENO, "%s -> dup(%i, stdin)\n", process->command, process->pipe[0]);
 		dup2(process->pipe[0], STDIN_FILENO);
 		close(process->pipe[0]);
 	}
 	if (process->pipe[1] != STDOUT_FILENO)
 	{
-		dprintf(STDERR_FILENO, "%s -> dup(%i, stdout)\n", process->command, process->pipe[1]);
 		dup2(process->pipe[1], STDOUT_FILENO);
 		close(process->pipe[1]);
 	}
 	if (process->close[0] != -1)
-	{
-		dprintf(STDERR_FILENO, "fork close([0]) %s\n", process->command);
 		close(process->close[0]);
-	}
 	if (process->close[1] != -1)
-	{
-		dprintf(STDERR_FILENO, "fork close([1]) %s\n", process->command);
 		close(process->close[1]);
-	}
 }
 
 int8_t		launch_blt(t_core *shell, t_process *process)
