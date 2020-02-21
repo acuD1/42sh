@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 22:32:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/15 16:20:46 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/21 03:44:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int8_t		mark_process_status
 			status_handler(shell, status);
 		}
 	}
-	else if (pid > 0)
-		background_jobs(jobs, pid, status);
+	background_jobs(jobs, pid, status);
 	return ((pid > 0) ? SUCCESS : FAILURE);
 }

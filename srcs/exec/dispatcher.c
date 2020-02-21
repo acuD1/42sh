@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/20 21:11:12 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/21 03:23:29 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	setup_pipes(t_process *process, t_lst *ptr)
 		next->pipe[0] = pipes[0];
 		next->close[0] = pipes[1];
 	}
-
 }
 
 static void	condition_fulfilled(t_lst *process)
@@ -34,7 +33,7 @@ static void	condition_fulfilled(t_lst *process)
 	t_process	*ptr;
 	int			cond;
 
-	ptr = ((t_process*)process->content);
+	ptr = ((t_process *)process->content);
 	cond = ptr->type;
 	if (cond != P_ANDIF && cond != P_ORIF)
 		return ;
@@ -42,18 +41,18 @@ static void	condition_fulfilled(t_lst *process)
 		return ;
 	else if (cond == P_ORIF && ptr->status != 0)
 		return ;
-	while (process && (ptr = ((t_process*)process->content))
-			&& (ptr->type == (enum e_pstate)cond || ptr->type == P_PIPE))
+	while (process && (ptr = ((t_process *)process->content))
+	&& (ptr->type == (enum e_pstate)cond || ptr->type == P_PIPE))
 	{
-		((t_process*)process->next->content)->completed = TRUE;
-		((t_process*)process->next->content)->status = 1;
+		((t_process *)process->next->content)->completed = TRUE;
 		process = process->next;
 	}
 }
 
 static void	init_process_list(t_lst *process)
 {
-	t_process	*ptr;
+	t_process *ptr;
+
 	while (process)
 	{
 		ptr = process->content;
@@ -63,7 +62,6 @@ static void	init_process_list(t_lst *process)
 		ptr->close[1] = -1;
 		process = process->next;
 	}
-
 }
 
 void		launch_job(t_core *shell, t_job *job, int foreground)
@@ -73,19 +71,22 @@ void		launch_job(t_core *shell, t_job *job, int foreground)
 
 	process = job->process_list;
 	init_process_list(process);
-	while (process && (ptr = ((t_process*)process->content)))
+	while (process && (ptr = ((t_process *)process->content)))
 	{
-		setup_pipes(ptr, process->next);
 		ptr->stopped = (foreground == TRUE) ? FALSE : TRUE;
-		expansion(shell, ptr);
 		if (ptr->completed == FALSE)
 		{
-			launch_blt(shell, ptr);
+			setup_pipes(ptr, process->next);
+			expansion(shell, ptr);
 			if (ptr->completed == FALSE)
-				exec_process(shell, job, ptr);
+			{
+				launch_blt(shell, ptr);
+				if (ptr->completed == FALSE)
+					exec_process(shell, job, ptr);
+			}
+			update_exit_status(shell);
+			condition_fulfilled(process);
 		}
-		update_exit_status(shell);
-		condition_fulfilled(process);
 		process = process->next;
 	}
 }

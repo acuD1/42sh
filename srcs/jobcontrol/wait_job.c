@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 20:36:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/21 01:31:04 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/21 03:44:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,5 @@ void	wait_for_process(t_core *shell, t_lst *jobs, t_process *process)
 
 	pid = waitpid(process->pid, &status, WUNTRACED);
 	mark_process_status(shell, jobs, pid, status);
+	do_job_notification(shell, shell->launched_jobs);
 }
