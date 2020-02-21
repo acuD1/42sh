@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/21 18:02:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/21 18:09:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static u_int8_t		goto_next_quote(char *buffer, char quote_type, int *i)
 {
 	while (buffer[(*i)++] != '\0')
 	{
-		if (quote_type == '\"' && check_backslash_nbr(buffer, i))
+		if ((quote_type == DQUOTE || quote_type == BQUOTE)
+									&& check_backslash_nbr(buffer, i))
 			continue ;
 		if (buffer[*i] == quote_type)
 			return (TRUE);

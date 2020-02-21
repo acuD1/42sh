@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/21 16:57:19 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/21 18:03:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@
 # define NEW_LINE				"\n"
 # define SPACE					" "
 # define BACKSLASH				'\\'
-# define BRACKET_OPEN			'('
-# define BRACKET_CLOSE			')'
 # define CURLY_BRACE_OPEN		'{'
 # define CURLY_BRACE_CLOSE		'}'
 # define CMD_PROMPT				0
