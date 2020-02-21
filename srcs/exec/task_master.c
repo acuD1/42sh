@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/19 18:52:53 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/21 17:01:14 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void	free_job(t_core *shell, t_lst *job)
 	{
 		while (ptr && ptr->next != job)
 			ptr = ptr->next;
-		ptr->next = job->next;
+		if (ptr)
+			ptr->next = job->next;
 	}
 	else
 	{
