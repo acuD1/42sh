@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/18 19:44:52 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/21 23:16:44 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int8_t			init_prompt(t_core *shell)
 	shell->term.status = CMD_PROMPT;
 	ft_bzero(buff, READ_SIZE);
 	shell->term.buffer = ft_memalloc(BUFF_SIZE);
-	init_config(shell);
+	set_termconfig(shell);
 	if (init_termcaps(&shell->term) == FAILURE)
 		quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
 	get_prompt_value(shell, "PS1");

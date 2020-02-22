@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/18 00:06:24 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/22 20:24:53 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ static void	init_shell_pgid(t_core *shell)
 	init_signals();
 	if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
 		print_and_quit(shell, "42sh: tcsetpgrp error\n");
-	if (tcgetattr(shell->terminal, &(shell->old_t)) != SUCCESS)
-		print_and_quit(shell, "42sh: tcgetattr error\n");
 }
 
 int8_t		init_shell(t_core *shell, char **av, char **environ)
@@ -42,6 +40,7 @@ int8_t		init_shell(t_core *shell, char **av, char **environ)
 	if (isatty(shell->terminal) == TRUE)
 	{
 		shell->is_interactive = TRUE;
+		init_config(shell);
 		init_shell_pgid(shell);
 	}
 	else

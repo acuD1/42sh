@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/21 01:34:31 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/21 23:10:17 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ jmp_buf g_exit_leaks;
 
 //debug
  int8_t		debug_ailleurs(const char *path, const char *str);
+void		set_termconfig(t_core *shell);
 
 /*
 **	===========================================================================
