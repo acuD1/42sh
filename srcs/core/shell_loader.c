@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/21 16:59:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/22 19:13:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	load_noi_mode(t_core *shell)
 {
-	while (ft_getnextline(STDIN_FILENO, &shell->term.buffer))
+	while (get_next_line(STDIN_FILENO, &shell->term.buffer))
 	{
 		lexer_parser_analyzer(shell);
 		if (task_master(shell) != SUCCESS)

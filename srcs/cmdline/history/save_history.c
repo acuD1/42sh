@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/20 12:18:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/22 19:11:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,9 @@ int8_t			init_history(t_core *shell)
 	if ((fd = open(history_file, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)
 		return (FAILURE);
 	ft_strdel(&history_file);
-	while (ft_getnextline(fd, &line) > 0)
+	while (get_next_line(fd, &line) > 0)
 	{
-		if (ft_str_isprint(line))
+		if (line[0] && ft_str_isprint(line))
 		{
 			shell->term.buffer = ft_strdup(line);
 			save_history(&shell->term);

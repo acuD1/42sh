@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/21 16:10:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/22 19:28:30 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,13 @@ u_int8_t		check_caps(const char *buff, t_read *term)
 	u_int64_t	value;
 
 	value = get_mask(buff);
+	/* ft_printf("[%lx]\n", value); */
+	/* if (value == 0x2100000000000000) */
+	/* { */
+	/* 	xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc); */
+	/* 	xtputs(term->tcaps[CLR_LINES], 1, my_outc); */
+	/* 	ft_dprintf(STDERR_FILENO, "%s%s%s%s", C_BOLD, F_C, term->prompt, C_X); */
+	/* } */
 	if (value == CTRL_D)
 		return (ctrl_delete(term));
 	if (value == TAB_KEY)

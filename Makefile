@@ -40,6 +40,7 @@ G_C					=	\033[0;32m
 R_C					=	\033[0;31m
 M_C					=	\033[0;35m
 C_C					=	\033[0;36m
+F_C					=	\033[35;5;108m
 
 # Programms names
 
@@ -357,8 +358,8 @@ $(NAME): $(OBJ) $(BUILD_FILE)
 	@$(CMPLO) $(NAME) $(OBJ) $(LIB)
 	@$(GCSUC)
 	@echo "---\nCFLAG - =$(B_C) $(CFLAG)$(RESET_C)\n---"
-	@echo "\n$(G_C)[$(BUILD_BRANCH)] $(RESET_C)$@ \
-	v.$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE) is ready !"
+	@echo "\n$(G_C)[$(BUILD_BRANCH)] $(RESET_C)$@ $(F_C) \
+	v.$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE) $(RESET_C) is ready !"
 	@cp $(NAME) \
 	$(B_PATH)$(NAME)_$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE)
 

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/20 12:13:51 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/22 21:36:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static int8_t	fc_editor(t_core *shell, t_cmd cmd)
 	char		*command;
 
 	command = ft_strjoin(cmd.editor, FC_TMP_FILE);
-	if ((cmd.fd = open(FC_TMP_FILE, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)
+	if ((cmd.fd = open(FC_TMP_FILE, O_RDONLY,
+									S_IRUSR | S_IRGRP | S_IROTH)) == -1)
 		return (FAILURE);
 	if (fc_launch_editor(shell, ft_strsplit(command, SPACE)) == FAILURE)
 		return (FAILURE);

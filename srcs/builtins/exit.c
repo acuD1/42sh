@@ -6,39 +6,11 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 23:42:04 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/19 15:25:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/22 19:09:19 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-static int8_t	ft_atol(const char *s, int64_t *result)
-{
-	size_t	i;
-	int8_t	sign;
-	int64_t	nb;
-
-	i = 0;
-	nb = 0;
-	sign = 1;
-	while (s[i] == ' ' || (s[i] >= 9 && s[i] <= 13))
-		i++;
-	if (s[i] != '-' && s[i] != '+' && !(s[i] >= '0' && s[i] <= '9'))
-		return (FAILURE);
-	if (s[i] == '+' || s[i] == '-')
-		sign *= (s[i++] == '-') ? -1 : 1;
-	while (s[i] >= '0' && s[i] <= '9')
-	{
-		if ((nb * sign == -922337203685477580 && s[i] > '8')
-			|| (nb * sign == 922337203685477580 && s[i] > '7'))
-			return (FAILURE);
-		nb = (nb * 10) + (s[i++] - '0');
-	}
-	while (s[i] == ' ')
-		i++;
-	*result = nb * sign;
-	return ((s[i] != 0) ? FAILURE : SUCCESS);
-}
 
 int8_t			builtin_exit(t_core *shell, t_process *process)
 {
