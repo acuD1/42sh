@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/21 23:10:17 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/24 22:39:29 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int8_t		task_master(t_core *shell);
 int8_t		is_a_blt(const char *cmd);
 int8_t		get_bin(t_core *shell, t_process *process);
 char		**set_envp(t_core *shell);
-void		status_handler(t_core *shell, int status);
+void		status_handler(t_core *shell, t_process *process, int status);
 
 /*
 **	===========================================================================

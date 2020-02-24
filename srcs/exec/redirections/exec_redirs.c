@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:01 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/15 16:18:36 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/24 21:43:11 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void		get_io_number(t_redir *ptr)
 	ptr->io_num[1] = -1;
 	ptr->dup_fd[0] = -1;
 	ptr->dup_fd[1] = -1;
+	ptr->close = -1;
 	if (ptr->op[0] && ft_strcmp(ptr->op[0], "&") != 0)
 		ptr->io_num[0] = ft_atoi(ptr->op[0]);
 	else if (ptr->op[0])

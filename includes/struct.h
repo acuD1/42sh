@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/20 18:13:51 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/24 21:43:42 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ typedef struct				s_redir
 	char					*heredoc;
 	char					*op[2];
 	enum e_pstate			type;
+	int						close;
 	int						io_num[2];
 	int						dup_fd[2];
 }							t_redir;

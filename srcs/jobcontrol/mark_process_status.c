@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 22:32:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/21 03:44:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/24 22:38:48 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ int8_t		mark_process_status
 		{
 			process->completed = TRUE;
 			process->status = (WIFEXITED(status))
-								? WEXITSTATUS(status)
-								: WTERMSIG(status);
-			status_handler(shell, status);
+								? WEXITSTATUS(status) : WTERMSIG(status);
+			status_handler(shell, process, status);
 		}
 	}
 	background_jobs(jobs, pid, status);

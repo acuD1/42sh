@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:31:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/19 01:11:25 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/24 22:38:43 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*signal_msg(int sig)
 	return (NULL);
 }
 
-void	status_handler(t_core *shell, int status)
+void	status_handler(t_core *shell, t_process *process, int status)
 {
 	char	*msg;
 
@@ -44,8 +44,9 @@ void	status_handler(t_core *shell, int status)
 				write(1, msg, ft_strlen(msg));
 			write(2, "\n", 1);
 		}
-		shell->status = status + 128;
+		if (process->type != P_PIPE)
+			shell->status = status + 128;
 	}
-	else
+	else if (process->type != P_PIPE)
 		shell->status = WEXITSTATUS(status);
 }

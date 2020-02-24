@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:29:40 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/14 03:58:40 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/24 22:03:08 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int8_t	dup_output(int fd, t_redir *ptr)
 
 	ptr->dup_fd[0] = dup(ptr->io_num[0]);
 	tmp = dup2(fd, ptr->io_num[0]);
+	ptr->close = fd;
 	if (ptr->io_num[1] != -1 && tmp >= 0)
 	{
 		ptr->dup_fd[1] = dup(ptr->io_num[1]);
 		dup2(tmp, ptr->io_num[1]);
 		close(tmp);
 	}
-	close(fd);
 	if (tmp < 0 || ptr->dup_fd < 0)
 		return (FAILURE);
 	return (SUCCESS);
@@ -49,6 +49,8 @@ void	close_fds(t_lst *redirs)
 			dup2(ptr->dup_fd[1], ptr->io_num[1]);
 			close(ptr->dup_fd[1]);
 		}
+		if (ptr->close >= 0)
+			close(ptr->close);
 	}
 }
 
@@ -58,7 +60,7 @@ int8_t	dup_input(int fd, t_redir *ptr)
 
 	ptr->dup_fd[0] = dup(ptr->io_num[0]);
 	tmp = dup2(fd, ptr->io_num[0]);
-	close(fd);
+	ptr->close = fd;
 	if (tmp < 0)
 		return (FAILURE);
 	return (SUCCESS);
