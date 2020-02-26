@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/21 16:11:45 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/26 19:51:35 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ static int8_t	read_curr_dir
 		term->flag++;
 		if (is_dot(data->d_name) == FALSE)
 		{
+			ft_strcat(tmp, "/");
 			ft_strcat(tmp, data->d_name);
-			if (is_dir(ft_strcat(tmp, "/")) == TRUE)
+			if (is_dir(tmp) == TRUE)
 				ft_strcat(data->d_name, "/");
 			insert_str_in_buffer(data->d_name, term);
 			ft_strcpy(tmp, curr);
