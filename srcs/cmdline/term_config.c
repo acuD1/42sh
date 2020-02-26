@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/26 17:25:29 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/26 18:41:00 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int8_t	init_config(t_core *shell)
 	shell->new_t.c_lflag &= ~(ICANON | ECHO);
 	shell->new_t.c_cc[VMIN] = 1;
 	shell->new_t.c_cc[VTIME] = 0;
-	if (tcsetattr(STDIN_FILENO, TCSADRAIN, &(shell->new_t)) == FAILURE)
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->new_t)) == FAILURE)
 	{
 		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr error\n");
 		quit_shell(shell, EXIT_FAILURE, FALSE);
@@ -60,7 +60,7 @@ int8_t	init_config(t_core *shell)
 
 void	set_termconfig(t_core *shell)
 {
-	if (tcsetattr(STDIN_FILENO, TCSADRAIN, &(shell->new_t)) == FAILURE)
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->new_t)) == FAILURE)
 	{
 		dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
 		quit_shell(shell, 1, FALSE);
