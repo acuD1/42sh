@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:51:46 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/18 16:39:15 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/20 21:10:33 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int8_t	builtin_pwd(t_core *shell, t_process *process)
 	ft_bzero(pwd, MAX_PATH + 1);
 	if (getcwd(pwd, MAX_PATH) == NULL)
 	{
-		shell->pwd_error = TRUE;
+		shell->cd.pwd_error = TRUE;
 		dprintf(STDERR_FILENO, "pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
 		return (SUCCESS);
 	}

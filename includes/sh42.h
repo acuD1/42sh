@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/19 17:30:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/22 18:52:19 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int8_t		path_tests(const char *path, int opt);
 */
 
 int8_t		increment_shlvl(t_core *shell);
-int8_t		update_pwd(t_core *shell, const char *pwd, const char *path);
+int8_t		update_pwd(t_core *shell);
 int8_t		update_ifs(t_core *shell);
 int8_t		update_termsize(t_core *shell);
 int8_t		create_term(t_core *shell);

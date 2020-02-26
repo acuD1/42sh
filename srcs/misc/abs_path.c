@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/13 14:02:32 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/20 17:34:17 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/22 15:11:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int8_t			get_canonical_path(t_core *shell, const char *path, char *abs, char *pw
 		abs[0] = '/';
 	else
 	{
-		if (shell && shell->pwd_error == TRUE)
+		if (shell && shell->cd.pwd_error >= TRUE)
 			ft_strcpy(abs, pwd);
 		else
 			getcwd(abs, MAX_PATH);
@@ -120,7 +120,7 @@ int8_t			get_canonical_path(t_core *shell, const char *path, char *abs, char *pw
 	}
 	if (check_filename_length(abs) == FAILURE)
 		return (FAILURE);
-	if (shell && shell->pwd_error == TRUE)
+	if (shell && shell->cd.pwd_error >= TRUE)
 	{
 		ft_bzero(pwd, MAX_PATH + 1);
 		ft_strcpy(pwd, abs);

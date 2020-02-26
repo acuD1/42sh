@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/20 19:38:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/22 18:50:56 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,46 +41,26 @@ int8_t	increment_shlvl(t_core *shell)
 **	and then assign the current working dir path to value.
 */
 
-int8_t	update_pwd(t_core *shell, const char *pwd, const char *path)
+int8_t	update_pwd(t_core *shell)
 {
-	struct stat	db_stat;
 	char	buf[MAX_PATH + 1];
-	t_db	*db_pwd;
-	t_db	*db_oldpwd;
+	t_db	*db;
 	char	*value;
 
-	db_pwd = NULL;
+	db = NULL;
 	value = NULL;
 	ft_bzero(buf, MAX_PATH + 1);
-	if (shell != NULL && (db_pwd = get_or_create_db(shell, "PWD", ENV_VAR)) != NULL)
+	if (shell != NULL && (db = get_or_create_db(shell, "PWD", ENV_VAR)) != NULL)
 	{
-		lstat(pwd, &db_stat);
-		if (shell->pwd_error == TRUE)
-		{
-			db_oldpwd = get_or_create_db(shell, "OLDPWD", ENV_VAR);
-			if (db_oldpwd->value && db_oldpwd->value[0] == '/')
-				value = ft_strdup(path);
-			else
-			{
-				value = ft_strdup(db_oldpwd->value);
-				value = ft_strjoinf(value, "/", 1);
-				value = ft_strjoinf(value, (char *)path, 1);
-			}
-		}
-		else if ((shell && shell->job_list && ((t_process *)(shell->job_list)->content)->no_symbolic == TRUE)
-			|| S_ISLNK(db_stat.st_mode) == FALSE)
-		{
-			getcwd(buf, MAX_PATH);
-			value = ft_strdup(buf);
-		}
-		else
-			value = ft_strdup(pwd);
-		if (value && modify_db(db_pwd, value, 0) != NULL)
+		getcwd(buf, MAX_PATH);
+		value = ft_strdup(buf);
+		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);
 		ft_strdel(&value);
 	}
 	return (FAILURE);
 }
+
 
 /*
 **	Update $_ : search $_ in the env list,
