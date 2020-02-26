@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/22 20:26:05 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/26 17:25:29 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,12 @@ void	init_cmd_line(t_core *shell, t_read *term)
 
 int8_t	init_config(t_core *shell)
 {
-	if (tgetent(NULL, "xterm-256color") == FAILURE)
-	{
-		ft_dprintf(STDERR_FILENO, "42sh: tgetent error\n");
-		quit_shell(shell, EXIT_FAILURE, TRUE);
-	}
+	if (init_termcaps(&(shell->term)) == FAILURE)
+		quit_shell(shell, EXIT_FAILURE, FALSE);
 	if (tcgetattr(STDIN_FILENO, &(shell->old_t)) == FAILURE)
 	{
 		ft_dprintf(STDERR_FILENO, "42sh: tcgetattr error\n");
-		quit_shell(shell, EXIT_FAILURE, TRUE);
+		quit_shell(shell, EXIT_FAILURE, FALSE);
 	}
 	shell->new_t = shell->old_t;
 	shell->new_t.c_lflag &= ~(ICANON | ECHO);
@@ -56,7 +53,7 @@ int8_t	init_config(t_core *shell)
 	if (tcsetattr(STDIN_FILENO, TCSADRAIN, &(shell->new_t)) == FAILURE)
 	{
 		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr error\n");
-		quit_shell(shell, EXIT_FAILURE, TRUE);
+		quit_shell(shell, EXIT_FAILURE, FALSE);
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/21 15:23:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:56:49 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void		free_lst(t_lst *lst);
 */
 
 void		xtputs(char *str, int i, int (*f)(int));
-char		*xtgetstr(char *id, char **area);
+char		*xtgetstr(char *id);
 size_t		xread(int fd, char *buff, int size);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/26 12:32:52 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:58:48 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ int		main(int ac, char **av, char **environ)
 		|| init_shell(&shell, av, environ) != SUCCESS)
 		return (0);
 	if (setjmp(g_exit_leaks))
-	{
-		dprintf(STDOUT_FILENO, "Exited with free handling ..\n");
-		return (EXIT_SUCCESS);
-	}
+		return (shell.status);
 	else
 	{
 		get_opt(ac, av, &shell);
