@@ -64,10 +64,28 @@ static u_int8_t	cursor_motion(const char *buff, t_read *term, uint64_t value)
 static void		tab_key(t_read *term, u_int64_t *value)
 {
 	auto_complete_mode(term);
-	*value = get_mask(term->tmp_buff);
-	if (term->tmp_buff && ft_is_print(*term->tmp_buff))
-		insert_in_buffer(term->tmp_buff, term);
-	ft_strdel(&term->tmp_buff);
+	*value = get_mask(term->ac_tmp);
+	if (term->tmp_buff && ft_is_print(*term->ac_tmp))
+		insert_in_buffer(term->ac_tmp, term);
+	ft_strdel(&term->ac_tmp);
+}
+
+/*
+**		CTRL+D del char on cursor if buffer isnt empty
+*/
+
+static int8_t	ctrl_delete(t_read *term)
+{
+	if (term->status == CMD_SUBPROMPT)
+	{
+		if (!*term->buffer)
+		{
+			term->flag = TRUE;
+			return (FALSE);
+		}
+	}
+	del_key(term);
+	return (TRUE);
 }
 
 /*
@@ -85,12 +103,15 @@ u_int8_t		check_caps(const char *buff, t_read *term)
 	u_int64_t	value;
 
 	value = get_mask(buff);
+	/* ft_printf("[%lx]\n", value); */
+	/* if (value == 0x2100000000000000) */
+	/* { */
+	/* 	xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc); */
+	/* 	xtputs(term->tcaps[CLR_LINES], 1, my_outc); */
+	/* 	ft_dprintf(STDERR_FILENO, "%s%s%s%s", C_BOLD, F_C, term->prompt, C_X); */
+	/* } */
 	if (value == CTRL_D)
-	{
-		if (term->status == CMD_SUBPROMPT)
-			term->flag = TRUE;
-		return (FALSE);
-	}
+		return (ctrl_delete(term));
 	if (value == TAB_KEY)
 		tab_key(term, &value);
 	else if (ft_is_print(*buff))
@@ -102,7 +123,7 @@ u_int8_t		check_caps(const char *buff, t_read *term)
 	if (value == RETURN_KEY)
 	{
 		if (*term->prompt || (!*term->prompt && *term->buffer))
-			write(STDERR_FILENO, "\n", 1);
+			ft_dprintf(STDERR_FILENO, "\n");
 		return (FALSE);
 	}
 	check_keys_comb(buff, term, value);

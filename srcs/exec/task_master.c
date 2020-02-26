@@ -22,7 +22,8 @@ static void	free_job(t_core *shell, t_lst *job)
 	{
 		while (ptr && ptr->next != job)
 			ptr = ptr->next;
-		ptr->next = job->next;
+		if (ptr)
+			ptr->next = job->next;
 	}
 	else
 	{

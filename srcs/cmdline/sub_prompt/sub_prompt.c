@@ -6,39 +6,28 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/15 17:28:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/21 17:54:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			display_subprompt(t_read *term)
+static int8_t	check_eof(t_read *term, char *sb)
 {
-	term->prompt_len = ft_strlen(term->prompt);
-	term->x = term->prompt_len;
-	term->y = 0;
-	term->width = term->x;
-	term->x_index = term->x;
-	ft_printf(term->prompt);
-}
-
-static u_int8_t	sub_prompt_error(t_read *term, char sb)
-{
-	if (term->flag == TRUE)
-	{
-		ft_dprintf(STDERR_FILENO,
-			"42sh: unexpected EOF while looking for matching `%c'\n", sb);
-		ft_dprintf(STDERR_FILENO,
-							"42sh: syntax error: unexpected end of file\n");
-		term->status = CMD_DONE;
-		return (TRUE);
-	}
 	if (term->status != CMD_SUBPROMPT)
-	{
-		term->status = CMD_DONE;
 		return (TRUE);
+	if (!sb)
+		return (FALSE);
+	else if (*sb == BACKSLASH && check_backslash(term, sb) == FALSE)
+		return (FALSE);
+	else if (*sb != BACKSLASH && ft_strchr(term->buffer, *sb))
+	{
+		if (!check_backslash(term, sb))
+			return (FALSE);
 	}
-	return (FALSE);
+	else if (*sb != BACKSLASH)
+		term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);
+	return (TRUE);
 }
 
 u_int8_t		read_multiline(t_read *term, char *sb)
@@ -55,19 +44,8 @@ u_int8_t		read_multiline(t_read *term, char *sb)
 		}
 		else
 		{
-			if (term->status != CMD_SUBPROMPT)
-				return (TRUE);
-			if (!sb)
+			if (check_eof(term, sb) != TRUE)
 				return (FALSE);
-			else if (*sb == BACKSLASH && check_backslash(term, sb) == FALSE)
-				return (FALSE);
-			else if (*sb != BACKSLASH && ft_strchr(term->buffer, *sb))
-			{
-				if (!check_backslash(term, sb))
-					return (FALSE);
-			}
-			else if (*sb != BACKSLASH)
-				term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);
 			break ;
 		}
 	}
@@ -96,7 +74,6 @@ void			load_subprompt(char sb, t_read *term)
 {
 	if (sb != BACKSLASH)
 		term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);
-	term->status = CMD_SUBPROMPT;
 	term->tmp_buff = ft_strdup(term->buffer);
 	term->flag = FALSE;
 	while (TRUE)

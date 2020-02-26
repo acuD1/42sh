@@ -26,7 +26,8 @@ void	init_cmd_line(t_core *shell, t_read *term)
 	term->prompt = NULL;
 	if (get_size(term) != SUCCESS)
 		quit_shell(shell, EXIT_FAILURE, TRUE);
-	init_history(term);
+	shell->term.history = term->history;
+	init_history(shell);
 }
 
 /*
@@ -78,7 +79,7 @@ int8_t	reset_config(t_core *shell)
 {
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->old_t)) == FAILURE)
 	{
-		dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
+		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
 		return (FAILURE);
 	}
 	ft_strdel(&shell->term.tmp_buff);

@@ -54,3 +54,19 @@ void		free_shell(t_core *shell)
 	free_history(&shell->term);
 	free_hash_map(&shell->hash);
 }
+
+//
+void		free_lst(t_lst *lst)
+{
+	t_lst	*tmp;
+
+	tmp = lst;
+	while (lst)
+	{
+		free(lst->content);
+		tmp = lst;
+		lst = lst->next;
+		free(tmp);
+		tmp = NULL;
+	}
+}

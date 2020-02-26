@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 23:42:04 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/18 19:26:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/22 19:09:19 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ int8_t	builtin_exit(t_core *shell, t_process *process)
 	}
 	else if (argc == 2)
 		quit_shell(shell, exit_value & 0xFF, TRUE);
-	dprintf(STDERR_FILENO, "42sh: exit: too many arguments\n");
+	ft_dprintf(STDERR_FILENO, "42sh: exit: too many arguments\n");
 	return (1);
 }

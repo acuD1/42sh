@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/15 19:57:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/22 19:11:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@
 #include "sh42.h"
 
 /*
-**	Open "./.42sh_history" file to write history datas at the end of file
+**	Open ".42sh_history" file to write history datas at the end of file
 */
 
-static int8_t	history_writer(t_lst *hst, int fd, int i)
+static int8_t	history_writer(t_lst *hst, int fd)
 {
+	int			i;
+
+	i = 0;
 	while (hst->next && ++i < HIST_SIZE)
 		hst = hst->next;
 	while (hst)
@@ -28,7 +31,7 @@ static int8_t	history_writer(t_lst *hst, int fd, int i)
 		if (write(fd, hst->content, ft_strlen(hst->content)) == FAILURE
 			|| write(fd, NEW_LINE, 1) == FAILURE)
 		{
-			ft_dprintf(2, "42sh: write failure\n");
+			ft_dprintf(STDERR_FILENO, "42sh: write failure in history file\n");
 			close(fd);
 			return (FAILURE);
 		}
@@ -38,22 +41,41 @@ static int8_t	history_writer(t_lst *hst, int fd, int i)
 	return (SUCCESS);
 }
 
-int8_t			write_history(t_read *term)
+char			*get_home_value(t_core *shell)
 {
-	int		fd;
-	int		i;
-	t_lst	*hst;
+	t_db	*db;
+	char	*path;
 
-	i = 0;
-	if (!(hst = term->history))
+	db = NULL;
+	path = NULL;
+	if ((db = search_db(shell->env, "HOME")) == NULL)
+		return (path = ft_strdup(HISTORY_FILE));
+	else if (!is_dir(db->value))
+		return (path = ft_strdup(HISTORY_FILE));
+	else
+	{
+		path = ft_strjoin(db->value, "/");
+		path = ft_strjoinf(path, HISTORY_FILE, 1);
+	}
+	return (path);
+}
+
+int8_t			write_history(t_core *shell)
+{
+	char	*history_file;
+	int		fd;
+
+	history_file = get_home_value(shell);
+	if (!shell->term.history)
 		return (FAILURE);
-	if ((fd = open(HISTORY_FILE, (O_CREAT | O_WRONLY | O_TRUNC)
+	if ((fd = open(history_file, (O_CREAT | O_WRONLY | O_TRUNC)
 				, (S_IRUSR | S_IWUSR) | (S_IRGRP | S_IROTH))) == -1)
 	{
-		ft_dprintf(STDIN_FILENO, "42sh: can't open history file\n");
+		ft_dprintf(STDERR_FILENO, "42sh: can't open history file\n");
 		return (FAILURE);
 	}
-	return (history_writer(hst, fd, i));
+	ft_strdel(&history_file);
+	return (history_writer(shell->term.history, fd));
 }
 
 /*
@@ -85,23 +107,27 @@ void			save_history(t_read *term)
 **	Init history list -> load datas from history file
 */
 
-int8_t			init_history(t_read *term)
+int8_t			init_history(t_core *shell)
 {
 	char	*line;
+	char	*history_file;
 	int		fd;
 	int		i;
+
 	i = 0;
 	line = NULL;
-	if ((fd = open(HISTORY_FILE, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)
+	history_file = get_home_value(shell);
+	if ((fd = open(history_file, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)
 		return (FAILURE);
-	while (ft_getnextline(fd, &line) > 0)
+	ft_strdel(&history_file);
+	while (get_next_line(fd, &line) > 0)
 	{
-		if (line && line[0] != '\0')
+		if (line[0] && ft_str_isprint(line))
 		{
-			term->buffer = ft_strdup(line);
-			save_history(term);
-			term->history->content_size = ++i;
-			ft_strdel(&(term->buffer));
+			shell->term.buffer = ft_strdup(line);
+			save_history(&shell->term);
+			shell->term.history->content_size = ++i;
+			ft_strdel(&(shell->term.buffer));
 		}
 		ft_strdel(&line);
 	}

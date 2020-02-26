@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/17 23:54:26 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/22 19:20:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define C_C					"\x1b[36m"
 # define C_X					"\x1b[0m"
 # define C_BOLD					"\x1b[1m"
+# define F_C					"\x1b[35;5;108m"
+
 
 /*
 **	Free
@@ -67,10 +69,8 @@
 # define NEW_LINE				"\n"
 # define SPACE					" "
 # define BACKSLASH				'\\'
-# define BRACKET_OPEN			'('
-# define BRACKET_CLOSE			')'
-# define CURLY_BRACKET_OPEN		'{'
-# define CURLY_BRACKET_CLOSE	'}'
+# define CURLY_BRACE_OPEN		'{'
+# define CURLY_BRACE_CLOSE		'}'
 # define CMD_PROMPT				0
 # define CMD_SUBPROMPT			1
 # define CMD_DONE				2
@@ -79,7 +79,7 @@
 **	Files name
 */
 
-# define FC_TMP_FILE			"./.42sh-fc.tmp"
+# define FC_TMP_FILE			"/tmp/42sh_fc.tmp"
 # define HISTORY_FILE			"./.42sh_history"
 
 /*

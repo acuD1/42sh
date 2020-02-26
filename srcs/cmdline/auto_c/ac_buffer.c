@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 06:35:59 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:13:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ u_int8_t		read_again
 
 	ft_bzero(buff, READ_SIZE);
 	delete_last_cmd(*prev, term);
-	if (is_dir(path) == TRUE)
+	if (path && is_dir(path) == TRUE)
 		ft_strcat(name, "/");
 	insert_str_in_buffer(name, term);
 	if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
@@ -40,7 +40,7 @@ u_int8_t		read_again
 		}
 		else
 		{
-			term->tmp_buff = ft_strdup(buff);
+			term->ac_tmp = ft_strdup(buff);
 			term->flag = FALSE;
 			return (FALSE);
 		}
@@ -138,14 +138,16 @@ void			to_complete_buffer(const char *to_find, t_read *term)
 {
 	char	current_dir[BUFF_SIZE];
 	DIR		*dir;
+	int		brace;
 
+	brace = 0;
 	ft_bzero(current_dir, BUFF_SIZE);
 	term->flag = FALSE;
 	ft_tabfree(term->cmd);
 	term->cmd = ft_memalloc(BUFF_SIZE);
 	term->cmd[0] = ft_strdup(to_find);
 	term->cmd[1] = ft_strdup(to_find);
-	if (ft_isstart(to_find, "$"))
+	if (ft_isstart(to_find, "$") || ft_isstart(to_find, "${"))
 	{
 		parse_env(&term->cmd[1], term->cmd[0], term);
 		return ;

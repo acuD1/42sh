@@ -50,8 +50,7 @@ static char		*stock_value(t_core *shell)
 	buffer = ft_strdup(shell->term.tmp_buff);
 	ft_strdel(&shell->term.tmp_buff);
 	i = ft_strlen_to(buffer, NEW_LINE[0]);
-	shell->term.status = CMD_DONE;
-	value = ft_strsub(buffer, i, ft_strlen(buffer) - i);
+	value = ft_strsub(buffer, i + 1, ft_strlen(buffer) - i);
 	ft_strdel(&shell->term.buffer);
 	shell->term.buffer = ft_strsub(buffer, 0, i);
 	ft_strdel(&buffer);
@@ -75,9 +74,7 @@ char			*load_heredoc(t_core *shell, const char *key)
 		shell->term.buffer = ft_memalloc(BUFF_SIZE);
 		display_subprompt(&shell->term);
 		if (check_key(shell, key) == FALSE)
-		{
 			continue ;
-		}
 		else if (*shell->term.prompt
 			|| (!*shell->term.prompt && shell->term.buffer))
 			break ;
@@ -85,6 +82,5 @@ char			*load_heredoc(t_core *shell, const char *key)
 			return (NULL);
 	}
 	value = stock_value(shell);
-	shell->term.status = CMD_DONE;
 	return (value);
 }

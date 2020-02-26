@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/24 22:39:29 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/20 14:50:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,13 +172,15 @@ int8_t		builtin_fc(t_core *shell, t_process *process);
 int8_t		builtin_test(t_core *shell, t_process *process);
 int8_t		edit_mode(t_core *shell, t_process *process, u_int64_t opt);
 int8_t		listing_mode(t_lst *w, char **av, u_int64_t opt);
-int8_t		select_specifier(t_core *shell, t_lst *w, char **av);
+int8_t		select_specifier(t_core *shell, char **av);
 int8_t		fc_error(u_int64_t opt, int err_num);
 u_int8_t	get_range(char **av, t_cmd *cmd);
-void		get_entries(t_lst *w, t_cmd *cmd);
+void		get_entries(t_lst *w, t_cmd *cmd, u_int64_t opt);
 void		print_list(t_lst *w, t_cmd cmd, u_int64_t opt);
 void		print_reverse(t_lst *w, t_cmd cmd, u_int64_t opt);
 void		skip_options(char ***av);
+void		sort_print_cmd(t_cmd cmd, t_lst *w, u_int64_t opt);
+int8_t		fc_launch_editor(t_core *shell, char **av);
 
 /*
 **	===========================================================================
