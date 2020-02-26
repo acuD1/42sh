@@ -92,7 +92,7 @@ static char		*get_brace_param(const char *str, t_core *shell)
 	tmp = NULL;
 	while (str[++i])
 	{
-		if (str[i] == '\n' || (i != 2 && str[i] == '$'))
+		if (str[i] == '\n') // || (i != 2 && str[i] == '$'))
 		{
 			ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
 			return (NULL);

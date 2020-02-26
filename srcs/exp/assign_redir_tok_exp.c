@@ -48,7 +48,7 @@ void			expansion_assign(t_core *shell, t_process *process)
 	{
 		if (((t_db*)lst->content)->value)
 		{
-			res = do_expansion(shell, ((t_db*)lst->content)->value);
+			res = inhibiteurs_expansion(((t_token*)lst->content)->data, shell);
 			if (!process->av)
 				add_assign_env(shell, ((t_db*)lst->content)->key, ft_strdup(res));
 			else
@@ -70,16 +70,18 @@ void			expansion_redir(t_core *shell, t_process *process)
 	res = NULL;
 	while (lst)
 	{
-		if ((((t_redir*)lst->content)->op[1]) && (res = do_expansion(shell, ((t_redir*)lst->content)->op[1])))
+		if (((t_redir*)lst->content)->op[1] && (((t_redir*)lst->content)->type != 8 || ((t_redir*)lst->content)->type != 7))
 		{
+			res = inhibiteurs_expansion(((t_redir*)lst->content)->op[1], shell);
 			if (!*res)
 				ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n", ((t_redir*)lst->content)->op[1]);
 			ft_strdel(&(((t_redir*)lst->content)->op[1]));
 			((t_redir*)lst->content)->op[1] = ft_strdup(res);
 			ft_strdel(&res);
 		}
-		if ((((t_redir*)lst->content)->heredoc) && (res = do_expansion(shell, ((t_redir*)lst->content)->heredoc)))
+		if (((t_redir*)lst->content)->heredoc)
 		{
+			res = inhibiteurs_expansion(((t_redir*)lst->content)->heredoc, shell);
 			ft_strdel(&(((t_redir*)lst->content)->heredoc));
 			((t_redir*)lst->content)->heredoc = ft_strdup(res);
 			ft_strdel(&res);
@@ -101,10 +103,8 @@ char			**add_underscore_envp(char **envp, char *data)
 			break ;
 		i++;
 	}
-	// printf("%s     #%s#\n", envp[i], data);
 	ft_strdel(&(envp[i]));
 	envp[i] = ft_strjoin("_=", data);
-	// printf("%s\n", envp[i]);
 	return (envp);
 }
 
@@ -121,9 +121,8 @@ void			expansion_tok(t_core *shell, t_process *process)
 	{
 		if (((t_token*)lst->content)->data)
 		{
-			res = do_expansion(shell, ((t_token*)lst->content)->data);
-			if (*res != '\0')
-				process->av = ft_add_arg_cmd_process(process->av, res);
+			res = inhibiteurs_expansion(((t_token*)lst->content)->data, shell);
+			process->av = ft_add_arg_cmd_process(process->av, res);
 			if (!lst->next)
 				process->envp = add_underscore_envp(process->envp, res);
 			ft_strdel(&res);

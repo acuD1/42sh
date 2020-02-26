@@ -13,6 +13,8 @@
 #ifndef LEXER_PARSER_ANALYZER_H
 # define LEXER_PARSER_ANALYZER_H
 
+
+u_int8_t check_backslash_nbr(char *str, int *index);
 void		lexer_parser_analyzer(t_core *shell);
 
 /*

@@ -16,8 +16,17 @@ static int		loop_till_next_quote(const char *str, int index, char quote)
 {
 	if (!str[index])
 		return (index);
-	while (str[index] && str[index] != quote)
+	while (str[index])
+	{
+		if (quote == '\"' && check_backslash_nbr((char*)str, &index))
+		{
+			index++;
+			continue ;
+		}
+		if (str[index] == quote)
+			break ;
 		index += 1;
+	}
 	return (index);
 }
 

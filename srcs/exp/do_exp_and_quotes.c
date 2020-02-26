@@ -12,38 +12,61 @@
 
 #include "sh42.h"
 
-enum e_estate	skip_quotes(const char *str, int *j, enum e_estate st)
+enum e_estate	skip_recur_quote(char *str, int *index, enum e_estate st)
 {
-	if (!str || ((str[*j] == '\"' && st == E_QUOTE)
-		|| (str[*j] == '\'' && st == E_DBQUOTE)))
+	if (!str || (str[*index] == '\\')
+		|| ((str[*index] == '\"' && st == E_QUOTE)
+		|| (str[*index] == '\'' && st == E_DBQUOTE)))
 		return (st);
-	if (str[*j] == '\"' && (st == E_DBQUOTE || st == NB_EXPANSION_STATE))
+	if (str[*index] == '\"' && (st == E_DBQUOTE || st == NB_EXPANSION_STATE))
 	{
 
 		if (st == E_DBQUOTE)
 			st = NB_EXPANSION_STATE;
 		else if (st == NB_EXPANSION_STATE)
 			st = E_DBQUOTE;
-		if (str[*j] == '\"')
-			*j += 1;
+		if (str[*index] == '\"')
+			*index += 1;
 	}
-	else if (str[*j] == '\'' && (st == E_QUOTE || st == NB_EXPANSION_STATE))
+	else if (str[*index] == '\'' && (st == E_QUOTE || st == NB_EXPANSION_STATE))
 	{
 		if (st == E_QUOTE)
 			st = NB_EXPANSION_STATE;
 		else if (st == NB_EXPANSION_STATE)
 			st = E_QUOTE;
-		if (str[*j] == '\'')
-			*j += 1;
+		if (str[*index] == '\'')
+			*index += 1;
 	}
-	if (str[*j] == '\'' || str[*j] == '\"')
-		st = skip_quotes(str, j, st);
+	if (str[*index] == '\'' || str[*index] == '\"')
+		st = skip_recur_quote(str, index, st);
 	return (st);
 }
 
-void					init_expansionat(t_expansion *exp)
+enum e_estate	skip_quotes(char *str, t_expansion *exp)
 {
-	exp->erience = 0;
+	if (str[exp->index] == '\"' && (exp->quotus == E_DBQUOTE || exp->quotus == NB_EXPANSION_STATE))
+	{
+		if (exp->quotus == E_DBQUOTE)
+			exp->quotus = NB_EXPANSION_STATE;
+		else if (exp->quotus == NB_EXPANSION_STATE)
+			exp->quotus = E_DBQUOTE;
+		if (str[exp->index] == '\"')
+			exp->index += 1;
+	}
+	else if (str[exp->index] == '\'' && (exp->quotus == E_QUOTE || exp->quotus == NB_EXPANSION_STATE))
+	{
+		if (exp->quotus == E_QUOTE)
+			exp->quotus = NB_EXPANSION_STATE;
+		else if (exp->quotus == NB_EXPANSION_STATE)
+			exp->quotus = E_QUOTE;
+		if (str[exp->index] == '\'')
+			exp->index += 1;
+	}
+	return (exp->quotus);
+}
+
+void					init_expansion_machine(t_expansion *exp)
+{
 	exp->sionat[0] = no_exp;
 	exp->sionat[1] = exp_tilde;
 	exp->sionat[2] = exp_tilde;
@@ -53,20 +76,4 @@ void					init_expansionat(t_expansion *exp)
 	exp->sionat[6] = exp_param;
 	exp->sionat[7] = exp_math;
 	exp->sionat[8] = exp_param;
-	exp->sionat[9] = infinite_expansion;
-}
-
-char					*do_expansion(t_core *shell, const char *data)
-{
-	char		*res;
-	t_expansion	exp;
-
-	init_expansionat(&exp);
-	res = NULL;
-	exp.erience = is_expansion(E_DBQUOTE);
-	if (!exp.erience)
-		return (ft_strdup(data));
-	if ((res = exp.sionat[exp.erience](data, shell)))
-		return (res);
-	return (NULL);
 }

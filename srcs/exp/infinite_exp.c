@@ -10,27 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <errno.h>
 #include "sh42.h"
-
-static int	get_quote_flag
-	(const char *str, int *index, int *dbquote, int *quote)
-{
-	if (str[*index] == '\"')
-	{
-		if (!*dbquote)
-			*dbquote = 1;
-		else
-			*dbquote = 0;
-	}
-	if (str[*index] == '\'' && !*dbquote)
-	{
-		if (!*quote)
-			*quote = 1;
-		else
-			*quote = 0;
-	}
-	return (1);
-}
 
 int		discard_backslash(const char *data, int *i, char **res)
 {
@@ -53,43 +34,161 @@ int		discard_backslash(const char *data, int *i, char **res)
 		ret = backslash_nbr % 2;
 		backslash_nbr /= 2;
 		tmp = ft_strsub(data, index - backslash_nbr, backslash_nbr);
+		*res = ft_strjoinf(*res, tmp, 4);
 		if (data[index] == '\n')
 			index++;
 		*i = index;
-		*res = ft_strjoinf(*res, tmp, 4);
 	}
 	return (ret);
 }
 
-static void	check_if_we_shall_exp
-	(const char *data, int flag[5], char **res, t_core *shell)
+int			check_tilde_path_exp(char *expandu, const char *str, int i, enum e_estate state)
 {
-	int		i;
+	char *tmp[3];
+	int len;
+	int exp_size;
 
-	i = flag[2];
-	if ((data[i] == '$' || data[i] == '~' || data[i] == '`'))
+	tmp[0] = NULL;
+	tmp[2] = NULL;
+	tmp[1] = NULL;
+	exp_size = i + 1;
+	if (!expandu || !str || str[0] != '~')
+		return (0);
+	if (state != E_TILDE)
+		exp_size++;
+	tmp[1] = ft_strsub(str, 0, i);
+	len = ft_strlen(str);
+	tmp[2] = ft_strsub(str, exp_size, len - exp_size);
+	tmp[0] = ft_strjoinf(tmp[1], expandu, 1);
+	tmp[0] = ft_strjoinf(tmp[0], tmp[2], 2);
+	if (is_a_dir(tmp[0]) == EISDIR)
 	{
-		flag[3] = get_exp(data, &i, res, shell);
-		if (!flag[3])
-			i--;
+		ft_strdel(&tmp[0]);
+		return (1);
 	}
-	flag[2] = i;
+	ft_strdel(&tmp[0]);
+	return (0);
 }
 
-static void	init_infinite_flags
-	(int flag[5], char **tmp, char **resultat, enum e_estate *state)
+void			apply_expansion(char *data, char *token, t_core *shell, t_expansion *exp)
 {
-	flag[0] = 0;
-	flag[1] = 0;
-	flag[2] = -1;
-	flag[3] = 1;
-	flag[4] = 0;
-	*resultat = ft_strnew(0);
-	*tmp = NULL;
-	*state = NB_EXPANSION_STATE;
+	char		*res;
+
+	res = NULL;
+	if ((res = exp->sionat[exp->erience](token, shell)))
+	{
+		if ((exp->st == E_TILDEP || exp->st == E_TILDEM || exp->st == E_TILDE)
+			&& !check_tilde_path_exp(res, data, exp->index, exp->st))
+		{
+			exp->res = ft_strjoin(exp->res, token);
+			ft_strdel(&res);
+		}
+		else
+			exp->res = ft_strjoinf(exp->res, res, 4);
+	}
 }
 
-char		*quote_backslash_discarder(const char *data)
+t_expansion 	*exp_biteurs(char *data, t_core *shell, t_expansion *exp)
+{
+	char			*exp_tok;
+
+	exp_tok = NULL;
+	exp->st = find_expansion(&data[exp->index]);
+	exp->erience = is_expansion(exp->st);
+	if ((exp_tok = get_expansion(&data[exp->index], exp->st)))
+	{
+		if (exp_tok[0] == '$' && !exp_tok[1])
+		{
+			exp->st = E_WORD;
+			return (exp);
+		}
+		apply_expansion(data, exp_tok, shell, exp);
+		exp->index += ft_strlen(exp_tok);
+		ft_strdel(&exp_tok);
+	}
+	exp->st = (!data[exp->index]) ? E_END : E_START;
+	return (exp);
+}
+
+t_expansion 	*word_biteurs(char *data, t_core *shell, t_expansion *exp)
+{
+	char *tmp;
+
+	if (!data[exp->index])
+	{
+		exp->st = E_END;
+		return (exp);
+	}
+	tmp = ft_strsub(data, exp->index, 1);
+	exp->res = ft_strjoinf(exp->res, tmp, 4);
+	exp->index++;
+	exp->st = (!data[exp->index]) ? E_END : E_START;
+	(void)shell;
+	return (exp);
+}
+
+t_expansion 	*quotes_biteurs(char *data, t_core *shell, t_expansion *exp)
+{
+	exp->quotus = skip_quotes(data, exp);
+	exp->st = (!data[exp->index]) ? E_END : E_START;
+	(void)shell;
+	return (exp);
+}
+
+t_expansion 	*discard_biteurs(char *data, t_core *shell, t_expansion *exp)
+{
+	(void)shell;
+	exp->discarded = discard_backslash(data, &(exp->index), &(exp->res));
+	exp->st = (!data[exp->index]) ? E_END : E_START;
+	return (exp);
+}
+
+int 			quotes_condition(char c, enum e_estate state)
+{
+	if ((c == '\"' && state == E_QUOTE) || (c == '\'' && state == E_DBQUOTE))
+		return (0);
+	return (1);
+}
+
+t_expansion 	*start_biteurs(char *data, t_core *shell, t_expansion *exp)
+{
+	if (!data[exp->index])
+		exp->st = E_END;
+	else if (exp->quotus != E_QUOTE && data[exp->index] == '\\')
+		exp->st = E_DISCARD;
+	else if (!exp->discarded && quotes_condition(data[exp->index], exp->quotus)
+		&& (data[exp->index] == '\'' || data[exp->index] == '\"'))
+		exp->st = E_QUOTES;
+	else if ((!exp->discarded && exp->quotus != E_QUOTE)
+		&& ((data[exp->index] == '$' || data[exp->index] == '~' || data[exp->index] == '`')))
+		exp->st = E_EXP;
+	else
+		exp->st = E_WORD;
+	exp->discarded = 0;
+	(void)shell;
+	return (exp);
+}
+
+t_expansion	*init_expansion_inhibiteurs(t_expansion *exp)
+{
+	if (!(exp = (t_expansion*)malloc(sizeof(t_expansion))))
+		return (NULL);
+	exp->index = 0;
+	exp->discarded = 0;
+	exp->res = ft_strnew(0);
+	exp->st = E_START;
+	exp->quotus = NB_EXPANSION_STATE;
+	init_expansion_machine(exp);
+	exp->biteurs[E_START] = start_biteurs;
+	exp->biteurs[E_EXP] = exp_biteurs;
+	exp->biteurs[E_WORD] = word_biteurs;
+	exp->biteurs[E_QUOTES] = quotes_biteurs;
+	exp->biteurs[E_DISCARD] = discard_biteurs;
+	exp->erience = 0;
+	return (exp);
+}
+
+char		*quote_backslash_discarder(char *data)
 {
 	char			*res;
 	char			*tmp;
@@ -104,7 +203,7 @@ char		*quote_backslash_discarder(const char *data)
 	index = 0;
 	while (data[index])
 	{
-		st = skip_quotes(data, &index, st);
+		st = skip_recur_quote(data, &index, st);
 		if (!data[index])
 			break ;
 		if (st != E_QUOTE)
@@ -121,33 +220,19 @@ char		*quote_backslash_discarder(const char *data)
 	return (res);
 }
 
-char		*infinite_expansion(const char *data, t_core *shell)
+char		*inhibiteurs_expansion(char *data, t_core *shell)
 {
-	int				flag[5];
-	char			*res;
-	char			*tmp;
-	enum e_estate	st;
+	t_expansion	*exp;
+	char *resultat;
 
 	if (!data || !*data)
 		return (NULL);
-	init_infinite_flags(flag, &tmp, &res, &st);
-	while (data[++flag[2]])
-	{
-		flag[3] = get_quote_flag(data, &flag[2], &flag[0], &flag[1]);
-		st = skip_quotes(data, &flag[2], st);
-		if (!data[flag[2]])
-			break ;
-		if (!flag[1])
-			if (!discard_backslash(data, &flag[2], &res))
-				check_if_we_shall_exp(data, flag, &res, shell);
-		st = skip_quotes(data, &flag[2], st);
-		if (!data[flag[2]])
-			break ;
-		if (flag[3])
-		{
-			tmp = ft_strsub(data, flag[2], 1);
-			res = ft_strjoinf(res, tmp, 4);
-		}
-	}
-	return (res);
+	exp = NULL;
+	exp = init_expansion_inhibiteurs(exp);
+	while (exp->st != E_END)
+		 exp = exp->biteurs[exp->st](data, shell, exp);
+	resultat = ft_strdup(exp->res);
+	ft_strdel(&exp->res);
+	free(exp);
+	return (resultat);
 }

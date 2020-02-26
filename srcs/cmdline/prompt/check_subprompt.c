@@ -12,11 +12,41 @@
 
 #include "sh42.h"
 
+u_int8_t check_backslash_nbr(char *str, int *index)
+{
+	int i;
+	int nbr;
+
+	i = *index;
+	nbr = 0;
+	if (!str[i] || str[i] != BACKSLASH)
+		return (0);
+	if (str[i] == BACKSLASH)
+	{
+		while (str[i] == BACKSLASH)
+		{
+			i++;
+			nbr++;
+		}
+	}
+	if ((nbr % 2) == 1)
+	{
+		*index = i;
+		return (1);
+	}
+	*index = i;
+	return (0);
+}
+
 static u_int8_t	goto_next_quote(char *buffer, char quote_type, int *i)
 {
 	while (buffer[(*i)++] != '\0')
+	{
+		if (quote_type == '\"' && check_backslash_nbr(buffer, i))
+			continue ;
 		if (buffer[*i] == quote_type)
 			return (TRUE);
+	}
 	return (FALSE);
 }
 
