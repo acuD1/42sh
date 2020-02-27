@@ -217,12 +217,12 @@ SRC					+=	$(S_PATH)$(REDIRS)exec_redirs.c
 SRC					+=	$(S_PATH)$(REDIRS)redirs_tools.c
 SRC					+=	$(S_PATH)$(REDIRS)redirs.c
 
-SRC					+=	$(S_PATH)$(EXPANSIONS)assign_redir_tok_exp.c
-SRC					+=	$(S_PATH)$(EXPANSIONS)do_exp_and_quotes.c
+SRC					+=	$(S_PATH)$(EXPANSIONS)assign_envp_tools.c
+SRC					+=	$(S_PATH)$(EXPANSIONS)machine_expansion.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)expansion.c
-SRC					+=	$(S_PATH)$(EXPANSIONS)infinite_exp.c
-
+SRC					+=	$(S_PATH)$(EXPANSIONS)quotes_backslash.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)tilde_cmds_math_exp.c
+
 SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_exp.c
 SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_param_cmds_exp.c
 SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_tilde_math_exp.c

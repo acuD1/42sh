@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   param_exp_opt.c                                    :+:      :+:    :+:   */
+/*   exp_param_opt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,10 +15,8 @@
 char		*dash_format(char **tablo, t_core *shell)
 {
 	char	*value;
-	char	*word;
 	int		i;
 
-	word = NULL;
 	i = 1;
 	value = NULL;
 	if ((value = check_env_key(tablo[0], shell)))
@@ -26,36 +24,30 @@ char		*dash_format(char **tablo, t_core *shell)
 		ft_tabfree(tablo);
 		return (ft_strdup(value));
 	}
-	if (tablo[1] && tablo[1][1] == '$')
-		i++;
-	if ((value = check_env_key(&tablo[1][i], shell)))
-		word = ft_strdup(value);
-	else
-		word = ft_strdup(&tablo[1][1]);
+	if (tablo[1])
+	{
+		if (tablo[1][1] == '$')
+			value = exp_param(&tablo[1][1], shell);
+		else
+			value = ft_strdup(&tablo[1][1]);
+	}
 	ft_tabfree(tablo);
-	return (word);
+	return (value);
 }
 
 char		*plus_format(char **tablo, t_core *shell)
 {
 	char	*value;
-	char	*word;
 
-	word = NULL;
 	value = NULL;
-	if ((value = check_env_key(tablo[0], shell)))
+	if ((check_env_key(tablo[0], shell)))
 	{
 		if (tablo[1][1] == '$')
-		{
-			word = check_env_key(&tablo[1][2], shell);
-			ft_tabfree(tablo);
-			if (!word)
-				return (NULL);
-		}
+			value = exp_param(&tablo[1][1], shell);
 		else
-			word = ft_strdup(&tablo[1][1]);
+			value = ft_strdup(&tablo[1][1]);
 		ft_tabfree(tablo);
-		return (word);
+		return (value);
 	}
 	ft_tabfree(tablo);
 	return (NULL);
@@ -75,22 +67,16 @@ char		*egal_format(char **tablo, t_core *shell)
 		ft_tabfree(tablo);
 		return (ft_strdup(value));
 	}
-	if (tablo[1][1] == '$')
+	if (tablo[1])
 	{
-		value = check_env_key(&tablo[1][2], shell);
-		if (value)
-		{
-			word = ft_strdup(value);
-			add_assign_env(shell, tablo[0], word);
-		}
-	}
-	else
-	{
-		word = ft_strdup(&tablo[1][1]);
-		add_assign_env(shell, tablo[0], word);
+		if (tablo[1][1] == '$')
+			value = exp_param(&tablo[1][1], shell);
+		else
+			value = ft_strdup(&tablo[1][1]);
+		add_assign_env(shell, tablo[0], value);
 	}
 	ft_tabfree(tablo);
-	return (word);
+	return (value);
 }
 
 char		*underniercaspourlaroute(char **tablo, t_core *shell)
@@ -102,20 +88,24 @@ char		*underniercaspourlaroute(char **tablo, t_core *shell)
 	word = NULL;
 	if ((value = check_env_key(tablo[0], shell)))
 	{
-		word = check_env_key(tablo[1], shell);
+
+		if (tablo[1][1] == '$')
+			value = exp_param(&tablo[1][1], shell);
+		else
+			word = check_env_key(tablo[1], shell);
 		if (!word || !*word)
 		{
 			ft_tabfree(tablo);
 			return (ft_strdup(value));
 		}
 		else
-			return (error_moar_format_third(tablo, word));
+			return (error_moar_format_third(tablo, word, shell));
 	}
 	ft_tabfree(tablo);
 	return (NULL);
 }
 
-char		*get_two_point_param_exp(char **tablo, t_core *shell)
+char		*get_two_point_exp_param(char **tablo, t_core *shell)
 {
 	if (tablo[1][0] == '-')
 		return (dash_format(tablo, shell));

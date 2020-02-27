@@ -65,15 +65,47 @@ enum e_estate	skip_quotes(char *str, t_expansion *exp)
 	return (exp->quotus);
 }
 
-void					init_expansion_machine(t_expansion *exp)
+int		discard_backslash(const char *data, int *i, char **res)
 {
-	exp->sionat[0] = no_exp;
-	exp->sionat[1] = exp_tilde;
-	exp->sionat[2] = exp_tilde;
-	exp->sionat[3] = exp_tilde;
-	exp->sionat[4] = exp_math;
-	exp->sionat[5] = exp_cmd_subs;
-	exp->sionat[6] = exp_param;
-	exp->sionat[7] = exp_math;
-	exp->sionat[8] = exp_param;
+	int		backslash_nbr;
+	int		index;
+	int		ret;
+	char	*tmp;
+
+	index = *i;
+	backslash_nbr = 0;
+	tmp = NULL;
+	ret = 0;
+	if (data[index] == '\\')
+	{
+		while (data[index] == '\\')
+		{
+			index++;
+			backslash_nbr++;
+		}
+		ret = backslash_nbr % 2;
+		backslash_nbr /= 2;
+		tmp = ft_strsub(data, index - backslash_nbr, backslash_nbr);
+		*res = ft_strjoinf(*res, tmp, 4);
+		if (data[index] == '\n')
+			index++;
+		*i = index;
+	}
+	return (ret);
+}
+
+t_expansion 	*quotes_biteurs(char *data, t_core *shell, t_expansion *exp)
+{
+	exp->quotus = skip_quotes(data, exp);
+	exp->st = (!data[exp->index]) ? E_END : E_START;
+	(void)shell;
+	return (exp);
+}
+
+t_expansion 	*discard_biteurs(char *data, t_core *shell, t_expansion *exp)
+{
+	(void)shell;
+	exp->discarded = discard_backslash(data, &(exp->index), &(exp->res));
+	exp->st = (!data[exp->index]) ? E_END : E_START;
+	return (exp);
 }

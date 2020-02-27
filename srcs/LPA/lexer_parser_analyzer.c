@@ -221,5 +221,7 @@ void		lexer_parser_analyzer(t_core *shell)
 		return ;
 	if (parser(lxr_tok) == TRUE)
 		analyzer(shell, lxr_tok);
+	else
+		shell->status = 2;
 	ft_freetokenlist(&lxr_tok);
 }

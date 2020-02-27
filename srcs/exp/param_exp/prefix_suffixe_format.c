@@ -16,6 +16,8 @@ char		*smallest_suffix_param(char *value, char *pattern)
 {
 	int		pattern_size;
 
+	if (!pattern || !value)
+		return (NULL);
 	pattern_size = ft_strlen(value) - ft_strlen(pattern);
 	if (ft_strequ(value + pattern_size, pattern))
 		return (ft_strsub(value, 0, pattern_size));
@@ -43,7 +45,10 @@ char		*suffix_format(char *data, t_core *shell)
 				resultat = ft_strdup(value);
 			else if (tablo[1][0] == '$')
 			{
-				tmp = check_env_key(&tablo[1][1], shell);
+				if (tablo[1][1] != '{')
+					tmp = check_env_key(&tablo[1][1], shell);
+				else
+					tmp = get_brace_param(tablo[1], shell);
 				resultat = smallest_suffix_param(value, tmp);
 			}
 			else
@@ -59,6 +64,8 @@ char		*smallest_prefix_param(char *value, char *pattern)
 {
 	int		size;
 
+	if (!pattern || !value)
+		return (NULL);
 	size = ft_strlen(pattern);
 	if (ft_strnequ(value, pattern, size))
 		return (ft_strsub(value, size, ft_strlen(value) - size));
@@ -86,8 +93,11 @@ char		*prefix_format(char *data, t_core *shell)
 				resultat = ft_strdup(value);
 			else if (tablo[1][0] == '$')
 			{
-				tmp = check_env_key(&tablo[1][1], shell);
-				resultat = smallest_suffix_param(value, tmp);
+				if (tablo[1][1] != '{')
+					tmp = check_env_key(&tablo[1][1], shell);
+				else
+					tmp = get_brace_param(tablo[1], shell);
+				resultat = smallest_prefix_param(value, tmp);
 			}
 			else
 				resultat = smallest_prefix_param(value, tablo[1]);

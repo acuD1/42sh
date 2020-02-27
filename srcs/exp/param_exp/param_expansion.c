@@ -20,19 +20,16 @@ char			*moar_format_plz(char *data, t_core *shell)
 	tablo = NULL;
 	tablen = 0;
 	if (data[ft_strlen(data) - 1] == ':')
-		return (error_moar_format_bis(data));
+		return (error_moar_format_bis(data, shell));
 	if ((tablo = ft_strsplit(data, ":")))
 	{
 		tablen = ft_tablen(tablo);
 		if (tablen > 3)
-			return (error_moar_format_param(tablo, data));
-		else if (tablen == 3)
+			return (error_moar_format_param(tablo, data, shell));
+		else if ((tablen == 3) && (ft_strisdigit(tablo[1]) && ft_strisdigit(tablo[2])))
 		{
-			if (ft_strisdigit(tablo[1]) && ft_strisdigit(tablo[2]))
-			{
-				ft_strdel(&data);
-				return (double_two_point_param(tablo, shell));
-			}
+			ft_strdel(&data);
+			return (double_two_point_param(tablo, shell));
 		}
 		else if (tablen == 2)
 		{
@@ -43,6 +40,7 @@ char			*moar_format_plz(char *data, t_core *shell)
 	ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", tablo[0]);
 	ft_tabfree(tablo);
 	ft_strdel(&data);
+	shell->status = 1;
 	return (NULL);
 }
 
@@ -89,22 +87,32 @@ char			*format_supplementaires(char *str, t_core *shell)
 	return (simple_format(str, shell));
 }
 
-static char		*get_brace_param(const char *str, t_core *shell)
+char		*get_brace_param(const char *str, t_core *shell)
 {
 	int			i;
+	int			count;
 	char		*tmp;
 
-	i = 0;
+	i = 1;
+	count = 0;
 	tmp = NULL;
-	while (str[++i])
+	printf("%s\n", str);
+	while (str[i++])
 	{
-		if (str[i] == '\n') // || (i != 2 && str[i] == '$'))
+		if (str[i] == '\n')
 		{
 			ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
 			return (NULL);
 		}
+		if (str[i] == '{')
+			count++;
 		if (str[i] == '}')
-			break ;
+		{
+			if (count)
+				count--;
+			else
+				break ;
+		}
 	}
 	if (!(tmp = ft_strsub(str, 2, i - 2)))
 		return (NULL);

@@ -65,14 +65,32 @@ char			*exp_get_bracket(const char *string, int len)
 {
 	char	*str;
 	int		index;
+	int		count; 
 
 	index = 0;
+	count = 0;
 	str = NULL;
 	if (!ft_strncmp(string, "${", len))
 	{
 		index = len;
-		while (string[index] && string[index] != '}')
+		while (string[index])
+		{
+			if (string[index] == '\n')
+			{
+				ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", string);
+				return (NULL);
+			}
+			if (string[index] == '{')
+				count++;
+			if (string[index] == '}')
+			{
+				if (count)
+					count--;
+				else
+					break ;
+			}
 			index++;
+		}
 		index++;
 		if (!(str = ft_strsub(string, 0, index)))
 			return (NULL);

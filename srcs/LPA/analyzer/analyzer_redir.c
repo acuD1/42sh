@@ -12,6 +12,38 @@
 
 #include "sh42.h"
 
+char		*quote_backslash_discarder(char *data)
+{
+	char			*res;
+	char			*tmp;
+	int				index;
+	enum e_estate	st;
+
+	st = NB_EXPANSION_STATE;
+	if (!data)
+		return (NULL);
+	tmp = NULL;
+	res = NULL;
+	index = 0;
+	while (data[index])
+	{
+		if (st != E_QUOTE)
+			discard_backslash(data, &index, &res);
+		st = skip_recur_quote(data, &index, st);
+		if (!data[index])
+			break ;
+		if (res)
+		{
+			tmp = ft_strsub(data, index, 1);
+			res = ft_strjoinf(res, tmp, 4);
+		}
+		else
+			res = ft_strsub(data, index, 1);
+		index++;
+	}
+	return (res);
+}
+
 void			free_koulchi(t_analyzer *anal)
 {
 	if (anal->redir.op[0])
@@ -61,7 +93,7 @@ void		init_redir(t_redir *new)
 	new->heredoc = NULL;
 }
 
-void		load_heredoc_noimode(t_analyzer *anal)
+t_analyzer	*load_heredoc_noimode(t_analyzer *anal, t_core *shell)
 {
 	char	*line;
 
@@ -78,6 +110,8 @@ void		load_heredoc_noimode(t_analyzer *anal)
 		anal->redir.heredoc = ft_strjoinf(anal->redir.heredoc, "\n", 1);
 	}
 	ft_strdel(&line);
+	shell->heredoc = 1;
+	return (anal);
 }
 
 t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
@@ -86,13 +120,13 @@ t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 	if (shell->mode & I_MODE)
 		anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
 	else
-		load_heredoc_noimode(anal);
+		anal = load_heredoc_noimode(anal, shell);
 	if (!shell->heredoc)
 		return (exit_lpa(anal));
 	anal->state = A_WORD;
 	shell->term.flag = FALSE;
 	shell->term.status = CMD_DONE;
-	// shell->heredoc = 0;
+	shell->heredoc = 0;
 	return (anal = redir_analyze(anal, shell));
 }
 

@@ -37,11 +37,12 @@ char		*questionmark_format(char **tablo, t_core *shell)
 	if (tablo[1])
 	{
 		if (tablo[1][1] == '$')
-			word = check_env_key(&tablo[1][2], shell);
+			word = exp_param(&tablo[1][1],shell);
 		else
 			word = ft_strdup(&tablo[1][1]);
 		ft_dprintf(STDERR_FILENO,
 			"42sh: %s: %s\n", tablo[0], word);
+		ft_strdel(&word);
 	}
 	else
 		ft_dprintf(STDERR_FILENO,
