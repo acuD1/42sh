@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/22 18:03:58 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/27 15:31:30 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct				s_cd
 	u_int8_t				pwd_error;
 	u_int8_t				dash;
 	u_int8_t				no_symbolic;
-	int						test;
+	int						error;
 }							t_cd;
 
 typedef struct				s_read

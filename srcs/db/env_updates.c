@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/22 18:50:56 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/27 17:50:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int8_t	update_pwd(t_core *shell)
 	}
 	return (FAILURE);
 }
-
 
 /*
 **	Update $_ : search $_ in the env list,

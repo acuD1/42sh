@@ -6,12 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:51:46 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/20 21:10:33 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/27 18:25:05 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
 #include "sh42.h"
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 static int8_t	pwd_opt_parser(int ac, t_process *process, t_db *db, char *pwd)
 {
@@ -27,21 +29,42 @@ static int8_t	pwd_opt_parser(int ac, t_process *process, t_db *db, char *pwd)
 	return (SUCCESS);
 }
 
-int8_t	builtin_pwd(t_core *shell, t_process *process)
+static int8_t	pwd_check_path(const char *path)
 {
-	t_db	*db;
-	char	pwd[MAX_PATH + 1];
-	int		ac;
+	int		errnum;
+
+	errnum = 0;
+	if (access(path, F_OK) == 0)
+		errnum = is_a_dir(path);
+	errnum = (errnum == EISDIR) ? 0 : errnum;
+	if (errnum == 0)
+		errnum = ft_access(path, X_OK);
+	return (errnum);
+}
+
+int8_t			builtin_pwd(t_core *shell, t_process *process)
+{
+	struct stat	stat;
+	t_db		*db;
+	char		pwd[MAX_PATH + 1];
+	int			ac;
+	int			errnum;
 
 	ft_bzero(pwd, MAX_PATH + 1);
-	if (getcwd(pwd, MAX_PATH) == NULL)
-	{
-		shell->cd.pwd_error = TRUE;
-		dprintf(STDERR_FILENO, "pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n");
-		return (SUCCESS);
-	}
 	ac = ft_tablen(process->av);
 	db = get_or_create_db(shell, "PWD", ENV_VAR);
+	lstat(db->value, &stat);
+	if (S_ISLNK(stat.st_mode) == FALSE
+		&& (errnum = pwd_check_path(db->value)) != SUCCESS)
+	{
+		shell->cd.pwd_error = TRUE;
+		dprintf(STDERR_FILENO, "|%d| %s %s", errnum, PWD_ERR, GETCWD_ERR);
+		if (errnum == EACCES)
+			ft_putstr_fd(" Permission denied\n", STDERR_FILENO);
+		else
+			ft_putstr_fd(" No such file or directory\n", STDERR_FILENO);
+		return (SUCCESS);
+	}
 	if (ac > 1)
 		return (pwd_opt_parser(ac, process, db, pwd));
 	dprintf(STDOUT_FILENO, "%s\n", db->value);
