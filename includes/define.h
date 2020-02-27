@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/22 19:20:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/27 17:09:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,21 @@
 # define ALT_AW_DO				0x1b1b5b4200000000
 
 /*
-**	Hash table
+**	Builtins
 */
 
 # define HASH_SIZE				256
 # define MAX_LOAD_F				0.75
-# define HASH_USAGE				"[-rl] [-p pathname] [-dt] [name ...]"
+# define HASH_USAGE				"hash [-rl] [-p pathname] [-dt] [name ...]"
 # define HASH_OPT				"lrpdt"
+# define CD_USAGE				"cd [-L|-P] [dir]"
+# define CD_OPT					"LP"
+# define PWD_USAGE				"pwd [-LP]"
+# define PWD_OPT				"LP"
+# define PWD_ERR				"pwd: error retrieving current directory:"
+# define CHDIR_ERR				"chdir: error retrieving current directory:"
+# define CD_ERR					"cd: error retrieving current directory:"
+# define GETCWD_ERR				"getcwd: cannot access parent directories:"
 
 /*
 **	Intern shell variables

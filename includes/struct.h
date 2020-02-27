@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/21 16:09:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/27 15:31:30 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,15 @@ typedef struct				s_hash
 	u_int32_t				lenght;
 }							t_hash;
 
+typedef struct				s_cd
+{
+	char					*tmp_pwd;
+	u_int8_t				pwd_error;
+	u_int8_t				dash;
+	u_int8_t				no_symbolic;
+	int						error;
+}							t_cd;
+
 typedef struct				s_read
 {
 	t_core					*shell;
@@ -78,6 +87,7 @@ struct						s_core
 	t_build					build;
 	t_hash					hash;
 	t_db					db;
+	t_cd					cd;
 	t_lst					*env;
 	t_lst					*pos_vars;
 	t_lst					*job_list;

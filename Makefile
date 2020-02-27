@@ -74,6 +74,7 @@ L_PATH				=	shared_libft/
 # Add custom dir for .o
 
 BUILTINS			=	builtins/
+CD					=	$(BUILTINS)cd/
 FC					=	$(BUILTINS)fc/
 HASH				=	$(BUILTINS)hash/
 CMDLINE				=	cmdline/
@@ -104,6 +105,7 @@ PATHS				+=	$(B_PATH)
 PATHS				+=	$(O_PATH)
 PATHS				+=	$(O_PATH)$(BUILTINS)
 PATHS				+=	$(O_PATH)$(FC)
+PATHS				+=	$(O_PATH)$(CD)
 PATHS				+=	$(O_PATH)$(HASH)
 PATHS				+=	$(O_PATH)$(CMDLINE)
 PATHS				+=	$(O_PATH)$(AC)
@@ -130,7 +132,6 @@ PATHS				+=	$(O_PATH)$(SIGNALS)
 # Files
 
 SRC					+=	$(S_PATH)$(BUILTINS)bg.c
-SRC					+=	$(S_PATH)$(BUILTINS)cd.c
 SRC					+=	$(S_PATH)$(BUILTINS)echo.c
 SRC					+=	$(S_PATH)$(BUILTINS)exit.c
 SRC					+=	$(S_PATH)$(BUILTINS)export.c
@@ -142,6 +143,11 @@ SRC					+=	$(S_PATH)$(BUILTINS)set.c
 SRC					+=	$(S_PATH)$(BUILTINS)test.c
 SRC					+=	$(S_PATH)$(BUILTINS)type.c
 SRC					+=	$(S_PATH)$(BUILTINS)unset.c
+
+SRC					+=	$(S_PATH)$(CD)cd_change_dir.c
+SRC					+=	$(S_PATH)$(CD)cd_check_path.c
+SRC					+=	$(S_PATH)$(CD)cd_update_pwd.c
+SRC					+=	$(S_PATH)$(CD)cd.c
 
 SRC					+=	$(S_PATH)$(FC)fc_edit.c
 SRC					+=	$(S_PATH)$(FC)fc_launcher.c
@@ -275,6 +281,7 @@ SRC					+=	$(S_PATH)$(LEXER)operator_token.c
 SRC					+=	$(S_PATH)$(PARSER)graph.c
 SRC					+=	$(S_PATH)$(PARSER)parser.c
 
+SRC					+=	$(S_PATH)$(MISC)abs_path_tools.c
 SRC					+=	$(S_PATH)$(MISC)abs_path.c
 SRC					+=	$(S_PATH)$(MISC)check_args.c
 SRC					+=	$(S_PATH)$(MISC)errors.c
