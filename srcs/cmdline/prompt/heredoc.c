@@ -74,6 +74,7 @@ char			*load_heredoc(t_core *shell, const char *key)
 
 	value = NULL;
 	init_config(shell);
+	shell->heredoc = 1;
 	shell->term.buffer = ft_strjoinf(shell->term.buffer, NEW_LINE, 1);
 	shell->term.tmp_buff = ft_strdup(shell->term.buffer);
 	shell->term.status = CMD_SUBPROMPT;
@@ -94,7 +95,6 @@ char			*load_heredoc(t_core *shell, const char *key)
 			return (NULL);
 	}
 	value = stock_value(shell);
-	printf("#%s#\n", value);
 	shell->term.status = CMD_DONE;
 	return (value);
 }

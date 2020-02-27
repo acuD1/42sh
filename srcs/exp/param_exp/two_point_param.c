@@ -16,19 +16,24 @@ char		*dash_format(char **tablo, t_core *shell)
 {
 	char	*value;
 	char	*word;
+	int		i;
 
 	word = NULL;
-	value = check_env_key(tablo[0], shell);
-	if (value && *value)
+	i = 1;
+	value = NULL;
+	if ((value = check_env_key(tablo[0], shell)))
 	{
 		ft_tabfree(tablo);
 		return (ft_strdup(value));
 	}
-	word = check_env_key(&tablo[1][1], shell);
+	if (tablo[1] && tablo[1][1] == '$')
+		i++;
+	if ((value = check_env_key(&tablo[1][i], shell)))
+		word = ft_strdup(value);
+	else
+		word = ft_strdup(&tablo[1][1]);
 	ft_tabfree(tablo);
-	if (!word)
-		return (NULL);
-	return (ft_strdup(word));
+	return (word);
 }
 
 char		*plus_format(char **tablo, t_core *shell)
@@ -37,14 +42,20 @@ char		*plus_format(char **tablo, t_core *shell)
 	char	*word;
 
 	word = NULL;
-	value = check_env_key(tablo[0], shell);
-	if (value && *value)
+	value = NULL;
+	if ((value = check_env_key(tablo[0], shell)))
 	{
-		word = check_env_key(&tablo[1][1], shell);
+		if (tablo[1][1] == '$')
+		{
+			word = check_env_key(&tablo[1][2], shell);
+			ft_tabfree(tablo);
+			if (!word)
+				return (NULL);
+		}
+		else
+			word = ft_strdup(&tablo[1][1]);
 		ft_tabfree(tablo);
-		if (!word)
-			return (NULL);
-		return (ft_strdup(word));
+		return (word);
 	}
 	ft_tabfree(tablo);
 	return (NULL);
@@ -54,18 +65,32 @@ char		*egal_format(char **tablo, t_core *shell)
 {
 	char	*value;
 	char	*word;
+	int		i;
 
+	i = 1;
 	word = NULL;
-	value = check_env_key(tablo[0], shell);
-	if (value && *value)
+	value = NULL;
+	if ((value = check_env_key(tablo[0], shell)))
 	{
 		ft_tabfree(tablo);
 		return (ft_strdup(value));
 	}
-	word = ft_strdup(&tablo[1][1]);
-	add_assign_env(shell, tablo[0], word);
+	if (tablo[1][1] == '$')
+	{
+		value = check_env_key(&tablo[1][2], shell);
+		if (value)
+		{
+			word = ft_strdup(value);
+			add_assign_env(shell, tablo[0], word);
+		}
+	}
+	else
+	{
+		word = ft_strdup(&tablo[1][1]);
+		add_assign_env(shell, tablo[0], word);
+	}
 	ft_tabfree(tablo);
-	return (NULL);
+	return (word);
 }
 
 char		*underniercaspourlaroute(char **tablo, t_core *shell)
@@ -73,9 +98,9 @@ char		*underniercaspourlaroute(char **tablo, t_core *shell)
 	char	*value;
 	char	*word;
 
-	value = check_env_key(tablo[0], shell);
+	value = NULL;
 	word = NULL;
-	if (value && *value)
+	if ((value = check_env_key(tablo[0], shell)))
 	{
 		word = check_env_key(tablo[1], shell);
 		if (!word || !*word)

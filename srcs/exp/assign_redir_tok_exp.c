@@ -70,18 +70,17 @@ void			expansion_redir(t_core *shell, t_process *process)
 	res = NULL;
 	while (lst)
 	{
-		if (((t_redir*)lst->content)->op[1] && (((t_redir*)lst->content)->type != 8 || ((t_redir*)lst->content)->type != 7))
+		if (((t_redir*)lst->content)->op[1] && (((t_redir*)lst->content)->type != 8 && ((t_redir*)lst->content)->type != 7)
+			&& (res = inhibiteurs_expansion(((t_redir*)lst->content)->op[1], shell)))
 		{
-			res = inhibiteurs_expansion(((t_redir*)lst->content)->op[1], shell);
 			if (!*res)
 				ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n", ((t_redir*)lst->content)->op[1]);
 			ft_strdel(&(((t_redir*)lst->content)->op[1]));
 			((t_redir*)lst->content)->op[1] = ft_strdup(res);
 			ft_strdel(&res);
 		}
-		if (((t_redir*)lst->content)->heredoc)
+		if (((t_redir*)lst->content)->heredoc && (res = inhibiteurs_expansion(((t_redir*)lst->content)->heredoc, shell)))
 		{
-			res = inhibiteurs_expansion(((t_redir*)lst->content)->heredoc, shell);
 			ft_strdel(&(((t_redir*)lst->content)->heredoc));
 			((t_redir*)lst->content)->heredoc = ft_strdup(res);
 			ft_strdel(&res);
@@ -122,7 +121,10 @@ void			expansion_tok(t_core *shell, t_process *process)
 		if (((t_token*)lst->content)->data)
 		{
 			res = inhibiteurs_expansion(((t_token*)lst->content)->data, shell);
-			process->av = ft_add_arg_cmd_process(process->av, res);
+			if (*res)
+				process->av = ft_add_arg_cmd_process(process->av, res);
+			else if (!*res && (ft_strchr(((t_token*)lst->content)->data, '\'') || ft_strchr(((t_token*)lst->content)->data, '\"')))
+				process->av = ft_add_arg_cmd_process(process->av, res);
 			if (!lst->next)
 				process->envp = add_underscore_envp(process->envp, res);
 			ft_strdel(&res);

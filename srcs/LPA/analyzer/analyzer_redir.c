@@ -12,29 +12,44 @@
 
 #include "sh42.h"
 
-void		exit_lpa(t_analyzer *anal, t_core *shell)
+void			free_koulchi(t_analyzer *anal)
 {
-	t_lst *job;
-	t_lst *tmp;
+	if (anal->redir.op[0])
+		ft_strdel(&anal->redir.op[0]);
+	if (anal->redir.op[1])
+		ft_strdel(&anal->redir.op[1]);
+	if (anal->redir.heredoc)
+		ft_strdel(&anal->redir.heredoc);
+	if (anal->redir_list)
+		ft_free_redirlist(&anal->redir_list);
+	if (anal->db.key)
+		ft_strdel(&anal->db.key);
+	if (anal->db.value)
+		ft_strdel(&anal->db.value);
+	if (anal->process.redir_list)
+		ft_free_redirlist(&anal->process.redir_list);
+	if (anal->process.assign_list)
+		free_db(anal->process.assign_list);
+	if (anal->process.command)
+		ft_strdel(&anal->process.command);
+	if (anal->process.tok_list)
+		ft_freetokenlist(&anal->process.tok_list);
+	if (anal->process_list)
+		free_process_list(&anal->process_list);
+}
 
-	job = NULL;
-	tmp = NULL;
+t_analyzer		*exit_lpa(t_analyzer *anal)
+{
+	free_koulchi(anal);
+	if (anal->job.command)
+		ft_strdel(&anal->job.command);
+	if (anal->job.process_list)
+		free_process_list(&anal->job.process_list);
 	if (anal->job_list)
-	{
-		job = anal->job_list;
-		while (job)
-		{
-			if (((t_job*)job->content)->command)
-				ft_strdel(&((t_job*)job->content)->command);
-			if (((t_job*)job->content)->process_list)
-				free_process_list(&((t_job*)job->content)->process_list);
-			tmp = job;
-			job = job->next;
-			free(tmp);
-		}
-	}
-	(void)anal;
-	(void)shell;
+		ft_freejoblist(&anal->job_list);
+	anal->state = A_STOP;
+	anal->job_list = NULL;
+	return (anal);
 }
 
 void		init_redir(t_redir *new)
@@ -46,40 +61,38 @@ void		init_redir(t_redir *new)
 	new->heredoc = NULL;
 }
 
-t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
+void		load_heredoc_noimode(t_analyzer *anal)
 {
 	char	*line;
 
+	line = NULL;
+	while (ft_getnextline(STDIN_FILENO, &line) > 0 && ft_strcmp(line, anal->redir.op[1]) != 0)
+	{
+		if (!anal->redir.heredoc)
+		{
+			anal->redir.heredoc = ft_strdup(line);
+			ft_strdel(&line);
+		}
+		else
+			anal->redir.heredoc = ft_strjoinf(anal->redir.heredoc, line, 4);
+		anal->redir.heredoc = ft_strjoinf(anal->redir.heredoc, "\n", 1);
+	}
+	ft_strdel(&line);
+}
+
+t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
+{
 	anal->redir.op[1] = quote_backslash_discarder(((t_token*)anal->lexer->content)->data);
 	if (shell->mode & I_MODE)
-	{
 		anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
-		if (shell->term.status == CMD_PROMPT)
-		{
-			printf("meh USELESS NEED TO SWAP anal.job_list to shell\n");
-			exit_lpa(anal, shell);
-			anal->state = A_STOP;
-			return (NULL);
-		}
-	}
 	else
-	{
-		while (ft_getnextline(STDIN_FILENO, &line) > 0 && ft_strcmp(line, anal->redir.op[1]) != 0)
-		{
-			if (!anal->redir.heredoc)
-			{
-				anal->redir.heredoc = ft_strdup(line);
-				ft_strdel(&line);
-			}
-			else
-				anal->redir.heredoc = ft_strjoinf(anal->redir.heredoc, line, 4);
-			anal->redir.heredoc = ft_strjoinf(anal->redir.heredoc, "\n", 1);
-		}
-		ft_strdel(&line);
-	}
+		load_heredoc_noimode(anal);
+	if (!shell->heredoc)
+		return (exit_lpa(anal));
 	anal->state = A_WORD;
 	shell->term.flag = FALSE;
 	shell->term.status = CMD_DONE;
+	// shell->heredoc = 0;
 	return (anal = redir_analyze(anal, shell));
 }
 

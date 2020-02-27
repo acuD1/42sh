@@ -20,7 +20,7 @@ static void	ft_free_redir(t_redir *redir)
 	free(redir);
 }
 
-static void	ft_free_redirlist(t_lst **head)
+void	ft_free_redirlist(t_lst **head)
 {
 	t_lst	*ptr;
 	t_lst	*next;

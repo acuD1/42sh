@@ -80,7 +80,7 @@ void			apply_expansion(char *data, char *token, t_core *shell, t_expansion *exp)
 		if ((exp->st == E_TILDEP || exp->st == E_TILDEM || exp->st == E_TILDE)
 			&& !check_tilde_path_exp(res, data, exp->index, exp->st))
 		{
-			exp->res = ft_strjoin(exp->res, token);
+			exp->res = ft_strjoinf(exp->res, token, 1);
 			ft_strdel(&res);
 		}
 		else
@@ -228,6 +228,7 @@ char		*inhibiteurs_expansion(char *data, t_core *shell)
 	if (!data || !*data)
 		return (NULL);
 	exp = NULL;
+	resultat = NULL;
 	exp = init_expansion_inhibiteurs(exp);
 	while (exp->st != E_END)
 		 exp = exp->biteurs[exp->st](data, shell, exp);

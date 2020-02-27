@@ -41,6 +41,11 @@ char		*suffix_format(char *data, t_core *shell)
 		{
 			if (!tablo[1])
 				resultat = ft_strdup(value);
+			else if (tablo[1][0] == '$')
+			{
+				tmp = check_env_key(&tablo[1][1], shell);
+				resultat = smallest_suffix_param(value, tmp);
+			}
 			else
 				resultat = smallest_suffix_param(value, tablo[1]);
 		}
@@ -79,6 +84,11 @@ char		*prefix_format(char *data, t_core *shell)
 		{
 			if (!tablo[1])
 				resultat = ft_strdup(value);
+			else if (tablo[1][0] == '$')
+			{
+				tmp = check_env_key(&tablo[1][1], shell);
+				resultat = smallest_suffix_param(value, tmp);
+			}
 			else
 				resultat = smallest_prefix_param(value, tablo[1]);
 		}

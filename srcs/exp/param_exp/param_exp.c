@@ -34,8 +34,18 @@ char		*questionmark_format(char **tablo, t_core *shell)
 		ft_tabfree(tablo);
 		return (ft_strdup(value));
 	}
-	ft_dprintf(STDERR_FILENO,
-		"42sh: %s parameter null or not set\n", tablo[0]);
+	if (tablo[1])
+	{
+		if (tablo[1][1] == '$')
+			word = check_env_key(&tablo[1][2], shell);
+		else
+			word = ft_strdup(&tablo[1][1]);
+		ft_dprintf(STDERR_FILENO,
+			"42sh: %s: %s\n", tablo[0], word);
+	}
+	else
+		ft_dprintf(STDERR_FILENO,
+			"42sh: %s parameter null or not set\n", tablo[0]);
 	ft_tabfree(tablo);
 	return (NULL);
 }

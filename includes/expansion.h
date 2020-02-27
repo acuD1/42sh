@@ -56,4 +56,5 @@ char			*get_two_point_param_exp(char **tablo, t_core *shell);
 enum e_estate	skip_quotes(char *str, t_expansion *exp);
 enum e_estate	skip_recur_quote(char *str, int *index, enum e_estate st);
 char			*quote_backslash_discarder(char *data);
+void	ft_free_redirlist(t_lst **head);
 #endif

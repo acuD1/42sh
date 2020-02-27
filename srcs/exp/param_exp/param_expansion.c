@@ -51,6 +51,12 @@ char			*simple_format(char *str, t_core *shell)
 	t_db		*db_tmp;
 
 	db_tmp = NULL;
+	if (ft_strchr(str, '$'))
+	{
+		ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
+		ft_strdel(&str);
+		return (NULL);
+	}
 	if ((db_tmp = search_db(shell->env, str)))
 	{
 		ft_strdel(&str);
