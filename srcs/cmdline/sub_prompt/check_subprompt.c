@@ -12,7 +12,7 @@
 
 #include "sh42.h"
 
-static u_int8_t		check_backslash_nbr(char *str, int *index)
+u_int8_t		check_backslash_nbr(char *str, int *index)
 {
 	int				i;
 	int				nbr;

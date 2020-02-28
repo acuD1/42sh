@@ -16,8 +16,17 @@ static int		loop_till_next_quote(const char *str, int index, char quote)
 {
 	if (!str[index])
 		return (index);
-	while (str[index] != quote)
+	while (str[index])
+	{
+		if (quote == '\"' && check_backslash_nbr((char*)str, &index))
+		{
+			index++;
+			continue ;
+		}
+		if (str[index] == quote)
+			break ;
 		index += 1;
+	}
 	return (index);
 }
 
@@ -55,7 +64,8 @@ int				get_word_size_ntype(int i, char *str)
 	while (str[index])
 	{
 		check_all_quotes(str, &index);
-		if ((index >= 1 && str[index - 1] != '\\') && ft_strchr(CHAR_INTERRUPT, str[index]))
+		if ((index >= 1 && str[index - 1] != '\\')
+			&& ft_strchr(CHAR_INTERRUPT, str[index]))
 			break ;
 		index++;
 	}

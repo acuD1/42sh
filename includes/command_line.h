@@ -82,6 +82,7 @@ int64_t		last_cmd_back(t_read *term, int i);
 
 u_int8_t	check_subprompt(t_core *shell);
 u_int8_t	check_backslash(t_read *term, char *quote);
+u_int8_t	check_backslash_nbr(char *str, int *index);
 u_int8_t	charset_count(t_read *term, char charset, int i);
 u_int8_t	quotes_is_matching(t_read *term, char *quote);
 void		load_subprompt(char quote, t_read *term);
