@@ -31,7 +31,7 @@ static void	print_longjob(t_job *job)
 	}
 }
 
-static void	print_job(t_job *job, uint64_t opt, const char *name)
+static void	print_job(t_job *job, u_int64_t opt, const char *name)
 {
 	if (!job)
 	{
@@ -49,7 +49,7 @@ static void	print_job(t_job *job, uint64_t opt, const char *name)
 
 int8_t		builtin_jobs(t_core *shell, t_process *process)
 {
-	uint64_t	opt;
+	u_int64_t	opt;
 	t_lst		*job_list;
 	t_job		*job;
 	int			argc;

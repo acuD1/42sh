@@ -42,7 +42,7 @@ static void		check_keys_comb(const char *buff, t_read *term, u_int64_t value)
 		jump_words(buff, term, value);
 }
 
-static u_int8_t	cursor_motion(const char *buff, t_read *term, uint64_t value)
+static u_int8_t	cursor_motion(const char *buff, t_read *term, u_int64_t value)
 {
 	if (value == ARROW_UP)
 		move_key_up(term);
