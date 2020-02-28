@@ -13,12 +13,17 @@
 #ifndef LEXER_PARSER_ANALYZER_H
 # define LEXER_PARSER_ANALYZER_H
 
+
+u_int8_t 	check_backslash_nbr(char *str, int *index);
 void		lexer_parser_analyzer(t_core *shell);
 
 /*
 **	ANALYZER
 */
 
+t_analyzer	*load_heredoc_fromline(t_analyzer *anal, t_core *shell);
+t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell);
+t_analyzer	*exit_lpa(t_analyzer *anal, t_core *shell);
 t_analyzer	*init_analyze(t_analyzer *analyzer, t_lst *lexer);
 void		init_redir(t_redir *new);
 void		init_process(t_process *new);
@@ -43,8 +48,10 @@ t_analyzer	*process_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer	*job_analyze(t_analyzer *analyzer, t_core *shell);
 t_analyzer	*process_word_analyze(t_analyzer *anal);
 void		free_process_list(t_lst **head);
+void		ft_free_redirlist(t_lst **head);
 char		*fill_cmd_job(t_lst *tok_lst, char *cmd);
 char		**ft_add_arg_cmd_process(char **tablo, const char *str);
+char		*join_one_char(char *dst, char *str, int index);
 
 /*
 **	PARSER

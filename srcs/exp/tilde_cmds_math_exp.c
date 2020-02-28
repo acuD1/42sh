@@ -15,15 +15,13 @@
 char	*no_exp(const char *data, t_core *shell)
 {
 	(void)shell;
-	(void)data;
-	return (NULL);
+	return (ft_strdup(data));
 }
 
 char	*exp_math(const char *data, t_core *shell)
 {
 	(void)shell;
-	(void)data;
-	return (NULL);
+	return (ft_strdup(data));
 }
 
 char	*exp_tilde(const char *data, t_core *shell)
@@ -52,7 +50,13 @@ char	*exp_tilde(const char *data, t_core *shell)
 
 char	*exp_cmd_subs(const char *data, t_core *shell)
 {
-	(void)data;
 	(void)shell;
-	return (NULL);
+	return (ft_strdup(data));
+}
+
+int		quotes_condition(char c, enum e_estate state)
+{
+	if ((c == '\"' && state == E_QUOTE) || (c == '\'' && state == E_DBQUOTE))
+		return (0);
+	return (1);
 }

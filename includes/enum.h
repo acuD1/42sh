@@ -32,6 +32,12 @@ enum	e_hash
 
 enum	e_estate
 {
+	E_START,
+	E_EXP,
+	E_WORD,
+	E_QUOTES,
+	E_DISCARD,
+	E_END,
 	E_QUOTE,
 	E_DBQUOTE,
 	E_BQUOTE,

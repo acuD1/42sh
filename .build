@@ -1,5 +1,5 @@
-Build information, patch level is incremented at compilation.
+Build information, patch level is incremented at compilation. double_quote 10 || aggreg 04 06 || expan 31 37 || simple_quote 03
 
 RELEASE	=	0
 VERSION	=	1
-PATCH	=	9096
+PATCH	=	9097

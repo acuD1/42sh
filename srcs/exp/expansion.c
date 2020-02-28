@@ -12,58 +12,104 @@
 
 #include "sh42.h"
 
-u_int8_t	is_expansion(enum e_estate id)
+static void			expansion_tok(t_core *shell, t_process *process)
 {
-	if (id == E_TILDEP)
-		return (1);
-	else if (id == E_TILDEM)
-		return (2);
-	else if (id == E_TILDE)
-		return (3);
-	else if (id == E_DBPARENT)
-		return (4);
-	else if (id == E_PARENT || id == E_BQUOTE)
-		return (5);
-	else if (id == E_BRACKET)
-		return (6);
-	else if (id == E_HOOK)
-		return (7);
-	else if (id == E_DOLLAR)
-		return (8);
-	else if (id == E_DBQUOTE)
-		return (9);
-	else if (id == E_QUOTE)
-		return (0);
-	return (0);
-}
+	t_lst			*lst;
+	char			*res;
 
-int			get_exp(const char *src, int *index, char **dst, t_core *shell)
-{
-	t_expansion		exp;
-	enum e_estate	state;
-	char			*exp_tok;
-	char			*exp_res;
-	int				i;
-
-	exp_tok = NULL;
-	exp_res = NULL;
-	state = NB_EXPANSION_STATE;
-	init_expansionat(&exp);
-	i = *index;
-	state = find_expansion(&src[i]);
-	exp.erience = is_expansion(state);
-	if ((exp_tok = get_expansion(&src[i], state)))
+	if (!process->tok_list || !shell)
+		return ;
+	res = NULL;
+	lst = process->tok_list;
+	while (lst)
 	{
-		if ((exp_res = exp.sionat[exp.erience](exp_tok, shell)))
-			*dst = ft_strjoinf(*dst, exp_res, 4);
-		*index += ft_strlen(exp_tok);
-		ft_strdel(&exp_tok);
-		return (0);
+		if (((t_token*)lst->content)->data)
+		{
+			res = inhibiteurs_expansion(((t_token*)lst->content)->data, shell);
+			if (*res)
+				process->av = ft_add_arg_cmd_process(process->av, res);
+			else if (!*res && (ft_strchr(((t_token*)lst->content)->data, '\'')
+				|| ft_strchr(((t_token*)lst->content)->data, '\"')))
+				process->av = ft_add_arg_cmd_process(process->av, res);
+			if (!lst->next)
+				process->envp = add_underscore_envp(process->envp, res);
+			ft_strdel(&res);
+		}
+		lst = lst->next;
 	}
-	return (1);
+	ft_freetokenlist(&process->tok_list);
 }
 
-void		expansion(t_core *shell, t_process *process)
+static void			expansion_assign(t_core *shell, t_process *process)
+{
+	t_lst			*lst;
+	char			*res;
+
+	if (!process->assign_list || !shell)
+		return ;
+	res = NULL;
+	lst = process->assign_list;
+	while (lst)
+	{
+		if (((t_db*)lst->content)->value)
+		{
+			res = inhibiteurs_expansion(((t_token*)lst->content)->data, shell);
+			if (!process->av)
+				add_assign_env(shell, ((t_db*)lst->content)->key,
+					ft_strdup(res));
+			else
+				add_assign_envp(((t_db*)lst->content)->key,
+					ft_strdup(res), &process->envp);
+			ft_strdel(&res);
+		}
+		lst = lst->next;
+	}
+}
+
+static void			filename_heredoc_exp(t_core *shell, t_redir *redir)
+{
+	char			*res;
+
+	res = NULL;
+	if (!redir || !redir->op[1])
+		return ;
+	if (redir->type != 8 && redir->type != 7
+		&& (res = inhibiteurs_expansion(redir->op[1], shell)))
+	{
+		if (!*res)
+		{
+			ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n",
+				redir->op[1]);
+			shell->status = 1;
+		}
+		ft_strdel(&(redir->op[1]));
+		redir->op[1] = ft_strdup(res);
+		ft_strdel(&res);
+	}
+	if ((shell->is_interactive) && redir->heredoc
+		&& (res = inhibiteurs_expansion(redir->heredoc, shell)))
+	{
+		ft_strdel(&(redir->heredoc));
+		redir->heredoc = ft_strdup(res);
+		ft_strdel(&res);
+	}
+}
+
+static void			expansion_redir(t_core *shell, t_process *process)
+{
+	t_lst			*lst;
+
+	if (!process->redir_list || !shell)
+		return ;
+	lst = process->redir_list;
+	while (lst)
+	{
+		filename_heredoc_exp(shell, ((t_redir*)lst->content));
+		lst = lst->next;
+	}
+}
+
+void				expansion(t_core *shell, t_process *process)
 {
 	if (!process || !shell)
 		return ;
@@ -71,13 +117,13 @@ void		expansion(t_core *shell, t_process *process)
 	if (process->tok_list)
 		expansion_tok(shell, process);
 	if (process->assign_list)
-	{
-		process->status = 0;
-		shell->status = 0;
 		expansion_assign(shell, process);
-	}
 	if (process->redir_list)
 		expansion_redir(shell, process);
-	if (process->av)
-		update_last_arg(shell, process->av);
+	if (!process->av)
+	{
+		process->status = 0;
+		shell->status = (!shell->status) ? 0 : 1;
+		process->completed = TRUE;
+	}
 }

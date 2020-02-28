@@ -12,6 +12,32 @@
 
 #include "sh42.h"
 
+char			*exp_get_bquote(const char *string, int len)
+{
+	int			i;
+	char		*str;
+
+	i = 0;
+	str = NULL;
+	if (!ft_strncmp(string, "`", len))
+	{
+		i++;
+		while (string[i])
+		{
+			if (string[i] == '`')
+			{
+				i++;
+				break ;
+			}
+			i++;
+		}
+		if (!(str = ft_strsub(string, 0, i)))
+			return (NULL);
+		return (str);
+	}
+	return (NULL);
+}
+
 static char		*new_exp(const char *string, enum e_estate id)
 {
 	int					i;
@@ -68,7 +94,7 @@ enum e_estate	find_expansion(const char *str)
 
 char			*get_expansion(const char *string, enum e_estate state)
 {
-	char	*new;
+	char		*new;
 
 	new = NULL;
 	if ((new = new_exp(string, state)))

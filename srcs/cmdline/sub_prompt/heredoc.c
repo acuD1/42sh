@@ -42,6 +42,15 @@ static int8_t	check_key(t_core *shell, const char *key)
 
 static char		*stock_value(t_core *shell)
 {
+	// char	*value;
+
+	// value = NULL;
+	// shell->term.tmp_buff = ft_strjoinf(shell->term.tmp_buff, shell->term.buffer, 3);
+	// value = ft_strdup(shell->term.tmp_buff);
+	// shell->term.status = CMD_DONE;
+	// shell->term.buffer = ft_strdup(value);
+	// reset_config(shell);
+	// return (value);
 	char	*value;
 	char	*buffer;
 	int		i;
@@ -50,6 +59,7 @@ static char		*stock_value(t_core *shell)
 	buffer = ft_strdup(shell->term.tmp_buff);
 	ft_strdel(&shell->term.tmp_buff);
 	i = ft_strlen_to(buffer, NEW_LINE[0]);
+	shell->term.status = CMD_DONE;
 	value = ft_strsub(buffer, i + 1, ft_strlen(buffer) - i);
 	ft_strdel(&shell->term.buffer);
 	shell->term.buffer = ft_strsub(buffer, 0, i);
