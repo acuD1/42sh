@@ -12,38 +12,6 @@
 
 #include "sh42.h"
 
-char			*moar_format_plz(char *data, t_core *shell)
-{
-	char		**tablo;
-	int			tablen;
-
-	tablo = NULL;
-	tablen = 0;
-	if (data[ft_strlen(data) - 1] == ':')
-		return (error_moar_format_bis(data, shell));
-	if ((tablo = ft_strsplit(data, ":")))
-	{
-		tablen = ft_tablen(tablo);
-		if (tablen > 3)
-			return (error_moar_format_param(tablo, data, shell));
-		else if ((tablen == 3) && (ft_strisdigit(tablo[1]) && ft_strisdigit(tablo[2])))
-		{
-			ft_strdel(&data);
-			return (double_two_point_param(tablo, shell));
-		}
-		else if (tablen == 2)
-		{
-			ft_strdel(&data);
-			return (get_two_point_param_exp(tablo, shell));
-		}
-	}
-	ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", tablo[0]);
-	ft_tabfree(tablo);
-	ft_strdel(&data);
-	shell->status = 1;
-	return (NULL);
-}
-
 char			*simple_format(char *str, t_core *shell)
 {
 	t_db		*db_tmp;
@@ -71,7 +39,10 @@ char			*format_supplementaires(char *str, t_core *shell)
 
 	i = 0;
 	if (str[0] == ':' || str[0] == '%')
+	{
+		ft_strdel(&str);
 		return (NULL);
+	}
 	if (str[i] == '#')
 		return (length_format(str, shell));
 	while (str[i])
@@ -87,7 +58,7 @@ char			*format_supplementaires(char *str, t_core *shell)
 	return (simple_format(str, shell));
 }
 
-char		*get_brace_param(const char *str, t_core *shell)
+char		*get_brace_param(char *str, t_core *shell)
 {
 	int			i;
 	int			count;
@@ -96,26 +67,20 @@ char		*get_brace_param(const char *str, t_core *shell)
 	i = 1;
 	count = 0;
 	tmp = NULL;
-	printf("%s\n", str);
 	while (str[i++])
 	{
 		if (str[i] == '\n')
 		{
 			ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
+			ft_strdel(&str);
 			return (NULL);
 		}
-		if (str[i] == '{')
-			count++;
-		if (str[i] == '}')
-		{
-			if (count)
-				count--;
-			else
-				break ;
-		}
+		if (!check_brackets_inbracket(&count, str[i]))
+			break ;
 	}
 	if (!(tmp = ft_strsub(str, 2, i - 2)))
 		return (NULL);
+	// ft_strdel(&str);
 	return (format_supplementaires(tmp, shell));
 }
 
@@ -125,7 +90,7 @@ char			*exp_param(const char *data, t_core *shell)
 
 	tmp = NULL;
 	if (data[0] == '$' && data[1] == '{')
-		return (tmp = get_brace_param(data, shell));
+		return (get_brace_param((char*)data, shell));
 	if (data[0] == '$' && data[1])
 	{
 		tmp = ft_strsub(data, 1, ft_strlen(data) - 1);
@@ -133,3 +98,35 @@ char			*exp_param(const char *data, t_core *shell)
 	}
 	return (NULL);
 }
+
+
+// char			*exp_param(const char *data, t_core *shell)
+// {
+// 	char		*tmp;
+// 	char		*tmp2;
+
+// 	tmp = NULL;
+// 	tmp2 = NULL;
+// 	printf("#%s# \n", data);
+// 	if (data[0] == '$' && data[1] == '{')
+// 	{
+// 		if ((tmp = exp_get_bracket(data, 2)))
+// 		{
+// 			tmp2 = ft_strsub(tmp, 2, );
+// 		}
+// 		if (ft_strchr(tmp, "\n"))
+// 		{
+// 			ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
+// 			shell->status = 1;
+// 			ft_strdle(&tmp);
+// 		}
+// 		else
+// 			return (format_supplementaires(tmp, shell));
+// 	}
+// 	if (data[0] == '$' && data[1])
+// 	{
+// 		tmp = ft_strsub(data, 1, ft_strlen(data) - 1);
+// 		return (simple_format(tmp, shell));
+// 	}
+// 	return (NULL);
+// }

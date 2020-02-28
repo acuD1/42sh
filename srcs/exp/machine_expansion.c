@@ -13,7 +13,7 @@
 #include <errno.h>
 #include "sh42.h"
 
-int			check_tilde_path_exp(char *expandu, const char *str, int i, enum e_estate state)
+static int			check_tilde_path_exp(char *expandu, const char *str, int i, enum e_estate state)
 {
 	char *tmp[3];
 	int len;
@@ -41,7 +41,7 @@ int			check_tilde_path_exp(char *expandu, const char *str, int i, enum e_estate 
 	return (0);
 }
 
-void			apply_expansion(char *data, char *token, t_core *shell, t_expansion *exp)
+static void			apply_expansion(char *data, char *token, t_core *shell, t_expansion *exp)
 {
 	char		*res;
 

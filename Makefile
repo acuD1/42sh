@@ -217,20 +217,21 @@ SRC					+=	$(S_PATH)$(REDIRS)exec_redirs.c
 SRC					+=	$(S_PATH)$(REDIRS)redirs_tools.c
 SRC					+=	$(S_PATH)$(REDIRS)redirs.c
 
+SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_exp.c
+SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_param_cmds_exp.c
+SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_tilde_math_exp.c
+
+SRC					+=	$(S_PATH)$(PARAM_EXP)two_point_param.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)prefix_suffixe_format.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)param_exp.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)error_param_format.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)param_expansion.c
+
 SRC					+=	$(S_PATH)$(EXPANSIONS)assign_envp_tools.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)machine_expansion.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)expansion.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)quotes_backslash.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)tilde_cmds_math_exp.c
-
-SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_exp.c
-SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_param_cmds_exp.c
-SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_tilde_math_exp.c
-SRC					+=	$(S_PATH)$(PARAM_EXP)prefix_suffixe_format.c
-SRC					+=	$(S_PATH)$(PARAM_EXP)param_exp.c
-SRC					+=	$(S_PATH)$(PARAM_EXP)two_point_param.c
-SRC					+=	$(S_PATH)$(PARAM_EXP)error_param_format.c
-SRC					+=	$(S_PATH)$(PARAM_EXP)param_expansion.c
 
 SRC					+=	$(S_PATH)$(JOBC)background.c
 SRC					+=	$(S_PATH)$(JOBC)continue.c
@@ -248,6 +249,7 @@ SRC					+=	$(S_PATH)$(LPA)lexer_parser_analyzer.c
 
 SRC					+=	$(S_PATH)$(ANALYZER)analyze.c
 SRC					+=	$(S_PATH)$(ANALYZER)analyzer_assign.c
+SRC					+=	$(S_PATH)$(ANALYZER)analyzer_heredoc.c
 SRC					+=	$(S_PATH)$(ANALYZER)analyzer_job.c
 SRC					+=	$(S_PATH)$(ANALYZER)analyzer_memory.c
 SRC					+=	$(S_PATH)$(ANALYZER)analyzer_name.c

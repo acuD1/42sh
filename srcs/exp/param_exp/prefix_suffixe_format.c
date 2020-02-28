@@ -12,7 +12,7 @@
 
 #include "sh42.h"
 
-char		*smallest_suffix_param(char *value, char *pattern)
+static char		*smallest_suffix_param(char *value, char *pattern)
 {
 	int		pattern_size;
 
@@ -60,7 +60,7 @@ char		*suffix_format(char *data, t_core *shell)
 	return (resultat);
 }
 
-char		*smallest_prefix_param(char *value, char *pattern)
+static char		*smallest_prefix_param(char *value, char *pattern)
 {
 	int		size;
 

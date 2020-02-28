@@ -25,9 +25,7 @@ char		*check_env_key(char *key, t_core *shell)
 char		*questionmark_format(char **tablo, t_core *shell)
 {
 	char *value;
-	char *word;
 
-	word = NULL;
 	value = check_env_key(tablo[0], shell);
 	if (value && *value)
 	{
@@ -37,16 +35,17 @@ char		*questionmark_format(char **tablo, t_core *shell)
 	if (tablo[1])
 	{
 		if (tablo[1][1] == '$')
-			word = exp_param(&tablo[1][1],shell);
+			value = exp_param(&tablo[1][1], shell);
 		else
-			word = ft_strdup(&tablo[1][1]);
+			value = ft_strdup(&tablo[1][1]);
 		ft_dprintf(STDERR_FILENO,
-			"42sh: %s: %s\n", tablo[0], word);
-		ft_strdel(&word);
+			"42sh: %s: %s\n", tablo[0], value);
+		ft_strdel(&value);
 	}
 	else
 		ft_dprintf(STDERR_FILENO,
 			"42sh: %s parameter null or not set\n", tablo[0]);
+	shell->status = 1;
 	ft_tabfree(tablo);
 	return (NULL);
 }
@@ -60,6 +59,7 @@ char		*length_format(char *str, t_core *shell)
 	{
 		ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
 		ft_strdel(&str);
+		shell->status = 1;
 		return (NULL);
 	}
 	if ((db_tmp = search_db(shell->env, &str[1])))
@@ -84,9 +84,9 @@ char		*double_two_point_param(char **tablo, t_core *shell)
 	if (tmp[1])
 	{
 		flag[1] = ft_strlen(tmp[1]) - 1;
-		if ((flag[2] = ft_atoi(tablo[2])) < 0)
+		if ((flag[2] = ft_atoi(tablo[2])) < 0 || flag[2] >= flag[1])
 			flag[2] = flag[1];
-		if ((flag[0] = ft_atoi(tablo[1])) < 0)
+		if ((flag[0] = ft_atoi(tablo[1])) < 0 || flag[0] >= flag[1])
 		{
 			ft_tabfree(tablo);
 			return (NULL);

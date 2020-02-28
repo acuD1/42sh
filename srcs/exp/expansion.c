@@ -12,28 +12,10 @@
 
 #include "sh42.h"
 
-char		*inhibiteurs_expansion(char *data, t_core *shell)
+static void			expansion_tok(t_core *shell, t_process *process)
 {
-	t_expansion	*exp;
-	char *resultat;
-
-	if (!data || !*data)
-		return (NULL);
-	exp = NULL;
-	resultat = NULL;
-	exp = init_expansion_inhibiteurs(exp);
-	while (exp->st != E_END)
-		 exp = exp->biteurs[exp->st](data, shell, exp);
-	resultat = ft_strdup(exp->res);
-	ft_strdel(&exp->res);
-	free(exp);
-	return (resultat);
-}
-
-void			expansion_tok(t_core *shell, t_process *process)
-{
-	t_lst	*lst;
-	char	*res;
+	t_lst			*lst;
+	char			*res;
 
 	if (!process->tok_list || !shell)
 		return ;
@@ -46,7 +28,8 @@ void			expansion_tok(t_core *shell, t_process *process)
 			res = inhibiteurs_expansion(((t_token*)lst->content)->data, shell);
 			if (*res)
 				process->av = ft_add_arg_cmd_process(process->av, res);
-			else if (!*res && (ft_strchr(((t_token*)lst->content)->data, '\'') || ft_strchr(((t_token*)lst->content)->data, '\"')))
+			else if (!*res &&(ft_strchr(((t_token*)lst->content)->data, '\'')
+				|| ft_strchr(((t_token*)lst->content)->data, '\"')))
 				process->av = ft_add_arg_cmd_process(process->av, res);
 			if (!lst->next)
 				process->envp = add_underscore_envp(process->envp, res);
@@ -57,10 +40,10 @@ void			expansion_tok(t_core *shell, t_process *process)
 	ft_freetokenlist(&process->tok_list);
 }
 
-void			expansion_assign(t_core *shell, t_process *process)
+static void			expansion_assign(t_core *shell, t_process *process)
 {
-	t_lst	*lst;
-	char	*res;
+	t_lst			*lst;
+	char			*res;
 
 	if (!process->assign_list || !shell)
 		return ;
@@ -81,38 +64,48 @@ void			expansion_assign(t_core *shell, t_process *process)
 	}
 }
 
-void			expansion_redir(t_core *shell, t_process *process)
+static void			filename_heredoc_exp(t_core *shell, t_redir *redir)
 {
-	t_lst	*lst;
-	char	*res;
+	char			*res;
+
+	res = NULL;
+	if (!redir || !redir->op[1])
+		return ;
+	if (redir->type != 8 && redir->type != 7 && (res = inhibiteurs_expansion(redir->op[1], shell)))
+	{
+		if (!*res)
+		{
+			ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n", redir->op[1]);
+			shell->status = 1;
+		}
+		ft_strdel(&(redir->op[1]));
+		redir->op[1] = ft_strdup(res);
+		ft_strdel(&res);
+	}
+	if ((shell->mode & I_MODE) && redir->heredoc 
+		&& (res = inhibiteurs_expansion(redir->heredoc, shell)))
+	{
+		ft_strdel(&(redir->heredoc));
+		redir->heredoc = ft_strdup(res);
+		ft_strdel(&res);
+	}
+}
+
+static void			expansion_redir(t_core *shell, t_process *process)
+{
+	t_lst			*lst;
 
 	if (!process->redir_list || !shell)
 		return ;
 	lst = process->redir_list;
-	res = NULL;
 	while (lst)
 	{
-		if (((t_redir*)lst->content)->op[1] && (((t_redir*)lst->content)->type != 8 && ((t_redir*)lst->content)->type != 7)
-			&& (res = inhibiteurs_expansion(((t_redir*)lst->content)->op[1], shell)))
-		{
-			if (!*res)
-				ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n", ((t_redir*)lst->content)->op[1]);
-			ft_strdel(&(((t_redir*)lst->content)->op[1]));
-			((t_redir*)lst->content)->op[1] = ft_strdup(res);
-			ft_strdel(&res);
-		}
-		if ((shell->mode & I_MODE) && ((t_redir*)lst->content)->heredoc 
-			&& (res = inhibiteurs_expansion(((t_redir*)lst->content)->heredoc, shell)))
-		{
-			ft_strdel(&(((t_redir*)lst->content)->heredoc));
-			((t_redir*)lst->content)->heredoc = ft_strdup(res);
-			ft_strdel(&res);
-		}
+		filename_heredoc_exp(shell, ((t_redir*)lst->content));
 		lst = lst->next;
 	}
 }
 
-void		expansion(t_core *shell, t_process *process)
+void				expansion(t_core *shell, t_process *process)
 {
 	if (!process || !shell)
 		return ;

@@ -21,10 +21,10 @@ int8_t			add_assign_env(t_core *shell, const char *key, char *value)
 	return (TRUE);
 }
 
-void		add_assign_envp(const char *key, char *value, char ***envp)
+void			add_assign_envp(const char *key, char *value, char ***envp)
 {
-	char	*tmp;
-	char	**tablo;
+	char		*tmp;
+	char		**tablo;
 
 	tmp = NULL;
 	tablo = *envp;
@@ -53,7 +53,7 @@ char			**add_underscore_envp(char **envp, char *data)
 	return (envp);
 }
 
-u_int8_t	is_expansion(enum e_estate id)
+u_int8_t		is_expansion(enum e_estate id)
 {
 	if (id == E_TILDEP)
 		return (1);
@@ -78,7 +78,7 @@ u_int8_t	is_expansion(enum e_estate id)
 	return (0);
 }
 
-t_expansion	*init_expansion_inhibiteurs(t_expansion *exp)
+t_expansion		*init_expansion_inhibiteurs(t_expansion *exp)
 {
 	if (!(exp = (t_expansion*)malloc(sizeof(t_expansion))))
 		return (NULL);

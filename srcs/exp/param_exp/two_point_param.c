@@ -105,7 +105,39 @@ char		*underniercaspourlaroute(char **tablo, t_core *shell)
 	return (NULL);
 }
 
-char		*get_two_point_exp_param(char **tablo, t_core *shell)
+char			*moar_format_plz(char *data, t_core *shell)
+{
+	char		**tablo;
+	int			tablen;
+
+	tablo = NULL;
+	tablen = 0;
+	if (data[ft_strlen(data) - 1] == ':')
+		return (error_moar_format_bis(data, shell));
+	if ((tablo = ft_strsplit(data, ":")))
+	{
+		tablen = ft_tablen(tablo);
+		if (tablen > 3)
+			return (error_moar_format_param(tablo, data, shell));
+		else if ((tablen == 3) && ft_strisdigit(tablo[1]) && ft_strisdigit(tablo[2]))
+		{
+			ft_strdel(&data);
+			return (double_two_point_param(tablo, shell));
+		}
+		else if (tablen == 2)
+		{
+			ft_strdel(&data);
+			return (get_two_point_param_exp(tablo, shell));
+		}
+	}
+	ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", tablo[0]);
+	ft_tabfree(tablo);
+	ft_strdel(&data);
+	shell->status = 1;
+	return (NULL);
+}
+
+char		*get_two_point_param_exp(char **tablo, t_core *shell)
 {
 	if (tablo[1][0] == '-')
 		return (dash_format(tablo, shell));

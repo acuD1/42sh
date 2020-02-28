@@ -12,32 +12,6 @@
 
 #include "sh42.h"
 
-char			*exp_get_bquote(const char *string, int len)
-{
-	int		i;
-	char	*str;
-
-	i = 0;
-	str = NULL;
-	if (!ft_strncmp(string, "`", len))
-	{
-		i++;
-		while (string[i])
-		{
-			if (string[i] == '`')
-			{
-				i++;
-				break ;
-			}
-			i++;
-		}
-		if (!(str = ft_strsub(string, 0, i)))
-			return (NULL);
-		return (str);
-	}
-	return (NULL);
-}
-
 char			*exp_get_paren(const char *string, int len)
 {
 	char	*str;
@@ -61,11 +35,25 @@ char			*exp_get_paren(const char *string, int len)
 	return (NULL);
 }
 
+int		check_brackets_inbracket(int *count, char c)
+{
+	if (c == '{')
+		*count += 1;
+	if (c == '}')
+	{
+		if (*count)
+			*count -= 1;
+		else
+			return (0);
+	}
+	return (1);
+}
+
 char			*exp_get_bracket(const char *string, int len)
 {
-	char	*str;
-	int		index;
-	int		count; 
+	char		*str;
+	int			index;
+	int			count; 
 
 	index = 0;
 	count = 0;
@@ -75,20 +63,8 @@ char			*exp_get_bracket(const char *string, int len)
 		index = len;
 		while (string[index])
 		{
-			if (string[index] == '\n')
-			{
-				ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", string);
-				return (NULL);
-			}
-			if (string[index] == '{')
-				count++;
-			if (string[index] == '}')
-			{
-				if (count)
-					count--;
-				else
-					break ;
-			}
+			if (!check_brackets_inbracket(&count, string[index]))
+				break ;
 			index++;
 		}
 		index++;

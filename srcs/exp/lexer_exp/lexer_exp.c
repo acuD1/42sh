@@ -12,10 +12,36 @@
 
 #include "sh42.h"
 
+char			*exp_get_bquote(const char *string, int len)
+{
+	int			i;
+	char		*str;
+
+	i = 0;
+	str = NULL;
+	if (!ft_strncmp(string, "`", len))
+	{
+		i++;
+		while (string[i])
+		{
+			if (string[i] == '`')
+			{
+				i++;
+				break ;
+			}
+			i++;
+		}
+		if (!(str = ft_strsub(string, 0, i)))
+			return (NULL);
+		return (str);
+	}
+	return (NULL);
+}
+
 static char		*new_exp(const char *string, enum e_estate id)
 {
-	int					i;
-	char				*new;
+	int			i;
+	char		*new;
 	static t_lex_exp	lex_pex[] = {
 		{exp_get_bquote, E_BQUOTE, 1},
 		{exp_get_tildep, E_TILDEP, 2},
@@ -42,7 +68,7 @@ static char		*new_exp(const char *string, enum e_estate id)
 
 enum e_estate	find_expansion(const char *str)
 {
-	int					i;
+	int			i;
 	const t_exp_token	exp[] = {
 		{E_BQUOTE, "`", 1},
 		{E_TILDEP, "~+", 2},
@@ -68,7 +94,7 @@ enum e_estate	find_expansion(const char *str)
 
 char			*get_expansion(const char *string, enum e_estate state)
 {
-	char	*new;
+	char		*new;
 
 	new = NULL;
 	if ((new = new_exp(string, state)))
