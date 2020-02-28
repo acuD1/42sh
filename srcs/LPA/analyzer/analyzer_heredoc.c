@@ -12,10 +12,10 @@
 
 #include "sh42.h"
 
-char		*inhibiteurs_expansion(char *data, t_core *shell)
+char				*inhibiteurs_expansion(char *data, t_core *shell)
 {
-	t_expansion	*exp;
-	char *resultat;
+	t_expansion		*exp;
+	char			*resultat;
 
 	if (!data || !*data)
 		return (NULL);
@@ -23,24 +23,22 @@ char		*inhibiteurs_expansion(char *data, t_core *shell)
 	resultat = NULL;
 	exp = init_expansion_inhibiteurs(exp);
 	while (exp->st != E_END)
-		 exp = exp->biteurs[exp->st](data, shell, exp);
+		exp = exp->biteurs[exp->st](data, shell, exp);
 	resultat = ft_strdup(exp->res);
 	ft_strdel(&exp->res);
 	free(exp);
 	return (resultat);
 }
 
-char		*quote_backslash_discarder(char *data)
+char				*heredoc_inhib(char *data)
 {
 	char			*res;
-	char			*tmp;
 	int				index;
 	enum e_estate	st;
 
 	st = NB_EXPANSION_STATE;
 	if (!data)
 		return (NULL);
-	tmp = NULL;
 	res = NULL;
 	index = 0;
 	while (data[index])
@@ -50,19 +48,13 @@ char		*quote_backslash_discarder(char *data)
 		st = skip_recur_quote(data, &index, st);
 		if (!data[index])
 			break ;
-		if (res)
-		{
-			tmp = ft_strsub(data, index, 1);
-			res = ft_strjoinf(res, tmp, 4);
-		}
-		else
-			res = ft_strsub(data, index, 1);
+		res = join_one_char(res, data, index);
 		index++;
 	}
 	return (res);
 }
 
-t_analyzer	*load_heredoc_fromline(t_analyzer *anal, t_core *shell)
+t_analyzer			*load_heredoc_fromline(t_analyzer *anal, t_core *shell)
 {
 	anal->redir.type = ((t_token*)anal->lexer->content)->id;
 	anal->lexer = anal->lexer->next;
@@ -70,18 +62,18 @@ t_analyzer	*load_heredoc_fromline(t_analyzer *anal, t_core *shell)
 	anal->lexer = anal->lexer->next;
 	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
 	anal->redir.op[1] = ft_strdup(((t_token*)anal->lexer->content)->data);
-	// anal->redir.op[1] = quote_backslash_discarder(((t_token*)anal->lexer->content)->data);
 	anal->redir.heredoc = ft_strjoin(anal->redir.op[1], "\n");
 	anal->state = A_WORD;
 	return (anal = redir_analyze(anal, shell));
 }
 
-t_analyzer	*load_heredoc_noimode(t_analyzer *anal, t_core *shell)
+t_analyzer			*load_heredoc_noimode(t_analyzer *anal, t_core *shell)
 {
-	char	*line;
+	char			*line;
 
 	line = NULL;
-	while (ft_getnextline(STDIN_FILENO, &line) > 0 && ft_strcmp(line, anal->redir.op[1]) != 0)
+	while (ft_getnextline(STDIN_FILENO, &line) > 0
+		&& ft_strcmp(line, anal->redir.op[1]) != 0)
 	{
 		if (!anal->redir.heredoc)
 		{
@@ -97,9 +89,9 @@ t_analyzer	*load_heredoc_noimode(t_analyzer *anal, t_core *shell)
 	return (anal);
 }
 
-t_analyzer	*heredoc_analyzer(t_analyzer *anal, t_core *shell)
+t_analyzer			*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 {
-	anal->redir.op[1] = quote_backslash_discarder(((t_token*)anal->lexer->content)->data);
+	anal->redir.op[1] = heredoc_inhib(((t_token*)anal->lexer->content)->data);
 	if (shell->mode & I_MODE)
 		anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
 	else

@@ -12,7 +12,7 @@
 
 #include "sh42.h"
 
-void			free_koulchi(t_analyzer *anal)
+void		free_koulchi(t_analyzer *anal)
 {
 	if (anal->redir.op[0])
 		ft_strdel(&anal->redir.op[0]);
@@ -38,7 +38,7 @@ void			free_koulchi(t_analyzer *anal)
 		free_process_list(&anal->process_list);
 }
 
-t_analyzer		*exit_lpa(t_analyzer *anal, t_core *shell)
+t_analyzer	*exit_lpa(t_analyzer *anal, t_core *shell)
 {
 	free_koulchi(anal);
 	if (anal->job.command)

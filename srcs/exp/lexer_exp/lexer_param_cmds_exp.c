@@ -35,7 +35,7 @@ char			*exp_get_paren(const char *string, int len)
 	return (NULL);
 }
 
-int		check_brackets_inbracket(int *count, char c)
+int				check_brackets_inbracket(int *count, char c)
 {
 	if (c == '{')
 		*count += 1;
@@ -53,7 +53,7 @@ char			*exp_get_bracket(const char *string, int len)
 {
 	char		*str;
 	int			index;
-	int			count; 
+	int			count;
 
 	index = 0;
 	count = 0;

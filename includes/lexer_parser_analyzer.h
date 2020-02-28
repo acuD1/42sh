@@ -51,6 +51,7 @@ void		free_process_list(t_lst **head);
 void		ft_free_redirlist(t_lst **head);
 char		*fill_cmd_job(t_lst *tok_lst, char *cmd);
 char		**ft_add_arg_cmd_process(char **tablo, const char *str);
+char		*join_one_char(char *dst, char *str, int index);
 
 /*
 **	PARSER

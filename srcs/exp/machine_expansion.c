@@ -13,11 +13,12 @@
 #include <errno.h>
 #include "sh42.h"
 
-static int			check_tilde_path_exp(char *expandu, const char *str, int i, enum e_estate state)
+static int			check_tilde_path_exp(char *expandu,
+	const char *str, int i, enum e_estate state)
 {
-	char *tmp[3];
-	int len;
-	int exp_size;
+	char			*tmp[3];
+	int				len;
+	int				exp_size;
 
 	tmp[0] = NULL;
 	tmp[2] = NULL;
@@ -41,9 +42,10 @@ static int			check_tilde_path_exp(char *expandu, const char *str, int i, enum e_
 	return (0);
 }
 
-static void			apply_expansion(char *data, char *token, t_core *shell, t_expansion *exp)
+static void			apply_expansion(char *data,
+	char *token, t_core *shell, t_expansion *exp)
 {
-	char		*res;
+	char			*res;
 
 	res = NULL;
 	if ((res = exp->sionat[exp->erience](token, shell)))
@@ -59,7 +61,7 @@ static void			apply_expansion(char *data, char *token, t_core *shell, t_expansio
 	}
 }
 
-t_expansion 	*exp_biteurs(char *data, t_core *shell, t_expansion *exp)
+t_expansion			*exp_biteurs(char *data, t_core *shell, t_expansion *exp)
 {
 	char			*exp_tok;
 
@@ -81,9 +83,9 @@ t_expansion 	*exp_biteurs(char *data, t_core *shell, t_expansion *exp)
 	return (exp);
 }
 
-t_expansion 	*word_biteurs(char *data, t_core *shell, t_expansion *exp)
+t_expansion			*word_biteurs(char *data, t_core *shell, t_expansion *exp)
 {
-	char *tmp;
+	char			*tmp;
 
 	if (!data[exp->index])
 	{
@@ -98,7 +100,7 @@ t_expansion 	*word_biteurs(char *data, t_core *shell, t_expansion *exp)
 	return (exp);
 }
 
-t_expansion 	*start_biteurs(char *data, t_core *shell, t_expansion *exp)
+t_expansion			*start_biteurs(char *data, t_core *shell, t_expansion *exp)
 {
 	if (!data[exp->index])
 		exp->st = E_END;
@@ -108,7 +110,8 @@ t_expansion 	*start_biteurs(char *data, t_core *shell, t_expansion *exp)
 		&& (data[exp->index] == '\'' || data[exp->index] == '\"'))
 		exp->st = E_QUOTES;
 	else if ((!exp->discarded && exp->quotus != E_QUOTE)
-		&& ((data[exp->index] == '$' || data[exp->index] == '~' || data[exp->index] == '`')))
+		&& ((data[exp->index] == '$' || data[exp->index] == '~'
+			|| data[exp->index] == '`')))
 		exp->st = E_EXP;
 	else
 		exp->st = E_WORD;
@@ -116,4 +119,3 @@ t_expansion 	*start_biteurs(char *data, t_core *shell, t_expansion *exp)
 	(void)shell;
 	return (exp);
 }
-

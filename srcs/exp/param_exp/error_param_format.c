@@ -12,7 +12,7 @@
 
 #include "sh42.h"
 
-char	*error_moar_format_third(char **tablo, char *data, t_core *shell)
+char		*error_moar_format_third(char **tablo, char *data, t_core *shell)
 {
 	ft_dprintf(STDERR_FILENO,
 		"42sh: %s: %s  syntax error: operand expected\
@@ -23,7 +23,7 @@ char	*error_moar_format_third(char **tablo, char *data, t_core *shell)
 	return (NULL);
 }
 
-char	*error_moar_format_bis(char *data, t_core *shell)
+char		*error_moar_format_bis(char *data, t_core *shell)
 {
 	ft_dprintf(STDERR_FILENO,
 		"42sh: %s  syntax error: operand expected\
@@ -33,7 +33,16 @@ char	*error_moar_format_bis(char *data, t_core *shell)
 	return (NULL);
 }
 
-char	*error_moar_format_param(char **tablo, char *data, t_core *shell)
+char		*one_moar_error(char **tablo, char *data, t_core *shell)
+{
+	ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", tablo[0]);
+	ft_tabfree(tablo);
+	ft_strdel(&data);
+	shell->status = 1;
+	return (NULL);
+}
+
+char		*error_moar_format_param(char **tablo, char *data, t_core *shell)
 {
 	ft_dprintf(STDERR_FILENO,
 		"42sh: %s  syntax error: operand expected (error token is \"%s\")\n",
@@ -43,4 +52,27 @@ char	*error_moar_format_param(char **tablo, char *data, t_core *shell)
 	ft_strdel(&data);
 	shell->status = 1;
 	return (NULL);
+}
+
+char		*dash_format(char **tablo, t_core *shell)
+{
+	char	*value;
+	int		i;
+
+	i = 1;
+	value = NULL;
+	if ((value = check_env_key(tablo[0], shell)))
+	{
+		ft_tabfree(tablo);
+		return (ft_strdup(value));
+	}
+	if (tablo[1])
+	{
+		if (tablo[1][1] == '$')
+			value = exp_param(&tablo[1][1], shell);
+		else
+			value = ft_strdup(&tablo[1][1]);
+	}
+	ft_tabfree(tablo);
+	return (value);
 }

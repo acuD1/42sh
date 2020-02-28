@@ -64,7 +64,8 @@ int				get_word_size_ntype(int i, char *str)
 	while (str[index])
 	{
 		check_all_quotes(str, &index);
-		if ((index >= 1 && str[index - 1] != '\\') && ft_strchr(CHAR_INTERRUPT, str[index]))
+		if ((index >= 1 && str[index - 1] != '\\')
+			&& ft_strchr(CHAR_INTERRUPT, str[index]))
 			break ;
 		index++;
 	}

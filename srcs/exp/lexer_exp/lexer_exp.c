@@ -40,8 +40,8 @@ char			*exp_get_bquote(const char *string, int len)
 
 static char		*new_exp(const char *string, enum e_estate id)
 {
-	int			i;
-	char		*new;
+	int					i;
+	char				*new;
 	static t_lex_exp	lex_pex[] = {
 		{exp_get_bquote, E_BQUOTE, 1},
 		{exp_get_tildep, E_TILDEP, 2},
@@ -68,7 +68,7 @@ static char		*new_exp(const char *string, enum e_estate id)
 
 enum e_estate	find_expansion(const char *str)
 {
-	int			i;
+	int					i;
 	const t_exp_token	exp[] = {
 		{E_BQUOTE, "`", 1},
 		{E_TILDEP, "~+", 2},

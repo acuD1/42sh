@@ -22,7 +22,8 @@ int				filename_checker(t_lst *lst)
 		lst = lst->next;
 	id = ((t_token*)lst->content)->id;
 	if (id == P_DLESSDASH || id == P_DLESS || id == P_LESS
-		|| id == P_LESSAND || id == P_DGREAT || id == P_GREATAND || id == P_GREAT)
+		|| id == P_LESSAND || id == P_DGREAT
+		|| id == P_GREATAND || id == P_GREAT)
 		return (0);
 	return (1);
 }

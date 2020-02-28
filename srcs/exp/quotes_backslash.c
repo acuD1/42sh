@@ -20,7 +20,6 @@ enum e_estate	skip_recur_quote(char *str, int *index, enum e_estate st)
 		return (st);
 	if (str[*index] == '\"' && (st == E_DBQUOTE || st == NB_EXPANSION_STATE))
 	{
-
 		if (st == E_DBQUOTE)
 			st = NB_EXPANSION_STATE;
 		else if (st == NB_EXPANSION_STATE)
@@ -44,7 +43,8 @@ enum e_estate	skip_recur_quote(char *str, int *index, enum e_estate st)
 
 enum e_estate	skip_quotes(char *str, t_expansion *exp)
 {
-	if (str[exp->index] == '\"' && (exp->quotus == E_DBQUOTE || exp->quotus == NB_EXPANSION_STATE))
+	if (str[exp->index] == '\"'
+		&& (exp->quotus == E_DBQUOTE || exp->quotus == NB_EXPANSION_STATE))
 	{
 		if (exp->quotus == E_DBQUOTE)
 			exp->quotus = NB_EXPANSION_STATE;
@@ -53,7 +53,8 @@ enum e_estate	skip_quotes(char *str, t_expansion *exp)
 		if (str[exp->index] == '\"')
 			exp->index += 1;
 	}
-	else if (str[exp->index] == '\'' && (exp->quotus == E_QUOTE || exp->quotus == NB_EXPANSION_STATE))
+	else if (str[exp->index] == '\''
+		&& (exp->quotus == E_QUOTE || exp->quotus == NB_EXPANSION_STATE))
 	{
 		if (exp->quotus == E_QUOTE)
 			exp->quotus = NB_EXPANSION_STATE;
@@ -65,12 +66,12 @@ enum e_estate	skip_quotes(char *str, t_expansion *exp)
 	return (exp->quotus);
 }
 
-int		discard_backslash(const char *data, int *i, char **res)
+int				discard_backslash(const char *data, int *i, char **res)
 {
-	int		backslash_nbr;
-	int		index;
-	int		ret;
-	char	*tmp;
+	int			backslash_nbr;
+	int			index;
+	int			ret;
+	char		*tmp;
 
 	index = *i;
 	backslash_nbr = 0;
@@ -94,7 +95,7 @@ int		discard_backslash(const char *data, int *i, char **res)
 	return (ret);
 }
 
-t_expansion 	*quotes_biteurs(char *data, t_core *shell, t_expansion *exp)
+t_expansion		*quotes_biteurs(char *data, t_core *shell, t_expansion *exp)
 {
 	exp->quotus = skip_quotes(data, exp);
 	exp->st = (!data[exp->index]) ? E_END : E_START;
@@ -102,10 +103,10 @@ t_expansion 	*quotes_biteurs(char *data, t_core *shell, t_expansion *exp)
 	return (exp);
 }
 
-t_expansion 	*discard_biteurs(char *data, t_core *shell, t_expansion *exp)
+t_expansion		*discard_biteurs(char *dt, t_core *shell, t_expansion *exp)
 {
 	(void)shell;
-	exp->discarded = discard_backslash(data, &(exp->index), &(exp->res));
-	exp->st = (!data[exp->index]) ? E_END : E_START;
+	exp->discarded = discard_backslash(dt, &(exp->index), &(exp->res));
+	exp->st = (!dt[exp->index]) ? E_END : E_START;
 	return (exp);
 }

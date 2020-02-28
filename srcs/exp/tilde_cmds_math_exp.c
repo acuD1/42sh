@@ -54,7 +54,7 @@ char	*exp_cmd_subs(const char *data, t_core *shell)
 	return (ft_strdup(data));
 }
 
-int 			quotes_condition(char c, enum e_estate state)
+int		quotes_condition(char c, enum e_estate state)
 {
 	if ((c == '\"' && state == E_QUOTE) || (c == '\'' && state == E_DBQUOTE))
 		return (0);

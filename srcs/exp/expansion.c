@@ -28,7 +28,7 @@ static void			expansion_tok(t_core *shell, t_process *process)
 			res = inhibiteurs_expansion(((t_token*)lst->content)->data, shell);
 			if (*res)
 				process->av = ft_add_arg_cmd_process(process->av, res);
-			else if (!*res &&(ft_strchr(((t_token*)lst->content)->data, '\'')
+			else if (!*res && (ft_strchr(((t_token*)lst->content)->data, '\'')
 				|| ft_strchr(((t_token*)lst->content)->data, '\"')))
 				process->av = ft_add_arg_cmd_process(process->av, res);
 			if (!lst->next)
@@ -55,9 +55,11 @@ static void			expansion_assign(t_core *shell, t_process *process)
 		{
 			res = inhibiteurs_expansion(((t_token*)lst->content)->data, shell);
 			if (!process->av)
-				add_assign_env(shell, ((t_db*)lst->content)->key, ft_strdup(res));
+				add_assign_env(shell, ((t_db*)lst->content)->key,
+					ft_strdup(res));
 			else
-				add_assign_envp(((t_db*)lst->content)->key, ft_strdup(res), &process->envp);
+				add_assign_envp(((t_db*)lst->content)->key,
+					ft_strdup(res), &process->envp);
 			ft_strdel(&res);
 		}
 		lst = lst->next;
@@ -71,18 +73,20 @@ static void			filename_heredoc_exp(t_core *shell, t_redir *redir)
 	res = NULL;
 	if (!redir || !redir->op[1])
 		return ;
-	if (redir->type != 8 && redir->type != 7 && (res = inhibiteurs_expansion(redir->op[1], shell)))
+	if (redir->type != 8 && redir->type != 7
+		&& (res = inhibiteurs_expansion(redir->op[1], shell)))
 	{
 		if (!*res)
 		{
-			ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n", redir->op[1]);
+			ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n",
+				redir->op[1]);
 			shell->status = 1;
 		}
 		ft_strdel(&(redir->op[1]));
 		redir->op[1] = ft_strdup(res);
 		ft_strdel(&res);
 	}
-	if ((shell->mode & I_MODE) && redir->heredoc 
+	if ((shell->mode & I_MODE) && redir->heredoc
 		&& (res = inhibiteurs_expansion(redir->heredoc, shell)))
 	{
 		ft_strdel(&(redir->heredoc));

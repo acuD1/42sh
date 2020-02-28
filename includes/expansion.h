@@ -58,7 +58,7 @@ t_expansion 	*exp_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion 	*word_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion 	*start_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion 	*quotes_biteurs(char *data, t_core *shell, t_expansion *exp);
-t_expansion 	*discard_biteurs(char *data, t_core *shell, t_expansion *exp);
+t_expansion 	*discard_biteurs(char *dt, t_core *shell, t_expansion *exp);
 
 /*
 **	PARAM_EXPANSION
@@ -87,4 +87,5 @@ char			*check_env_key(char *key, t_core *shell);
 char			*error_moar_format_third(char **tablo, char *data, t_core *shell);
 char			*error_moar_format_bis(char *data, t_core *shell);
 char			*error_moar_format_param(char **tablo, char *data, t_core *shell);
+char			*one_moar_error(char **tablo, char *data, t_core *shell);
 #endif

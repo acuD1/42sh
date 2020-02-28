@@ -12,32 +12,9 @@
 
 #include "sh42.h"
 
-char		*dash_format(char **tablo, t_core *shell)
+char			*plus_format(char **tablo, t_core *shell)
 {
-	char	*value;
-	int		i;
-
-	i = 1;
-	value = NULL;
-	if ((value = check_env_key(tablo[0], shell)))
-	{
-		ft_tabfree(tablo);
-		return (ft_strdup(value));
-	}
-	if (tablo[1])
-	{
-		if (tablo[1][1] == '$')
-			value = exp_param(&tablo[1][1], shell);
-		else
-			value = ft_strdup(&tablo[1][1]);
-	}
-	ft_tabfree(tablo);
-	return (value);
-}
-
-char		*plus_format(char **tablo, t_core *shell)
-{
-	char	*value;
+	char		*value;
 
 	value = NULL;
 	if ((check_env_key(tablo[0], shell)))
@@ -53,11 +30,11 @@ char		*plus_format(char **tablo, t_core *shell)
 	return (NULL);
 }
 
-char		*egal_format(char **tablo, t_core *shell)
+char			*egal_format(char **tablo, t_core *shell)
 {
-	char	*value;
-	char	*word;
-	int		i;
+	char		*value;
+	char		*word;
+	int			i;
 
 	i = 1;
 	word = NULL;
@@ -79,16 +56,15 @@ char		*egal_format(char **tablo, t_core *shell)
 	return (value);
 }
 
-char		*underniercaspourlaroute(char **tablo, t_core *shell)
+char			*underniercaspourlaroute(char **tablo, t_core *shell)
 {
-	char	*value;
-	char	*word;
+	char		*value;
+	char		*word;
 
 	value = NULL;
 	word = NULL;
 	if ((value = check_env_key(tablo[0], shell)))
 	{
-
 		if (tablo[1][1] == '$')
 			value = exp_param(&tablo[1][1], shell);
 		else
@@ -119,7 +95,8 @@ char			*moar_format_plz(char *data, t_core *shell)
 		tablen = ft_tablen(tablo);
 		if (tablen > 3)
 			return (error_moar_format_param(tablo, data, shell));
-		else if ((tablen == 3) && ft_strisdigit(tablo[1]) && ft_strisdigit(tablo[2]))
+		else if ((tablen == 3)
+			&& ft_strisdigit(tablo[1]) && ft_strisdigit(tablo[2]))
 		{
 			ft_strdel(&data);
 			return (double_two_point_param(tablo, shell));
@@ -130,14 +107,10 @@ char			*moar_format_plz(char *data, t_core *shell)
 			return (get_two_point_param_exp(tablo, shell));
 		}
 	}
-	ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", tablo[0]);
-	ft_tabfree(tablo);
-	ft_strdel(&data);
-	shell->status = 1;
-	return (NULL);
+	return (one_moar_error(tablo, data, shell));
 }
 
-char		*get_two_point_param_exp(char **tablo, t_core *shell)
+char			*get_two_point_param_exp(char **tablo, t_core *shell)
 {
 	if (tablo[1][0] == '-')
 		return (dash_format(tablo, shell));
