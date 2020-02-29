@@ -26,26 +26,26 @@ char		*questionmark_format(char **tablo, t_core *shell)
 {
 	char *value;
 
-	value = check_env_key(tablo[0], shell);
-	printf("#%s#\n", value);
-	if (value)
+	if ((value = check_env_key(tablo[0], shell)))
 	{
-		ft_tabfree(tablo);
-		return (ft_strdup(value));
+		if (*value == '\0')
+			ft_dprintf(STDERR_FILENO,
+				"42sh: %s parameter null or not set\n", tablo[0]);
+		else
+		{
+			ft_tabfree(tablo);
+			return (ft_strdup(value));
+		}
 	}
-	if (value && tablo[1])
+	else
 	{
 		if (tablo[1][1] == '$')
 			value = exp_param(&tablo[1][1], shell);
 		else
 			value = ft_strdup(&tablo[1][1]);
-		ft_dprintf(STDERR_FILENO,
-			"42sh: %s: %s", tablo[0], value);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: %s\n", tablo[0], value);
 		ft_strdel(&value);
 	}
-	if (!*value || !value)
-		ft_dprintf(STDERR_FILENO,
-			"42sh: %s parameter null or not set\n", tablo[0]);
 	shell->status = 1;
 	ft_tabfree(tablo);
 	return (NULL);

@@ -46,7 +46,7 @@ int8_t			set_env(t_core *shell, char **argv, char **environ)
 	size_t	i;
 
 	i = 0;
-	// WTF ?
+	// WTF ? MAIS DE FOU WTF ?
 	fetch_db(&shell->db, "OLDPWD", EXPORT_VAR);
 	ft_strdel(&(shell->db.value));
 	ft_lstappend(&shell->env, ft_lstnew(&(shell->db), sizeof(t_db)));

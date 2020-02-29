@@ -29,7 +29,7 @@ static void		erase_line(t_core *shell)
 			shell->heredoc = 0;
 		ft_strdel(&shell->term.buffer);
 		shell->term.buffer = ft_strdup(shell->term.tmp_buff);
-		save_history(&shell->term);;
+		save_history(&shell->term);
 		ft_strdel(&shell->term.buffer);
 		shell->term.buffer = ft_memalloc(BUFF_SIZE);
 		shell->term.status = CMD_PROMPT;

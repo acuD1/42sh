@@ -62,7 +62,7 @@
 # define PS1					"'42sh-0.1$ '"
 # define PS2					"'> '"
 # define BUFF_SIZE				4096
-# define READ_SIZE				8
+# define READ_SIZE				64
 # define QUOTE					'\''
 # define DQUOTE					'\"'
 # define BQUOTE					'`'
