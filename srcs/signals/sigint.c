@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/29 14:33:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/29 14:41:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void			sigint_handler(int signum)
 	shell = get_core(NULL);
 	signal(SIGINT, sigint_handler);
 	shell->status = 128 + signum;
-	write(STDERR_FILENO, "\n", 1);
+	ft_dprintf(STDERR_FILENO, "^C\n");
 	update_exit_status(shell);
 	erase_line(shell);
 }
