@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/15 15:33:14 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/29 14:17:51 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void		insert_in_buffer(const char *buff, t_read *term)
 	if (term->x_index >= BUFF_SIZE)
 	{
 		increase_len = ft_strlen(term->buffer) + READ_SIZE;
-		term->buffer = realloc(term->buffer, increase_len);
+		term->buffer = ft_realloc(term->buffer, increase_len);
 	}
 	if (ft_strlen(buff) > 1)
 	{

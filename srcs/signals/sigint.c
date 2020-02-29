@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/26 18:42:23 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/29 14:33:06 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@ static void		erase_line(t_core *shell)
 {
 	if (shell->term.status == CMD_PROMPT)
 	{
-		while (shell->term.x_index < shell->term.width)
-			move_right(shell->term.buffer, &(shell->term));
+		goto_prompt(&shell->term);
 		ft_strdel(&shell->term.buffer);
+		ft_strdel(&shell->term.tmp_buff);
 		shell->term.buffer = ft_memalloc(BUFF_SIZE);
-		display_prompt(&(shell->term));
 	}
 	else if (shell->term.status == CMD_SUBPROMPT)
 	{
@@ -29,9 +28,7 @@ static void		erase_line(t_core *shell)
 			shell->heredoc = 0;
 		ft_strdel(&shell->term.buffer);
 		shell->term.buffer = ft_strdup(shell->term.tmp_buff);
-		save_history(&shell->term);;
-		// ft_printf("{%s{\n", shell->term.tmp_buff);
-		// ft_strdel(&shell->term.tmp_buff);
+		save_history(&shell->term);
 		ft_strdel(&shell->term.buffer);
 		shell->term.buffer = ft_memalloc(BUFF_SIZE);
 		shell->term.status = CMD_PROMPT;
