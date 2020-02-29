@@ -6,16 +6,16 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/21 18:09:17 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:46:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-u_int8_t check_backslash_nbr(char *str, int *index)
+u_int8_t		check_backslash_nbr(char *str, int *index)
 {
-	int i;
-	int nbr;
+	int		i;
+	int		nbr;
 
 	i = *index;
 	nbr = 0;
@@ -50,7 +50,7 @@ static u_int8_t	goto_next_quote(char *buffer, char quote_type, int *i)
 	return (FALSE);
 }
 
-static char			set_quote_type(char quote)
+static char		set_quote_type(char quote)
 {
 	if (quote == QUOTE || quote == DQUOTE || quote == BQUOTE)
 		return (quote);
@@ -59,7 +59,7 @@ static char			set_quote_type(char quote)
 	return ('\0');
 }
 
-u_int8_t			quotes_is_matching(t_read *term, char *quote)
+u_int8_t		quotes_is_matching(t_read *term, char *quote)
 {
 	int			i;
 
@@ -82,9 +82,9 @@ u_int8_t			quotes_is_matching(t_read *term, char *quote)
 	return (TRUE);
 }
 
-u_int8_t			check_subprompt(t_core *shell)
+u_int8_t		check_subprompt(t_core *shell)
 {
-	char			quote;
+	char		quote;
 
 	quote = '\0';
 	if (quotes_is_matching(&shell->term, &quote) == TRUE)

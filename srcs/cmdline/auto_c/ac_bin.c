@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/26 19:57:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:39:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void			to_complete_bin(const char *to_find, t_read *term)
 		while (dir && (data = readdir(dir)) != NULL)
 		{
 			if ((!*to_find || ft_isstart(data->d_name, to_find))
-				&& is_a_blt(data->d_name) == -1 && !ft_isstart(data->d_name, "."))
+			&& is_a_blt(data->d_name) == -1 && !ft_isstart(data->d_name, "."))
 				ft_lstappend(&bin, ft_lstnew(data->d_name,
 							sizeof(char) * (ft_strlen(data->d_name) + 1)));
 		}

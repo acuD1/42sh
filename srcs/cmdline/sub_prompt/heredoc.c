@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/21 23:10:03 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:40:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,6 @@ static int8_t	check_key(t_core *shell, const char *key)
 
 static char		*stock_value(t_core *shell)
 {
-	// char	*value;
-
-	// value = NULL;
-	// shell->term.tmp_buff = ft_strjoinf(shell->term.tmp_buff, shell->term.buffer, 3);
-	// value = ft_strdup(shell->term.tmp_buff);
-	// shell->term.status = CMD_DONE;
-	// shell->term.buffer = ft_strdup(value);
-	// reset_config(shell);
-	// return (value);
 	char	*value;
 	char	*buffer;
 	int		i;
