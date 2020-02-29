@@ -65,7 +65,6 @@ char			*load_heredoc(t_core *shell, const char *key)
 
 	value = NULL;
 	set_termconfig(shell);
-	init_config(shell);
 	shell->heredoc = 1;
 	shell->term.buffer = ft_strjoinf(shell->term.buffer, NEW_LINE, 1);
 	shell->term.tmp_buff = ft_strdup(shell->term.buffer);

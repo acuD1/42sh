@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/26 16:56:49 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:37:52 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ u_int8_t	is_tab(const char *d_name, t_read *term);
 u_int8_t	is_dir(const char *dir);
 void		split_cmd(char **to_find, t_read *term);
 void		free_lst(t_lst *lst);
+void		feature(t_read *term, u_int64_t value);
 
 /*
 **		Functions safe

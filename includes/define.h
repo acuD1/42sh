@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/27 17:09:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:32:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@
 # define CTRL_B					0x0200000000000000
 # define CTRL_F					0x0600000000000000
 # define CTRL_D					0x0400000000000000
+# define CTRL_W					0x1700000000000000
 # define ALT_AW_UP				0x1b1b5b4100000000
 # define ALT_AW_DO				0x1b1b5b4200000000
 

@@ -117,7 +117,7 @@ void			to_complete_bin(const char *to_find, t_read *term)
 		while (dir && (data = readdir(dir)) != NULL)
 		{
 			if ((!*to_find || ft_isstart(data->d_name, to_find))
-				&& is_a_blt(data->d_name) == -1 && !ft_isstart(data->d_name, "."))
+			&& is_a_blt(data->d_name) == -1 && !ft_isstart(data->d_name, "."))
 				ft_lstappend(&bin, ft_lstnew(data->d_name,
 							sizeof(char) * (ft_strlen(data->d_name) + 1)));
 		}

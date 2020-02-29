@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sigint.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/26 18:42:23 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:47:33 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@ static void		erase_line(t_core *shell)
 {
 	if (shell->term.status == CMD_PROMPT)
 	{
-		while (shell->term.x_index < shell->term.width)
-			move_right(shell->term.buffer, &(shell->term));
+		goto_prompt(&shell->term);
 		ft_strdel(&shell->term.buffer);
+		ft_strdel(&shell->term.tmp_buff);
 		shell->term.buffer = ft_memalloc(BUFF_SIZE);
-		display_prompt(&(shell->term));
 	}
 	else if (shell->term.status == CMD_SUBPROMPT)
 	{
@@ -47,7 +46,7 @@ void			sigint_handler(int signum)
 	shell = get_core(NULL);
 	signal(SIGINT, sigint_handler);
 	shell->status = 128 + signum;
-	write(STDERR_FILENO, "\n", 1);
+	ft_dprintf(STDERR_FILENO, "^C\n");
 	update_exit_status(shell);
 	erase_line(shell);
 }

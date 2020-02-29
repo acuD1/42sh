@@ -36,7 +36,7 @@ void			sort_print_cmd(t_cmd cmd, t_lst *w, u_int64_t opt)
 		print_list(w, cmd, opt);
 }
 
-void			get_entries(t_lst *w, t_cmd *cmd, uint64_t opt)
+void			get_entries(t_lst *w, t_cmd *cmd, u_int64_t opt)
 {
 	int			w_entries;
 
