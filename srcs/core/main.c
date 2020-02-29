@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:44:30 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/18 19:36:44 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:58:48 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,16 @@ int		main(int ac, char **av, char **environ)
 	if (read(STDIN_FILENO, NULL, 0) < 0
 		|| init_shell(&shell, av, environ) != SUCCESS)
 		return (0);
-//	if (setjmp(g_exit_leaks))
-//	{
-//		dprintf(STDOUT_FILENO, "Exited with free handling ..\n");
-//		return (EXIT_SUCCESS);
-//	}
-//	else
-//	{
+	if (setjmp(g_exit_leaks))
+		return (shell.status);
+	else
+	{
 		get_opt(ac, av, &shell);
 		if (shell.is_interactive)
 			load_i_mode(&shell);
 		else
 			load_noi_mode(&shell);
-//	}
+	}
 	free_shell(&shell);
 	return (shell.status);
 }

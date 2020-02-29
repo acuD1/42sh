@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/21 15:23:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:56:49 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int64_t		last_cmd_back(t_read *term, int i);
 
 u_int8_t	check_subprompt(t_core *shell);
 u_int8_t	check_backslash(t_read *term, char *quote);
+u_int8_t	check_backslash_nbr(char *str, int *index);
 u_int8_t	charset_count(t_read *term, char charset, int i);
 u_int8_t	quotes_is_matching(t_read *term, char *quote);
 void		load_subprompt(char quote, t_read *term);

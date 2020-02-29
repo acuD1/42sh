@@ -12,76 +12,82 @@
 
 #include "sh42.h"
 
-char		*smallest_suffix_param(char *value, char *pattern)
+static char		*smallest_suffix_param(char *value, char *pattern)
 {
-	int		pattern_size;
+	int			pattern_size;
 
+	if (!pattern || !value)
+		return (NULL);
 	pattern_size = ft_strlen(value) - ft_strlen(pattern);
 	if (ft_strequ(value + pattern_size, pattern))
 		return (ft_strsub(value, 0, pattern_size));
 	return (ft_strdup(value));
 }
 
-char		*suffix_format(char *data, t_core *shell)
+char			*suffix_format(char *data, t_core *shell)
 {
-	char	*tmp;
-	char	*value;
-	char	**tablo;
-	char	*resultat;
+	char		*value;
+	char		*tmp;
+	char		**tablo;
+	char		*resultat;
 
-	tmp = NULL;
-	value = NULL;
 	resultat = NULL;
-	tablo = NULL;
-	if ((tmp = ft_strchr(data, '%')))
+	tmp = NULL;
+	tablo = ft_strsplit(data, "%");
+	value = check_env_key(tablo[0], shell);
+	if (value && *value)
 	{
-		tablo = ft_strsplit(data, "%");
-		value = check_env_key(tablo[0], shell);
-		if (value && *value)
+		if (!tablo[1])
+			resultat = ft_strdup(value);
+		else if (tablo[1] && tablo[1][0] == '$')
 		{
-			if (!tablo[1])
-				resultat = ft_strdup(value);
-			else
-				resultat = smallest_suffix_param(value, tablo[1]);
+			tmp = exp_param(tablo[1], shell);
+			resultat = smallest_suffix_param(value, tmp);
+			ft_strdel(&tmp);
 		}
+		else
+			resultat = smallest_suffix_param(value, tablo[1]);
 	}
-	ft_strdel(&data);
 	ft_tabfree(tablo);
+	ft_strdel(&data);
 	return (resultat);
 }
 
-char		*smallest_prefix_param(char *value, char *pattern)
+static char		*smallest_prefix_param(char *value, char *pattern)
 {
-	int		size;
+	int			size;
 
+	if (!pattern || !value)
+		return (NULL);
 	size = ft_strlen(pattern);
 	if (ft_strnequ(value, pattern, size))
 		return (ft_strsub(value, size, ft_strlen(value) - size));
 	return (ft_strdup(value));
 }
 
-char		*prefix_format(char *data, t_core *shell)
+char			*prefix_format(char *data, t_core *shell)
 {
-	char	*tmp;
-	char	*value;
-	char	**tablo;
-	char	*resultat;
+	char		*value;
+	char		*tmp;
+	char		**tablo;
+	char		*resultat;
 
-	tmp = NULL;
-	value = NULL;
 	resultat = NULL;
-	tablo = NULL;
-	if ((tmp = ft_strchr(data, '#')))
+	tmp = NULL;
+	tablo = ft_strsplit(data, "#");
+	value = check_env_key(tablo[0], shell);
+	if (value && *value)
 	{
-		tablo = ft_strsplit(data, "#");
-		value = check_env_key(tablo[0], shell);
-		if (value && *value)
+		if (!tablo[1])
+			resultat = ft_strdup(value);
+		else if (tablo[1] && tablo[1][0] == '$')
 		{
-			if (!tablo[1])
-				resultat = ft_strdup(value);
-			else
-				resultat = smallest_prefix_param(value, tablo[1]);
+			tmp = exp_param(tablo[1], shell);
+			resultat = smallest_suffix_param(value, tmp);
+			ft_strdel(&tmp);
 		}
+		else
+			resultat = smallest_prefix_param(value, tablo[1]);
 	}
 	ft_strdel(&data);
 	ft_tabfree(tablo);

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/22 19:20:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/27 17:09:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@
 # define PS1					"'42sh-0.1$ '"
 # define PS2					"'> '"
 # define BUFF_SIZE				4096
-# define READ_SIZE				8
+# define READ_SIZE				64
 # define QUOTE					'\''
 # define DQUOTE					'\"'
 # define BQUOTE					'`'

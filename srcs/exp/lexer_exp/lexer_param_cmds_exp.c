@@ -12,32 +12,6 @@
 
 #include "sh42.h"
 
-char			*exp_get_bquote(const char *string, int len)
-{
-	int		i;
-	char	*str;
-
-	i = 0;
-	str = NULL;
-	if (!ft_strncmp(string, "`", len))
-	{
-		i++;
-		while (string[i])
-		{
-			if (string[i] == '`')
-			{
-				i++;
-				break ;
-			}
-			i++;
-		}
-		if (!(str = ft_strsub(string, 0, i)))
-			return (NULL);
-		return (str);
-	}
-	return (NULL);
-}
-
 char			*exp_get_paren(const char *string, int len)
 {
 	char	*str;
@@ -61,18 +35,38 @@ char			*exp_get_paren(const char *string, int len)
 	return (NULL);
 }
 
+int				check_brackets_inbracket(int *count, char c)
+{
+	if (c == '{')
+		*count += 1;
+	if (c == '}')
+	{
+		if (*count)
+			*count -= 1;
+		else
+			return (0);
+	}
+	return (1);
+}
+
 char			*exp_get_bracket(const char *string, int len)
 {
-	char	*str;
-	int		index;
+	char		*str;
+	int			index;
+	int			count;
 
 	index = 0;
+	count = 0;
 	str = NULL;
 	if (!ft_strncmp(string, "${", len))
 	{
 		index = len;
-		while (string[index] && string[index] != '}')
+		while (string[index])
+		{
+			if (!check_brackets_inbracket(&count, string[index]))
+				break ;
 			index++;
+		}
 		index++;
 		if (!(str = ft_strsub(string, 0, index)))
 			return (NULL);
@@ -90,12 +84,9 @@ static int8_t	get_index_expan(const char *str)
 		return (0);
 	while (str[i])
 	{
-		if (str[1] == '?')
-		{
-			i++;
-			break ;
-		}
-		if (str[1] == '$')
+		if (str[1] == '?' || str[1] == '$'
+			|| str[1] == '!' || str[1] == '-'
+			|| str[1] == '@' || str[1] == '*')
 		{
 			i++;
 			break ;

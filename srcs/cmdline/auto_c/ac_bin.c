@@ -36,12 +36,12 @@ static void		insert_bin_in_buffer(const char *bin, t_read *term)
 
 static void		add_builtin_lst(t_lst **bin, const char *cmd)
 {
-	static char	*blt_names[8] = {"set", "unset", "export", "exit", "type",
-														"jobs", "hash", "test"};
+	static char	*blt_names[14] = {"set", "unset", "export", "exit", "cd"
+	, "echo", "pwd", "type", "fg", "jobs", "bg", "hash", "fc", "test"};
 	int			i;
 
 	i = 0;
-	while (i < 8)
+	while (i < 14)
 	{
 		if (!*cmd || ft_isstart(blt_names[i], cmd))
 			ft_lstappend(&(*bin), ft_lstnew(blt_names[i],
@@ -117,7 +117,7 @@ void			to_complete_bin(const char *to_find, t_read *term)
 		while (dir && (data = readdir(dir)) != NULL)
 		{
 			if ((!*to_find || ft_isstart(data->d_name, to_find))
-										&& !ft_isstart(data->d_name, "."))
+				&& is_a_blt(data->d_name) == -1 && !ft_isstart(data->d_name, "."))
 				ft_lstappend(&bin, ft_lstnew(data->d_name,
 							sizeof(char) * (ft_strlen(data->d_name) + 1)));
 		}

@@ -50,6 +50,7 @@ static char		*stock_value(t_core *shell)
 	buffer = ft_strdup(shell->term.tmp_buff);
 	ft_strdel(&shell->term.tmp_buff);
 	i = ft_strlen_to(buffer, NEW_LINE[0]);
+	shell->term.status = CMD_DONE;
 	value = ft_strsub(buffer, i + 1, ft_strlen(buffer) - i);
 	ft_strdel(&shell->term.buffer);
 	shell->term.buffer = ft_strsub(buffer, 0, i);
@@ -64,6 +65,8 @@ char			*load_heredoc(t_core *shell, const char *key)
 
 	value = NULL;
 	set_termconfig(shell);
+	init_config(shell);
+	shell->heredoc = 1;
 	shell->term.buffer = ft_strjoinf(shell->term.buffer, NEW_LINE, 1);
 	shell->term.tmp_buff = ft_strdup(shell->term.buffer);
 	shell->term.status = CMD_SUBPROMPT;

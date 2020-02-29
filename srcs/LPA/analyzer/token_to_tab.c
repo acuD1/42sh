@@ -51,6 +51,23 @@ char		**ft_add_arg_cmd_process(char **tablo, const char *str)
 	return (tb);
 }
 
+char		*join_one_char(char *dst, char *str, int index)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	if (!str)
+		return (NULL);
+	if (dst)
+	{
+		tmp = ft_strsub(str, index, 1);
+		dst = ft_strjoinf(dst, tmp, 4);
+	}
+	else
+		dst = ft_strsub(str, index, 1);
+	return (dst);
+}
+
 char		*fill_cmd_job(t_lst *tok_lst, char *cmd)
 {
 	if (!tok_lst || !tok_lst->content)

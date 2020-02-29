@@ -85,10 +85,10 @@ int8_t			write_history(t_core *shell)
 
 void			save_history(t_read *term)
 {
-	t_lst	*saved;
+	t_lst		*saved;
 
 	saved = NULL;
-	if (*term->buffer)
+	if (term->buffer && *term->buffer)
 	{
 		saved = ft_memalloc(sizeof(*saved));
 		saved->prev = NULL;
@@ -102,7 +102,6 @@ void			save_history(t_read *term)
 			term->history->content_size = term->history->next->content_size + 1;
 	}
 }
-
 /*
 **	Init history list -> load datas from history file
 */

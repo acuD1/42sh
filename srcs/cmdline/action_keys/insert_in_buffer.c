@@ -99,16 +99,18 @@ void		insert_str_in_buffer(const char *d_name, t_read *term)
 void		insert_in_buffer(const char *buff, t_read *term)
 {
 	int		buff_index;
+	int		len;
 	int		increase_len;
 
 	increase_len = 0;
 	buff_index = term->x_index - term->prompt_len;
+	len = (*buff) ? ft_strlen(buff) : 0;
 	if (term->x_index >= BUFF_SIZE)
 	{
 		increase_len = ft_strlen(term->buffer) + READ_SIZE;
 		term->buffer = realloc(term->buffer, increase_len);
 	}
-	if (ft_strlen(buff) > 1)
+	if (len > 1)
 	{
 		insert_str_in_buffer(buff, term);
 		return ;

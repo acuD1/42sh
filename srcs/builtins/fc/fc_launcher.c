@@ -34,6 +34,10 @@ int8_t			fc_launch_editor(t_core *shell, char **argv)
 	ft_bzero(&job, sizeof(t_job));
 	process.av = argv;
 	process.envp = set_envp(shell);
+	process.pipe[0] = STDIN_FILENO;
+	process.pipe[1] = STDOUT_FILENO;
+	process.close[0] = -1;
+	process.close[1] = -1;
 	ft_lstappend(&(job.process_list), ft_lstnew(&process, sizeof(t_process)));
 	if (job.process_list == NULL)
 		return (FAILURE);

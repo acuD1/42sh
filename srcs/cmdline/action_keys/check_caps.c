@@ -123,7 +123,7 @@ u_int8_t		check_caps(const char *buff, t_read *term)
 	if (value == RETURN_KEY)
 	{
 		if (*term->prompt || (!*term->prompt && *term->buffer))
-			write(STDERR_FILENO, "\n", 1);
+			ft_dprintf(STDERR_FILENO, "\n");
 		return (FALSE);
 	}
 	check_keys_comb(buff, term, value);
