@@ -34,6 +34,6 @@ int8_t	builtin_exit(t_core *shell, t_process *process)
 	}
 	else if (argc == 2)
 		quit_shell(shell, exit_value & 0xFF, TRUE);
-	dprintf(STDERR_FILENO, "42sh: exit: too many arguments\n");
+	ft_dprintf(STDERR_FILENO, "42sh: exit: too many arguments\n");
 	return (1);
 }

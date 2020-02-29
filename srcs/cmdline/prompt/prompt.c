@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/21 23:16:44 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/19 15:51:16 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 
 void			goto_prompt(t_read *term)
 {
+	if ((int)ft_strlen(term->prompt) > term->ws_col)
+		term->y += ft_strlen(term->prompt) / term->ws_col;
 	while (term->y-- > 0)
 		xtputs(term->tcaps[KEY_UP], 1, my_outc);
 	xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
@@ -39,9 +41,10 @@ void			goto_prompt(t_read *term)
 void			display_prompt(t_read *term)
 {
 	term->prompt_len = ft_strlen(term->prompt);
+	term->prompt_len = term->prompt_len % term->ws_col;
 	term->x = term->prompt_len;
-	term->x_index = term->x;
 	term->y = 0;
+	term->x_index = term->x;
 	term->width = term->x;
 	term->sub_prompt = 0;
 	ft_dprintf(STDERR_FILENO, "%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
@@ -65,7 +68,7 @@ static int8_t	end_of_file(t_core *shell, const char *buff)
 			return (FALSE);
 		}
 		reset_config(shell);
-		write_history(&shell->term);
+        write_history(shell);
 		return (TRUE);
 	}
 	return (FALSE);

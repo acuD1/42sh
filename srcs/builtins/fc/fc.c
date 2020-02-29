@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/08 20:26:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/20 14:50:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int8_t			fc_error(u_int64_t opt, int err_num)
 	{
 		ft_dprintf(2, "42sh: fc: -e: option requires an argument\n");
 		ft_dprintf(STDERR_FILENO, "fc: usage: fc [-e ename] \
-		[-lnr] [first] [last] or fc -s [pat=rep] [command]\n");
+			[-lnr] [first] [last] or fc -s [pat=rep] [command]\n");
 	}
 	else
 		ft_dprintf(STDERR_FILENO,
@@ -64,7 +64,7 @@ int8_t			builtin_fc(t_core *shell, t_process *process)
 	if (fc_options(process->av, opt) == FALSE)
 		return (fc_error(opt, 2));
 	else if (w && (opt & (1ULL << 18)))
-		return (select_specifier(shell, w, process->av));
+		return (select_specifier(shell, process->av));
 	else if (w && (opt & (1ULL << 11)))
 		listing_mode(w, process->av, opt);
 	else

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 15:59:01 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/21 15:23:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void		display_prompt(t_read *term);
 void		display_subprompt(t_read *term);
 void		goto_prompt(t_read *term);
 void		get_prompt_value(t_core *shell, const char *key);
+u_int8_t	sub_prompt_error(t_read *term, char sb);
 
 /*
 **		Check Caps and Interpret
@@ -64,8 +65,8 @@ void		clr_screen(t_read *term);
 **		History
 */
 
-int8_t		init_history(t_read *term);
-int8_t		write_history(t_read *term);
+int8_t		init_history(t_core *shell);
+int8_t		write_history(t_core *shell);
 void		save_history(t_read *term);
 void		research_mode(t_read *term);
 void		check_expansions(t_read *term);
@@ -113,7 +114,8 @@ u_int64_t	get_mask(const char *buff);
 int			is_dot(const char *d_name);
 u_int8_t	is_tab(const char *d_name, t_read *term);
 u_int8_t	is_dir(const char *dir);
-u_int8_t	split_cmd(char **to_find, t_read *term);
+void		split_cmd(char **to_find, t_read *term);
+void		free_lst(t_lst *lst);
 
 /*
 **		Functions safe

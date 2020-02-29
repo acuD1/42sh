@@ -6,38 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/13 14:28:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/19 19:34:34 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-void		parse_env(char **prev_b, const char *to_find, t_read *term)
-{
-	t_lst	*env;
-	t_lst	*head;
-	char	*tmp;
-
-	tmp = NULL;
-	env = term->shell->env;
-	head = env;
-	term->flag = FALSE;
-	while (env->next)
-	{
-		if (ft_isstart(((t_db *)(env->content))->key, to_find + 1)
-			|| !ft_strcmp(to_find, "$"))
-		{
-			tmp = ft_strjoin("$", ((t_db *)(env->content))->key);
-			if (read_again(prev_b, NULL, tmp, term) == FALSE)
-				break ;
-			term->flag = TRUE;
-			ft_strdel(&tmp);
-		}
-		env = env->next;
-	}
-	ft_strdel(&tmp);
-	(term->flag == TRUE) ? parse_env(prev_b, to_find, term) : 0;
-}
 
 /*
 **		Split all bin/sbin directories in an array
@@ -62,7 +35,7 @@ char		**split_path(t_core *shell, const char *str)
 	return (array);
 }
 
-u_int8_t	split_cmd(char **to_find, t_read *term)
+void		split_cmd(char **to_find, t_read *term)
 {
 	int		i;
 
@@ -71,13 +44,16 @@ u_int8_t	split_cmd(char **to_find, t_read *term)
 	while (ft_isblank(term->buffer[++i]))
 		continue ;
 	if (term->buffer[i] == '\0')
-		return (FALSE);
+	{
+		*to_find = ft_strnew(0);
+		term->cmd = ft_memalloc(BUFF_SIZE);
+		return ;
+	}
 	if ((term->cmd = ft_strsplit(term->buffer, SPACE)) == NULL)
-		return (FALSE);
+		return ;
 	term->ac = ft_tablen(term->cmd);
 	if (term->buffer[ft_strlen(term->buffer) - 1] == ' ')
 		term->ac += 1;
 	if (!(*to_find = ft_strdup(term->cmd[ft_tablen(term->cmd) - 1])))
-		return (FALSE);
-	return (TRUE);
+		return ;
 }

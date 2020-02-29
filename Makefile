@@ -40,6 +40,7 @@ G_C					=	\033[0;32m
 R_C					=	\033[0;31m
 M_C					=	\033[0;35m
 C_C					=	\033[0;36m
+F_C					=	\033[35;5;108m
 
 # Programms names
 
@@ -82,6 +83,7 @@ AK					=	$(CMDLINE)action_keys/
 HISTORY				=	$(CMDLINE)history/
 HST_EXP				=	$(HISTORY)exp/
 PROMPT				=	$(CMDLINE)prompt/
+SUB_PROMPT			=	$(CMDLINE)sub_prompt/
 CORE				=	core/
 DB					=	db/
 EXEC				=	exec/
@@ -111,6 +113,7 @@ PATHS				+=	$(O_PATH)$(AK)
 PATHS				+=	$(O_PATH)$(HISTORY)
 PATHS				+=	$(O_PATH)$(HST_EXP)
 PATHS				+=	$(O_PATH)$(PROMPT)
+PATHS				+=	$(O_PATH)$(SUB_PROMPT)
 PATHS				+=	$(O_PATH)$(CORE)
 PATHS				+=	$(O_PATH)$(DB)
 PATHS				+=	$(O_PATH)$(EXEC)
@@ -147,6 +150,7 @@ SRC					+=	$(S_PATH)$(CD)cd_update_pwd.c
 SRC					+=	$(S_PATH)$(CD)cd.c
 
 SRC					+=	$(S_PATH)$(FC)fc_edit.c
+SRC					+=	$(S_PATH)$(FC)fc_launcher.c
 SRC					+=	$(S_PATH)$(FC)fc_listing.c
 SRC					+=	$(S_PATH)$(FC)fc_print.c
 SRC					+=	$(S_PATH)$(FC)fc_specifier.c
@@ -178,6 +182,7 @@ SRC					+=	$(S_PATH)$(AC)ac_buffer.c
 SRC					+=	$(S_PATH)$(AC)ac_current_dir.c
 SRC					+=	$(S_PATH)$(AC)ac_directories.c
 SRC					+=	$(S_PATH)$(AC)ac_tools.c
+SRC					+=	$(S_PATH)$(AC)ac_var.c
 SRC					+=	$(S_PATH)$(AC)auto_completion.c
 
 SRC					+=	$(S_PATH)$(HISTORY)save_history.c
@@ -187,11 +192,13 @@ SRC					+=	$(S_PATH)$(HST_EXP)check_hst_exp.c
 SRC					+=	$(S_PATH)$(HST_EXP)history_expansions.c
 SRC					+=	$(S_PATH)$(HST_EXP)replace_buffer.c
 
-SRC					+=	$(S_PATH)$(PROMPT)check_backslash.c
-SRC					+=	$(S_PATH)$(PROMPT)check_subprompt.c
-SRC					+=	$(S_PATH)$(PROMPT)heredoc.c
 SRC					+=	$(S_PATH)$(PROMPT)prompt.c
-SRC					+=	$(S_PATH)$(PROMPT)sub_prompt.c
+
+SRC					+=	$(S_PATH)$(SUB_PROMPT)check_backslash.c
+SRC					+=	$(S_PATH)$(SUB_PROMPT)check_subprompt.c
+SRC					+=	$(S_PATH)$(SUB_PROMPT)heredoc.c
+SRC					+=	$(S_PATH)$(SUB_PROMPT)sub_prompt.c
+SRC					+=	$(S_PATH)$(SUB_PROMPT)subprompt_tools.c
 
 SRC					+=	$(S_PATH)$(CORE)free_handler.c
 SRC					+=	$(S_PATH)$(CORE)init_shell.c
@@ -359,8 +366,8 @@ $(NAME): $(OBJ) $(BUILD_FILE)
 	@$(CMPLO) $(NAME) $(OBJ) $(LIB)
 	@$(GCSUC)
 	@echo "---\nCFLAG - =$(B_C) $(CFLAG)$(RESET_C)\n---"
-	@echo "\n$(G_C)[$(BUILD_BRANCH)] $(RESET_C)$@ \
-	v.$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE) is ready !"
+	@echo "\n$(G_C)[$(BUILD_BRANCH)] $(RESET_C)$@ $(F_C) \
+	v.$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE) $(RESET_C) is ready !"
 	@cp $(NAME) \
 	$(B_PATH)$(NAME)_$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE)
 

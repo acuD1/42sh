@@ -24,7 +24,6 @@ void	xtputs(char *str, int i, int (*f)(int))
 	shell = get_core(NULL);
 	tputs(str, i, f);
 }
-
 size_t	xread(int fd, char *buff, int size)
 {
 	int		ret;
@@ -35,7 +34,7 @@ size_t	xread(int fd, char *buff, int size)
 	{
 		if (ret == FAILURE)
 		{
-			dprintf(STDERR_FILENO, "42sh: read errror\n");
+			ft_dprintf(STDERR_FILENO, "42sh: error: read failure\n");
 			quit_shell(shell, EXIT_FAILURE, TRUE);
 		}
 	}

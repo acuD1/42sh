@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 04:58:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/18 18:51:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int64_t	call_word(t_read *term, int i)
 	int		n;
 	t_lst	*w;
 
+	ft_bzero(word, BUFF_SIZE);
 	j = -1;
 	w = term->history;
 	n = i + 1;
@@ -35,7 +36,7 @@ int64_t	call_word(t_read *term, int i)
 	word[j + 1] = '\0';
 	if (!w || n > (int)ft_lstlen(w) || n > HIST_SIZE)
 		return (FAILURE);
-	while (w->next && ft_isstart((char *)w->content, word) == 0)
+	while (w->next && ft_isstart((char *)w->content, word) == FALSE)
 		w = w->next;
 	if (!w->next)
 		return (FAILURE);
@@ -57,6 +58,7 @@ int64_t	callback_number(t_read *term, int i)
 	j = -1;
 	w = term->history;
 	n = i + 2;
+	ft_bzero(nb, BUFF_SIZE);
 	while (ft_isdigit(term->buffer[n]))
 	{
 		nb[++j] = term->buffer[n];
@@ -88,6 +90,7 @@ int64_t	call_number(t_read *term, int i)
 	j = -1;
 	w = term->history;
 	n = i + 1;
+	ft_bzero(nb, BUFF_SIZE);
 	while (ft_isdigit(term->buffer[n]))
 	{
 		nb[++j] = term->buffer[n];

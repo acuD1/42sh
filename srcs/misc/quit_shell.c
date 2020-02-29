@@ -16,7 +16,11 @@ void	quit_shell(t_core *shell, int exit_value, int8_t v)
 {
 //		longjmp(g_exit_leaks, 42); /* TEMPORARY */
 	if (shell->is_interactive)
-		reset_config(shell);
+    {
+        reset_config(shell);
+	    save_history(&shell->term);
+	    write_history(shell);
+    }        
 	free_shell(shell);
 	if (shell->is_interactive && v == TRUE)
 		write(STDERR_FILENO, "exit\n", 5);

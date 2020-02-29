@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/24 21:43:42 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:09:58 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct				s_read
 	char					*tcaps[CAPS_NBR];
 	char					*buffer;
 	char					*tmp_buff;
+	char					*ac_tmp;
 	int						prompt_len;
 	int						x_index;
 	int						x;

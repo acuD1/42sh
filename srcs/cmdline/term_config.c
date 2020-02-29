@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/22 20:26:05 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:27:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	init_cmd_line(t_core *shell, t_read *term)
 	term->prompt = NULL;
 	if (get_size(term) != SUCCESS)
 		quit_shell(shell, EXIT_FAILURE, TRUE);
-	init_history(term);
+	shell->term.history = term->history;
+	init_history(shell);
 }
 
 /*
@@ -78,7 +79,7 @@ int8_t	reset_config(t_core *shell)
 {
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->old_t)) == FAILURE)
 	{
-		dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
+		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
 		return (FAILURE);
 	}
 	ft_strdel(&shell->term.tmp_buff);
