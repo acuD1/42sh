@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/13 16:08:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:59:01 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ u_int8_t	split_cmd(char **to_find, t_read *term);
 */
 
 void		xtputs(char *str, int i, int (*f)(int));
-char		*xtgetstr(char *id, char **area);
 size_t		xread(int fd, char *buff, int size);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 12:13:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 04:31:30 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:56:38 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,6 @@ void	xtputs(char *str, int i, int (*f)(int))
 
 	shell = get_core(NULL);
 	tputs(str, i, f);
-}
-
-char	*xtgetstr(char *id, char **area)
-{
-	char	*str;
-	t_core	*shell;
-
-	shell = get_core(NULL);
-	if ((str = tgetstr(id, area)) == NULL)
-	{
-		dprintf(STDERR_FILENO, "42sh: tgetstr errror\n");
-		quit_shell(shell, EXIT_FAILURE, TRUE);
-	}
-	return (str);
 }
 
 size_t	xread(int fd, char *buff, int size)

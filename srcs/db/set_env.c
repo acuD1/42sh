@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/19 02:48:52 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/29 16:02:10 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,12 @@ int8_t			set_env(t_core *shell, char **argv, char **environ)
 	i = 0;
 	while (*environ && environ[i])
 	{
-		if (ft_strncmp("OLDPWD", environ[i], 6) != 0)
-		{
-			ft_lstappend(&shell->env, ft_lstnew(fetch_db(&shell->db
-				, environ[i], EXPORT_VAR | INTERNAL_VAR), sizeof(t_db)));
-		}
+		ft_lstappend(&shell->env, ft_lstnew(fetch_db(&shell->db
+			, environ[i], EXPORT_VAR | INTERNAL_VAR), sizeof(t_db)));
 		i++;
 	}
     if (search_db(shell->env, "OLDPWD") == NULL)
-    {	
+    {
         fetch_db(&shell->db, "OLDPWD", EXPORT_VAR);
 	    ft_strdel(&(shell->db.value));
 	    ft_lstappend(&shell->env, ft_lstnew(&(shell->db), sizeof(t_db)));
