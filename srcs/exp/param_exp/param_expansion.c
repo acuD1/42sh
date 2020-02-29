@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   param_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:16:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/07 05:32:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/29 19:18:55 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char			*simple_format(char *str, t_core *shell)
 	t_db		*db_tmp;
 
 	db_tmp = NULL;
-	if (ft_strchr(str, '$'))
+	if (ft_strchr(str, '$') && str[0] != '$')
 	{
 		ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
 		ft_strdel(&str);

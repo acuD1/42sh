@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 15:12:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/07 02:02:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/29 19:17:31 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void		print_hash_map(t_core *shell, enum e_hash fmt)
 	if ((map = shell->hash.map) == NULL)
 		return ;
 	if (fmt == H_DEF)
-		dprintf(STDOUT_FILENO, "hits    command\n");
+		dprintf(STDOUT_FILENO, "hits\tcommand\n");
 	while (++i < shell->hash.size)
 	{
 		cur_map = map[i];
 		while (cur_map)
 		{
 			if (fmt == H_DEF)
-				dprintf(STDOUT_FILENO, "%4d    %s\n",
+				dprintf(STDOUT_FILENO, "%4d\t%s\n",
 						((t_db *)cur_map->content)->hit,
 						((t_db *)cur_map->content)->value);
 			if (fmt == H_LISTED)
