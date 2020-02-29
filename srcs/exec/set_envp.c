@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_envp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:32:46 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/18 01:13:48 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:56:55 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,14 @@ static void	check_env(t_lst *env, char **envp, size_t *i, int join_it)
 
 char		**set_envp(t_core *shell)
 {
-	t_lst	*env;
 	char	**envp;
 	size_t	i;
 
-	i = 0;
-	env = shell->env;
-	check_env(env, NULL, &i, FALSE);
+	i = ft_lstlen(shell->env);
 	if (!(envp = ft_memalloc(sizeof(envp) * (i + 1))))
 		return (NULL);
-	env = shell->env;
 	i = 0;
-	check_env(env, envp, &i, TRUE);
+	check_env(shell->env, envp, &i, TRUE);
 	envp[i] = NULL;
 	return (envp);
 }
