@@ -98,6 +98,8 @@ t_analyzer			*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 		anal = load_heredoc_noimode(anal, shell);
 	if (!shell->heredoc)
 		return (exit_lpa(anal, shell));
+	shell->term.buffer = ft_strjoinf(shell->term.buffer, anal->redir.heredoc, 1);
+	save_history(&shell->term);
 	anal->state = A_WORD;
 	shell->term.flag = FALSE;
 	shell->term.status = CMD_DONE;
