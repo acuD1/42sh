@@ -1,1 +1,13 @@
-lol
+ls: prout: No such file or directory
+.:
+42sh
+42sh.dSYM
+Makefile
+README.md
+build
+doc_ivars.md
+includes
+shared_libft
+srcs
+status
+test

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:42 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/24 21:42:06 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:11:54 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,14 @@ int8_t	dup_ofd(t_redir *ptr)
 	}
 	if (ft_is_number(ptr->op[1]) == SUCCESS)
 	{
-		ptr->dup_fd[0] = dup(ft_atoi(ptr->op[0]));
-		if ((dup2(ft_atoi(ptr->op[1]), ptr->io_num[0])) < 0)
+		if (fcntl(ft_atoi(ptr->op[1]), F_GETFD) != -1)
 		{
-			dprintf(
-				STDERR_FILENO, "42sh: %s: Bad file descriptor\n", ptr->op[1]);
-			return (FAILURE);
+			ptr->dup_fd[0] = dup(ptr->io_num[0]);
+			if ((dup2(ft_atoi(ptr->op[1]), ptr->io_num[0])) >= 0)
+				return (SUCCESS);
 		}
-		return (SUCCESS);
+		dprintf(STDERR_FILENO, "42sh: %s: Bad file descriptor\n", ptr->op[1]);
+		return (FAILURE);
 	}
 	return (redir_output(ptr));
 }
