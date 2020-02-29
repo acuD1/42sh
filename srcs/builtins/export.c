@@ -6,20 +6,18 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/18 01:48:49 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/29 20:33:13 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int8_t	parse_export(int argc, char **argv)
+static int8_t	parse_export(int argc, char **argv, u_int64_t *options)
 {
-	u_int64_t	options;
-
-	options = ft_get_options(argc, argv, "");
-	if (options & (1ULL << 63))
+	*options = ft_get_options(argc, argv, "p");
+	if (*options & (1ULL << 63))
 	{
-		print_usage("export", options % 128, "unset [name ...]");
+		print_usage("export", *options % 128, "unset [name ...]");
 		return (2);
 	}
 	return (SUCCESS);
@@ -31,7 +29,7 @@ static void		export_hash_handler(t_core *shell, const char *str)
 		free_hash_map(&shell->hash);
 }
 
-static int8_t	export(t_core *shell, const char *arg, int *ret)
+static int8_t	export(t_core *shell, const char *arg, int *ret, u_int64_t opt)
 {
 	t_db	*db;
 	char	*str;
@@ -49,7 +47,7 @@ static int8_t	export(t_core *shell, const char *arg, int *ret)
 		return (SUCCESS);
 	}
 	else if (!str
-	|| !(db = get_or_create_db(shell, str, EXPORT_VAR | INTERNAL_VAR)))
+	|| !(db = get_or_create_db(shell, str, EXPORT_VAR | ((opt == 0 && ft_strchr(arg, '=')) ? INTERNAL_VAR : 0))))
 	{
 		ft_strdel(&str);
 		return (FAILURE);
@@ -82,23 +80,24 @@ static void		export_display(t_core *shell)
 
 int8_t			builtin_export(t_core *shell, t_process *process)
 {
-	int		argc;
-	int		ret;
-	int		i;
+	u_int64_t	opt;
+	int			argc;
+	int			ret;
+	int			i;
 
 	argc = ft_tablen(process->av);
-	i = (argc > 1 && ft_strcmp("--", process->av[1]) != 0) ? 1 : 2;
+	i = (argc > 1 && process->av[1][0] != '-') ? 1 : 2;
 	if (i == argc + 1)
 	{
 		export_display(shell);
 		return (0);
 	}
-	if ((ret = parse_export(argc, process->av)) != SUCCESS)
+	if ((ret = parse_export(argc, process->av, &opt)) != SUCCESS)
 		return (ret);
 	ret = 0;
 	while (i < argc)
 	{
-		if (export(shell, process->av[i], &ret) != SUCCESS)
+		if (export(shell, process->av[i], &ret, opt) != SUCCESS)
 			return (FAILURE);
 		i++;
 	}
