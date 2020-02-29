@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:44:14 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 16:21:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/29 17:43:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,6 @@ int8_t			fc_launch_editor(t_core *shell, char **argv)
 
 	job_ptr = NULL;
 	ft_bzero(&process, sizeof(t_process));
-	process.pipe[0] = STDIN_FILENO;
-	process.pipe[1] = STDOUT_FILENO;
-	process.close[0] = -1;
-	process.close[1] = -1;
 	ft_bzero(&job, sizeof(t_job));
 	process.av = argv;
 	process.envp = set_envp(shell);
