@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/20 21:26:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/29 14:12:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void		auto_complete_mode(t_read *term)
 	char	*to_find;
 	int		i;
 
-	i = ft_strlen(term->buffer) - 1;
+	i = term->x_index - term->prompt_len - 1;
 	to_find = NULL;
 	split_cmd(&to_find, term);
 	if (term->ac > 1)
