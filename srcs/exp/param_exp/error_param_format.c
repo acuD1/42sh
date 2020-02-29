@@ -18,7 +18,6 @@ char		*error_moar_format_third(char **tablo, char *data, t_core *shell)
 		"42sh: %s: %s  syntax error: operand expected\
 (error token is \"%s\")\n", tablo[0], data, data);
 	ft_tabfree(tablo);
-	ft_strdel(&data);
 	shell->status = 1;
 	return (NULL);
 }

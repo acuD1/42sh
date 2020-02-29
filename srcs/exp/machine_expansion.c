@@ -73,6 +73,7 @@ t_expansion			*exp_biteurs(char *data, t_core *shell, t_expansion *exp)
 		if (exp_tok[0] == '$' && !exp_tok[1])
 		{
 			exp->st = E_WORD;
+			ft_strdel(&exp_tok);			
 			return (exp);
 		}
 		apply_expansion(data, exp_tok, shell, exp);
