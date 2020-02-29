@@ -84,6 +84,7 @@ HISTORY				=	$(CMDLINE)history/
 HST_EXP				=	$(HISTORY)exp/
 PROMPT				=	$(CMDLINE)prompt/
 SUB_PROMPT			=	$(CMDLINE)sub_prompt/
+CMDLINE_UTILS		=	$(CMDLINE)utils/
 CORE				=	core/
 DB					=	db/
 EXEC				=	exec/
@@ -108,6 +109,7 @@ PATHS				+=	$(O_PATH)$(FC)
 PATHS				+=	$(O_PATH)$(CD)
 PATHS				+=	$(O_PATH)$(HASH)
 PATHS				+=	$(O_PATH)$(CMDLINE)
+PATHS				+=	$(O_PATH)$(CMDLINE_UTILS)
 PATHS				+=	$(O_PATH)$(AC)
 PATHS				+=	$(O_PATH)$(AK)
 PATHS				+=	$(O_PATH)$(HISTORY)
@@ -168,8 +170,10 @@ SRC					+=	$(S_PATH)$(HASH)resize_hash_map.c
 
 SRC					+=	$(S_PATH)$(CMDLINE)init_termcaps.c
 SRC					+=	$(S_PATH)$(CMDLINE)term_config.c
-SRC					+=	$(S_PATH)$(CMDLINE)utils.c
-SRC					+=	$(S_PATH)$(CMDLINE)xfunctions.c
+
+SRC					+=	$(S_PATH)$(CMDLINE_UTILS)get_var_value.c
+SRC					+=	$(S_PATH)$(CMDLINE_UTILS)utils.c
+SRC					+=	$(S_PATH)$(CMDLINE_UTILS)xfunctions.c
 
 SRC					+=	$(S_PATH)$(AK)check_caps.c
 SRC					+=	$(S_PATH)$(AK)del_keys.c

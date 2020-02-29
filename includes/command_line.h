@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 15:37:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:03:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int64_t		call_number(t_read *term, int i);
 int64_t		callback_number(t_read *term, int i);
 int64_t		call_word(t_read *term, int i);
 int64_t		last_cmd_back(t_read *term, int i);
+char		*get_home_value(t_core *shell);
 
 /*
 **		Subprompt/Multiline

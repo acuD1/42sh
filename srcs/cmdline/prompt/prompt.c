@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 15:21:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:09:37 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,24 +73,6 @@ static int8_t	end_of_file(t_core *shell, const char *buff)
 		return (TRUE);
 	}
 	return (FALSE);
-}
-
-void			get_prompt_value(t_core *shell, const char *key)
-{
-	t_db	*db;
-
-	db = NULL;
-	if ((db = search_db(shell->env, key)) == NULL)
-	{
-		shell->term.prompt = ft_strnew(0);
-		return ;
-	}
-	if (!ft_strcmp(db->value, PS1))
-		shell->term.prompt = ft_strsub(db->value, 1, 10);
-	else if (!ft_strcmp(db->value, PS2))
-		shell->term.prompt = ft_strsub(db->value, 1, 2);
-	else
-		shell->term.prompt = ft_strdup(db->value);
 }
 
 int8_t			init_prompt(t_core *shell)
