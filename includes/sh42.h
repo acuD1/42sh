@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   sh42.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
 /*   Updated: 2020/02/24 22:39:29 by mpivet-p         ###   ########.fr       */
@@ -113,7 +113,8 @@ void		hash_error(t_hash *hash);
 */
 
 t_core		*get_core(t_core *core);
-int8_t		get_canonical_path(const char *path, char *buffer);
+int8_t		get_canonical_path
+	(t_core *shell, const char *path, char *buffer, char *pwd);
 void		ft_perror(const char *s, const char *name, int errnum);
 int8_t		ft_access(const char *path, int mode);
 int8_t		is_a_dir(const char *path);
@@ -123,6 +124,10 @@ void		print_and_quit(t_core *shell, const char *message);
 int			check_invalid_identifiers(const char *arg, const char *exceptions);
 char		*signal_msg(int sig);
 int8_t		path_tests(const char *path, int opt);
+void		dir_backward(char *path);
+int8_t		dir_forward(char *path);
+int8_t		dir_write(const char *rel, char *abs);
+int8_t		check_filename_length(const char *str);
 
 /*
 **	===========================================================================
@@ -148,7 +153,7 @@ int8_t		update_background_pid(t_core *shell);
 int8_t		update_ps1(t_core *shell);
 int8_t		update_ps2(t_core *shell);
 int8_t		update_last_arg(t_core *shell, char **argv);
-int8_t		update_oldpwd(t_core *shell, const char *oldpwd);
+int8_t		update_oldpwd(t_core *shell);
 
 /*
 **	===========================================================================
@@ -179,6 +184,10 @@ void		get_entries(t_lst *w, t_cmd *cmd);
 void		print_list(t_lst *w, t_cmd cmd, u_int64_t opt);
 void		print_reverse(t_lst *w, t_cmd cmd, u_int64_t opt);
 void		skip_options(char ***av);
+int8_t		cd_update_pwd(t_core *shell, const char *pwd, const char *path);
+int8_t		cd_check_path(const char *path);
+int8_t		change_dir(t_core *shell, const char *path);
+int8_t		update_pwds(t_core *shell, const char *buffer, const char *path);
 
 /*
 **	===========================================================================

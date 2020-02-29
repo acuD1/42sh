@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env_updates.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/18 01:41:15 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:49:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <sys/stat.h>
 
 /*
 **	Increment SHLVL : search SHLVL in the env list, increment the value
@@ -100,18 +101,21 @@ int8_t	update_last_arg(t_core *shell, char **argv)
 	return (FAILURE);
 }
 
-int8_t	update_oldpwd(t_core *shell, const char *oldpwd)
+int8_t	update_oldpwd(t_core *shell)
 {
-	t_db	*db;
+	t_db	*db_pwd;
+	t_db	*db_oldpwd;
 	char	*value;
 
-	db = NULL;
+	db_pwd = NULL;
+	db_oldpwd = NULL;
 	value = NULL;
-	if (shell && (db = get_or_create_db(shell, "OLDPWD"
-	, EXPORT_VAR | INTERNAL_VAR)) != NULL)
+	if (shell
+		&& (db_pwd = get_or_create_db(shell, "OLDPWD", EXPORT_VAR | INTERNAL_VAR)) != NULL
+		&& (db_oldpwd = get_or_create_db(shell, "PWD", EXPORT_VAR | INTERNAL_VAR)) != NULL)
 	{
-		value = ft_strdup(oldpwd);
-		if (value && modify_db(db, value, 0) != NULL)
+		value = ft_strdup(db_oldpwd->value);
+		if (value && modify_db(db_pwd, value, 0) != NULL)
 			return (SUCCESS);
 		ft_strdel(&value);
 	}

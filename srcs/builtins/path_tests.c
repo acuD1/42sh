@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 20:12:52 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 04:23:27 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/19 16:33:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int8_t			path_tests(const char *path, int opt)
 	struct stat	buf;
 	char		buffer[MAX_PATH + 1];
 
-	if (get_canonical_path(path, buffer) != SUCCESS
+	if (get_canonical_path(NULL, path, buffer, NULL) != SUCCESS
 	|| ((opt == LL_UNATEST) ? lstat(path, &buf) : stat(path, &buf)) < 0)
 		return (1);
 	if (opt == B_UNATEST)

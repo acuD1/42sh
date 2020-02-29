@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:47:24 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/07 06:35:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/02/17 15:29:00 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,14 @@ char		*infinite_expansion(const char *data, t_core *shell)
 	while (data[++flag[2]])
 	{
 		flag[3] = get_quote_flag(data, &flag[2], &flag[0], &flag[1]);
-		st = skip_quotes(data, &flag[2], st);
-		if (!data[flag[2]])
-			break ;
 		if (!flag[1])
 		{
 			check_if_we_shall_exp(data, flag, &res, shell);
 			discard_backslash(data, &flag[2], &res);
 		}
+		st = skip_quotes(data, &flag[2], st);
+		if (!data[flag[2]])
+			break ;
 		if (flag[3])
 		{
 			tmp = ft_strsub(data, flag[2], 1);

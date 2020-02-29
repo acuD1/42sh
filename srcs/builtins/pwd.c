@@ -3,29 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:51:46 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/12/07 21:05:56 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/02/29 15:47:48 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
 #include "sh42.h"
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
-int8_t	builtin_pwd(t_core *shell, t_process *process)
+static int8_t	pwd_opt_parser(int ac, t_process *process, t_db *db, char *pwd)
 {
-	char	pwd[MAX_PATH + 1];
+	u_int64_t	options;
 
-	(void)shell;
-	(void)process;
+	options = ft_get_options(ac, process->av, "LP");
+	if (options & (1ULL << 37))
+		dprintf(STDOUT_FILENO, "%s\n", db->value);
+	else if (options & (1ULL << 41))
+		dprintf(STDOUT_FILENO, "%s\n", getcwd(pwd, MAX_PATH));
+	else
+		print_usage("pwd", options % 128, PWD_USAGE);
+	return (SUCCESS);
+}
+
+static int8_t	pwd_check_path(const char *path)
+{
+	int		errnum;
+
+	errnum = 0;
+	if (access(path, F_OK) == 0)
+		errnum = is_a_dir(path);
+	errnum = (errnum == EISDIR) ? 0 : errnum;
+	if (errnum == 0)
+		errnum = ft_access(path, X_OK);
+	return (errnum);
+}
+
+int8_t			builtin_pwd(t_core *shell, t_process *process)
+{
+	struct stat	stat;
+	t_db		*db;
+	char		pwd[MAX_PATH + 1];
+	int			ac;
+	int			errnum;
+
 	ft_bzero(pwd, MAX_PATH + 1);
-	if (getcwd(pwd, MAX_PATH) == NULL)
+	ac = ft_tablen(process->av);
+	db = get_or_create_db(shell, "PWD", EXPORT_VAR | INTERNAL_VAR);
+	lstat(db->value, &stat);
+	if (S_ISLNK(stat.st_mode) == FALSE
+		&& (errnum = pwd_check_path(db->value)) != SUCCESS)
 	{
-		ft_perror(pwd, "pwd", ENOENT);
-		return (1);
+		shell->cd.pwd_error = TRUE;
+		dprintf(STDERR_FILENO, "|%d| %s %s", errnum, PWD_ERR, GETCWD_ERR);
+		if (errnum == EACCES)
+			ft_putstr_fd(" Permission denied\n", STDERR_FILENO);
+		else
+			ft_putstr_fd(" No such file or directory\n", STDERR_FILENO);
+		return (SUCCESS);
 	}
-	write(STDOUT_FILENO, pwd, ft_strlen(pwd));
-	write(STDOUT_FILENO, "\n", 1);
+	if (ac > 1)
+		return (pwd_opt_parser(ac, process, db, pwd));
+	dprintf(STDOUT_FILENO, "%s\n", db->value);
 	return (SUCCESS);
 }

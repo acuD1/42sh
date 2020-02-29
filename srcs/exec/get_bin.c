@@ -65,6 +65,8 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 	i = -1;
 	if ((db = search_db(shell->env, "PATH")) == NULL)
 	{
+		if (process->blt)
+			return (FAILURE);
 		process->bin = ft_strdup(process->av[0]);
 		return (SUCCESS);
 	}
