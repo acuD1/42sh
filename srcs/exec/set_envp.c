@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/27 14:32:46 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/29 18:56:55 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/01 23:49:24 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void	check_env(t_lst *env, char **envp, size_t *i, int join_it)
 			if (join_it == TRUE)
 			{
 				envp[*i] = ft_strjoinf(
-								ft_strjoin(((t_db*)(env->content))->key, "=")
-								, ((t_db*)(env->content))->value, 1);
+						ft_strjoin(((t_db*)(env->content))->key, "=")
+						, ((t_db*)(env->content))->value, 1);
 			}
 			*i += 1;
 		}

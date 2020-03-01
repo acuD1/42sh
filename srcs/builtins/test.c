@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 17:50:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/11 15:41:04 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/01 23:38:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int32_t	get_opt_test(int argc, char **argv, int diff)
 {
 	static char	*op[NB_TESTBLT] = {"-b", "-c", "-d", "-e", "-f", "-g", "-L"
-		, "-p", "-r", "-S", "-s", "-u", "-W", "-x", "-z", "=", "!=", "-eq"
+		, "-p", "-r", "-S", "-s", "-u", "-w", "-x", "-z", "=", "!=", "-eq"
 		, "-ne", "-ge", "-lt", "-le"};
 	int			i;
 
@@ -34,14 +34,15 @@ static int32_t	get_opt_test(int argc, char **argv, int diff)
 
 static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 {
-	*opt = get_opt_test(argc, argv, diff);
-	if (*opt > DIFF_BINTEST
-	&& ((argc > 2 + diff && ft_is_number(argv[1 + diff]) != 0)
-		|| (argc > 3 + diff && ft_is_number(argv[3 + diff]) != 0)))
+	int64_t	num;
+
+	if ((*opt = get_opt_test(argc, argv, diff)) > DIFF_BINTEST
+	&& ((argc > 2 + diff && ft_atol(argv[1 + diff], &num) != SUCCESS)
+		|| (argc > 3 + diff && ft_atol(argv[3 + diff], &num) != SUCCESS)))
 	{
 		dprintf(STDERR_FILENO, "42sh: test: %s: integer expression expected\n"
-		, (ft_is_number(argv[1 + diff]) != 0)
-			? argv[1 + diff] : argv[3 + diff]);
+		, (ft_atol(argv[1 + diff], &num) != SUCCESS)
+		? argv[1 + diff] : argv[3 + diff]);
 		return (FAILURE);
 	}
 	if ((argc > 4 + diff && *opt > Z_UNATEST)
@@ -62,13 +63,13 @@ static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 
 static int8_t	comp_tests(const char *s1, const char *s2, int opt)
 {
-	int	n1;
-	int	n2;
+	int64_t n1;
+	int64_t	n2;
 
 	if (opt == SAME_BINTEST || opt == DIFF_BINTEST)
 		return (((ft_strcmp(s1, s2) == 0) ? 1 : 0) ^ (DIFF_BINTEST - opt));
-	n1 = ft_atoi(s1);
-	n2 = ft_atoi(s2);
+	ft_atol(s1, &n1);
+	ft_atol(s2, &n2);
 	if (opt == EQ_BINTEST || opt == NE_BINTEST)
 		return ((n1 == n2) ^ (NE_BINTEST - opt));
 	if (opt == GE_BINTEST || opt == LT_BINTEST)

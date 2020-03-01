@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_tests.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 20:12:52 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/19 16:33:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/01 23:25:47 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static int8_t	other_tests(const char *path, int opt, struct stat buf)
 {
 	if (opt == R_UNATEST)
-		return ((buf.st_mode & S_IRUSR) ^ 1);
+		return ((buf.st_mode & S_IRUSR) ? 0 : 1);
 	if (opt == SS_UNATEST)
 		return (S_ISSOCK(buf.st_mode) ^ 1);
 	if (opt == S_UNATEST)
@@ -24,9 +24,9 @@ static int8_t	other_tests(const char *path, int opt, struct stat buf)
 	if (opt == U_UNATEST && buf.st_mode & S_IXUSR)
 		return ((buf.st_mode & S_ISUID) ? 0 : 1);
 	if (opt == W_UNATEST)
-		return ((buf.st_mode & S_IWUSR) ^ 1);
+		return ((buf.st_mode & S_IWUSR) ? 0 : 1);
 	if (opt == X_UNATEST)
-		return ((buf.st_mode & S_IXUSR) ^ 1);
+		return ((buf.st_mode & S_IXUSR) ? 0 : 1);
 	return ((path[0] == 0) ? 0 : 1);
 }
 
@@ -44,6 +44,8 @@ int8_t			path_tests(const char *path, int opt)
 		return (S_ISCHR(buf.st_mode) ^ 1);
 	if (opt == D_UNATEST)
 		return (S_ISDIR(buf.st_mode) ^ 1);
+	if (opt == E_UNATEST)
+		return (access(path, F_OK == 0) ? 0 : 1);
 	if (opt == F_UNATEST)
 		return (S_ISREG(buf.st_mode) ^ 1);
 	if (opt == G_UNATEST && buf.st_mode & S_IXGRP)

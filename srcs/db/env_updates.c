@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/29 12:36:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/01 23:43:50 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,10 @@ int8_t	update_oldpwd(t_core *shell)
 	db_pwd = NULL;
 	db_oldpwd = NULL;
 	value = NULL;
-	if (shell
-		&& (db_pwd = get_or_create_db(shell, "OLDPWD", EXPORT_VAR | INTERNAL_VAR)) != NULL
-		&& (db_oldpwd = get_or_create_db(shell, "PWD", EXPORT_VAR | INTERNAL_VAR)) != NULL)
+	if (shell && (db_pwd = get_or_create_db(
+					shell, "OLDPWD", EXPORT_VAR | INTERNAL_VAR)) != NULL
+		&& (db_oldpwd = get_or_create_db(
+				shell, "PWD", EXPORT_VAR | INTERNAL_VAR)) != NULL)
 	{
 		value = ft_strdup(db_oldpwd->value);
 		if (value && modify_db(db_pwd, value, 0) != NULL)

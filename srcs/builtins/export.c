@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/29 20:33:13 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/01 23:46:13 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static int8_t	export(t_core *shell, const char *arg, int *ret, u_int64_t opt)
 		ft_strdel(&str);
 		return (SUCCESS);
 	}
-	else if (!str
-	|| !(db = get_or_create_db(shell, str, EXPORT_VAR | ((opt == 0 && ft_strchr(arg, '=')) ? INTERNAL_VAR : 0))))
+	else if (!str || !(db = get_or_create_db(shell, str, EXPORT_VAR
+			| ((opt == 0 && ft_strchr(arg, '=')) ? INTERNAL_VAR : 0))))
 	{
 		ft_strdel(&str);
 		return (FAILURE);

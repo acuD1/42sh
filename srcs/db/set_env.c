@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/27 18:56:18 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/01 23:49:55 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static int8_t	init_env(t_core *shell)
 {
 	static int8_t	(*inits[16])() = {increment_shlvl, update_pwd
 		, update_ifs, update_termsize, create_term, update_histfile
-		, update_hist_size, update_histfile_size, update_version
-		, update_sharp_var, update_process_id, update_shell_name
-		, update_shell_flags, update_exit_status, update_ps1, update_ps2};
+			, update_hist_size, update_histfile_size, update_version
+			, update_sharp_var, update_process_id, update_shell_name
+			, update_shell_flags, update_exit_status, update_ps1, update_ps2};
 	int				i;
 
 	i = 0;
@@ -49,15 +49,15 @@ int8_t			set_env(t_core *shell, char **argv, char **environ)
 	while (*environ && environ[i])
 	{
 		ft_lstappend(&shell->env, ft_lstnew(fetch_db(&shell->db
-			, environ[i], EXPORT_VAR | INTERNAL_VAR), sizeof(t_db)));
+				, environ[i], EXPORT_VAR | INTERNAL_VAR), sizeof(t_db)));
 		i++;
 	}
-    if (search_db(shell->env, "OLDPWD") == NULL)
-    {
-        fetch_db(&shell->db, "OLDPWD", EXPORT_VAR);
-	    ft_strdel(&(shell->db.value));
-	    ft_lstappend(&shell->env, ft_lstnew(&(shell->db), sizeof(t_db)));
-    }
+	if (search_db(shell->env, "OLDPWD") == NULL)
+	{
+		fetch_db(&shell->db, "OLDPWD", EXPORT_VAR);
+		ft_strdel(&(shell->db.value));
+		ft_lstappend(&shell->env, ft_lstnew(&(shell->db), sizeof(t_db)));
+	}
 	if (update_last_arg(shell, argv) != SUCCESS)
 		return (FAILURE);
 	if (init_env(shell) != SUCCESS)

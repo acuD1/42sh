@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/16 22:26:09 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/01 23:53:44 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,8 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 	i = -1;
 	if ((db = search_db(shell->env, "PATH")) == NULL)
 	{
-		if (process->blt)
-			return (FAILURE);
-		process->bin = ft_strdup(process->av[0]);
-		return (SUCCESS);
+		return ((process->blt || (process->bin = ft_strdup(
+							process->av[0])) >= 0) ? FAILURE : SUCCESS);
 	}
 	if (!(split_path = ft_strsplit(db->value, ":")))
 		return (FAILURE);
