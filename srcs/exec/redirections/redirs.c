@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:42 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/29 15:11:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:49:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ int8_t	dup_ofd(t_redir *ptr)
 			if ((dup2(ft_atoi(ptr->op[1]), ptr->io_num[0])) >= 0)
 				return (SUCCESS);
 		}
-		ft_dprintf(STDERR_FILENO, "42sh: %s: Bad file descriptor\n", ptr->op[1]);
+		ft_dprintf(STDERR_FILENO,
+			"42sh: %s: Bad file descriptor\n", ptr->op[1]);
 		return (FAILURE);
 	}
 	return (redir_output(ptr));

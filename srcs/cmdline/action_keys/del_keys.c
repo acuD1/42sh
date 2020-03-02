@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del_keys.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/17 13:19:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:46:35 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void		del_key(t_read *term)
 	int		y;
 	int		w;
 
-    // T SUR GUILLAUME ?
-    // if (term->buffer && term->x >= term->prompt_len * (term->y == 0 ? 1 : 0)
 	if (*term->buffer && term->x >= term->prompt_len * (term->y == 0 ? 1 : 0)
 		&& term->x < term->width)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 17:50:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/01 23:38:32 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:43:28 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 	&& ((argc > 2 + diff && ft_atol(argv[1 + diff], &num) != SUCCESS)
 		|| (argc > 3 + diff && ft_atol(argv[3 + diff], &num) != SUCCESS)))
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: test: %s: integer expression expected\n"
+		ft_dprintf(2, "42sh: test: %s: integer expression expected\n"
 		, (ft_atol(argv[1 + diff], &num) != SUCCESS)
 		? argv[1 + diff] : argv[3 + diff]);
 		return (FAILURE);

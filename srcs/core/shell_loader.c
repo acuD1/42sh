@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loader.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/01 20:51:01 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:48:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	load_noi_mode(t_core *shell)
 		{
 			if (shell->term.buffer[i] < 0)
 			{
-				ft_dprintf(STDERR_FILENO, "42sh: syntax error: invalid token\n");
+				ft_dprintf(STDERR_FILENO,
+					"42sh: syntax error: invalid token\n");
 				quit_shell(shell, 2, FALSE);
 			}
 			i++;

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:15:08 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/21 18:04:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:45:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void			check_all_quotes(char *str, int *index)
 		i = loop_till_next_quote(str, i + 1, '\"');
 	else if (str[i] == '{')
 		i = loop_till_next_quote(str, i, '}');
-	/* else if (str[i] == '(') */
-	/* 	i = loop_till_next_quote(str, i, ')'); */
 	*index = i;
 }
 

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:38:40 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/16 18:34:01 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:41:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ static int8_t	fill_default
 	process_tmp.av[0] = ft_strdup(process->av[i]);
 	process_tmp.av[1] = NULL;
 	if (get_bin_path(shell, &process_tmp) != SUCCESS || process_tmp.bin == NULL)
-		ft_dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process->av[i]);
+		ft_dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n",
+			process->av[i]);
 	else
 		fill_exec(shell, process_tmp.av[0], process_tmp.bin, H_DEF);
 	ft_strdel(&process_tmp.bin);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   infinite_exp.c                                     :+:      :+:    :+:   */
+/*   machine_expansion.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:47:24 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/02 14:34:35 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:50:57 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_expansion			*exp_biteurs(char *data, t_core *shell, t_expansion *exp)
 		if (exp_tok[0] == '$' && !exp_tok[1])
 		{
 			exp->st = E_WORD;
-			ft_strdel(&exp_tok);			
+			ft_strdel(&exp_tok);
 			return (exp);
 		}
 		apply_expansion(data, exp_tok, shell, exp);

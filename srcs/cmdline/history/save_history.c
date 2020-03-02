@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save_history.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 14:27:55 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:47:20 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void			save_history(t_read *term)
 			term->history->content_size = term->history->next->content_size + 1;
 	}
 }
+
 /*
 **	Init history list -> load datas from history file
 */
