@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:47:24 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/07 06:35:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/02 14:34:35 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int			check_tilde_path_exp(char *expandu,
 	len = ft_strlen(str);
 	tmp[2] = ft_strsub(str, exp_size, len - exp_size);
 	tmp[0] = ft_strjoinf(tmp[1], expandu, 1);
-	tmp[0] = ft_strjoinf(tmp[0], tmp[2], 2);
+	tmp[0] = ft_strjoinf(tmp[0], tmp[2], 3);
 	if (is_a_dir(tmp[0]) == EISDIR)
 	{
 		ft_strdel(&tmp[0]);
