@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 18:09:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:59:51 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,8 @@ static int8_t	end_of_file(t_core *shell, const char *buff)
 			write(STDERR_FILENO, "There are stopped jobs.\n", 24);
 			return (FALSE);
 		}
-		write_history(shell);
 		reset_config(shell);
-        write_history(shell);
+		write_history(shell);
 		return (TRUE);
 	}
 	return (FALSE);

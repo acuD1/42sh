@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 15:46:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:00:14 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ u_int8_t		check_backslash_nbr(char *str, int *index)
 	return (0);
 }
 
-static u_int8_t		goto_next_quote(char *buffer, char quote_type, int *i)
+static u_int8_t	goto_next_quote(char *buffer, char quote_type, int *i)
 {
 	while (buffer[(*i)++] != '\0')
 	{
