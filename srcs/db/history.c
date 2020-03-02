@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 20:18:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/01/15 18:03:24 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/02 14:42:50 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int8_t	update_histfile(t_core *shell)
 	if (shell && ptr != NULL
 			&& (db = get_or_create_db(shell, "HISTFILE", INTERNAL_VAR)) != NULL)
 	{
-		value = ft_strjoinf(ft_strjoin("/Users/", ptr)
+		value = ft_strjoinf(ft_strjoinf("/Users/", ptr, 2)
 				, ft_strdup("/.42sh_history"), 4);
 		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);
