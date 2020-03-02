@@ -26,7 +26,7 @@ static int8_t	check_filepath(t_process *process)
 		return (ret);
 	if (process->bin == NULL)
 	{
-		dprintf(STDERR_FILENO, "42sh: %s: command not found\n", process->av[0]);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: command not found\n", process->av[0]);
 		ret = 127;
 	}
 	else if ((ret = ft_access(process->bin, F_OK | X_OK)) != SUCCESS)
@@ -48,14 +48,14 @@ int8_t			call_bin(t_core *shell, t_process *process)
 	if (process->bin == NULL)
 	{
 		if (process->av != NULL)
-			dprintf(STDERR_FILENO
+			ft_dprintf(STDERR_FILENO
 				, "42sh: %s: command not found\n", process->av[0]);
 		exit(127);
 	}
 	if ((ret = check_filepath(process)) == 0)
 	{
 		ret = execve(process->bin, process->av, process->envp);
-		dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);
+		ft_dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);
 		exit(1);
 	}
 	exit(ret);

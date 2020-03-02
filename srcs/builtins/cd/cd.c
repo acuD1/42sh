@@ -21,7 +21,7 @@ static int8_t	cd_oldpwd_error(t_core *shell, t_db *db_oldpwd)
 	tmp = ft_strdup(db_oldpwd->value);
 	tmp = ft_strjoinf(tmp, "/", 1);
 	tmp = ft_strjoinf(tmp, db_pwd->value, 1);
-	dprintf(STDOUT_FILENO, "%s\n", db_oldpwd->value);
+	ft_dprintf(STDOUT_FILENO, "%s\n", db_oldpwd->value);
 	shell->cd.tmp_pwd = ft_strdup(db_oldpwd->value);
 	shell->cd.dash = TRUE;
 	change_dir(shell, tmp);
@@ -48,7 +48,7 @@ static int8_t	cd_oldpwd(t_core *shell)
 		ft_perror(db_oldpwd->value, "cd", errnum);
 		return (1);
 	}
-	dprintf(STDOUT_FILENO, "%s\n", db_oldpwd->value);
+	ft_dprintf(STDOUT_FILENO, "%s\n", db_oldpwd->value);
 	return (change_dir(shell, db_oldpwd->value));
 }
 
@@ -59,7 +59,7 @@ static int8_t	cd_home(t_core *shell)
 
 	ft_bzero(pwd, MAX_PATH);
 	if (getcwd(pwd, MAX_PATH) == NULL && shell->cd.pwd_error == TRUE)
-		dprintf(STDERR_FILENO, "%s %s No such file or directory\n",
+		ft_dprintf(STDERR_FILENO, "%s %s No such file or directory\n",
 			CHDIR_ERR, GETCWD_ERR);
 	if ((var = search_db(shell->env, "HOME")) == NULL)
 	{

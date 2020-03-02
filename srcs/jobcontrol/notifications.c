@@ -34,7 +34,7 @@ void		format_job_info(t_job *job)
 	int		signal;
 
 	signal = (job_is_completed(job)) ? 0 : 7;
-	dprintf(STDERR_FILENO, "[%i]%c  %s\t\t%s\n", job->jobc_id, job->jobc_last
+	ft_dprintf(STDERR_FILENO, "[%i]%c  %s\t\t%s\n", job->jobc_id, job->jobc_last
 		, (job_is_stopped(job) && !job_is_completed(job))
 		? "Stopped" : signal_msg(signal), job->command);
 }
@@ -59,7 +59,7 @@ static void	free_job(t_core *shell, t_lst *job)
 
 void		job_background_notif(t_job *job)
 {
-	printf("[%i] %i\n", job->jobc_id, job->pgid);
+	ft_printf("[%i] %i\n", job->jobc_id, job->pgid);
 }
 
 int8_t		do_job_notification(t_core *shell, t_lst *job)

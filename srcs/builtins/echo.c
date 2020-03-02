@@ -24,7 +24,7 @@ int8_t	builtin_echo(t_core *shell, t_process *process)
 	{
 		if (write(STDOUT_FILENO, process->av[i], ft_strlen(process->av[i])) < 0)
 		{
-			dprintf(STDERR_FILENO
+			ft_dprintf(STDERR_FILENO
 			, "42sh: echo: write error: Bad file descriptor\n");
 			return (1);
 		}

@@ -34,7 +34,7 @@ int8_t		init_shell(t_core *shell, char **av, char **environ)
 	get_core(shell);
 	if (set_env(shell, av, environ) != SUCCESS)
 	{
-		dprintf(STDERR_FILENO, "42sh: Cannot allocate memory\n");
+		ft_dprintf(STDERR_FILENO, "42sh: Cannot allocate memory\n");
 		return (EXIT_FAILURE);
 	}
 	if (isatty(shell->terminal) == TRUE)

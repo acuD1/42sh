@@ -40,7 +40,7 @@ static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 	&& ((argc > 2 + diff && ft_atol(argv[1 + diff], &num) != SUCCESS)
 		|| (argc > 3 + diff && ft_atol(argv[3 + diff], &num) != SUCCESS)))
 	{
-		dprintf(STDERR_FILENO, "42sh: test: %s: integer expression expected\n"
+		ft_dprintf(STDERR_FILENO, "42sh: test: %s: integer expression expected\n"
 		, (ft_atol(argv[1 + diff], &num) != SUCCESS)
 		? argv[1 + diff] : argv[3 + diff]);
 		return (FAILURE);
@@ -48,13 +48,13 @@ static int8_t	parse_testblt(int argc, char **argv, int diff, int *opt)
 	if ((argc > 4 + diff && *opt > Z_UNATEST)
 		|| (argc > 3 + diff && *opt <= Z_UNATEST && *opt >= 0))
 	{
-		dprintf(STDERR_FILENO, "42sh: test: too many arguments\n");
+		ft_dprintf(STDERR_FILENO, "42sh: test: too many arguments\n");
 		return (FAILURE);
 	}
 	if (*opt < 0 || (*opt > Z_UNATEST && argc < 4 + diff)
 		|| (*opt <= Z_UNATEST && *opt >= 0 && argc > 3 + diff))
 	{
-		dprintf(STDERR_FILENO, "42sh: test: %s: %s operator expected\n"
+		ft_dprintf(STDERR_FILENO, "42sh: test: %s: %s operator expected\n"
 		, argv[1 + diff], (*opt <= Z_UNATEST) ? "binary" : "unary");
 		return (FAILURE);
 	}

@@ -87,7 +87,7 @@ int8_t	dup_ifd(t_redir *ptr)
 		ptr->dup_fd[0] = ft_atoi(ptr->op[1]);
 		if ((ptr->dup_fd[0] = dup2(ptr->dup_fd[0], ptr->io_num[0])) < 0)
 		{
-			dprintf(
+			ft_dprintf(
 				STDERR_FILENO, "42sh: %s: Bad file descriptor\n", ptr->op[1]);
 			return (FAILURE);
 		}
@@ -113,7 +113,7 @@ int8_t	dup_ofd(t_redir *ptr)
 			if ((dup2(ft_atoi(ptr->op[1]), ptr->io_num[0])) >= 0)
 				return (SUCCESS);
 		}
-		dprintf(STDERR_FILENO, "42sh: %s: Bad file descriptor\n", ptr->op[1]);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: Bad file descriptor\n", ptr->op[1]);
 		return (FAILURE);
 	}
 	return (redir_output(ptr));

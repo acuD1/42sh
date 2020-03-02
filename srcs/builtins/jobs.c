@@ -22,10 +22,10 @@ static void	print_longjob(t_job *job)
 	{
 		process = ((t_process *)ptr->content);
 		if (ptr == job->process_list)
-			printf("[%d]%c %d %-24s %s\n", job->jobc_id, job->jobc_last
+			ft_printf("[%d]%c %d %-24s %s\n", job->jobc_id, job->jobc_last
 			, process->pid, signal_msg(process->status), process->command);
 		else
-			printf("     %d %24s%s\n", process->pid
+			ft_printf("     %d %24s%s\n", process->pid
 			, signal_msg(process->status), process->command);
 		ptr = ptr->next;
 	}
@@ -35,15 +35,15 @@ static void	print_job(t_job *job, u_int64_t opt, const char *name)
 {
 	if (!job)
 	{
-		dprintf(STDERR_FILENO, "42sh: jobs: %s: no such job\n", name);
+		ft_dprintf(STDERR_FILENO, "42sh: jobs: %s: no such job\n", name);
 		return ;
 	}
 	if (opt & (1ULL << 15))
-		printf("%d\n", job->pgid);
+		ft_printf("%d\n", job->pgid);
 	else if (opt & (1ULL << 11))
 		print_longjob(job);
 	else
-		printf("[%d]%c  %s\t\t%s\n", job->jobc_id, job->jobc_last
+		ft_printf("[%d]%c  %s\t\t%s\n", job->jobc_id, job->jobc_last
 		, (job_is_stopped(job)) ? "Stopped" : "Done", job->command);
 }
 

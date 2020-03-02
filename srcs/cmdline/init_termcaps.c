@@ -28,7 +28,7 @@ int8_t			get_size(t_read *term)
 		if ((term->ws_col = tgetnum("co")) < 0
 			|| (term->ws_li = tgetnum("li")) < 0)
 		{
-			dprintf(STDERR_FILENO, "Ioctl and Tgetnum error");
+			ft_dprintf(STDERR_FILENO, "Ioctl and Tgetnum error");
 			quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
 			return (FAILURE);
 		}
@@ -69,17 +69,17 @@ int8_t			init_termcaps(t_read *term)
 	sh = getenv("TERM");
 	if (tgetent(NULL, ((sh) ? sh : "xterm-256color")) == 0)
 	{
-		dprintf(STDERR_FILENO, "42sh: tgetent error\n");
+		ft_dprintf(STDERR_FILENO, "42sh: tgetent error\n");
 		return (FAILURE);
 	}
 	if (stock_termcaps(term) != SUCCESS)
 	{
-		dprintf(STDERR_FILENO, "42sh: error while getting termcaps\n");
+		ft_dprintf(STDERR_FILENO, "42sh: error while getting termcaps\n");
 		return (FAILURE);
 	}
 	if (get_size(term) != SUCCESS)
 	{
-		dprintf(STDERR_FILENO, "42sh: error while getting terminal size\n");
+		ft_dprintf(STDERR_FILENO, "42sh: error while getting terminal size\n");
 		return (FAILURE);
 	}
 	return (SUCCESS);

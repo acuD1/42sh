@@ -18,10 +18,10 @@ static int	can_bg_run(t_core *shell, char **argv)
 
 	argc = ft_tablen(argv);
 	if (!(shell->is_interactive))
-		dprintf(STDERR_FILENO, "42sh: bg: no job control\n");
+		ft_dprintf(STDERR_FILENO, "42sh: bg: no job control\n");
 	else if ((argc == 1 || (argc == 2 && ft_strcmp(argv[1], "--") == 0))
 		&& get_job(shell->launched_jobs, NULL) == NULL)
-		dprintf(STDERR_FILENO, "42sh: bg: current: no such job\n");
+		ft_dprintf(STDERR_FILENO, "42sh: bg: current: no such job\n");
 	else
 		return (SUCCESS);
 	return (FAILURE);
@@ -36,7 +36,7 @@ int8_t		builtin_bg(t_core *shell, t_process *process)
 	if (can_bg_run(shell, process->av) != SUCCESS)
 		return (1);
 	if (process->av[i] && process->av[i][0] == '-' && process->av[i][1] != 0)
-		dprintf(STDERR_FILENO
+		ft_dprintf(STDERR_FILENO
 		, "42sh: bg: -%c: invalid option\nfb: usage: fb [jobspec]\n"
 		, process->av[i][1]);
 	while (process->av[i])
@@ -44,7 +44,7 @@ int8_t		builtin_bg(t_core *shell, t_process *process)
 		job = get_job(shell->launched_jobs, process->av[i]);
 		if (!job)
 		{
-			dprintf(STDERR_FILENO, "42sh: bg: %s: no such job\n"
+			ft_dprintf(STDERR_FILENO, "42sh: bg: %s: no such job\n"
 			, (process->av[i]) ? process->av[1] : "current");
 			return (1);
 		}

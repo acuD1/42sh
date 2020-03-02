@@ -15,13 +15,13 @@
 void	print_usage(const char *name, int c, const char *usage)
 {
 	if (c > 0)
-		dprintf(STDERR_FILENO, "42sh: %s: -%c: invalid option\n", name, c);
-	dprintf(STDERR_FILENO, "%s: usage: %s\n", name, usage);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: -%c: invalid option\n", name, c);
+	ft_dprintf(STDERR_FILENO, "%s: usage: %s\n", name, usage);
 }
 
 void	print_and_quit(t_core *shell, const char *message)
 {
-	dprintf(STDERR_FILENO, "%s", message);
+	ft_dprintf(STDERR_FILENO, "%s", message);
 	quit_shell(shell, EXIT_FAILURE, FALSE);
 }
 
@@ -35,7 +35,7 @@ void	ft_perror(const char *s, const char *name, int errnum)
 		, 0, 0, 0, 0, 0, 0, 0, "File name too long", 0, 0, 0, 0, 0, 0, 0};
 
 	if (name != NULL)
-		dprintf(STDERR_FILENO, "42sh: %s: %s: %s\n", name, s, error[errnum]);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: %s: %s\n", name, s, error[errnum]);
 	else
-		dprintf(STDERR_FILENO, "42sh: %s: %s\n", s, error[errnum]);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: %s\n", s, error[errnum]);
 }

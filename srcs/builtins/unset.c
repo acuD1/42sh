@@ -48,7 +48,7 @@ int8_t			builtin_unset(t_core *shell, t_process *process)
 		if (check_invalid_identifiers(process->av[i], "") != SUCCESS)
 		{
 			ret = 1;
-			dprintf(STDERR_FILENO
+			ft_dprintf(STDERR_FILENO
 			, "42sh: unset: `%s': not a valid identifier\n", process->av[i]);
 		}
 		else

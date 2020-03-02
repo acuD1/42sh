@@ -44,7 +44,7 @@ int8_t		mark_process_status
 	{
 		if (WIFSTOPPED(status))
 		{
-			printf("\n");
+			ft_printf("\n");
 			process->status = 18;
 			shell->status = 128 + 18;
 			process->stopped = TRUE;

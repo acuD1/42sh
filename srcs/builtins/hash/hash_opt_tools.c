@@ -22,18 +22,18 @@ void		print_hash_map(t_core *shell, enum e_hash fmt)
 	if ((map = shell->hash.map) == NULL)
 		return ;
 	if (fmt == H_DEF)
-		dprintf(STDOUT_FILENO, "hits\tcommand\n");
+		ft_dprintf(STDOUT_FILENO, "hits\tcommand\n");
 	while (++i < shell->hash.size)
 	{
 		cur_map = map[i];
 		while (cur_map)
 		{
 			if (fmt == H_DEF)
-				dprintf(STDOUT_FILENO, "%4d\t%s\n",
+				ft_dprintf(STDOUT_FILENO, "%4d\t%s\n",
 						((t_db *)cur_map->content)->hit,
 						((t_db *)cur_map->content)->value);
 			if (fmt == H_LISTED)
-				dprintf(STDOUT_FILENO, "builtin hash -p %s %s\n",
+				ft_dprintf(STDOUT_FILENO, "builtin hash -p %s %s\n",
 						((t_db *)cur_map->content)->value,
 						((t_db *)cur_map->content)->key);
 			cur_map = cur_map->next;
@@ -61,7 +61,7 @@ void		hash_key_remover(t_core *shell, char *process)
 		prev = map;
 		if ((map = map->next) == NULL)
 		{
-			dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process);
+			ft_dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process);
 			return ;
 		}
 	}
@@ -93,12 +93,12 @@ static void	find_hash_sub_map(t_process *process, t_lst *map, size_t i, int ac)
 		if (ft_strequ(process->av[i], ((t_db *)sub_map->content)->key))
 		{
 			if (ac > 3)
-				dprintf(STDOUT_FILENO, "%-*s%s\n",
+				ft_dprintf(STDOUT_FILENO, "%-*s%s\n",
 						get_hash_t_pad(((t_db *)sub_map->content)->key),
 						((t_db *)sub_map->content)->key,
 						((t_db *)sub_map->content)->value);
 			else
-				dprintf(STDOUT_FILENO, "%s\n",
+				ft_dprintf(STDOUT_FILENO, "%s\n",
 						((t_db *)sub_map->content)->value);
 			((t_db *)sub_map->content)->hit += 1;
 			break ;
@@ -106,7 +106,7 @@ static void	find_hash_sub_map(t_process *process, t_lst *map, size_t i, int ac)
 		sub_map = sub_map->next;
 	}
 	if (sub_map == NULL)
-		dprintf(STDERR_FILENO,
+		ft_dprintf(STDERR_FILENO,
 				"42sh: hash: %s: not found\n", process->av[i]);
 }
 
@@ -124,7 +124,7 @@ void		find_hash(t_core *shell, t_process *process, int ac)
 		shell->hash.value = get_hash(process->av[i], shell->hash.size);
 		if (map == NULL || map[shell->hash.value] == NULL)
 		{
-			dprintf(STDERR_FILENO,
+			ft_dprintf(STDERR_FILENO,
 					"42sh: hash: %s: not found\n", process->av[i]);
 			i++;
 			continue;

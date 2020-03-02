@@ -62,7 +62,7 @@ void	set_termconfig(t_core *shell)
 {
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->new_t)) == FAILURE)
 	{
-		dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
+		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
 		quit_shell(shell, 1, FALSE);
 	}
 }

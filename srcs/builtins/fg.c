@@ -20,21 +20,21 @@ int8_t	builtin_fg(t_core *shell, t_process *process)
 	i = (process->av[1] && ft_strcmp(process->av[1], "--") == 0) ? 2 : 1;
 	if (!(shell->is_interactive))
 	{
-		dprintf(STDERR_FILENO, "42sh: fg: no job control\n");
+		ft_dprintf(STDERR_FILENO, "42sh: fg: no job control\n");
 		return (1);
 	}
 	if (process->av[i] && process->av[i][0] == '-' && process->av[i][1] != 0)
-		dprintf(STDERR_FILENO
+		ft_dprintf(STDERR_FILENO
 		, "42sh: fg: -%c: invalid option\nfg: usage: fg [jobspec]\n"
 		, process->av[i][1]);
 	job = get_job(shell->launched_jobs, process->av[i]);
 	if (!job)
 	{
-		dprintf(STDERR_FILENO, "42sh: fg: %s: no such job\n"
+		ft_dprintf(STDERR_FILENO, "42sh: fg: %s: no such job\n"
 		, (process->av[i]) ? process->av[i] : "current");
 		return (1);
 	}
-	printf("%s\n", job->command);
+	ft_printf("%s\n", job->command);
 	continue_job(shell, job, TRUE);
 	return (SUCCESS);
 }

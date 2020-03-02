@@ -91,7 +91,7 @@ static int8_t	fill_default
 	process_tmp.av[0] = ft_strdup(process->av[i]);
 	process_tmp.av[1] = NULL;
 	if (get_bin_path(shell, &process_tmp) != SUCCESS || process_tmp.bin == NULL)
-		dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process->av[i]);
+		ft_dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process->av[i]);
 	else
 		fill_exec(shell, process_tmp.av[0], process_tmp.bin, H_DEF);
 	ft_strdel(&process_tmp.bin);

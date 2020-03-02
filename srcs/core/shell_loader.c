@@ -23,7 +23,7 @@ void	load_noi_mode(t_core *shell)
 		{
 			if (shell->term.buffer[i] < 0)
 			{
-				dprintf(STDERR_FILENO, "42sh: syntax error: invalid token\n");
+				ft_dprintf(STDERR_FILENO, "42sh: syntax error: invalid token\n");
 				quit_shell(shell, 2, FALSE);
 			}
 			i++;

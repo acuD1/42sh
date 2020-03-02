@@ -17,7 +17,7 @@ static int8_t	change_dir_perm_error
 	(t_core *shell, const char *path, int errnum)
 {
 	if (shell->cd.pwd_error == TRUE)
-		dprintf(STDERR_FILENO, "%s %s Permission denied\n",
+		ft_dprintf(STDERR_FILENO, "%s %s Permission denied\n",
 			CHDIR_ERR, GETCWD_ERR);
 	else
 		errnum = ENOTDIR;
@@ -77,7 +77,7 @@ int8_t			change_dir(t_core *shell, const char *path)
 	{
 		cd_init_cache(shell, buffer, pwd, db);
 		get_canonical_path(shell, path, buffer, pwd);
-		dprintf(STDERR_FILENO, "%s %s No such file or directory\n",
+		ft_dprintf(STDERR_FILENO, "%s %s No such file or directory\n",
 			CHDIR_ERR, GETCWD_ERR);
 		return (update_pwds(shell, buffer, path));
 	}

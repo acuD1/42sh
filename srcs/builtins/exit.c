@@ -28,7 +28,7 @@ int8_t	builtin_exit(t_core *shell, t_process *process)
 		quit_shell(shell, shell->status, 1);
 	if (ft_atol(process->av[1], &exit_value) != SUCCESS)
 	{
-		dprintf(STDERR_FILENO
+		ft_dprintf(STDERR_FILENO
 		, "exit\n42sh: exit: %s: numeric argument required\n", process->av[1]);
 		quit_shell(shell, 2, FALSE);
 	}

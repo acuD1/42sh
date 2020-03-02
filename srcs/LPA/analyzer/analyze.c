@@ -30,10 +30,8 @@ t_analyzer	*ionbr_analyze(t_analyzer *anal, t_core *shell)
 
 t_analyzer	*error_analyze(t_analyzer *anal, t_core *shell)
 {
-	printf("JE DOIS GERER CE CAS LA %s %u\n",
-	((t_token*)anal->lexer->content)->data, anal->state);
 	anal->state = A_STOP;
-	(void)shell;
+	shell->status = 2;
 	return (anal);
 }
 

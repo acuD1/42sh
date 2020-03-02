@@ -36,7 +36,7 @@ int8_t	hash_p(t_core *shell, t_process *process, int ac)
 	i = 3;
 	if (ac == 2)
 	{
-		dprintf(STDERR_FILENO, "42sh: hash: -p: option requires an argument\n");
+		ft_dprintf(STDERR_FILENO, "42sh: hash: -p: option requires an argument\n");
 		print_usage("hash", 0, "[-rl] [-p pathname] [-dt] [name ...]");
 		return (SUCCESS);
 	}
@@ -46,7 +46,7 @@ int8_t	hash_p(t_core *shell, t_process *process, int ac)
 	{
 		while (process->av[i])
 		{
-			dprintf(STDERR_FILENO, "42sh: hash: %s: Is a directoy\n",
+			ft_dprintf(STDERR_FILENO, "42sh: hash: %s: Is a directoy\n",
 					process->av[2]);
 			i++;
 		}
@@ -73,6 +73,6 @@ int8_t	hash_t(t_core *shell, t_process *process, int ac)
 	if (ac > 2)
 		find_hash(shell, process, ac);
 	else
-		dprintf(STDERR_FILENO, "42sh: hash: -t: option requires an argument\n");
+		ft_dprintf(STDERR_FILENO, "42sh: hash: -t: option requires an argument\n");
 	return (SUCCESS);
 }

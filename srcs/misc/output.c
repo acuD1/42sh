@@ -14,7 +14,7 @@
 
 void	version(t_core *shell)
 {
-	dprintf(STDOUT_FILENO,
+	ft_dprintf(STDOUT_FILENO,
 		"%s|%sv.%d_%d_%d%s|%s 42sh%s\n\n",
 		C_G, C_X,
 		shell->build.release, shell->build.version, shell->build.patch,

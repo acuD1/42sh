@@ -34,7 +34,7 @@ static void		print_internal_vars(t_core *shell)
 	{
 		if (((t_db*)ptr->content)->type & INTERNAL_VAR)
 		{
-			dprintf(STDOUT_FILENO, "%s=%s\n", ((t_db*)ptr->content)->key
+			ft_dprintf(STDOUT_FILENO, "%s=%s\n", ((t_db*)ptr->content)->key
 					, ((t_db*)ptr->content)->value);
 		}
 		ptr = ptr->next;

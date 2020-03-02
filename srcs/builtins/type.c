@@ -20,7 +20,7 @@ static int8_t	type(t_core *shell, char *path)
 	process.blt = TRUE;
 	if (is_a_blt(path) != FAILURE)
 	{
-		printf("%s is a shell builtin\n", path);
+		ft_printf("%s is a shell builtin\n", path);
 		return (SUCCESS);
 	}
 	if ((process.av = (char**)malloc(sizeof(char*) * 2)) == NULL)
@@ -28,12 +28,12 @@ static int8_t	type(t_core *shell, char *path)
 	process.av[0] = path;
 	process.av[1] = NULL;
 	if (locate_hash(shell, &process) == SUCCESS)
-		printf("%s is hashed (%s)\n", path, process.bin);
+		ft_printf("%s is hashed (%s)\n", path, process.bin);
 	else if (get_bin(shell, &process) == SUCCESS
 		&& access(process.bin, F_OK | X_OK) == 0)
-		printf("%s is %s\n", path, process.bin);
+		ft_printf("%s is %s\n", path, process.bin);
 	else
-		dprintf(STDERR_FILENO, "42sh: type: %s: not found\n", path);
+		ft_dprintf(STDERR_FILENO, "42sh: type: %s: not found\n", path);
 	ft_strdel(&process.bin);
 	free(process.av);
 	return (SUCCESS);

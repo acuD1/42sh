@@ -21,9 +21,9 @@ static int8_t	pwd_opt_parser(int ac, t_process *process, t_db *db, char *pwd)
 
 	options = ft_get_options(ac, process->av, "LP");
 	if (options & (1ULL << 37))
-		dprintf(STDOUT_FILENO, "%s\n", db->value);
+		ft_dprintf(STDOUT_FILENO, "%s\n", db->value);
 	else if (options & (1ULL << 41))
-		dprintf(STDOUT_FILENO, "%s\n", getcwd(pwd, MAX_PATH));
+		ft_dprintf(STDOUT_FILENO, "%s\n", getcwd(pwd, MAX_PATH));
 	else
 		print_usage("pwd", options % 128, PWD_USAGE);
 	return (SUCCESS);
@@ -58,7 +58,7 @@ int8_t			builtin_pwd(t_core *shell, t_process *process)
 		&& (errnum = pwd_check_path(db->value)) != SUCCESS)
 	{
 		shell->cd.pwd_error = TRUE;
-		dprintf(STDERR_FILENO, "|%d| %s %s", errnum, PWD_ERR, GETCWD_ERR);
+		ft_dprintf(STDERR_FILENO, "|%d| %s %s", errnum, PWD_ERR, GETCWD_ERR);
 		if (errnum == EACCES)
 			ft_putstr_fd(" Permission denied\n", STDERR_FILENO);
 		else
@@ -67,6 +67,6 @@ int8_t			builtin_pwd(t_core *shell, t_process *process)
 	}
 	if (ac > 1)
 		return (pwd_opt_parser(ac, process, db, pwd));
-	dprintf(STDOUT_FILENO, "%s\n", db->value);
+	ft_dprintf(STDOUT_FILENO, "%s\n", db->value);
 	return (SUCCESS);
 }

@@ -15,16 +15,16 @@
 static void	print_shell_usage(int option, int fd)
 {
 	if (fd == STDERR_FILENO)
-		dprintf(fd, "42sh: -%c: invalid option\n", option);
-	dprintf(fd, "Usage: 42sh [option] ...\n");
-	dprintf(fd, "Shell options:\n\t-vh or -c command\n");
+		ft_dprintf(fd, "42sh: -%c: invalid option\n", option);
+	ft_dprintf(fd, "Usage: 42sh [option] ...\n");
+	ft_dprintf(fd, "Shell options:\n\t-vh or -c command\n");
 }
 
 static void	opt_h(int ac, char **av, t_core *shell)
 {
 	(void)ac;
 	(void)av;
-	dprintf(STDERR_FILENO, "42sh, version %d.%d.%d\n",
+	ft_dprintf(STDERR_FILENO, "42sh, version %d.%d.%d\n",
 		shell->build.release, shell->build.version, shell->build.patch);
 	print_shell_usage(0, STDOUT_FILENO);
 	quit_shell(shell, EXIT_SUCCESS, FALSE);
@@ -34,7 +34,7 @@ static void	opt_v(int ac, char **av, t_core *shell)
 {
 	(void)ac;
 	(void)av;
-	dprintf(STDOUT_FILENO, "42sh, version %d.%d.%d\n",
+	ft_dprintf(STDOUT_FILENO, "42sh, version %d.%d.%d\n",
 		shell->build.release, shell->build.version, shell->build.patch);
 }
 
@@ -43,12 +43,12 @@ static void	opt_c(int ac, char **av, t_core *shell)
 	(void)ac;
 	if (!av[2])
 	{
-		dprintf(STDERR_FILENO, "42sh: -c: option requires an argument\n");
+		ft_dprintf(STDERR_FILENO, "42sh: -c: option requires an argument\n");
 		quit_shell(shell, 2, FALSE);
 	}
 	shell->is_interactive = FALSE;
 	shell->term.buffer = ft_strdup(av[2]);
-	dprintf(STDERR_FILENO, "%s\n", shell->term.buffer);
+	ft_dprintf(STDERR_FILENO, "%s\n", shell->term.buffer);
 	lexer_parser_analyzer(shell);
 	if (task_master(shell) != SUCCESS)
 		return (quit_shell(shell, EXIT_FAILURE, FALSE));

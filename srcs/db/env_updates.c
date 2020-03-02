@@ -36,7 +36,7 @@ int8_t	increment_shlvl(t_core *shell)
 		else
 			new_value = ((value & 8000000000000000) >> 32) + value & 0xFFF;
 		if (value > 999)
-			dprintf(STDERR_FILENO
+			ft_dprintf(STDERR_FILENO
 			, "42sh: warning: shell level (%lli) too high, resetting to 1\n"
 			, value);
 		shlvl = (value == 999) ? ft_strnew(0) : ft_itoa(new_value + 1);

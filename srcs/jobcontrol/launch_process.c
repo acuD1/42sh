@@ -30,7 +30,7 @@ static void	put_process_in_grp(t_core *shell, t_process *process)
 		process->pgid = process->pid;
 	if (setpgid(process->pid, process->pgid) != SUCCESS)
 	{
-		dprintf(STDERR_FILENO, "42sh: setpgid error\n");
+		ft_dprintf(STDERR_FILENO, "42sh: setpgid error\n");
 		exit(EXIT_FAILURE);
 	}
 }

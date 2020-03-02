@@ -41,7 +41,7 @@ static int8_t	export(t_core *shell, const char *arg, int *ret, u_int64_t opt)
 	if (str && (check_invalid_identifiers(str, "=") || ft_isdigit(arg[0]) != 0))
 	{
 		*ret = 1;
-		dprintf(STDERR_FILENO
+		ft_dprintf(STDERR_FILENO
 		, "42sh: export: `%s': not a valid identifier\n", arg);
 		ft_strdel(&str);
 		return (SUCCESS);
@@ -70,9 +70,9 @@ static void		export_display(t_core *shell)
 		if (ptr->type & EXPORT_VAR)
 		{
 			if (ptr->value)
-				printf("export %s=\"%s\"\n", ptr->key, ptr->value);
+				ft_printf("export %s=\"%s\"\n", ptr->key, ptr->value);
 			else
-				printf("export %s\n", ptr->key);
+				ft_printf("export %s\n", ptr->key);
 		}
 		db = db->next;
 	}
