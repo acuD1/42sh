@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 15:12:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:07:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int8_t			fc_error(u_int64_t opt, int err_num)
 	if (err_num == 0)
 		ft_dprintf(2, "42sh: fc: history specification out of range\n");
 	else if (err_num == 1)
-		print_usage("fc", opt % 128, "fc: usage: fc [-e ename] [-lnr] [first]\
-			[last] or fc -s [pat=rep] [command]");
+		print_usage("fc", opt % 128,
+"fc: usage: fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]");
 	else if (err_num == 2)
 	{
 		ft_dprintf(2, "42sh: fc: -e: option requires an argument\n");

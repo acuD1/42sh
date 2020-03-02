@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 15:58:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:06:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int8_t	fc_exec_cmd(t_core *shell, t_cmd cmd)
 		do_job_notification(shell, shell->launched_jobs);
 		if (task_master(shell) != SUCCESS)
 		{
+			ft_strdel(&cmd.editor);
 			close(cmd.fd);
 			return (FAILURE);
 		}
@@ -30,6 +31,7 @@ static int8_t	fc_exec_cmd(t_core *shell, t_cmd cmd)
 	close(cmd.fd);
 	ft_strdel(&shell->term.buffer);
 	shell->term.buffer = ft_memalloc(BUFF_SIZE);
+	ft_strdel(&cmd.editor);
 	return (SUCCESS);
 }
 
@@ -40,9 +42,17 @@ static int8_t	fc_editor(t_core *shell, t_cmd cmd)
 	command = ft_strjoin(cmd.editor, FC_TMP_FILE);
 	if ((cmd.fd = open(FC_TMP_FILE, O_RDONLY,
 									S_IRUSR | S_IRGRP | S_IROTH)) == -1)
+	{
+		ft_strdel(&command);
+		ft_strdel(&cmd.editor);
 		return (FAILURE);
+	}
 	if (fc_launch_editor(shell, ft_strsplit(command, SPACE)) == FAILURE)
+	{
+		ft_strdel(&command);
+		ft_strdel(&cmd.editor);
 		return (FAILURE);
+	}
 	ft_strdel(&command);
 	ft_strdel(&shell->term.buffer);
 	if (fc_exec_cmd(shell, cmd) == FAILURE)
@@ -68,7 +78,6 @@ int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 	t_cmd		cmd;
 
 	ft_bzero(&cmd, sizeof(t_cmd));
-	cmd.editor = get_editor(process->av, opt);
 	if ((cmd.fd = open(FC_TMP_FILE,
 		(O_CREAT | O_WRONLY | O_TRUNC), (S_IRUSR | S_IWUSR))) == FAILURE)
 		return (fc_error(opt, 4));
@@ -76,5 +85,6 @@ int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 		return (fc_error(opt, 0));
 	get_entries(shell->term.history, &cmd, opt);
 	sort_print_cmd(cmd, shell->term.history, opt);
+	cmd.editor = get_editor(process->av, opt);
 	return (fc_editor(shell, cmd));
 }
