@@ -37,7 +37,6 @@ static void			expansion_tok(t_core *shell, t_process *process)
 		}
 		lst = lst->next;
 	}
-	ft_freetokenlist(&process->tok_list);
 }
 
 static void			expansion_assign(t_core *shell, t_process *process)
