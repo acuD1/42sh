@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/29 19:55:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/02 14:26:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int8_t	cd_opt_parser(t_core *shell, int ac, t_process *process)
 	if ((process->av[1][0] != '-' && ac > 2) || (process->av[1][0] == '-' && ac > 3))
 	{
 		dprintf(STDERR_FILENO, "42sh: cd: too many arguments\n");
-		return (SUCCESS);
+		return (1);
 	}
 	if (options & (1ULL << 37))
 		return (change_dir(shell, process->av[2]));
