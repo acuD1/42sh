@@ -6,7 +6,7 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 00:16:37 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/05 00:16:39 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:41:02 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char			*egal_format(char **tablo, t_core *shell)
 		add_assign_env(shell, tablo[0], value);
 	}
 	ft_tabfree(tablo);
-	return (value);
+	return (ft_strdup(value));
 }
 
 char			*underniercaspourlaroute(char **tablo, t_core *shell)
