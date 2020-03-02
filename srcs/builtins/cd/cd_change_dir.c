@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 16:41:27 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/29 15:48:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:27:15 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static void		cd_init_cache(t_core *shell, char *buffer, char *pwd, t_db *db)
 	ft_bzero(buffer, MAX_PATH + 1);
 	ft_bzero(pwd, MAX_PATH + 1);
 	db = get_or_create_db(shell,
-			shell->cd.no_symbolic == TRUE ? "PWD" : "OLDPWD", EXPORT_VAR | INTERNAL_VAR);
+			shell->cd.no_symbolic == TRUE ? "PWD" : "OLDPWD",
+			EXPORT_VAR | INTERNAL_VAR);
 	ft_strcpy(pwd, db->value);
 }
 

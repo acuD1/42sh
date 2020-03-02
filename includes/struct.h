@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/27 15:31:30 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:24:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,8 @@ typedef struct				s_cmd
 /*
 ** EXP
 */
-typedef struct				s_expansion t_expansion;
+
+typedef struct s_expansion	t_expansion;
 typedef char				*(*t_exp)(const char *, t_core *);
 typedef t_expansion			*(*t_inhi)(char *, t_core *, t_expansion *);
 
@@ -219,17 +220,17 @@ typedef struct				s_exp_size
 	char					*res;
 }							t_exp_size;
 
-typedef struct				s_expansion
+struct						s_expansion
 {
 	t_exp					sionat[9];
 	t_inhi					biteurs[5];
 	int						erience;
-	int		 				index;
+	int						index;
 	int						discarded;
 	char					*res;
 	enum e_estate			st;
 	enum e_estate			quotus;
-}							t_expansion;
+};
 
 typedef struct				s_exp_token
 {

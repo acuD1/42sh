@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   param_expansion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:16:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/29 19:18:55 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:50:33 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char			*get_brace_param(char *str, t_core *shell)
 		if (str[i] == '\n')
 		{
 			ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
-				return (NULL);
+			return (NULL);
 		}
 		if (!check_brackets_inbracket(&count, str[i]))
 			break ;

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:29:42 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/29 15:48:52 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:39:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ int8_t			cd_update_pwd(t_core *shell, const char *pwd, const char *path)
 	value = NULL;
 	ft_bzero(buf, MAX_PATH + 1);
 	if (shell != NULL
-		&& (db_pwd = get_or_create_db(shell, "PWD", EXPORT_VAR | INTERNAL_VAR)) != NULL)
+		&& (db_pwd = get_or_create_db(shell, "PWD", EXPORT_VAR
+						| INTERNAL_VAR)) != NULL)
 	{
 		if (pwd)
 			lstat(pwd, &db_stat);
 		if (shell->cd.pwd_error >= TRUE)
 			value = cd_pwd_error_handler(shell, path, value);
-		else if (shell->cd.no_symbolic == TRUE
-				|| S_ISLNK(db_stat.st_mode) == FALSE)
+		else if (shell->cd.no_symbolic == TRUE || !(S_ISLNK(db_stat.st_mode)))
 			value = ft_strdup(getcwd(buf, MAX_PATH));
 		else
 			value = ft_strdup(pwd);

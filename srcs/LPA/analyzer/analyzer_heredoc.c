@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer_heredoc.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:13:54 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/29 15:49:19 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:44:48 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ t_analyzer			*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 		anal = load_heredoc_noimode(anal, shell);
 	if (!shell->heredoc)
 		return (exit_lpa(anal, shell));
-	shell->term.buffer = ft_strjoinf(shell->term.buffer, anal->redir.heredoc, 1);
+	shell->term.buffer = ft_strjoinf(shell->term.buffer,
+							anal->redir.heredoc, 1);
 	save_history(&shell->term);
 	anal->state = A_WORD;
 	shell->term.flag = FALSE;

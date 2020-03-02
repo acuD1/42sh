@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   call_bin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/19 00:26:47 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:49:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static int8_t	check_filepath(t_process *process)
 		return (ret);
 	if (process->bin == NULL)
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: %s: command not found\n", process->av[0]);
+		ft_dprintf(STDERR_FILENO,
+			"42sh: %s: command not found\n", process->av[0]);
 		ret = 127;
 	}
 	else if ((ret = ft_access(process->bin, F_OK | X_OK)) != SUCCESS)
