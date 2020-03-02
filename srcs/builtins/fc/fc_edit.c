@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/22 21:36:49 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:58:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 	cmd.editor = get_editor(process->av, opt);
 	if ((cmd.fd = open(FC_TMP_FILE,
 		(O_CREAT | O_WRONLY | O_TRUNC), (S_IRUSR | S_IWUSR))) == FAILURE)
-		return (fc_error(opt, 3));
-	get_range(process->av, &cmd);
+		return (fc_error(opt, 4));
+	if (ft_tablen(process->av) > 1 && get_range(process->av, &cmd) == FALSE)
+		return (fc_error(opt, 0));
 	get_entries(shell->term.history, &cmd, opt);
 	sort_print_cmd(cmd, shell->term.history, opt);
 	return (fc_editor(shell, cmd));

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 15:48:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:02:42 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,30 +67,11 @@ static int8_t	end_of_file(t_core *shell, const char *buff)
 			write(STDERR_FILENO, "There are stopped jobs.\n", 24);
 			return (FALSE);
 		}
-		write_history(shell);
 		reset_config(shell);
 		write_history(shell);
 		return (TRUE);
 	}
 	return (FALSE);
-}
-
-void			get_prompt_value(t_core *shell, const char *key)
-{
-	t_db	*db;
-
-	db = NULL;
-	if ((db = search_db(shell->env, key)) == NULL)
-	{
-		shell->term.prompt = ft_strnew(0);
-		return ;
-	}
-	if (!ft_strcmp(db->value, PS1))
-		shell->term.prompt = ft_strsub(db->value, 1, 10);
-	else if (!ft_strcmp(db->value, PS2))
-		shell->term.prompt = ft_strsub(db->value, 1, 2);
-	else
-		shell->term.prompt = ft_strdup(db->value);
 }
 
 int8_t			init_prompt(t_core *shell)

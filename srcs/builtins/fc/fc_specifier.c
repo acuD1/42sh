@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/22 21:36:22 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:13:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,11 @@ static void		get_pat_and_rep(char **av, char **pat, char **rep)
 	skip_options(&av);
 	av++;
 	str = ft_strdup(*av);
-	*rep = ft_strchr(str, '=');
-	if (*rep == NULL)
+	(*pat) = str;
+	if ((*rep = ft_strchr(str, '=')) == NULL)
 		return ;
 	**rep = '\0';
 	(*rep)++;
-	(*pat) = str;
 }
 
 static int8_t	replace_pattern(t_core *shell, char *pat, char *rep)
@@ -55,6 +54,41 @@ static int8_t	replace_pattern(t_core *shell, char *pat, char *rep)
 	return (SUCCESS);
 }
 
+static void		replace_cmd_spe(t_core *shell, int cmd)
+{
+	t_lst		*w;
+
+	w = shell->term.history;
+	while (w)
+	{
+		if (cmd == (int)w->content_size)
+		{
+			ft_strdel(&shell->term.buffer);
+			shell->term.buffer = ft_strdup(w->content);
+		}
+		w = w->next;
+	}
+}
+
+static void		select_cmd_spe(t_core *shell, int cmd)
+{
+	int			w_entries;
+
+	w_entries = ft_lstlen(shell->term.history);
+	if (cmd < 0)
+	{
+		if ((cmd * (-1)) > w_entries)
+			cmd = 1;
+		else
+			cmd = w_entries + cmd;
+		replace_cmd_spe(shell, cmd);
+	}
+	else if (cmd == 0)
+		cmd = 1;
+	else
+		replace_cmd_spe(shell, cmd);
+}
+
 /*
 **			[fc -s [old=new] [specifier]]
 **		=> select specifier in history to re-enter
@@ -75,8 +109,11 @@ int8_t			select_specifier(t_core *shell, char **av)
 	get_pat_and_rep(av, &pat, &rep);
 	ft_strdel(&shell->term.buffer);
 	shell->term.buffer = ft_strdup(shell->term.history->content);
-	while (replace_pattern(shell, pat, rep) == SUCCESS)
-		;
+	if (ft_tablen(av) > 2 && ft_isdigit(*pat) && rep == NULL)
+		select_cmd_spe(shell, ft_atoi(pat));
+	else
+		while (replace_pattern(shell, pat, rep) == SUCCESS)
+			;
 	ft_strdel(&pat);
 	ft_dprintf(cmd.fd, "%s\n", shell->term.buffer);
 	lexer_parser_analyzer(shell);

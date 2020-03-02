@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 15:37:06 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/02/29 18:06:55 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		feature(t_read *term, u_int64_t value)
 		xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
 		xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 		ft_dprintf(STDERR_FILENO, "%s%s%s%s%s", C_BOLD, F_C, term->prompt,
-						C_X, term->buffer);
+				C_X, term->buffer);
 	}
 }
 
