@@ -16,9 +16,11 @@ static char		*smallest_suffix_param(char *value, char *pattern)
 {
 	int			pattern_size;
 
-	if (!pattern || !value)
-		return (NULL);
-	pattern_size = ft_strlen(value) - ft_strlen(pattern);
+	pattern_size = 0;
+	if (!value)
+		return (ft_strdup(pattern));
+	if (pattern_size > (int)ft_strlen(value))
+		pattern_size = ft_strlen(value) - ft_strlen(pattern);
 	if (ft_strequ(value + pattern_size, pattern))
 		return (ft_strsub(value, 0, pattern_size));
 	return (ft_strdup(value));
@@ -57,8 +59,9 @@ static char		*smallest_prefix_param(char *value, char *pattern)
 {
 	int			size;
 
-	if (!pattern || !value)
-		return (NULL);
+	size = 0;
+	if (!value)
+		return (ft_strdup(pattern));
 	size = ft_strlen(pattern);
 	if (ft_strnequ(value, pattern, size))
 		return (ft_strsub(value, size, ft_strlen(value) - size));
@@ -83,7 +86,7 @@ char			*prefix_format(char *data, t_core *shell)
 		else if (tablo[1] && tablo[1][0] == '$')
 		{
 			tmp = exp_param(tablo[1], shell);
-			resultat = smallest_suffix_param(value, tmp);
+			resultat = smallest_prefix_param(value, tmp);
 			ft_strdel(&tmp);
 		}
 		else
