@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 16:05:27 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/02 19:15:04 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ u_int8_t		quotes_is_matching(t_read *term, char *quote)
 			i++;
 			continue ;
 		}
-		if ((*quote = set_quote_type(term->buffer[i])) != '\0')
+		if ((*quote = set_quote_type(term->buffer[i])) != CURLY_BRACE_CLOSE)
 		{
 			if (goto_next_quote(term->buffer, *quote, &i) == TRUE)
 				continue ;
@@ -88,7 +88,8 @@ u_int8_t		check_subprompt(t_core *shell)
 	char	quote;
 
 	quote = '\0';
-	if (quotes_is_matching(&shell->term, &quote) == TRUE)
+	if (quotes_is_matching(&shell->term, &quote) == TRUE
+								&& quote != CURLY_BRACE_CLOSE)
 		if (check_backslash(&shell->term, &quote) == FALSE)
 			return (FALSE);
 	if (quote != '\0')

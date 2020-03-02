@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/21 17:54:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:53:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static u_int8_t	check_multi_subprompt(t_read *term, char *sb)
 		term->tmp_buff = ft_strdup(term->buffer);
 		return (TRUE);
 	}
-	else if (!*sb || *sb == BACKSLASH)
+	else if (*sb == BACKSLASH)
 		term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
 	return (FALSE);
 }
