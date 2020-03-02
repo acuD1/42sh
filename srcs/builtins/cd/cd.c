@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/02 15:54:25 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:56:01 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int8_t	cd_opt_parser(t_core *shell, int ac, t_process *process)
 	options = ft_get_options(ac, process->av, CD_OPT);
 	if (!process->av[2])
 		return (cd_home(shell));
-	if (check_cd_arguments(process, ac) != SUCCESS)
+	if (check_cd_argument(process, ac) != SUCCESS)
 		return (1);
 	if (options & (1ULL << 37))
 		return (change_dir(shell, process->av[2]));
