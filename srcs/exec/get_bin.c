@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_bin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/01 23:53:44 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:40:07 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,11 @@ int8_t			get_bin(t_core *shell, t_process *process)
 	int		ret;
 
 	ret = 0;
+	if (process->av[0][0] == 0)
+	{
+		process->bin = NULL;
+		return (SUCCESS);
+	}
 	if ((process->av[0][0] == '.'
 			&& process->av[0][1] == '/'
 			&& process->av[0][2] != 0)

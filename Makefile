@@ -367,7 +367,7 @@ all: libm $(BUILD) $(NAME)
 # Compilation core
 
 
-$(NAME): $(OBJ) $(BUILD_FILE)
+$(NAME): $(OBJ) $(BUILD_FILE) shared_libft/shared_libft.a
 	@$(ECHO) $(GCFIL) $(NAME)
 	@$(CMPLO) $(NAME) $(OBJ) $(LIB)
 	@$(GCSUC)

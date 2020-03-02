@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:44:14 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 16:07:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/02 16:40:40 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void		del_job(t_lst *job)
 
 static void		init_process_fc(t_core *shell, t_process *process, char **argv)
 {
-	ft_bzero(&process, sizeof(t_process));
 	process->av = argv;
 	process->envp = set_envp(shell);
 	process->pipe[0] = STDIN_FILENO;
@@ -38,6 +37,7 @@ int8_t			fc_launch_editor(t_core *shell, char **argv)
 
 	job_ptr = NULL;
 	ft_bzero(&job, sizeof(t_job));
+	ft_bzero(&process, sizeof(t_process));
 	init_process_fc(shell, &process, argv);
 	ft_lstappend(&(job.process_list), ft_lstnew(&process, sizeof(t_process)));
 	if (job.process_list == NULL)
