@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 14:47:16 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/06 22:03:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:03:29 by guvillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	init_process_graph(t_graph *graph)
 		, P_GREATAND, P_LESSAND, P_DLESS, P_DLESSDASH, P_ASSIGN, P_NEWLINE
 		, P_END, P_ERROR};
 
-	graph[P_PIPE].good_type = tab_good_type;
 	graph[P_AND].good_type = tab_good_type;
 	graph[P_SEMICOLON].good_type = tab_good_type;
 }

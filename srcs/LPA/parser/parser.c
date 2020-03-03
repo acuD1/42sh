@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/06 22:53:02 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:03:40 by guvillat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ static void		init_start_graph(t_graph *graph)
 {
 	static enum e_pstate	tab_good_type[] = {P_WORD, P_GREAT, P_LESS, P_DGREAT
 		, P_GREATAND, P_LESSAND, P_DLESS, P_DLESSDASH, P_ASSIGN, P_IONUMBER
-		, P_END, P_START, P_ERROR};
+		, P_START, P_ERROR};
 
 	graph[P_START].good_type = tab_good_type;
 	graph[P_NEWLINE].good_type = tab_good_type;
+	graph[P_PIPE].good_type = tab_good_type;
 	graph[P_ORIF].good_type = tab_good_type;
 	graph[P_ANDIF].good_type = tab_good_type;
 }
