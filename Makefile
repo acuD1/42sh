@@ -325,14 +325,24 @@ vpath %.h $(H_PATH)
 
 # Variables
 
-C_GCC				=	clang $(CFLAG)
+DEBUG				=
+CFLAGS				= -Wall -Wextra -Werror
+ifeq ($(DEBUG), g)
+	CFLAGS = -g
+else ifeq ($(DEBUG), fsanitize)
+	CFLAGS = -fsanitize=address
+else ifeq ($(DEBUG), hard)
+	CFLAGS = -Wall -Wextra -Weverything -fsanitize=address,undefined
+else ifeq ($(DEBUG), dev)
+	CFLAGS =
+endif
+CC					=	clang $(CFLAGS)
 IFLAGS				+=	$(addprefix -I, $(H_PATH))
-CMPLC				=	$(C_GCC) -c $(IFLAGS)
-CMPLO				=	$(C_GCC) -o
+CMPLC				=	$(CC) -c $(IFLAGS)
+CMPLO				=	$(CC) -o
 BUILD				=	$(PATHS)
 AR_RC				=	ar rc
 RANLI				=	ranlib
-CFLAG				=	-Wall -Wextra -Werror -g
 RM_RF				=	/bin/rm -rf
 MKDIR				=	mkdir -p
 NORME				=	norminette
@@ -345,18 +355,6 @@ CLSUC				=	echo "$(R_C)=====>     DONE$(RESET_C)"
 NORMD				=	echo "$(G_C)=====>     DONE$(RESET_C)"
 
 .PHONY: all norme clean fclean re test
-
-DEBUG 				=
-
-ifeq ($(DEBUG), g)
-	CFLAG = -g
-else ifeq ($(DEBUG), fsanitize)
-	CFLAG = -fsanitize=address -g3
-else ifeq ($(DEBUG), dev)
-	CFLAG =
-else
-	CFLAG = -Wall -Wextra -Werror -g
-endif
 
 # Rules
 make:
@@ -377,7 +375,7 @@ $(NAME): $(OBJ) $(BUILD_FILE) $(TEST)
 	@$(ECHO) $(GCFIL) $(NAME)
 	@$(CMPLO) $(NAME) $(OBJ) $(LIB)
 	@$(GCSUC)
-	@echo "---\nCFLAG - =$(B_C) $(CFLAG)$(RESET_C)\n---"
+	@echo "---\nCFLAGS - =$(B_C) $(CFLAGS)$(RESET_C)\n---"
 	@echo "\n$(G_C)[$(BUILD_BRANCH)] $(RESET_C)$@ $(F_C) \
 	v.$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE) $(RESET_C) is ready !"
 	@cp $(NAME) \
