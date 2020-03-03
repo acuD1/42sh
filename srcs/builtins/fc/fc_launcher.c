@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fc_launcher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:44:14 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 21:40:22 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/03 10:48:12 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,42 +21,37 @@ static void		del_job(t_lst **job)
 	*job = NULL;
 }
 
-static void		init_launcher_fc(
-		t_core *shell, t_job **job, t_process **process, char **argv)
+static void		init_launcher_fc(t_core *shell, t_job *job, t_process *process, char **argv)
 {
-	*process = (t_process*)malloc(sizeof(t_process) * 1);
-	ft_bzero(*process, sizeof(t_process));
-	*job = (t_job*)malloc(sizeof(t_job) * 1);
-	ft_bzero(*job, sizeof(t_job));
-	(*process)->av = argv;
-	(*process)->envp = set_envp(shell);
-	(*process)->pipe[0] = STDIN_FILENO;
-	(*process)->pipe[1] = STDOUT_FILENO;
-	(*process)->close[0] = -1;
-	(*process)->close[1] = -1;
+	ft_bzero(process, sizeof(t_process));
+	ft_bzero(job, sizeof(t_job));
+	process->av = argv;
+	process->envp = set_envp(shell);
+	process->pipe[0] = STDIN_FILENO;
+	process->pipe[1] = STDOUT_FILENO;
+	process->close[0] = -1;
+	process->close[1] = -1;
 }
 
 int8_t			fc_launch_editor(t_core *shell, char **argv)
 {
-	t_process	*process;
+	t_process	process;
 	t_lst		*job_ptr;
 	t_lst		*ptr;
-	t_job		*job;
+	t_job		job;
 
 	job_ptr = NULL;
 	ptr = shell->job_list;
 	init_launcher_fc(shell, &job, &process, argv);
-
-	ft_lstappend(&(job->process_list), ft_lstnew(process, sizeof(t_process)));
-	if (ft_lstappend(&job_ptr, ft_lstnew(job, sizeof(t_job))) == NULL)
+	ft_lstappend(&(job.process_list), ft_lstnew(&process, sizeof(t_process)));
+	if (ft_lstappend(&job_ptr, ft_lstnew(&job, sizeof(t_job))) == NULL)
 	{
-		free_process_list(&(job->process_list));
+		free_process_list(&(job.process_list));
 		return (FAILURE);
 	}
-
 	job_ptr->next = ptr;
 	shell->job_list = job_ptr;
-	exec_process(shell, job_ptr->content, job->process_list->content);
+	exec_process(shell, job_ptr->content, job.process_list->content);
 	shell->job_list = ptr;
 	job_ptr->next = NULL;
 	if (job_is_completed(job_ptr->content))
