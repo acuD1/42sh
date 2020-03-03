@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/02 15:56:01 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/03 13:55:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int8_t	cd_opt_parser(t_core *shell, int ac, t_process *process)
 
 	ft_bzero(pwd, MAX_PATH + 1);
 	options = ft_get_options(ac, process->av, CD_OPT);
-	if (!process->av[2])
+	if (!process->av[2] && options & ((1ULL << 37) | (1ULL << 41)))
 		return (cd_home(shell));
 	if (check_cd_argument(process, ac) != SUCCESS)
 		return (1);
@@ -111,7 +111,7 @@ int8_t			builtin_cd(t_core *shell, t_process *process)
 		return (cd_home(shell));
 	if (ft_strcmp(process->av[1], "-") == 0 && !process->av[1][1])
 		return (cd_oldpwd(shell));
-	if (argc > 2)
+	if (process->av[1][0] == '-')
 		return (cd_opt_parser(shell, argc, process));
 	change_dir(shell, process->av[1]);
 	return (SUCCESS);

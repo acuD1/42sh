@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fc_launcher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:44:14 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/03 10:48:12 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/03 14:01:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void		del_job(t_lst **job)
 	*job = NULL;
 }
 
-static void		init_launcher_fc(t_core *shell, t_job *job, t_process *process, char **argv)
+static void		init_launcher_fc
+	(t_core *shell, t_job *job, t_process *process, char **argv)
 {
 	ft_bzero(process, sizeof(t_process));
 	ft_bzero(job, sizeof(t_job));

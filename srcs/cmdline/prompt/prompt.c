@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 16:02:42 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/03 14:01:40 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int8_t			init_prompt(t_core *shell)
 	char	buff[READ_SIZE + 1];
 
 	shell->term.status = CMD_PROMPT;
-	ft_bzero(buff, READ_SIZE);
+	ft_bzero(buff, READ_SIZE + 1);
 	shell->term.buffer = ft_memalloc(BUFF_SIZE);
 	set_termconfig(shell);
 	get_prompt_value(shell, "PS1");

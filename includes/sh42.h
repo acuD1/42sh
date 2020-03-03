@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/02 15:35:10 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/03 13:56:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,6 +189,7 @@ int8_t		cd_check_path(const char *path);
 int8_t		change_dir(t_core *shell, const char *path);
 int8_t		update_pwds(t_core *shell, const char *buffer, const char *path);
 int			check_cd_argument(t_process *process, int ac);
+int8_t		cd_use_cd_path(t_core *shell, const char *path);
 
 /*
 **	===========================================================================

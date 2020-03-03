@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 16:41:27 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/02 15:27:15 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/03 13:56:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int8_t			change_dir(t_core *shell, const char *path)
 	t_db		*db;
 	int			errnum;
 
+	if (cd_use_cd_path(shell, path) == SUCCESS)
+		return (SUCCESS);
 	ft_bzero(buffer, MAX_PATH + 1);
 	get_canonical_path(shell, path, buffer, pwd);
 	db = get_or_create_db(shell, "PWD", EXPORT_VAR | INTERNAL_VAR);

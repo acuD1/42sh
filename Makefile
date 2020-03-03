@@ -149,6 +149,7 @@ SRC					+=	$(S_PATH)$(BUILTINS)unset.c
 SRC					+=	$(S_PATH)$(CD)cd_change_dir.c
 SRC					+=	$(S_PATH)$(CD)cd_check_path.c
 SRC					+=	$(S_PATH)$(CD)cd_update_pwd.c
+SRC					+=	$(S_PATH)$(CD)cd_use_cd_path.c
 SRC					+=	$(S_PATH)$(CD)cd.c
 
 SRC					+=	$(S_PATH)$(FC)fc_edit.c
@@ -366,8 +367,13 @@ all: libm $(BUILD) $(NAME)
 
 # Compilation core
 
+ifneq ("$(wildcard $(L_PATH)$(LNAME))","")
+TEST = shared_libft/shared_libft.a
+else
+TEST =
+endif
 
-$(NAME): $(OBJ) $(BUILD_FILE) shared_libft/shared_libft.a
+$(NAME): $(OBJ) $(BUILD_FILE) $(TEST)
 	@$(ECHO) $(GCFIL) $(NAME)
 	@$(CMPLO) $(NAME) $(OBJ) $(LIB)
 	@$(GCSUC)
