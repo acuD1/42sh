@@ -6,7 +6,7 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 15:29:47 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/11 15:29:48 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/03/03 11:24:38 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char		*smallest_suffix_param(char *value, char *pattern)
 	pattern_size = 0;
 	if (!value)
 		return (ft_strdup(pattern));
-	if (pattern_size > (int)ft_strlen(value))
+	if (ft_strlen(value) >= ft_strlen(pattern))
 		pattern_size = ft_strlen(value) - ft_strlen(pattern);
 	if (ft_strequ(value + pattern_size, pattern))
 		return (ft_strsub(value, 0, pattern_size));
