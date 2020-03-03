@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 06:35:42 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/03 18:48:03 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ static void		search_in_history(t_read *term)
 	history = term->history;
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
+		if (!term->tmp_buff)
+			return ;
 		if (insert_in_search(term, &i, buff) == FAILURE)
 		{
 			ft_strdel(&term->tmp_buff);
