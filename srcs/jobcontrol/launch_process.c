@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/21 02:43:02 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/03 22:57:23 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,11 @@ int8_t		launch_blt(t_core *shell, t_process *process)
 
 void		launch_process(t_core *shell, t_process *process)
 {
-	int		blt;
-
 	if (shell->is_interactive)
 	{
 		reset_signals();
 		put_process_in_grp(shell, process);
 	}
 	redir_pipes(process);
-	if (process->av)
-	{
-		if ((blt = is_a_blt(process->av[0])) != FAILURE)
-			exit(call_builtin(shell, process, blt));
-	}
 	call_bin(shell, process);
 }

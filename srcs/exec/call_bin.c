@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/02 15:49:18 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/03 22:56:51 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,14 @@ static int8_t	check_filepath(t_process *process)
 
 int8_t			call_bin(t_core *shell, t_process *process)
 {
+	int		blt;
 	int		ret;
 
 	ret = 0;
 	if (exec_redirs(shell, process, process->redir_list) != SUCCESS)
 		exit(1);
+	if (process->av && (blt = is_a_blt(process->av[0])) != FAILURE)
+		exit(call_builtin(shell, process, blt));
 	if (process->bin == NULL)
 	{
 		if (process->av != NULL)
