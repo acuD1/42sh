@@ -359,7 +359,7 @@ NORMD				=	echo "$(G_C)=====>     DONE$(RESET_C)"
 # Rules
 make:
 	$(MSG)
-	@$(MAKE) --no-print-directory all
+	$(MAKE) --no-print-directory all
 
 all: libm $(BUILD) $(NAME)
 
@@ -372,19 +372,19 @@ TEST =
 endif
 
 $(NAME): $(OBJ) $(BUILD_FILE) $(TEST)
-	@$(ECHO) $(GCFIL) $(NAME)
-	@$(CMPLO) $(NAME) $(OBJ) $(LIB)
-	@$(GCSUC)
-	@echo "---\nCFLAGS - =$(B_C) $(CFLAGS)$(RESET_C)\n---"
-	@echo "\n$(G_C)[$(BUILD_BRANCH)] $(RESET_C)$@ $(F_C) \
+	$(ECHO) $(GCFIL) $(NAME)
+	$(CMPLO) $(NAME) $(OBJ) $(LIB)
+	$(GCSUC)
+	echo "---\nCFLAGS - =$(B_C) $(CFLAGS)$(RESET_C)\n---"
+	echo "\n$(G_C)[$(BUILD_BRANCH)] $(RESET_C)$@ $(F_C) \
 	v.$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE) $(RESET_C) is ready !"
-	@cp $(NAME) \
+	cp $(NAME) \
 	$(B_PATH)$(NAME)_$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE)
 
 $(OBJ): $(O_PATH)%.o: $(S_PATH)%.c $(HDR)
-	@$(CMPLC) -DBUILDR=$(BUILD_RELEASE) -DBUILDV=$(BUILD_VERSION) \
+	$(CMPLC) -DBUILDR=$(BUILD_RELEASE) -DBUILDV=$(BUILD_VERSION) \
 	-DBUILDP=$(BUILD_PATCH) -DDATE=$(BUILD_DATE) $< -o $@
-	@$(ECHO) $(GCFIL) $<
+	$(ECHO) $(GCFIL) $<
 
 # Check if .build exist, then incremente patch level each compilation.
 # If not exist, create it with default values
@@ -393,53 +393,57 @@ UNAME_S				:=	$(shell uname -s)
 
 ifeq ($(UNAME_S), Darwin)
 $(BUILD_FILE): $(OBJ)
-	@if ! test -f $(BUILD_FILE); \
+	if ! test -f $(BUILD_FILE); \
 	then echo $(DEFAULT_BUILD_FILE) > $(BUILD_FILE); fi
-	@sed -i '.bak' "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
+	sed -i '.bak' "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
 	$(BUILD_FILE)
-	@rm $(BUILD_FILE).bak
+	rm $(BUILD_FILE).bak
 else
 $(BUILD_FILE): $(OBJ)
-	@if ! test -f $(BUILD_FILE); \
+	if ! test -f $(BUILD_FILE); \
 	then echo $(DEFAULT_BUILD_FILE) > $(BUILD_FILE); fi
-	@sed -i "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
+	sed -i "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
 	$(BUILD_FILE)
 endif
 
 $(PATHS):
-	@$(MKDIR) $(PATHS)
-	@$(foreach var,$(PATHS), $(ECHO) $(MKSHW) $(var);)
+	$(MKDIR) $(PATHS)
+	$(foreach var,$(PATHS), $(ECHO) $(MKSHW) $(var);)
 
 norme:
-	@$(NORMR)
-	@$(NORME) $(SRC) $(H_PATH)$(HNAME)
-	@$(NORMD)
+	$(NORMR)
+	$(NORME) $(SRC) $(H_PATH)$(HNAME)
+	$(NORMD)
 
 clean: libco
-	@for i in $(OBJ); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
-	@$(CLSUC)
+	for i in $(OBJ); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
+	$(CLSUC)
 
 fclean: libc
-	@for i in $(OBJ); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
-	@for i in $(PATHS); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
-	@$(RM_RF) $(NAME)
-	@$(ECHO) $(RMSHW) $(NAME)
-	@$(CLSUC)
+	for i in $(OBJ); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
+	for i in $(PATHS); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
+	$(RM_RF) $(NAME)
+	$(ECHO) $(RMSHW) $(NAME)
+	$(CLSUC)
 
 # Libc rules
 
 libm:
-	@make -C $(L_PATH)
-	@printf "\n"
+	make -C $(L_PATH)
+	printf "\n"
 
 libco:
-	@make clean -C $(L_PATH)
+	make clean -C $(L_PATH)
 
 libc:
-	@make fclean -C $(L_PATH)
+	make fclean -C $(L_PATH)
 
 re:
 	$(MSG)
-	@$(MAKE) --no-print-directory fclean all
+	$(MAKE) --no-print-directory fclean all
+
+ifndef VERBOSE
+.SILENT:
+endif
 
 endif
