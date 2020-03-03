@@ -25,14 +25,27 @@ void			add_assign_envp(const char *key, char *value, char ***envp)
 {
 	char		*tmp;
 	char		**tablo;
+	int			i;
 
 	tmp = NULL;
 	tablo = *envp;
+	i = -1;
 	tmp = ft_strjoin(key, "=");
 	tmp = ft_strjoinf(tmp, value, 4);
+	while (tablo[++i])
+	{
+		if (!ft_strncmp(tablo[i], key, ft_strlen(key)))
+		{
+			ft_strdel(&tablo[i]);
+			tablo[i] = ft_strdup(tmp);
+			ft_strdel(&tmp);
+			*envp = tablo;
+			return ;
+		}
+	}
 	tablo = ft_add_arg_cmd_process(tablo, tmp);
-	*envp = tablo;
 	ft_strdel(&tmp);
+	*envp = tablo;
 }
 
 char			**add_underscore_envp(char **envp, char *data)
