@@ -72,7 +72,8 @@ u_int8_t		quotes_is_matching(t_read *term, char *quote)
 			i++;
 			continue ;
 		}
-		if ((*quote = set_quote_type(term->buffer[i])) != CURLY_BRACE_CLOSE)
+		*quote = set_quote_type(term->buffer[i]);
+		if (*quote == QUOTE || *quote == DQUOTE || *quote == BQUOTE)
 		{
 			if (goto_next_quote(term->buffer, *quote, &i) == TRUE)
 				continue ;
