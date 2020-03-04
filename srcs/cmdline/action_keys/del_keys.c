@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   del_keys.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 16:02:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/04 21:39:15 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void		del_key(t_read *term)
 		y = term->y;
 		w = term->width - 1;
 		clear_all_lines(term);
-		ft_putstr(term->buffer);
+		ft_putstr_fd(term->buffer, STDERR_FILENO);
 		term->x = x;
 		term->x_index = i;
 		term->y = y;

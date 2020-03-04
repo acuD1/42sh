@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_in_history.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/03 18:48:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/04 21:39:01 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static void		goto_reverse(t_read *term, const char *buff_tmp, int8_t mode)
 	xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 	if (mode == SUCCESS)
-		ft_dprintf(STDIN_FILENO, "(reverse-i-search)`%s': ", buff_tmp);
+		ft_dprintf(STDERR_FILENO, "(reverse-i-search)`%s': ", buff_tmp);
 	else if (mode == FAILURE)
-		ft_dprintf(STDIN_FILENO, "(failed reverse-i-search)`%s': ", buff_tmp);
+		ft_dprintf(STDERR_FILENO, "(failed reverse-i-search)`%s': ", buff_tmp);
 }
 
 static void		walking_history

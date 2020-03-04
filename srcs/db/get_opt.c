@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_opt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 16:34:39 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/27 18:38:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/04 21:39:38 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	opt_c(int ac, char **av, t_core *shell)
 	}
 	shell->is_interactive = FALSE;
 	shell->term.buffer = ft_strdup(av[2]);
-	ft_dprintf(STDERR_FILENO, "%s\n", shell->term.buffer);
 	lexer_parser_analyzer(shell);
 	if (task_master(shell) != SUCCESS)
 		return (quit_shell(shell, EXIT_FAILURE, FALSE));
