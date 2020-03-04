@@ -5,7 +5,7 @@ define MSG
 #                                                         :::      ::::::::    #
 #    Makefile for 42sh                                  :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By arsciand fcatusse guvillat mpivet-p         +#+  +:+       +#+         #
+#    By arsciand fcatusse guvillat                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #                                                      #+#    #+#              #
 #                                                     ###   ########.fr        #
@@ -358,7 +358,17 @@ NORMD				=	echo "$(G_C)=====>     DONE$(RESET_C)"
 
 # Rules
 make:
-	$(MSG)
+	echo "# **************************************************************************** #"
+	echo "#                                                                              #"
+	echo "#                                                         :::      ::::::::    #"
+	echo "#    Makefile for 42sh                                  :+:      :+:    :+:    #"
+	echo "#                                                     +:+ +:+         +:+      #"
+	echo "#    By arsciand fcatusse guvillat                  +#+  +:+       +#+         #"
+	echo "#                                                 +#+#+#+#+#+   +#+            #"
+	echo "#                                                      #+#    #+#              #"
+	echo "#                                                     ###   ########.fr        #"
+	echo "#                                                                              #"
+	echo "# **************************************************************************** #"
 	$(MAKE) --no-print-directory all
 
 all: libm $(BUILD) $(NAME)
@@ -438,8 +448,11 @@ libco:
 libc:
 	make fclean -C $(L_PATH)
 
+help:
+	echo "Makefile for 42sh"
+	echo "usage : make [VERBOSE=1] [DEBUG=g|fsanitize|hard|dev] [all|clean|fclean|re|libm|libco|libc|help]"
+
 re:
-	$(MSG)
 	$(MAKE) --no-print-directory fclean all
 
 ifndef VERBOSE
