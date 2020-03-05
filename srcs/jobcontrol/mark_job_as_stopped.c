@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 04:04:30 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/08 04:04:39 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:02:55 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,4 @@ void	mark_job_as_stopped(t_job *job, int stopped)
 		((t_process*)ptr->content)->stopped = stopped;
 		ptr = ptr->next;
 	}
-	job->notified = FALSE;
 }

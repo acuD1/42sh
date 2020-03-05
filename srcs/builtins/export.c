@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/01 23:46:13 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 00:49:05 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@ static int8_t	parse_export(int argc, char **argv, u_int64_t *options)
 	return (SUCCESS);
 }
 
-static void		export_hash_handler(t_core *shell, const char *str)
-{
-	if (ft_strequ(str, "PATH") == TRUE)
-		free_hash_map(&shell->hash);
-}
-
 static int8_t	export(t_core *shell, const char *arg, int *ret, u_int64_t opt)
 {
 	t_db	*db;
@@ -36,9 +30,11 @@ static int8_t	export(t_core *shell, const char *arg, int *ret, u_int64_t opt)
 	int		len;
 
 	len = ft_strclen(arg, '=');
-	str = ft_strsub(arg, 0, len);
-	export_hash_handler(shell, str);
-	if (str && (check_invalid_identifiers(str, "=") || ft_isdigit(arg[0]) != 0))
+	if (!(str = ft_strsub(arg, 0, len)))
+		return (FAILURE);
+	if (ft_strequ(str, "PATH=") == TRUE)
+		free_hash_map(&shell->hash);
+	if (check_invalid_identifiers(str, "=") || ft_isdigit(arg[0]) != 0)
 	{
 		*ret = 1;
 		ft_dprintf(STDERR_FILENO
@@ -46,16 +42,14 @@ static int8_t	export(t_core *shell, const char *arg, int *ret, u_int64_t opt)
 		ft_strdel(&str);
 		return (SUCCESS);
 	}
-	else if (!str || !(db = get_or_create_db(shell, str, EXPORT_VAR
-			| ((opt == 0 && ft_strchr(arg, '=')) ? INTERNAL_VAR : 0))))
-	{
-		ft_strdel(&str);
-		return (FAILURE);
-	}
+	db = get_or_create_db(shell, str, 0);
 	ft_strdel(&str);
-	str = ((int)ft_strlen(arg) > len) ? ft_strdup(arg + len + 1) : NULL;
-	modify_db(db, str, db->type | EXPORT_VAR);
-	return (SUCCESS);
+	str = (ft_strchr(arg, '=')) ? ft_strdup(arg + len + 1) : NULL;
+	if (opt == 0 && ft_strchr(arg, '='))
+		modify_db(db, str, db->type | EXPORT_VAR | INTERNAL_VAR);
+	else
+		modify_db(db, str, db->type | EXPORT_VAR);
+	return (db ? SUCCESS : FAILURE);
 }
 
 static void		export_display(t_core *shell)
@@ -78,6 +72,27 @@ static void		export_display(t_core *shell)
 	}
 }
 
+static void		export_envp(t_core *shell, t_process *process)
+{
+	char	*value;
+	char	*key;
+	char	*str;
+	int		len;
+	int		i;
+
+	i = 0;
+	while (process->envp[i])
+	{
+		str = process->envp[i];
+		len = ft_strclen(str, '=');
+		key = ft_strsub(str, 0, len);
+		value = ft_strsub(str, len + 1, ft_strlen(str) - len);
+		edit_var(shell, key, value, INTERNAL_VAR | EXPORT_VAR);
+		ft_strdel(&key);
+		i++;
+	}
+}
+
 int8_t			builtin_export(t_core *shell, t_process *process)
 {
 	u_int64_t	opt;
@@ -88,10 +103,8 @@ int8_t			builtin_export(t_core *shell, t_process *process)
 	argc = ft_tablen(process->av);
 	i = (argc > 1 && process->av[1][0] != '-') ? 1 : 2;
 	if (i == argc + 1)
-	{
 		export_display(shell);
-		return (0);
-	}
+	export_envp(shell, process);
 	if ((ret = parse_export(argc, process->av, &opt)) != SUCCESS)
 		return (ret);
 	ret = 0;

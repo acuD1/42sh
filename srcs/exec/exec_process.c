@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/29 19:10:47 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 20:00:50 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ static void		control_process
 	if (process->pgid == -1)
 		job->pgid = process->pid;
 	process->pgid = job->pgid;
-	if (process->stopped != TRUE
-		&& setpgid(process->pid, process->pgid) != SUCCESS)
+	if (setpgid(process->pid, process->pgid) != SUCCESS)
 		print_and_quit(shell, "42sh: setpgid error (1)\n");
 	if (process->stopped != TRUE && process->type != P_PIPE)
 	{
@@ -49,6 +48,8 @@ static void		control_process
 		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: tcsetpgrp error (2)\n");
 	}
+	else
+		process->stopped = FALSE;
 }
 
 void			exec_process(t_core *shell, t_job *job, t_process *process)
@@ -60,7 +61,6 @@ void			exec_process(t_core *shell, t_job *job, t_process *process)
 		get_bin(shell, process);
 	if ((process->pid = fork()) == 0)
 	{
-		shell->is_interactive = FALSE;
 		launch_process(shell, process);
 	}
 	else if (process->pid < 0)
