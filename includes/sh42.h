@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/03 13:56:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/05 03:26:37 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <stdio.h>
 # include <setjmp.h>
 
-jmp_buf g_exit_leaks;
+extern jmp_buf g_exit_leaks;
 
 void		set_termconfig(t_core *shell);
 
