@@ -6,19 +6,19 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 18:46:19 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 21:15:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <signal.h>
 
-static void	free_job(t_core *shell, t_lst *job)
+void	free_job(t_lst **job_list, t_lst *job)
 {
 	t_lst	*ptr;
 
-	ptr = shell->job_list;
-	if (shell->job_list != job)
+	ptr = *job_list;
+	if (*job_list != job)
 	{
 		while (ptr && ptr->next != job)
 			ptr = ptr->next;
@@ -27,12 +27,15 @@ static void	free_job(t_core *shell, t_lst *job)
 	}
 	else
 	{
-		shell->job_list = job->next;
+		*job_list = job->next;
 	}
-	free_process_list(&(((t_job*)job->content)->process_list));
-	ft_strdel(&(((t_job*)job->content)->command));
-	free(job->content);
-	free(job);
+	if (job)
+	{
+		free_process_list(&(((t_job*)job->content)->process_list));
+		ft_strdel(&(((t_job*)job->content)->command));
+		free(job->content);
+		free(job);
+	}
 }
 
 static void	place_job(t_core *shell, t_job *job, int8_t foreground)
@@ -107,7 +110,7 @@ int8_t		task_master(t_core *shell)
 		handle_background_job(shell, job->content, foreground);
 		place_job(shell, job->content, foreground);
 		if (job_is_completed(job->content))
-			free_job(shell, job);
+			free_job(&(shell->job_list), job);
 		else
 			ft_lstappend(&(shell->launched_jobs), job);
 		job = next;

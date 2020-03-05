@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/05 20:00:50 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 21:25:50 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ void			exec_process(t_core *shell, t_job *job, t_process *process)
 	if (process->av)
 		get_bin(shell, process);
 	if ((process->pid = fork()) == 0)
-	{
 		launch_process(shell, process);
-	}
 	else if (process->pid < 0)
 		print_and_quit(shell, "42sh: fork failure\n");
 	if (process->pipe[1] != STDOUT_FILENO)

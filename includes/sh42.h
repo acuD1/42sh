@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh42.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/03 13:56:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/05 21:06:44 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,5 +249,6 @@ void		attr_jobc_id(t_core *shell, t_job *job);
 int8_t		do_job_notification(t_core *shell, t_lst *job);
 int			cond(t_lst *process);
 int8_t		are_jobs_done(t_core *shell, t_lst *jobs);
+void		free_job(t_lst **job_list, t_lst *job);
 
 #endif

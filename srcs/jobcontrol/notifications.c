@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/12 08:33:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/05 21:22:48 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,6 @@ void		format_job_info(t_job *job)
 		? "Stopped" : signal_msg(signal), job->command);
 }
 
-static void	free_job(t_core *shell, t_lst *job)
-{
-	t_lst	*ptr;
-
-	ptr = shell->launched_jobs;
-	if (shell->launched_jobs != job)
-	{
-		while (ptr && ptr->next != job)
-			ptr = ptr->next;
-		ptr->next = job->next;
-	}
-	else
-		shell->launched_jobs = job->next;
-	free_process_list(job->content);
-	ft_strdel(&(((t_job*)job->content)->command));
-	free(job);
-}
-
 void		job_background_notif(t_job *job)
 {
 	ft_printf("[%i] %i\n", job->jobc_id, job->pgid);
@@ -75,7 +57,7 @@ int8_t		do_job_notification(t_core *shell, t_lst *job)
 		if (job_is_completed(ptr))
 		{
 			format_job_info(ptr);
-			free_job(shell, job);
+			free_job(&(shell->launched_jobs), job);
 			job = shell->launched_jobs;
 			ptr = NULL;
 		}
