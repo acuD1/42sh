@@ -332,7 +332,7 @@ ifeq ($(DEBUG), g)
 else ifeq ($(DEBUG), fsanitize)
 	CFLAGS = -fsanitize=address
 else ifeq ($(DEBUG), hard)
-	CFLAGS = -Wall -Wextra -Weverything -fsanitize=address,undefined
+	CFLAGS = -Wall -Weverything -fsanitize=address,undefined -Wno-cast-qual
 else ifeq ($(DEBUG), dev)
 	CFLAGS =
 endif
