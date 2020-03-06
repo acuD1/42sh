@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 23:42:04 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/29 19:13:16 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 04:14:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 int8_t	builtin_exit(t_core *shell, t_process *process)
 {
 	int64_t	exit_value;
-	int		argc;
+	size_t	argc;
 
 	argc = ft_tablen(process->av);
 	exit_value = 0;
 	if (are_jobs_done(shell, shell->launched_jobs) != TRUE)
 	{
 		write(STDERR_FILENO, "There are stopped jobs.\n", 24);
-		return (shell->status);
+		return ((int8_t)shell->status); //Not sure
 	}
 	if (argc == 1)
 		quit_shell(shell, shell->status, 1);

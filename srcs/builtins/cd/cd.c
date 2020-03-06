@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/03 13:55:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:15:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ static int8_t	cd_home(t_core *shell)
 	return (update_pwds(shell, pwd, NULL));
 }
 
-static int8_t	cd_opt_parser(t_core *shell, int ac, t_process *process)
+static int8_t	cd_opt_parser(t_core *shell, size_t ac, t_process *process)
 {
 	char		pwd[MAX_PATH + 1];
 	u_int64_t	options;
 
 	ft_bzero(pwd, MAX_PATH + 1);
-	options = ft_get_options(ac, process->av, CD_OPT);
+	options = ft_get_options((int)ac, process->av, CD_OPT);
 	if (!process->av[2] && options & ((1ULL << 37) | (1ULL << 41)))
 		return (cd_home(shell));
 	if (check_cd_argument(process, ac) != SUCCESS)
@@ -101,7 +101,7 @@ static int8_t	cd_opt_parser(t_core *shell, int ac, t_process *process)
 
 int8_t			builtin_cd(t_core *shell, t_process *process)
 {
-	int		argc;
+	size_t	argc;
 	char	tmp[MAX_PATH + 1];
 
 	ft_bzero(tmp, MAX_PATH + 1);

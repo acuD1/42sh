@@ -6,26 +6,26 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 15:12:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/29 19:17:31 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/06 18:06:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		print_hash_map(t_core *shell, enum e_hash fmt)
+void			print_hash_map(t_core *shell, enum e_hash fmt)
 {
 	t_lst	**map;
 	t_lst	*cur_map;
 	size_t	i;
 
-	i = -1;
+	i = 0;
 	if ((map = shell->hash.map) == NULL)
 		return ;
 	if (fmt == H_DEF)
 		ft_dprintf(STDOUT_FILENO, "hits\tcommand\n");
-	while (++i < shell->hash.size)
+	while (i < shell->hash.size)
 	{
-		cur_map = map[i];
+		cur_map = map[i++];
 		while (cur_map)
 		{
 			if (fmt == H_DEF)
@@ -41,20 +41,21 @@ void		print_hash_map(t_core *shell, enum e_hash fmt)
 	}
 }
 
-void		hash_key_remover(t_core *shell, char *process)
+void			hash_key_remover(t_core *shell, char *process)
 {
 	t_lst		*map;
 	t_lst		*prev;
 	u_int32_t	hash_value;
 
+	prev = NULL;
 	if (shell->hash.map == NULL || process == NULL)
 		return ;
-	hash_value = get_hash(process, shell->hash.size);
-	map = shell->hash.map[hash_value];
+	map = shell->hash.map[(hash_value = get_hash(process, shell->hash.size))];
 	if (map && ft_strequ(((t_db *)map->content)->key, process) == TRUE)
 	{
 		shell->hash.map[hash_value] = map->next;
-		return (free_hash_key(&shell->hash, map));
+		free_hash_key(&shell->hash, map);
+		return ;
 	}
 	while (map && ft_strequ(((t_db *)map->content)->key, process) == FALSE)
 	{
@@ -69,9 +70,9 @@ void		hash_key_remover(t_core *shell, char *process)
 	free_hash_key(&shell->hash, map);
 }
 
-static int	get_hash_t_pad(const char *key)
+static size_t	get_hash_t_pad(const char *key)
 {
-	int	pad;
+	size_t	pad;
 
 	pad = ft_strlen(key);
 	if (pad > 8)
@@ -83,7 +84,7 @@ static int	get_hash_t_pad(const char *key)
 	return (pad);
 }
 
-static void	find_hash_sub_map(t_process *process, t_lst *map, size_t i, int ac)
+static void		find_hash_sub_map(t_process *process, t_lst *map, size_t i, size_t ac)
 {
 	t_lst	*sub_map;
 
@@ -110,7 +111,7 @@ static void	find_hash_sub_map(t_process *process, t_lst *map, size_t i, int ac)
 				"42sh: hash: %s: not found\n", process->av[i]);
 }
 
-void		find_hash(t_core *shell, t_process *process, int ac)
+void			find_hash(t_core *shell, t_process *process, size_t ac)
 {
 	t_lst	**map;
 	size_t	i;

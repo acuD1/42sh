@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   bg.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:59:13 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/18 00:03:37 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 04:23:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int	can_bg_run(t_core *shell, char **argv)
+static int8_t	can_bg_run(t_core *shell, char **argv)
 {
-	int	argc;
+	size_t	argc;
 
 	argc = ft_tablen(argv);
 	if (!(shell->is_interactive))
@@ -27,10 +27,10 @@ static int	can_bg_run(t_core *shell, char **argv)
 	return (FAILURE);
 }
 
-int8_t		builtin_bg(t_core *shell, t_process *process)
+int8_t			builtin_bg(t_core *shell, t_process *process)
 {
 	t_job	*job;
-	int		i;
+	size_t	i;
 
 	i = (process->av[1] && ft_strcmp(process->av[1], "--") == 0) ? 2 : 1;
 	if (can_bg_run(shell, process->av) != SUCCESS)

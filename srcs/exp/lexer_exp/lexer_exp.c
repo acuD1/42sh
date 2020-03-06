@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:45:32 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/07 06:25:56 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/05 22:29:30 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,16 @@ enum e_estate	find_expansion(const char *str)
 {
 	int					i;
 	const t_exp_token	exp[] = {
-		{E_BQUOTE, "`", 1},
-		{E_TILDEP, "~+", 2},
-		{E_TILDEM, "~-", 2},
-		{E_TILDE, "~", 1},
-		{E_DBPARENT, "$((", 3},
-		{E_PARENT, "$(", 2},
-		{E_BRACKET, "${", 2},
-		{E_HOOK, "$[", 2},
-		{E_DOLLAR, "$", 1},
-		{NB_EXPANSION_STATE, NULL, 0}
+		{"`", E_BQUOTE, 1},
+		{"~+", E_TILDEP, 2},
+		{"~-", E_TILDEM, 2},
+		{"~", E_TILDE, 1},
+		{"$((", E_DBPARENT, 3},
+		{"$(", E_PARENT, 2},
+		{"${", E_BRACKET, 2},
+		{"$[", E_HOOK, 2},
+		{"$", E_DOLLAR, 1},
+		{NULL, NB_EXPANSION_STATE, 0}
 	};
 
 	i = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/29 19:10:47 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 20:36:08 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void			exec_process(t_core *shell, t_job *job, t_process *process)
 		get_bin(shell, process);
 	if ((process->pid = fork()) == 0)
 	{
-		shell->is_interactive = FALSE;
+		//shell->is_interactive = FALSE;
 		launch_process(shell, process);
 	}
 	else if (process->pid < 0)

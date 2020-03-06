@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   jobs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/12 15:58:24 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 04:19:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,18 @@ static void	print_job(t_job *job, u_int64_t opt, const char *name)
 
 int8_t		builtin_jobs(t_core *shell, t_process *process)
 {
-	u_int64_t	opt;
 	t_lst		*job_list;
 	t_job		*job;
-	int			argc;
-	int			i;
+	u_int64_t	opt;
+	size_t		argc;
+	size_t		i;
 
 	argc = ft_tablen(process->av);
 	job_list = shell->launched_jobs;
 	i = skip_opt(process->av) + 1;
 	if (shell->launched_jobs)
 		update_status(shell);
-	if ((opt = ft_get_options(argc, process->av, "lp")) & (1ULL << 63))
+	if ((opt = ft_get_options((int)argc, process->av, "lp")) & (1ULL << 63))
 		print_usage("42sh: jobs", opt & 0xFF, "jobs [-lp] [jobspec ...]");
 	if (i >= argc)
 		while (job_list)

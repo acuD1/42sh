@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:59:13 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/16 22:38:13 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 04:24:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int8_t	builtin_echo(t_core *shell, t_process *process)
 {
-	int		argc;
-	int		i;
+	size_t	argc;
+	size_t	i;
 
 	(void)shell;
 	i = 1;

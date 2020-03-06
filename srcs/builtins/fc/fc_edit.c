@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 20:28:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/05 21:48:35 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int8_t	fc_editor(t_core *shell, t_cmd cmd)
 	return (SUCCESS);
 }
 
-char			*get_editor(char **av, u_int64_t opt)
+static char		*get_editor(char **av, u_int64_t opt)
 {
 	char		*editor;
 

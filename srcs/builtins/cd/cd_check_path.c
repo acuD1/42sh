@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 17:14:23 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/02 15:34:42 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/05 21:34:11 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int8_t		cd_check_path(const char *path)
 {
-	int		errnum;
+	int8_t	errnum;
 
 	errnum = 0;
 	if (access(path, F_OK) == 0)
@@ -26,7 +26,7 @@ int8_t		cd_check_path(const char *path)
 	return (errnum);
 }
 
-int			check_cd_argument(t_process *process, int ac)
+int8_t		check_cd_argument(t_process *process, size_t ac)
 {
 	if ((process->av[1][0] != '-' && ac > 2)
 		|| (process->av[1][0] == '-' && ac > 3))

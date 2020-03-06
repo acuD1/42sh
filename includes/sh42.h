@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/05 03:26:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/06 18:04:04 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,27 @@ void		status_handler(t_core *shell, t_process *process, int status);
 
 u_int32_t	get_hash(const char *line, u_int32_t size);
 int8_t		locate_hash(t_core *shell, t_process *process);
-void		hash_map_dispatcher
+void		hash_dispatcher
 				(t_core *shell, t_process *process, enum e_hash fmt);
+int8_t		fill_exec
+				(t_core *shell, const char *key,
+				const char *value, enum e_hash fmt);
+int8_t		fill_path
+				(t_core *shell, t_process *process, enum e_hash fmt, size_t i);
+int8_t		fill_default
+				(t_core *shell, t_process *process, enum e_hash fmt, size_t i);
 int8_t		resize_hash_map(t_core *shell);
 void		free_hash_map(t_hash *hash);
 t_db		*fetch_hash_db
 				(t_db *db, const char *key, const char *value, enum e_hash fmt);
 void		hash_key_remover(t_core *shell, char *process);
-int8_t		hash_l(t_core *shell, t_process *process, int ac);
-int8_t		hash_r(t_core *shell, t_process *process, int ac);
-int8_t		hash_p(t_core *shell, t_process *process, int ac);
-int8_t		hash_d(t_core *shell, t_process *process, int ac);
-int8_t		hash_t(t_core *shell, t_process *process, int ac);
+int8_t		hash_l(t_core *shell, t_process *process, size_t ac);
+int8_t		hash_r(t_core *shell, t_process *process, size_t ac);
+int8_t		hash_p(t_core *shell, t_process *process, size_t ac);
+int8_t		hash_d(t_core *shell, t_process *process, size_t ac);
+int8_t		hash_t(t_core *shell, t_process *process, size_t ac);
 void		print_hash_map(t_core *shell, enum e_hash fmt);
-void		find_hash(t_core *shell, t_process *process, int ac);
+void		find_hash(t_core *shell, t_process *process, size_t ac);
 void		free_hash_key(t_hash *hash, t_lst *map);
 void		hash_error(t_hash *hash);
 
@@ -188,7 +195,7 @@ int8_t		cd_update_pwd(t_core *shell, const char *pwd, const char *path);
 int8_t		cd_check_path(const char *path);
 int8_t		change_dir(t_core *shell, const char *path);
 int8_t		update_pwds(t_core *shell, const char *buffer, const char *path);
-int			check_cd_argument(t_process *process, int ac);
+int8_t		check_cd_argument(t_process *process, size_t ac);
 int8_t		cd_use_cd_path(t_core *shell, const char *path);
 
 /*

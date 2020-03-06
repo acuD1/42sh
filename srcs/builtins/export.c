@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 03:30:02 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/01 23:46:13 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 04:18:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ static void		export_hash_handler(t_core *shell, const char *str)
 		free_hash_map(&shell->hash);
 }
 
-static int8_t	export(t_core *shell, const char *arg, int *ret, u_int64_t opt)
+static int8_t	export
+	(t_core *shell, const char *arg, int8_t *ret, u_int64_t opt)
 {
 	t_db	*db;
 	char	*str;
-	int		len;
+	size_t	len;
 
 	len = ft_strclen(arg, '=');
 	str = ft_strsub(arg, 0, len);
@@ -53,7 +54,7 @@ static int8_t	export(t_core *shell, const char *arg, int *ret, u_int64_t opt)
 		return (FAILURE);
 	}
 	ft_strdel(&str);
-	str = ((int)ft_strlen(arg) > len) ? ft_strdup(arg + len + 1) : NULL;
+	str = (ft_strlen(arg) > len) ? ft_strdup(arg + len + 1) : NULL;
 	modify_db(db, str, db->type | EXPORT_VAR);
 	return (SUCCESS);
 }
@@ -81,9 +82,9 @@ static void		export_display(t_core *shell)
 int8_t			builtin_export(t_core *shell, t_process *process)
 {
 	u_int64_t	opt;
-	int			argc;
-	int			ret;
-	int			i;
+	size_t		argc;
+	size_t		i;
+	int8_t		ret;
 
 	argc = ft_tablen(process->av);
 	i = (argc > 1 && process->av[1][0] != '-') ? 1 : 2;
@@ -92,7 +93,7 @@ int8_t			builtin_export(t_core *shell, t_process *process)
 		export_display(shell);
 		return (0);
 	}
-	if ((ret = parse_export(argc, process->av, &opt)) != SUCCESS)
+	if ((ret = parse_export((int)argc, process->av, &opt)) != SUCCESS)
 		return (ret);
 	ret = 0;
 	while (i < argc)

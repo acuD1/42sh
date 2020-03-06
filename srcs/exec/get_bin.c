@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/02 16:40:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:54:25 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int8_t			get_bin(t_core *shell, t_process *process)
 		return (SUCCESS);
 	ret = get_bin_path(shell, process);
 	if (!process->blt)
-		hash_map_dispatcher(shell, process, H_EXEC);
+		hash_dispatcher(shell, process, H_EXEC);
 	if (ret == 1)
 		return (FAILURE);
 	return (SUCCESS);

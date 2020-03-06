@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/05 03:55:45 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/05 21:47:42 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,10 +208,11 @@ typedef struct				s_cmd
 {
 	char					**av;
 	char					*editor;
-	int						first;
-	int						last;
-	int						ac;
+	size_t					ac;
+	int32_t					first;
+	int32_t					last;
 	int						fd;
+	char					pad[4];
 }							t_cmd;
 
 /*

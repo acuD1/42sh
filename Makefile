@@ -159,7 +159,8 @@ SRC					+=	$(S_PATH)$(FC)fc_print.c
 SRC					+=	$(S_PATH)$(FC)fc_specifier.c
 SRC					+=	$(S_PATH)$(FC)fc.c
 
-SRC					+=	$(S_PATH)$(HASH)add_hash_map.c
+SRC					+=	$(S_PATH)$(HASH)hash_dispatcher.c
+SRC					+=	$(S_PATH)$(HASH)fill_hash_map.c
 SRC					+=	$(S_PATH)$(HASH)fetch_hash_db.c
 SRC					+=	$(S_PATH)$(HASH)get_hash.c
 SRC					+=	$(S_PATH)$(HASH)hash_handler.c
