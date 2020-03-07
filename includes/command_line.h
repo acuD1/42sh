@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 18:03:10 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:16:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ u_int8_t	sub_prompt_error(t_read *term, char sb);
 
 u_int8_t	check_caps(const char *buf, t_read *term);
 void		insert_in_buffer(const char *buf, t_read *term);
-void		insert_char_in_buffer(const char buf, t_read *term, int buf_index);
+void		insert_char_in_buffer(const char buf, t_read *term, size_t buf_index);
 void		insert_str_in_buffer(const char *d_name, t_read *term);
 
 /*
@@ -110,8 +110,8 @@ u_int8_t	read_again
 */
 
 int			my_outc(int c);
-u_int8_t	get_width_last_line(t_read *term);
-u_int8_t	get_width_current_line(t_read *term);
+size_t		get_width_last_line(t_read *term);
+size_t		get_width_current_line(t_read *term);
 u_int64_t	get_mask(const char *buff);
 int			is_dot(const char *d_name);
 u_int8_t	is_tab(const char *d_name, t_read *term);

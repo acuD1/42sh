@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/03 14:24:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:09:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 void			goto_prompt(t_read *term)
 {
-	if ((int)ft_strlen(term->prompt) > term->ws_col)
+	if (ft_strlen(term->prompt) > term->ws_col)
 		term->y += ft_strlen(term->prompt) / term->ws_col;
 	while (term->y-- > 0)
 		xtputs(term->tcaps[KEY_UP], 1, my_outc);

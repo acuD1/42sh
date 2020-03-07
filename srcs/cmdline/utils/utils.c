@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/06 18:17:05 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:16:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ int			my_outc(int c)
 	return (SUCCESS);
 }
 
-u_int8_t	get_width_last_line(t_read *term)
+size_t	get_width_last_line(t_read *term)
 {
-	int		buff_index;
-	int		width;
-	int		x;
+	size_t	buff_index;
+	size_t	width;
+	ssize_t	x;
 
 	width = 0;
 	x = term->x;
@@ -56,18 +56,18 @@ u_int8_t	get_width_last_line(t_read *term)
 	return (width);
 }
 
-u_int8_t	get_width_current_line(t_read *term)
+size_t	get_width_current_line(t_read *term)
 {
-	int		buff_index;
-	int		width;
-	int		x;
+	size_t	buff_index;
+	size_t	width;
+	ssize_t	x;
 
 	width = 0;
 	x = term->x;
 	buff_index = term->x_index - term->prompt_len;
 	while (term->buffer[buff_index])
 	{
-		if (term->buffer[buff_index] == NEW_LINE[0] || x == term->ws_col - 1)
+		if (term->buffer[buff_index] == NEW_LINE[0] || x == (ssize_t)term->ws_col - 1)
 			break ;
 		width++;
 		x++;

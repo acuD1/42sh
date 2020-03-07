@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 16:02:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:11:17 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,20 @@ static void	clear_all_lines(t_read *term)
 
 void		del_key(t_read *term)
 {
-	int		i;
-	int		x;
-	int		y;
-	int		w;
+	size_t	i;
+	ssize_t	x;
+	size_t	y;
+	size_t	w;
 
-	if (*term->buffer && term->x >= term->prompt_len * (term->y == 0 ? 1 : 0)
-		&& term->x < term->width)
+	if (*term->buffer && term->x >= (ssize_t)(term->prompt_len * (term->y == 0 ? 1 : 0))
+		&& term->x < (ssize_t)term->width)
 	{
 		i = term->x_index - term->prompt_len - 1;
-		while (term->buffer[++i])
+		while (term->buffer[i])
+		{
 			term->buffer[i] = term->buffer[i + 1];
+			i++;
+		}
 		x = term->x;
 		i = term->x_index;
 		y = term->y;
@@ -63,7 +66,7 @@ void		del_key(t_read *term)
 
 void		bs_key(const char *buf, t_read *term)
 {
-	if ((term->y > 0 && term->x >= 0) || term->x > term->prompt_len)
+	if ((term->y > 0 && term->x >= 0) || term->x > (ssize_t)term->prompt_len)
 	{
 		move_left(buf, term);
 		del_key(term);

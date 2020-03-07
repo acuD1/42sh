@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/03 14:52:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:09:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 **	To insert a char in buffer at the end of line
 */
 
-void		insert_char_in_buffer(const char buff, t_read *term, int buff_index)
+void		insert_char_in_buffer(const char buff, t_read *term, size_t buff_index)
 {
 	ft_dprintf(STDIN_FILENO, "%c", buff);
-	if (buff == NEW_LINE[0] || term->x >= term->ws_col)
+	if (buff == NEW_LINE[0] || term->x >= (ssize_t)term->ws_col)
 	{
 		if (buff == NEW_LINE[0])
 			term->x = -1;
@@ -33,9 +33,9 @@ void		insert_char_in_buffer(const char buff, t_read *term, int buff_index)
 	term->x_index++;
 }
 
-static void	insert_at_index(t_read *term, int buff_index, const char *buff)
+static void	insert_at_index(t_read *term, size_t buff_index, const char *buff)
 {
-	int		j;
+	size_t	j;
 
 	j = ft_strlen(term->buffer) + 1;
 	while (--j > buff_index)
@@ -50,10 +50,10 @@ static void	insert_at_index(t_read *term, int buff_index, const char *buff)
 **			`clr_lines' => to clear all following lines from cursor
 */
 
-static void	insert_inline_char(const char *buff, t_read *term, int buff_index)
+static void	insert_inline_char(const char *buff, t_read *term, size_t buff_index)
 {
 	char	*tmp;
-	int		x;
+	size_t	x;
 
 	x = 0;
 	tmp = NULL;
@@ -75,8 +75,8 @@ static void	insert_inline_char(const char *buff, t_read *term, int buff_index)
 
 void		insert_str_in_buffer(const char *d_name, t_read *term)
 {
-	int		buff_index;
-	int		i;
+	size_t	buff_index;
+	size_t	i;
 
 	i = ft_strlen(d_name);
 	while (i--)
@@ -98,9 +98,9 @@ void		insert_str_in_buffer(const char *d_name, t_read *term)
 
 void		insert_in_buffer(const char *buff, t_read *term)
 {
-	int		buff_index;
-	int		len;
-	int		increase_len;
+	size_t	buff_index;
+	size_t	len;
+	size_t	increase_len;
 
 	increase_len = 0;
 	buff_index = term->x_index - term->prompt_len;

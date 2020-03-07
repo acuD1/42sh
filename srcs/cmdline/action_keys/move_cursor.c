@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 14:49:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:15:52 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,19 @@ void		move_key_up(t_read *term)
 
 void		move_right(const char *buff, t_read *term)
 {
-	int		width;
-	int		buff_index;
+	size_t	width;
+	size_t	buff_index;
 
 	(void)buff;
 	width = get_width_current_line(term);
 	buff_index = term->x_index - term->prompt_len;
-	if (term->x < width)
+	if (term->x < (ssize_t)width)
 	{
 		xtputs(term->tcaps[KEY_RIGHT], 1, my_outc);
 		term->x_index++;
 		term->x++;
 	}
-	else if (term->x >= term->ws_col - 1 || *buff == NEW_LINE[0]
+	else if (term->x >= (ssize_t)term->ws_col - 1 || *buff == NEW_LINE[0]
 			|| term->buffer[buff_index] == NEW_LINE[0])
 	{
 		xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
@@ -121,10 +121,10 @@ void		move_right(const char *buff, t_read *term)
 
 void		move_left(const char *buff, t_read *term)
 {
-	int		width;
+	size_t	width;
 
 	(void)buff;
-	if ((term->x > term->prompt_len && term->y == 0)
+	if ((term->x > (ssize_t)term->prompt_len && term->y == 0)
 		|| (term->x > 0 && term->y > 0))
 	{
 		xtputs(term->tcaps[KEY_LEFT], 1, my_outc);
@@ -134,7 +134,7 @@ void		move_left(const char *buff, t_read *term)
 	else if (term->y > 0 && term->x == 0)
 	{
 		width = get_width_last_line(term);
-		term->x = width;
+		term->x = (ssize_t)width;
 		while (width--)
 			xtputs(term->tcaps[KEY_RIGHT], 1, my_outc);
 		xtputs(term->tcaps[KEY_UP], 1, my_outc);

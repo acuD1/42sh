@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/05 21:47:42 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:05:55 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ typedef struct				s_read
 	char					*buffer;
 	char					*tmp_buff;
 	char					*ac_tmp;
-	int						prompt_len;
-	int						x_index;
-	int						x;
-	int						y;
-	int						width;
-	int						ws_col;
+	size_t					prompt_len;
+	size_t					x_index;
+	ssize_t					x;
+	size_t					y;
+	size_t					width;
+	size_t					ws_col;
 	int						ws_li;
 	int						ac;
 	int						sub_prompt;

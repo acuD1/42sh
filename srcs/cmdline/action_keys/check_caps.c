@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_caps.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 15:37:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/07 16:38:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 static void		check_keys_comb(const char *buff, t_read *term, u_int64_t value)
 {
-	int		i;
+	size_t	i;
 
 	i = term->width - term->x_index;
 	if (value == CTRL_L)
