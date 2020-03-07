@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/07 17:11:17 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/07 18:17:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	clear_all_lines(t_read *term)
 
 void		del_key(t_read *term)
 {
-	size_t	i;
+	ssize_t	i;
 	ssize_t	x;
 	size_t	y;
 	size_t	w;
@@ -40,11 +40,8 @@ void		del_key(t_read *term)
 		&& term->x < (ssize_t)term->width)
 	{
 		i = term->x_index - term->prompt_len - 1;
-		while (term->buffer[i])
-		{
+		while (term->buffer[++i])
 			term->buffer[i] = term->buffer[i + 1];
-			i++;
-		}
 		x = term->x;
 		i = term->x_index;
 		y = term->y;

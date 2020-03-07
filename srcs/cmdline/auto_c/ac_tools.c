@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/19 19:34:34 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:21:45 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,15 @@ char		**split_path(t_core *shell, const char *str)
 
 void		split_cmd(char **to_find, t_read *term)
 {
-	int		i;
+	size_t	i;
 
-	i = -1;
+	i = 0;
 	term->ac = 0;
-	while (ft_isblank(term->buffer[++i]))
+	while (ft_isblank(term->buffer[i]))
+	{
+		i++;
 		continue ;
+	}
 	if (term->buffer[i] == '\0')
 	{
 		*to_find = ft_strnew(0);

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/21 16:13:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/07 17:19:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ u_int8_t		read_again
 
 static u_int8_t	get_dir(t_read *term, char *current_dir)
 {
-	int		found;
+	size_t	found;
 	char	*tmp;
-	int		i;
+//	int		i;
 
-	i = 0;
+	//i = 0;
 	tmp = NULL;
 	found = ft_strlen(term->cmd[0]);
 	while (found--)
@@ -65,7 +65,7 @@ static u_int8_t	get_dir(t_read *term, char *current_dir)
 			ft_strncpy(current_dir, term->cmd[1], found + 1);
 			tmp = ft_strdup(ft_strrchr(term->cmd[0], '/'));
 			ft_strdel(&term->cmd[0]);
-			i = ft_strlen(tmp);
+		//	i = ft_strlen(tmp);
 			term->cmd[0] = ft_strdup(tmp + 1);
 			ft_strdel(&tmp);
 			return (TRUE);
@@ -138,9 +138,9 @@ void			to_complete_buffer(const char *to_find, t_read *term)
 {
 	char	current_dir[BUFF_SIZE];
 	DIR		*dir;
-	int		brace;
+//	int		brace;
 
-	brace = 0;
+//	brace = 0;
 	ft_bzero(current_dir, BUFF_SIZE);
 	term->flag = FALSE;
 	ft_tabfree(term->cmd);
