@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/07 17:09:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/07 20:21:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,5 @@ int8_t			init_prompt(t_core *shell)
 			break ;
 	}
 	shell->term.status = CMD_DONE;
-	if (check_subprompt(shell) == FALSE)
-		check_expansions(&shell->term);
-	reset_config(shell);
 	return (SUCCESS);
 }

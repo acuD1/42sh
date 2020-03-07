@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_hst_expansions.c                             :+:      :+:    :+:   */
+/*   check_hst_exp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/18 18:51:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/07 20:30:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static void	find_expansions(t_read *term, int *i)
+static void	find_expansions(t_read *term, ssize_t *i)
 {
 	if (term->buffer[*i + 1] == '!')
 		*i = last_cmd_back(term, *i);
@@ -24,21 +24,29 @@ static void	find_expansions(t_read *term, int *i)
 		*i = callback_number(term, *i);
 }
 
-void		check_expansions(t_read *term)
+int8_t		check_expansions(t_read *term)
 {
 	char	*tmp;
-	int		i;
+	ssize_t	i;
 
-	i = -1;
+	i = 0;
+	if (ft_strequ(term->buffer, "!") == TRUE)
+		return (FAILURE);
 	tmp = ft_strdup(term->buffer);
-	while (term->buffer[++i])
+	while (term->buffer[i])
 	{
+		// C'est pas bon du tout, bcp de cas ou ca marche pas
 		if (term->buffer[i] == '!')
 			find_expansions(term, &i);
 		if (i == FAILURE)
+		{
+			ft_dprintf(STDERR_FILENO, "42sh: %s: event not found\n", tmp);
 			break ;
+		}
+		i++;
 	}
 	if (ft_strcmp(tmp, term->buffer))
 		ft_dprintf(STDERR_FILENO, "%s\n", term->buffer);
 	ft_strdel(&tmp);
+	return (i == FAILURE ? FAILURE : SUCCESS);
 }

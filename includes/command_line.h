@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/07 17:16:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/07 20:17:20 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,12 @@ int8_t		init_history(t_core *shell);
 int8_t		write_history(t_core *shell);
 void		save_history(t_read *term);
 void		research_mode(t_read *term);
-void		check_expansions(t_read *term);
-void		insert_content(int j, int i, t_read *term, char *content);
-int64_t		call_number(t_read *term, int i);
-int64_t		callback_number(t_read *term, int i);
-int64_t		call_word(t_read *term, int i);
-int64_t		last_cmd_back(t_read *term, int i);
+int8_t		check_expansions(t_read *term);
+void		insert_content(size_t j, ssize_t i, t_read *term, char *content);
+int64_t		call_number(t_read *term, ssize_t i);
+int64_t		callback_number(t_read *term, ssize_t i);
+int64_t		call_word(t_read *term, ssize_t i);
+int64_t		last_cmd_back(t_read *term, ssize_t i);
 char		*get_home_value(t_core *shell);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 16:03:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/07 18:21:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 static int8_t	history_writer(t_lst *hst, int fd)
 {
-	int			i;
+	size_t	i;
 
 	i = 0;
 	while (hst->next && ++i < HIST_SIZE)
@@ -91,7 +91,7 @@ void			save_history(t_read *term)
 static void		read_history_file(t_core *shell, int fd)
 {
 	char		*line;
-	int			i;
+	size_t		i;
 
 	i = 0;
 	line = NULL;
@@ -119,9 +119,7 @@ int8_t			init_history(t_core *shell)
 	char	*line;
 	char	*history_file;
 	int		fd;
-	int		i;
 
-	i = 0;
 	line = NULL;
 	history_file = get_home_value(shell);
 	if ((fd = open(history_file, O_RDONLY, S_IRUSR | S_IRGRP | S_IROTH)) == -1)

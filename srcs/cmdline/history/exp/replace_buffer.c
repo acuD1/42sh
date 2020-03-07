@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 04:02:43 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 14:20:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/07 19:10:17 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ static void	replace_buffer(t_read *term, char *begin, char *end, char *content)
 **		To insert in buffer the content found from the hst lst
 */
 
-void		insert_content(int j, int i, t_read *term, char *content)
+void		insert_content(size_t j, ssize_t i, t_read *term, char *content)
 {
 	char	*begin;
 	char	*end;
-	int		inc_len;
-	int		buff_len;
+	size_t	inc_len;
+	size_t	buff_len;
 
 	inc_len = 0;
 	end = NULL;
@@ -53,9 +53,9 @@ void		insert_content(int j, int i, t_read *term, char *content)
 		term->buffer = ft_realloc(term->buffer, inc_len);
 	}
 	if (i > 0)
-		begin = ft_strsub(term->buffer, 0, i);
+		begin = ft_strsub(term->buffer, 0, (ssize_t)i);
 	if (i + j < buff_len)
-		end = ft_strsub(term->buffer, i + j, buff_len - (i + j));
+		end = ft_strsub(term->buffer, (unsigned int)i + j, (size_t)(buff_len - (i + j)));
 	ft_strdel(&term->buffer);
 	replace_buffer(term, begin, end, content);
 }
