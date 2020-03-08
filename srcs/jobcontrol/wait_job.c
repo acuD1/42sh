@@ -6,12 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/27 20:36:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/21 22:31:39 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:50:15 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <sys/wait.h>
+#include <unistd.h>
 
 void	wait_for_job(t_core *shell, t_lst *jobs, t_job *job)
 {
