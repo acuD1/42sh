@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exp_param_opt.c                                    :+:      :+:    :+:   */
+/*   two_point_param.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 00:16:37 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/02 15:41:02 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:24:42 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char			*plus_format(char **tablo, t_core *shell)
+char	*plus_format(char **tablo, t_core *shell)
 {
-	char		*value;
+	char	*value;
 
 	value = NULL;
 	if ((check_env_key(tablo[0], shell)))
@@ -30,11 +30,11 @@ char			*plus_format(char **tablo, t_core *shell)
 	return (NULL);
 }
 
-char			*egal_format(char **tablo, t_core *shell)
+char	*egal_format(char **tablo, t_core *shell)
 {
-	char		*value;
-	char		*word;
-	int			i;
+	char	*value;
+	char	*word;
+	size_t	i;
 
 	i = 1;
 	word = NULL;
@@ -56,10 +56,10 @@ char			*egal_format(char **tablo, t_core *shell)
 	return (ft_strdup(value));
 }
 
-char			*underniercaspourlaroute(char **tablo, t_core *shell)
+char	*underniercaspourlaroute(char **tablo, t_core *shell)
 {
-	char		*value;
-	char		*word;
+	char	*value;
+	char	*word;
 
 	value = NULL;
 	word = NULL;
@@ -81,10 +81,10 @@ char			*underniercaspourlaroute(char **tablo, t_core *shell)
 	return (NULL);
 }
 
-char			*moar_format_plz(char *data, t_core *shell)
+char	*moar_format_plz(char *data, t_core *shell)
 {
-	char		**tablo;
-	int			tablen;
+	char	**tablo;
+	size_t	tablen;
 
 	tablo = NULL;
 	tablen = 0;
@@ -110,7 +110,7 @@ char			*moar_format_plz(char *data, t_core *shell)
 	return (one_moar_error(tablo, data, shell));
 }
 
-char			*get_two_point_param_exp(char **tablo, t_core *shell)
+char	*get_two_point_param_exp(char **tablo, t_core *shell)
 {
 	if (tablo[1][0] == '-')
 		return (dash_format(tablo, shell));
@@ -122,6 +122,6 @@ char			*get_two_point_param_exp(char **tablo, t_core *shell)
 		return (questionmark_format(tablo, shell));
 	else
 		return (underniercaspourlaroute(tablo, shell));
-	ft_tabfree(tablo);
-	return (NULL);
+	/*ft_tabfree(tablo); On passe jamais ici guillaume.
+	return (NULL);*/
 }

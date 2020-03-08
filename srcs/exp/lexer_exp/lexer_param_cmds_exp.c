@@ -6,16 +6,16 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:46:13 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/07 05:34:52 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 19:07:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char			*exp_get_paren(const char *string, int len)
+char			*exp_get_paren(const char *string, size_t len)
 {
 	char	*str;
-	int		index;
+	size_t	index;
 
 	str = NULL;
 	index = 0;
@@ -35,7 +35,7 @@ char			*exp_get_paren(const char *string, int len)
 	return (NULL);
 }
 
-int				check_brackets_inbracket(int *count, char c)
+u_int8_t			check_brackets_inbracket(u_int32_t *count, char c)
 {
 	if (c == '{')
 		*count += 1;
@@ -49,11 +49,11 @@ int				check_brackets_inbracket(int *count, char c)
 	return (1);
 }
 
-char			*exp_get_bracket(const char *string, int len)
+char			*exp_get_bracket(const char *string, size_t len)
 {
 	char		*str;
-	int			index;
-	int			count;
+	size_t		index;
+	u_int32_t	count;
 
 	index = 0;
 	count = 0;
@@ -75,9 +75,9 @@ char			*exp_get_bracket(const char *string, int len)
 	return (NULL);
 }
 
-static int8_t	get_index_expan(const char *str)
+static size_t	get_index_expan(const char *str)
 {
-	int		i;
+	size_t	i;
 
 	i = 1;
 	if (!str)
@@ -99,10 +99,10 @@ static int8_t	get_index_expan(const char *str)
 	return (i);
 }
 
-char			*exp_get_dollar(const char *string, int len)
+char			*exp_get_dollar(const char *string, size_t len)
 {
 	char	*str;
-	int		index;
+	size_t	index;
 
 	index = len;
 	str = NULL;

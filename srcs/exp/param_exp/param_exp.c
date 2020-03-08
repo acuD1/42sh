@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_param_exp.c                                  :+:      :+:    :+:   */
+/*   param_exp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 15:29:12 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/11 15:29:17 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:25:55 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char		*check_env_key(char *key, t_core *shell)
+char	*check_env_key(char *key, t_core *shell)
 {
 	t_db	*db;
 
@@ -22,7 +22,7 @@ char		*check_env_key(char *key, t_core *shell)
 	return (NULL);
 }
 
-char		*questionmark_format(char **tablo, t_core *shell)
+char	*questionmark_format(char **tablo, t_core *shell)
 {
 	char *value;
 
@@ -51,7 +51,7 @@ char		*questionmark_format(char **tablo, t_core *shell)
 	return (NULL);
 }
 
-char		*length_format(char *str, t_core *shell)
+char	*length_format(char *str, t_core *shell)
 {
 	t_db	*db_tmp;
 
@@ -66,13 +66,13 @@ char		*length_format(char *str, t_core *shell)
 	if ((db_tmp = search_db(shell->env, &str[1])))
 	{
 		ft_strdel(&str);
-		return (ft_itoa(ft_strlen(db_tmp->value)));
+		return (ft_itoa((int32_t)ft_strlen(db_tmp->value)));
 	}
 	ft_strdel(&str);
 	return (ft_strdup("0"));
 }
 
-char		*double_two_point_param(char **tablo, t_core *shell)
+char	*double_two_point_param(char **tablo, t_core *shell)
 {
 	int		flag[3];
 	char	*tmp[2];
@@ -84,7 +84,7 @@ char		*double_two_point_param(char **tablo, t_core *shell)
 	tmp[1] = check_env_key(tablo[0], shell);
 	if (tmp[1])
 	{
-		flag[1] = ft_strlen(tmp[1]) - 1;
+		flag[1] = (int)ft_strlen(tmp[1]) - 1;
 		if ((flag[2] = ft_atoi(tablo[2])) < 0 || flag[2] >= flag[1])
 			flag[2] = flag[1];
 		if ((flag[0] = ft_atoi(tablo[1])) < 0 || flag[0] >= flag[1])
@@ -92,7 +92,7 @@ char		*double_two_point_param(char **tablo, t_core *shell)
 			ft_tabfree(tablo);
 			return (NULL);
 		}
-		if (!(tmp[0] = ft_strsub(tmp[1], flag[0], flag[2])))
+		if (!(tmp[0] = ft_strsub(tmp[1], (unsigned int)flag[0], (size_t)flag[2])))
 			return (NULL);
 	}
 	ft_tabfree(tablo);

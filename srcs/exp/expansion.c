@@ -6,16 +6,16 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/02 19:19:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:31:58 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static void			expansion_tok(t_core *shell, t_process *process)
+static void	expansion_tok(t_core *shell, t_process *process)
 {
-	t_lst			*lst;
-	char			*res;
+	t_lst	*lst;
+	char	*res;
 
 	if (!process->tok_list || !shell)
 		return ;
@@ -39,10 +39,10 @@ static void			expansion_tok(t_core *shell, t_process *process)
 	}
 }
 
-static void			expansion_assign(t_core *shell, t_process *process)
+static void	expansion_assign(t_core *shell, t_process *process)
 {
-	t_lst			*lst;
-	char			*res;
+	t_lst	*lst;
+	char	*res;
 
 	if (!process->assign_list || !shell)
 		return ;
@@ -65,9 +65,9 @@ static void			expansion_assign(t_core *shell, t_process *process)
 	}
 }
 
-static void			filename_heredoc_exp(t_core *shell, t_redir *redir)
+static void	filename_heredoc_exp(t_core *shell, t_redir *redir)
 {
-	char			*res;
+	char	*res;
 
 	res = NULL;
 	if (!redir || !redir->op[1])
@@ -94,9 +94,9 @@ static void			filename_heredoc_exp(t_core *shell, t_redir *redir)
 	}
 }
 
-static void			expansion_redir(t_core *shell, t_process *process)
+static void	expansion_redir(t_core *shell, t_process *process)
 {
-	t_lst			*lst;
+	t_lst	*lst;
 
 	if (!process->redir_list || !shell)
 		return ;
@@ -108,7 +108,7 @@ static void			expansion_redir(t_core *shell, t_process *process)
 	}
 }
 
-void				expansion(t_core *shell, t_process *process)
+void		expansion(t_core *shell, t_process *process)
 {
 	if (!process || !shell)
 		return ;

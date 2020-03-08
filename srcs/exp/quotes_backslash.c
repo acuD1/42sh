@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   do_exp_and_quotes.c                                :+:      :+:    :+:   */
+/*   quotes_backslash.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 19:35:57 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/07 05:47:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:32:16 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-enum e_estate	skip_recur_quote(char *str, int *index, enum e_estate st)
+enum e_estate	skip_recur_quote(char *str, size_t *index, enum e_estate st)
 {
 	if (!str || (str[*index] == '\\')
 		|| ((str[*index] == '\"' && st == E_QUOTE)
@@ -66,11 +66,11 @@ enum e_estate	skip_quotes(char *str, t_expansion *exp)
 	return (exp->quotus);
 }
 
-int				discard_backslash(const char *data, int *i, char **res)
+u_int32_t		discard_backslash(const char *data, size_t *i, char **res)
 {
-	int			backslash_nbr;
-	int			index;
-	int			ret;
+	size_t		index;
+	u_int32_t	backslash_nbr;
+	u_int32_t	ret;
 	char		*tmp;
 
 	index = *i;
@@ -86,7 +86,7 @@ int				discard_backslash(const char *data, int *i, char **res)
 		}
 		ret = backslash_nbr % 2;
 		backslash_nbr /= 2;
-		tmp = ft_strsub(data, index - backslash_nbr, backslash_nbr);
+		tmp = ft_strsub(data, (unsigned int)(index - backslash_nbr), (size_t)backslash_nbr);
 		*res = ft_strjoinf(*res, tmp, 4);
 		if (data[index] == '\n')
 			index++;

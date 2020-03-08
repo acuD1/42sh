@@ -6,19 +6,19 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:47:24 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/02 15:50:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:29:07 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
 #include "sh42.h"
 
-static int			check_tilde_path_exp(char *expandu,
-	const char *str, int i, enum e_estate state)
+static u_int8_t	check_tilde_path_exp
+	(char *expandu, const char *str, size_t i, enum e_estate state)
 {
-	char			*tmp[3];
-	int				len;
-	int				exp_size;
+	char	*tmp[3];
+	size_t	len;
+	size_t	exp_size;
 
 	tmp[0] = NULL;
 	tmp[2] = NULL;
@@ -30,7 +30,7 @@ static int			check_tilde_path_exp(char *expandu,
 		exp_size++;
 	tmp[1] = ft_strsub(str, 0, i);
 	len = ft_strlen(str);
-	tmp[2] = ft_strsub(str, exp_size, len - exp_size);
+	tmp[2] = ft_strsub(str, (unsigned int)exp_size, len - exp_size);
 	tmp[0] = ft_strjoinf(tmp[1], expandu, 1);
 	tmp[0] = ft_strjoinf(tmp[0], tmp[2], 3);
 	if (is_a_dir(tmp[0]) == EISDIR)
@@ -42,10 +42,10 @@ static int			check_tilde_path_exp(char *expandu,
 	return (0);
 }
 
-static void			apply_expansion(char *data,
-	char *token, t_core *shell, t_expansion *exp)
+static void		apply_expansion
+	(char *data, char *token, t_core *shell, t_expansion *exp)
 {
-	char			*res;
+	char	*res;
 
 	res = NULL;
 	if ((res = exp->sionat[exp->erience](token, shell)))
@@ -61,9 +61,9 @@ static void			apply_expansion(char *data,
 	}
 }
 
-t_expansion			*exp_biteurs(char *data, t_core *shell, t_expansion *exp)
+t_expansion		*exp_biteurs(char *data, t_core *shell, t_expansion *exp)
 {
-	char			*exp_tok;
+	char	*exp_tok;
 
 	exp_tok = NULL;
 	exp->st = find_expansion(&data[exp->index]);
@@ -84,16 +84,16 @@ t_expansion			*exp_biteurs(char *data, t_core *shell, t_expansion *exp)
 	return (exp);
 }
 
-t_expansion			*word_biteurs(char *data, t_core *shell, t_expansion *exp)
+t_expansion		*word_biteurs(char *data, t_core *shell, t_expansion *exp)
 {
-	char			*tmp;
+	char	*tmp;
 
 	if (!data[exp->index])
 	{
 		exp->st = E_END;
 		return (exp);
 	}
-	tmp = ft_strsub(data, exp->index, 1);
+	tmp = ft_strsub(data, (unsigned int)exp->index, 1);
 	exp->res = ft_strjoinf(exp->res, tmp, 4);
 	exp->index++;
 	exp->st = (!data[exp->index]) ? E_END : E_START;
@@ -101,7 +101,7 @@ t_expansion			*word_biteurs(char *data, t_core *shell, t_expansion *exp)
 	return (exp);
 }
 
-t_expansion			*start_biteurs(char *data, t_core *shell, t_expansion *exp)
+t_expansion		*start_biteurs(char *data, t_core *shell, t_expansion *exp)
 {
 	if (!data[exp->index])
 		exp->st = E_END;

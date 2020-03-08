@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/08 16:59:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:33:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ typedef struct				s_token
 {
 	char					*data;
 	enum e_pstate			id;
+	char					pad[4];
 	size_t					len;
-	char					pad[8];
 }							t_token;
 
 struct						s_lexer
@@ -141,9 +141,9 @@ struct						s_lexer
 	t_token					token;
 	char					*buff;
 	enum e_lstate			status;
+	char					pad[4];
 	size_t					ntok;
 	size_t					buf_pos;
-	char					pad[8];
 };
 
 typedef struct				s_job
@@ -237,9 +237,9 @@ struct						s_expansion
 	char					*res;
 	enum e_estate			st;
 	enum e_estate			quotus;
-	int						erience;
-	int						index;
-	int						discarded;
+	size_t					erience;
+	size_t					index;
+	u_int32_t				discarded;
 	char					pad[4];
 };
 
@@ -247,14 +247,16 @@ typedef struct				s_exp_token
 {
 	char					*data;
 	enum e_estate			id;
-	int						len;
+	char					pad[4];
+	size_t					len;
 }							t_exp_token;
 
 typedef struct				s_lex_exp
 {
-	char					*(*fct)(const char *, int);
+	char					*(*fct)(const char *, size_t);
 	enum e_estate			id;
-	int						len;
+	char					pad[4];
+	size_t					len;
 }							t_lex_exp;
 
 #endif

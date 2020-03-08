@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 18:43:16 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 15:15:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:30:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@
 **	LEXER_EXPANSION
 */
 
-int				check_brackets_inbracket(int *count, char c);
+u_int8_t		check_brackets_inbracket(u_int32_t *count, char c);
 enum e_estate	find_expansion(const char *str);
 char			*get_expansion(const char *string, enum e_estate state);
-char			*exp_get_bquote(const char *string, int len);
-char			*exp_get_paren(const char *string, int len);
-char			*exp_get_bracket(const char *string, int len);
-char			*exp_get_dollar(const char *string, int len);
-char			*exp_get_tilde(const char *string, int len);
-char			*exp_get_tildep(const char *string, int len);
-char			*exp_get_tildem(const char *string, int len);
-char			*exp_get_hook(const char *string, int len);
-char			*exp_get_dbparen(const char *string, int len);
+char			*exp_get_bquote(const char *string, size_t len);
+char			*exp_get_paren(const char *string, size_t len);
+char			*exp_get_bracket(const char *string, size_t len);
+char			*exp_get_dollar(const char *string, size_t len);
+char			*exp_get_tilde(const char *string, size_t len);
+char			*exp_get_tildep(const char *string, size_t len);
+char			*exp_get_tildem(const char *string, size_t len);
+char			*exp_get_hook(const char *string, size_t len);
+char			*exp_get_dbparen(const char *string, size_t len);
 
 /*
 **	EXPANSION_INHIBITEUR
@@ -45,10 +45,10 @@ void			add_assign_envp(const char *key, char *value, char ***envp);
 char			**add_underscore_envp(char **envp, char *data);
 u_int8_t		is_expansion(enum e_estate id);
 t_expansion		*init_expansion_inhibiteurs(t_expansion *exp);
-enum e_estate	skip_recur_quote(char *str, int *index, enum e_estate st);
+enum e_estate	skip_recur_quote(char *str, size_t *index, enum e_estate st);
 enum e_estate	skip_quotes(char *str, t_expansion *exp);
-int				discard_backslash(const char *data, int *i, char **res);
-int				quotes_condition(char c, enum e_estate state);
+u_int32_t		discard_backslash(const char *data, size_t *i, char **res);
+u_int8_t		quotes_condition(char c, enum e_estate state);
 t_expansion		*exp_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*word_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*start_biteurs(char *data, t_core *shell, t_expansion *exp);

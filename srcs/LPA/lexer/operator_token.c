@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:46:41 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/06 16:22:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 19:46:20 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 const t_token	g_ope[] =
 {
-	{"\n", P_NEWLINE, 1, {}},
-	{"&&", P_ANDIF, 2, {}},
-	{"&", P_AND, 1, {}},
-	{"||", P_ORIF, 2, {}},
-	{"|", P_PIPE, 1, {}},
-	{";;", P_DSEMI, 2, {}},
-	{";", P_SEMICOLON, 1, {}},
-	{"<<-", P_DLESSDASH, 3, {}},
-	{"<<", P_DLESS, 2, {}},
-	{"<&", P_LESSAND, 2, {}},
-	{"<", P_LESS, 1, {}},
-	{">>", P_DGREAT, 2, {}},
-	{">&", P_GREATAND, 2, {}},
-	{">", P_GREAT, 1, {}},
-	{NULL, P_OPE_INTERRUPT, 0, {}}
+	{"\n", P_NEWLINE, "", 1},
+	{"&&", P_ANDIF, "", 2},
+	{"&", P_AND, "", 1},
+	{"||", P_ORIF, "", 2},
+	{"|", P_PIPE, "", 1},
+	{";;", P_DSEMI, "", 2},
+	{";", P_SEMICOLON, "", 1},
+	{"<<-", P_DLESSDASH, "", 3},
+	{"<<", P_DLESS, "", 2},
+	{"<&", P_LESSAND, "", 2},
+	{"<", P_LESS, "", 1},
+	{">>", P_DGREAT, "", 2},
+	{">&", P_GREATAND, "", 2},
+	{">", P_GREAT, "", 1},
+	{NULL, P_OPE_INTERRUPT, "", 0}
 };
 
 static t_lst	*new_ope(t_lexer *lx, enum e_pstate id, int len, t_lst *lst)
