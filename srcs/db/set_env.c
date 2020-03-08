@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:02:36 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/01 23:49:55 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:16:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@
 
 static int8_t	init_env(t_core *shell)
 {
-	static int8_t	(*inits[16])() = {increment_shlvl, update_pwd
+	static int8_t	(*inits[16])(t_core *) = {increment_shlvl, update_pwd
 		, update_ifs, update_termsize, create_term, update_histfile
-			, update_hist_size, update_histfile_size, update_version
-			, update_sharp_var, update_process_id, update_shell_name
-			, update_shell_flags, update_exit_status, update_ps1, update_ps2};
-	int				i;
+		, update_hist_size, update_histfile_size, update_version
+		, update_sharp_var, update_process_id, update_shell_name
+		, update_shell_flags, update_exit_status, update_ps1, update_ps2};
+	size_t			i;
 
 	i = 0;
 	while (i < 16)

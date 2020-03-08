@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/01 23:43:50 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:14:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int8_t	update_last_arg(t_core *shell, char **argv)
 {
 	t_db	*db;
 	char	*value;
-	int		tablen;
+	size_t	tablen;
 
 	db = NULL;
 	value = NULL;

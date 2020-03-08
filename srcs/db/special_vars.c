@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_vars.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:40:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 16:41:03 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:18:07 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int8_t	update_sharp_var(t_core *shell)
 	value = NULL;
 	if (shell && (db = get_or_create_db(shell, "#", SPECIAL_VAR)) != NULL)
 	{
-		value = ft_itoa(ft_lstlen(shell->pos_vars));
+		value = ft_itoa((int32_t)ft_lstlen(shell->pos_vars));
 		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);
 		ft_strdel(&value);

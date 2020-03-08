@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/07 20:37:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:13:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	load_i_mode(t_core *shell)
 		lexer_parser_analyzer(shell);
 		do_job_notification(shell, shell->launched_jobs);
 		if (task_master(shell) != SUCCESS)
-			return (quit_shell(shell, EXIT_FAILURE, FALSE));
+			quit_shell(shell, EXIT_FAILURE, FALSE);
 		save_history(&shell->term);
 		free_prompt(shell);
 	}
