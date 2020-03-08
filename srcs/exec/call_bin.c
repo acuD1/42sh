@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/02 15:49:18 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:04:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 static int8_t	check_filepath(t_process *process)
 {
-	int			ret;
+	int8_t	ret;
 
 	ret = 0;
 	if (process->av == NULL)
@@ -39,9 +39,9 @@ static int8_t	check_filepath(t_process *process)
 	return ((ret == 127) ? 127 : 126);
 }
 
-int8_t			call_bin(t_core *shell, t_process *process)
+void			call_bin(t_core *shell, t_process *process)
 {
-	int		ret;
+	int	ret;
 
 	ret = 0;
 	if (exec_redirs(shell, process, process->redir_list) != SUCCESS)
@@ -53,7 +53,7 @@ int8_t			call_bin(t_core *shell, t_process *process)
 				, "42sh: %s: command not found\n", process->av[0]);
 		exit(127);
 	}
-	if ((ret = check_filepath(process)) == 0)
+	if ((ret = (int)check_filepath(process)) == 0)
 	{
 		ret = execve(process->bin, process->av, process->envp);
 		ft_dprintf(STDERR_FILENO, "42sh: excve failure [%i]\n", ret);

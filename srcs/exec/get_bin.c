@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/06 16:54:25 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:12:21 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int8_t	check_filepath(const char *filepath)
 {
-	int		ret;
+	int8_t	ret;
 
 	if ((ret = ft_access(filepath, F_OK | X_OK)) != SUCCESS)
 		return (ret);
@@ -27,7 +27,7 @@ static int8_t	check_filepath(const char *filepath)
 static int8_t	format_path(const char *path, t_process *process)
 {
 	char	*tmp;
-	int		i;
+	size_t	i;
 
 	i = ft_strlen(path);
 	tmp = NULL;
@@ -60,17 +60,17 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 {
 	char	**split_path;
 	t_db	*db;
-	int		i;
+	size_t	i;
 
-	i = -1;
+	i = 0;
 	if ((db = search_db(shell->env, "PATH")) == NULL)
 	{
-		return ((process->blt || (process->bin = ft_strdup(
-							process->av[0])) >= 0) ? FAILURE : SUCCESS);
+		return (process->blt || ((process->bin = ft_strdup(process->av[0]))
+			== NULL ? FAILURE : SUCCESS));
 	}
 	if (!(split_path = ft_strsplit(db->value, ":")))
 		return (FAILURE);
-	while (split_path[++i] != NULL)
+	while (split_path[i] != NULL)
 	{
 		ft_strdel(&(process->bin));
 		if (access(split_path[i], X_OK | F_OK) == 0)
@@ -80,6 +80,7 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 			if (valid_path(process, &split_path) == SUCCESS)
 				return (SUCCESS);
 		}
+		i++;
 	}
 	ft_tabdel(&split_path);
 	return (1);
@@ -87,7 +88,7 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 
 int8_t			get_bin(t_core *shell, t_process *process)
 {
-	int		ret;
+	int8_t	ret;
 
 	ret = 0;
 	if (process->av[0][0] == 0)

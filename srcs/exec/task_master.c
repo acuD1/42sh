@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   task_master.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/29 18:12:39 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:13:25 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int8_t		task_master(t_core *shell)
 {
 	t_lst	*job;
 	t_lst	*next;
-	int		foreground;
+	int8_t	foreground;
 
 	job = shell->job_list;
 	while (job)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:31:01 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/24 21:43:11 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:16:19 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int8_t	get_fd(t_redir *redir)
 int8_t			exec_redirs(t_core *shell, t_process *process, t_lst *head)
 {
 	t_lst	*redirs;
-	int		i;
+	int8_t	i;
 
 	i = 0;
 	redirs = head;

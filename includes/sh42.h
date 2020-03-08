@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/06 18:04:04 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:37:47 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int8_t		edit_var
 int8_t		call_builtin(t_core *shell, t_process *process, int blt);
 int8_t		get_bin_path(t_core *shell, t_process *process);
 void		exec_process(t_core *shell, t_job *job, t_process *process);
-int8_t		call_bin(t_core *shell, t_process *process);
+void		call_bin(t_core *shell, t_process *process);
 int8_t		task_master(t_core *shell);
 int8_t		is_a_blt(const char *cmd);
 int8_t		get_bin(t_core *shell, t_process *process);
