@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 17:15:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:22:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int8_t	cd_oldpwd_error(t_core *shell, t_db *db_oldpwd)
 static int8_t	cd_oldpwd(t_core *shell)
 {
 	t_db	*db_oldpwd;
-	int		errnum;
+	int8_t	errnum;
 
 	if ((db_oldpwd = search_db(shell->env, "OLDPWD")) == NULL
 		|| db_oldpwd->value == NULL)

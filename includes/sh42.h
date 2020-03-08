@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/08 20:51:48 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:35:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int8_t		edit_var
 **	===========================================================================
 */
 
-int8_t		call_builtin(t_core *shell, t_process *process, int blt);
+int8_t		call_builtin(t_core *shell, t_process *process, int8_t blt);
 int8_t		get_bin_path(t_core *shell, t_process *process);
 void		exec_process(t_core *shell, t_job *job, t_process *process);
 void		call_bin(t_core *shell, t_process *process);
@@ -120,13 +120,13 @@ void		hash_error(t_hash *hash);
 t_core		*get_core(t_core *core);
 int8_t		get_canonical_path
 	(t_core *shell, const char *path, char *buffer, char *pwd);
-void		ft_perror(const char *s, const char *name, int errnum);
-int8_t		ft_access(const char *path, int mode);
+void		ft_perror(const char *s, const char *name, int8_t errnum);
+int8_t		ft_access(const char *path, u_int8_t mode);
 int8_t		is_a_dir(const char *path);
-void		print_usage(const char *name, int c, const char *usage);
+void		print_usage(const char *name, u_int8_t c, const char *usage);
 void		quit_shell(t_core *shell, int exit_value, int8_t v);
 void		print_and_quit(t_core *shell, const char *message);
-int			check_invalid_identifiers(const char *arg, const char *exceptions);
+int8_t		check_invalid_identifiers(const char *arg, const char *exceptions);
 char		*signal_msg(int sig);
 int8_t		path_tests(const char *path, int opt);
 void		dir_backward(char *path);

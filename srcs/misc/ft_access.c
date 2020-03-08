@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 00:18:54 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/19 17:42:32 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:26:26 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "sys/stat.h"
 #include "errno.h"
 
-static int8_t	access_file(const char *path, int mode)
+static u_int8_t	access_file(const char *path, u_int8_t mode)
 {
 	struct stat	file;
 
@@ -27,10 +27,10 @@ static int8_t	access_file(const char *path, int mode)
 	return (EACCES);
 }
 
-static int32_t	dir_depth(const char *path, char *buffer, int depth)
+static size_t	dir_depth(const char *path, char *buffer, size_t depth)
 {
 	const char	*ptr;
-	int			i;
+	ssize_t		i;
 
 	i = 0;
 	ptr = path;
@@ -47,16 +47,16 @@ static int32_t	dir_depth(const char *path, char *buffer, int depth)
 		depth--;
 	}
 	i = ptr - path;
-	ft_strncpy(buffer, path, i);
+	ft_strncpy(buffer, path, (size_t)i);
 	return (ft_strlen(buffer));
 }
 
-int8_t			ft_access(const char *path, int mode)
+int8_t		ft_access(const char *path, u_int8_t mode)
 {
-	char	buffer[MAX_PATH + 1];
-	int		path_len;
-	int		depth;
-	int		ret;
+	char		buffer[MAX_PATH + 1];
+	size_t		path_len;
+	size_t		depth;
+	int8_t		ret;
 
 	depth = 0;
 	path_len = 0;
@@ -70,12 +70,12 @@ int8_t			ft_access(const char *path, int mode)
 	path_len = ft_strlen(buffer);
 	while (dir_depth(path, buffer, depth) < path_len)
 	{
-		if ((ret = access_file(buffer, F_OK | X_OK)) != SUCCESS)
+		if ((ret = (int8_t)access_file(buffer, F_OK | X_OK)) != SUCCESS)
 		{
 			ft_bzero(buffer, MAX_PATH);
 			return (ret);
 		}
 		depth++;
 	}
-	return (access_file(buffer, mode));
+	return ((int8_t)access_file(buffer, mode));
 }
