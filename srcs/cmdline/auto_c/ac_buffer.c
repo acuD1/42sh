@@ -6,12 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/21 16:13:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:41:15 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dirent.h>
 #include "sh42.h"
+#include <dirent.h>
+#include <unistd.h>
 
 /*
 **		Delete last command insert in buffer and insert the new one

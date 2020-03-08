@@ -6,12 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 15:05:40 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/02 15:42:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:37:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <errno.h>
+#include <unistd.h>
 
 int8_t	hash_l(t_core *shell, t_process *process, int ac)
 {

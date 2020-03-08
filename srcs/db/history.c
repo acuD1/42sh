@@ -6,11 +6,12 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 20:18:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 14:42:50 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:14:14 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 /*
 **	Update [INTERNAL_VAR] HISTFILE, continaining the place of the history file

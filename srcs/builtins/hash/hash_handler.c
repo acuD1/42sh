@@ -6,12 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 17:21:14 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/17 23:59:03 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:36:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <errno.h>
+#include <stdlib.h>
 
 void	reset_hash(t_hash *hash)
 {

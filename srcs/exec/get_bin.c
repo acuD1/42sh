@@ -6,12 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/02 16:40:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:17:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
 #include "sh42.h"
+#include <errno.h>
+#include <unistd.h>
 
 static int8_t	check_filepath(const char *filepath)
 {

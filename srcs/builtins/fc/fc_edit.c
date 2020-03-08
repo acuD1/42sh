@@ -6,12 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 20:28:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:31:33 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <fcntl.h>
+#include <unistd.h>
 
 static int8_t	fc_exec_cmd(t_core *shell, t_cmd cmd)
 {

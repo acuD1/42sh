@@ -6,11 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:13:54 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/02 19:09:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:39:11 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 char				*inhibiteurs_expansion(char *data, t_core *shell)
 {

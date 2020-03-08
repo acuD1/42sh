@@ -6,11 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 17:29:49 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/03 17:52:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:39:53 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <stdlib.h>
 
 static void	init_start_analyze(t_anal analyze)
 {

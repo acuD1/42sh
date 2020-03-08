@@ -6,11 +6,12 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 22:37:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/17 19:05:02 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:27:21 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 static int8_t	parse_set(int argc, char **argv)
 {

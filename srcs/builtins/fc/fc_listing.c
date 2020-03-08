@@ -6,11 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:11:54 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 18:50:48 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:32:02 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 void			sort_print_cmd(t_cmd cmd, t_lst *w, u_int64_t opt)
 {

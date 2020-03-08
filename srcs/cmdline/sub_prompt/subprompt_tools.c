@@ -6,11 +6,12 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 17:11:13 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/20 17:31:30 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:43:41 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 void			display_subprompt(t_read *term)
 {

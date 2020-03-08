@@ -6,11 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 13:53:40 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/03 13:53:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:31:06 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 static int8_t	use_cd_path_handler
 	(t_core *shell, char *dir, char *path, char **tab)

@@ -1,38 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   free_job_from_list.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/04 15:59:13 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 14:26:02 by mpivet-p         ###   ########.fr       */
+/*   Created: 2020/03/08 13:24:57 by mpivet-p          #+#    #+#             */
+/*   Updated: 2020/03/08 15:35:29 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-#include <unistd.h>
+#include <stdlib.h>
 
-int8_t	builtin_echo(t_core *shell, t_process *process)
+void	free_job(t_lst **job_list, t_lst *job)
 {
-	int		argc;
-	int		i;
+	t_lst	*ptr;
 
-	(void)shell;
-	i = 1;
-	argc = ft_tablen(process->av);
-	while (i < argc)
+	ptr = *job_list;
+	if (*job_list != job)
 	{
-		if (write(STDOUT_FILENO, process->av[i], ft_strlen(process->av[i])) < 0)
-		{
-			ft_dprintf(STDERR_FILENO
-			, "42sh: echo: write error: Bad file descriptor\n");
-			return (1);
-		}
-		i++;
-		if (i < argc)
-			write(1, " ", 1);
+		while (ptr && ptr->next != job)
+			ptr = ptr->next;
+		if (ptr)
+			ptr->next = job->next;
 	}
-	write(1, "\n", 1);
-	return (SUCCESS);
+	else
+	{
+		*job_list = job->next;
+	}
+	if (job)
+	{
+		free_process_list(&(((t_job*)job->content)->process_list));
+		ft_strdel(&(((t_job*)job->content)->command));
+		free(job->content);
+		free(job);
+	}
 }

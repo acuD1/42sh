@@ -6,12 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:29:40 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/24 22:03:08 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:28:46 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
 #include "sh42.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 int8_t	dup_output(int fd, t_redir *ptr)
 {

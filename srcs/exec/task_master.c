@@ -6,37 +6,14 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 21:15:32 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:27:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <signal.h>
-
-void	free_job(t_lst **job_list, t_lst *job)
-{
-	t_lst	*ptr;
-
-	ptr = *job_list;
-	if (*job_list != job)
-	{
-		while (ptr && ptr->next != job)
-			ptr = ptr->next;
-		if (ptr)
-			ptr->next = job->next;
-	}
-	else
-	{
-		*job_list = job->next;
-	}
-	if (job)
-	{
-		free_process_list(&(((t_job*)job->content)->process_list));
-		ft_strdel(&(((t_job*)job->content)->command));
-		free(job->content);
-		free(job);
-	}
-}
+#include <unistd.h>
+#include <stdlib.h>
 
 static void	place_job(t_core *shell, t_job *job, int8_t foreground)
 {
@@ -93,6 +70,18 @@ static void	handle_background_job(t_core *shell, t_job *job, int foreground)
 		launch_job(shell, job, foreground);
 }
 
+static void	setup_background_job(t_job *job, int *foreground)
+{
+	if (job->type == P_AND)
+	{
+		*foreground = FALSE;
+		job->notified = TRUE;
+	}
+	else
+		*foreground = TRUE;
+
+}
+
 int8_t		task_master(t_core *shell)
 {
 	t_lst	*job;
@@ -103,9 +92,7 @@ int8_t		task_master(t_core *shell)
 	while (job)
 	{
 		do_job_notification(shell, shell->launched_jobs);
-		foreground = TRUE;
-		if (((t_job*)job->content)->type == P_AND)
-			foreground = FALSE;
+		setup_background_job((t_job*)job->content, &foreground);
 		next = job->next;
 		handle_background_job(shell, job->content, foreground);
 		place_job(shell, job->content, foreground);

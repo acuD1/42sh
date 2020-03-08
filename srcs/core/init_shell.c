@@ -6,12 +6,14 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 15:27:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/22 20:24:53 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:44:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
 #include "sh42.h"
+#include <signal.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 static void	init_shell_pgid(t_core *shell)
 {

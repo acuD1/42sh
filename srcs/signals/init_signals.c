@@ -6,12 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/03 17:13:01 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:43:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
 #include "sh42.h"
+#include <signal.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 static void	sig_handler(int signum)
 {

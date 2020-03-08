@@ -6,11 +6,12 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 15:29:22 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/11 15:29:24 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:29:21 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 char		*error_moar_format_third(char **tablo, char *data, t_core *shell)
 {

@@ -6,13 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/26 18:09:51 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:38:19 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "sh42.h"
 #include <sys/ioctl.h>
 #include <termcap.h>
-#include "sh42.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 /*
 **	Store datas of terminal's line/column

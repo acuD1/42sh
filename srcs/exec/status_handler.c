@@ -6,11 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:31:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/24 22:38:43 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:17:54 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 char	*signal_msg(int sig)
 {

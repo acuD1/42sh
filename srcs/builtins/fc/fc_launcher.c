@@ -6,11 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:44:14 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/03 14:01:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:31:55 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 static void		del_job(t_lst **job)
 {

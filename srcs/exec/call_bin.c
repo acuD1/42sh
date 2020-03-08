@@ -6,12 +6,14 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 20:01:18 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:15:31 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <errno.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 /*
 **	Function inside the fork where env is created, redirections

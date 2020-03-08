@@ -6,11 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 05:41:09 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/16 22:42:39 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:29:02 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 static int8_t	type(t_core *shell, char *path)
 {

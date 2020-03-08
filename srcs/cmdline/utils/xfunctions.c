@@ -6,12 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 12:13:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/26 17:17:47 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:39:24 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <term.h>
 #include "sh42.h"
+#include <term.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 /*
 **	Some functions safe/protected

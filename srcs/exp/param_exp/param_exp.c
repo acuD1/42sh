@@ -6,11 +6,12 @@
 /*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 15:29:12 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/11 15:29:17 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:29:03 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 char		*check_env_key(char *key, t_core *shell)
 {

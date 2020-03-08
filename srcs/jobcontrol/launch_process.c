@@ -6,12 +6,14 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 19:51:05 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:34:51 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <signal.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 void		reset_signals(void)
 {

@@ -6,12 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 18:01:39 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 21:11:19 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:33:51 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
 #include "sh42.h"
+#include <signal.h>
+#include <unistd.h>
 
 int8_t	put_job_in_foreground(t_core *shell, t_lst *jobs, t_job *job, int cont)
 {

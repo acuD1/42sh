@@ -6,12 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/01 23:43:50 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:45:33 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <sys/stat.h>
+#include <unistd.h>
 
 /*
 **	Increment SHLVL : search SHLVL in the env list, increment the value

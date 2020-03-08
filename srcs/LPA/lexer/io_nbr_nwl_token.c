@@ -6,11 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 17:55:48 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/06 22:51:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:40:33 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <stdlib.h>
 
 int				filename_checker(t_lst *lst)
 {

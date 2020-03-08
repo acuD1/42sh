@@ -6,12 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/26 19:51:35 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:41:34 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dirent.h>
 #include "sh42.h"
+#include <dirent.h>
+#include <unistd.h>
 
 /*
 ** Return only TRUE if tab key is pressed

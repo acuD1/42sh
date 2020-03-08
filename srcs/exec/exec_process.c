@@ -6,12 +6,12 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/05 21:25:50 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:17:07 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-#include <errno.h>
+#include <unistd.h>
 
 /*
 **	exec_process takes for parameter t_lst *env for now because we can set

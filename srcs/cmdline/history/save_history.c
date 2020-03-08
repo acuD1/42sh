@@ -6,14 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 16:03:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:41:56 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "sh42.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include "sh42.h"
+#include <unistd.h>
 
 /*
 **	Open ".42sh_history" file to write history datas at the end of file

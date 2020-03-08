@@ -6,11 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 20:32:08 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/26 15:08:15 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:42:08 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 void	print_usage(const char *name, int c, const char *usage)
 {

@@ -6,12 +6,14 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/26 18:41:00 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:38:45 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <term.h>
 #include "sh42.h"
+#include <term.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 void	init_cmd_line(t_core *shell, t_read *term)
 {

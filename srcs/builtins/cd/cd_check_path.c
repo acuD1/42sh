@@ -6,12 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 17:14:23 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/02 15:34:42 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:30:48 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <errno.h>
+#include <unistd.h>
 
 int8_t		cd_check_path(const char *path)
 {
