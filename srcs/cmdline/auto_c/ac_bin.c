@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/07 17:18:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:07:52 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 static void		insert_bin_in_buffer(const char *bin, t_read *term)
 {
 	size_t	i;
-	size_t	buff_index;
+	ssize_t	buff_index;
 
 	i = 0;
 	buff_index = 0;
@@ -51,7 +51,7 @@ static void		add_builtin_lst(t_lst **bin, const char *cmd)
 	}
 }
 
-int8_t			is_completion(t_read *term)
+static u_int8_t	is_completion(t_read *term)
 {
 	u_int64_t	value;
 	char		buff[READ_SIZE + 1];

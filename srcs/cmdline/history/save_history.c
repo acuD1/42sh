@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/07 18:21:49 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:22:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 static int8_t	history_writer(t_lst *hst, int fd)
 {
-	size_t	i;
+	ssize_t	i;
 
 	i = 0;
 	while (hst->next && ++i < HIST_SIZE)

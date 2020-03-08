@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/19 13:23:42 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:03:47 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static u_int8_t	heredoc_error(const char *key)
 	return (TRUE);
 }
 
-static int8_t	check_key(t_core *shell, const char *key)
+static u_int8_t	check_key(t_core *shell, const char *key)
 {
 	if (read_multiline(&shell->term, NULL) == FALSE)
 	{
@@ -44,14 +44,14 @@ static char		*stock_value(t_core *shell)
 {
 	char	*value;
 	char	*buffer;
-	int		i;
+	size_t	i;
 
 	value = NULL;
 	buffer = ft_strdup(shell->term.tmp_buff);
 	ft_strdel(&shell->term.tmp_buff);
 	i = ft_strlen_to(buffer, NEW_LINE[0]);
 	shell->term.status = CMD_DONE;
-	value = ft_strsub(buffer, i + 1, ft_strlen(buffer) - i);
+	value = ft_strsub(buffer, (unsigned int)i + 1, ft_strlen(buffer) - i);
 	ft_strdel(&shell->term.buffer);
 	shell->term.buffer = ft_strsub(buffer, 0, i);
 	ft_strdel(&buffer);

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/07 18:17:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:50:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ void		del_key(t_read *term)
 {
 	ssize_t	i;
 	ssize_t	x;
-	size_t	y;
-	size_t	w;
+	ssize_t	y;
+	ssize_t	w;
 
-	if (*term->buffer && term->x >= (ssize_t)(term->prompt_len * (term->y == 0 ? 1 : 0))
-		&& term->x < (ssize_t)term->width)
+	if (*term->buffer && term->x >= term->prompt_len * (term->y == 0 ? 1 : 0)
+		&& term->x < term->width)
 	{
 		i = term->x_index - term->prompt_len - 1;
 		while (term->buffer[++i])
@@ -63,7 +63,7 @@ void		del_key(t_read *term)
 
 void		bs_key(const char *buf, t_read *term)
 {
-	if ((term->y > 0 && term->x >= 0) || term->x > (ssize_t)term->prompt_len)
+	if ((term->y > 0 && term->x >= 0) || term->x > term->prompt_len)
 	{
 		move_left(buf, term);
 		del_key(term);

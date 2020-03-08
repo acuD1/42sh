@@ -6,16 +6,16 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 19:15:04 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:02:08 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-u_int8_t		check_backslash_nbr(char *str, int *index)
+u_int8_t		check_backslash_nbr(char *str, ssize_t *index)
 {
-	int		i;
-	int		nbr;
+	ssize_t	i;
+	ssize_t	nbr;
 
 	i = *index;
 	nbr = 0;
@@ -38,7 +38,7 @@ u_int8_t		check_backslash_nbr(char *str, int *index)
 	return (0);
 }
 
-static u_int8_t	goto_next_quote(char *buffer, char quote_type, int *i)
+static u_int8_t	goto_next_quote(char *buffer, char quote_type, ssize_t *i)
 {
 	while (buffer[(*i)++] != '\0')
 	{
@@ -62,7 +62,7 @@ static char		set_quote_type(char quote)
 
 u_int8_t		quotes_is_matching(t_read *term, char *quote)
 {
-	int		i;
+	ssize_t	i;
 
 	i = -1;
 	while (term->buffer[++i] != '\0')

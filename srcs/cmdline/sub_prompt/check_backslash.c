@@ -6,15 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:44:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/07 05:59:38 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:23:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-u_int8_t	charset_count(t_read *term, char c, int i)
+u_int8_t	charset_count(t_read *term, char c, size_t i)
 {
-	int		count;
+	u_int8_t	count;
 
 	count = 0;
 	while (term->buffer[i])

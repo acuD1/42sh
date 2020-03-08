@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/07 17:19:53 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:08:01 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,7 @@ void			to_complete_buffer(const char *to_find, t_read *term)
 {
 	char	current_dir[BUFF_SIZE];
 	DIR		*dir;
-//	int		brace;
 
-//	brace = 0;
 	ft_bzero(current_dir, BUFF_SIZE);
 	term->flag = FALSE;
 	ft_tabfree(term->cmd);

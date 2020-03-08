@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 16:53:44 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/07 06:03:51 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:26:38 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		init_ionumber_graph(t_graph *graph);
 **	LEXER
 */
 
-int			get_word_size_ntype(int i, char *str);
+size_t		get_word_size_ntype(size_t i, char *str);
 t_lst		*lexer(char *line);
 t_lst		*start_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst		*end_lexer(t_lexer *lexer, t_lst *lexer_token);

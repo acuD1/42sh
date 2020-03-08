@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/07 20:37:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:55:47 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int64_t	call_word(t_read *term, ssize_t i)
 	t_lst	*w;
 	char	word[BUFF_SIZE];
 	ssize_t	n;
-	size_t	j;
+	ssize_t	j;
 
 	ft_bzero(word, BUFF_SIZE);
 	j = 0;
@@ -42,7 +42,7 @@ int64_t	call_word(t_read *term, ssize_t i)
 	if (!w->next)
 		return (FAILURE);
 	insert_content(j + 2, i, term, (char *)w->content);
-	return (i + ft_strlen((char *)w->content) - 1);
+	return (i + (ssize_t)ft_strlen((char *)w->content) - 1);
 }
 
 /*
@@ -54,7 +54,7 @@ int64_t	callback_number(t_read *term, ssize_t i)
 	t_lst	*w;
 	char	nb[BUFF_SIZE];
 	ssize_t	n;
-	size_t	j;
+	ssize_t	j;
 
 	j = 0;
 	w = term->history;
@@ -87,7 +87,7 @@ int64_t	call_number(t_read *term, ssize_t i)
 	t_lst	*w;
 	char	nb[BUFF_SIZE];
 	ssize_t	n;
-	size_t	j;
+	ssize_t	j;
 
 	j = 0;
 	w = term->history;

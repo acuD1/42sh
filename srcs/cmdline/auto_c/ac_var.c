@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ac_var.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 15:03:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/18 15:30:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:09:04 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		insert_dollar(char **insert, const char *to_find, char *key)
 		*insert = ft_strjoin("$", key);
 }
 
-static int8_t	var_is_matching(const char *to_find, char *key)
+static u_int8_t	var_is_matching(const char *to_find, char *key)
 {
 	if (ft_isstart(key, to_find + 1))
 		return (TRUE);
@@ -57,5 +57,6 @@ void			parse_env(char **prev_b, const char *to_find, t_read *term)
 		env = env->next;
 	}
 	ft_strdel(&insert);
-	(term->flag == TRUE) ? parse_env(prev_b, to_find, term) : 0;
+	if (term->flag == TRUE)
+		parse_env(prev_b, to_find, term);
 }

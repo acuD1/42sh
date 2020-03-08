@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/07 17:20:21 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:08:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ u_int8_t		is_tab(const char *d_name, t_read *term)
 	return (FALSE);
 }
 
-int				is_dot(const char *d_name)
+u_int8_t		is_dot(const char *d_name)
 {
 	if (!ft_strcmp(d_name, "."))
 		return (TRUE);
@@ -110,5 +110,6 @@ void			display_current_directory(t_read *term, const char *av)
 	if (read_curr_dir(term, tmp, new_dir, dir) == FAILURE)
 		return ;
 	closedir(dir);
-	(term->flag != 2) ? display_current_directory(term, av) : 0;
+	if (term->flag != 2)
+		display_current_directory(term, av);
 }
