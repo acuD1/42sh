@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 16:42:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/06 22:42:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:41:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_process		*find_process(t_lst *job, pid_t pid)
 	return (NULL);
 }
 
-int8_t			job_is_stopped(t_job *job)
+u_int8_t			job_is_stopped(t_job *job)
 {
 	t_lst	*ptr;
 
@@ -45,7 +45,7 @@ int8_t			job_is_stopped(t_job *job)
 	return (TRUE);
 }
 
-int8_t			job_is_completed(t_job *job)
+u_int8_t			job_is_completed(t_job *job)
 {
 	t_lst	*ptr;
 

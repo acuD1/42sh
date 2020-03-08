@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_job.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 19:25:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/16 21:21:51 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:39:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_job			*get_job_by_id(t_lst *jobs, int id)
 static t_job	*get_job_by_name(t_lst *jobs, char *str)
 {
 	t_job	*ptr;
-	int		i;
+	size_t	i;
 
 	while (jobs)
 	{

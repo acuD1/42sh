@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   notifications.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/12 08:33:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:42:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void		job_background_notif(t_job *job)
 	ft_printf("[%i] %i\n", job->jobc_id, job->pgid);
 }
 
-int8_t		do_job_notification(t_core *shell, t_lst *job)
+void		do_job_notification(t_core *shell, t_lst *job)
 {
 	t_lst	*jnext;
 	t_job	*ptr;
@@ -87,5 +87,4 @@ int8_t		do_job_notification(t_core *shell, t_lst *job)
 		}
 		job = jnext;
 	}
-	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/08 20:33:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:51:20 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,10 +172,11 @@ typedef struct				s_process
 	pid_t					pgid;
 	int						pipe[2];
 	int						close[2];
-	int8_t					completed;
+	int						completed;
+	int						status;
 	int8_t					stopped;
-	int8_t					status;
 	int8_t					blt;
+	char					pad[2];
 }							t_process;
 
 typedef struct				s_redir

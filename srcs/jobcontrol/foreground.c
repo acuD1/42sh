@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   foreground.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 18:01:39 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/21 23:08:38 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:41:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include "sh42.h"
 
-int8_t	put_job_in_foreground(t_core *shell, t_lst *jobs, t_job *job, int cont)
+void	put_job_in_foreground(t_core *shell, t_lst *jobs, t_job *job, u_int8_t cont)
 {
 	if (tcsetpgrp(shell->terminal, job->pgid) != SUCCESS)
 		print_and_quit(shell, "42sh: tcsetpgrp error (foreground 1)\n");
@@ -26,5 +26,4 @@ int8_t	put_job_in_foreground(t_core *shell, t_lst *jobs, t_job *job, int cont)
 	wait_for_job(shell, jobs, job);
 	if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
 		print_and_quit(shell, "42sh: tcsetpgrp error (foreground 2)\n");
-	return (SUCCESS);
 }

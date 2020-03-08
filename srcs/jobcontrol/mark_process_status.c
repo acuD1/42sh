@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mark_process_status.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 22:32:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/24 22:38:48 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:50:18 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	background_jobs(t_lst *jobs, pid_t pid, int status)
 			while (process)
 			{
 				((t_process*)process->content)->completed =
-				(WIFSIGNALED(status) || WIFEXITED(status)) ? TRUE : FALSE;
+				(int8_t)((WIFSIGNALED(status) || WIFEXITED(status)) ? TRUE : FALSE);
 				process = process->next;
 			}
 			return ;
