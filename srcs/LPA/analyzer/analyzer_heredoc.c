@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:13:54 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/02 19:09:21 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:00:26 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char				*inhibiteurs_expansion(char *data, t_core *shell)
 {
-	t_expansion		*exp;
-	char			*resultat;
+	t_expansion	*exp;
+	char		*resultat;
 
 	if (!data || !*data)
 		return (NULL);
@@ -30,10 +30,10 @@ char				*inhibiteurs_expansion(char *data, t_core *shell)
 	return (resultat);
 }
 
-char				*heredoc_inhib(char *data)
+static char			*heredoc_inhib(char *data)
 {
 	char			*res;
-	int				index;
+	size_t			index;
 	enum e_estate	st;
 
 	st = NB_EXPANSION_STATE;
@@ -67,9 +67,9 @@ t_analyzer			*load_heredoc_fromline(t_analyzer *anal, t_core *shell)
 	return (anal = redir_analyze(anal, shell));
 }
 
-t_analyzer			*load_heredoc_noimode(t_analyzer *anal, t_core *shell)
+static t_analyzer	*load_heredoc_noimode(t_analyzer *anal, t_core *shell)
 {
-	char			*line;
+	char	*line;
 
 	line = NULL;
 	while (ft_getnextline(STDIN_FILENO, &line) > 0

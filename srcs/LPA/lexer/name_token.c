@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:15:08 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 15:27:48 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:05:36 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static size_t	loop_till_next_quote(const char *str, size_t index, char quote)
 	return (index);
 }
 
-void			check_all_quotes(char *str, size_t *index)
+static void		check_all_quotes(char *str, size_t *index)
 {
 	size_t	i;
 
@@ -79,7 +79,7 @@ static t_lst	*word_lexer(t_lexer *lexer, t_lst *lexer_token)
 	str = NULL;
 	if (!(i = get_word_size_ntype(i, lexer->buff)))
 		return (NULL);
-	if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
+	if (!(str = ft_strsub(lexer->buff, (unsigned int)lexer->buf_pos, i - lexer->buf_pos)))
 		return (NULL);
 	ft_lstappend(&lexer_token, ft_lstnew(
 				fetch_token(&lexer->token, P_WORD, str), sizeof(t_token)));

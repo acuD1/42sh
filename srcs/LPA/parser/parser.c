@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/06 22:53:02 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:57:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static t_parser	*ft_init_graph(t_parser *parser)
 
 static u_int8_t	graph(enum e_pstate *c, enum e_pstate n, enum e_pstate ps[])
 {
-	u_int8_t	i;
+	size_t	i;
 
 	i = 0;
 	if (ps == NULL)

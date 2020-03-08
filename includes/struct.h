@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/08 20:51:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:07:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ typedef struct				s_parser
 {
 	t_graph					graph[NB_PARSER_STATE];
 	enum e_pstate			state;
+	char					pad[4];
 }							t_parser;
 
 typedef struct				s_token

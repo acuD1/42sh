@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:54:18 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/13 20:45:08 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:01:16 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	**create_tablo(const char *str)
 char		**ft_add_arg_cmd_process(char **tablo, const char *str)
 {
 	char	**tb;
-	int		j;
+	size_t	j;
 
 	j = 0;
 	tb = NULL;
@@ -51,7 +51,7 @@ char		**ft_add_arg_cmd_process(char **tablo, const char *str)
 	return (tb);
 }
 
-char		*join_one_char(char *dst, char *str, int index)
+char		*join_one_char(char *dst, char *str, size_t index)
 {
 	char	*tmp;
 
@@ -60,11 +60,11 @@ char		*join_one_char(char *dst, char *str, int index)
 		return (NULL);
 	if (dst)
 	{
-		tmp = ft_strsub(str, index, 1);
+		tmp = ft_strsub(str, (unsigned int)index, 1);
 		dst = ft_strjoinf(dst, tmp, 4);
 	}
 	else
-		dst = ft_strsub(str, index, 1);
+		dst = ft_strsub(str, (unsigned int)index, 1);
 	return (dst);
 }
 
