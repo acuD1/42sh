@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:45:53 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 21:03:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:29:35 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static size_t	isvalid_assignement_word(const char *str, size_t index)
 	return (i + 1);
 }
 
-static t_lst	*create_assign_token(t_lexer *lex, size_t len, t_lst *lexer_token)
+static t_lst	*create_assign_token
+	(t_lexer *lex, size_t len, t_lst *lexer_token)
 {
 	char	*str;
 	size_t	value_len;

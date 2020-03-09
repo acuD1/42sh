@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/08 18:12:21 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:20:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 {
 	char	**split_path;
 	t_db	*db;
-	size_t	i;
+	ssize_t	i;
 
-	i = 0;
+	i = -1;
 	if ((db = search_db(shell->env, "PATH")) == NULL)
 	{
 		return (process->blt || ((process->bin = ft_strdup(process->av[0]))
@@ -70,7 +70,7 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 	}
 	if (!(split_path = ft_strsplit(db->value, ":")))
 		return (FAILURE);
-	while (split_path[i] != NULL)
+	while (split_path[++i] != NULL)
 	{
 		ft_strdel(&(process->bin));
 		if (access(split_path[i], X_OK | F_OK) == 0)
@@ -80,7 +80,6 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 			if (valid_path(process, &split_path) == SUCCESS)
 				return (SUCCESS);
 		}
-		i++;
 	}
 	ft_tabdel(&split_path);
 	return (1);

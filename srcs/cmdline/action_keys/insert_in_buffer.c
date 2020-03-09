@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 16:51:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:01:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 **	To insert a char in buffer at the end of line
 */
 
-void		insert_char_in_buffer(const char buff, t_read *term, ssize_t buff_index)
+void		insert_char_in_buffer
+	(const char buff, t_read *term, ssize_t buff_index)
 {
 	ft_dprintf(STDIN_FILENO, "%c", buff);
 	if (buff == NEW_LINE[0] || term->x >= term->ws_col)
@@ -50,7 +51,8 @@ static void	insert_at_index(t_read *term, ssize_t buff_index, const char *buff)
 **			`clr_lines' => to clear all following lines from cursor
 */
 
-static void	insert_inline_char(const char *buff, t_read *term, ssize_t buff_index)
+static void	insert_inline_char
+	(const char *buff, t_read *term, ssize_t buff_index)
 {
 	char	*tmp;
 	ssize_t	x;

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 19:35:57 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 20:32:16 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:34:44 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ u_int32_t		discard_backslash(const char *data, size_t *i, char **res)
 	index = *i;
 	backslash_nbr = 0;
 	tmp = NULL;
-	ret = 0;
 	if (data[index] == '\\')
 	{
 		while (data[index] == '\\')
@@ -86,7 +85,8 @@ u_int32_t		discard_backslash(const char *data, size_t *i, char **res)
 		}
 		ret = backslash_nbr % 2;
 		backslash_nbr /= 2;
-		tmp = ft_strsub(data, (unsigned int)(index - backslash_nbr), (size_t)backslash_nbr);
+		tmp = ft_strsub(data,
+				(unsigned int)(index - backslash_nbr), (size_t)backslash_nbr);
 		*res = ft_strjoinf(*res, tmp, 4);
 		if (data[index] == '\n')
 			index++;

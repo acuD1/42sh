@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 17:55:48 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 21:04:56 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:29:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static t_lst	*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token, size_t i)
 	if ((lexer->buff[i] == '<' || lexer->buff[i] == '>')
 		&& filename_checker(lexer_token))
 	{
-		if (!(str = ft_strsub(lexer->buff, (unsigned int)lexer->buf_pos, i - lexer->buf_pos)))
+		if (!(str = ft_strsub(lexer->buff, (unsigned int)lexer->buf_pos
+			, i - lexer->buf_pos)))
 			return (NULL);
 		if (!(ft_lstappend(&lexer_token, ft_lstnew(
 			fetch_token(&lexer->token, P_IONUMBER, str), sizeof(t_token)))))

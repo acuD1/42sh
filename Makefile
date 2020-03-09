@@ -164,6 +164,7 @@ SRC					+=	$(S_PATH)$(HASH)fill_hash_map.c
 SRC					+=	$(S_PATH)$(HASH)fetch_hash_db.c
 SRC					+=	$(S_PATH)$(HASH)get_hash.c
 SRC					+=	$(S_PATH)$(HASH)hash_handler.c
+SRC					+=	$(S_PATH)$(HASH)hash_key_remover.c
 SRC					+=	$(S_PATH)$(HASH)hash_opt_tools.c
 SRC					+=	$(S_PATH)$(HASH)hash_opt.c
 SRC					+=	$(S_PATH)$(HASH)hash.c

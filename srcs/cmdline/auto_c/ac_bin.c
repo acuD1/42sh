@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 17:07:52 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:02:35 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,13 @@ void			to_complete_bin(const char *to_find, t_read *term)
 	struct dirent	*data;
 	DIR				*dir;
 	char			**path;
-	size_t			i;
+	ssize_t			i;
 	t_lst			*bin;
 
-	i = 0;
+	i = -1;
 	bin = NULL;
 	path = split_path(term->shell, "PATH");
-	while (path && path[i] && is_dir(path[i]))
+	while (path && path[++i] && is_dir(path[i]))
 	{
 		dir = opendir(path[i]);
 		while (dir && (data = readdir(dir)) != NULL)
@@ -123,7 +123,6 @@ void			to_complete_bin(const char *to_find, t_read *term)
 							sizeof(char) * (ft_strlen(data->d_name) + 1)));
 		}
 		closedir(dir);
-		i++;
 	}
 	ft_tabfree(path);
 	add_builtin_lst(&bin, to_find);

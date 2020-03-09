@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:46:13 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 19:07:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:21:19 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char			*exp_get_paren(const char *string, size_t len)
 	return (NULL);
 }
 
-u_int8_t			check_brackets_inbracket(u_int32_t *count, char c)
+u_int8_t		check_brackets_inbracket(u_int32_t *count, char c)
 {
 	if (c == '{')
 		*count += 1;

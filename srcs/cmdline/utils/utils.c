@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 16:33:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:01:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			my_outc(int c)
 	return (SUCCESS);
 }
 
-ssize_t	get_width_last_line(t_read *term)
+ssize_t		get_width_last_line(t_read *term)
 {
 	ssize_t	buff_index;
 	ssize_t	width;
@@ -56,7 +56,7 @@ ssize_t	get_width_last_line(t_read *term)
 	return (width);
 }
 
-ssize_t	get_width_current_line(t_read *term)
+ssize_t		get_width_current_line(t_read *term)
 {
 	ssize_t	buff_index;
 	ssize_t	width;

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 16:21:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:04:10 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int8_t		check_expansions(t_read *term)
 	tmp = ft_strdup(term->buffer);
 	while (term->buffer[i])
 	{
-		// C'est pas bon du tout, bcp de cas ou ca marche pas
 		if (term->buffer[i] == '!')
 			find_expansions(term, &i);
 		if (i == FAILURE)

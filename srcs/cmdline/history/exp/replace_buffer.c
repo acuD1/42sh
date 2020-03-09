@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 04:02:43 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 17:01:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:04:39 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ void		insert_content(ssize_t j, ssize_t i, t_read *term, char *content)
 	buff_len = (ssize_t)ft_strlen(term->buffer);
 	if (i >= BUFF_SIZE)
 	{
-		inc_len = (ssize_t)ft_strlen(term->buffer) + (ssize_t)ft_strlen((char *)content);
+		inc_len = (ssize_t)ft_strlen(term->buffer)
+			+ (ssize_t)ft_strlen((char *)content);
 		term->buffer = ft_realloc(term->buffer, (size_t)inc_len);
 	}
 	if (i > 0)
 		begin = ft_strsub(term->buffer, 0, (size_t)i);
 	if ((i + j) < buff_len)
-		end = ft_strsub(term->buffer, (unsigned int)(i + j), (size_t)(buff_len - (i + j)));
+		end = ft_strsub(term->buffer, (unsigned int)(i + j),
+				(size_t)(buff_len - (i + j)));
 	ft_strdel(&term->buffer);
 	replace_buffer(term, begin, end, content);
 }

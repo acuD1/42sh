@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 15:29:12 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 20:25:55 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:27:07 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ char	*double_two_point_param(char **tablo, t_core *shell)
 			ft_tabfree(tablo);
 			return (NULL);
 		}
-		if (!(tmp[0] = ft_strsub(tmp[1], (unsigned int)flag[0], (size_t)flag[2])))
+		if (!(tmp[0] = ft_strsub(tmp[1], (unsigned int)flag[0]
+			, (size_t)flag[2])))
 			return (NULL);
 	}
 	ft_tabfree(tablo);

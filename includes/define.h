@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/08 18:04:59 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 18:30:38 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,10 @@
 # define CHDIR_ERR				"chdir: error retrieving current directory:"
 # define CD_ERR					"cd: error retrieving current directory:"
 # define GETCWD_ERR				"getcwd: cannot access parent directories:"
+# define TEST_INT_EXP			0x001
+# define TEST_ARG				0x002
+# define TEST_BIN				0x004
+# define TEST_UNA				0x006
 
 /*
 **	Intern shell variables

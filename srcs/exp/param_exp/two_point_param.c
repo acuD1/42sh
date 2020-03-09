@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/05 00:16:37 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 20:24:42 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:26:28 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,4 @@ char	*get_two_point_param_exp(char **tablo, t_core *shell)
 		return (questionmark_format(tablo, shell));
 	else
 		return (underniercaspourlaroute(tablo, shell));
-	/*ft_tabfree(tablo); On passe jamais ici guillaume.
-	return (NULL);*/
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:51:46 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 21:18:12 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 18:24:11 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-static int8_t	pwd_opt_parser(size_t ac, t_process *process, t_db *db, char *pwd)
+static int8_t	pwd_opt_parser
+	(size_t ac, t_process *process, t_db *db, char *pwd)
 {
 	u_int64_t	options;
 

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 17:08:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:31:04 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ u_int8_t	sub_prompt_error(t_read *term, char sb);
 
 u_int8_t	check_caps(const char *buf, t_read *term);
 void		insert_in_buffer(const char *buf, t_read *term);
-void		insert_char_in_buffer(const char buf, t_read *term, ssize_t buf_index);
+void		insert_char_in_buffer
+				(const char buf, t_read *term, ssize_t buf_index);
 void		insert_str_in_buffer(const char *d_name, t_read *term);
 
 /*

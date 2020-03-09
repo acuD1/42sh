@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 17:50:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 17:11:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 18:39:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,47 @@ static int32_t	get_opt_test(size_t argc, char **argv, int8_t diff)
 	return (FAILURE);
 }
 
-static int8_t	parse_testblt(size_t argc, char **argv, int8_t diff, int32_t *opt)
+static void		parse_testblt_handler
+	(char **argv, int8_t diff, int64_t num, u_int8_t status)
+{
+	if (status ^ TEST_INT_EXP)
+		ft_dprintf(2, "42sh: test: %s: integer expression expected\n"
+			, (ft_atol(argv[1 + diff], &num) != SUCCESS)
+			? argv[1 + diff] : argv[3 + diff]);
+	else if (status ^ TEST_ARG)
+		ft_dprintf(STDERR_FILENO, "42sh: test: too many arguments\n");
+	else if (status ^ TEST_BIN)
+		ft_dprintf(STDERR_FILENO, "42sh: test: %s: %s operator expected\n"
+			, argv[1 + diff], "binary");
+	else if (status ^ TEST_UNA)
+		ft_dprintf(STDERR_FILENO, "42sh: test: %s: %s operator expected\n"
+			, argv[1 + diff], "unary");
+}
+
+static int8_t	parse_testblt
+	(size_t argc, char **argv, int8_t diff, int32_t *opt)
 {
 	int64_t	num;
 
 	if ((*opt = get_opt_test(argc, argv, diff)) > DIFF_BINTEST
 	&& ((argc > 2 + (size_t)diff && ft_atol(argv[1 + diff], &num) != SUCCESS)
-		|| (argc > 3 + (size_t)diff && ft_atol(argv[3 + diff], &num) != SUCCESS)))
+		|| (argc > 3 + (size_t)diff
+		&& ft_atol(argv[3 + diff], &num) != SUCCESS)))
 	{
-		ft_dprintf(2, "42sh: test: %s: integer expression expected\n"
-		, (ft_atol(argv[1 + diff], &num) != SUCCESS)
-		? argv[1 + diff] : argv[3 + diff]);
+		parse_testblt_handler(argv, diff, num, TEST_INT_EXP);
 		return (FAILURE);
 	}
 	if ((argc > 4 + (size_t)diff && *opt > Z_UNATEST)
 		|| (argc > 3 + (size_t)diff && *opt <= Z_UNATEST && *opt >= 0))
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: test: too many arguments\n");
+		parse_testblt_handler(argv, diff, num, TEST_ARG);
 		return (FAILURE);
 	}
 	if (*opt < 0 || (*opt > Z_UNATEST && argc < 4 + (size_t)diff)
 		|| (*opt <= Z_UNATEST && *opt >= 0 && argc > 3 + (size_t)diff))
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: test: %s: %s operator expected\n"
-		, argv[1 + diff], (*opt <= Z_UNATEST) ? "binary" : "unary");
+		parse_testblt_handler(argv, diff, num,
+			(*opt <= Z_UNATEST) ? TEST_BIN : TEST_UNA);
 		return (FAILURE);
 	}
 	return (SUCCESS);
@@ -67,8 +84,10 @@ static int8_t	comp_tests(const char *s1, const char *s2, int32_t opt)
 	int64_t	n2;
 
 	if (opt == SAME_BINTEST || opt == DIFF_BINTEST)
-		return (((ft_strcmp(s1, s2) == 0) ? 1 : 0)
-			^ (int8_t)(DIFF_BINTEST - opt));
+	{
+		return (((ft_strcmp(s1, s2) == 0)
+		? 1 : 0) ^ (int8_t)(DIFF_BINTEST - opt));
+	}
 	ft_atol(s1, &n1);
 	ft_atol(s2, &n2);
 	if (opt == EQ_BINTEST || opt == NE_BINTEST)

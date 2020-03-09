@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 15:12:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/06 18:06:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:00:46 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,35 +41,6 @@ void			print_hash_map(t_core *shell, enum e_hash fmt)
 	}
 }
 
-void			hash_key_remover(t_core *shell, char *process)
-{
-	t_lst		*map;
-	t_lst		*prev;
-	u_int32_t	hash_value;
-
-	prev = NULL;
-	if (shell->hash.map == NULL || process == NULL)
-		return ;
-	map = shell->hash.map[(hash_value = get_hash(process, shell->hash.size))];
-	if (map && ft_strequ(((t_db *)map->content)->key, process) == TRUE)
-	{
-		shell->hash.map[hash_value] = map->next;
-		free_hash_key(&shell->hash, map);
-		return ;
-	}
-	while (map && ft_strequ(((t_db *)map->content)->key, process) == FALSE)
-	{
-		prev = map;
-		if ((map = map->next) == NULL)
-		{
-			ft_dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process);
-			return ;
-		}
-	}
-	prev->next = map->next;
-	free_hash_key(&shell->hash, map);
-}
-
 static size_t	get_hash_t_pad(const char *key)
 {
 	size_t	pad;
@@ -84,7 +55,8 @@ static size_t	get_hash_t_pad(const char *key)
 	return (pad);
 }
 
-static void		find_hash_sub_map(t_process *process, t_lst *map, size_t i, size_t ac)
+static void		find_hash_sub_map
+	(t_process *process, t_lst *map, size_t i, size_t ac)
 {
 	t_lst	*sub_map;
 

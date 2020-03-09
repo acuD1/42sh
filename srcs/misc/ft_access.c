@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 00:18:54 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 21:26:26 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:30:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ static size_t	dir_depth(const char *path, char *buffer, size_t depth)
 	return (ft_strlen(buffer));
 }
 
-int8_t		ft_access(const char *path, u_int8_t mode)
+int8_t			ft_access(const char *path, u_int8_t mode)
 {
-	char		buffer[MAX_PATH + 1];
-	size_t		path_len;
-	size_t		depth;
-	int8_t		ret;
+	char	buffer[MAX_PATH + 1];
+	size_t	path_len;
+	size_t	depth;
+	int8_t	ret;
 
 	depth = 0;
 	path_len = 0;

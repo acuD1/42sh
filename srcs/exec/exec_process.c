@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/05 20:36:08 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:19:51 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,7 @@ void			exec_process(t_core *shell, t_job *job, t_process *process)
 	if (process->av)
 		get_bin(shell, process);
 	if ((process->pid = fork()) == 0)
-	{
-		//shell->is_interactive = FALSE;
 		launch_process(shell, process);
-	}
 	else if (process->pid < 0)
 		print_and_quit(shell, "42sh: fork failure\n");
 	if (process->pipe[1] != STDOUT_FILENO)

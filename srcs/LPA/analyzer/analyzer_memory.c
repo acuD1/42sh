@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 20:31:06 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/08 20:52:52 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:29:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static void		free_lpa(t_analyzer *anal)
+static void	free_lpa(t_analyzer *anal)
 {
 	if (anal->redir.op[0])
 		ft_strdel(&anal->redir.op[0]);
