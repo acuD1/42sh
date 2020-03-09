@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/08 16:42:37 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/09 15:30:33 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void		control_process
 	{
 		if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: tcsetpgrp error (1)\n");
-		wait_for_process(shell, shell->job_list, process);
+		wait_for_job(shell, shell->job_list, job);
 		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: tcsetpgrp error (2)\n");
 	}

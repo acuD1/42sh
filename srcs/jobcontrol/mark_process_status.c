@@ -6,12 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 22:32:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 17:06:59 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/09 15:28:14 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 static void	background_jobs(t_lst *jobs, pid_t pid, int status)
 {
