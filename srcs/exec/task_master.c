@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 19:00:18 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/09 21:07:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int8_t		task_master(t_core *shell)
 	job = shell->job_list;
 	while (job)
 	{
-		do_job_notification(shell, shell->launched_jobs);
 		foreground = ((t_job*)job->content)->type == P_AND ? FALSE : TRUE;
 		next = job->next;
 		handle_background_job(shell, job->content, foreground);
@@ -87,7 +86,11 @@ int8_t		task_master(t_core *shell)
 		if (job_is_completed(job->content))
 			free_job(&(shell->job_list), job);
 		else
+		{
+			shell->job_list = job->next;
+			job->next = NULL;
 			ft_lstappend(&(shell->launched_jobs), job);
+		}
 		job = next;
 	}
 	shell->job_list = NULL;

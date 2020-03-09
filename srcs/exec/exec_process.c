@@ -6,12 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/09 15:30:33 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/09 21:31:51 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <unistd.h>
+#include <sys/wait.h>
 
 /*
 **	exec_process takes for parameter t_lst *env for now because we can set
@@ -44,7 +45,10 @@ static void		control_process
 	{
 		if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: tcsetpgrp error (1)\n");
-		wait_for_job(shell, shell->job_list, job);
+		if (process->pipe[0] != STDIN_FILENO)
+			wait_for_job(shell, shell->job_list, job);
+		else
+			wait_for_process(shell, shell->job_list, process);
 		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: tcsetpgrp error (2)\n");
 	}

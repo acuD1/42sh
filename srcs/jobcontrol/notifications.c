@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 15:35:39 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/09 20:00:23 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void		update_status(t_core *shell)
 	if (!shell->launched_jobs)
 		return ;
 	pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
-	while (pid > 0
-		&& !mark_process_status(shell, shell->launched_jobs, pid, status))
+	while (mark_process_status(shell, shell->launched_jobs, pid, status))
 	{
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
 	}
@@ -47,20 +46,18 @@ void		job_background_notif(t_job *job)
 
 int8_t		do_job_notification(t_core *shell, t_lst *job)
 {
-	t_lst	*jnext;
 	t_job	*ptr;
 
 	update_status(shell);
 	while (job)
 	{
 		ptr = ((t_job*)job->content);
-		jnext = job->next;
 		if (job_is_completed(ptr))
 		{
 			format_job_info(ptr);
 			free_job(&(shell->launched_jobs), job);
 			job = shell->launched_jobs;
-			ptr = NULL;
+			continue ;
 		}
 		else if (job_is_stopped(ptr) && ptr->notified != TRUE)
 		{
@@ -68,7 +65,7 @@ int8_t		do_job_notification(t_core *shell, t_lst *job)
 			format_job_info(ptr);
 			ptr->notified = TRUE;
 		}
-		job = jnext;
+		job = job->next;
 	}
 	return (SUCCESS);
 }

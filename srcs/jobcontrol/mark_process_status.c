@@ -6,36 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 22:32:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/09 15:28:14 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/09 21:03:44 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <stdlib.h>
 #include <unistd.h>
-
-static void	background_jobs(t_lst *jobs, pid_t pid, int status)
-{
-	t_job	*ptr;
-	t_lst	*process;
-
-	while (jobs)
-	{
-		ptr = jobs->content;
-		if (ptr->pgid == pid && ptr->type == P_AND)
-		{
-			process = ptr->process_list;
-			while (process)
-			{
-				((t_process*)process->content)->completed =
-				(WIFSIGNALED(status) || WIFEXITED(status)) ? TRUE : FALSE;
-				process = process->next;
-			}
-			return ;
-		}
-		jobs = jobs->next;
-	}
-}
 
 int8_t		mark_process_status
 	(t_core *shell, t_lst *jobs, pid_t pid, int status)
@@ -58,7 +35,7 @@ int8_t		mark_process_status
 								? WEXITSTATUS(status) : WTERMSIG(status);
 			status_handler(shell, process, status);
 		}
+		return (TRUE);
 	}
-	background_jobs(jobs, pid, status);
-	return ((pid > 0) ? SUCCESS : FAILURE);
+	return (FALSE);
 }
