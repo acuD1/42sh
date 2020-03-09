@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:53:37 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/02 15:44:24 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 17:24:59 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_analyzer	*split_and_create_assign_token(t_analyzer *anal)
 	ft_lstappend(&anal->process.assign_list,
 		ft_lstnew(fetch_db(&anal->db,
 		((t_token*)anal->lexer->content)->data,
-		EXPORT_VAR | INTERNAL_VAR), sizeof(t_db)));
+		INTERNAL_VAR), sizeof(t_db)));
 	init_assign(&anal->db);
 	anal->process.type = ((t_token*)anal->lexer->content)->id;
 	anal->state = A_ASSIGN;

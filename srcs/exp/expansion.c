@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 18:31:58 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 17:24:49 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	expansion_assign(t_core *shell, t_process *process)
 	{
 		if (((t_db*)lst->content)->value)
 		{
-			res = inhibiteurs_expansion(((t_token*)lst->content)->data, shell);
+			res = inhibiteurs_expansion(((t_db*)lst->content)->value, shell);
 			if (!process->av)
 				add_assign_env(shell, ((t_db*)lst->content)->key,
 					ft_strdup(res));
