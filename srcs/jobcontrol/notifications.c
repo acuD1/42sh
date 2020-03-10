@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/09 20:00:23 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:17:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int8_t		do_job_notification(t_core *shell, t_lst *job)
 		if (job_is_completed(ptr))
 		{
 			format_job_info(ptr);
-			free_job(&(shell->launched_jobs), job);
+			//free_job(&(shell->launched_jobs), job);
 			job = shell->launched_jobs;
 			continue ;
 		}

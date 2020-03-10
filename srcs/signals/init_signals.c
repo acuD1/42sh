@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 15:43:32 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/10 15:52:25 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void		init_signals(void)
 			, SIGIO, SIGXCPU, SIGXFSZ, SIGVTALRM, SIGPROF, SIGWINCH, SIGUSR1
 			, SIGUSR2};
 	static void	(*sighandler[27])(int) = {sig_handler, sigint_handler
-		, sig_handler, sig_handler, sig_handler, sig_handler, sig_handler
+		, SIG_IGN, sig_handler, sig_handler, sig_handler, sig_handler
 		, sig_handler, sig_handler, sig_handler, sig_exit, sig_handler
 		, sig_handler, sig_handler, sig_handler, sig_exit, SIG_DFL, SIG_IGN
 		, SIG_IGN, SIG_DFL, sig_handler, sig_handler, sig_handler, sig_handler
