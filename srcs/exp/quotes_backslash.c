@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 19:35:57 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/09 19:34:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:32:39 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,24 +69,24 @@ enum e_estate	skip_quotes(char *str, t_expansion *exp)
 u_int32_t		discard_backslash(const char *data, size_t *i, char **res)
 {
 	size_t		index;
-	u_int32_t	backslash_nbr;
+	u_int32_t	b_nbr;
 	u_int32_t	ret;
 	char		*tmp;
 
 	index = *i;
-	backslash_nbr = 0;
+	b_nbr = 0;
 	tmp = NULL;
+	ret = 0;
 	if (data[index] == '\\')
 	{
 		while (data[index] == '\\')
 		{
 			index++;
-			backslash_nbr++;
+			b_nbr++;
 		}
-		ret = backslash_nbr % 2;
-		backslash_nbr /= 2;
-		tmp = ft_strsub(data,
-				(unsigned int)(index - backslash_nbr), (size_t)backslash_nbr);
+		ret = b_nbr % 2;
+		b_nbr /= 2;
+		tmp = ft_strsub(data, (unsigned int)(index - b_nbr), (size_t)b_nbr);
 		*res = ft_strjoinf(*res, tmp, 4);
 		if (data[index] == '\n')
 			index++;
