@@ -148,6 +148,8 @@ SRC					+=	$(S_PATH)$(BUILTINS)unset.c
 
 SRC					+=	$(S_PATH)$(CD)cd_change_dir.c
 SRC					+=	$(S_PATH)$(CD)cd_check_path.c
+SRC					+=	$(S_PATH)$(CD)cd_home.c
+SRC					+=	$(S_PATH)$(CD)cd_oldpwd.c
 SRC					+=	$(S_PATH)$(CD)cd_update_pwd.c
 SRC					+=	$(S_PATH)$(CD)cd_use_cd_path.c
 SRC					+=	$(S_PATH)$(CD)cd.c

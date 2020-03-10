@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/08 21:35:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/10 20:29:24 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 
 # include <stdio.h>
 # include <setjmp.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 extern jmp_buf g_exit_leaks;
 
@@ -195,8 +197,9 @@ int8_t		cd_update_pwd(t_core *shell, const char *pwd, const char *path);
 int8_t		cd_check_path(const char *path);
 int8_t		change_dir(t_core *shell, const char *path);
 int8_t		update_pwds(t_core *shell, const char *buffer, const char *path);
-int8_t		check_cd_argument(t_process *process, size_t ac);
 int8_t		cd_use_cd_path(t_core *shell, const char *path);
+int8_t		cd_oldpwd(t_core *shell);
+int8_t		cd_home(t_core *shell);
 
 /*
 **	===========================================================================

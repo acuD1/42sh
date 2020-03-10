@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 17:50:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/09 18:39:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:42:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static int8_t	parse_testblt
 {
 	int64_t	num;
 
+	num = 0;
 	if ((*opt = get_opt_test(argc, argv, diff)) > DIFF_BINTEST
 	&& ((argc > 2 + (size_t)diff && ft_atol(argv[1 + diff], &num) != SUCCESS)
 		|| (argc > 3 + (size_t)diff

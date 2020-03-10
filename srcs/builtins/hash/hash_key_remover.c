@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 18:55:30 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/09 19:32:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/10 20:54:53 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ void		hash_key_remover(t_core *shell, char *process)
 	if (shell->hash.map == NULL || process == NULL)
 		return ;
 	hash_value = get_hash(process, shell->hash.size);
-	map = shell->hash.map[hash_value];
+	if ((map = shell->hash.map[hash_value]) == NULL)
+	{
+		ft_dprintf(STDERR_FILENO, "42sh: hash: %s: not found\n", process);
+		return ;
+	}
 	if (map && ft_strequ(((t_db *)map->content)->key, process) == TRUE)
 	{
 		shell->hash.map[hash_value] = map->next;

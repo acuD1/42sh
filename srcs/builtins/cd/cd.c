@@ -6,113 +6,110 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 21:22:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/10 20:08:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int8_t	cd_oldpwd_error(t_core *shell, t_db *db_oldpwd)
+static int8_t	check_n_args(size_t i, size_t argc)
 {
-	t_db	*db_pwd;
-	char	*tmp;
-
-	db_pwd = search_db(shell->env, "PWD");
-	tmp = ft_strdup(db_oldpwd->value);
-	tmp = ft_strjoinf(tmp, "/", 1);
-	tmp = ft_strjoinf(tmp, db_pwd->value, 1);
-	ft_dprintf(STDOUT_FILENO, "%s\n", db_oldpwd->value);
-	shell->cd.tmp_pwd = ft_strdup(db_oldpwd->value);
-	shell->cd.dash = TRUE;
-	change_dir(shell, tmp);
-	ft_strdel(&tmp);
+	if ((argc - i) >= 2)
+	{
+		dprintf(STDERR_FILENO, "42sh: cd: too many arguments\n");
+		return (FAILURE);
+	}
 	return (SUCCESS);
 }
 
-static int8_t	cd_oldpwd(t_core *shell)
+static int8_t	get_opt_cd(t_process *process, char *option, size_t *i)
 {
-	t_db	*db_oldpwd;
-	int8_t	errnum;
+	size_t	j;
 
-	if ((db_oldpwd = search_db(shell->env, "OLDPWD")) == NULL
-		|| db_oldpwd->value == NULL)
+	j = 1;
+	while (process->av[*i][j])
 	{
-		write(STDERR_FILENO, "42sh: cd: OLDPWD not set\n", 25);
-		return (1);
+		*option = process->av[*i][j];
+		if (*option != 'P' && *option != 'L' && *option != 0)
+		{
+			print_usage("cd", (u_int8_t)(*option), CD_USAGE);
+			return (FAILURE);
+		}
+		j++;
 	}
-	db_oldpwd->type = INTERNAL_VAR | EXPORT_VAR;
-	if ((errnum = cd_check_path(db_oldpwd->value)) == SUCCESS
-		&& shell->cd.pwd_error >= TRUE)
-		return (cd_oldpwd_error(shell, db_oldpwd));
-	if (errnum != SUCCESS)
-	{
-		ft_perror(db_oldpwd->value, "cd", errnum);
-		return (1);
-	}
-	ft_dprintf(STDOUT_FILENO, "%s\n", db_oldpwd->value);
-	return (change_dir(shell, db_oldpwd->value));
+	(*i)++;
+	return (SUCCESS);
 }
 
-static int8_t	cd_home(t_core *shell)
+static int8_t	cd_opt_parser
+	(t_process *process, char *option, size_t *i, size_t argc)
+{
+	while (process->av[*i])
+	{
+		if (ft_strequ(process->av[*i], "--"))
+		{
+			(*i)++;
+			if (check_n_args(*i, argc) == SUCCESS)
+				break ;
+			else
+				return (FAILURE);
+		}
+		if (process->av[*i][0] == '-' && process->av[*i][1])
+		{
+			if (get_opt_cd(process, option, i) == SUCCESS)
+				continue ;
+			else
+				return (FAILURE);
+		}
+		if (check_n_args(*i, argc) != SUCCESS)
+			return (FAILURE);
+		if (!process->av[*i + 1])
+			break ;
+		(*i)++;
+	}
+	return (SUCCESS);
+}
+
+static int8_t	cd_handler
+	(t_core *shell, t_process *process, size_t i, char options)
 {
 	char	pwd[MAX_PATH + 1];
-	t_db	*var;
-
-	ft_bzero(pwd, MAX_PATH);
-	if (getcwd(pwd, MAX_PATH) == NULL && shell->cd.pwd_error == TRUE)
-		ft_dprintf(STDERR_FILENO, "%s %s No such file or directory\n",
-			CHDIR_ERR, GETCWD_ERR);
-	if ((var = search_db(shell->env, "HOME")) == NULL)
-	{
-		write(STDERR_FILENO, "42sh: cd: HOME not set\n", 23);
-		return (1);
-	}
-	shell->cd.pwd_error = FALSE;
-	if (chdir(var->value) != SUCCESS)
-		ft_perror(var->value, "cd", cd_check_path(var->value));
-	return (update_pwds(shell, pwd, NULL));
-}
-
-static int8_t	cd_opt_parser(t_core *shell, size_t ac, t_process *process)
-{
-	char		pwd[MAX_PATH + 1];
-	u_int64_t	options;
 
 	ft_bzero(pwd, MAX_PATH + 1);
-	options = ft_get_options((int)ac, process->av, CD_OPT);
-	if (!process->av[2] && options & ((1ULL << 37) | (1ULL << 41)))
+	if (!process->av[i])
 		return (cd_home(shell));
-	if (check_cd_argument(process, ac) != SUCCESS)
-		return (1);
-	if (options & (1ULL << 37))
-		return (change_dir(shell, process->av[2]));
-	if (options & (1ULL << 41))
+	if (process->av[i][0] == '-' && !process->av[i][1])
+		return (cd_oldpwd(shell));
+	if (options == 'L')
+		return (change_dir(shell, process->av[i]));
+	if (options == 'P')
 	{
-		if (process->av[2] && process->av[2][0] == '-' && !process->av[2][1])
-			return (cd_oldpwd(shell));
 		if (getcwd(pwd, MAX_PATH) == NULL)
 			shell->cd.pwd_error = TRUE;
 		shell->cd.no_symbolic = TRUE;
-		return (change_dir(shell, process->av[2]));
+		return (change_dir(shell, process->av[i]));
 	}
-	print_usage("cd", options % 128, CD_USAGE);
-	return (SUCCESS);
+	return (change_dir(shell, process->av[i]));
 }
 
 int8_t			builtin_cd(t_core *shell, t_process *process)
 {
-	size_t	argc;
 	char	tmp[MAX_PATH + 1];
+	char	option;
+	size_t	argc;
+	size_t	i;
 
 	ft_bzero(tmp, MAX_PATH + 1);
 	shell->cd.no_symbolic = FALSE;
+	option = 0;
+	i = 1;
 	argc = ft_tablen(process->av);
-	if (argc == 1 || ft_strcmp(process->av[1], "--") == 0)
+	if (argc == 1)
 		return (cd_home(shell));
-	if (ft_strcmp(process->av[1], "-") == 0 && !process->av[1][1])
+	if (ft_strcmp(process->av[1], "-")
+		== 0 && !process->av[1][1] && !process->av[2])
 		return (cd_oldpwd(shell));
-	if (process->av[1][0] == '-')
-		return (cd_opt_parser(shell, argc, process));
-	change_dir(shell, process->av[1]);
-	return (SUCCESS);
+	if (cd_opt_parser(process, &option, &i, argc) != SUCCESS)
+		return (1);
+	return (cd_handler(shell, process, i, option));
 }
