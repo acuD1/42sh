@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/10 16:17:32 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:52:32 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,26 @@ void		job_background_notif(t_job *job)
 	ft_printf("[%i] %i\n", job->jobc_id, job->pgid);
 }
 
-int8_t		do_job_notification(t_core *shell, t_lst *job)
+int8_t		do_job_notification(t_core *shell, t_lst *job, int8_t free)
 {
 	t_job	*ptr;
 
-	update_status(shell);
+	if (free)
+		update_status(shell);
 	while (job)
 	{
 		ptr = ((t_job*)job->content);
 		if (job_is_completed(ptr))
 		{
 			format_job_info(ptr);
-			//free_job(&(shell->launched_jobs), job);
+			if (free)
+				free_job(&(shell->launched_jobs), job);
 			job = shell->launched_jobs;
 			continue ;
 		}
 		else if (job_is_stopped(ptr) && ptr->notified != TRUE)
 		{
+			write(STDERR_FILENO, "\n", 1);
 			attr_jobc_id(shell, ptr);
 			format_job_info(ptr);
 			ptr->notified = TRUE;

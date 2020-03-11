@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fc_edit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 14:31:33 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:58:14 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int8_t	fc_exec_cmd(t_core *shell, t_cmd cmd)
 	while (ft_getnextline(cmd.fd, &shell->term.buffer) > 0)
 	{
 		lexer_parser_analyzer(shell);
-		do_job_notification(shell, shell->launched_jobs);
+		do_job_notification(shell, shell->launched_jobs, TRUE);
 		if (task_master(shell) != SUCCESS)
 		{
 			ft_strdel(&cmd.editor);

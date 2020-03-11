@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/17 22:32:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/10 16:10:55 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 19:11:34 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int8_t		mark_process_status
 	{
 		if (WIFSTOPPED(status))
 		{
-			write(STDERR_FILENO, "\n", 1);
 			process->status = WSTOPSIG(status);
 			shell->status =  128 + process->status;
 			process->stopped = TRUE;

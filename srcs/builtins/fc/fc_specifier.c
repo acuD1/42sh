@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fc_specifier.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 14:32:11 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:58:22 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int8_t			select_specifier(t_core *shell, char **av)
 	ft_strdel(&pat);
 	ft_dprintf(cmd.fd, "%s\n", shell->term.buffer);
 	lexer_parser_analyzer(shell);
-	do_job_notification(shell, shell->launched_jobs);
+	do_job_notification(shell, shell->launched_jobs, TRUE);
 	if (task_master(shell) != SUCCESS)
 		return (FAILURE);
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/10 16:07:00 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 18:58:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	load_i_mode(t_core *shell)
 		if (init_prompt(shell) != SUCCESS)
 			return ;
 		lexer_parser_analyzer(shell);
-		do_job_notification(shell, shell->launched_jobs);
+		do_job_notification(shell, shell->launched_jobs, TRUE);
 		if (task_master(shell) != SUCCESS)
 			return (quit_shell(shell, EXIT_FAILURE, FALSE));
 		save_history(&shell->term);
