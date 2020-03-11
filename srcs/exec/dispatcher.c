@@ -6,12 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 15:16:35 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 21:35:31 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <unistd.h>
+#include <sys/wait.h>
 
 static void	setup_pipes(t_process *process, t_lst *ptr)
 {
@@ -29,6 +30,19 @@ static void	setup_pipes(t_process *process, t_lst *ptr)
 	}
 }
 
+int		get_signal(int status)
+{
+	if (WIFSTOPPED(status))
+	{
+		return (WSTOPSIG(status));
+	}
+	else if (WIFSIGNALED(status))
+	{
+		return (WTERMSIG(status));
+	}
+	return (0);
+}
+
 static void	condition_fulfilled(t_lst *process)
 {
 	t_process	*ptr;
@@ -38,29 +52,16 @@ static void	condition_fulfilled(t_lst *process)
 	cond = ptr->type;
 	if (cond != P_ANDIF && cond != P_ORIF)
 		return ;
-	else if (cond == P_ANDIF && ptr->status == 0)
+	else if (cond == P_ANDIF
+	&& get_signal(ptr->status) == 0 && WEXITSTATUS(ptr->status) == 0)
 		return ;
-	else if (cond == P_ORIF && ptr->status != 0)
+	else if (cond == P_ORIF
+	&& (get_signal(ptr->status) != 0 || WEXITSTATUS(ptr->status) != 0))
 		return ;
 	while (process && (ptr = ((t_process *)process->content))
 	&& (ptr->type == (enum e_pstate)cond || ptr->type == P_PIPE))
 	{
 		((t_process *)process->next->content)->completed = TRUE;
-		process = process->next;
-	}
-}
-
-static void	init_process_list(t_lst *process)
-{
-	t_process *ptr;
-
-	while (process)
-	{
-		ptr = process->content;
-		ptr->pipe[0] = STDIN_FILENO;
-		ptr->pipe[1] = STDOUT_FILENO;
-		ptr->close[0] = -1;
-		ptr->close[1] = -1;
 		process = process->next;
 	}
 }
@@ -71,7 +72,6 @@ void		launch_job(t_core *shell, t_job *job, int foreground)
 	t_lst		*process;
 
 	process = job->process_list;
-	init_process_list(process);
 	while (process && (ptr = ((t_process *)process->content)))
 	{
 		ptr->stopped = (foreground == TRUE) ? FALSE : TRUE;

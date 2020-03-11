@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/11 18:53:17 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 21:38:14 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int8_t		task_master(t_core *shell);
 int8_t		is_a_blt(const char *cmd);
 int8_t		get_bin(t_core *shell, t_process *process);
 char		**set_envp(t_core *shell);
-void		status_handler(t_core *shell, t_process *process, int status);
+void		status_handler(t_core *shell, t_process *process);
 
 /*
 **	===========================================================================
@@ -247,6 +247,7 @@ void		format_job_info(t_job *job);
 int			update_jobs(t_lst *jobs);
 void		attr_jobc_id(t_core *shell, t_job *job);
 int8_t		do_job_notification(t_core *shell, t_lst *job, int8_t free);
+int			get_signal(int status);
 int			cond(t_lst *process);
 int8_t		are_jobs_done(t_core *shell, t_lst *jobs);
 void		free_job(t_lst **job_list, t_lst *job);
