@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/11 21:38:14 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 22:26:51 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void		hash_error(t_hash *hash);
 **	===========================================================================
 */
 
+int			get_signal(int status);
 t_core		*get_core(t_core *core);
 int8_t		get_canonical_path
 	(t_core *shell, const char *path, char *buffer, char *pwd);

@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/26 13:17:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/11 18:52:32 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 22:22:59 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,23 @@ void		update_status(t_core *shell)
 
 void		format_job_info(t_job *job)
 {
-	int		signal;
+	static char	*messages[4] = {"Stopped(SIGTSTP)\n", "Stopped(SIGTTIN)\n"
+		, "Stopped(SIGSTOP)\n"};
+	char		*msg;
 
-	signal = (job_is_completed(job)) ? 0 : 7;
-	ft_dprintf(STDERR_FILENO, "[%i]%c  %s\t\t%s\n", job->jobc_id, job->jobc_last
-		, (job_is_stopped(job) && !job_is_completed(job))
-		? "Stopped" : signal_msg(signal), job->command);
+	msg = messages[2];
+	if (job_is_completed(job))
+	{
+		msg = signal_msg(0);
+	}
+	else if (job->type == P_AND)
+	{
+		msg = messages[1];
+	}
+	else if (job_is_stopped(job))
+		msg = messages[1];
+	ft_dprintf(STDERR_FILENO, "[%i]%c  %.*s\t\t%s\n", job->jobc_id
+	, job->jobc_last, ft_strlen(msg) - 1, msg, job->command);
 }
 
 void		job_background_notif(t_job *job)

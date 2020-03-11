@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 20:31:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/11 21:44:13 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 22:16:27 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	status_handler(t_core *shell, t_process *process)
 	int		status;
 	char	*msg;
 
-	if (WIFSIGNALED(status))
+	if (WIFSIGNALED(process->status))
 	{
 		status = WTERMSIG(process->status);
 		msg = signal_msg(status);
 		if (msg != NULL && status != 0 && status != 13 && status != 2)
 			write(2, msg, ft_strlen(msg));
 	}
-	else if (WIFSTOPPED(status))
+	else if (WIFSTOPPED(process->status))
 	{
 		status = WSTOPSIG(process->status);
 	}

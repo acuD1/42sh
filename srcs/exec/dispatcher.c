@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/11 21:35:31 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 22:25:52 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,6 @@ static void	setup_pipes(t_process *process, t_lst *ptr)
 		next->pipe[0] = pipes[0];
 		next->close[0] = pipes[1];
 	}
-}
-
-int		get_signal(int status)
-{
-	if (WIFSTOPPED(status))
-	{
-		return (WSTOPSIG(status));
-	}
-	else if (WIFSIGNALED(status))
-	{
-		return (WTERMSIG(status));
-	}
-	return (0);
 }
 
 static void	condition_fulfilled(t_lst *process)

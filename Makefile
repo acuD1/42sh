@@ -255,6 +255,7 @@ SRC					+=	$(S_PATH)$(JOBC)background.c
 SRC					+=	$(S_PATH)$(JOBC)continue.c
 SRC					+=	$(S_PATH)$(JOBC)foreground.c
 SRC					+=	$(S_PATH)$(JOBC)get_job.c
+SRC					+=	$(S_PATH)$(JOBC)get_signal.c
 SRC					+=	$(S_PATH)$(JOBC)job_utils.c
 SRC					+=	$(S_PATH)$(JOBC)jobc_id.c
 SRC					+=	$(S_PATH)$(JOBC)launch_process.c
