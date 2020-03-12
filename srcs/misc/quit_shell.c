@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 23:52:50 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/02 19:38:05 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/10 22:46:01 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	quit_shell(t_core *shell, int exit_value, int8_t v)
 {
+	ft_strdel(&shell->term.cpy);
 	write_history(shell);
 	if (shell->is_interactive)
 	{

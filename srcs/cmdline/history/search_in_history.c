@@ -3,44 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   search_in_history.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/04 21:39:01 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:09:39 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static void		goto_reverse(t_read *term, const char *buff_tmp, int8_t mode)
+void			goto_reverse(t_read *term, const char *buff_tmp)
 {
+	ssize_t		str_len;
+
+	str_len = (ssize_t)ft_strlen(buff_tmp);
+	str_len += (ssize_t)ft_strlen(term->buffer) + (ssize_t)term->search - 1;
+	term->y = str_len / term->ws_col;
 	goto_prompt(term);
 	xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
-	if (mode == SUCCESS)
+	if (term->search == SEARCH_SUCCESS)
 		ft_dprintf(STDERR_FILENO, "(reverse-i-search)`%s': ", buff_tmp);
-	else if (mode == FAILURE)
+	else if (term->search == SEARCH_FAILURE)
 		ft_dprintf(STDERR_FILENO, "(failed reverse-i-search)`%s': ", buff_tmp);
+	if (term->buffer)
+		ft_putstr_fd(term->buffer, STDERR_FILENO);
 }
 
 static void		walking_history
 	(const char *buff_tmp, t_read *term, t_lst **history)
 {
-	while ((*history)->next && *buff_tmp)
+	while (*history && (*history)->next && *buff_tmp)
 	{
 		if (ft_strstr((*history)->content, buff_tmp))
 		{
-			goto_reverse(term, buff_tmp, SUCCESS);
-			ft_bzero(term->buffer, ft_strlen(term->buffer));
-			term->x = (ssize_t)ft_strlen(buff_tmp) + 23;
+			term->search = SEARCH_SUCCESS;
+			goto_reverse(term, buff_tmp);
+			ft_strdel(&term->buffer);
+			term->buffer = ft_memalloc(BUFF_SIZE);
 			insert_str_in_buffer((*history)->content, term);
-			if ((*history)->next)
-				(*history) = (*history)->next;
+			(*history) = (*history)->next;
 			return ;
 		}
 		(*history) = (*history)->next;
 	}
-	goto_reverse(term, buff_tmp, FAILURE);
+	term->search = SEARCH_FAILURE;
+	xtputs(term->tcaps[BELL], 1, my_outc);
+	goto_reverse(term, buff_tmp);
 }
 
 static int8_t	insert_in_search(t_read *term, int64_t *i, const char buff[])
@@ -51,7 +60,10 @@ static int8_t	insert_in_search(t_read *term, int64_t *i, const char buff[])
 	if (ft_is_print(*buff))
 	{
 		term->tmp_buff[++(*i)] = *buff;
-		goto_reverse(term, term->tmp_buff, SUCCESS);
+		if (term->search == SEARCH_FAILURE)
+			goto_reverse(term, term->tmp_buff);
+		else
+			goto_reverse(term, term->tmp_buff);
 	}
 	else if (value == BS_KEY && *term->tmp_buff)
 	{
@@ -65,7 +77,7 @@ static int8_t	insert_in_search(t_read *term, int64_t *i, const char buff[])
 	return (SUCCESS);
 }
 
-static void		search_in_history(t_read *term)
+static void		research_in_history(t_read *term)
 {
 	char		buff[READ_SIZE + 1];
 	int64_t		i;
@@ -85,6 +97,7 @@ static void		search_in_history(t_read *term)
 			return ;
 		}
 		walking_history(term->tmp_buff, term, &history);
+		ft_bzero(buff, READ_SIZE + 1);
 	}
 }
 
@@ -93,20 +106,21 @@ void			research_mode(t_read *term)
 	char		*saved;
 
 	saved = NULL;
+	term->search = SEARCH_SUCCESS;
 	if (term->tmp_buff)
 	{
 		saved = ft_strdup(term->tmp_buff);
 		ft_strdel(&term->tmp_buff);
 	}
-	goto_reverse(term, "", SUCCESS);
-	search_in_history(term);
+	goto_reverse(term, "");
+	research_in_history(term);
 	if (saved)
 	{
 		term->tmp_buff = ft_strdup(saved);
 		ft_strdel(&saved);
 	}
 	goto_prompt(term);
-	ft_dprintf(STDIN_FILENO, "%s", term->buffer);
+	ft_putstr_fd(term->buffer, STDERR_FILENO);
 	term->x += ft_strlen(term->buffer);
 	term->width = term->x;
 	term->x_index = term->x;

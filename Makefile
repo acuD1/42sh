@@ -80,6 +80,7 @@ HASH				=	$(BUILTINS)hash/
 CMDLINE				=	cmdline/
 AC					=	$(CMDLINE)auto_c/
 AK					=	$(CMDLINE)action_keys/
+CLIPBOARD			=	$(CMDLINE)clipboard/
 HISTORY				=	$(CMDLINE)history/
 HST_EXP				=	$(HISTORY)exp/
 PROMPT				=	$(CMDLINE)prompt/
@@ -112,6 +113,7 @@ PATHS				+=	$(O_PATH)$(CMDLINE)
 PATHS				+=	$(O_PATH)$(CMDLINE_UTILS)
 PATHS				+=	$(O_PATH)$(AC)
 PATHS				+=	$(O_PATH)$(AK)
+PATHS				+=	$(O_PATH)$(CLIPBOARD)
 PATHS				+=	$(O_PATH)$(HISTORY)
 PATHS				+=	$(O_PATH)$(HST_EXP)
 PATHS				+=	$(O_PATH)$(PROMPT)
@@ -185,6 +187,10 @@ SRC					+=	$(S_PATH)$(AK)del_keys.c
 SRC					+=	$(S_PATH)$(AK)insert_in_buffer.c
 SRC					+=	$(S_PATH)$(AK)keys_comb.c
 SRC					+=	$(S_PATH)$(AK)move_cursor.c
+SRC					+=	$(S_PATH)$(AK)move_in_column.c
+
+SRC					+=	$(S_PATH)$(CLIPBOARD)select_text.c
+SRC					+=	$(S_PATH)$(CLIPBOARD)ak_clipboard.c
 
 SRC					+=	$(S_PATH)$(AC)ac_bin.c
 SRC					+=	$(S_PATH)$(AC)ac_buffer.c

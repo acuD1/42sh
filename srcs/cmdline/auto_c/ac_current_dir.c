@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 17:08:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 02:39:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static int8_t	get_dir(t_read *term, const char *av, char *new_dir)
 	if (term->ac > 1 && is_dir(av))
 	{
 		ft_strcpy(new_dir, av);
+		if (av[ft_strlen(av) - 1] != '/')
+			insert_in_buffer("/", term);
 		return (SUCCESS);
 	}
 	return (SUCCESS);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/05 19:11:05 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/12 14:39:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 **	  Termcaps capabilities:
 **	  - `up' => to move the cursor vertically up one input
 **	  - `cr' => to move the cursor to the beginning of the input it is on
-**	  - `clr_inputs' => to clear input from the cursor and following inputs
+**	  - `clr_lines' => to clear line from the cursor and following inputs
 */
 
 void			goto_prompt(t_read *term)
@@ -70,9 +70,22 @@ static int8_t	end_of_file(t_core *shell, const char *buff)
 		}
 		reset_config(shell);
 		write_history(shell);
+		ft_strdel(&shell->term.cpy);
 		return (TRUE);
 	}
 	return (FALSE);
+}
+
+#include <fcntl.h>
+static void		debug_current(const char *path, t_core *shell)
+{
+	int			fd;
+
+	fd = open(path, O_WRONLY);
+	ft_dprintf(fd, "\n=== CURRENT VALUES ===\n");
+	ft_dprintf(fd, "x[%d] xi[%d] y[%d] ws_col[%d]\n width[%d] buff[%s]\n",
+	shell->term.x, shell->term.x_index, shell->term.y, shell->term.ws_col, shell->term.width, shell->term.buffer);
+
 }
 
 int8_t			init_prompt(t_core *shell)
@@ -81,20 +94,25 @@ int8_t			init_prompt(t_core *shell)
 
 	shell->term.status = CMD_PROMPT;
 	ft_bzero(buff, READ_SIZE + 1);
-	shell->term.buffer = ft_memalloc(BUFF_SIZE);
+	shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 	set_termconfig(shell);
 	get_prompt_value(shell, "PS1");
 	display_prompt(&shell->term);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
+		shell->term.search = 0;
 		if (end_of_file(shell, buff) == TRUE)
 			return (FAILURE);
 		if (check_caps(buff, &shell->term) == TRUE)
-			ft_bzero(buff, READ_SIZE);
+			ft_bzero(buff, READ_SIZE + 1);
 		else if (*shell->term.prompt
 			|| (!*shell->term.prompt && shell->term.buffer))
 			break ;
+		debug_current("/dev/ttys004", shell);
 	}
 	shell->term.status = CMD_DONE;
+	/*check_subprompt(shell); // Need check
+	check_expansions(&shell->term);
+	reset_config(shell);*/
 	return (SUCCESS);
 }

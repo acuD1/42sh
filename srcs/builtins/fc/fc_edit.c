@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/05 21:48:35 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:28:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int8_t	fc_exec_cmd(t_core *shell, t_cmd cmd)
 {
 	while (ft_getnextline(cmd.fd, &shell->term.buffer) > 0)
 	{
+		ft_dprintf(STDERR_FILENO, "%s\n", shell->term.buffer);
 		lexer_parser_analyzer(shell);
 		do_job_notification(shell, shell->launched_jobs);
 		if (task_master(shell) != SUCCESS)

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 16:25:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/11 00:39:45 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int8_t			get_size(t_read *term)
 
 static int8_t	stock_termcaps(t_read *term)
 {
-	static char	*termcaps[CAPS_NBR] = {"dc", "sc", "rc", "do", "up", "nd"
-		, "le", "cr", "ho", "cl", "cd", "ce"};
+	static char	*termcaps[CAPS_NBR] = {"sc", "rc", "do", "up", "nd"
+		, "le", "cr", "ho", "cl", "cd", "ce",  "so", "se", "bl"};
 	size_t		i;
 
 	i = 0;

@@ -6,11 +6,10 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 16:52:30 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 01:02:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
 #include "sh42.h"
 
 static void	check_tmp_buffer(t_read *term)
@@ -53,6 +52,8 @@ void		move_key_down(t_read *term)
 		term->buffer = ft_memalloc(BUFF_SIZE);
 		insert_str_in_buffer((char*)w->content, term);
 	}
+	else
+		xtputs(term->tcaps[BELL], 1, my_outc);
 }
 
 /*
@@ -90,12 +91,11 @@ void		move_key_up(t_read *term)
 **		Arrow right to move the cursor one char on the right
 */
 
-void		move_right(const char *buff, t_read *term)
+void		move_right(t_read *term)
 {
 	ssize_t	width;
 	ssize_t	buff_index;
 
-	(void)buff;
 	width = get_width_current_line(term);
 	buff_index = term->x_index - term->prompt_len;
 	if (term->x < width)
@@ -104,7 +104,7 @@ void		move_right(const char *buff, t_read *term)
 		term->x_index++;
 		term->x++;
 	}
-	else if (term->x >= term->ws_col - 1 || *buff == NEW_LINE[0]
+	else if (term->x >= term->ws_col - 1
 			|| term->buffer[buff_index] == NEW_LINE[0])
 	{
 		xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
@@ -113,17 +113,18 @@ void		move_right(const char *buff, t_read *term)
 		term->x = 0;
 		term->y++;
 	}
+	else if (term->x_index == term->width)
+		xtputs(term->tcaps[BELL], 1, my_outc);
 }
 
 /*
 **		Arrow left to move the cursor one char on the left
 */
 
-void		move_left(const char *buff, t_read *term)
+void		move_left(t_read *term)
 {
 	ssize_t	width;
 
-	(void)buff;
 	if ((term->x > term->prompt_len && term->y == 0)
 		|| (term->x > 0 && term->y > 0))
 	{
@@ -141,4 +142,6 @@ void		move_left(const char *buff, t_read *term)
 		term->x_index--;
 		term->y--;
 	}
+	else if (term->x_index == term->prompt_len)
+		xtputs(term->tcaps[BELL], 1, my_outc);
 }

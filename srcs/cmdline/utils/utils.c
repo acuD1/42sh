@@ -6,22 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/09 19:01:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 14:37:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-void		feature(t_read *term, u_int64_t value)
-{
-	if (value == CTRL_W)
-	{
-		xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
-		xtputs(term->tcaps[CLR_LINES], 1, my_outc);
-		ft_dprintf(STDERR_FILENO, "%s%s%s%s%s", C_BOLD, F_C, term->prompt,
-				C_X, term->buffer);
-	}
-}
 
 int			my_outc(int c)
 {
@@ -38,9 +27,9 @@ ssize_t		get_width_last_line(t_read *term)
 	width = 0;
 	x = term->x;
 	buff_index = term->x_index - (ssize_t)term->prompt_len;
-	if (term->buffer[buff_index - 1] == NEW_LINE[0])
+	if ((buff_index > 0) && term->buffer[buff_index - 1] == NEW_LINE[0])
 		buff_index--;
-	while (buff_index--)
+	while (buff_index-- > 0)
 	{
 		if (term->buffer[buff_index] == NEW_LINE[0])
 			break ;
@@ -65,7 +54,7 @@ ssize_t		get_width_current_line(t_read *term)
 	width = 0;
 	x = term->x;
 	buff_index = term->x_index - (ssize_t)term->prompt_len;
-	while (term->buffer[buff_index])
+	while (buff_index < (ssize_t)ft_strlen(term->buffer))
 	{
 		if (term->buffer[buff_index] == NEW_LINE[0] || x == term->ws_col - 1)
 			break ;

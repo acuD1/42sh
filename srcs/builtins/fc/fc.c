@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/05 22:05:58 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 14:36:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,19 @@ int8_t			fc_error(u_int64_t opt, int err_num)
 	return (FAILURE);
 }
 
-static int8_t	fc_options(char **av, u_int64_t opt)
+static int8_t	fc_options(char **av, u_int64_t *opt)
 {
-	if (opt & (1ULL << 4))
+	if (*opt & (1ULL << 4))
 	{
 		while (*av)
 		{
 			if (ft_strequ(*av, "-e") && *(av + 1) == NULL)
 				return (FALSE);
+			if (ft_strequ(*av, "-s"))
+			{
+				*opt = 0;
+				*opt |= (1ULL << 18);
+			}
 			(av)++;
 		}
 	}
@@ -63,11 +68,11 @@ int8_t			builtin_fc(t_core *shell, t_process *process)
 	opt = ft_get_options((int)ft_tablen(process->av), process->av, FC_OPT);
 	if (opt & (1ULL << 63))
 		return (fc_error(opt, 1));
-	if (fc_options(process->av, opt) == FALSE)
+	if (fc_options(process->av, &opt) == FALSE)
 		return (fc_error(opt, 2));
-	else if (w && (opt & (1ULL << 18)))
+	if (opt & (1ULL << 18))
 		return (select_specifier(shell, process->av));
-	else if (w && (opt & (1ULL << 11)))
+	else if (opt & (1ULL << 11))
 		listing_mode(w, process->av, opt);
 	else
 		return (edit_mode(shell, process, opt));

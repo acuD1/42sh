@@ -6,13 +6,17 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 16:52:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/11 23:02:46 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		clr_screen(t_read *term)
+/*
+**			CTRL_L => clear the screen but keep last buffer inserted
+*/
+
+void			clr_screen(t_read *term)
 {
 	char	*tmp;
 	ssize_t	x_saved;
@@ -30,98 +34,48 @@ void		clr_screen(t_read *term)
 	ft_strdel(&tmp);
 	i = term->x_index - x_saved;
 	while (i--)
-		move_left(NULL, term);
+		move_left(term);
 }
 
-/*
-**	CTRL/SHIFT + ARROW_UP to move up one input in the same column
-**	Termcaps capabilities :	`up' to go up one input in same col
-**				`nd' to move the cursor on right
-*/
-
-static void	move_col_up(t_read *term)
+static void		jump_backward(t_read *term)
 {
-	ssize_t	width;
-
-	width = 0;
-	xtputs(term->tcaps[KEY_UP], 1, my_outc);
-	if (term->x < term->prompt_len && term->y == 1)
+	while (term->x_index > term->prompt_len &&
+			term->buffer[term->x_index - term->prompt_len] == ' ')
+		move_left(term);
+	while (term->x_index > term->prompt_len &&
+			term->buffer[term->x_index - term->prompt_len] != ' ')
 	{
-		while ((term->x)++ < term->prompt_len)
-			xtputs(term->tcaps[KEY_RIGHT], 1, my_outc);
-		term->x_index = term->x;
-	}
-	else
-	{
-		width = get_width_last_line(term);
-		if (term->y == 1)
-			term->x_index = term->x;
-		else
-			term->x_index -= width;
-	}
-	term->y--;
-}
-
-/*
-**	CTRL/ALT + ARROW_DOWN to move down one line at the first column
-**	Termcaps capabilities : `down' to move cursor down at beginning of input
-*/
-
-static void	move_col_down(t_read *term)
-{
-	ssize_t	width;
-	ssize_t	nb_ofline;
-
-	nb_ofline = 0;
-	width = get_width_current_line(term) - term->x;
-	if ((nb_ofline = charset_count(term, NEW_LINE[0], 0)) == 0)
-		nb_ofline = term->width / term->ws_col;
-	if (term->y < nb_ofline)
-	{
-		xtputs(term->tcaps[KEY_DOWN], 1, my_outc);
-		term->x_index = term->x_index + width + 1;
-		term->x = 0;
-		term->y++;
+		move_left(term);
+		if (term->buffer[term->x_index - term->prompt_len] == '\n')
+			break ;
 	}
 }
 
-static void	move_in_column(u_int64_t value, t_read *term)
+static void		jump_forward(t_read *term)
 {
-	if (value == ALT_AW_UP && term->y > 0)
-		move_col_up(term);
-	else if (value == ALT_AW_DO)
-		move_col_down(term);
+	while (term->x_index < term->width
+		&& term->buffer[term->x_index - term->prompt_len] == ' ')
+		move_right(term);
+	while (term->x_index < term->width
+		&& term->buffer[term->x_index - term->prompt_len] != ' ')
+	{
+		move_right(term);
+		if (term->buffer[term->x_index - term->prompt_len] == '\n')
+			break ;
+	}
 }
 
 /*
-**	(CTRL+F) to jump one word forward
-**	(CTRL+B) to jump one word backward
+**			CTRL+F => to jump one word forward
+**			CTRL+B => to jump one word backward
 */
 
-void		jump_words(const char *buff, t_read *term, u_int64_t value)
+void			jump_words(t_read *term, u_int64_t value)
 {
 	if (value == CTRL_B)
-	{
-		if (term->buffer[term->x_index - term->prompt_len] != ' ')
-			move_left(buff, term);
-		while (term->x_index > term->prompt_len
-			&& term->buffer[term->x_index - term->prompt_len] == ' ')
-			move_left(buff, term);
-		while (term->x_index > term->prompt_len
-			&& term->buffer[term->x_index - term->prompt_len - 1] != ' ')
-			move_left(buff, term);
-	}
+		jump_backward(term);
 	else if (value == CTRL_F)
-	{
-		if (term->buffer[term->x_index - term->prompt_len] != ' ')
-			move_right(buff, term);
-		while (term->x_index < term->width
-			&& term->buffer[term->x_index - term->prompt_len] == ' ')
-			move_right(buff, term);
-		while (term->x_index < term->width
-			&& term->buffer[term->x_index - term->prompt_len] != ' ')
-			move_right(buff, term);
-	}
-	else if (value == ALT_AW_UP || value == ALT_AW_DO)
+		jump_forward(term);
+	else if (value == MOVE_UP || value == MOVE_DOWN)
 		move_in_column(value, term);
 }

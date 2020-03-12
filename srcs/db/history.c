@@ -6,11 +6,14 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 20:18:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 14:42:50 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:59:29 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
 
 /*
 **	Update [INTERNAL_VAR] HISTFILE, continaining the place of the history file
@@ -19,18 +22,19 @@
 
 int8_t	update_histfile(t_core *shell)
 {
-	t_db	*db;
-	char	*ptr;
-	char	*value;
+	struct passwd	*pw;
+	const char		*home_dir;
+	t_db			*db;
+	char			*value;
 
+	pw = getpwuid(getuid());
+	home_dir = pw->pw_dir;
 	db = NULL;
-	ptr = getlogin();
 	value = NULL;
-	if (shell && ptr != NULL
+	if (shell && home_dir != NULL
 			&& (db = get_or_create_db(shell, "HISTFILE", INTERNAL_VAR)) != NULL)
 	{
-		value = ft_strjoinf(ft_strjoinf("/Users/", ptr, 2)
-				, ft_strdup("/.42sh_history"), 4);
+		value = ft_strjoin(home_dir, "/.42sh_history");
 		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);
 		ft_strdel(&value);

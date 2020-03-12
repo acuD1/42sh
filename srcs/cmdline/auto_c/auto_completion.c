@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 16:53:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 14:45:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ u_int8_t	is_dir(const char *dir)
 		tmp = ft_strjoin("./", dir);
 	else
 		tmp = ft_strdup(dir);
-	if (lstat(tmp, &buf) == FAILURE)
+	if (lstat(dir, &buf) == FAILURE)
 	{
 		ft_strdel(&tmp);
 		return (FALSE);

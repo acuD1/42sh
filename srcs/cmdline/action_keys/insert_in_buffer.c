@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/09 19:01:32 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 01:52:08 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,30 @@
 void		insert_char_in_buffer
 	(const char buff, t_read *term, ssize_t buff_index)
 {
-	ft_dprintf(STDIN_FILENO, "%c", buff);
-	if (buff == NEW_LINE[0] || term->x >= term->ws_col)
+	write(STDERR_FILENO, &buff, 1);
+	if (buff == NEW_LINE[0])
 	{
-		if (buff == NEW_LINE[0])
-			term->x = -1;
-		else
-			term->x = 0;
+		term->x = -1;
 		term->y++;
 	}
 	term->x++;
 	term->width++;
 	term->buffer[buff_index] = buff;
 	term->x_index++;
+	if (term->x == term->ws_col)
+	{
+		term->x = 0;
+		term->y++;
+		xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
+		xtputs(term->tcaps[KEY_DOWN], 1, my_outc);
+	}
 }
 
 static void	insert_at_index(t_read *term, ssize_t buff_index, const char *buff)
 {
 	ssize_t	j;
 
-	j = (ssize_t)ft_strlen(term->buffer) + 1;
+	j = (ssize_t)ft_strlen(term->buffer); // + 1;
 	while (--j > buff_index)
 		term->buffer[j] = term->buffer[j - 1];
 	term->buffer[buff_index] = *buff;
@@ -67,7 +71,7 @@ static void	insert_inline_char
 	insert_str_in_buffer(tmp, term);
 	x = buff_index + (ssize_t)term->prompt_len;
 	while (++x < term->width)
-		move_left(buff, term);
+		move_left(term);
 	ft_strdel(&tmp);
 }
 
@@ -81,6 +85,8 @@ void		insert_str_in_buffer(const char *d_name, t_read *term)
 	size_t	i;
 
 	i = ft_strlen(d_name);
+	if (i >= BUFF_SIZE)
+		term->buffer = ft_realloc(term->buffer, BUFF_SIZE + i);
 	while (i--)
 	{
 		buff_index = term->x_index - term->prompt_len;

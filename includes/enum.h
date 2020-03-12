@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:28:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/06 16:38:41 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/11 00:39:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ enum	e_lstate
 
 enum	e_tcaps
 {
-	DEL_CR,
 	SAVE_CR,
 	RESTORE_CR,
 	KEY_DOWN,
@@ -127,6 +126,9 @@ enum	e_tcaps
 	CLEAR,
 	CLR_LINES,
 	CLR_EOL,
+	SELECT_ON,
+	SELECT_OFF,
+	BELL,
 	CAPS_NBR
 };
 

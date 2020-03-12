@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/09 19:03:02 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 03:15:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ u_int8_t		read_again
 	u_int64_t	value;
 	char		buff[READ_SIZE + 1];
 
-	ft_bzero(buff, READ_SIZE);
+	ft_bzero(buff, READ_SIZE + 1);
 	delete_last_cmd(*prev, term);
 	if (path && is_dir(path) == TRUE)
 		ft_strcat(name, "/");
@@ -61,7 +61,7 @@ static u_int8_t	get_dir(t_read *term, char *current_dir)
 		{
 			ft_bzero(current_dir, BUFF_SIZE);
 			ft_strncpy(current_dir, term->cmd[1], found + 1);
-			tmp = ft_strdup(ft_strrchr(term->cmd[0], '/'));
+			tmp = ft_strdup(ft_strchr(term->cmd[0], '/'));
 			ft_strdel(&term->cmd[0]);
 			term->cmd[0] = ft_strdup(tmp + 1);
 			ft_strdel(&tmp);
@@ -133,7 +133,7 @@ static void		read_dir(t_read *term, char const current_dir[], DIR *dir)
 
 void			to_complete_buffer(const char *to_find, t_read *term)
 {
-	char	current_dir[BUFF_SIZE];
+	char	current_dir[BUFF_SIZE + 1];
 	DIR		*dir;
 
 	ft_bzero(current_dir, BUFF_SIZE);

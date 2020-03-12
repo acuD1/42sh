@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/09 19:31:04 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/11 23:46:37 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ u_int8_t	sub_prompt_error(t_read *term, char sb);
 **		Check Caps and Interpret
 */
 
-u_int8_t	check_caps(const char *buf, t_read *term);
+u_int8_t	check_caps(const char *buff, t_read *term);
 void		insert_in_buffer(const char *buf, t_read *term);
 void		insert_char_in_buffer
 				(const char buf, t_read *term, ssize_t buf_index);
@@ -48,18 +48,19 @@ void		insert_str_in_buffer(const char *d_name, t_read *term);
 **		Cursor Motion
 */
 
-void		move_right(const char *buf, t_read *term);
-void		move_left(const char *buf, t_read *term);
+void		move_right(t_read *term);
+void		move_left(t_read *term);
 void		move_key_up(t_read *term);
 void		move_key_down(t_read *term);
-void		jump_words(const char *buf, t_read *term, u_int64_t value);
+void		jump_words(t_read *term, u_int64_t value);
+void		move_in_column(u_int64_t value, t_read *term);
 
 /*
 **		Delete Keys
 */
 
 void		del_key(t_read *term);
-void		bs_key(const char *buf, t_read *term);
+void		bs_key(t_read *term);
 void		clr_screen(t_read *term);
 
 /*
@@ -77,6 +78,7 @@ int64_t		callback_number(t_read *term, ssize_t i);
 int64_t		call_word(t_read *term, ssize_t i);
 int64_t		last_cmd_back(t_read *term, ssize_t i);
 char		*get_home_value(t_core *shell);
+void		goto_reverse(t_read *term, const char *buff_tmp);
 
 /*
 **		Subprompt/Multiline
@@ -119,7 +121,6 @@ u_int8_t	is_tab(const char *d_name, t_read *term);
 u_int8_t	is_dir(const char *dir);
 void		split_cmd(char **to_find, t_read *term);
 void		free_lst(t_lst *lst);
-void		feature(t_read *term, u_int64_t value);
 
 /*
 **		Functions safe
@@ -127,5 +128,15 @@ void		feature(t_read *term, u_int64_t value);
 
 void		xtputs(char *str, int i, int (*f)(int));
 ssize_t		xread(int fd, char *buff, size_t size);
+
+/*
+**		Clipboard action keys
+*/
+
+void		ak_clipboard(t_read *term, const char *buff, u_int64_t *value);
+void		load_selection(t_read *term, const char *buff, u_int64_t value);
+void		copy_text(t_read *term, t_cmd copy);
+void		paste_text(t_read *term);
+void		cut_text(t_read *term, t_cmd copy);
 
 #endif

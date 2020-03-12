@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/09 19:02:35 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 03:18:34 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,17 @@
 #include "sh42.h"
 
 /*
-** 	Function to save in buffer the current bin found at buffer[0]
+** 		Function to save in buffer the current bin found at buffer[0]
 */
 
 static void		insert_bin_in_buffer(const char *bin, t_read *term)
 {
-	size_t	i;
-	ssize_t	buff_index;
+	ssize_t buff_index;
 
-	i = 0;
-	buff_index = 0;
+	buff_index = term->x_index - term->prompt_len;
 	ft_strdel(&term->buffer);
-	term->buffer = ft_memalloc(BUFF_SIZE);
-	while (bin[i])
-	{
-		insert_char_in_buffer(bin[i], term, buff_index);
-		buff_index++;
-		i++;
-	}
-	insert_char_in_buffer(SPACE[0], term, buff_index);
+	term->buffer = ft_memalloc(BUFF_SIZE + 1);
+	insert_str_in_buffer(bin, term);
 }
 
 static void		add_builtin_lst(t_lst **bin, const char *cmd)
@@ -57,7 +49,7 @@ static u_int8_t	is_completion(t_read *term)
 	char		buff[READ_SIZE + 1];
 
 	value = 0;
-	ft_bzero(buff, READ_SIZE);
+	ft_bzero(buff, READ_SIZE + 1);
 	if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		value = get_mask(buff);
@@ -65,6 +57,7 @@ static u_int8_t	is_completion(t_read *term)
 			return (TRUE);
 		else
 			term->ac_tmp = ft_strdup(buff);
+		ft_bzero(buff, READ_SIZE + 1);
 	}
 	return (FALSE);
 }

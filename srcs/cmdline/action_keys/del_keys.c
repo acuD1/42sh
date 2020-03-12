@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/04 21:39:15 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 23:04:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 
 static void	clear_all_lines(t_read *term)
 {
-	xtputs(term->tcaps[DEL_CR], 1, my_outc);
 	xtputs(term->tcaps[SAVE_CR], 1, my_outc);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 	xtputs(term->tcaps[RESTORE_CR], 1, my_outc);
@@ -54,6 +53,8 @@ void		del_key(t_read *term)
 		term->width = w;
 		xtputs(term->tcaps[RESTORE_CR], 1, my_outc);
 	}
+	else
+		xtputs(term->tcaps[BELL], 1, my_outc);
 }
 
 /*
@@ -61,11 +62,13 @@ void		del_key(t_read *term)
 **	Call del_key function to delete char from cursor position
 */
 
-void		bs_key(const char *buf, t_read *term)
+void		bs_key(t_read *term)
 {
 	if ((term->y > 0 && term->x >= 0) || term->x > term->prompt_len)
 	{
-		move_left(buf, term);
+		move_left(term);
 		del_key(term);
 	}
+	else
+		xtputs(term->tcaps[BELL], 1, my_outc);
 }

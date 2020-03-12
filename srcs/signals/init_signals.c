@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 21:17:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/05 15:17:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,24 @@ static void	sig_exit(int signum)
 static void	sigh_winch(int signum)
 {
 	t_core	*shell;
+	char	*tmp;
 
 	(void)signum;
-	fflush(stdout);
 	shell = get_core(NULL);
+	tmp = ft_strdup(shell->term.buffer);
+	fflush(stdout);
 	if (get_size(&(shell->term)) != SUCCESS || update_termsize(shell))
 		quit_shell(shell, EXIT_SUCCESS, FALSE);
+	if (shell->term.search == 29)
+		goto_reverse(&shell->term, shell->term.tmp_buff);
+	else if (shell->term.search == 22)
+		goto_reverse(&shell->term, shell->term.tmp_buff);
+	else
+		goto_prompt(&shell->term);
+	ft_strdel(&shell->term.buffer);
+	shell->term.buffer = ft_memalloc(BUFF_SIZE);
+	insert_str_in_buffer(tmp, &shell->term);
+	ft_strdel(&tmp);
 }
 
 /*

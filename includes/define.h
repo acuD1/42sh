@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/09 18:30:38 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/11 22:10:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@
 # define PS1					"'42sh-0.1$ '"
 # define PS2					"'> '"
 # define BUFF_SIZE				4096
-# define READ_SIZE				64
+# define READ_SIZE				8
 # define QUOTE					'\''
 # define DQUOTE					'\"'
 # define BQUOTE					'`'
@@ -73,6 +73,8 @@
 # define CMD_PROMPT				0
 # define CMD_SUBPROMPT			1
 # define CMD_DONE				2
+# define SEARCH_FAILURE			29
+# define SEARCH_SUCCESS			22
 
 /*
 **	Files name
@@ -97,15 +99,20 @@
 # define RETURN_KEY				0x0a00000000000000
 # define CTRL_R					0x1200000000000000
 # define CTRL_L					0x0c00000000000000
-# define CTRL_K					0x0b00000000000000
+# define CTRL_N					0x0e00000000000000
 # define CTRL_A					0x0100000000000000
 # define CTRL_E					0x0500000000000000
 # define CTRL_B					0x0200000000000000
 # define CTRL_F					0x0600000000000000
 # define CTRL_D					0x0400000000000000
 # define CTRL_W					0x1700000000000000
-# define ALT_AW_UP				0x1b1b5b4100000000
-# define ALT_AW_DO				0x1b1b5b4200000000
+# define MOVE_UP				0x1b5b313b32410000
+# define MOVE_DOWN				0x1b5b313b32420000
+# define SELECT_LEFT			0x1b5b313b36440000
+# define SELECT_RIGHT			0x1b5b313b36430000
+# define CTRL_K					0x0b00000000000000
+# define CTRL_P					0x1000000000000000
+# define CTRL_X					0x1800000000000000
 
 /*
 **	Builtins
