@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/11 18:12:52 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/12 17:25:54 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,6 @@ void			exec_process(t_core *shell, t_job *job, t_process *process)
 		control_process(shell, job, process);
 	else if (process->type != P_PIPE)
 		wait_for_process(shell, shell->job_list, process);
+	if (get_signal(process->status) == 2)
+		write(2, "\n", 1);
 }

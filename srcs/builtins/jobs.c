@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/10 19:31:45 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/12 17:16:08 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ static void	print_longjob(t_job *job)
 	{
 		process = ((t_process *)ptr->content);
 		if (ptr == job->process_list)
-			ft_printf("[%d]%c %d %-24s %s\n", job->jobc_id, job->jobc_last
-			, process->pid, signal_msg(process->status), process->command);
+			ft_printf("[%d]%c %d %-23.*s %s\n", job->jobc_id, job->jobc_last
+			, process->pid, ft_strlen(signal_msg(process->status)) - 1
+			, signal_msg(process->status), process->command);
 		else
-			ft_printf("     %d %24s%s\n", process->pid
+			ft_printf("     %d %-24.*s%s\n", process->pid
+			, ft_strlen(signal_msg(process->status)) - 1
 			, signal_msg(process->status), process->command);
 		ptr = ptr->next;
 	}
