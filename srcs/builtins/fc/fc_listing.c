@@ -6,17 +6,17 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:11:54 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 18:50:48 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/05 21:44:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void			sort_print_cmd(t_cmd cmd, t_lst *w, u_int64_t opt)
+void		sort_print_cmd(t_cmd cmd, t_lst *w, u_int64_t opt)
 {
-	int			w_entries;
+	int32_t	w_entries;
 
-	w_entries = ft_lstlen(w);
+	w_entries = (int32_t)ft_lstlen(w);
 	if (cmd.last < cmd.first)
 	{
 		if (cmd.first < 0)
@@ -36,11 +36,11 @@ void			sort_print_cmd(t_cmd cmd, t_lst *w, u_int64_t opt)
 		print_list(w, cmd, opt);
 }
 
-void			get_entries(t_lst *w, t_cmd *cmd, u_int64_t opt)
+void		get_entries(t_lst *w, t_cmd *cmd, u_int64_t opt)
 {
-	int			w_entries;
+	int32_t		w_entries;
 
-	w_entries = ft_lstlen(w);
+	w_entries = (int32_t)ft_lstlen(w);
 	if (cmd->first <= 0 && (opt & (1ULL << 4)))
 		cmd->first = w_entries;
 	else if (cmd->first <= 0)
@@ -56,7 +56,7 @@ void			get_entries(t_lst *w, t_cmd *cmd, u_int64_t opt)
 	}
 }
 
-void			skip_options(char ***av)
+void		skip_options(char ***av)
 {
 	while (++(*av) && **av)
 	{
@@ -70,11 +70,8 @@ void			skip_options(char ***av)
 	(*av)--;
 }
 
-u_int8_t		get_range(char **av, t_cmd *cmd)
+u_int8_t	get_range(char **av, t_cmd *cmd)
 {
-	int			i;
-
-	i = 0;
 	if ((cmd->ac = ft_tablen(av)) == 2)
 		return (TRUE);
 	skip_options(&av);
@@ -95,7 +92,7 @@ u_int8_t		get_range(char **av, t_cmd *cmd)
 	return (TRUE);
 }
 
-int8_t			listing_mode(t_lst *w, char **av, u_int64_t opt)
+int8_t		listing_mode(t_lst *w, char **av, u_int64_t opt)
 {
 	t_cmd		cmd;
 

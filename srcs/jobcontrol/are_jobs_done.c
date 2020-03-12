@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   are_jobs_done.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 18:31:48 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/19 02:56:17 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:40:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t	are_jobs_done(t_core *shell, t_lst *jobs)
+u_int8_t	are_jobs_done(t_core *shell, t_lst *jobs)
 {
 	t_job	*job;
 

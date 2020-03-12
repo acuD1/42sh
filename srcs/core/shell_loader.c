@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/02 15:48:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:13:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	load_noi_mode(t_core *shell)
 {
-	int		i;
+	size_t	i;
 
 	while (ft_getnextline(STDIN_FILENO, &shell->term.buffer))
 	{
@@ -44,10 +44,20 @@ void	load_i_mode(t_core *shell)
 	{
 		if (init_prompt(shell) != SUCCESS)
 			return ;
+		if (check_subprompt(shell) == FALSE)
+		{
+			if (check_expansions(&shell->term) == FAILURE)
+			{
+				reset_config(shell);
+				free_prompt(shell);
+				continue ;
+			}
+		}
+		reset_config(shell);
 		lexer_parser_analyzer(shell);
 		do_job_notification(shell, shell->launched_jobs);
 		if (task_master(shell) != SUCCESS)
-			return (quit_shell(shell, EXIT_FAILURE, FALSE));
+			quit_shell(shell, EXIT_FAILURE, FALSE);
 		save_history(&shell->term);
 		free_prompt(shell);
 	}

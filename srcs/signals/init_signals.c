@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/03 17:13:01 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:17:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		init_signals(void)
 		, sig_handler, sig_handler, sig_handler, sig_exit, SIG_DFL, SIG_IGN
 		, SIG_IGN, SIG_DFL, sig_handler, sig_handler, sig_handler, sig_handler
 		, sigh_winch, sig_handler, sig_handler};
-	int			i;
+	size_t		i;
 
 	i = 0;
 	while (i < 27)

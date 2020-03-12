@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 16:34:39 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/27 18:38:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:15:00 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	opt_c(int ac, char **av, t_core *shell)
 	ft_dprintf(STDERR_FILENO, "%s\n", shell->term.buffer);
 	lexer_parser_analyzer(shell);
 	if (task_master(shell) != SUCCESS)
-		return (quit_shell(shell, EXIT_FAILURE, FALSE));
+		quit_shell(shell, EXIT_FAILURE, FALSE);
 	quit_shell(shell, EXIT_SUCCESS, FALSE);
 }
 

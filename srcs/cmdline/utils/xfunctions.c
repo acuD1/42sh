@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 12:13:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/26 17:17:47 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:48:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	xtputs(char *str, int i, int (*f)(int))
 	tputs(str, i, f);
 }
 
-size_t	xread(int fd, char *buff, int size)
+ssize_t	xread(int fd, char *buff, size_t size)
 {
-	int		ret;
+	ssize_t	ret;
 	t_core	*shell;
 
 	shell = get_core(NULL);

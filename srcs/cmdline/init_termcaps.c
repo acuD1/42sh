@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/26 18:09:51 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:25:11 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ static int8_t	stock_termcaps(t_read *term)
 {
 	static char	*termcaps[CAPS_NBR] = {"dc", "sc", "rc", "do", "up", "nd"
 		, "le", "cr", "ho", "cl", "cd", "ce"};
-	int			i;
+	size_t		i;
 
-	i = -1;
-	while (++i < CAPS_NBR)
+	i = 0;
+	while (i < CAPS_NBR)
 	{
 		if ((term->tcaps[i] = tgetstr(termcaps[i], NULL)) == NULL)
 			return (FAILURE);
+		i++;
 	}
 	return (SUCCESS);
 }

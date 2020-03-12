@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/03 13:56:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/10 20:29:24 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@
 
 # include <stdio.h>
 # include <setjmp.h>
+# include <unistd.h>
+# include <stdlib.h>
 
-jmp_buf g_exit_leaks;
+extern jmp_buf g_exit_leaks;
 
 void		set_termconfig(t_core *shell);
 
@@ -69,10 +71,10 @@ int8_t		edit_var
 **	===========================================================================
 */
 
-int8_t		call_builtin(t_core *shell, t_process *process, int blt);
+int8_t		call_builtin(t_core *shell, t_process *process, int8_t blt);
 int8_t		get_bin_path(t_core *shell, t_process *process);
 void		exec_process(t_core *shell, t_job *job, t_process *process);
-int8_t		call_bin(t_core *shell, t_process *process);
+void		call_bin(t_core *shell, t_process *process);
 int8_t		task_master(t_core *shell);
 int8_t		is_a_blt(const char *cmd);
 int8_t		get_bin(t_core *shell, t_process *process);
@@ -87,20 +89,27 @@ void		status_handler(t_core *shell, t_process *process, int status);
 
 u_int32_t	get_hash(const char *line, u_int32_t size);
 int8_t		locate_hash(t_core *shell, t_process *process);
-void		hash_map_dispatcher
+void		hash_dispatcher
 				(t_core *shell, t_process *process, enum e_hash fmt);
+int8_t		fill_exec
+				(t_core *shell, const char *key,
+				const char *value, enum e_hash fmt);
+int8_t		fill_path
+				(t_core *shell, t_process *process, enum e_hash fmt, size_t i);
+int8_t		fill_default
+				(t_core *shell, t_process *process, enum e_hash fmt, size_t i);
 int8_t		resize_hash_map(t_core *shell);
 void		free_hash_map(t_hash *hash);
 t_db		*fetch_hash_db
 				(t_db *db, const char *key, const char *value, enum e_hash fmt);
 void		hash_key_remover(t_core *shell, char *process);
-int8_t		hash_l(t_core *shell, t_process *process, int ac);
-int8_t		hash_r(t_core *shell, t_process *process, int ac);
-int8_t		hash_p(t_core *shell, t_process *process, int ac);
-int8_t		hash_d(t_core *shell, t_process *process, int ac);
-int8_t		hash_t(t_core *shell, t_process *process, int ac);
+int8_t		hash_l(t_core *shell, t_process *process, size_t ac);
+int8_t		hash_r(t_core *shell, t_process *process, size_t ac);
+int8_t		hash_p(t_core *shell, t_process *process, size_t ac);
+int8_t		hash_d(t_core *shell, t_process *process, size_t ac);
+int8_t		hash_t(t_core *shell, t_process *process, size_t ac);
 void		print_hash_map(t_core *shell, enum e_hash fmt);
-void		find_hash(t_core *shell, t_process *process, int ac);
+void		find_hash(t_core *shell, t_process *process, size_t ac);
 void		free_hash_key(t_hash *hash, t_lst *map);
 void		hash_error(t_hash *hash);
 
@@ -113,13 +122,13 @@ void		hash_error(t_hash *hash);
 t_core		*get_core(t_core *core);
 int8_t		get_canonical_path
 	(t_core *shell, const char *path, char *buffer, char *pwd);
-void		ft_perror(const char *s, const char *name, int errnum);
-int8_t		ft_access(const char *path, int mode);
+void		ft_perror(const char *s, const char *name, int8_t errnum);
+int8_t		ft_access(const char *path, u_int8_t mode);
 int8_t		is_a_dir(const char *path);
-void		print_usage(const char *name, int c, const char *usage);
+void		print_usage(const char *name, u_int8_t c, const char *usage);
 void		quit_shell(t_core *shell, int exit_value, int8_t v);
 void		print_and_quit(t_core *shell, const char *message);
-int			check_invalid_identifiers(const char *arg, const char *exceptions);
+int8_t		check_invalid_identifiers(const char *arg, const char *exceptions);
 char		*signal_msg(int sig);
 int8_t		path_tests(const char *path, int opt);
 void		dir_backward(char *path);
@@ -188,8 +197,9 @@ int8_t		cd_update_pwd(t_core *shell, const char *pwd, const char *path);
 int8_t		cd_check_path(const char *path);
 int8_t		change_dir(t_core *shell, const char *path);
 int8_t		update_pwds(t_core *shell, const char *buffer, const char *path);
-int			check_cd_argument(t_process *process, int ac);
 int8_t		cd_use_cd_path(t_core *shell, const char *path);
+int8_t		cd_oldpwd(t_core *shell);
+int8_t		cd_home(t_core *shell);
 
 /*
 **	===========================================================================
@@ -224,12 +234,12 @@ void		init_signals(void);
 */
 
 t_process	*find_process(t_lst *job, pid_t pid);
-int8_t		job_is_stopped(t_job *job);
-int8_t		job_is_completed(t_job *job);
-int8_t		put_job_in_foreground
-				(t_core *shell, t_lst *jobs, t_job *job, int cont);
-void		put_job_in_background(t_core *shell, t_job *job, int cont);
-int8_t		continue_job(t_core *shell, t_job *job, int foreground);
+u_int8_t	job_is_stopped(t_job *job);
+u_int8_t	job_is_completed(t_job *job);
+void		put_job_in_foreground
+				(t_core *shell, t_lst *jobs, t_job *job, u_int8_t cont);
+void		put_job_in_background(t_core *shell, t_job *job, u_int8_t cont);
+void		continue_job(t_core *shell, t_job *job, int foreground);
 void		reset_signals(void);
 void		launch_process(t_core *shell, t_process *process);
 void		launch_job(t_core *shell, t_job *job, int foreground);
@@ -237,7 +247,7 @@ void		job_background_notif(t_job *job);
 void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
 int8_t		mark_process_status
 				(t_core *shell, t_lst *jobs, pid_t pid, int status);
-void		mark_job_as_stopped(t_job *job, int stopped);
+void		mark_job_as_stopped(t_job *job, int8_t stopped);
 int8_t		launch_blt(t_core *shell, t_process *process);
 void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
 void		update_status(t_core *shell);
@@ -246,8 +256,8 @@ t_job		*get_job_by_id(t_lst *jobs, int id);
 void		format_job_info(t_job *job);
 int			update_jobs(t_lst *jobs);
 void		attr_jobc_id(t_core *shell, t_job *job);
-int8_t		do_job_notification(t_core *shell, t_lst *job);
+void		do_job_notification(t_core *shell, t_lst *job);
 int			cond(t_lst *process);
-int8_t		are_jobs_done(t_core *shell, t_lst *jobs);
+u_int8_t	are_jobs_done(t_core *shell, t_lst *jobs);
 
 #endif

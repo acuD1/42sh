@@ -6,15 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:16:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/02 15:50:33 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:40:20 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char			*simple_format(char *str, t_core *shell)
+char	*simple_format(char *str, t_core *shell)
 {
-	t_db		*db_tmp;
+	t_db	*db_tmp;
 
 	db_tmp = NULL;
 	if (ft_strchr(str, '$') && str[0] != '$')
@@ -32,9 +32,9 @@ char			*simple_format(char *str, t_core *shell)
 	return (NULL);
 }
 
-char			*format_supplementaires(char *str, t_core *shell)
+char	*format_supplementaires(char *str, t_core *shell)
 {
-	int			i;
+	size_t	i;
 
 	i = 0;
 	if (str[0] == ':' || str[0] == '%')
@@ -57,10 +57,10 @@ char			*format_supplementaires(char *str, t_core *shell)
 	return (simple_format(str, shell));
 }
 
-char			*get_brace_param(char *str, t_core *shell)
+char	*get_brace_param(char *str, t_core *shell)
 {
-	int			i;
-	int			count;
+	size_t		i;
+	u_int32_t	count;
 	char		*tmp;
 
 	i = 1;
@@ -81,9 +81,9 @@ char			*get_brace_param(char *str, t_core *shell)
 	return (format_supplementaires(tmp, shell));
 }
 
-char			*exp_param(const char *data, t_core *shell)
+char	*exp_param(const char *data, t_core *shell)
 {
-	char		*tmp;
+	char	*tmp;
 
 	tmp = NULL;
 	if (data[0] == '$' && data[1] == '{')

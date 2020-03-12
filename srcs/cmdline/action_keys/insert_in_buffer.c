@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/03 14:52:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:01:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 **	To insert a char in buffer at the end of line
 */
 
-void		insert_char_in_buffer(const char buff, t_read *term, int buff_index)
+void		insert_char_in_buffer
+	(const char buff, t_read *term, ssize_t buff_index)
 {
 	ft_dprintf(STDIN_FILENO, "%c", buff);
 	if (buff == NEW_LINE[0] || term->x >= term->ws_col)
@@ -33,11 +34,11 @@ void		insert_char_in_buffer(const char buff, t_read *term, int buff_index)
 	term->x_index++;
 }
 
-static void	insert_at_index(t_read *term, int buff_index, const char *buff)
+static void	insert_at_index(t_read *term, ssize_t buff_index, const char *buff)
 {
-	int		j;
+	ssize_t	j;
 
-	j = ft_strlen(term->buffer) + 1;
+	j = (ssize_t)ft_strlen(term->buffer) + 1;
 	while (--j > buff_index)
 		term->buffer[j] = term->buffer[j - 1];
 	term->buffer[buff_index] = *buff;
@@ -50,10 +51,11 @@ static void	insert_at_index(t_read *term, int buff_index, const char *buff)
 **			`clr_lines' => to clear all following lines from cursor
 */
 
-static void	insert_inline_char(const char *buff, t_read *term, int buff_index)
+static void	insert_inline_char
+	(const char *buff, t_read *term, ssize_t buff_index)
 {
 	char	*tmp;
-	int		x;
+	ssize_t	x;
 
 	x = 0;
 	tmp = NULL;
@@ -63,7 +65,7 @@ static void	insert_inline_char(const char *buff, t_read *term, int buff_index)
 	ft_strdel(&term->buffer);
 	term->buffer = ft_memalloc(BUFF_SIZE);
 	insert_str_in_buffer(tmp, term);
-	x = buff_index + term->prompt_len;
+	x = buff_index + (ssize_t)term->prompt_len;
 	while (++x < term->width)
 		move_left(buff, term);
 	ft_strdel(&tmp);
@@ -75,8 +77,8 @@ static void	insert_inline_char(const char *buff, t_read *term, int buff_index)
 
 void		insert_str_in_buffer(const char *d_name, t_read *term)
 {
-	int		buff_index;
-	int		i;
+	ssize_t	buff_index;
+	size_t	i;
 
 	i = ft_strlen(d_name);
 	while (i--)
@@ -98,17 +100,17 @@ void		insert_str_in_buffer(const char *d_name, t_read *term)
 
 void		insert_in_buffer(const char *buff, t_read *term)
 {
-	int		buff_index;
-	int		len;
-	int		increase_len;
+	ssize_t	buff_index;
+	ssize_t	len;
+	ssize_t	increase_len;
 
 	increase_len = 0;
 	buff_index = term->x_index - term->prompt_len;
-	len = (*buff) ? ft_strlen(buff) : 0;
+	len = (*buff) ? (ssize_t)ft_strlen(buff) : 0;
 	if (term->x_index >= BUFF_SIZE || term->x_index + len >= BUFF_SIZE)
 	{
-		increase_len = ft_strlen(term->buffer) + READ_SIZE;
-		term->buffer = ft_realloc(term->buffer, increase_len);
+		increase_len = (ssize_t)ft_strlen(term->buffer) + READ_SIZE;
+		term->buffer = ft_realloc(term->buffer, (size_t)increase_len);
 	}
 	if (len > 1)
 	{

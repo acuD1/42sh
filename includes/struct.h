@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/02 15:24:50 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/10 19:23:36 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct				s_db
 	char					*value;
 	u_int32_t				hit;
 	u_int8_t				type;
+	char					pad[3];
 }							t_db;
 
 typedef struct				s_build
@@ -44,15 +45,17 @@ typedef struct				s_hash
 	u_int32_t				value;
 	u_int32_t				size;
 	u_int32_t				lenght;
+	char					pad[4];
 }							t_hash;
 
 typedef struct				s_cd
 {
 	char					*tmp_pwd;
+	int						error;
 	u_int8_t				pwd_error;
 	u_int8_t				dash;
 	u_int8_t				no_symbolic;
-	int						error;
+	char					pad[1];
 }							t_cd;
 
 typedef struct				s_read
@@ -66,17 +69,18 @@ typedef struct				s_read
 	char					*buffer;
 	char					*tmp_buff;
 	char					*ac_tmp;
-	int						prompt_len;
-	int						x_index;
-	int						x;
-	int						y;
-	int						width;
-	int						ws_col;
-	int						ws_li;
-	int						ac;
-	int						sub_prompt;
-	int						status;
-	int						flag;
+	ssize_t					prompt_len;
+	ssize_t					x_index;
+	ssize_t					x;
+	ssize_t					y;
+	ssize_t					width;
+	ssize_t					ws_col;
+	ssize_t					ws_li;
+	size_t					ac;
+	u_int8_t				sub_prompt;
+	u_int8_t				status;
+	u_int8_t				flag;
+	char					pad[5];
 }							t_read;
 
 struct						s_core
@@ -99,6 +103,7 @@ struct						s_core
 	int32_t					terminal;
 	int8_t					is_interactive;
 	int8_t					notified;
+	char					pad[6];
 };
 
 /*
@@ -118,36 +123,40 @@ typedef struct				s_graph
 
 typedef struct				s_parser
 {
-	enum e_pstate			state;
 	t_graph					graph[NB_PARSER_STATE];
+	enum e_pstate			state;
+	char					pad[4];
 }							t_parser;
 
 typedef struct				s_token
 {
-	enum e_pstate			id;
 	char					*data;
+	enum e_pstate			id;
+	char					pad[4];
 	size_t					len;
 }							t_token;
 
 struct						s_lexer
 {
-	char					*buff;
-	enum e_lstate			status;
-	size_t					ntok;
-	size_t					buf_pos;
 	t_lexing				lex[NB_LEXER_STATE];
 	t_token					token;
+	char					*buff;
+	enum e_lstate			status;
+	char					pad[4];
+	size_t					ntok;
+	size_t					buf_pos;
 };
 
 typedef struct				s_job
 {
 	t_lst					*process_list;
 	char					*command;
-	char					jobc_last;
 	enum e_pstate			type;
 	pid_t					pgid;
-	int8_t					notified;
 	int						jobc_id;
+	int8_t					notified;
+	char					jobc_last;
+	char					pad[2];
 }							t_job;
 
 typedef struct				s_process
@@ -162,12 +171,13 @@ typedef struct				s_process
 	enum e_pstate			type;
 	pid_t					pid;
 	pid_t					pgid;
-	int8_t					completed;
-	int8_t					stopped;
-	int8_t					status;
-	int8_t					blt;
 	int						pipe[2];
 	int						close[2];
+	int						completed;
+	int						status;
+	int8_t					stopped;
+	int8_t					blt;
+	char					pad[2];
 }							t_process;
 
 typedef struct				s_redir
@@ -193,16 +203,18 @@ struct						s_analyzer
 	t_lst					*process_list;
 	t_lst					*redir_list;
 	enum e_astate			state;
+	char					pad[4];
 };
 
 typedef struct				s_cmd
 {
 	char					**av;
 	char					*editor;
-	int						first;
-	int						last;
-	int						ac;
+	size_t					ac;
+	int32_t					first;
+	int32_t					last;
 	int						fd;
+	char					pad[4];
 }							t_cmd;
 
 /*
@@ -215,35 +227,38 @@ typedef t_expansion			*(*t_inhi)(char *, t_core *, t_expansion *);
 
 typedef struct				s_exp_size
 {
-	enum e_estate			id;
 	char					*(*acab)(char *, enum e_estate id);
 	char					*res;
+	enum e_estate			id;
 }							t_exp_size;
 
 struct						s_expansion
 {
 	t_exp					sionat[9];
 	t_inhi					biteurs[5];
-	int						erience;
-	int						index;
-	int						discarded;
 	char					*res;
 	enum e_estate			st;
 	enum e_estate			quotus;
+	size_t					erience;
+	size_t					index;
+	u_int32_t				discarded;
+	char					pad[4];
 };
 
 typedef struct				s_exp_token
 {
-	enum e_estate			id;
 	char					*data;
-	int						len;
+	enum e_estate			id;
+	char					pad[4];
+	size_t					len;
 }							t_exp_token;
 
 typedef struct				s_lex_exp
 {
-	char					*(*fct)(const char *, int);
+	char					*(*fct)(const char *, size_t);
 	enum e_estate			id;
-	int						len;
+	char					pad[4];
+	size_t					len;
 }							t_lex_exp;
 
 #endif

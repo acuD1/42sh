@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 18:53:45 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:10:06 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int8_t	check_eof(t_read *term, char *sb)
+static u_int8_t	check_eof(t_read *term, char *sb)
 {
 	if (term->status != CMD_SUBPROMPT)
 		return (TRUE);

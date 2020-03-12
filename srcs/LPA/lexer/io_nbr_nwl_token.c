@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 17:55:48 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/06 22:51:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:29:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int				filename_checker(t_lst *lst)
+static u_int8_t	filename_checker(t_lst *lst)
 {
 	enum e_pstate id;
 
@@ -28,7 +28,7 @@ int				filename_checker(t_lst *lst)
 	return (1);
 }
 
-static t_lst	*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token, int i)
+static t_lst	*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token, size_t i)
 {
 	char	*str;
 
@@ -36,7 +36,8 @@ static t_lst	*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token, int i)
 	if ((lexer->buff[i] == '<' || lexer->buff[i] == '>')
 		&& filename_checker(lexer_token))
 	{
-		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, i - lexer->buf_pos)))
+		if (!(str = ft_strsub(lexer->buff, (unsigned int)lexer->buf_pos
+			, i - lexer->buf_pos)))
 			return (NULL);
 		if (!(ft_lstappend(&lexer_token, ft_lstnew(
 			fetch_token(&lexer->token, P_IONUMBER, str), sizeof(t_token)))))
@@ -52,7 +53,7 @@ static t_lst	*isvalid_ionumber(t_lexer *lexer, t_lst *lexer_token, int i)
 
 t_lst			*number_lexer(t_lexer *lx, t_lst *lexer_token)
 {
-	int		i;
+	size_t	i;
 
 	i = lx->buf_pos;
 	if (!lx->buff[lx->buf_pos] || !ft_isdigit(lx->buff[lx->buf_pos]))
@@ -79,7 +80,7 @@ t_lst			*newline_lexer(t_lexer *lexer, t_lst *lexer_token)
 	}
 	if (lexer->buff[lexer->buf_pos] == '\n')
 	{
-		if (!(str = ft_strsub(lexer->buff, lexer->buf_pos, 1)))
+		if (!(str = ft_strsub(lexer->buff, (unsigned int)lexer->buf_pos, 1)))
 			return (NULL);
 		if (!(ft_lstappend(&lexer_token, ft_lstnew(
 			fetch_token(&lexer->token, P_NEWLINE, str), sizeof(t_token)))))

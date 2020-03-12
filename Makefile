@@ -5,7 +5,7 @@ define MSG
 #                                                         :::      ::::::::    #
 #    Makefile for 42sh                                  :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By arsciand fcatusse guvillat mpivet-p         +#+  +:+       +#+         #
+#    By arsciand fcatusse guvillat                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #                                                      #+#    #+#              #
 #                                                     ###   ########.fr        #
@@ -148,6 +148,8 @@ SRC					+=	$(S_PATH)$(BUILTINS)unset.c
 
 SRC					+=	$(S_PATH)$(CD)cd_change_dir.c
 SRC					+=	$(S_PATH)$(CD)cd_check_path.c
+SRC					+=	$(S_PATH)$(CD)cd_home.c
+SRC					+=	$(S_PATH)$(CD)cd_oldpwd.c
 SRC					+=	$(S_PATH)$(CD)cd_update_pwd.c
 SRC					+=	$(S_PATH)$(CD)cd_use_cd_path.c
 SRC					+=	$(S_PATH)$(CD)cd.c
@@ -159,10 +161,12 @@ SRC					+=	$(S_PATH)$(FC)fc_print.c
 SRC					+=	$(S_PATH)$(FC)fc_specifier.c
 SRC					+=	$(S_PATH)$(FC)fc.c
 
-SRC					+=	$(S_PATH)$(HASH)add_hash_map.c
+SRC					+=	$(S_PATH)$(HASH)hash_dispatcher.c
+SRC					+=	$(S_PATH)$(HASH)fill_hash_map.c
 SRC					+=	$(S_PATH)$(HASH)fetch_hash_db.c
 SRC					+=	$(S_PATH)$(HASH)get_hash.c
 SRC					+=	$(S_PATH)$(HASH)hash_handler.c
+SRC					+=	$(S_PATH)$(HASH)hash_key_remover.c
 SRC					+=	$(S_PATH)$(HASH)hash_opt_tools.c
 SRC					+=	$(S_PATH)$(HASH)hash_opt.c
 SRC					+=	$(S_PATH)$(HASH)hash.c
@@ -325,14 +329,24 @@ vpath %.h $(H_PATH)
 
 # Variables
 
-C_GCC				=	clang $(CFLAG)
+DEBUG				=
+CFLAGS				= -Wall -Wextra -Werror
+ifeq ($(DEBUG), g)
+	CFLAGS = -g
+else ifeq ($(DEBUG), fsanitize)
+	CFLAGS = -fsanitize=address
+else ifeq ($(DEBUG), hard)
+	CFLAGS = -Wall -Weverything -fsanitize=address,undefined -Wno-cast-qual -Wno-missing-noreturn
+else ifeq ($(DEBUG), dev)
+	CFLAGS =
+endif
+CC					=	clang $(CFLAGS)
 IFLAGS				+=	$(addprefix -I, $(H_PATH))
-CMPLC				=	$(C_GCC) -c $(IFLAGS)
-CMPLO				=	$(C_GCC) -o
+CMPLC				=	$(CC) -c $(IFLAGS)
+CMPLO				=	$(CC) -o
 BUILD				=	$(PATHS)
 AR_RC				=	ar rc
 RANLI				=	ranlib
-CFLAG				=	-Wall -Wextra -Werror -g
 RM_RF				=	/bin/rm -rf
 MKDIR				=	mkdir -p
 NORME				=	norminette
@@ -346,22 +360,20 @@ NORMD				=	echo "$(G_C)=====>     DONE$(RESET_C)"
 
 .PHONY: all norme clean fclean re test
 
-DEBUG 				=
-
-ifeq ($(DEBUG), g)
-	CFLAG = -g
-else ifeq ($(DEBUG), fsanitize)
-	CFLAG = -fsanitize=address -g3
-else ifeq ($(DEBUG), dev)
-	CFLAG =
-else
-	CFLAG = -Wall -Wextra -Werror -g
-endif
-
 # Rules
 make:
-	$(MSG)
-	@$(MAKE) --no-print-directory all
+	echo "# **************************************************************************** #"
+	echo "#                                                                              #"
+	echo "#                                                         :::      ::::::::    #"
+	echo "#    Makefile for 42sh                                  :+:      :+:    :+:    #"
+	echo "#                                                     +:+ +:+         +:+      #"
+	echo "#    By arsciand fcatusse guvillat                  +#+  +:+       +#+         #"
+	echo "#                                                 +#+#+#+#+#+   +#+            #"
+	echo "#                                                      #+#    #+#              #"
+	echo "#                                                     ###   ########.fr        #"
+	echo "#                                                                              #"
+	echo "# **************************************************************************** #"
+	$(MAKE) --no-print-directory all
 
 all: libm $(BUILD) $(NAME)
 
@@ -374,19 +386,19 @@ TEST =
 endif
 
 $(NAME): $(OBJ) $(BUILD_FILE) $(TEST)
-	@$(ECHO) $(GCFIL) $(NAME)
-	@$(CMPLO) $(NAME) $(OBJ) $(LIB)
-	@$(GCSUC)
-	@echo "---\nCFLAG - =$(B_C) $(CFLAG)$(RESET_C)\n---"
-	@echo "\n$(G_C)[$(BUILD_BRANCH)] $(RESET_C)$@ $(F_C) \
+	$(ECHO) $(GCFIL) $(NAME)
+	$(CMPLO) $(NAME) $(OBJ) $(LIB)
+	$(GCSUC)
+	echo "---\nCFLAGS - =$(B_C) $(CFLAGS)$(RESET_C)\n---"
+	echo "\n$(G_C)[$(BUILD_BRANCH)] $(RESET_C)$@ $(F_C) \
 	v.$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE) $(RESET_C) is ready !"
-	@cp $(NAME) \
+	cp $(NAME) \
 	$(B_PATH)$(NAME)_$(BUILD_RELEASE)_$(BUILD_VERSION)_$(BUILD_PATCH)_$(BUILD_DATE)
 
 $(OBJ): $(O_PATH)%.o: $(S_PATH)%.c $(HDR)
-	@$(CMPLC) -DBUILDR=$(BUILD_RELEASE) -DBUILDV=$(BUILD_VERSION) \
+	$(CMPLC) -DBUILDR=$(BUILD_RELEASE) -DBUILDV=$(BUILD_VERSION) \
 	-DBUILDP=$(BUILD_PATCH) -DDATE=$(BUILD_DATE) $< -o $@
-	@$(ECHO) $(GCFIL) $<
+	$(ECHO) $(GCFIL) $<
 
 # Check if .build exist, then incremente patch level each compilation.
 # If not exist, create it with default values
@@ -395,53 +407,60 @@ UNAME_S				:=	$(shell uname -s)
 
 ifeq ($(UNAME_S), Darwin)
 $(BUILD_FILE): $(OBJ)
-	@if ! test -f $(BUILD_FILE); \
+	if ! test -f $(BUILD_FILE); \
 	then echo $(DEFAULT_BUILD_FILE) > $(BUILD_FILE); fi
-	@sed -i '.bak' "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
+	sed -i '.bak' "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
 	$(BUILD_FILE)
-	@rm $(BUILD_FILE).bak
+	rm $(BUILD_FILE).bak
 else
 $(BUILD_FILE): $(OBJ)
-	@if ! test -f $(BUILD_FILE); \
+	if ! test -f $(BUILD_FILE); \
 	then echo $(DEFAULT_BUILD_FILE) > $(BUILD_FILE); fi
-	@sed -i "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
+	sed -i "5s/$(BUILD_PATCH)/$$(echo $$(($(BUILD_PATCH) + 1)))/g" \
 	$(BUILD_FILE)
 endif
 
 $(PATHS):
-	@$(MKDIR) $(PATHS)
-	@$(foreach var,$(PATHS), $(ECHO) $(MKSHW) $(var);)
+	$(MKDIR) $(PATHS)
+	$(foreach var,$(PATHS), $(ECHO) $(MKSHW) $(var);)
 
 norme:
-	@$(NORMR)
-	@$(NORME) $(SRC) $(H_PATH)$(HNAME)
-	@$(NORMD)
+	$(NORMR)
+	$(NORME) $(SRC) $(H_PATH)$(HNAME)
+	$(NORMD)
 
 clean: libco
-	@for i in $(OBJ); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
-	@$(CLSUC)
+	for i in $(OBJ); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
+	$(CLSUC)
 
 fclean: libc
-	@for i in $(OBJ); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
-	@for i in $(PATHS); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
-	@$(RM_RF) $(NAME)
-	@$(ECHO) $(RMSHW) $(NAME)
-	@$(CLSUC)
+	for i in $(OBJ); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
+	for i in $(PATHS); do $(RM_RF) $$i; $(ECHO) $(RMSHW) $$i; done
+	$(RM_RF) $(NAME)
+	$(ECHO) $(RMSHW) $(NAME)
+	$(CLSUC)
 
 # Libc rules
 
 libm:
-	@make -C $(L_PATH)
-	@printf "\n"
+	make -C $(L_PATH)
+	printf "\n"
 
 libco:
-	@make clean -C $(L_PATH)
+	make clean -C $(L_PATH)
 
 libc:
-	@make fclean -C $(L_PATH)
+	make fclean -C $(L_PATH)
+
+help:
+	echo "Makefile for 42sh"
+	echo "usage : make [VERBOSE=1] [DEBUG=g|fsanitize|hard|dev] [all|clean|fclean|re|libm|libco|libc|help]"
 
 re:
-	$(MSG)
-	@$(MAKE) --no-print-directory fclean all
+	$(MAKE) --no-print-directory fclean all
+
+ifndef VERBOSE
+.SILENT:
+endif
 
 endif

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 14:12:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:53:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 
 void		delete_last_cmd(const char *d_name, t_read *term)
 {
-	int		i;
+	ssize_t	i;
 	char	*tmp;
 
 	tmp = NULL;
-	i = term->width - term->prompt_len - ft_strlen(d_name);
+	i = term->width - (ssize_t)term->prompt_len - (ssize_t)ft_strlen(d_name);
 	ft_strdel(&tmp);
-	tmp = ft_strsub(term->buffer, 0, i);
+	tmp = ft_strsub(term->buffer, 0, (size_t)i);
 	goto_prompt(term);
 	ft_strdel(&term->buffer);
 	term->buffer = ft_memalloc(BUFF_SIZE);
@@ -70,7 +70,7 @@ u_int8_t	is_dir(const char *dir)
 void		auto_complete_mode(t_read *term)
 {
 	char	*to_find;
-	int		i;
+	ssize_t	i;
 
 	i = term->x_index - term->prompt_len - 1;
 	to_find = NULL;

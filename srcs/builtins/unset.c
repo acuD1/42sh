@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 03:59:34 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/16 22:33:29 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:13:21 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int8_t	parse_unset(int argc, char **argv)
+static int8_t	parse_unset(size_t argc, char **argv)
 {
 	u_int64_t	options;
 
-	options = ft_get_options(argc, argv, "");
+	options = ft_get_options((int)argc, argv, "");
 	if (options & (1ULL << 63))
 	{
 		print_usage("unset", options % 128, "unset [name ...]");
@@ -33,10 +33,10 @@ static void		unset_hash_handler(t_core *shell, const char *str)
 
 int8_t			builtin_unset(t_core *shell, t_process *process)
 {
-	int		parsing_ret;
-	int		argc;
-	int		ret;
-	int		i;
+	int8_t	parsing_ret;
+	size_t	argc;
+	int8_t	ret;
+	size_t	i;
 
 	ret = 0;
 	argc = ft_tablen(process->av);

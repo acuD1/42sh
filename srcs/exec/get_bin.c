@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 12:59:52 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/02 16:40:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:20:50 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int8_t	check_filepath(const char *filepath)
 {
-	int		ret;
+	int8_t	ret;
 
 	if ((ret = ft_access(filepath, F_OK | X_OK)) != SUCCESS)
 		return (ret);
@@ -27,7 +27,7 @@ static int8_t	check_filepath(const char *filepath)
 static int8_t	format_path(const char *path, t_process *process)
 {
 	char	*tmp;
-	int		i;
+	size_t	i;
 
 	i = ft_strlen(path);
 	tmp = NULL;
@@ -60,13 +60,13 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 {
 	char	**split_path;
 	t_db	*db;
-	int		i;
+	ssize_t	i;
 
 	i = -1;
 	if ((db = search_db(shell->env, "PATH")) == NULL)
 	{
-		return ((process->blt || (process->bin = ft_strdup(
-							process->av[0])) >= 0) ? FAILURE : SUCCESS);
+		return (process->blt || ((process->bin = ft_strdup(process->av[0]))
+			== NULL ? FAILURE : SUCCESS));
 	}
 	if (!(split_path = ft_strsplit(db->value, ":")))
 		return (FAILURE);
@@ -87,7 +87,7 @@ int8_t			get_bin_path(t_core *shell, t_process *process)
 
 int8_t			get_bin(t_core *shell, t_process *process)
 {
-	int		ret;
+	int8_t	ret;
 
 	ret = 0;
 	if (process->av[0][0] == 0)
@@ -108,7 +108,7 @@ int8_t			get_bin(t_core *shell, t_process *process)
 		return (SUCCESS);
 	ret = get_bin_path(shell, process);
 	if (!process->blt)
-		hash_map_dispatcher(shell, process, H_EXEC);
+		hash_dispatcher(shell, process, H_EXEC);
 	if (ret == 1)
 		return (FAILURE);
 	return (SUCCESS);

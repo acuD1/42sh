@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assign_redir_tok_exp.c                             :+:      :+:    :+:   */
+/*   assign_envp_tools.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:47:03 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/13 18:17:00 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:31:26 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int8_t			add_assign_env(t_core *shell, const char *key, char *value)
+int8_t		add_assign_env(t_core *shell, const char *key, char *value)
 {
 	if (!key || !shell->env)
 		return (FAILURE);
@@ -21,18 +21,18 @@ int8_t			add_assign_env(t_core *shell, const char *key, char *value)
 	return (TRUE);
 }
 
-void			add_assign_envp(const char *key, char *value, char ***envp)
+void		add_assign_envp(const char *key, char *value, char ***envp)
 {
-	char		*tmp;
-	char		**tablo;
-	int			i;
+	char	*tmp;
+	char	**tablo;
+	size_t	i;
 
 	tmp = NULL;
 	tablo = *envp;
-	i = -1;
+	i = 0;
 	tmp = ft_strjoin(key, "=");
 	tmp = ft_strjoinf(tmp, value, 4);
-	while (tablo[++i])
+	while (tablo[i])
 	{
 		if (!ft_strncmp(tablo[i], key, ft_strlen(key)))
 		{
@@ -42,15 +42,16 @@ void			add_assign_envp(const char *key, char *value, char ***envp)
 			*envp = tablo;
 			return ;
 		}
+		i++;
 	}
 	tablo = ft_add_arg_cmd_process(tablo, tmp);
 	ft_strdel(&tmp);
 	*envp = tablo;
 }
 
-char			**add_underscore_envp(char **envp, char *data)
+char		**add_underscore_envp(char **envp, char *data)
 {
-	int			i;
+	size_t	i;
 
 	i = 0;
 	if (!*envp || !data)
@@ -66,7 +67,7 @@ char			**add_underscore_envp(char **envp, char *data)
 	return (envp);
 }
 
-u_int8_t		is_expansion(enum e_estate id)
+u_int8_t	is_expansion(enum e_estate id)
 {
 	if (id == E_TILDEP)
 		return (1);
@@ -91,7 +92,7 @@ u_int8_t		is_expansion(enum e_estate id)
 	return (0);
 }
 
-t_expansion		*init_expansion_inhibiteurs(t_expansion *exp)
+t_expansion	*init_expansion_inhibiteurs(t_expansion *exp)
 {
 	if (!(exp = (t_expansion*)malloc(sizeof(t_expansion))))
 		return (NULL);

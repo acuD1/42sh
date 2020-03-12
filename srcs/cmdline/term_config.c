@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   term_config.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/26 18:41:00 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:42:23 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int8_t	init_config(t_core *shell)
 		quit_shell(shell, EXIT_FAILURE, FALSE);
 	}
 	shell->new_t = shell->old_t;
-	shell->new_t.c_lflag &= ~(ICANON | ECHO);
+	shell->new_t.c_lflag &= (size_t)~(ICANON | ECHO);
 	shell->new_t.c_cc[VMIN] = 1;
 	shell->new_t.c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->new_t)) == FAILURE)

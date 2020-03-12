@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/19 11:53:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:52:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void		clr_screen(t_read *term)
 {
 	char	*tmp;
-	int		x_saved;
-	int		i;
+	ssize_t	x_saved;
+	ssize_t	i;
 
 	i = 0;
 	x_saved = term->x_index;
@@ -41,7 +41,7 @@ void		clr_screen(t_read *term)
 
 static void	move_col_up(t_read *term)
 {
-	int		width;
+	ssize_t	width;
 
 	width = 0;
 	xtputs(term->tcaps[KEY_UP], 1, my_outc);
@@ -69,8 +69,8 @@ static void	move_col_up(t_read *term)
 
 static void	move_col_down(t_read *term)
 {
-	int		width;
-	int		nb_ofline;
+	ssize_t	width;
+	ssize_t	nb_ofline;
 
 	nb_ofline = 0;
 	width = get_width_current_line(term) - term->x;

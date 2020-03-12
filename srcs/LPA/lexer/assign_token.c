@@ -6,15 +6,15 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:45:53 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/13 18:15:56 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:29:35 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int		isvalid_assignement_word(const char *str, size_t index)
+static size_t	isvalid_assignement_word(const char *str, size_t index)
 {
-	int		i;
+	size_t	i;
 
 	i = index;
 	if (!str || ft_isdigit(str[i]) || str[i] == '=')
@@ -31,17 +31,18 @@ static int		isvalid_assignement_word(const char *str, size_t index)
 	return (i + 1);
 }
 
-static t_lst	*create_assign_token(t_lexer *lex, int len, t_lst *lexer_token)
+static t_lst	*create_assign_token
+	(t_lexer *lex, size_t len, t_lst *lexer_token)
 {
 	char	*str;
-	int		value_len;
+	size_t	value_len;
 
 	str = NULL;
 	value_len = 0;
 	value_len = get_word_size_ntype(len, lex->buff);
 	if (!value_len)
 		value_len = len;
-	if (!(str = ft_strsub(lex->buff, lex->buf_pos,
+	if (!(str = ft_strsub(lex->buff, (unsigned int)lex->buf_pos,
 		value_len - lex->buf_pos)))
 		return (NULL);
 	if (!(ft_lstappend(&lexer_token,
@@ -55,7 +56,7 @@ static t_lst	*create_assign_token(t_lexer *lex, int len, t_lst *lexer_token)
 
 t_lst			*assignement_word_lexer(t_lexer *lexer, t_lst *lexer_token)
 {
-	int		i;
+	size_t	i;
 
 	i = 0;
 	if (!lexer->buff)

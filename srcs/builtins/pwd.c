@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:51:46 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/29 15:47:48 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/09 18:24:11 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-static int8_t	pwd_opt_parser(int ac, t_process *process, t_db *db, char *pwd)
+static int8_t	pwd_opt_parser
+	(size_t ac, t_process *process, t_db *db, char *pwd)
 {
 	u_int64_t	options;
 
-	options = ft_get_options(ac, process->av, "LP");
+	options = ft_get_options((int)ac, process->av, "LP");
 	if (options & (1ULL << 37))
 		ft_dprintf(STDOUT_FILENO, "%s\n", db->value);
 	else if (options & (1ULL << 41))
@@ -31,7 +32,7 @@ static int8_t	pwd_opt_parser(int ac, t_process *process, t_db *db, char *pwd)
 
 static int8_t	pwd_check_path(const char *path)
 {
-	int		errnum;
+	int8_t	errnum;
 
 	errnum = 0;
 	if (access(path, F_OK) == 0)
@@ -47,8 +48,8 @@ int8_t			builtin_pwd(t_core *shell, t_process *process)
 	struct stat	stat;
 	t_db		*db;
 	char		pwd[MAX_PATH + 1];
-	int			ac;
-	int			errnum;
+	size_t		ac;
+	int8_t		errnum;
 
 	ft_bzero(pwd, MAX_PATH + 1);
 	ac = ft_tablen(process->av);

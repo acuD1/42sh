@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer_memory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 20:31:06 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/29 18:12:26 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:29:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-void		free_koulchi(t_analyzer *anal)
+static void	free_lpa(t_analyzer *anal)
 {
 	if (anal->redir.op[0])
 		ft_strdel(&anal->redir.op[0]);
@@ -40,7 +40,7 @@ void		free_koulchi(t_analyzer *anal)
 
 t_analyzer	*exit_lpa(t_analyzer *anal, t_core *shell)
 {
-	free_koulchi(anal);
+	free_lpa(anal);
 	if (anal->job.command)
 		ft_strdel(&anal->job.command);
 	if (anal->job.process_list)

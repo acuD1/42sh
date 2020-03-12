@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/03 18:48:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:47:05 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void		walking_history
 		{
 			goto_reverse(term, buff_tmp, SUCCESS);
 			ft_bzero(term->buffer, ft_strlen(term->buffer));
-			term->x = ft_strlen(buff_tmp) + 23;
+			term->x = (ssize_t)ft_strlen(buff_tmp) + 23;
 			insert_str_in_buffer((*history)->content, term);
 			if ((*history)->next)
 				(*history) = (*history)->next;

@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_hash_map.c                                     :+:      :+:    :+:   */
+/*   fill_hash_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 14:38:40 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/02 15:41:18 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:01:21 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static int8_t	fill_exec
+int8_t			fill_exec
 	(t_core *shell, const char *key, const char *value, enum e_hash fmt)
 {
 	float	load_factor;
 
 	shell->hash.lenght++;
 	load_factor = (float)shell->hash.lenght / shell->hash.size;
-	if (load_factor > MAX_LOAD_F && resize_hash_map(shell) != SUCCESS)
+	if (load_factor > (float)MAX_LOAD_F && resize_hash_map(shell) != SUCCESS)
 		return (FAILURE);
 	shell->hash.value = get_hash(key, shell->hash.size);
 	if (!(ft_lstappend(&shell->hash.map[shell->hash.value],
@@ -29,7 +29,7 @@ static int8_t	fill_exec
 	return (SUCCESS);
 }
 
-static int8_t	fill_path
+int8_t			fill_path
 	(t_core *shell, t_process *process, enum e_hash fmt, size_t i)
 {
 	t_lst		*map;
@@ -75,7 +75,7 @@ static int8_t	is_hashed(t_core *shell, t_process *process, size_t i)
 	return (FAILURE);
 }
 
-static int8_t	fill_default
+int8_t			fill_default
 	(t_core *shell, t_process *process, enum e_hash fmt, size_t i)
 {
 	t_process	process_tmp;
@@ -99,34 +99,4 @@ static int8_t	fill_default
 	ft_tabdel(&process_tmp.av);
 	is_hashed(shell, process, i);
 	return (SUCCESS);
-}
-
-void			hash_map_dispatcher
-	(t_core *shell, t_process *process, enum e_hash fmt)
-{
-	size_t			i;
-	static int8_t	(*fill_fp[3])() = {fill_default, fill_exec, fill_path};
-
-	if (fmt == H_EXEC && process->bin == NULL)
-		return ;
-	if (shell->hash.map == NULL
-		&& !(shell->hash.map = ft_memalloc(sizeof(t_lst*) * shell->hash.size)))
-		return (hash_error(&shell->hash));
-	if (fmt == H_EXEC)
-	{
-		if (fill_fp[fmt](shell, process->av[0], process->bin, fmt) != SUCCESS)
-			return (hash_error(&shell->hash));
-	}
-	else
-	{
-		i = fmt + 1;
-		while (process->av[i])
-		{
-			if (fill_fp[fmt](shell, process, fmt, i) != SUCCESS)
-				return (hash_error(&shell->hash));
-			i++;
-		}
-	}
-	if (shell->hash.lenght == 0)
-		reset_hash(&shell->hash);
 }

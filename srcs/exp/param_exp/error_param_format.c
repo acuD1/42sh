@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error_param_format.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 15:29:22 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/11 15:29:24 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/03/08 18:29:47 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char		*error_moar_format_third(char **tablo, char *data, t_core *shell)
+char	*error_moar_format_third(char **tablo, char *data, t_core *shell)
 {
 	ft_dprintf(STDERR_FILENO,
 		"42sh: %s: %s  syntax error: operand expected\
@@ -22,7 +22,7 @@ char		*error_moar_format_third(char **tablo, char *data, t_core *shell)
 	return (NULL);
 }
 
-char		*error_moar_format_bis(char *data, t_core *shell)
+char	*error_moar_format_bis(char *data, t_core *shell)
 {
 	ft_dprintf(STDERR_FILENO,
 		"42sh: %s  syntax error: operand expected\
@@ -32,7 +32,7 @@ char		*error_moar_format_bis(char *data, t_core *shell)
 	return (NULL);
 }
 
-char		*one_moar_error(char **tablo, char *data, t_core *shell)
+char	*one_moar_error(char **tablo, char *data, t_core *shell)
 {
 	ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", tablo[0]);
 	ft_tabfree(tablo);
@@ -41,7 +41,7 @@ char		*one_moar_error(char **tablo, char *data, t_core *shell)
 	return (NULL);
 }
 
-char		*error_moar_format_param(char **tablo, char *data, t_core *shell)
+char	*error_moar_format_param(char **tablo, char *data, t_core *shell)
 {
 	ft_dprintf(STDERR_FILENO,
 		"42sh: %s  syntax error: operand expected (error token is \"%s\")\n",
@@ -53,10 +53,10 @@ char		*error_moar_format_param(char **tablo, char *data, t_core *shell)
 	return (NULL);
 }
 
-char		*dash_format(char **tablo, t_core *shell)
+char	*dash_format(char **tablo, t_core *shell)
 {
 	char	*value;
-	int		i;
+	size_t	i;
 
 	i = 1;
 	value = NULL;

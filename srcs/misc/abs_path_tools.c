@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 17:55:13 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/27 17:56:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:10:46 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	dir_backward(char *path)
 {
-	int		i;
+	size_t	i;
 
 	i = ft_strlen(path) - 1;
 	if (i <= 0)
@@ -29,7 +29,7 @@ void	dir_backward(char *path)
 
 int8_t	dir_forward(char *path)
 {
-	int		i;
+	size_t	i;
 
 	i = (path[0] == '/') ? 1 : 0;
 	while (path[i] && path[i] != '/')
@@ -43,8 +43,8 @@ int8_t	dir_forward(char *path)
 
 int8_t	dir_write(const char *rel, char *abs)
 {
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
 	j = ft_strlen(abs);
 	i = (rel[0] == '/') ? 1 : 0;
@@ -70,8 +70,8 @@ int8_t	dir_write(const char *rel, char *abs)
 
 int8_t	check_filename_length(const char *str)
 {
-	int		filename;
-	int		i;
+	size_t	filename;
+	size_t	i;
 
 	filename = 0;
 	i = 1;

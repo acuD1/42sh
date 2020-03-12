@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   launch_process.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/21 02:43:02 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:35:52 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	redir_pipes(t_process *process)
 
 int8_t		launch_blt(t_core *shell, t_process *process)
 {
-	int		blt;
+	int8_t	blt;
 
 	if (process->pipe[0] == STDIN_FILENO && process->pipe[1] == STDOUT_FILENO
 		&& process->av && (blt = is_a_blt(process->av[0])) != FAILURE)
@@ -73,7 +73,7 @@ int8_t		launch_blt(t_core *shell, t_process *process)
 
 void		launch_process(t_core *shell, t_process *process)
 {
-	int		blt;
+	int8_t	blt;
 
 	if (shell->is_interactive)
 	{

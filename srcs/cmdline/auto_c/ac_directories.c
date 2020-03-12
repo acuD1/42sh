@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:27:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/20 20:18:19 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:41:16 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static u_int8_t	is_exe(const char *dir)
 		return (FALSE);
 }
 
-static u_int8_t	ac_dir(t_read *term, char *dir, const char *to_find)
+static int8_t	ac_dir(t_read *term, char *dir, const char *to_find)
 {
 	char	*tmp;
 
@@ -73,5 +73,6 @@ void			read_directories(const char *to_find, t_read *term)
 	else
 		term->flag = FALSE;
 	closedir(dir);
-	term->flag == TRUE ? read_directories(to_find, term) : 0;
+	if (term->flag == TRUE)
+		read_directories(to_find, term);
 }

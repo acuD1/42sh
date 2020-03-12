@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 16:41:27 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/03 13:56:49 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:22:26 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <errno.h>
 
 static int8_t	change_dir_perm_error
-	(t_core *shell, const char *path, int errnum)
+	(t_core *shell, const char *path, int8_t errnum)
 {
 	if (shell->cd.pwd_error == TRUE)
 		ft_dprintf(STDERR_FILENO, "%s %s Permission denied\n",
@@ -33,7 +33,7 @@ int8_t			update_pwds(t_core *shell, const char *buffer, const char *path)
 }
 
 static int8_t	change_dir_handler
-	(t_core *shell, const char *path, int errnum)
+	(t_core *shell, const char *path, int8_t errnum)
 {
 	if (shell->cd.pwd_error == TRUE)
 	{
@@ -65,7 +65,7 @@ int8_t			change_dir(t_core *shell, const char *path)
 	char		buffer[MAX_PATH + 1];
 	static char pwd[MAX_PATH + 1];
 	t_db		*db;
-	int			errnum;
+	int8_t		errnum;
 
 	if (cd_use_cd_path(shell, path) == SUCCESS)
 		return (SUCCESS);

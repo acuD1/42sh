@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 17:29:49 by guvillat          #+#    #+#             */
-/*   Updated: 2020/02/03 17:52:09 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 20:55:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static void	init_word_analyze(t_anal analyze)
 
 static void	bzero_analyze(t_anal parsing)
 {
-	int		index;
-	int		state;
+	size_t	index;
+	size_t	state;
 
 	index = 0;
 	while (index < NB_ANALYZER_STATE)

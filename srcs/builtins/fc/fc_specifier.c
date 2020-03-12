@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/02 15:13:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/05 21:52:03 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int8_t	replace_pattern(t_core *shell, char *pat, char *rep)
 	if ((pat_index = ft_strstr(shell->term.buffer, pat)) == NULL)
 		return (FAILURE);
 	tmp = ft_strdup(shell->term.buffer);
-	replace = ft_strsub(tmp, 0, pat_index - shell->term.buffer);
+	replace = ft_strsub(tmp, 0, (size_t)(pat_index - shell->term.buffer));
 	ft_strdel(&tmp);
 	tmp = ft_strjoinf(replace, rep, 1);
 	replace = ft_strjoinf(tmp, pat_index + ft_strlen(pat), 1);
@@ -54,14 +54,14 @@ static int8_t	replace_pattern(t_core *shell, char *pat, char *rep)
 	return (SUCCESS);
 }
 
-static void		replace_cmd_spe(t_core *shell, int cmd)
+static void		replace_cmd_spe(t_core *shell, int32_t cmd)
 {
 	t_lst		*w;
 
 	w = shell->term.history;
 	while (w)
 	{
-		if (cmd == (int)w->content_size)
+		if (cmd == (int32_t)w->content_size)
 		{
 			ft_strdel(&shell->term.buffer);
 			shell->term.buffer = ft_strdup(w->content);
@@ -70,11 +70,11 @@ static void		replace_cmd_spe(t_core *shell, int cmd)
 	}
 }
 
-static void		select_cmd_spe(t_core *shell, int cmd)
+static void		select_cmd_spe(t_core *shell, int32_t cmd)
 {
-	int			w_entries;
+	int32_t		w_entries;
 
-	w_entries = ft_lstlen(shell->term.history);
+	w_entries = (int32_t)ft_lstlen(shell->term.history);
 	if (cmd < 0)
 	{
 		if ((cmd * (-1)) > w_entries)

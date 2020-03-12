@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 14:49:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:52:30 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void		move_key_up(t_read *term)
 
 void		move_right(const char *buff, t_read *term)
 {
-	int		width;
-	int		buff_index;
+	ssize_t	width;
+	ssize_t	buff_index;
 
 	(void)buff;
 	width = get_width_current_line(term);
@@ -121,7 +121,7 @@ void		move_right(const char *buff, t_read *term)
 
 void		move_left(const char *buff, t_read *term)
 {
-	int		width;
+	ssize_t	width;
 
 	(void)buff;
 	if ((term->x > term->prompt_len && term->y == 0)

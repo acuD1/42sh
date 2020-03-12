@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_caps.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 15:37:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 16:50:34 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 static void		check_keys_comb(const char *buff, t_read *term, u_int64_t value)
 {
-	int		i;
+	ssize_t	i;
 
 	i = term->width - term->x_index;
 	if (value == CTRL_L)
@@ -74,7 +74,7 @@ static void		tab_key(t_read *term, u_int64_t *value)
 **		CTRL+D del char on cursor if buffer isnt empty
 */
 
-static int8_t	ctrl_delete(t_read *term)
+static u_int8_t	ctrl_delete(t_read *term)
 {
 	if (term->status == CMD_SUBPROMPT)
 	{

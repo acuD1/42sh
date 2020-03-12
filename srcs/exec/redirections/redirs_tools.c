@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirs_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:29:40 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/24 22:03:08 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/09 18:01:01 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int8_t	dup_output(int fd, t_redir *ptr)
 		ptr->dup_fd[1] = dup(ptr->io_num[1]);
 		dup2(tmp, ptr->io_num[1]);
 		close(tmp);
+		if (ptr->dup_fd[1] < 0)
+			return (FAILURE);
 	}
-	if (tmp < 0 || ptr->dup_fd < 0)
+	if (tmp < 0)
 		return (FAILURE);
 	return (SUCCESS);
 }

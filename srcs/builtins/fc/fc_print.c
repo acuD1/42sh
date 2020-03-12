@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fc_print.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 15:06:02 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/20 12:20:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/05 21:52:55 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 **		Handle all options (listing, reverse, no number, and edit mode)
 */
 
-void		print_reverse(t_lst *w, t_cmd cmd, u_int64_t opt)
+void	print_reverse(t_lst *w, t_cmd cmd, u_int64_t opt)
 {
-	int			i;
+	int32_t	i;
 
-	i = ft_lstlen(w);
+	i = (int32_t)ft_lstlen(w);
 	while (w && i >= cmd.first)
 	{
 		if ((i <= cmd.last && (opt & (1ULL << 13))))
@@ -35,9 +35,9 @@ void		print_reverse(t_lst *w, t_cmd cmd, u_int64_t opt)
 	}
 }
 
-void		print_list(t_lst *w, t_cmd cmd, u_int64_t opt)
+void	print_list(t_lst *w, t_cmd cmd, u_int64_t opt)
 {
-	int			i;
+	int32_t	i;
 
 	i = 1;
 	while (w->next)

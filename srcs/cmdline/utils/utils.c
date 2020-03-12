@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 18:06:55 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/09 19:01:09 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ int			my_outc(int c)
 	return (SUCCESS);
 }
 
-u_int8_t	get_width_last_line(t_read *term)
+ssize_t		get_width_last_line(t_read *term)
 {
-	int		buff_index;
-	int		width;
-	int		x;
+	ssize_t	buff_index;
+	ssize_t	width;
+	ssize_t	x;
 
 	width = 0;
 	x = term->x;
-	buff_index = term->x_index - term->prompt_len;
+	buff_index = term->x_index - (ssize_t)term->prompt_len;
 	if (term->buffer[buff_index - 1] == NEW_LINE[0])
 		buff_index--;
 	while (buff_index--)
@@ -56,15 +56,15 @@ u_int8_t	get_width_last_line(t_read *term)
 	return (width);
 }
 
-u_int8_t	get_width_current_line(t_read *term)
+ssize_t		get_width_current_line(t_read *term)
 {
-	int		buff_index;
-	int		width;
-	int		x;
+	ssize_t	buff_index;
+	ssize_t	width;
+	ssize_t	x;
 
 	width = 0;
 	x = term->x;
-	buff_index = term->x_index - term->prompt_len;
+	buff_index = term->x_index - (ssize_t)term->prompt_len;
 	while (term->buffer[buff_index])
 	{
 		if (term->buffer[buff_index] == NEW_LINE[0] || x == term->ws_col - 1)
@@ -90,7 +90,7 @@ u_int64_t	get_mask(const char *buff)
 	shift = 56;
 	while (i < 8 && buff && buff[i])
 	{
-		value = buff[i];
+		value = (u_int64_t)buff[i];
 		value <<= shift;
 		tmp |= value;
 		shift -= 8;
