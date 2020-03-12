@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 15:29:12 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/09 19:27:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 17:10:47 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char	*check_env_key(char *key, t_core *shell)
+char		*check_env_key(char *key, t_core *shell)
 {
 	t_db	*db;
 
@@ -22,7 +22,19 @@ char	*check_env_key(char *key, t_core *shell)
 	return (NULL);
 }
 
-char	*questionmark_format(char **tablo, t_core *shell)
+static void	format_value(char **tablo, t_core *shell, char *value)
+{
+	if (tablo[1][1] == '$')
+		value = exp_param(&tablo[1][1], shell);
+	else if (tablo[1][1] == '~')
+		value = exp_tilde(&tablo[1][1], shell);
+	else
+		value = ft_strdup(&tablo[1][1]);
+	ft_dprintf(STDERR_FILENO, "42sh: %s: %s\n", tablo[0], value);
+	ft_strdel(&value);
+}
+
+char		*questionmark_format(char **tablo, t_core *shell)
 {
 	char *value;
 
@@ -38,22 +50,13 @@ char	*questionmark_format(char **tablo, t_core *shell)
 		}
 	}
 	else
-	{
-		if (tablo[1][1] == '$')
-			value = exp_param(&tablo[1][1], shell);
-		else if (tablo[1][1] == '~')
-			value = exp_tilde(&tablo[1][1], shell);
-		else
-			value = ft_strdup(&tablo[1][1]);
-		ft_dprintf(STDERR_FILENO, "42sh: %s: %s\n", tablo[0], value);
-		ft_strdel(&value);
-	}
+		format_value(tablo, shell, value);
 	shell->status = 1;
 	ft_tabfree(tablo);
 	return (NULL);
 }
 
-char	*length_format(char *str, t_core *shell)
+char		*length_format(char *str, t_core *shell)
 {
 	t_db	*db_tmp;
 
@@ -76,7 +79,7 @@ char	*length_format(char *str, t_core *shell)
 	return (ft_strdup("0"));
 }
 
-char	*double_two_point_param(char **tablo, t_core *shell)
+char		*double_two_point_param(char **tablo, t_core *shell)
 {
 	int		flag[3];
 	char	*tmp[2];

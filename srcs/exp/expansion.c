@@ -6,48 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/12 16:37:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 17:05:07 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-
-static void	expansion_tok(t_core *shell, t_process *process)
-{
-	t_lst	*lst;
-	char	*res;
-	char	*tmp;
-
-	tmp = NULL;
-	res = NULL;
-	lst = process->tok_list;
-	while (lst)
-	{
-		if (((t_token*)lst->content)->data)
-		{
-			res = inhibiteurs_expansion(((t_token*)lst->content)->data, shell);
-			if (shell->subst_error)
-			{
-				ft_tabdel(&process->av);
-				ft_strdel(&res);
-				shell->status = 1;
-				return ;
-			}
-			if (*res)
-			{
-				process->av = ft_add_arg_cmd_process(process->av, res);
-				ft_strdel(&tmp);
-				tmp = ft_strdup(res);
-			}
-			else if (!*res && (ft_strchr(((t_token*)lst->content)->data, '\'')
-				|| ft_strchr(((t_token*)lst->content)->data, '\"')))
-				process->av = ft_add_arg_cmd_process(process->av, res);
-			ft_strdel(&res);
-		}
-		lst = lst->next;
-	}
-	update_underscore_value(tmp, shell, process);
-}
 
 static void	expansion_assign(t_core *shell, t_process *process)
 {

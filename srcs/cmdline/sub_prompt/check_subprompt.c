@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 16:35:34 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:57:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static ssize_t	exit_subprompt_prio(t_core *shell, char *str)
 	return (0);
 }
 
-ssize_t			open_machine_subprompt(t_core *shell, t_subprompt *sub)
+size_t			open_machine_subprompt(t_core *shell, t_subprompt *sub)
 {
 	char	*tmp;
 
@@ -37,19 +37,13 @@ ssize_t			open_machine_subprompt(t_core *shell, t_subprompt *sub)
 		shell->term.buffer = ft_strjoinf(shell->term.buffer, NEW_LINE, 1);
 	if (!sub->keys)
 	{
-		tmp = ft_strsub(shell->term.buffer, 0, ft_strlen(shell->term.buffer) - 1);
+		tmp = ft_strsub(shell->term.buffer, 0,
+					ft_strlen(shell->term.buffer) - 1);
 		sub->index--;
 	}
 	else
 		tmp = ft_strdup(shell->term.buffer);
-	while (TRUE)
-	{
-		ft_strdel(&shell->term.buffer);
-		shell->term.buffer = ft_memalloc(BUFF_SIZE);
-		display_subprompt(&shell->term);
-		if (read_multiline(&shell->term) == FALSE)
-			break ;
-	}
+	subprompt_loader(shell);
 	if (sub_prompt_error(&shell->term,
 		(sub->keys) ? sub->keys[0] : '\0') == TRUE)
 		return (exit_subprompt_prio(shell, tmp));

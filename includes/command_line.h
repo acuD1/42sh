@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/11 23:46:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/12 17:12:07 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,22 @@ int8_t		get_size(t_read *term);
 char		*add_keys_subprompt(char c, char *str);
 char		*del_keys_subprompt(char c, char *str);
 ssize_t		check_quote_priority(char *str, t_subprompt *sub);
-enum		e_subp quote_subprompt(t_core *shell, t_subprompt *sub);
+enum e_subp	quote_subprompt(t_core *shell, t_subprompt *sub);
 ssize_t		check_dbquote_priority(t_core *shell, t_subprompt *sub);
 enum e_subp	dbquote_subprompt(t_core *shell, t_subprompt *sub);
 ssize_t		open_machine_subprompt(t_core *shell, t_subprompt *sub);
 enum e_subp	backslash_subprompt(t_core *shell, t_subprompt *sub);
-void 		reboot_or_end_machine(t_core *shell, t_subprompt *sub);
-enum e_subp braceparam_subprompt(t_core *shell, t_subprompt *sub);
-void 		del_keys_subprompt_and_move(t_subprompt *sub, char quote);
-enum e_subp start_subprompt(t_core *shell, t_subprompt *sub);
+void		reboot_or_end_machine(t_core *shell, t_subprompt *sub);
+enum e_subp	braceparam_subprompt(t_core *shell, t_subprompt *sub);
+void		del_keys_subprompt_and_move(t_subprompt *sub, char quote);
+enum e_subp	start_subprompt(t_core *shell, t_subprompt *sub);
 int8_t		init_prompt(t_core *shell);
 void		display_prompt(t_read *term);
 void		display_subprompt(t_read *term);
 void		goto_prompt(t_read *term);
 void		get_prompt_value(t_core *shell, const char *key);
 u_int8_t	sub_prompt_error(t_read *term, char sb);
+void		subprompt_loader(t_core *shell);
 
 /*
 **		Check Caps and Interpret

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 14:50:10 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/10 20:39:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:49:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int8_t			builtin_hash(t_core *shell, t_process *process)
 
 	ac = ft_tablen(process->av);
 	i = skip_opt(process->av);
-	//dprintf(STDERR_FILENO, "|%zu|\n", i);
 	if (ac > 1 && process->av[1][0] != '-')
 	{
 		hash_dispatcher(shell, process, H_DEF);

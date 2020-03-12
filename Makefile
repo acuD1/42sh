@@ -214,6 +214,7 @@ SRC					+=	$(S_PATH)$(SUB_PROMPT)check_subprompt.c
 SRC					+=	$(S_PATH)$(SUB_PROMPT)heredoc.c
 SRC					+=	$(S_PATH)$(SUB_PROMPT)sub_prompt.c
 SRC					+=	$(S_PATH)$(SUB_PROMPT)subprompt_tools.c
+SRC					+=	$(S_PATH)$(SUB_PROMPT)subprompt_loader.c
 
 SRC					+=	$(S_PATH)$(CORE)free_handler.c
 SRC					+=	$(S_PATH)$(CORE)init_shell.c
@@ -261,6 +262,7 @@ SRC					+=	$(S_PATH)$(EXPANSIONS)expansion.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)quotes_backslash.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)inhibiteurs.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)tilde_cmds_math_exp.c
+SRC					+=	$(S_PATH)$(EXPANSIONS)expansion_tok.c
 
 SRC					+=	$(S_PATH)$(JOBC)background.c
 SRC					+=	$(S_PATH)$(JOBC)continue.c

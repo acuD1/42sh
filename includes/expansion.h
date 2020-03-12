@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 18:43:16 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 16:30:58 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 17:04:14 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ t_expansion		*word_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*start_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*quotes_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*discard_biteurs(char *dt, t_core *shell, t_expansion *exp);
+void			expansion_tok(t_core *shell, t_process *process);
 
 /*
 **	PARAM_EXPANSION
