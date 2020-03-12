@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 18:43:16 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 20:30:44 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:30:58 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ char			*exp_get_dbparen(const char *string, size_t len);
 **	EXPANSION_INHIBITEUR
 */
 
-void			update_underscore_value(char *tmp, t_core *shell, t_process *process);
+void			update_underscore_value
+					(char *tmp, t_core *shell, t_process *process);
 char			*inhibiteurs_expansion(char *data, t_core *shell);
 char			*no_exp(const char *data, t_core *shell);
 char			*exp_math(const char *data, t_core *shell);

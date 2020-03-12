@@ -6,12 +6,24 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 14:39:02 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:34:08 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <fcntl.h>
 
+static void		debug_current(const char *path, t_core *shell)
+{
+	int			fd;
+
+	fd = open(path, O_WRONLY);
+	ft_dprintf(fd, "\n=== CURRENT VALUES ===\n");
+	ft_dprintf(fd, "x[%d] xi[%d] y[%d] ws_col[%d]\n width[%d] buff[%s]\n",
+	shell->term.x, shell->term.x_index, shell->term.y,
+	shell->term.ws_col, shell->term.width, shell->term.buffer);
+
+}
 /*
 **	  Termcaps capabilities:
 **	  - `up' => to move the cursor vertically up one input
@@ -74,18 +86,6 @@ static int8_t	end_of_file(t_core *shell, const char *buff)
 		return (TRUE);
 	}
 	return (FALSE);
-}
-
-#include <fcntl.h>
-static void		debug_current(const char *path, t_core *shell)
-{
-	int			fd;
-
-	fd = open(path, O_WRONLY);
-	ft_dprintf(fd, "\n=== CURRENT VALUES ===\n");
-	ft_dprintf(fd, "x[%d] xi[%d] y[%d] ws_col[%d]\n width[%d] buff[%s]\n",
-	shell->term.x, shell->term.x_index, shell->term.y, shell->term.ws_col, shell->term.width, shell->term.buffer);
-
 }
 
 int8_t			init_prompt(t_core *shell)

@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:13:54 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/12 15:51:01 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:38:29 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static char				*heredoc_inhib(char *data)
+static char			*heredoc_inhib(char *data)
 {
 	char			*res;
 	size_t			index;

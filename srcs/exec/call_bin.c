@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   call_bin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 20:01:18 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:36:45 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int8_t	check_filepath(t_process *process)
 
 void			call_bin(t_core *shell, t_process *process)
 {
-	int8_t		blt;
+	int8_t	blt;
 	int		ret;
 
 	ret = 0;

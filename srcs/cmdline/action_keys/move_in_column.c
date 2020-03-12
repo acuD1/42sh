@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 22:40:28 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 15:04:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:33:12 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **				`nd' to move the cursor on right
 */
 
-static void		move_col_up(t_read *term)
+static void	move_col_up(t_read *term)
 {
 	ssize_t	width;
 	ssize_t	new_y;
@@ -37,7 +37,7 @@ static void		move_col_up(t_read *term)
 **	Termcaps capabilities : `down' to move cursor down at beginning of input
 */
 
-static void		move_col_down(t_read *term)
+static void	move_col_down(t_read *term)
 {
 	ssize_t	width;
 	ssize_t	nb_ofline;

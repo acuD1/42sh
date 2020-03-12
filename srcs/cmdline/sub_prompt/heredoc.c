@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 17:03:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:36:28 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static char		*stock_value(t_core *shell)
 	reset_config(shell);
 	return (value);
 }
-
 
 char			*load_heredoc(t_core *shell, const char *key)
 {

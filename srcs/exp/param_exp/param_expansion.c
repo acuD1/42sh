@@ -6,13 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:16:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/12 15:50:32 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:38:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char	*simple_format(char *str, t_core *shell)
+char				*simple_format(char *str, t_core *shell)
 {
 	t_db	*db_tmp;
 
@@ -28,7 +28,7 @@ char	*simple_format(char *str, t_core *shell)
 	return (NULL);
 }
 
-char	*format_supplementaires(char *str, t_core *shell)
+char				*format_supplementaires(char *str, t_core *shell)
 {
 	size_t	i;
 
@@ -53,7 +53,7 @@ char	*format_supplementaires(char *str, t_core *shell)
 	return (simple_format(str, shell));
 }
 
-static u_int32_t			check_param_exp(char *str, size_t *i, t_core *shell)
+static u_int32_t	check_param_exp(char *str, size_t *i, t_core *shell)
 {
 	if ((str[*i] == '\\' && str[*i + 1] && str[*i + 1] != '\n')
 		|| (str[*i] == '\n'))
@@ -66,7 +66,7 @@ static u_int32_t			check_param_exp(char *str, size_t *i, t_core *shell)
 	return (1);
 }
 
-char			*get_brace_param(char *str, t_core *shell)
+char				*get_brace_param(char *str, t_core *shell)
 {
 	size_t		i;
 	u_int32_t	count;
@@ -87,7 +87,7 @@ char			*get_brace_param(char *str, t_core *shell)
 	return (format_supplementaires(tmp, shell));
 }
 
-char	*exp_param(const char *data, t_core *shell)
+char				*exp_param(const char *data, t_core *shell)
 {
 	if (data[0] == '$' && data[1] == '{')
 		return (get_brace_param((char*)data, shell));

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 19:32:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/09 17:24:49 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:37:13 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void	expansion_tok(t_core *shell, t_process *process)
 {
-	t_lst			*lst;
-	char			*res;
-	char			*tmp;
+	t_lst	*lst;
+	char	*res;
+	char	*tmp;
 
 	tmp = NULL;
 	res = NULL;

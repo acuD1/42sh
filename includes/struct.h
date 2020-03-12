@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/12 16:04:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:45:19 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct				s_read
 	ssize_t					ws_col;
 	ssize_t					ws_li;
 	size_t					ac;
-	int32_t					search; //Need pad
+	int32_t					search;
 	u_int8_t				sub_prompt;
 	u_int8_t				status;
 	u_int8_t				flag;
@@ -86,20 +86,20 @@ typedef struct				s_read
 }							t_read;
 
 typedef struct s_subprompt	t_subprompt;
-typedef enum e_subp			(*t_sbpt)(t_core *, t_subprompt *); // NORME
+typedef enum e_subp			(*t_sbpt)(t_core *, t_subprompt *);
 
-typedef struct				s_subprompt
+struct						s_subprompt
 {
 	t_sbpt					tu[NB_SUBP_STATE];
 	char					*keys;
 	enum e_subp				state;
 	char					pad[4];
-	ssize_t 				index;
-	u_int8_t 				quoted;
-	u_int8_t 				dbquoted;
-	u_int8_t 				escaped;
+	ssize_t					index;
+	u_int8_t				quoted;
+	u_int8_t				dbquoted;
+	u_int8_t				escaped;
 	char					pad_2[5];
-}							t_subprompt;
+};
 
 struct						s_core
 {

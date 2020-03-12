@@ -6,22 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 14:45:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:39:01 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <signal.h>
-/*  */
-/* #include <fcntl.h> */
-/* static void		debugg(const char *path, t_core *shell) */
-/* { */
-/* 	int			fd; */
-/*  */
-/* 	fd = open(path, O_WRONLY); */
-/* 	ft_dprintf(fd, "research[%d] x[%d] xi[%d] y[%d], [%s]\n", shell->term.research, shell->term.x, shell->term.x_index, shell->term.y, shell->term.buffer); */
-/*  */
-/* } */
 
 static void		erase_line(t_core *shell)
 {

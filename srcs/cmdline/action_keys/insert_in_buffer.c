@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 01:52:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:32:58 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	insert_at_index(t_read *term, ssize_t buff_index, const char *buff)
 {
 	ssize_t	j;
 
-	j = (ssize_t)ft_strlen(term->buffer); // + 1;
+	j = (ssize_t)ft_strlen(term->buffer);
 	while (--j > buff_index)
 		term->buffer[j] = term->buffer[j - 1];
 	term->buffer[buff_index] = *buff;

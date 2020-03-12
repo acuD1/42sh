@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inhibiteurs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: guvillat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 23:21:22 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/10 23:21:23 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:37:36 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	update_underscore_value(char *tmp, t_core *shell, t_process *process)
 	ft_strdel(&tmp);
 }
 
-char				*inhibiteurs_expansion(char *data, t_core *shell)
+char	*inhibiteurs_expansion(char *data, t_core *shell)
 {
 	t_expansion		*exp;
 	char			*resultat;
