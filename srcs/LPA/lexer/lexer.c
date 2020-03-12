@@ -6,11 +6,30 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 15:41:31 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/09 17:25:08 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:52:45 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+/*
+void			ft_printtoklist(t_lst *lexer)
+{
+	t_token		*tmp;
+
+	tmp = NULL;
+	if (!lexer)
+		return ;
+	while (lexer)
+	{
+		tmp = (t_token*)lexer->content;
+		ft_printf("{[%s] %u}\n",
+			((t_token*)lexer->content)->data, ((t_token*)lexer->content)->id);
+		if (!lexer->next)
+			break ;
+		lexer = lexer->next;
+	}
+}*/
 
 t_lst			*discard_lexer(t_lexer *lx, t_lst *lexer_token)
 {
@@ -82,6 +101,7 @@ t_lst			*lexer(char *line)
 	while (lexer.status != L_END)
 		lexer_token = lexer.lex[lexer.status](&lexer, *head);
 	lexer_token = *head;
+	//ft_printtoklist(lexer_token);
 	init_lexer(NULL, &lexer);
 	return (*head);
 }

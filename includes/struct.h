@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/12 15:01:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 16:04:39 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,22 @@ typedef struct				s_read
 	char					pad[1];
 }							t_read;
 
+typedef struct s_subprompt	t_subprompt;
+typedef enum e_subp			(*t_sbpt)(t_core *, t_subprompt *); // NORME
+
+typedef struct				s_subprompt
+{
+	t_sbpt					tu[NB_SUBP_STATE];
+	char					*keys;
+	enum e_subp				state;
+	char					pad[4];
+	ssize_t 				index;
+	u_int8_t 				quoted;
+	u_int8_t 				dbquoted;
+	u_int8_t 				escaped;
+	char					pad_2[5];
+}							t_subprompt;
+
 struct						s_core
 {
 	struct termios			old_t;
@@ -92,6 +108,7 @@ struct						s_core
 	t_read					term;
 	t_build					build;
 	t_hash					hash;
+	t_subprompt				sub;
 	t_db					db;
 	t_cd					cd;
 	t_lst					*env;
@@ -102,10 +119,11 @@ struct						s_core
 	pid_t					pgid;
 	int32_t					status;
 	int32_t					heredoc;
+	int32_t					subst_error;
 	int32_t					terminal;
 	int8_t					is_interactive;
 	int8_t					notified;
-	char					pad[6];
+	char					pad[2];
 };
 
 /*

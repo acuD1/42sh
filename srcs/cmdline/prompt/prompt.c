@@ -110,6 +110,8 @@ int8_t			init_prompt(t_core *shell)
 			break ;
 		debug_current("/dev/ttys004", shell);
 	}
+	check_subprompt(shell);
+	check_expansions(&shell->term);
 	shell->term.status = CMD_DONE;
 	/*check_subprompt(shell); // Need check
 	check_expansions(&shell->term);

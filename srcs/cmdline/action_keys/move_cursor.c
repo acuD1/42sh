@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 01:02:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:48:25 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	check_tmp_buffer(t_read *term)
 {
 	goto_prompt(term);
 	ft_strdel(&term->buffer);
-	term->buffer = ft_memalloc(BUFF_SIZE);
+	term->buffer = ft_memalloc(BUFF_SIZE + 1);
 	if (term->tmp_buff && ft_strlen(term->tmp_buff) > 0)
 	{
 		insert_str_in_buffer(term->tmp_buff, term);
@@ -31,7 +31,8 @@ static void	check_tmp_buffer(t_read *term)
 
 void		move_key_down(t_read *term)
 {
-	t_lst		*w;
+	t_lst	*w;
+	size_t	len;
 
 	w = NULL;
 	if (term->history && term->history_index)
@@ -49,7 +50,8 @@ void		move_key_down(t_read *term)
 		}
 		goto_prompt(term);
 		ft_strdel(&term->buffer);
-		term->buffer = ft_memalloc(BUFF_SIZE);
+		len = ft_strlen((char*)w->content) + BUFF_SIZE + READ_SIZE + 1;
+		term->buffer = ft_memalloc(len);
 		insert_str_in_buffer((char*)w->content, term);
 	}
 	else
@@ -63,6 +65,7 @@ void		move_key_down(t_read *term)
 void		move_key_up(t_read *term)
 {
 	t_lst	*w;
+	size_t	len;
 
 	if (term->history)
 	{
@@ -82,7 +85,8 @@ void		move_key_up(t_read *term)
 		}
 		goto_prompt(term);
 		ft_strdel(&term->buffer);
-		term->buffer = ft_memalloc(BUFF_SIZE);
+		len = ft_strlen((char*)w->content) + BUFF_SIZE + READ_SIZE + 1;
+		term->buffer = ft_strnew(len);
 		insert_str_in_buffer((char*)w->content, term);
 	}
 }

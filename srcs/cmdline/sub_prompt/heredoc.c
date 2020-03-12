@@ -21,7 +21,7 @@ static u_int8_t	heredoc_error(const char *key)
 
 static u_int8_t	check_key(t_core *shell, const char *key)
 {
-	if (read_multiline(&shell->term, NULL) == FALSE)
+	if (read_multiline(&shell->term) == FALSE)
 	{
 		if (shell->term.flag == TRUE)
 			return (heredoc_error(key));
@@ -38,6 +38,21 @@ static u_int8_t	check_key(t_core *shell, const char *key)
 			return (TRUE);
 	}
 	return (FALSE);
+}
+
+u_int8_t		read_multiline(t_read *term)
+{
+	char	buff[READ_SIZE + 1];
+
+	ft_bzero(buff, READ_SIZE + 1);
+	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+	{
+		if (check_caps(buff, term) == TRUE)
+			ft_bzero(buff, READ_SIZE + 1);
+		else
+			return (FALSE);
+	}
+	return (TRUE);
 }
 
 static char		*stock_value(t_core *shell)
@@ -58,6 +73,7 @@ static char		*stock_value(t_core *shell)
 	reset_config(shell);
 	return (value);
 }
+
 
 char			*load_heredoc(t_core *shell, const char *key)
 {

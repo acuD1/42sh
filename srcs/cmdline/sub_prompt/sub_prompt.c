@@ -6,93 +6,96 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/05 17:37:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/06 23:00:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static u_int8_t	check_eof(t_read *term, char *sb)
+ssize_t		check_quote_priority(char *str, t_subprompt *sub)
 {
-	if (term->status != CMD_SUBPROMPT)
-		return (TRUE);
-	if (!sb)
-		return (FALSE);
-	else if (*sb == BACKSLASH && check_backslash(term, sb) == FALSE)
-		return (FALSE);
-	else if (*sb != BACKSLASH && ft_strchr(term->buffer, *sb))
+	if (!str || str[sub->index] != '\'')
+		return (1);
+	sub->index++;
+	while (str[sub->index])
 	{
-		if (!check_backslash(term, sb))
-			return (FALSE);
+		if (str[sub->index] == '\'')
+		{
+			sub->index++;
+			return (0);
+		}
+		sub->index++;
 	}
-	else if (*sb != BACKSLASH)
-		term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);
-	return (TRUE);
+	return (1);
 }
 
-u_int8_t		read_multiline(t_read *term, char *sb)
+enum e_subp	quote_subprompt(t_core *shell, t_subprompt *sub)
 {
-	char	buff[READ_SIZE + 1];
-
-	ft_bzero(buff, READ_SIZE);
-	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+	if (check_quote_priority(shell->term.buffer, sub))
 	{
-		if (check_caps(buff, term) == TRUE)
+		if (!sub->keys)
 		{
-			ft_bzero(buff, READ_SIZE);
-			continue ;
+			sub->keys = add_keys_subprompt('\'', sub->keys);
+			sub->quoted = 1;
+		}
+		else if (sub->keys[0] == '\'')
+		{
+			sub->keys = del_keys_subprompt('\'', sub->keys);
+			sub->quoted = 0;
+		}
+	}
+	return (sub->state = SP_START);
+}
+
+ssize_t		check_dbquote_priority(t_core *shell, t_subprompt *sub)
+{
+	while (shell->term.buffer[++sub->index])
+	{
+		if (shell->term.buffer[sub->index] == '\\')
+		{
+			sub->index++;
+			continue;
+		}
+		if (shell->term.buffer[sub->index] == '\"')
+		{
+			sub->index++;
+			return (0);
+		}
+		if (shell->term.buffer[sub->index] == '$'
+			&& shell->term.buffer[sub->index + 1] == '{')
+			return (1);
+	}
+	return (1);
+}
+
+enum e_subp	dbquote_subprompt(t_core *shell, t_subprompt *sub)
+{
+	if (check_dbquote_priority(shell, sub))
+	{
+		if (!sub->keys)
+		{
+			sub->keys = add_keys_subprompt('\"', sub->keys);
+			sub->dbquoted = 1;
+		}
+		else if (sub->keys[0] == '\"')
+		{
+			sub->keys = del_keys_subprompt('\"', sub->keys);
+			sub->dbquoted = 0;
 		}
 		else
 		{
-			if (check_eof(term, sb) != TRUE)
-				return (FALSE);
-			break ;
+			sub->keys = add_keys_subprompt('\"', sub->keys);
+			sub->dbquoted = 1;
 		}
 	}
-	return (TRUE);
+	return (sub->state = SP_START);
 }
 
-static u_int8_t	check_multi_subprompt(t_read *term, char *sb)
+enum e_subp	braceparam_subprompt(t_core *shell, t_subprompt *sub)
 {
-	if (*sb != BACKSLASH)
-		term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
-	if (quotes_is_matching(term, sb) == FALSE)
-	{
-		if (*sb == BACKSLASH)
-			term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
-		term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);
-		ft_strdel(&term->tmp_buff);
-		term->tmp_buff = ft_strdup(term->buffer);
-		return (TRUE);
-	}
-	else if (*sb == BACKSLASH)
-		term->buffer = ft_strjoinf(term->tmp_buff, term->buffer, 2);
-	return (FALSE);
-}
-
-void			load_subprompt(char sb, t_read *term)
-{
-	if (sb != BACKSLASH)
-		term->buffer = ft_strjoinf(term->buffer, NEW_LINE, 1);
-	term->tmp_buff = ft_strdup(term->buffer);
-	term->flag = FALSE;
-	while (TRUE)
-	{
-		ft_strdel(&term->buffer);
-		term->buffer = ft_memalloc(BUFF_SIZE);
-		display_subprompt(term);
-		if (read_multiline(term, &sb) == FALSE)
-		{
-			if (check_multi_subprompt(term, &sb) == TRUE)
-				continue ;
-			else if (*term->prompt
-				|| (!*term->prompt && term->buffer))
-				break ;
-		}
-		if (sub_prompt_error(term, sb) == TRUE)
-			return ;
-		term->tmp_buff = ft_strjoinf(term->tmp_buff, term->buffer, 1);
-	}
-	ft_strdel(&term->tmp_buff);
-	term->status = CMD_DONE;
+	if (shell->term.buffer[sub->index] == '$'
+		&& shell->term.buffer[sub->index + 1] == '{')
+		sub->keys = add_keys_subprompt('}', sub->keys);
+	sub->index++;
+	return (sub->state = SP_START);
 }

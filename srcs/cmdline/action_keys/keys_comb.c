@@ -29,7 +29,7 @@ void			clr_screen(t_read *term)
 	ft_dprintf(STDERR_FILENO, "%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
 	goto_prompt(term);
 	ft_strdel(&term->buffer);
-	term->buffer = ft_memalloc(BUFF_SIZE);
+	term->buffer = ft_memalloc(BUFF_SIZE + 1);
 	insert_str_in_buffer(tmp, term);
 	ft_strdel(&tmp);
 	i = term->x_index - x_saved;

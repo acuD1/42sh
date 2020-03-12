@@ -26,7 +26,18 @@ int8_t		get_size(t_read *term);
 /*
 **		Prompt/Subprompt
 */
-
+char		*add_keys_subprompt(char c, char *str);
+char		*del_keys_subprompt(char c, char *str);
+ssize_t		check_quote_priority(char *str, t_subprompt *sub);
+enum		e_subp quote_subprompt(t_core *shell, t_subprompt *sub);
+ssize_t		check_dbquote_priority(t_core *shell, t_subprompt *sub);
+enum e_subp	dbquote_subprompt(t_core *shell, t_subprompt *sub);
+ssize_t		open_machine_subprompt(t_core *shell, t_subprompt *sub);
+enum e_subp	backslash_subprompt(t_core *shell, t_subprompt *sub);
+void 		reboot_or_end_machine(t_core *shell, t_subprompt *sub);
+enum e_subp braceparam_subprompt(t_core *shell, t_subprompt *sub);
+void 		del_keys_subprompt_and_move(t_subprompt *sub, char quote);
+enum e_subp start_subprompt(t_core *shell, t_subprompt *sub);
 int8_t		init_prompt(t_core *shell);
 void		display_prompt(t_read *term);
 void		display_subprompt(t_read *term);
@@ -84,13 +95,13 @@ void		goto_reverse(t_read *term, const char *buff_tmp);
 **		Subprompt/Multiline
 */
 
-u_int8_t	check_subprompt(t_core *shell);
+ssize_t	check_subprompt(t_core *shell);
 u_int8_t	check_backslash(t_read *term, char *quote);
 u_int8_t	check_backslash_nbr(char *str, ssize_t *index);
 u_int8_t	charset_count(t_read *term, char charset, size_t i);
 u_int8_t	quotes_is_matching(t_read *term, char *quote);
 void		load_subprompt(char quote, t_read *term);
-u_int8_t	read_multiline(t_read *term, char *sb);
+u_int8_t	read_multiline(t_read *term);
 char		*load_heredoc(t_core *shell, const char *key);
 
 /*

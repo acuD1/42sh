@@ -67,7 +67,7 @@ static void	insert_inline_char
 	tmp = ft_strdup(term->buffer);
 	goto_prompt(term);
 	ft_strdel(&term->buffer);
-	term->buffer = ft_memalloc(BUFF_SIZE);
+	term->buffer = ft_memalloc(BUFF_SIZE + 1);
 	insert_str_in_buffer(tmp, term);
 	x = buff_index + (ssize_t)term->prompt_len;
 	while (++x < term->width)

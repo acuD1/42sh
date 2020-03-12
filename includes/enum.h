@@ -13,6 +13,17 @@
 #ifndef ENUM_H
 # define ENUM_H
 
+enum	e_subp
+{
+	SP_START,
+	SP_DBQUOTE,
+	SP_QUOTE,
+	SP_BRACEPARAM,
+	SP_BACKSLASH,
+	SP_END,
+	NB_SUBP_STATE,
+};
+
 /*
 **	HASH
 */

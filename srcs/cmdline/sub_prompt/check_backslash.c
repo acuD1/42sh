@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:44:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 16:23:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:28:27 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,33 @@ u_int8_t	check_backslash(t_read *term, char *quote)
 		}
 	}
 	return (FALSE);
+}
+
+enum e_subp	backslash_subprompt(t_core *shell, t_subprompt *sub)
+{
+	if (check_backslash_nbr((char*)shell->term.buffer, &sub->index))
+	{
+		sub->escaped = 1;
+	}
+	sub->state = SP_START;
+	return (sub->state);
+}
+
+void		del_keys_subprompt_and_move(t_subprompt *sub, char quote)
+{
+	sub->keys = del_keys_subprompt(quote, sub->keys);
+	sub->index++;
+}
+
+void		reboot_or_end_machine(t_core *shell, t_subprompt *sub)
+{
+	if (sub->escaped)
+	{
+		open_machine_subprompt(shell, sub);
+		sub->escaped = 0;
+	}
+	else if (sub->keys != NULL)
+		open_machine_subprompt(shell, sub);
+	else
+		sub->state = SP_END;
 }

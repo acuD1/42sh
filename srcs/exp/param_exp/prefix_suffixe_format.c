@@ -28,31 +28,31 @@ static char	*smallest_suffix_param(char *value, char *pattern)
 
 char		*suffix_format(char *data, t_core *shell)
 {
-	char	*value;
-	char	*tmp;
-	char	**tablo;
-	char	*resultat;
+	char		*str[3];
+	char		**tablo;
 
-	resultat = NULL;
-	tmp = NULL;
+	str[2] = NULL;
+	str[1] = NULL;
 	tablo = ft_strsplit(data, "%");
-	value = check_env_key(tablo[0], shell);
-	if (value && *value)
+	str[0] = check_env_key(tablo[0], shell);
+	if (str[0] && *str[0])
 	{
 		if (!tablo[1])
-			resultat = ft_strdup(value);
+			str[2] = ft_strdup(str[0]);
 		else if (tablo[1] && tablo[1][0] == '$')
 		{
-			tmp = exp_param(tablo[1], shell);
-			resultat = smallest_suffix_param(value, tmp);
-			ft_strdel(&tmp);
+			str[1] = exp_param(tablo[1], shell);
+			str[2] = smallest_suffix_param(str[0], str[1]);
+			ft_strdel(&str[1]);
 		}
+		else if (tablo[1][0] == '~')
+			str[0] = exp_tilde(&tablo[1][1], shell);
 		else
-			resultat = smallest_suffix_param(value, tablo[1]);
+			str[2] = smallest_suffix_param(str[0], tablo[1]);
 	}
 	ft_tabfree(tablo);
 	ft_strdel(&data);
-	return (resultat);
+	return (str[2]);
 }
 
 static char	*smallest_prefix_param(char *value, char *pattern)
@@ -70,29 +70,29 @@ static char	*smallest_prefix_param(char *value, char *pattern)
 
 char		*prefix_format(char *data, t_core *shell)
 {
-	char	*value;
-	char	*tmp;
-	char	**tablo;
-	char	*resultat;
+	char		**tablo;
+	char		*str[3];
 
-	resultat = NULL;
-	tmp = NULL;
+	str[2] = NULL;
+	str[1] = NULL;
 	tablo = ft_strsplit(data, "#");
-	value = check_env_key(tablo[0], shell);
-	if (value && *value)
+	str[0] = check_env_key(tablo[0], shell);
+	if (str[0] && *str[0])
 	{
 		if (!tablo[1])
-			resultat = ft_strdup(value);
+			str[2] = ft_strdup(str[0]);
 		else if (tablo[1] && tablo[1][0] == '$')
 		{
-			tmp = exp_param(tablo[1], shell);
-			resultat = smallest_prefix_param(value, tmp);
-			ft_strdel(&tmp);
+			str[1] = exp_param(tablo[1], shell);
+			str[2] = smallest_prefix_param(str[0], str[1]);
+			ft_strdel(&str[1]);
 		}
+		else if (tablo[1][0] == '~')
+			str[0] = exp_tilde(&tablo[1][1], shell);
 		else
-			resultat = smallest_prefix_param(value, tablo[1]);
+			str[2] = smallest_prefix_param(str[0], tablo[1]);
 	}
 	ft_strdel(&data);
 	ft_tabfree(tablo);
-	return (resultat);
+	return (str[2]);
 }

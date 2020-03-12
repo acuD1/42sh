@@ -6,28 +6,53 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:15:08 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/09 19:30:11 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:38:08 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-static size_t	loop_till_next_quote(const char *str, size_t index, char quote)
+static size_t	loop_till_quote(const char *str, size_t index, char quote)
 {
+	index++;
 	if (!str[index])
 		return (index);
 	while (str[index])
 	{
-		if (quote == '\"' && check_backslash_nbr((char*)str, (ssize_t *)&index))
-		{
-			index++;
-			continue ;
-		}
 		if (str[index] == quote)
 			break ;
-		index += 1;
+		index++;
 	}
 	return (index);
+}
+
+static size_t	loop_till_next_subprompt(const char *str, size_t i)
+{
+	size_t	f[2];
+
+	if (!str[i])
+		return (0);
+	f[1] = (str[i] == '\"') ? 1 : 0;
+	f[0] = (str[i] == '$' && str[i + 1] && str[i + 1] == '{') ? 1 : 0;
+	while (str[++i])
+	{
+		if (check_backslash_nbr((char*)str, (ssize_t*)&i))
+			continue ;
+		if (str[i] == '$' && str[i + 1] && str[i + 1] == '{')
+			f[0]++;
+		else if (str[i] == '}' && f[0] && (!f[1] || f[0] > f[1]))
+			f[0]--;
+		else if (str[i] == '\"')
+		{
+			if (!f[1] || f[0] > f[1])
+				f[1]++;
+			else
+				f[1]--;
+		}
+		if (!f[1] && !f[0])
+			break ;
+	}
+	return (i);
 }
 
 static void		check_all_quotes(char *str, size_t *index)
@@ -41,13 +66,12 @@ static void		check_all_quotes(char *str, size_t *index)
 			i++;
 	}
 	else if (str[i] == '\'')
-		i = loop_till_next_quote(str, i + 1, '\'');
+		i = loop_till_quote(str, i, '\'');
 	else if (str[i] == '`')
-		i = loop_till_next_quote(str, i + 1, '`');
-	else if (str[i] == '\"')
-		i = loop_till_next_quote(str, i + 1, '\"');
-	else if (str[i] == '{')
-		i = loop_till_next_quote(str, i, '}');
+		i = loop_till_quote(str, i, '`');
+	else if ((str[i] == '$' && str[i + 1] && str[i + 1] == '{')
+		|| str[i] == '\"')
+		i = loop_till_next_subprompt(str, i);
 	*index = i;
 }
 
@@ -68,39 +92,4 @@ size_t			get_word_size_ntype(size_t i, char *str)
 		index++;
 	}
 	return (index);
-}
-
-static t_lst	*word_lexer(t_lexer *lexer, t_lst *lexer_token)
-{
-	size_t	i;
-	char	*str;
-
-	i = lexer->buf_pos;
-	str = NULL;
-	if (!(i = get_word_size_ntype(i, lexer->buff)))
-		return (NULL);
-	if (!(str = ft_strsub(lexer->buff, (unsigned int)lexer->buf_pos
-		, i - lexer->buf_pos)))
-		return (NULL);
-	ft_lstappend(&lexer_token, ft_lstnew(
-				fetch_token(&lexer->token, P_WORD, str), sizeof(t_token)));
-	free(str);
-	lexer->ntok++;
-	lexer->buf_pos = i;
-	return (lexer_token);
-}
-
-t_lst			*name_lexer(t_lexer *lexer, t_lst *lexer_token)
-{
-	char	*str;
-
-	str = NULL;
-	if (!lexer->buff)
-	{
-		lexer->status = L_END;
-		return (lexer_token);
-	}
-	lexer_token = word_lexer(lexer, lexer_token);
-	lexer->status = L_START;
-	return (lexer_token);
 }

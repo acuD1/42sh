@@ -41,6 +41,8 @@ char	*questionmark_format(char **tablo, t_core *shell)
 	{
 		if (tablo[1][1] == '$')
 			value = exp_param(&tablo[1][1], shell);
+		else if (tablo[1][1] == '~')
+			value = exp_tilde(&tablo[1][1], shell);
 		else
 			value = ft_strdup(&tablo[1][1]);
 		ft_dprintf(STDERR_FILENO, "42sh: %s: %s\n", tablo[0], value);
@@ -56,11 +58,13 @@ char	*length_format(char *str, t_core *shell)
 	t_db	*db_tmp;
 
 	db_tmp = NULL;
-	if (ft_strchr(str, ':') || ft_strchr(str, '%') || ft_strchr(&str[1], '#'))
+	if (ft_strchr(str, ':') || ft_strchr(str, '%') || ft_strchr(&str[1], '#')
+		|| str[2] == '~')
 	{
 		ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
 		ft_strdel(&str);
 		shell->status = 1;
+		shell->subst_error = 1;
 		return (NULL);
 	}
 	if ((db_tmp = search_db(shell->env, &str[1])))

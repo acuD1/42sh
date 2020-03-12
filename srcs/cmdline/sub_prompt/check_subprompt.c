@@ -6,101 +6,109 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/09 21:15:15 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:49:36 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-u_int8_t		check_backslash_nbr(char *str, ssize_t *index)
+static ssize_t		exit_subprompt_prio(t_core *shell, char *str)
 {
-	ssize_t	i;
-	ssize_t	nbr;
-
-	i = *index;
-	nbr = 0;
-	if (!str[i] || str[i] != BACKSLASH)
-		return (0);
-	if (str[i] == BACKSLASH)
-	{
-		while (str[i] == BACKSLASH)
-		{
-			i++;
-			nbr++;
-		}
-	}
-	if ((nbr % 2) == 1)
-	{
-		*index = i;
-		return (1);
-	}
-	*index = i;
+	ft_strdel(&shell->sub.keys);
+	shell->sub.state = SP_END;
+	save_history(&shell->term);
+	ft_strdel(&shell->term.buffer);
+	ft_strdel(&str);
+	shell->term.buffer = ft_memalloc(BUFF_SIZE);
 	return (0);
 }
 
-static u_int8_t	goto_next_quote(char *buffer, char quote_type, ssize_t *i)
+ssize_t		open_machine_subprompt(t_core *shell, t_subprompt *sub)
 {
-	while (buffer[(*i)++] != '\0')
+	char	*tmp;
+
+	tmp = NULL;
+	shell->term.sub_prompt = TRUE;
+	ft_strdel(&shell->term.prompt);
+	get_prompt_value(shell, "PS2");
+	shell->term.flag = FALSE;
+	shell->term.status = CMD_SUBPROMPT;
+	if (sub->keys && (sub->keys[0] == '\"' || sub->keys[0] == '\''))
+		shell->term.buffer = ft_strjoinf(shell->term.buffer, NEW_LINE, 1);
+	if (!sub->keys)
 	{
-		if ((quote_type == DQUOTE || quote_type == BQUOTE)
-									&& check_backslash_nbr(buffer, i))
-			continue ;
-		if (buffer[*i] == quote_type)
-			return (TRUE);
+		tmp = ft_strsub(shell->term.buffer, 0, ft_strlen(shell->term.buffer) - 1);
+		sub->index--;
 	}
-	return (FALSE);
+	else
+		tmp = ft_strdup(shell->term.buffer);
+	while (TRUE)
+	{
+		ft_strdel(&shell->term.buffer);
+		shell->term.buffer = ft_memalloc(BUFF_SIZE);
+		display_subprompt(&shell->term);
+		if (read_multiline(&shell->term) == FALSE)
+			break ;
+	}
+	if (sub_prompt_error(&shell->term,
+		(sub->keys) ? sub->keys[0] : '\0') == TRUE)
+		return (exit_subprompt_prio(shell, tmp));
+	shell->term.buffer = ft_strjoinf(tmp, shell->term.buffer, 3);
+	sub->escaped = 0;
+	return (0);
 }
 
-static char		set_quote_type(char quote)
+enum e_subp	start_subprompt(t_core *shell, t_subprompt *sub)
 {
-	if (quote == QUOTE || quote == DQUOTE || quote == BQUOTE)
-		return (quote);
-	else if (quote == CURLY_BRACE_OPEN)
-		return (quote = CURLY_BRACE_CLOSE);
-	return ('\0');
+	if (!shell->term.buffer[sub->index])
+		reboot_or_end_machine(shell, sub);
+	else if (shell->term.buffer[sub->index] == '}'
+		&& !sub->escaped && sub->keys && sub->keys[0] == '}')
+		del_keys_subprompt_and_move(sub, '}');
+	else if (sub->keys && sub->keys[0] == '\"' && sub->keys[1] == '}'
+		&& shell->term.buffer[sub->index] == '\"'
+		&& shell->term.buffer[sub->index + 1] == '}')
+		del_keys_subprompt_and_move(sub, '\"');
+	else if (shell->term.buffer[sub->index] == '\''
+		&& !sub->escaped && !sub->dbquoted)
+		sub->state = SP_QUOTE;
+	else if (shell->term.buffer[sub->index] == '\"'
+		&& !sub->escaped && !sub->quoted)
+		sub->state = SP_DBQUOTE;
+	else if (shell->term.buffer[sub->index] == '$'
+		&& shell->term.buffer[sub->index + 1] == '{' && !sub->quoted)
+		sub->state = SP_BRACEPARAM;
+	else if (shell->term.buffer[sub->index] == '\\' && !sub->quoted)
+		sub->state = SP_BACKSLASH;
+	else
+		sub->index++;
+	sub->escaped = 0;
+	return (sub->state);
 }
 
-u_int8_t		quotes_is_matching(t_read *term, char *quote)
+static void		init_subprompt(t_subprompt *sub)
 {
-	ssize_t	i;
+	sub->state = SP_START;
+	sub->keys = NULL;
+	sub->index = 0;
+	sub->escaped = 0;
+	sub->quoted = 0;
+	sub->dbquoted = 0;
+	sub->tu[SP_START] = start_subprompt;
+	sub->tu[SP_DBQUOTE] = dbquote_subprompt;
+	sub->tu[SP_QUOTE] = quote_subprompt;
+	sub->tu[SP_BRACEPARAM] = braceparam_subprompt;
+	sub->tu[SP_BACKSLASH] = backslash_subprompt;
+	sub->tu[SP_END] = NULL;
+}
 
-	i = -1;
-	while (term->buffer[++i] != '\0')
-	{
-		if (term->buffer[i] == BACKSLASH)
-		{
-			i++;
-			continue ;
-		}
-		*quote = set_quote_type(term->buffer[i]);
-		if (*quote == QUOTE || *quote == DQUOTE || *quote == BQUOTE)
-		{
-			if (goto_next_quote(term->buffer, *quote, &i) == TRUE)
-				continue ;
-			else
-				return (FALSE);
-		}
-	}
+ssize_t		check_subprompt(t_core *shell)
+{
+	if (!shell->term.buffer)
+		return (FALSE);
+	init_subprompt(&shell->sub);
+	while (shell->sub.state != SP_END)
+		shell->sub.state = shell->sub.tu[shell->sub.state](shell, &shell->sub);
+	ft_strdel(&(shell->sub.keys));
 	return (TRUE);
-}
-
-u_int8_t		check_subprompt(t_core *shell)
-{
-	char	quote;
-
-	quote = '\0';
-	if (quotes_is_matching(&shell->term, &quote) == TRUE
-								&& quote != CURLY_BRACE_CLOSE)
-		if (check_backslash(&shell->term, &quote) == FALSE)
-			return (FALSE);
-	if (quote != '\0')
-	{
-		shell->term.sub_prompt = TRUE;
-		ft_strdel(&shell->term.prompt);
-		get_prompt_value(shell, "PS2");
-		shell->term.status = CMD_SUBPROMPT;
-		load_subprompt(quote, &shell->term);
-		return (TRUE);
-	}
-	return (FALSE);
 }

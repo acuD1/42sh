@@ -259,6 +259,7 @@ SRC					+=	$(S_PATH)$(EXPANSIONS)assign_envp_tools.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)machine_expansion.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)expansion.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)quotes_backslash.c
+SRC					+=	$(S_PATH)$(EXPANSIONS)inhibiteurs.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)tilde_cmds_math_exp.c
 
 SRC					+=	$(S_PATH)$(JOBC)background.c

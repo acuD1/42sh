@@ -21,6 +21,8 @@ char	*plus_format(char **tablo, t_core *shell)
 	{
 		if (tablo[1][1] == '$')
 			value = exp_param(&tablo[1][1], shell);
+		else if (tablo[1][1] == '~')
+			value = exp_tilde(&tablo[1][1], shell);
 		else
 			value = ft_strdup(&tablo[1][1]);
 		ft_tabfree(tablo);
@@ -48,6 +50,8 @@ char	*egal_format(char **tablo, t_core *shell)
 	{
 		if (tablo[1][1] == '$')
 			value = exp_param(&tablo[1][1], shell);
+		else if (tablo[1][1] == '~')
+			value = exp_tilde(&tablo[1][1], shell);
 		else
 			value = ft_strdup(&tablo[1][1]);
 		add_assign_env(shell, tablo[0], value);
@@ -65,13 +69,16 @@ char	*underniercaspourlaroute(char **tablo, t_core *shell)
 	word = NULL;
 	if ((value = check_env_key(tablo[0], shell)))
 	{
-		if (tablo[1][1] == '$')
-			value = exp_param(&tablo[1][1], shell);
+		if (tablo[1][0] == '$')
+			word = exp_param(tablo[1], shell);
+		else if (tablo[1][0] == '~')
+			word = exp_tilde(tablo[1], shell);
 		else
 			word = check_env_key(tablo[1], shell);
 		if (!word || !*word)
 		{
 			ft_tabfree(tablo);
+			ft_strdel(&word);
 			return (ft_strdup(value));
 		}
 		else
@@ -122,4 +129,5 @@ char	*get_two_point_param_exp(char **tablo, t_core *shell)
 		return (questionmark_format(tablo, shell));
 	else
 		return (underniercaspourlaroute(tablo, shell));
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:47:24 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 20:29:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:31:51 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,21 @@
 #include "sh42.h"
 
 static u_int8_t	check_tilde_path_exp
-	(char *expandu, const char *str, size_t i, enum e_estate state)
+	(char *expandu, const char *str, size_t i)
 {
-	char	*tmp[3];
-	size_t	len;
-	size_t	exp_size;
+	char			*tmp;
 
-	tmp[0] = NULL;
-	tmp[2] = NULL;
-	tmp[1] = NULL;
-	exp_size = i + 1;
+	tmp = NULL;
 	if (!expandu || !str || str[0] != '~')
 		return (0);
-	if (state != E_TILDE)
-		exp_size++;
-	tmp[1] = ft_strsub(str, 0, i);
-	len = ft_strlen(str);
-	tmp[2] = ft_strsub(str, (unsigned int)exp_size, len - exp_size);
-	tmp[0] = ft_strjoinf(tmp[1], expandu, 1);
-	tmp[0] = ft_strjoinf(tmp[0], tmp[2], 3);
-	if (is_a_dir(tmp[0]) == EISDIR)
+	tmp = ft_strsub(str, 0, i);
+	tmp = ft_strjoinf(tmp, expandu, 1);
+	if (is_a_dir(tmp) == EISDIR)
 	{
-		ft_strdel(&tmp[0]);
+		ft_strdel(&tmp);
 		return (1);
 	}
-	ft_strdel(&tmp[0]);
+	ft_strdel(&tmp);
 	return (0);
 }
 
@@ -51,7 +41,7 @@ static void		apply_expansion
 	if ((res = exp->sionat[exp->erience](token, shell)))
 	{
 		if ((exp->st == E_TILDEP || exp->st == E_TILDEM || exp->st == E_TILDE)
-			&& !check_tilde_path_exp(res, data, exp->index, exp->st))
+			&& !check_tilde_path_exp(res, data, exp->index))
 		{
 			exp->res = ft_strjoinf(exp->res, token, 1);
 			ft_strdel(&res);
@@ -103,7 +93,7 @@ t_expansion		*word_biteurs(char *data, t_core *shell, t_expansion *exp)
 
 t_expansion		*start_biteurs(char *data, t_core *shell, t_expansion *exp)
 {
-	if (!data[exp->index])
+	if (!data[exp->index] || shell->subst_error)
 		exp->st = E_END;
 	else if (exp->quotus != E_QUOTE && data[exp->index] == '\\')
 		exp->st = E_DISCARD;

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:16:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 18:40:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:50:32 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,13 @@ char	*simple_format(char *str, t_core *shell)
 	t_db	*db_tmp;
 
 	db_tmp = NULL;
-	if (ft_strchr(str, '$') && str[0] != '$')
-	{
-		ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
-		ft_strdel(&str);
-		return (NULL);
-	}
-	if ((db_tmp = search_db(shell->env, str)))
+	if (!(ft_strchr(str, '$') && str[0] != '$')
+			&& (db_tmp = search_db(shell->env, str)))
 	{
 		ft_strdel(&str);
 		return (ft_strdup(db_tmp->value));
 	}
+	shell->status = 1;
 	ft_strdel(&str);
 	return (NULL);
 }
@@ -57,7 +53,20 @@ char	*format_supplementaires(char *str, t_core *shell)
 	return (simple_format(str, shell));
 }
 
-char	*get_brace_param(char *str, t_core *shell)
+static u_int32_t			check_param_exp(char *str, size_t *i, t_core *shell)
+{
+	if ((str[*i] == '\\' && str[*i + 1] && str[*i + 1] != '\n')
+		|| (str[*i] == '\n'))
+	{
+		ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
+		shell->status = 1;
+		shell->subst_error = 1;
+		return (0);
+	}
+	return (1);
+}
+
+char			*get_brace_param(char *str, t_core *shell)
 {
 	size_t		i;
 	u_int32_t	count;
@@ -68,11 +77,8 @@ char	*get_brace_param(char *str, t_core *shell)
 	tmp = NULL;
 	while (str[i++])
 	{
-		if (str[i] == '\n')
-		{
-			ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
-			return (NULL);
-		}
+		if (!check_param_exp(str, &i, shell))
+			break ;
 		if (!check_brackets_inbracket(&count, str[i]))
 			break ;
 	}
@@ -83,15 +89,9 @@ char	*get_brace_param(char *str, t_core *shell)
 
 char	*exp_param(const char *data, t_core *shell)
 {
-	char	*tmp;
-
-	tmp = NULL;
 	if (data[0] == '$' && data[1] == '{')
 		return (get_brace_param((char*)data, shell));
 	if (data[0] == '$' && data[1])
-	{
-		tmp = ft_strsub(data, 1, ft_strlen(data) - 1);
-		return (simple_format(tmp, shell));
-	}
+		return (simple_format(ft_strsub(data, 1, ft_strlen(data) - 1), shell));
 	return (NULL);
 }

@@ -6,31 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:13:54 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/09 17:24:45 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 15:51:01 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-char				*inhibiteurs_expansion(char *data, t_core *shell)
-{
-	t_expansion	*exp;
-	char		*resultat;
-
-	if (!data || !*data)
-		return (NULL);
-	exp = NULL;
-	resultat = NULL;
-	exp = init_expansion_inhibiteurs(exp);
-	while (exp->st != E_END)
-		exp = exp->biteurs[exp->st](data, shell, exp);
-	resultat = ft_strdup(exp->res);
-	ft_strdel(&exp->res);
-	free(exp);
-	return (resultat);
-}
-
-static char			*heredoc_inhib(char *data)
+static char				*heredoc_inhib(char *data)
 {
 	char			*res;
 	size_t			index;
