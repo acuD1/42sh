@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 17:01:52 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:11:05 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static int8_t	end_of_file(t_core *shell, const char *buff)
 		if (are_jobs_done(shell, shell->launched_jobs) != TRUE)
 		{
 			write(STDERR_FILENO, "There are stopped jobs.\n", 24);
+			display_prompt(&(shell->term));
 			return (FALSE);
 		}
 		reset_config(shell);

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 20:35:52 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:51:05 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,11 @@ int8_t		launch_blt(t_core *shell, t_process *process)
 
 void		launch_process(t_core *shell, t_process *process)
 {
-	int8_t	blt;
-
 	if (shell->is_interactive)
 	{
 		reset_signals();
 		put_process_in_grp(shell, process);
 	}
 	redir_pipes(process);
-	if (process->av)
-	{
-		if ((blt = is_a_blt(process->av[0])) != FAILURE)
-			exit(call_builtin(shell, process, blt));
-	}
 	call_bin(shell, process);
 }

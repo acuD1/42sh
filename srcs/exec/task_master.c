@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 18:13:25 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:46:19 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,10 @@ int8_t		task_master(t_core *shell)
 	job = shell->job_list;
 	while (job)
 	{
-		foreground = (((t_job*)job->content)->type == P_AND) ? FALSE : TRUE;
+		do_job_notification(shell, shell->launched_jobs);
+		foreground = TRUE;
+		if (((t_job*)job->content)->type == P_AND)
+			foreground = FALSE;
 		next = job->next;
 		handle_background_job(shell, job->content, foreground);
 		place_job(shell, job->content, foreground);

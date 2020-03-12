@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   db_tools.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 18:21:41 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/07 04:18:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/05 00:24:05 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@
 
 t_db	*modify_db(t_db *db, char *new_value, u_int8_t new_type)
 {
-	if (db && new_value != NULL)
+	if (db && new_value)
 	{
 		ft_strdel(&(db->value));
 		db->value = new_value;
 	}
 	if (db && new_type != 0)
 	{
-		db->type = new_type;
+		db->type |= new_type;
 	}
 	if (!db)
 		ft_strdel(&new_value);
@@ -111,7 +111,7 @@ int8_t	edit_var
 	db = NULL;
 	if (shell && (db = get_or_create_db(shell, name, var_type)) != NULL)
 	{
-		if (value && modify_db(db, value, 0) != NULL)
+		if (value && modify_db(db, value, var_type) != NULL)
 			return (SUCCESS);
 	}
 	ft_strdel(&value);
