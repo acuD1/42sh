@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 16:34:39 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/08 14:45:53 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/12 20:37:03 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	print_shell_usage(int option, int fd)
 	if (fd == STDERR_FILENO)
 		ft_dprintf(fd, "42sh: -%c: invalid option\n", option);
 	ft_dprintf(fd, "Usage: 42sh [option] ...\n");
-	ft_dprintf(fd, "Shell options:\n\t-vh or -c command\n");
+	ft_dprintf(fd, "Shell options:\n\t-chv command\n");
 }
 
 static void	opt_h(int ac, char **av, t_core *shell)
@@ -76,4 +76,5 @@ void		get_opt(int ac, char **av, t_core *shell)
 		opt_v(ac, av, shell);
 	if (opt & (1ULL << ('c' - 97)))
 		opt_c(ac, av, shell);
+	shell->opt = opt;
 }

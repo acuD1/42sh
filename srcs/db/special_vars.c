@@ -6,7 +6,7 @@
 /*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:40:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/01/15 16:41:03 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/12 20:41:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int8_t	update_shell_flags(t_core *shell)
 	value = NULL;
 	if (shell && (db = get_or_create_db(shell, "-", SPECIAL_VAR)) != NULL)
 	{
-		value = ft_strdup("himBH");
+		if (opt & (1ULL << ('v' - 'a') && opt & (1ULL << ('c' - 'a')))
+			value = ft_strdup("");
 		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);
 		ft_strdel(&value);
