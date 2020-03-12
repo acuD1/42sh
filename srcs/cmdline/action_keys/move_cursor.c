@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 15:48:25 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/12 20:31:55 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ void		move_key_down(t_read *term)
 		}
 		goto_prompt(term);
 		ft_strdel(&term->buffer);
-		len = ft_strlen((char*)w->content) + BUFF_SIZE + READ_SIZE + 1;
-		term->buffer = ft_memalloc(len);
+		term->buffer = ft_memalloc(BUFF_SIZE);
 		insert_str_in_buffer((char*)w->content, term);
 	}
 	else
@@ -85,8 +84,7 @@ void		move_key_up(t_read *term)
 		}
 		goto_prompt(term);
 		ft_strdel(&term->buffer);
-		len = ft_strlen((char*)w->content) + BUFF_SIZE + READ_SIZE + 1;
-		term->buffer = ft_strnew(len);
+		term->buffer = ft_memalloc(BUFF_SIZE);
 		insert_str_in_buffer((char*)w->content, term);
 	}
 }

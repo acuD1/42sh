@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/03 19:28:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/12 20:36:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static int8_t	fc_editor(t_core *shell, t_cmd cmd)
 	}
 	ft_strdel(&command);
 	ft_strdel(&shell->term.buffer);
+	printf("[%s]\n",command);
 	if (fc_exec_cmd(shell, cmd) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
@@ -70,7 +71,11 @@ static char		*get_editor(char **av, u_int64_t opt)
 	if (!*(av + 1) || (ft_isnum(*(av + 1)) && !(opt & (1ULL << 4))))
 		editor = ft_strdup("ed ");
 	else if (opt & (1ULL << 4))
+	{
 		editor = ft_strjoin(*(av + 1), " ");
+		if (!ft_strequ(editor, "vim ") && !ft_strequ(editor, "emacs "))
+			ft_strdel(&editor);
+	}
 	return (editor);
 }
 
@@ -87,6 +92,8 @@ int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 	get_range(process->av, &cmd);
 	get_entries(shell->term.history, &cmd, opt);
 	sort_print_cmd(cmd, shell->term.history, opt);
-	cmd.editor = get_editor(process->av, opt);
+	printf("[%d][%d]\n", cmd.first, cmd.last);
+	if ((cmd.editor = get_editor(process->av, opt)) == NULL)
+		return (fc_error(opt, 0));
 	return (fc_editor(shell, cmd));
 }
