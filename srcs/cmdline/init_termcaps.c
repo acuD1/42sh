@@ -30,9 +30,8 @@ int8_t			get_size(t_read *term)
 		if ((term->ws_col = tgetnum("co")) < 0
 			|| (term->ws_li = tgetnum("li")) < 0)
 		{
-			ft_dprintf(STDERR_FILENO, "Ioctl and Tgetnum error");
+			ft_dprintf(STDERR_FILENO, "42sh: ioctl error\n");
 			quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
-			return (FAILURE);
 		}
 		return (SUCCESS);
 	}
@@ -76,12 +75,11 @@ int8_t			init_termcaps(t_read *term)
 	}
 	if (stock_termcaps(term) != SUCCESS)
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: error while getting termcaps\n");
+		ft_dprintf(STDERR_FILENO, "42sh: termcaps error\n");
 		return (FAILURE);
 	}
 	if (get_size(term) != SUCCESS)
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: error while getting terminal size\n");
 		return (FAILURE);
 	}
 	return (SUCCESS);

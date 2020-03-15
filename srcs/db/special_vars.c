@@ -70,7 +70,13 @@ int8_t	update_shell_flags(t_core *shell)
 	value = NULL;
 	if (shell && (db = get_or_create_db(shell, "-", SPECIAL_VAR)) != NULL)
 	{
-		if (opt & (1ULL << ('v' - 'a') && opt & (1ULL << ('c' - 'a')))
+		if (shell->opt & (1ULL << ('v' - 'a') && shell->opt & (1ULL << ('c' - 'a'))))
+			value = ft_strdup("cv");
+		else if (shell->opt & (1ULL << ('v' - 'a')))
+			value = ft_strdup("v");
+		else if (shell->opt & (1ULL << ('c' - 'a')))
+			value = ft_strdup("c");
+		else
 			value = ft_strdup("");
 		if (value && modify_db(db, value, 0) != NULL)
 			return (SUCCESS);

@@ -58,23 +58,18 @@ static void	opt_c(int ac, char **av, t_core *shell)
 
 void		get_opt(int ac, char **av, t_core *shell)
 {
-	size_t		i;
-	u_int64_t	opt;
-
-	if (!av[1])
+	if (ac < 2)
 		return ;
-	opt = ft_get_options(ac, av, SHELL_OPT);
-	if (opt & (1ULL << 63))
+	shell->opt = ft_get_options(ac, av, SHELL_OPT);
+	if (shell->opt & (1ULL << 63))
 	{
-		print_shell_usage(opt % 128, STDERR_FILENO);
+		print_shell_usage(shell->opt % 128, STDERR_FILENO);
 		quit_shell(shell, EXIT_FAILURE, FALSE);
 	}
-	i = 0;
-	if (opt & (1ULL << ('h' - 97)))
+	if (shell->opt & (1ULL << ('h' - 97)))
 		opt_h(ac, av, shell);
-	if (opt & (1ULL << ('v' - 97)))
+	if (shell->opt & (1ULL << ('v' - 97)))
 		opt_v(ac, av, shell);
-	if (opt & (1ULL << ('c' - 97)))
+	if (shell->opt & (1ULL << ('c' - 97)))
 		opt_c(ac, av, shell);
-	shell->opt = opt;
 }
