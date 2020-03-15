@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dispatcher.c                                       :+:      :+:    :+:   */
+/*   launch_job.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -53,6 +53,23 @@ static void	condition_fulfilled(t_lst *process)
 	}
 }
 
+static void	clear_process(t_job *job, t_lst **ptr)
+{
+	t_lst	*prev;
+
+	prev = job->process_list;
+	if (((t_process*)(*ptr)->content)->completed == TRUE)
+	{
+		while (prev != *ptr)
+			prev = prev->next;	
+		if (prev == job->process_list)
+			job->process_list = (*ptr)->next;
+		else
+			prev->next = (*ptr)->next;
+	}
+	*ptr = (*ptr)->next;
+}
+
 void		launch_job(t_core *shell, t_job *job, int foreground)
 {
 	t_process	*ptr;
@@ -75,6 +92,6 @@ void		launch_job(t_core *shell, t_job *job, int foreground)
 			update_exit_status(shell);
 			condition_fulfilled(process);
 		}
-		process = process->next;
+		clear_process(job, &process);
 	}
 }

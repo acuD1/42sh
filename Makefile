@@ -224,7 +224,7 @@ SRC					+=	$(S_PATH)$(DB)version.c
 
 SRC					+=	$(S_PATH)$(EXEC)call_bin.c
 SRC					+=	$(S_PATH)$(EXEC)call_builtin.c
-SRC					+=	$(S_PATH)$(EXEC)dispatcher.c
+SRC					+=	$(S_PATH)$(EXEC)launch_job.c
 SRC					+=	$(S_PATH)$(EXEC)exec_process.c
 SRC					+=	$(S_PATH)$(EXEC)get_bin.c
 SRC					+=	$(S_PATH)$(EXEC)set_envp.c
