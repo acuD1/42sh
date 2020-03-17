@@ -252,5 +252,6 @@ int			get_signal(int status);
 int			cond(t_lst *process);
 int8_t		are_jobs_done(t_core *shell, t_lst *jobs);
 void		free_job(t_lst **job_list, t_lst *job);
+void		rebuild_job_command(t_job *job);
 
 #endif
