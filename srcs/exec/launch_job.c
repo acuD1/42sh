@@ -53,19 +53,54 @@ static void	condition_fulfilled(t_lst *process)
 	}
 }
 
+static void	debug_plist(t_lst *ptr)
+{
+	while (ptr)
+	{
+		dprintf(STDERR_FILENO, "%p content : %p\n", ptr, ptr->content);
+		ptr = ptr->next;
+	}
+}
+
+static void	free_process_link(t_lst *ptr)
+{
+	if (ptr && ptr->content)
+	{
+//		dprintf(2, "free : %s\n", ((t_process*)ptr->content)->command);
+		ft_free_redirlist((t_lst **)&(((t_process *)ptr->content)->redir_list));
+		free_db((((t_process *)ptr->content)->assign_list));
+		ft_freetokenlist(&(((t_process *)ptr->content)->tok_list));
+		ft_tabdel(&(((t_process *)ptr->content)->av));
+		ft_tabdel(&(((t_process *)ptr->content)->envp));
+		ft_strdel(&(((t_process *)ptr->content)->bin));
+		ft_strdel(&(((t_process *)ptr->content)->command));
+		free(ptr->content);
+		free(ptr);
+	}
+}
+
 static void	clear_process(t_job *job, t_lst **ptr)
 {
 	t_lst	*prev;
 
 	prev = job->process_list;
+	dprintf(2, "clear_process()\n");
 	if (((t_process*)(*ptr)->content)->completed == TRUE)
 	{
-		while (prev != *ptr)
-			prev = prev->next;	
-		if (prev == job->process_list)
+		if (job->process_list == *ptr)
+		{
 			job->process_list = (*ptr)->next;
+		}
 		else
+		{
+			while (prev->next != *ptr)
+				prev = prev->next;
 			prev->next = (*ptr)->next;
+		}
+		prev = *ptr;
+		*ptr = (*ptr)->next;
+		free_process_link(prev);
+		return ;
 	}
 	*ptr = (*ptr)->next;
 }
@@ -94,4 +129,6 @@ void		launch_job(t_core *shell, t_job *job, int foreground)
 		}
 		clear_process(job, &process);
 	}
+	debug_plist(job->process_list);
+	dprintf(2, "leaving launch_job()\n");
 }
