@@ -119,7 +119,6 @@ int8_t			select_specifier(t_core *shell, char **av)
 	ft_dprintf(cmd.fd, "%s\n", shell->term.buffer);
 	lexer_parser_analyzer(shell);
 	do_job_notification(shell, shell->launched_jobs, TRUE);
-	if (task_master(shell) != SUCCESS)
-		return (FAILURE);
+	task_master(shell);
 	return (SUCCESS);
 }

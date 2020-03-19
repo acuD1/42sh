@@ -96,7 +96,7 @@ static void	clear_process(t_job *job, t_lst **ptr)
 	*ptr = (*ptr)->next;
 }
 
-void		launch_job(t_core *shell, t_job *job, int foreground)
+int8_t		launch_job(t_core *shell, t_job *job, int foreground)
 {
 	t_process	*ptr;
 	t_lst		*process;
@@ -118,6 +118,9 @@ void		launch_job(t_core *shell, t_job *job, int foreground)
 			update_exit_status(shell);
 			condition_fulfilled(process);
 		}
+		if (ptr->completed == TRUE && ptr->status == SIGINT)
+			return (FAILURE);
 		clear_process(job, &process);
 	}
+	return (SUCCESS);
 }

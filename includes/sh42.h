@@ -73,7 +73,7 @@ int8_t		call_builtin(t_core *shell, t_process *process, int blt);
 int8_t		get_bin_path(t_core *shell, t_process *process);
 void		exec_process(t_core *shell, t_job *job, t_process *process);
 int8_t		call_bin(t_core *shell, t_process *process);
-int8_t		task_master(t_core *shell);
+void		task_master(t_core *shell);
 int8_t		is_a_blt(const char *cmd);
 int8_t		get_bin(t_core *shell, t_process *process);
 char		**set_envp(t_core *shell);
@@ -233,7 +233,7 @@ void		put_job_in_background(t_core *shell, t_job *job, int cont);
 int8_t		continue_job(t_core *shell, t_job *job, int foreground);
 void		reset_signals(void);
 void		launch_process(t_core *shell, t_process *process);
-void		launch_job(t_core *shell, t_job *job, int foreground);
+int8_t		launch_job(t_core *shell, t_job *job, int foreground);
 void		job_background_notif(t_job *job);
 void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
 int8_t		mark_process_status

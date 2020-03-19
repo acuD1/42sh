@@ -48,8 +48,7 @@ void	load_i_mode(t_core *shell)
 			return ;
 		lexer_parser_analyzer(shell);
 		do_job_notification(shell, shell->launched_jobs, TRUE);
-		if (task_master(shell) != SUCCESS)
-			return (quit_shell(shell, EXIT_FAILURE, FALSE));
+		task_master(shell);
 		save_history(&shell->term);
 		free_prompt(shell);
 	}

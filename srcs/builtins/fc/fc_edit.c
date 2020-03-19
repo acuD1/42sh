@@ -20,12 +20,7 @@ static int8_t	fc_exec_cmd(t_core *shell, t_cmd cmd)
 	{
 		lexer_parser_analyzer(shell);
 		do_job_notification(shell, shell->launched_jobs, TRUE);
-		if (task_master(shell) != SUCCESS)
-		{
-			ft_strdel(&cmd.editor);
-			close(cmd.fd);
-			return (FAILURE);
-		}
+		task_master(shell);
 		save_history(&shell->term);
 		ft_strdel(&shell->term.buffer);
 	}

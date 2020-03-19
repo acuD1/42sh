@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-static void	place_job(t_core *shell, t_job *job, int8_t foreground)
+static void		place_job(t_core *shell, t_job *job, int8_t foreground)
 {
 	if (shell->is_interactive && job_is_completed(job))
 		return ;
@@ -32,7 +32,7 @@ static void	place_job(t_core *shell, t_job *job, int8_t foreground)
 	}
 }
 
-int			cond(t_lst *process)
+int				cond(t_lst *process)
 {
 	while (process)
 	{
@@ -44,7 +44,7 @@ int			cond(t_lst *process)
 	return (FALSE);
 }
 
-static void	handle_background_job(t_core *shell, t_job *job, int foreground)
+static int8_t	handle_background_job(t_core *shell, t_job *job, int foreground)
 {
 	pid_t	pid;
 
@@ -67,10 +67,11 @@ static void	handle_background_job(t_core *shell, t_job *job, int foreground)
 		shell->status = 0;
 	}
 	else
-		launch_job(shell, job, foreground);
+		 return (launch_job(shell, job, foreground));
+	return (SUCCESS);
 }
 
-int8_t		task_master(t_core *shell)
+void			task_master(t_core *shell)
 {
 	t_lst	*job;
 	t_lst	*next;
@@ -81,7 +82,8 @@ int8_t		task_master(t_core *shell)
 	{
 		foreground = ((t_job*)job->content)->type == P_AND ? FALSE : TRUE;
 		next = job->next;
-		handle_background_job(shell, job->content, foreground);
+		if (handle_background_job(shell, job->content, foreground) == 1)
+			return (ft_freejoblist(&(shell->job_list)));
 		place_job(shell, job->content, foreground);
 		if (job_is_completed(job->content))
 			free_job(&(shell->job_list), job);
@@ -94,5 +96,4 @@ int8_t		task_master(t_core *shell)
 		job = next;
 	}
 	shell->job_list = NULL;
-	return (SUCCESS);
 }

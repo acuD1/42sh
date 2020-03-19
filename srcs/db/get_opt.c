@@ -51,9 +51,8 @@ static void	opt_c(int ac, char **av, t_core *shell)
 	shell->is_interactive = FALSE;
 	shell->term.buffer = ft_strdup(av[2]);
 	lexer_parser_analyzer(shell);
-	if (task_master(shell) != SUCCESS)
-		return (quit_shell(shell, EXIT_FAILURE, FALSE));
-	quit_shell(shell, EXIT_SUCCESS, FALSE);
+	task_master(shell);
+	quit_shell(shell, shell->status, FALSE);
 }
 
 void		get_opt(int ac, char **av, t_core *shell)
