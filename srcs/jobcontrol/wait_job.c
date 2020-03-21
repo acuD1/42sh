@@ -27,15 +27,18 @@ void	wait_for_job(t_core *shell, t_lst *jobs, t_job *job)
 		do_job_notification(shell, shell->job_list, FALSE);
 }
 
-void	wait_for_process(t_core *shell, t_lst *jobs, t_process *process)
+void	wait_for_process(t_core *shell, t_job *job, t_process *process)
 {
 	pid_t	pid;
 	int		status;
 
 	pid = waitpid(process->pid, &status, WUNTRACED);
-	mark_process_status(shell, jobs, pid, status);
+	mark_process_status(shell, shell->job_list, pid, status);
 	do_job_notification(shell, shell->launched_jobs, TRUE);
-	if (WIFSTOPPED(status)
+	if (shell->is_interactive && WIFSTOPPED(status)
 	&& (WSTOPSIG(status) == SIGTSTP || WSTOPSIG(status) == SIGSTOP))
-		do_job_notification(shell, shell->job_list, FALSE);
+	{
+		job->notified = TRUE;
+		dprintf(STDERR_FILENO, "\n[1]+ Need real message         %s\n", process->command);
+	}
 }

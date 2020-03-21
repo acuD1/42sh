@@ -240,7 +240,7 @@ int8_t		mark_process_status
 				(t_core *shell, t_lst *jobs, pid_t pid, int status);
 void		mark_job_as_stopped(t_job *job, int stopped);
 int8_t		launch_blt(t_core *shell, t_process *process);
-void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
+void		wait_for_process(t_core *shell, t_job *job, t_process *process);
 void		update_status(t_core *shell);
 t_job		*get_job(t_lst *jobs, char *str);
 t_job		*get_job_by_id(t_lst *jobs, int id);

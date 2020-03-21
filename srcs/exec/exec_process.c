@@ -48,12 +48,20 @@ static void		control_process
 		if (process->pipe[0] != STDIN_FILENO)
 			wait_for_job(shell, shell->job_list, job);
 		else
-			wait_for_process(shell, shell->job_list, process);
+			wait_for_process(shell, job, process);
 		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
 			print_and_quit(shell, "42sh: tcsetpgrp error (2)\n");
 	}
 	else
 		process->stopped = FALSE;
+}
+
+static void	clear_fds(t_process *process)
+{
+	if (process->pipe[1] != STDOUT_FILENO)
+		close(process->pipe[1]);
+	if (process->pipe[0] != STDIN_FILENO)
+		close(process->pipe[0]);
 }
 
 void			exec_process(t_core *shell, t_job *job, t_process *process)
@@ -67,14 +75,9 @@ void			exec_process(t_core *shell, t_job *job, t_process *process)
 		launch_process(shell, process);
 	else if (process->pid < 0)
 		print_and_quit(shell, "42sh: fork failure\n");
-	if (process->pipe[1] != STDOUT_FILENO)
-		close(process->pipe[1]);
-	if (process->pipe[0] != STDIN_FILENO)
-		close(process->pipe[0]);
+	clear_fds(process);
 	if (shell->is_interactive == TRUE)
 		control_process(shell, job, process);
 	else if (process->type != P_PIPE)
-		wait_for_process(shell, shell->job_list, process);
-	if (get_signal(process->status) == 2)
-		write(2, "\n", 1);
+		wait_for_process(shell, job, process);
 }

@@ -75,7 +75,8 @@ int8_t		do_job_notification(t_core *shell, t_lst *job, int8_t free)
 		else if (job_is_stopped(ptr) && ptr->notified != TRUE)
 		{
 			write(STDERR_FILENO, "\n", 1);
-			attr_jobc_id(shell, ptr);
+			if (ptr->jobc_id == 0)
+				attr_jobc_id(shell, ptr);
 			format_job_info(ptr);
 			ptr->notified = TRUE;
 		}
