@@ -6,11 +6,22 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 20:31:55 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/27 18:40:54 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+/* #include <fcntl.h> */
+/* static void		debugi(const char *path, t_read *shell) */
+/* { */
+/* 	int			fd; */
+/*  */
+/* 	fd = open(path, O_WRONLY); */
+/* 	ft_dprintf(fd, "x[%d] xi[%d] y[%d] ws_col[%d]\n width[%d] buff[%s]\n", */
+/* 	shell->x, shell->x_index, shell->y, */
+/* 	shell->ws_col, shell->width, shell->buffer); */
+/* } */
 
 static void	check_tmp_buffer(t_read *term)
 {
@@ -32,7 +43,6 @@ static void	check_tmp_buffer(t_read *term)
 void		move_key_down(t_read *term)
 {
 	t_lst	*w;
-	size_t	len;
 
 	w = NULL;
 	if (term->history && term->history_index)
@@ -64,7 +74,6 @@ void		move_key_down(t_read *term)
 void		move_key_up(t_read *term)
 {
 	t_lst	*w;
-	size_t	len;
 
 	if (term->history)
 	{
@@ -127,6 +136,7 @@ void		move_left(t_read *term)
 {
 	ssize_t	width;
 
+//	debugi("/dev/pts/2", term);
 	if ((term->x > term->prompt_len && term->y == 0)
 		|| (term->x > 0 && term->y > 0))
 	{

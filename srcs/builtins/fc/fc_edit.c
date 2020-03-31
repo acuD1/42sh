@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 20:36:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/24 18:50:37 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static int8_t	fc_editor(t_core *shell, t_cmd cmd)
 	}
 	ft_strdel(&command);
 	ft_strdel(&shell->term.buffer);
-	printf("[%s]\n",command);
 	if (fc_exec_cmd(shell, cmd) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
@@ -79,6 +78,28 @@ static char		*get_editor(char **av, u_int64_t opt)
 	return (editor);
 }
 
+static void		get_edit_entries(t_lst *w, t_cmd *cmd)
+{
+	int32_t		w_entries;
+
+	w_entries = (int32_t)ft_lstlen(w);
+	if (cmd->ac == 1)
+	{
+		cmd->first = w_entries;
+		cmd->last = w_entries;
+	}
+	else if (cmd->ac == 2)
+		cmd->last = cmd->first;
+	else if (cmd->ac == 4)
+		cmd->last = cmd->first;
+	if (cmd->first <= 0)
+		cmd->first = w_entries + cmd->first + 1;
+	if (cmd->last <= 0)
+		cmd->last = w_entries + cmd->last + 1;
+	printf("[%zu][%d][%d]\n", cmd->ac, cmd->first, cmd->last);
+}
+
+
 int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 {
 	t_cmd		cmd;
@@ -90,9 +111,8 @@ int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 	if (!shell->term.history)
 		return (fc_error(opt, 0));
 	get_range(process->av, &cmd);
-	get_entries(shell->term.history, &cmd, opt);
+	get_edit_entries(shell->term.history, &cmd);
 	sort_print_cmd(cmd, shell->term.history, opt);
-	printf("[%d][%d]\n", cmd.first, cmd.last);
 	if ((cmd.editor = get_editor(process->av, opt)) == NULL)
 		return (fc_error(opt, 0));
 	return (fc_editor(shell, cmd));
