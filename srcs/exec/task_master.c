@@ -21,8 +21,6 @@ static void		place_job(t_core *shell, t_job *job, int8_t foreground)
 		return ;
 	if (!(shell->is_interactive))
 		wait_for_job(shell, shell->job_list, job);
-	else if (foreground == TRUE && !job_is_stopped(job))
-		put_job_in_foreground(shell, shell->job_list, job, FALSE);
 	else if (foreground == FALSE)
 	{
 		job->jobc_id = update_jobs(shell->launched_jobs);

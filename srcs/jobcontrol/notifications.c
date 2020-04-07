@@ -31,21 +31,17 @@ void		update_status(t_core *shell)
 
 void		format_job_info(t_job *job)
 {
-	static char	*messages[4] = {"Stopped(SIGTSTP)\n", "Stopped(SIGTTIN)\n"
-		, "Stopped(SIGSTOP)\n"};
 	char		*msg;
 
-	msg = messages[2];
+	msg = "Stopped\n";
 	if (job_is_completed(job))
 	{
 		msg = signal_msg(0);
 	}
 	else if (job->type == P_AND)
 	{
-		msg = messages[1];
+		msg = "Running\n";
 	}
-	else if (job_is_stopped(job))
-		msg = messages[1];
 	ft_dprintf(STDERR_FILENO, "[%i]%c  %.*s\t\t%s\n", job->jobc_id
 	, job->jobc_last, ft_strlen(msg) - 1, msg, job->command);
 }

@@ -47,7 +47,7 @@ void			sigint_handler(int signum)
 	shell = get_core(NULL);
 	signal(SIGINT, sigint_handler);
 	shell->status = 128 + signum;
-	ft_dprintf(STDERR_FILENO, "^C\n");
+	ft_dprintf(STDERR_FILENO, "^Cours\n");
 	update_exit_status(shell);
 	erase_line(shell);
 }
