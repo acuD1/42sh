@@ -6,22 +6,20 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/27 18:40:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/08 20:32:10 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <fcntl.h>
+static void		deb(const char *path, t_read *t)
+{
+	int			fd;
 
-/* #include <fcntl.h> */
-/* static void		debugi(const char *path, t_read *shell) */
-/* { */
-/* 	int			fd; */
-/*  */
-/* 	fd = open(path, O_WRONLY); */
-/* 	ft_dprintf(fd, "x[%d] xi[%d] y[%d] ws_col[%d]\n width[%d] buff[%s]\n", */
-/* 	shell->x, shell->x_index, shell->y, */
-/* 	shell->ws_col, shell->width, shell->buffer); */
-/* } */
+	fd = open(path, O_WRONLY);
+	ft_dprintf(fd, "====QUICK EZ DEBUG====\n\n");
+	ft_dprintf(fd, "x[%d]ix[%d]y[%d] ws_col[%d]\n\n",  t->x,t->x_index,t->y,t->ws_col);
+}
 
 static void	check_tmp_buffer(t_read *term)
 {
@@ -60,7 +58,7 @@ void		move_key_down(t_read *term)
 		}
 		goto_prompt(term);
 		ft_strdel(&term->buffer);
-		term->buffer = ft_memalloc(BUFF_SIZE);
+		term->buffer = ft_memalloc(BUFF_SIZE + 1);
 		insert_str_in_buffer((char*)w->content, term);
 	}
 	else
@@ -93,7 +91,7 @@ void		move_key_up(t_read *term)
 		}
 		goto_prompt(term);
 		ft_strdel(&term->buffer);
-		term->buffer = ft_memalloc(BUFF_SIZE);
+		term->buffer = ft_memalloc(BUFF_SIZE + 1);
 		insert_str_in_buffer((char*)w->content, term);
 	}
 }
@@ -115,8 +113,7 @@ void		move_right(t_read *term)
 		term->x_index++;
 		term->x++;
 	}
-	else if (term->x >= term->ws_col - 1
-			|| term->buffer[buff_index] == NEW_LINE[0])
+	else if (term->buffer[buff_index] == '\n')
 	{
 		xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
 		xtputs(term->tcaps[KEY_DOWN], 1, my_outc);
@@ -136,7 +133,6 @@ void		move_left(t_read *term)
 {
 	ssize_t	width;
 
-//	debugi("/dev/pts/2", term);
 	if ((term->x > term->prompt_len && term->y == 0)
 		|| (term->x > 0 && term->y > 0))
 	{
@@ -156,4 +152,5 @@ void		move_left(t_read *term)
 	}
 	else if (term->x_index == term->prompt_len)
 		xtputs(term->tcaps[BELL], 1, my_outc);
+	deb("/dev/pts/2", term);
 }
