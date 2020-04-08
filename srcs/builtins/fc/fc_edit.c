@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/24 18:50:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/08 22:29:22 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ static void		get_edit_entries(t_lst *w, t_cmd *cmd)
 		cmd->first = w_entries + cmd->first + 1;
 	if (cmd->last <= 0)
 		cmd->last = w_entries + cmd->last + 1;
-	printf("[%zu][%d][%d]\n", cmd->ac, cmd->first, cmd->last);
 }
 
 
