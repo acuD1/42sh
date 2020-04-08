@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/08 20:05:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/08 22:02:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,55 +27,27 @@ static void		debuga(const char *path, int width, int i)
 	ft_dprintf(fd, "buff_index[%d] width[%d]\n\n", i, width);
 }
 
-/* ssize_t		get_width_last_line(t_read *term) */
-/* { */
-/* 	ssize_t	buff_index; */
-/* 	ssize_t	width; */
-/*  */
-/* 	width = 0; */
-/* 	buff_index = term->x_index - (ssize_t)term->prompt_len - 1; */
-/* 	while (buff_index-- > 0 && width < (term->ws_col - 1)) */
-/* 	{ */
-/* 		debuga("/dev/pts/2", width, buff_index); */
-/* 		if (term->buffer[buff_index] == '\n') */
-/* 			break ; */
-/* 		width++; */
-/* 	} */
-/* 	if (term->y == 1) */
-/* 		width += term->prompt_len; */
-/* 	if (width == term->ws_col) */
-/* 	{ */
-/* 		width--; */
-/* 		term->x_index--; */
-/* 	} */
-/* 	return (width); */
-/* } */
-
 ssize_t		get_width_last_line(t_read *term)
 {
 	ssize_t	buff_index;
 	ssize_t	width;
-	ssize_t	x;
 
 	width = 0;
-	x = term->x;
 	buff_index = term->x_index - (ssize_t)term->prompt_len;
-	if ((buff_index > 0) && term->buffer[buff_index - 1] == NEW_LINE[0])
+	if ((buff_index > 0) && term->buffer[buff_index - 1] == '\n')
 		buff_index--;
+	else
+			return (term->ws_col - 1);
 	while (buff_index-- > 0)
 	{
-		if (term->buffer[buff_index] == NEW_LINE[0])
+		if (term->buffer[buff_index] == '\n')
 			break ;
-		else if (x == 0 && !ft_strchr(term->buffer, NEW_LINE[0]))
-			return (term->ws_col - 1);
-		x--;
 		width++;
 	}
-	/* if (width > term->ws_col) */
-	/* 	width -= term->ws_col; */
-	if (term->y == 1)
+	if ((width + ((term->y == 2) ? term->prompt_len : 0)) > term->ws_col)
+		width = (width + ((term->y == 2) ? term->prompt_len : 0)) % term->ws_col;
+	else if (term->y == 1)
 		width += term->prompt_len;
-	debuga("/dev/pts/2", buff_index, width);
 	return (width);
 }
 
