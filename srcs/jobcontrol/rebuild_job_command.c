@@ -26,7 +26,12 @@ void	rebuild_job_command(t_job *job)
 		if (ptr == job->process_list)
 			tmp = ft_strjoin(job->command, get_short_command(ptr->content));
 		else
+		{
+			tmp = ft_strjoin(job->command, " ");
+			ft_strdel(&(job->command));
+			job->command = tmp;
 			tmp = ft_strjoin(job->command, ((t_process*)ptr->content)->command);
+		}
 		ft_strdel(&(job->command));
 		job->command = tmp;
 		ptr = ptr->next;

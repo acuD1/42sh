@@ -52,7 +52,7 @@ static void	condition_fulfilled(t_lst *process)
 		process = process->next;
 	}
 }
-/*
+
 static void	free_process_link(t_lst *ptr)
 {
 	if (ptr && ptr->content)
@@ -74,7 +74,9 @@ static void	clear_process(t_job *job, t_lst **ptr)
 	t_lst	*prev;
 
 	prev = job->process_list;
-	if (((t_process*)(*ptr)->content)->completed == TRUE)
+	if ((*ptr)->next &&
+		(((t_process*)(*ptr)->content)->completed == TRUE
+		|| ((t_process*)(*ptr)->content)->stopped == TRUE))
 	{
 		if (job->process_list == *ptr)
 		{
@@ -94,18 +96,17 @@ static void	clear_process(t_job *job, t_lst **ptr)
 		return ;
 	}
 	*ptr = (*ptr)->next;
-}*/
+}
 
 int8_t		launch_job(t_core *shell, t_job *job, int foreground)
 {
 	t_process	*ptr;
 	t_lst		*process;
-	t_lst		*next;
 
 	process = job->process_list;
-	while (process && (ptr = ((t_process *)process->content)))
+	while (process && (ptr = ((t_process*)process->content)))
 	{
-		next = process->next;
+//		dprintf(2, "new process => %s %p %p\n", ptr->command, ptr, process);
 		ptr->stopped = (foreground == TRUE) ? FALSE : TRUE;
 		if (ptr->completed == FALSE)
 		{
@@ -122,7 +123,7 @@ int8_t		launch_job(t_core *shell, t_job *job, int foreground)
 		}
 		if (ptr->completed == TRUE && ptr->status == SIGINT)
 			return (FAILURE);
-		process = next;
+		clear_process(job, &process);
 	}
 	return (SUCCESS);
 }
