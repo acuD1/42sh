@@ -6,20 +6,11 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/08 22:09:49 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/11 11:02:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-#include <fcntl.h>
-static void		deb(const char *path, t_read *t)
-{
-	int			fd;
-
-	fd = open(path, O_WRONLY);
-	ft_dprintf(fd, "====QUICK EZ DEBUG====\n\n");
-	ft_dprintf(fd, "x[%d]ix[%d]y[%d] ws_col[%d]\n\n",  t->x,t->x_index,t->y,t->ws_col);
-}
 
 static void	check_tmp_buffer(t_read *term)
 {
@@ -152,5 +143,4 @@ void		move_left(t_read *term)
 	}
 	else if (term->x_index == term->prompt_len)
 		xtputs(term->tcaps[BELL], 1, my_outc);
-	deb("/dev/pts/2", term);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/08 22:29:22 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/11 11:15:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int8_t	fc_exec_cmd(t_core *shell, t_cmd cmd)
 	}
 	close(cmd.fd);
 	ft_strdel(&shell->term.buffer);
-	shell->term.buffer = ft_memalloc(BUFF_SIZE);
+	shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 	ft_strdel(&cmd.editor);
 	return (SUCCESS);
 }
@@ -83,7 +83,7 @@ static void		get_edit_entries(t_lst *w, t_cmd *cmd)
 	int32_t		w_entries;
 
 	w_entries = (int32_t)ft_lstlen(w);
-	if (cmd->ac == 1)
+	if (cmd->ac == 1 || cmd->ac == 3)
 	{
 		cmd->first = w_entries;
 		cmd->last = w_entries;
