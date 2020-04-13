@@ -329,8 +329,7 @@ vpath %.h $(H_PATH)
 
 # Variables
 
-DEBUG				=
-CFLAGS				= -Wall -Wextra -Werror
+CFLAGS				= -Wall -Wextra -Werror -g3
 ifeq ($(DEBUG), g)
 	CFLAGS = -g
 else ifeq ($(DEBUG), fsanitize)

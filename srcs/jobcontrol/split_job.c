@@ -13,6 +13,15 @@ static void	erase_process(t_process *process)
 	process->command = NULL;
 }
 
+void	debug_list(t_lst *ptr)
+{
+	while (ptr)
+	{
+		dprintf(2, "%s\n", ((t_process*)ptr->content)->command);
+		ptr = ptr->next;
+	}
+}
+
 static void	copy_process_list(t_job *job, t_job *new_job)
 {
 	t_process	process;
@@ -49,7 +58,9 @@ void	split_job(t_core *shell, t_job *job)
 	job->pgid = -1;
 	new_job.pgid = job->pgid;
 	new_job.type = P_SEMICOLON;
-	new_job.process_list = job->process_list;
-	//rebuild_job_command(&new_job);
+	rebuild_job_command(&new_job);
+	new_job.command = ft_strdup("new_job");
+	new_job.notified = FALSE;
 	ft_lstappend(&(shell->launched_jobs), ft_lstnew(&new_job, sizeof(t_job)));
+	do_job_notification(shell, shell->launched_jobs, TRUE);
 }
