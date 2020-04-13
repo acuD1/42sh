@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/08 22:02:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/11 20:51:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,6 @@ int			my_outc(int c)
 {
 	write(0, &c, 1);
 	return (SUCCESS);
-}
-
-#include <fcntl.h>
-static void		debuga(const char *path, int width, int i)
-{
-	int			fd;
-
-	fd = open(path, O_WRONLY);
-	ft_dprintf(fd, "buff_index[%d] width[%d]\n\n", i, width);
 }
 
 ssize_t		get_width_last_line(t_read *term)
