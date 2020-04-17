@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 15:03:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 17:09:04 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/17 11:46:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void		insert_dollar(char **insert, const char *to_find, char *key)
 		*insert = ft_strjoin("${", key);
 		*insert = ft_strjoinf(*insert, "}", 1);
 	}
-	else if (!ft_strcmp(to_find, "$"))
+	else if (to_find[0] == '$')
 		*insert = ft_strjoin("$", key);
 }
 
