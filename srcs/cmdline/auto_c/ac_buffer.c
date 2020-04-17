@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/17 11:45:26 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/17 11:51:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static u_int8_t	get_dir(t_read *term, char *current_dir)
 	{
 		if (term->cmd[0][found] == '/')
 		{
-			ft_bzero(current_dir, BUFF_SIZE);
+			ft_bzero(current_dir, BUFF_SIZE + 1);
 			ft_strncpy(current_dir, term->cmd[1], found + 1);
 			tmp = ft_strdup(ft_strchr(term->cmd[0], '/'));
 			ft_strdel(&term->cmd[0]);

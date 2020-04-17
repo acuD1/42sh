@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 14:45:54 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/17 11:50:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void		delete_last_cmd(const char *d_name, t_read *term)
 	tmp = ft_strsub(term->buffer, 0, (size_t)i);
 	goto_prompt(term);
 	ft_strdel(&term->buffer);
-	term->buffer = ft_memalloc(BUFF_SIZE);
+	term->buffer = ft_memalloc(BUFF_SIZE + 1);
 	insert_str_in_buffer(tmp, term);
 	ft_strdel(&tmp);
 }
