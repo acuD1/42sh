@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 16:58:21 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/19 17:46:06 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <fcntl.h>
 
-static void		debug_current(const char *path, t_core *shell)
+/*static void		debug_current(const char *path, t_core *shell)
 {
 	int			fd;
 
@@ -22,7 +22,7 @@ static void		debug_current(const char *path, t_core *shell)
 	ft_dprintf(fd, "x[%d] xi[%d] y[%d] ws_col[%d]\n width[%d] buff[%s]\n",
 	shell->term.x, shell->term.x_index, shell->term.y,
 	shell->term.ws_col, shell->term.width, shell->term.buffer);
-}
+}*/
 
 /*
 **	  Termcaps capabilities:
@@ -108,7 +108,7 @@ int8_t			init_prompt(t_core *shell)
 		else if (*shell->term.prompt
 			|| (!*shell->term.prompt && shell->term.buffer))
 			break ;
-		debug_current("/dev/ttys004", shell);
+		//debug_current("/dev/ttys004", shell);
 	}
 	check_subprompt(shell);
 	check_expansions(&shell->term);
