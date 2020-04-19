@@ -29,6 +29,7 @@
 # include <setjmp.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <sys/types.h>
 
 extern jmp_buf g_exit_leaks;
 
