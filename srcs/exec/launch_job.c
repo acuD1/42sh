@@ -30,6 +30,15 @@ static void	setup_pipes(t_process *process, t_lst *ptr)
 	}
 }
 
+void	debg_list(t_lst *ptr)
+{
+	while (ptr)
+	{
+		dprintf(2, "%p %s\n", ((t_process*)ptr->content)->command, ((t_process*)ptr->content)->command);
+		ptr = ptr->next;
+	}
+}
+
 static void	condition_fulfilled(t_lst *process)
 {
 	t_process	*ptr;
@@ -79,9 +88,7 @@ static void	clear_process(t_job *job, t_lst **ptr)
 		|| ((t_process*)(*ptr)->content)->stopped == TRUE))
 	{
 		if (job->process_list == *ptr)
-		{
 			job->process_list = (*ptr)->next;
-		}
 		else
 		{
 			while (prev->next != *ptr)
@@ -91,6 +98,7 @@ static void	clear_process(t_job *job, t_lst **ptr)
 		prev = *ptr;
 		*ptr = (*ptr)->next;
 		free_process_link(prev);
+		job->process_list = *ptr;
 		if (*ptr)
 			rebuild_job_command(job);
 		return ;
@@ -106,7 +114,6 @@ int8_t		launch_job(t_core *shell, t_job *job, int foreground)
 	process = job->process_list;
 	while (process && (ptr = ((t_process*)process->content)))
 	{
-//		dprintf(2, "new process => %s %p %p\n", ptr->command, ptr, process);
 		ptr->stopped = (foreground == TRUE) ? FALSE : TRUE;
 		if (ptr->completed == FALSE)
 		{

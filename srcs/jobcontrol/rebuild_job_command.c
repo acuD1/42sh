@@ -4,6 +4,7 @@ char	*get_short_command(t_process *process)
 {
 	int			skip;
 
+dprintf(2, "%p %p\n", process, process->command);
 	if (ft_strncmp(process->command, "&& ", 3) == 0
 		|| ft_strncmp(process->command, "|| ", 3) == 0)
 		skip = 3;
