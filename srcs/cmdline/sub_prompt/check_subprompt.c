@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_subprompt.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 16:57:22 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/19 17:24:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static ssize_t	exit_subprompt_prio(t_core *shell, char *str)
 	return (0);
 }
 
-size_t			open_machine_subprompt(t_core *shell, t_subprompt *sub)
+ssize_t			open_machine_subprompt(t_core *shell, t_subprompt *sub)
 {
 	char	*tmp;
 
