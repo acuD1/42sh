@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/10 20:08:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/20 16:42:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,11 @@ static int8_t	cd_handler
 	if (!process->av[i])
 		return (cd_home(shell));
 	if (process->av[i][0] == '-' && !process->av[i][1])
+	{
+		if (options == 'P')
+			shell->cd.no_symbolic = TRUE;
 		return (cd_oldpwd(shell));
+	}
 	if (options == 'L')
 		return (change_dir(shell, process->av[i]));
 	if (options == 'P')
