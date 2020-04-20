@@ -12,15 +12,6 @@
 
 #include "sh42.h"
 
-//#include <fcntl.h>
-//static void		debuga(const char *path,t_read *term)
-//{
-//	int			fd;
-
-//	fd = open(path, O_WRONLY);
-//	ft_dprintf(fd, "y[%d] ssearch[%d]\n\n", term->y, term->search);
-//}
-
 void			goto_reverse(t_read *term, const char *buff_tmp)
 {
 	ssize_t		str_len;
@@ -40,29 +31,26 @@ void			goto_reverse(t_read *term, const char *buff_tmp)
 		ft_dprintf(STDERR_FILENO, "(reverse-i-search)`%s': ", buff_tmp);
 	else if (term->search == SEARCH_FAILURE)
 		ft_dprintf(STDERR_FILENO, "(failed reverse-i-search)`%s': ", buff_tmp);
-	if (term->buffer)
-		ft_putstr_fd(term->buffer, STDERR_FILENO);
 }
 
 static void		walking_history
-	(const char *buff_tmp, t_read *term, t_lst *history)
+	(const char *buff_tmp, t_read *term, t_lst **history)
 {
-	while (history && (history)->next && *buff_tmp)
+	while (*history && (*history)->next && *buff_tmp)
 	{
-		if (ft_strstr(history->content, buff_tmp))
+		if (ft_strstr((*history)->content, buff_tmp))
 		{
 			term->search = SEARCH_SUCCESS;
 			goto_reverse(term, buff_tmp);
 			ft_strdel(&term->buffer);
 			term->buffer = ft_memalloc(BUFF_SIZE + 1);
-			insert_str_in_buffer(history->content, term);
-			history = history->next;
+			insert_str_in_buffer((*history)->content, term);
+			*history = (*history)->next;
 			return ;
 		}
-		history = history->next;
+		*history = (*history)->next;
 	}
 	term->search = SEARCH_FAILURE;
-	xtputs(term->tcaps[BELL], 1, my_outc);
 	goto_reverse(term, buff_tmp);
 }
 
@@ -101,6 +89,8 @@ static void		research_in_history(t_read *term)
 	term->tmp_buff = ft_memalloc(BUFF_SIZE + 1);
 	ft_bzero(buff, READ_SIZE + 1);
 	history = term->history;
+	goto_reverse(term, "");
+	ft_putstr_fd(term->buffer, STDERR_FILENO);
 	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		if (!term->tmp_buff)
@@ -110,7 +100,9 @@ static void		research_in_history(t_read *term)
 			ft_strdel(&term->tmp_buff);
 			return ;
 		}
-		walking_history(term->tmp_buff, term, history);
+		if (*buff == 127)
+			history = term->history;
+		walking_history(term->tmp_buff, term, &history);
 		ft_bzero(buff, READ_SIZE + 1);
 	}
 }
@@ -130,7 +122,6 @@ void			research_mode(t_read *term)
 		saved = ft_strdup(term->tmp_buff);
 		ft_strdel(&term->tmp_buff);
 	}
-	goto_reverse(term, "");
 	research_in_history(term);
 	if (saved)
 	{
