@@ -12,14 +12,14 @@
 
 #include "sh42.h"
 
-#include <fcntl.h>
-static void		debuga(const char *path,t_read *term)
-{
-	int			fd;
+//#include <fcntl.h>
+//static void		debuga(const char *path,t_read *term)
+//{
+//	int			fd;
 
-	fd = open(path, O_WRONLY);
-	ft_dprintf(fd, "y[%d] ssearch[%d]\n\n", term->y, term->search);
-}
+//	fd = open(path, O_WRONLY);
+//	ft_dprintf(fd, "y[%d] ssearch[%d]\n\n", term->y, term->search);
+//}
 
 void			goto_reverse(t_read *term, const char *buff_tmp)
 {

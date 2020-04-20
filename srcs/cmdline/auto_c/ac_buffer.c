@@ -55,18 +55,19 @@ static u_int8_t	get_dir(t_read *term, char *current_dir)
 
 	tmp = NULL;
 	found = ft_strlen(term->cmd[0]);
-	while (found--)
+	while (found)
 	{
 		if (term->cmd[0][found] == '/')
 		{
 			ft_bzero(current_dir, BUFF_SIZE + 1);
 			ft_strncpy(current_dir, term->cmd[1], found + 1);
-			tmp = ft_strdup(ft_strchr(term->cmd[0], '/'));
+			tmp = ft_strdup(ft_strrchr(term->cmd[0], '/'));
 			ft_strdel(&term->cmd[0]);
 			term->cmd[0] = ft_strdup(tmp + 1);
 			ft_strdel(&tmp);
 			return (TRUE);
 		}
+		found--;
 	}
 	return (FALSE);
 }
