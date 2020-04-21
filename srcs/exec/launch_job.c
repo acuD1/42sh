@@ -30,15 +30,6 @@ static void	setup_pipes(t_process *process, t_lst *ptr)
 	}
 }
 
-void	debg_list(t_lst *ptr)
-{
-	while (ptr)
-	{
-		dprintf(2, "%p %s\n", ((t_process*)ptr->content)->command, ((t_process*)ptr->content)->command);
-		ptr = ptr->next;
-	}
-}
-
 static void	condition_fulfilled(t_lst *process)
 {
 	t_process	*ptr;
