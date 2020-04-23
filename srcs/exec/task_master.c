@@ -71,9 +71,9 @@ static int8_t	handle_background_job(t_core *shell, t_job *job, int foreground)
 
 void			task_master(t_core *shell)
 {
+	int8_t	foreground;
 	t_lst	*job;
 	t_lst	*next;
-	int8_t	foreground;
 
 	job = shell->job_list;
 	while (job)
@@ -81,10 +81,7 @@ void			task_master(t_core *shell)
 		foreground = ((t_job*)job->content)->type == P_AND ? FALSE : TRUE;
 		next = job->next;
 		if (handle_background_job(shell, job->content, foreground) == 1)
-		{
-			ft_freejoblist(&(shell->job_list));
-			return ;
-		}
+			break ;
 		place_job(shell, job->content, foreground);
 		if (job_is_completed(job->content))
 			free_job(&(shell->job_list), job);
@@ -96,5 +93,5 @@ void			task_master(t_core *shell)
 		}
 		job = next;
 	}
-	shell->job_list = NULL;
+	ft_freejoblist(&(shell->job_list));
 }
