@@ -6,11 +6,12 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:59:13 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/18 00:03:54 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:26:30 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 int8_t	builtin_fg(t_core *shell, t_process *process)
 {

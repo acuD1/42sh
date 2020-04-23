@@ -6,12 +6,13 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 16:41:27 by arsciand          #+#    #+#             */
-/*   Updated: 2020/04/20 17:19:22 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/23 16:50:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <errno.h>
+#include <unistd.h>
 
 static int8_t	change_dir_perm_error
 	(t_core *shell, const char *path, int8_t errnum)

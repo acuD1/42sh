@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   hash_opt.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 15:05:40 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/06 18:03:30 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:51:19 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <errno.h>
+#include <unistd.h>
 
 int8_t	hash_l(t_core *shell, t_process *process, size_t ac)
 {

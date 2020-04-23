@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   sub_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/06 23:00:33 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:54:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 ssize_t		check_quote_priority(char *str, t_subprompt *sub)
 {

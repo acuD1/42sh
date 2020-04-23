@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   xfunctions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 12:13:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 15:48:03 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:54:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <term.h>
 #include "sh42.h"
+#include <term.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 /*
 **	Some functions safe/protected

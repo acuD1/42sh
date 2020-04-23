@@ -6,13 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 15:29:42 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/02 15:39:49 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:30:57 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 static char		*cd_pwd_error_handler
 	(t_core *shell, const char *path, char *value)

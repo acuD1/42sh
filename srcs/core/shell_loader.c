@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loader.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/12 14:39:06 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:55:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 void	load_noi_mode(t_core *shell)
 {
@@ -55,9 +57,8 @@ void	load_i_mode(t_core *shell)
 		}
 		reset_config(shell);
 		lexer_parser_analyzer(shell);
-		do_job_notification(shell, shell->launched_jobs);
-		if (task_master(shell) != SUCCESS)
-			quit_shell(shell, EXIT_FAILURE, FALSE);
+		do_job_notification(shell, shell->launched_jobs, TRUE);
+		task_master(shell);
 		save_history(&shell->term);
 		free_prompt(shell);
 	}

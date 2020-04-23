@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   name_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:15:08 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/12 15:38:08 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 17:00:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <stdlib.h>
 
 static size_t	loop_till_quote(const char *str, size_t index, char quote)
 {

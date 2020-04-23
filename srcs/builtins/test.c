@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 17:50:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/10 14:42:13 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:52:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 static int32_t	get_opt_test(size_t argc, char **argv, int8_t diff)
 {

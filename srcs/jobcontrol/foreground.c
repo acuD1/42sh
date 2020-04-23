@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   foreground.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/21 18:01:39 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/09 19:27:57 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:58:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
 #include "sh42.h"
+#include <signal.h>
+#include <unistd.h>
 
 void	put_job_in_foreground
 	(t_core *shell, t_lst *jobs, t_job *job, u_int8_t cont)

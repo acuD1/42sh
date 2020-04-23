@@ -6,12 +6,13 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:20:26 by arsciand          #+#    #+#             */
-/*   Updated: 2020/02/15 17:09:19 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:37:36 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <errno.h>
+#include <unistd.h>
 
 static int8_t	del_located_hash(t_core *shell, t_lst *node, t_process *process)
 {

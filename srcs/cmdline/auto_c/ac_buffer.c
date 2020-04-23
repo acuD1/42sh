@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ac_buffer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/17 11:51:49 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:53:00 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dirent.h>
 #include "sh42.h"
+#include <dirent.h>
+#include <unistd.h>
 
 /*
 **		Delete last command insert in buffer and insert the new one

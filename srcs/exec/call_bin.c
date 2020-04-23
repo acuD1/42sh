@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   call_bin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 01:58:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/12 16:36:45 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:56:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <errno.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 /*
 **	Function inside the fork where env is created, redirections

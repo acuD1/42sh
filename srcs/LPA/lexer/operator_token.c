@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   operator_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:46:41 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/09 19:30:23 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 17:00:49 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <stdlib.h>
 
 static const t_token	g_ope[] =
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_line.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 17:12:07 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 17:28:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void		goto_reverse(t_read *term, const char *buff_tmp);
 **		Subprompt/Multiline
 */
 
-ssize_t	check_subprompt(t_core *shell);
+ssize_t		check_subprompt(t_core *shell);
 u_int8_t	check_backslash(t_read *term, char *quote);
 u_int8_t	check_backslash_nbr(char *str, ssize_t *index);
 u_int8_t	charset_count(t_read *term, char charset, size_t i);

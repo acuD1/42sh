@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   term_config.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/10 17:14:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:54:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <term.h>
 #include "sh42.h"
+#include <term.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 void	init_cmd_line(t_core *shell, t_read *term)
 {

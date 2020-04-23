@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   token_to_tab.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:54:18 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 21:01:16 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 17:00:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <stdlib.h>
 
 static char	**create_tablo(const char *str)
 {

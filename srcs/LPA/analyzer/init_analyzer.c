@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init_analyzer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 17:29:49 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 20:55:27 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 17:00:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <stdlib.h>
 
 static void	init_start_analyze(t_anal analyze)
 {

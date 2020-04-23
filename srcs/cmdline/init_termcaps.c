@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init_termcaps.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:35:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 16:33:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:54:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "sh42.h"
 #include <sys/ioctl.h>
 #include <termcap.h>
-#include "sh42.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 /*
 **	Store datas of terminal's line/column
@@ -28,9 +30,8 @@ int8_t			get_size(t_read *term)
 		if ((term->ws_col = tgetnum("co")) < 0
 			|| (term->ws_li = tgetnum("li")) < 0)
 		{
-			ft_dprintf(STDERR_FILENO, "Ioctl and Tgetnum error");
+			ft_dprintf(STDERR_FILENO, "42sh: ioctl error\n");
 			quit_shell(get_core(NULL), EXIT_FAILURE, FALSE);
-			return (FAILURE);
 		}
 		return (SUCCESS);
 	}
@@ -75,12 +76,11 @@ int8_t			init_termcaps(t_read *term)
 	}
 	if (stock_termcaps(term) != SUCCESS)
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: error while getting termcaps\n");
+		ft_dprintf(STDERR_FILENO, "42sh: termcaps error\n");
 		return (FAILURE);
 	}
 	if (get_size(term) != SUCCESS)
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: error while getting terminal size\n");
 		return (FAILURE);
 	}
 	return (SUCCESS);

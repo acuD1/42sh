@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   check_hst_exp.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/09 19:04:10 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:53:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 static void	find_expansions(t_read *term, ssize_t *i)
 {

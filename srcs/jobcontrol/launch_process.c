@@ -6,12 +6,14 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:55:51 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 19:51:05 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/11 21:37:03 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <signal.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 void		reset_signals(void)
 {
@@ -60,7 +62,6 @@ int8_t		launch_blt(t_core *shell, t_process *process)
 	if (process->pipe[0] == STDIN_FILENO && process->pipe[1] == STDOUT_FILENO
 		&& process->av && (blt = is_a_blt(process->av[0])) != FAILURE)
 	{
-		process->status = 1;
 		if (exec_redirs(shell, process, process->redir_list) == SUCCESS)
 			process->status = call_builtin(shell, process, blt);
 		process->completed = TRUE;

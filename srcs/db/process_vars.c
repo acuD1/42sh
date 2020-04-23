@@ -6,11 +6,12 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 16:51:00 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/02/19 02:49:27 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:14:31 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 /*
 **	Update or create $$ special variable, containing the pid of the program

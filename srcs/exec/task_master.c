@@ -3,46 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   task_master.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:19:07 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 18:46:19 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/04/23 17:22:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <signal.h>
+#include <unistd.h>
+#include <stdlib.h>
 
-static void	free_job(t_core *shell, t_lst *job)
-{
-	t_lst	*ptr;
-
-	ptr = shell->job_list;
-	if (shell->job_list != job)
-	{
-		while (ptr && ptr->next != job)
-			ptr = ptr->next;
-		if (ptr)
-			ptr->next = job->next;
-	}
-	else
-	{
-		shell->job_list = job->next;
-	}
-	free_process_list(&(((t_job*)job->content)->process_list));
-	ft_strdel(&(((t_job*)job->content)->command));
-	free(job->content);
-	free(job);
-}
-
-static void	place_job(t_core *shell, t_job *job, int8_t foreground)
+static void		place_job(t_core *shell, t_job *job, int8_t foreground)
 {
 	if (shell->is_interactive && job_is_completed(job))
 		return ;
 	if (!(shell->is_interactive))
 		wait_for_job(shell, shell->job_list, job);
-	else if (foreground == TRUE && !job_is_stopped(job))
-		put_job_in_foreground(shell, shell->job_list, job, FALSE);
 	else if (foreground == FALSE)
 	{
 		job->jobc_id = update_jobs(shell->launched_jobs);
@@ -52,7 +30,7 @@ static void	place_job(t_core *shell, t_job *job, int8_t foreground)
 	}
 }
 
-int			cond(t_lst *process)
+int				cond(t_lst *process)
 {
 	while (process)
 	{
@@ -64,7 +42,7 @@ int			cond(t_lst *process)
 	return (FALSE);
 }
 
-static void	handle_background_job(t_core *shell, t_job *job, int foreground)
+static int8_t	handle_background_job(t_core *shell, t_job *job, int foreground)
 {
 	pid_t	pid;
 
@@ -87,10 +65,11 @@ static void	handle_background_job(t_core *shell, t_job *job, int foreground)
 		shell->status = 0;
 	}
 	else
-		launch_job(shell, job, foreground);
+		return (launch_job(shell, job, foreground));
+	return (SUCCESS);
 }
 
-int8_t		task_master(t_core *shell)
+void			task_master(t_core *shell)
 {
 	t_lst	*job;
 	t_lst	*next;
@@ -99,19 +78,23 @@ int8_t		task_master(t_core *shell)
 	job = shell->job_list;
 	while (job)
 	{
-		do_job_notification(shell, shell->launched_jobs);
-		foreground = TRUE;
-		if (((t_job*)job->content)->type == P_AND)
-			foreground = FALSE;
+		foreground = ((t_job*)job->content)->type == P_AND ? FALSE : TRUE;
 		next = job->next;
-		handle_background_job(shell, job->content, foreground);
+		if (handle_background_job(shell, job->content, foreground) == 1)
+		{
+			ft_freejoblist(&(shell->job_list));
+			return ;
+		}
 		place_job(shell, job->content, foreground);
 		if (job_is_completed(job->content))
-			free_job(shell, job);
+			free_job(&(shell->job_list), job);
 		else
+		{
+			shell->job_list = job->next;
+			job->next = NULL;
 			ft_lstappend(&(shell->launched_jobs), job);
+		}
 		job = next;
 	}
 	shell->job_list = NULL;
-	return (SUCCESS);
 }

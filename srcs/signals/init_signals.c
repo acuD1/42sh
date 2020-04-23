@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init_signals.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 15:17:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/23 17:01:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
 #include "sh42.h"
+#include <signal.h>
+#include <unistd.h>
+#include <stdlib.h>
 
 static void	sig_handler(int signum)
 {
@@ -76,7 +78,7 @@ void		init_signals(void)
 			, SIGIO, SIGXCPU, SIGXFSZ, SIGVTALRM, SIGPROF, SIGWINCH, SIGUSR1
 			, SIGUSR2};
 	static void	(*sighandler[27])(int) = {sig_handler, sigint_handler
-		, sig_handler, sig_handler, sig_handler, sig_handler, sig_handler
+		, SIG_IGN, sig_handler, sig_handler, sig_handler, sig_handler
 		, sig_handler, sig_handler, sig_handler, sig_exit, sig_handler
 		, sig_handler, sig_handler, sig_handler, sig_exit, SIG_DFL, SIG_IGN
 		, SIG_IGN, SIG_DFL, sig_handler, sig_handler, sig_handler, sig_handler

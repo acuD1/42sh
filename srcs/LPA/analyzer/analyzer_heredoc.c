@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer_heredoc.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:13:54 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/12 16:38:29 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:59:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 static char			*heredoc_inhib(char *data)
 {

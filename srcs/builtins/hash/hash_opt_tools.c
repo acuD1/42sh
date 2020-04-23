@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   hash_opt_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 15:12:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/09 19:00:46 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:51:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 void			print_hash_map(t_core *shell, enum e_hash fmt)
 {

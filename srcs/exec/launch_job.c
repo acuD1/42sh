@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dispatcher.c                                       :+:      :+:    :+:   */
+/*   launch_job.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/04/23 15:25:37 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/23 16:56:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
+#include <sys/wait.h>
 
 static void	setup_pipes(t_process *process, t_lst *ptr)
 {
@@ -37,9 +39,11 @@ static void	condition_fulfilled(t_lst *process)
 	cond = ptr->type;
 	if (cond != P_ANDIF && cond != P_ORIF)
 		return ;
-	else if (cond == P_ANDIF && ptr->status == 0)
+	else if (cond == P_ANDIF
+	&& get_signal(ptr->status) == 0 && WEXITSTATUS(ptr->status) == 0)
 		return ;
-	else if (cond == P_ORIF && ptr->status != 0)
+	else if (cond == P_ORIF
+	&& (get_signal(ptr->status) != 0 || WEXITSTATUS(ptr->status) != 0))
 		return ;
 	while (process && (ptr = ((t_process *)process->content))
 	&& (ptr->type == (enum e_pstate)cond || ptr->type == P_PIPE))
@@ -49,29 +53,57 @@ static void	condition_fulfilled(t_lst *process)
 	}
 }
 
-static void	init_process_list(t_lst *process)
+static void	free_process_link(t_lst *ptr)
 {
-	t_process *ptr;
-
-	while (process)
+	if (ptr && ptr->content)
 	{
-		ptr = process->content;
-		ptr->pipe[0] = STDIN_FILENO;
-		ptr->pipe[1] = STDOUT_FILENO;
-		ptr->close[0] = -1;
-		ptr->close[1] = -1;
-		process = process->next;
+		ft_free_redirlist((t_lst **)&(((t_process *)ptr->content)->redir_list));
+		free_db((((t_process *)ptr->content)->assign_list));
+		ft_freetokenlist(&(((t_process *)ptr->content)->tok_list));
+		ft_tabdel(&(((t_process *)ptr->content)->av));
+		ft_tabdel(&(((t_process *)ptr->content)->envp));
+		ft_strdel(&(((t_process *)ptr->content)->bin));
+		ft_strdel(&(((t_process *)ptr->content)->command));
+		free(ptr->content);
+		free(ptr);
 	}
 }
 
-void		launch_job(t_core *shell, t_job *job, int foreground)
+static void	clear_process(t_job *job, t_lst **ptr)
+{
+	t_lst	*prev;
+
+	prev = job->process_list;
+	if ((*ptr)->next &&
+		(((t_process*)(*ptr)->content)->completed == TRUE
+		|| ((t_process*)(*ptr)->content)->stopped == TRUE))
+	{
+		if (job->process_list == *ptr)
+			job->process_list = (*ptr)->next;
+		else
+		{
+			while (prev->next != *ptr)
+				prev = prev->next;
+			prev->next = (*ptr)->next;
+		}
+		prev = *ptr;
+		*ptr = (*ptr)->next;
+		free_process_link(prev);
+		job->process_list = *ptr;
+		if (*ptr)
+			rebuild_job_command(job);
+		return ;
+	}
+	*ptr = (*ptr)->next;
+}
+
+int8_t		launch_job(t_core *shell, t_job *job, int foreground)
 {
 	t_process	*ptr;
 	t_lst		*process;
 
 	process = job->process_list;
-	init_process_list(process);
-	while (process && (ptr = ((t_process *)process->content)))
+	while (process && (ptr = ((t_process*)process->content)))
 	{
 		ptr->stopped = (foreground == TRUE) ? FALSE : TRUE;
 		if (ptr->completed == FALSE)
@@ -87,6 +119,9 @@ void		launch_job(t_core *shell, t_job *job, int foreground)
 			update_exit_status(shell);
 			condition_fulfilled(process);
 		}
-		process = process->next;
+		if (ptr->completed == TRUE && ptr->status == SIGINT)
+			return (FAILURE);
+		clear_process(job, &process);
 	}
+	return (SUCCESS);
 }

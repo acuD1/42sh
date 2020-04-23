@@ -6,12 +6,13 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:43:39 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/23 16:50:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <fcntl.h>
+#include <unistd.h>
 
 static int8_t	fc_exec_cmd(t_core *shell, t_cmd cmd)
 {
@@ -19,13 +20,8 @@ static int8_t	fc_exec_cmd(t_core *shell, t_cmd cmd)
 	{
 		ft_dprintf(STDERR_FILENO, "%s\n", shell->term.buffer);
 		lexer_parser_analyzer(shell);
-		do_job_notification(shell, shell->launched_jobs);
-		if (task_master(shell) != SUCCESS)
-		{
-			ft_strdel(&cmd.editor);
-			close(cmd.fd);
-			return (FAILURE);
-		}
+		do_job_notification(shell, shell->launched_jobs, TRUE);
+		task_master(shell);
 		save_history(&shell->term);
 		ft_strdel(&shell->term.buffer);
 	}

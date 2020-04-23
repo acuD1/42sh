@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   fc_specifier.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 18:17:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:50:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 static void		get_pat_and_rep(char **av, char **pat, char **rep)
 {
@@ -117,8 +118,7 @@ int8_t			select_specifier(t_core *shell, char **av)
 	ft_strdel(&pat);
 	ft_dprintf(cmd.fd, "%s\n", shell->term.buffer);
 	lexer_parser_analyzer(shell);
-	do_job_notification(shell, shell->launched_jobs);
-	if (task_master(shell) != SUCCESS)
-		return (FAILURE);
+	do_job_notification(shell, shell->launched_jobs, TRUE);
+	task_master(shell);
 	return (SUCCESS);
 }

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirs_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 03:29:40 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/09 18:01:01 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:56:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
 #include "sh42.h"
+#include <fcntl.h>
+#include <unistd.h>
 
 int8_t	dup_output(int fd, t_redir *ptr)
 {

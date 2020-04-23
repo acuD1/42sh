@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   hash_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/28 17:21:14 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/10 20:50:20 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:51:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <errno.h>
+#include <stdlib.h>
 
 void	reset_hash(t_hash *hash)
 {

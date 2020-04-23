@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   analyzer_memory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 20:31:06 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/09 19:29:14 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 17:00:11 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <stdlib.h>
 
 static void	free_lpa(t_analyzer *anal)
 {

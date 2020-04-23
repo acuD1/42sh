@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   error_param_format.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 15:29:22 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 18:29:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:56:44 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 char	*error_moar_format_third(char **tablo, char *data, t_core *shell)
 {

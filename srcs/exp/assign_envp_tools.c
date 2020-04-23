@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   assign_envp_tools.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 20:47:03 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 18:31:26 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:57:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <stdlib.h>
 
 int8_t		add_assign_env(t_core *shell, const char *key, char *value)
 {

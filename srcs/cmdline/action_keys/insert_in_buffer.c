@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   insert_in_buffer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/08 20:50:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:52:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 /*
 **		To insert a char in buffer at the end of line

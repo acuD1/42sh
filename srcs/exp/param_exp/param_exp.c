@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   param_exp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 15:29:12 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/12 17:10:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:56:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 char		*check_env_key(char *key, t_core *shell)
 {

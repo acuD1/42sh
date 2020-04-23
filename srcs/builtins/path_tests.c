@@ -6,12 +6,13 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/30 20:12:52 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/01 23:25:47 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 14:27:02 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/stat.h>
 #include "sh42.h"
+#include <sys/stat.h>
+#include <unistd.h>
 
 static int8_t	other_tests(const char *path, int opt, struct stat buf)
 {

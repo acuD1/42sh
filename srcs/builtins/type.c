@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   type.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 05:41:09 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 21:19:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:52:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 static int8_t	type(t_core *shell, char *path)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh42.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/10 14:01:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/23 17:19:19 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ int8_t		call_builtin(t_core *shell, t_process *process, int8_t blt);
 int8_t		get_bin_path(t_core *shell, t_process *process);
 void		exec_process(t_core *shell, t_job *job, t_process *process);
 void		call_bin(t_core *shell, t_process *process);
-int8_t		task_master(t_core *shell);
+void		task_master(t_core *shell);
 int8_t		is_a_blt(const char *cmd);
 int8_t		get_bin(t_core *shell, t_process *process);
 char		**set_envp(t_core *shell);
-void		status_handler(t_core *shell, t_process *process, int status);
+void		status_handler(t_core *shell, t_process *process);
 
 /*
 **	===========================================================================
@@ -120,6 +120,7 @@ void		hash_error(t_hash *hash);
 **	===========================================================================
 */
 
+int			get_signal(int status);
 t_core		*get_core(t_core *core);
 int8_t		get_canonical_path
 	(t_core *shell, const char *path, char *buffer, char *pwd);
@@ -243,22 +244,27 @@ void		put_job_in_background(t_core *shell, t_job *job, u_int8_t cont);
 void		continue_job(t_core *shell, t_job *job, int foreground);
 void		reset_signals(void);
 void		launch_process(t_core *shell, t_process *process);
-void		launch_job(t_core *shell, t_job *job, int foreground);
+int8_t		launch_job(t_core *shell, t_job *job, int foreground);
 void		job_background_notif(t_job *job);
 void		wait_for_job(t_core *shell, t_lst *jobs, t_job *job);
 int8_t		mark_process_status
 				(t_core *shell, t_lst *jobs, pid_t pid, int status);
 void		mark_job_as_stopped(t_job *job, int8_t stopped);
 int8_t		launch_blt(t_core *shell, t_process *process);
-void		wait_for_process(t_core *shell, t_lst *jobs, t_process *process);
+void		wait_for_process(t_core *shell, t_job *job, t_process *process);
 void		update_status(t_core *shell);
 t_job		*get_job(t_lst *jobs, char *str);
 t_job		*get_job_by_id(t_lst *jobs, int id);
 void		format_job_info(t_job *job);
 int			update_jobs(t_lst *jobs);
 void		attr_jobc_id(t_core *shell, t_job *job);
-void		do_job_notification(t_core *shell, t_lst *job);
+void		do_job_notification(t_core *shell, t_lst *job, int8_t free);
+int			get_signal(int status);
 int			cond(t_lst *process);
 u_int8_t	are_jobs_done(t_core *shell, t_lst *jobs);
+void		free_job(t_lst **job_list, t_lst *job);
+void		rebuild_job_command(t_job *job);
+char		*get_short_command(t_process *process);
+void		split_job(t_core *shell, t_job *job);
 
 #endif

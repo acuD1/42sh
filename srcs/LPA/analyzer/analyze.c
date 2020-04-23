@@ -6,11 +6,12 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:52:47 by guvillat          #+#    #+#             */
-/*   Updated: 2020/01/30 19:09:23 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/03/08 15:36:39 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <stdlib.h>
 
 t_analyzer	*end_analyze(t_analyzer *analyzer, t_core *shell)
 {

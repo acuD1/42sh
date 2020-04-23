@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   keys_comb.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/02 17:45:19 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/11 23:02:46 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:52:45 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
 
 /*
 **			CTRL_L => clear the screen but keep last buffer inserted

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sigint.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/12 16:39:01 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 17:01:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <signal.h>
+#include <unistd.h>
 
 static void		erase_line(t_core *shell)
 {
@@ -48,7 +49,7 @@ void			sigint_handler(int signum)
 	shell = get_core(NULL);
 	signal(SIGINT, sigint_handler);
 	shell->status = 128 + signum;
-	ft_dprintf(STDERR_FILENO, "^C\n");
+	ft_dprintf(STDERR_FILENO, "^Cours\n");
 	update_exit_status(shell);
 	erase_line(shell);
 }

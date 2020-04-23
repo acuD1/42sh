@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd_check_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 17:14:23 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/10 18:39:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:50:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <errno.h>
+#include <unistd.h>
 
 int8_t		cd_check_path(const char *path)
 {

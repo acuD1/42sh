@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_parser_analyzer.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:51:01 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/19 17:52:35 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/23 17:39:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <stdlib.h>
 
 void		ft_freejoblist(t_lst **lst)
 {

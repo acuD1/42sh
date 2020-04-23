@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_updates.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 19:12:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/08 17:14:43 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:55:17 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <sys/stat.h>
+#include <unistd.h>
 
 /*
 **	Increment SHLVL : search SHLVL in the env list, increment the value

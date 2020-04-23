@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2020/04/23 15:48:50 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/23 17:46:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void		add_lanouvellelistalasuite(t_lst *old, t_lst *new)
 {
-	t_lst *prev;
+	t_ls	 *prev;
 
 	prev = old;
 	while (old)
@@ -88,7 +88,7 @@ u_int8_t		parser_subpts(t_core *shell, t_lst *old)
 	return (FALSE);
 }
 
-u_int8_t	graph(enum e_pstate *c, enum e_pstate n, enum e_pstate ps[])
+u_int8_t		graph(enum e_pstate *c, enum e_pstate n, enum e_pstate ps[])
 {
 	size_t	i;
 

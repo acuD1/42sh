@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   quit_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 23:52:50 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/10 22:46:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/23 17:01:10 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
+#include <stdlib.h>
 
 void	quit_shell(t_core *shell, int exit_value, int8_t v)
 {

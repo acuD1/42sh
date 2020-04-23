@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   output.c                                           :+:      :+:    :+:   */
+/*   get_signal.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/20 17:20:07 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/08 15:42:44 by mpivet-p         ###   ########.fr       */
+/*   Created: 2020/03/11 22:26:28 by mpivet-p          #+#    #+#             */
+/*   Updated: 2020/04/23 17:31:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-#include <unistd.h>
+#include <sys/wait.h>
 
-void	version(t_core *shell)
+int		get_signal(int status)
 {
-	ft_dprintf(STDOUT_FILENO,
-		"%s|%sv.%d_%d_%d%s|%s 42sh%s\n\n",
-		C_G, C_X,
-		shell->build.release, shell->build.version, shell->build.patch,
-		C_G, C_Y, C_X);
+	if (WIFSTOPPED(status))
+	{
+		return (WSTOPSIG(status));
+	}
+	else if (WIFSIGNALED(status))
+	{
+		return (WTERMSIG(status));
+	}
+	return (0);
 }

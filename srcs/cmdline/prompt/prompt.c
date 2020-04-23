@@ -6,14 +6,15 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:44:26 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/23 17:47:24 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <fcntl.h>
+#include <unistd.h>
 
-/*static void		debug_current(const char *path, t_core *shell)
+/*
 **	  - `cr' => to move the cursor to the beginning of the input it is on
 **	  - `clr_lines' => to clear line from the cursor and following inputs
 */
@@ -101,9 +102,3 @@ int8_t			init_prompt(t_core *shell)
 	shell->term.status = CMD_DONE;
 	return (SUCCESS);
 }
-
-/*
-** check_subprompt(shell); // Need check
-**	check_expansions(&shell->term);
-**	reset_config(shell);
-*/

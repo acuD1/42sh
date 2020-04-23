@@ -235,7 +235,7 @@ SRC					+=	$(S_PATH)$(DB)version.c
 
 SRC					+=	$(S_PATH)$(EXEC)call_bin.c
 SRC					+=	$(S_PATH)$(EXEC)call_builtin.c
-SRC					+=	$(S_PATH)$(EXEC)dispatcher.c
+SRC					+=	$(S_PATH)$(EXEC)launch_job.c
 SRC					+=	$(S_PATH)$(EXEC)exec_process.c
 SRC					+=	$(S_PATH)$(EXEC)get_bin.c
 SRC					+=	$(S_PATH)$(EXEC)set_envp.c
@@ -268,14 +268,18 @@ SRC					+=	$(S_PATH)$(JOBC)background.c
 SRC					+=	$(S_PATH)$(JOBC)continue.c
 SRC					+=	$(S_PATH)$(JOBC)foreground.c
 SRC					+=	$(S_PATH)$(JOBC)get_job.c
+SRC					+=	$(S_PATH)$(JOBC)get_signal.c
 SRC					+=	$(S_PATH)$(JOBC)job_utils.c
 SRC					+=	$(S_PATH)$(JOBC)jobc_id.c
 SRC					+=	$(S_PATH)$(JOBC)launch_process.c
 SRC					+=	$(S_PATH)$(JOBC)mark_process_status.c
+SRC					+=	$(S_PATH)$(JOBC)free_job_from_list.c
 SRC					+=	$(S_PATH)$(JOBC)mark_job_as_stopped.c
 SRC					+=	$(S_PATH)$(JOBC)notifications.c
 SRC					+=	$(S_PATH)$(JOBC)wait_job.c
 SRC					+=	$(S_PATH)$(JOBC)are_jobs_done.c
+SRC					+=	$(S_PATH)$(JOBC)rebuild_job_command.c
+SRC					+=	$(S_PATH)$(JOBC)split_job.c
 
 SRC					+=	$(S_PATH)$(LPA)lexer_parser_analyzer.c
 

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ac_bin.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 03:18:34 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:52:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <dirent.h>
 #include "sh42.h"
+#include <dirent.h>
+#include <unistd.h>
 
 /*
 ** 		Function to save in buffer the current bin found at buffer[0]
