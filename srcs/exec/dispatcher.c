@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dispatcher.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/01 16:54:22 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/05 16:57:56 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/04/23 15:25:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static void	setup_pipes(t_process *process, t_lst *ptr)
 
 static void	condition_fulfilled(t_lst *process)
 {
-	t_process	*ptr;
-	int			cond;
+	t_process		*ptr;
+	enum e_pstate	cond;
 
 	ptr = ((t_process *)process->content);
 	cond = ptr->type;

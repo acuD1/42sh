@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_access.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 00:18:54 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/03/09 19:30:49 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 15:35:44 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "sys/stat.h"
 #include "errno.h"
 
-static u_int8_t	access_file(const char *path, u_int8_t mode)
+static u_int8_t	access_file(const char *path, unsigned int mode)
 {
 	struct stat	file;
 
