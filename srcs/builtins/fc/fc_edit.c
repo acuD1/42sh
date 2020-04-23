@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/03 19:28:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/08 22:29:22 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,32 @@ static char		*get_editor(char **av, u_int64_t opt)
 	if (!*(av + 1) || (ft_isnum(*(av + 1)) && !(opt & (1ULL << 4))))
 		editor = ft_strdup("ed ");
 	else if (opt & (1ULL << 4))
+	{
 		editor = ft_strjoin(*(av + 1), " ");
+		if (!ft_strequ(editor, "vim ") && !ft_strequ(editor, "emacs "))
+			ft_strdel(&editor);
+	}
 	return (editor);
+}
+
+static void		get_edit_entries(t_lst *w, t_cmd *cmd)
+{
+	int32_t		w_entries;
+
+	w_entries = (int32_t)ft_lstlen(w);
+	if (cmd->ac == 1)
+	{
+		cmd->first = w_entries;
+		cmd->last = w_entries;
+	}
+	else if (cmd->ac == 2)
+		cmd->last = cmd->first;
+	else if (cmd->ac == 4)
+		cmd->last = cmd->first;
+	if (cmd->first <= 0)
+		cmd->first = w_entries + cmd->first + 1;
+	if (cmd->last <= 0)
+		cmd->last = w_entries + cmd->last + 1;
 }
 
 int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
@@ -85,8 +109,9 @@ int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 	if (!shell->term.history)
 		return (fc_error(opt, 0));
 	get_range(process->av, &cmd);
-	get_entries(shell->term.history, &cmd, opt);
+	get_edit_entries(shell->term.history, &cmd);
 	sort_print_cmd(cmd, shell->term.history, opt);
-	cmd.editor = get_editor(process->av, opt);
+	if ((cmd.editor = get_editor(process->av, opt)) == NULL)
+		return (fc_error(opt, 0));
 	return (fc_editor(shell, cmd));
 }

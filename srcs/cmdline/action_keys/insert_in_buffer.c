@@ -6,25 +6,29 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 16:32:58 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/08 20:50:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
 /*
-**	To insert a char in buffer at the end of line
+**		To insert a char in buffer at the end of line
+**		If the cursor is equal to the last column of the screen :
+**		- Newline is inserted in the buffer and coordinates are updated
+**		- Buff is displayed at x = 0
+**		Otherwise it is not inserted again if buff is already a newline
 */
 
 void		insert_char_in_buffer
 	(const char buff, t_read *term, ssize_t buff_index)
 {
-	write(STDERR_FILENO, &buff, 1);
-	if (buff == NEW_LINE[0])
+	if (buff == '\n')
 	{
 		term->x = -1;
 		term->y++;
 	}
+	write(STDERR_FILENO, &buff, 1);
 	term->x++;
 	term->width++;
 	term->buffer[buff_index] = buff;
@@ -42,17 +46,17 @@ static void	insert_at_index(t_read *term, ssize_t buff_index, const char *buff)
 {
 	ssize_t	j;
 
-	j = (ssize_t)ft_strlen(term->buffer);
+	j = (ssize_t)ft_strlen(term->buffer) + 1;
 	while (--j > buff_index)
 		term->buffer[j] = term->buffer[j - 1];
 	term->buffer[buff_index] = *buff;
 }
 
 /*
-**	To insert char in buffer if cursor is inline
-**	Termcaps : 	`save_cr' => save cursor position
-**			`reset_cr' => restore cursor position
-**			`clr_lines' => to clear all following lines from cursor
+**		To insert char in buffer if cursor is inline
+**		Termcaps : 	`save_cr' => save cursor position
+**					`reset_cr' => restore cursor position
+**					`clr_lines' => to clear all following lines from cursor
 */
 
 static void	insert_inline_char
@@ -76,7 +80,7 @@ static void	insert_inline_char
 }
 
 /*
-**	To insert a string in buffer at the end of line
+**		To insert a string in buffer at the end of line
 */
 
 void		insert_str_in_buffer(const char *d_name, t_read *term)
@@ -99,9 +103,9 @@ void		insert_str_in_buffer(const char *d_name, t_read *term)
 }
 
 /*
-**	Insert one char if size of buff is equal to 1
-**	Otherwise (size greater than 1) paste the string in buffer
-**	If cursor position is under the width of line => insert inline
+**		Insert one char if size of buff is equal to 1
+**		Otherwise (size greater than 1) paste the string in buffer
+**		If cursor position is under the width of line => insert inline
 */
 
 void		insert_in_buffer(const char *buff, t_read *term)

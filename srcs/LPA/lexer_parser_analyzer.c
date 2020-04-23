@@ -74,7 +74,7 @@ void		lexer_parser_analyzer(t_core *shell)
 	lxr_tok = lexer(shell->term.buffer);
 	if (lxr_tok == NULL)
 		return ;
-	if (parser(lxr_tok) == TRUE)
+	if (parser(lxr_tok, shell) == TRUE)
 		analyzer(shell, lxr_tok);
 	else
 		shell->status = 2;

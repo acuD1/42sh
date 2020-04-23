@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/12 16:45:19 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/23 15:47:29 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,12 @@ struct						s_core
 	pid_t					pgid;
 	int32_t					status;
 	int32_t					heredoc;
+	int32_t					subpts;
 	int32_t					subst_error;
 	int32_t					terminal;
 	int8_t					is_interactive;
 	int8_t					notified;
-	char					pad[2];
+	char					pad[6];
 };
 
 /*
@@ -145,7 +146,8 @@ typedef struct				s_parser
 {
 	t_graph					graph[NB_PARSER_STATE];
 	enum e_pstate			state;
-	char					pad[4];
+	u_int8_t				f;
+	char					pad[3];
 }							t_parser;
 
 typedef struct				s_token

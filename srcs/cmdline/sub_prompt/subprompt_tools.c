@@ -81,7 +81,7 @@ void			display_subprompt(t_read *term)
 	term->y = 0;
 	term->width = term->x;
 	term->x_index = term->x;
-	ft_dprintf(STDERR_FILENO, term->prompt);
+	ft_dprintf(STDERR_FILENO, "%s", term->prompt);
 }
 
 u_int8_t		sub_prompt_error(t_read *term, char sb)

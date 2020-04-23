@@ -24,8 +24,8 @@ static void		erase_line(t_core *shell)
 	}
 	else if (shell->term.status == CMD_SUBPROMPT)
 	{
-		if (shell->heredoc)
-			shell->heredoc = 0;
+		shell->heredoc = (shell->heredoc) ? 0 : 1;
+		shell->subpts = (!shell->subpts) ? 1 : 0;
 		ft_strdel(&shell->term.buffer);
 		shell->term.buffer = ft_strdup(shell->term.tmp_buff);
 		save_history(&shell->term);

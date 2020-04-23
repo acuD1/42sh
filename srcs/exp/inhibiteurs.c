@@ -17,7 +17,7 @@ void	update_underscore_value(char *tmp, t_core *shell, t_process *process)
 	if (tmp)
 	{
 		process->envp = add_underscore_envp(process->envp, tmp);
-		// add_assign_env(shell, "_", ft_strdup(tmp));
+		add_assign_env(shell, "_", ft_strdup(tmp)); // je sais plus pk je lavais commenté faut re test xD
 	}
 	(void)shell;
 	ft_strdel(&tmp);

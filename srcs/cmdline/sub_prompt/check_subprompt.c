@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:46:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/19 17:24:12 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/23 15:41:49 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static ssize_t	exit_subprompt_prio(t_core *shell, char *str)
 {
 	ft_strdel(&shell->sub.keys);
 	shell->sub.state = SP_END;
+	ft_strdel(&shell->term.buffer);
+	shell->term.buffer = ft_strdup(str);
 	save_history(&shell->term);
 	ft_strdel(&shell->term.buffer);
 	ft_strdel(&str);
@@ -69,8 +71,9 @@ enum e_subp		start_subprompt(t_core *shell, t_subprompt *sub)
 	else if (shell->term.buffer[sub->index] == '\"'
 		&& !sub->escaped && !sub->quoted)
 		sub->state = SP_DBQUOTE;
-	else if (shell->term.buffer[sub->index] == '$'
-		&& shell->term.buffer[sub->index + 1] == '{' && !sub->quoted)
+	else if (shell->term.buffer[sub->index] == '$' && !sub->quoted
+		&& shell->term.buffer[sub->index + 1] == '{'
+		&& shell->term.buffer[sub->index + 1])
 		sub->state = SP_BRACEPARAM;
 	else if (shell->term.buffer[sub->index] == '\\' && !sub->quoted)
 		sub->state = SP_BACKSLASH;

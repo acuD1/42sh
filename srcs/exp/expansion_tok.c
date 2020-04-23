@@ -12,49 +12,45 @@
 
 #include "sh42.h"
 
-static int8_t	expansion_tok_handler
-	(t_core *shell, t_process *process, char *res)
+static char		*apply_exp_tok(t_core *shell, char *data, char *tmp, char ***t)
 {
+	char		*res;
+
+	res = NULL;
+	res = inhibiteurs_expansion(data, shell);
 	if (shell->subst_error)
 	{
-		ft_tabdel(&process->av);
+		ft_strdel(&tmp);
+		ft_tabdel(&*t);
 		ft_strdel(&res);
 		shell->status = 1;
-		return (FAILURE);
+		return (NULL);
 	}
-	return (SUCCESS);
-}
-
-static void		add_inhibiteur(t_process *process, char *res, char *tmp)
-{
-	process->av = ft_add_arg_cmd_process(process->av, res);
-	ft_strdel(&tmp);
-	tmp = ft_strdup(res);
+	if (*res)
+	{
+		ft_strdel(&tmp);
+		*t = ft_add_arg_cmd_process(*t, res);
+		tmp = ft_strdup(res);
+	}
+	else if (!*res && (ft_strchr(data, '\'')
+		|| ft_strchr(data, '\"')))
+		*t = ft_add_arg_cmd_process(*t, res);
+	ft_strdel(&res);
+	return (tmp);
 }
 
 void			expansion_tok(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
-	char	*res;
 	char	*tmp;
 
 	tmp = NULL;
-	res = NULL;
 	lst = process->tok_list;
 	while (lst)
 	{
 		if (((t_token*)lst->content)->data)
-		{
-			res = inhibiteurs_expansion(((t_token*)lst->content)->data, shell);
-			if (expansion_tok_handler(shell, process, res) != SUCCESS)
-				return ;
-			if (*res)
-				add_inhibiteur(process, res, tmp);
-			else if (!*res && (ft_strchr(((t_token*)lst->content)->data, '\'')
-				|| ft_strchr(((t_token*)lst->content)->data, '\"')))
-				process->av = ft_add_arg_cmd_process(process->av, res);
-			ft_strdel(&res);
-		}
+			tmp = apply_exp_tok(shell, ((t_token*)lst->content)->data,
+				tmp, &process->av);
 		lst = lst->next;
 	}
 	update_underscore_value(tmp, shell, process);

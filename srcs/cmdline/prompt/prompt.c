@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/19 17:46:06 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/23 15:41:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,6 @@
 #include <fcntl.h>
 
 /*static void		debug_current(const char *path, t_core *shell)
-{
-	int			fd;
-
-	fd = open(path, O_WRONLY);
-	ft_dprintf(fd, "\n=== CURRENT VALUES ===\n");
-	ft_dprintf(fd, "x[%d] xi[%d] y[%d] ws_col[%d]\n width[%d] buff[%s]\n",
-	shell->term.x, shell->term.x_index, shell->term.y,
-	shell->term.ws_col, shell->term.width, shell->term.buffer);
-}*/
-
-/*
-**	  Termcaps capabilities:
-**	  - `up' => to move the cursor vertically up one input
 **	  - `cr' => to move the cursor to the beginning of the input it is on
 **	  - `clr_lines' => to clear line from the cursor and following inputs
 */
@@ -108,7 +95,6 @@ int8_t			init_prompt(t_core *shell)
 		else if (*shell->term.prompt
 			|| (!*shell->term.prompt && shell->term.buffer))
 			break ;
-		//debug_current("/dev/ttys004", shell);
 	}
 	check_subprompt(shell);
 	check_expansions(&shell->term);

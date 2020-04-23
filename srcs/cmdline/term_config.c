@@ -25,6 +25,7 @@ void	init_cmd_line(t_core *shell, t_read *term)
 	term->tmp_buff = NULL;
 	term->cmd = NULL;
 	term->prompt = NULL;
+	term->sub_prompt = FALSE;
 	term->cpy = NULL;
 	if (get_size(term) != SUCCESS)
 		quit_shell(shell, EXIT_FAILURE, TRUE);

@@ -300,6 +300,7 @@ SRC					+=	$(S_PATH)$(LEXER)operator_token.c
 
 SRC					+=	$(S_PATH)$(PARSER)graph.c
 SRC					+=	$(S_PATH)$(PARSER)parser.c
+SRC					+=	$(S_PATH)$(PARSER)parser_subpts.c
 
 SRC					+=	$(S_PATH)$(MISC)abs_path_tools.c
 SRC					+=	$(S_PATH)$(MISC)abs_path.c

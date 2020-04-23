@@ -12,73 +12,63 @@
 
 #include "sh42.h"
 
-static void		init_start_graph(t_graph *graph)
+static void		init_parser(t_parser *parser, t_core *shell)
 {
-	static enum e_pstate	tab_good_type[] = {P_WORD, P_GREAT, P_LESS, P_DGREAT
-		, P_GREATAND, P_LESSAND, P_DLESS, P_DLESSDASH, P_ASSIGN, P_IONUMBER
-		, P_START, P_ERROR};
-
-	graph[P_START].good_type = tab_good_type;
-	graph[P_NEWLINE].good_type = tab_good_type;
-	graph[P_PIPE].good_type = tab_good_type;
-	graph[P_ORIF].good_type = tab_good_type;
-	graph[P_ANDIF].good_type = tab_good_type;
-}
-
-static t_parser	*ft_init_graph(t_parser *parser)
-{
+	shell->subpts = 0;
+	parser->state = P_START;
+	parser->f = 4;
 	init_start_graph(parser->graph);
 	init_redirect_graph(parser->graph);
 	init_process_graph(parser->graph);
 	init_ionumber_graph(parser->graph);
 	init_word_graph(parser->graph);
-	return (parser);
 }
 
-static u_int8_t	graph(enum e_pstate *c, enum e_pstate n, enum e_pstate ps[])
+static u_int8_t	parser_error(char *data, t_core *shell)
 {
-	size_t	i;
+	ft_dprintf(STDERR_FILENO, "42sh: syntax error near unexpected token `%s'\n",
+		data);
+	shell->subpts = 1;
+	return (FALSE);
+}
 
-	i = 0;
-	if (ps == NULL)
-		return (0);
-	while (ps[i] != P_ERROR)
-	{
-		if (n == ps[i])
-		{
-			*c = n;
-			return (1);
-		}
-		i++;
-	}
+static u_int8_t	p_if(enum e_pstate st, t_core *sh)
+{
+	if (sh->is_interactive && (st == P_PIPE || st == P_ANDIF || st == P_ORIF))
+		return (1);
 	return (0);
 }
 
-u_int8_t		parser(t_lst *lexer)
+static u_int8_t	parser_graph(t_parser *parser, enum e_pstate id)
 {
-	t_parser	*parser;
+	return (graph(&parser->state, id, parser->graph[parser->state].good_type));
+}
+
+u_int8_t		parser(t_lst *lexer, t_core *shell)
+{
+	t_parser	p;
 	t_lst		*tok_lst;
 
-	parser = NULL;
 	if (!lexer)
 		return (FALSE);
-	if (!(parser = (t_parser*)malloc(sizeof(t_parser))))
-		return (FALSE);
-	parser->state = P_START;
 	tok_lst = lexer;
-	parser = ft_init_graph(parser);
+	init_parser(&p, shell);
 	while (tok_lst)
 	{
-		if (!(graph(&parser->state, ((t_token*)tok_lst->content)->id,
-			parser->graph[parser->state].good_type)))
+		if (p_if(p.state, shell) && ((t_token*)tok_lst->content)->id == P_END)
 		{
-			ft_printf("42sh: syntax error near unexpected token `%s'\n",
-				((t_token*)tok_lst->content)->data);
-			free(parser);
-			return (FALSE);
+			if (shell->subpts)
+				return (FALSE);
+			if ((p.f = parser_subpts(shell, lexer)) == FALSE)
+				continue ;
+			else if (p.f == 2)
+				return (FALSE);
+			else
+				break ;
 		}
+		if (!parser_graph(&p, ((t_token*)tok_lst->content)->id))
+			return (parser_error(((t_token*)tok_lst->content)->data, shell));
 		tok_lst = tok_lst->next;
 	}
-	free(parser);
 	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 15:48:25 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/08 22:09:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void	check_tmp_buffer(t_read *term)
 void		move_key_down(t_read *term)
 {
 	t_lst	*w;
-	size_t	len;
 
 	w = NULL;
 	if (term->history && term->history_index)
@@ -50,8 +49,7 @@ void		move_key_down(t_read *term)
 		}
 		goto_prompt(term);
 		ft_strdel(&term->buffer);
-		len = ft_strlen((char*)w->content) + BUFF_SIZE + READ_SIZE + 1;
-		term->buffer = ft_memalloc(len);
+		term->buffer = ft_memalloc(BUFF_SIZE + 1);
 		insert_str_in_buffer((char*)w->content, term);
 	}
 	else
@@ -65,7 +63,6 @@ void		move_key_down(t_read *term)
 void		move_key_up(t_read *term)
 {
 	t_lst	*w;
-	size_t	len;
 
 	if (term->history)
 	{
@@ -85,8 +82,7 @@ void		move_key_up(t_read *term)
 		}
 		goto_prompt(term);
 		ft_strdel(&term->buffer);
-		len = ft_strlen((char*)w->content) + BUFF_SIZE + READ_SIZE + 1;
-		term->buffer = ft_strnew(len);
+		term->buffer = ft_memalloc(BUFF_SIZE + 1);
 		insert_str_in_buffer((char*)w->content, term);
 	}
 }
@@ -108,8 +104,7 @@ void		move_right(t_read *term)
 		term->x_index++;
 		term->x++;
 	}
-	else if (term->x >= term->ws_col - 1
-			|| term->buffer[buff_index] == NEW_LINE[0])
+	else if (term->buffer[buff_index] == '\n' || term->x == (term->ws_col - 1))
 	{
 		xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
 		xtputs(term->tcaps[KEY_DOWN], 1, my_outc);
