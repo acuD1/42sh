@@ -14,7 +14,7 @@
 
 static void		add_lanouvellelistalasuite(t_lst *old, t_lst *new)
 {
-	t_ls	 *prev;
+	t_lst	 *prev;
 
 	prev = old;
 	while (old)

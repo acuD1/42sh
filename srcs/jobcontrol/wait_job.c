@@ -22,7 +22,7 @@ static void		wait_pipe(t_core *shell, t_lst *jobs, t_job *job, int *status)
 	ptr = job->process_list;
 	pid = waitpid(((t_process*)ptr->content)->pid, status, WUNTRACED);
 	ptr = ptr->next;
-	while (mark_process_status(shell, jobs, pid, *status)
+	while (ptr && mark_process_status(shell, jobs, pid, *status)
 			&& ((t_process*)ptr->content)->pipe[0] != STDIN_FILENO)
 	{
 		pid = waitpid(WAIT_ANY, status, WUNTRACED);
