@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/08 22:02:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/23 16:45:07 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,25 @@ int			my_outc(int c)
 ssize_t		get_width_last_line(t_read *term)
 {
 	ssize_t	buff_index;
-	ssize_t	w;
+	ssize_t	width;
 
-	w = 0;
+	width = 0;
 	buff_index = term->x_index - (ssize_t)term->prompt_len;
 	if ((buff_index > 0) && term->buffer[buff_index - 1] == '\n')
 		buff_index--;
 	else
-		return (term->ws_col - 1);
+			return (term->ws_col - 1);
 	while (buff_index-- > 0)
 	{
 		if (term->buffer[buff_index] == '\n')
 			break ;
-		w++;
+		width++;
 	}
-	if ((w + ((term->y == 2) ? term->prompt_len : 0)) > term->ws_col)
-		w = (w + ((term->y == 2) ? term->prompt_len : 0)) % term->ws_col;
+	if ((width + ((term->y == 2) ? term->prompt_len : 0)) > term->ws_col)
+		width = (width + ((term->y == 2) ? term->prompt_len : 0)) % term->ws_col;
 	else if (term->y == 1)
-		w += term->prompt_len;
-	return (w);
+		width += term->prompt_len;
+	return (width);
 }
 
 ssize_t		get_width_current_line(t_read *term)

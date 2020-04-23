@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 16:55:47 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/17 11:52:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 int64_t	call_word(t_read *term, ssize_t i)
 {
 	t_lst	*w;
-	char	word[BUFF_SIZE];
+	char	word[BUFF_SIZE + 1];
 	ssize_t	n;
 	ssize_t	j;
 
-	ft_bzero(word, BUFF_SIZE);
+	ft_bzero(word, BUFF_SIZE + 1);
 	j = 0;
 	w = term->history;
 	n = i + 1;
@@ -52,14 +52,14 @@ int64_t	call_word(t_read *term, ssize_t i)
 int64_t	callback_number(t_read *term, ssize_t i)
 {
 	t_lst	*w;
-	char	nb[BUFF_SIZE];
+	char	nb[BUFF_SIZE + 1];
 	ssize_t	n;
 	ssize_t	j;
 
 	j = 0;
 	w = term->history;
 	n = i + 2;
-	ft_bzero(nb, BUFF_SIZE);
+	ft_bzero(nb, BUFF_SIZE + 1);
 	while (ft_isdigit(term->buffer[n]))
 	{
 		nb[j] = term->buffer[n];
@@ -85,14 +85,14 @@ int64_t	callback_number(t_read *term, ssize_t i)
 int64_t	call_number(t_read *term, ssize_t i)
 {
 	t_lst	*w;
-	char	nb[BUFF_SIZE];
+	char	nb[BUFF_SIZE + 1];
 	ssize_t	n;
 	ssize_t	j;
 
 	j = 0;
 	w = term->history;
 	n = i + 1;
-	ft_bzero(nb, BUFF_SIZE);
+	ft_bzero(nb, BUFF_SIZE + 1);
 	while (ft_isdigit(term->buffer[n]))
 	{
 		nb[j] = term->buffer[n];

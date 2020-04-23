@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:59 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 02:39:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/17 11:45:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ u_int8_t		is_tab(const char *d_name, t_read *term)
 	u_int64_t	value;
 	char		buff[READ_SIZE + 1];
 
-	ft_bzero(buff, READ_SIZE);
+	ft_bzero(buff, READ_SIZE + 1);
 	if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		value = get_mask(buff);
@@ -100,9 +100,12 @@ static int8_t	read_curr_dir
 void			display_current_directory(t_read *term, const char *av)
 {
 	DIR		*dir;
-	char	tmp[BUFF_SIZE];
-	char	new_dir[BUFF_SIZE];
+	char	tmp[BUFF_SIZE + 1];
+	char	new_dir[BUFF_SIZE + 1];
 
+	dir = NULL;
+	ft_bzero(tmp, BUFF_SIZE + 1);
+	ft_bzero(new_dir, BUFF_SIZE + 1);
 	term->flag = FALSE;
 	if (get_dir(term, av, new_dir) == FAILURE)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 03:15:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/04/17 11:51:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,19 @@ static u_int8_t	get_dir(t_read *term, char *current_dir)
 
 	tmp = NULL;
 	found = ft_strlen(term->cmd[0]);
-	while (found--)
+	while (found)
 	{
 		if (term->cmd[0][found] == '/')
 		{
-			ft_bzero(current_dir, BUFF_SIZE);
+			ft_bzero(current_dir, BUFF_SIZE + 1);
 			ft_strncpy(current_dir, term->cmd[1], found + 1);
-			tmp = ft_strdup(ft_strchr(term->cmd[0], '/'));
+			tmp = ft_strdup(ft_strrchr(term->cmd[0], '/'));
 			ft_strdel(&term->cmd[0]);
 			term->cmd[0] = ft_strdup(tmp + 1);
 			ft_strdel(&tmp);
 			return (TRUE);
 		}
+		found--;
 	}
 	return (FALSE);
 }
@@ -136,10 +137,11 @@ void			to_complete_buffer(const char *to_find, t_read *term)
 	char	current_dir[BUFF_SIZE + 1];
 	DIR		*dir;
 
-	ft_bzero(current_dir, BUFF_SIZE);
+	dir = NULL;
+	ft_bzero(current_dir, BUFF_SIZE + 1);
 	term->flag = FALSE;
 	ft_tabfree(term->cmd);
-	term->cmd = ft_memalloc(BUFF_SIZE);
+	term->cmd = ft_memalloc(BUFF_SIZE + 1);
 	term->cmd[0] = ft_strdup(to_find);
 	term->cmd[1] = ft_strdup(to_find);
 	if (ft_isstart(to_find, "$") || ft_isstart(to_find, "${"))

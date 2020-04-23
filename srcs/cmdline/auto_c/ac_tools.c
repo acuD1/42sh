@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 16:20:40 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/17 11:50:20 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		split_cmd(char **to_find, t_read *term)
 	if (term->buffer[i] == '\0')
 	{
 		*to_find = ft_strnew(0);
-		term->cmd = ft_memalloc(BUFF_SIZE);
+		term->cmd = ft_memalloc(BUFF_SIZE + 1);
 		return ;
 	}
 	if ((term->cmd = ft_strsplit(term->buffer, SPACE)) == NULL)
