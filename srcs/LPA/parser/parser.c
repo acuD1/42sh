@@ -13,6 +13,25 @@
 #include "sh42.h"
 #include <stdlib.h>
 
+u_int8_t		graph(enum e_pstate *c, enum e_pstate n, enum e_pstate ps[])
+{
+	size_t	i;
+
+	i = 0;
+	if (ps == NULL)
+		return (0);
+	while (ps[i] != P_ERROR)
+	{
+		if (n == ps[i])
+		{
+			*c = n;
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 static void		init_parser(t_parser *parser, t_core *shell)
 {
 	shell->subpts = 0;
@@ -33,13 +52,6 @@ static u_int8_t	parser_error(char *data, t_core *shell)
 	return (FALSE);
 }
 
-static u_int8_t	p_if(enum e_pstate st, t_core *sh)
-{
-	if (sh->is_interactive && (st == P_PIPE || st == P_ANDIF || st == P_ORIF))
-		return (1);
-	return (0);
-}
-
 static u_int8_t	parser_graph(t_parser *parser, enum e_pstate id)
 {
 	return (graph(&parser->state, id, parser->graph[parser->state].good_type));
@@ -56,17 +68,6 @@ u_int8_t		parser(t_lst *lexer, t_core *shell)
 	init_parser(&p, shell);
 	while (tok_lst)
 	{
-		if (p_if(p.state, shell) && ((t_token*)tok_lst->content)->id == P_END)
-		{
-			if (shell->subpts)
-				return (FALSE);
-			if ((p.f = parser_subpts(shell, lexer)) == FALSE)
-				continue ;
-			else if (p.f == 2)
-				return (FALSE);
-			else
-				break ;
-		}
 		if (!parser_graph(&p, ((t_token*)tok_lst->content)->id))
 			return (parser_error(((t_token*)tok_lst->content)->data, shell));
 		tok_lst = tok_lst->next;

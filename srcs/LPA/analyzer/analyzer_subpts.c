@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_subpts.c                                    :+:      :+:    :+:   */
+/*   analyzer_subpts.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,29 +12,13 @@
 
 #include "sh42.h"
 
-static void		add_lanouvellelistalasuite(t_lst *old, t_lst *new)
-{
-	t_lst	 *prev;
-
-	prev = old;
-	while (old)
-	{
-		old = old->next;
-		if (((t_token*)old->content)->id == P_END)
-			break ;
-		prev = prev->next;
-	}
-	ft_strdel(&((t_token*)old->content)->data);
-	free(((t_token*)old->content));
-	free(old);
-	prev->next = new;
-}
-
-static u_int8_t	lex_n_parse(t_core *shell, t_lst *old, char *old_buffer)
+static u_int8_t		lex_n_parse(t_core *shell, t_lst *old, char *old_buffer)
 {
 	t_lst	*new;
+	t_lst	*prev;
 
 	new = NULL;
+	prev = old;
 	new = lexer(shell->term.buffer);
 	shell->term.buffer = ft_strjoinf(old_buffer, shell->term.buffer, 3);
 	if (parser(new, shell) == FALSE)
@@ -42,11 +26,15 @@ static u_int8_t	lex_n_parse(t_core *shell, t_lst *old, char *old_buffer)
 		ft_freetokenlist(&new);
 		return (FALSE);
 	}
-	add_lanouvellelistalasuite(old, new);
+	old = old->next;
+	ft_strdel(&((t_token*)old->content)->data);
+	free(((t_token*)old->content));
+	free(old);
+	prev->next = new;
 	return (TRUE);
 }
 
-static u_int8_t	ouverture_du_subpts(t_core *shell, char *old_buffer)
+static u_int8_t		ouverture_du_subpts(t_core *shell, char *old_buffer)
 {
 	set_termconfig(shell);
 	subprompt_loader(shell);
@@ -68,7 +56,7 @@ static u_int8_t	ouverture_du_subpts(t_core *shell, char *old_buffer)
 	return (0);
 }
 
-u_int8_t		parser_subpts(t_core *shell, t_lst *old)
+static u_int8_t		analyzer_subpts(t_core *shell, t_lst *old)
 {
 	char	*old_buffer;
 
@@ -88,21 +76,35 @@ u_int8_t		parser_subpts(t_core *shell, t_lst *old)
 	return (FALSE);
 }
 
-u_int8_t		graph(enum e_pstate *c, enum e_pstate n, enum e_pstate ps[])
-{
-	size_t	i;
 
-	i = 0;
-	if (ps == NULL)
-		return (0);
-	while (ps[i] != P_ERROR)
+static t_analyzer	*open_subpt(t_analyzer *anal, t_core *shell)
+{
+	u_int8_t	state;
+
+	state = FALSE;
+	while (state == FALSE)
 	{
-		if (n == ps[i])
-		{
-			*c = n;
-			return (1);
-		}
-		i++;
+		if (shell->subpts)
+			return (exit_lpa(anal, shell));
+		if ((state = analyzer_subpts(shell, anal->lexer)) == FALSE)
+			continue ;
+		else if (state == 2)
+			return (exit_lpa(anal, shell));
+		else
+			break ;
 	}
-	return (0);
+	return (anal);
+}
+
+t_analyzer			*add_process(t_analyzer *anal, t_core *shell)
+{
+	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
+	anal->process.type = ((t_token*)anal->lexer->content)->id;
+	anal->state = A_SEPARATOR;
+	anal = process_analyze(anal, shell);
+	anal->process.command = fill_cmd_job(anal->lexer, anal->process.command);
+	if (shell->is_interactive && anal->lexer->next
+		&& ((t_token*)anal->lexer->next->content)->id == P_END)
+			anal = open_subpt(anal, shell);
+	return (anal);
 }

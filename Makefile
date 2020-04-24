@@ -293,6 +293,7 @@ SRC					+=	$(S_PATH)$(ANALYZER)analyzer_process.c
 SRC					+=	$(S_PATH)$(ANALYZER)analyzer_redir.c
 SRC					+=	$(S_PATH)$(ANALYZER)init_analyzer_bis.c
 SRC					+=	$(S_PATH)$(ANALYZER)init_analyzer.c
+SRC					+=	$(S_PATH)$(ANALYZER)analyzer_subpts.c
 SRC					+=	$(S_PATH)$(ANALYZER)token_to_tab.c
 
 SRC					+=	$(S_PATH)$(LEXER)assign_token.c
@@ -304,7 +305,6 @@ SRC					+=	$(S_PATH)$(LEXER)operator_token.c
 
 SRC					+=	$(S_PATH)$(PARSER)graph.c
 SRC					+=	$(S_PATH)$(PARSER)parser.c
-SRC					+=	$(S_PATH)$(PARSER)parser_subpts.c
 
 SRC					+=	$(S_PATH)$(MISC)abs_path_tools.c
 SRC					+=	$(S_PATH)$(MISC)abs_path.c

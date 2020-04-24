@@ -38,29 +38,23 @@ t_analyzer	*error_analyze(t_analyzer *anal, t_core *shell)
 
 t_analyzer	*separator_analyze(t_analyzer *anal, t_core *shell)
 {
-	enum e_pstate	state;
-
-	state = ((t_token*)anal->lexer->content)->id;
-	if (state == P_SEMICOLON || state == P_AND)
+	if (((t_token*)anal->lexer->content)->id == P_SEMICOLON
+		|| ((t_token*)anal->lexer->content)->id == P_AND)
 	{
-		anal->job.type = state;
-		return (anal = job_analyze(anal, shell));
-	}
-	else if (state == P_ORIF || state == P_ANDIF || state == P_PIPE)
-	{
-		anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
-		anal->process.type = state;
+		anal->job.type = ((t_token*)anal->lexer->content)->id;
 		anal->state = A_SEPARATOR;
-		anal = process_analyze(anal, shell);
-		anal->process.command = fill_cmd_job(anal->lexer,
-			anal->process.command);
-	}
-	else if (state == P_NEWLINE || state == P_END)
-	{
-		anal->job.type = state;
 		return (anal = job_analyze(anal, shell));
 	}
-	anal->state = A_SEPARATOR;
+	else if (((t_token*)anal->lexer->content)->id == P_ORIF
+		|| ((t_token*)anal->lexer->content)->id == P_ANDIF
+		|| ((t_token*)anal->lexer->content)->id == P_PIPE)
+		return (anal = add_process(anal, shell));
+	else if (((t_token*)anal->lexer->content)->id == P_NEWLINE || ((t_token*)anal->lexer->content)->id == P_END)
+	{
+		anal->job.type = ((t_token*)anal->lexer->content)->id;
+		anal->state = A_SEPARATOR;
+		return (anal = job_analyze(anal, shell));
+	}
 	return (anal);
 }
 
