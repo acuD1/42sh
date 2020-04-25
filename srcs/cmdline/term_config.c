@@ -29,6 +29,7 @@ void	init_cmd_line(t_core *shell, t_read *term)
 	term->prompt = NULL;
 	term->sub_prompt = FALSE;
 	term->cpy = NULL;
+	term->subpts = 0;
 	if (get_size(term) != SUCCESS)
 		quit_shell(shell, EXIT_FAILURE, TRUE);
 	shell->term.history = term->history;

@@ -81,6 +81,7 @@ static t_analyzer	*open_subpt(t_analyzer *anal, t_core *shell)
 	u_int8_t	state;
 
 	state = FALSE;
+	shell->term.subpts = 1;
 	while (state == FALSE)
 	{
 		if (shell->subpts)
@@ -92,6 +93,7 @@ static t_analyzer	*open_subpt(t_analyzer *anal, t_core *shell)
 		else
 			break ;
 	}
+	shell->term.subpts = 0;
 	return (anal);
 }
 

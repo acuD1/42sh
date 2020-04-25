@@ -111,7 +111,7 @@ u_int8_t		check_caps(const char *buff, t_read *term)
 		tab_key(term, &value);
 	else if (ft_is_print(*buff))
 		insert_in_buffer(buff, term);
-	if (value == CTRL_R)
+	if (value == CTRL_R && !term->subpts)
 		research_mode(term);
 	if (cursor_motion(term, value))
 		return (TRUE);

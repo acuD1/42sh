@@ -80,6 +80,7 @@ typedef struct				s_read
 	size_t					ac;
 	int32_t					search;
 	u_int8_t				sub_prompt;
+	u_int8_t				subpts;
 	u_int8_t				status;
 	u_int8_t				flag;
 	char					pad[1];
