@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inhibiteurs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 23:21:22 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/12 16:37:36 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/04/25 13:02:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	update_underscore_value(char *tmp, t_core *shell, t_process *process)
 	if (tmp)
 	{
 		process->envp = add_underscore_envp(process->envp, tmp);
-		add_assign_env(shell, "_", ft_strdup(tmp)); // je sais plus pk je lavais commenté faut re test xD
+		add_assign_env(shell, "_", ft_strdup(tmp));
 	}
 	(void)shell;
 	ft_strdel(&tmp);

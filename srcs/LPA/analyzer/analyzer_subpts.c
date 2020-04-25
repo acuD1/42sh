@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2020/04/23 17:46:16 by user42           ###   ########.fr       */
+/*   Updated: 2020/04/25 13:04:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static u_int8_t		analyzer_subpts(t_core *shell, t_lst *old)
 	return (FALSE);
 }
 
-
 static t_analyzer	*open_subpt(t_analyzer *anal, t_core *shell)
 {
 	u_int8_t	state;
@@ -105,6 +104,6 @@ t_analyzer			*add_process(t_analyzer *anal, t_core *shell)
 	anal->process.command = fill_cmd_job(anal->lexer, anal->process.command);
 	if (shell->is_interactive && anal->lexer->next
 		&& ((t_token*)anal->lexer->next->content)->id == P_END)
-			anal = open_subpt(anal, shell);
+		anal = open_subpt(anal, shell);
 	return (anal);
 }
