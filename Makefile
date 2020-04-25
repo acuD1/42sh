@@ -348,7 +348,7 @@ CFLAGS				= -Wall -Wextra -Werror
 ifeq ($(DEBUG), g)
 	CFLAGS = -g
 else ifeq ($(DEBUG), fsanitize)
-	CFLAGS = -fsanitize=address
+	CFLAGS = -fsanitize=address -g3
 else ifeq ($(DEBUG), hard)
 	CFLAGS = -Wall -Weverything -fsanitize=address,undefined -Wno-cast-qual -Wno-missing-noreturn
 else ifeq ($(DEBUG), dev)

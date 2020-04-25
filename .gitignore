@@ -106,3 +106,4 @@ test
 ### DEBUG ###
 srcs/debug.c
 truc
+test

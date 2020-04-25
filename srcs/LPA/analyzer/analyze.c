@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   analyze.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 13:52:47 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/08 15:36:39 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/04/25 13:02:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ t_analyzer	*separator_analyze(t_analyzer *anal, t_core *shell)
 		|| ((t_token*)anal->lexer->content)->id == P_ANDIF
 		|| ((t_token*)anal->lexer->content)->id == P_PIPE)
 		return (anal = add_process(anal, shell));
-	else if (((t_token*)anal->lexer->content)->id == P_NEWLINE || ((t_token*)anal->lexer->content)->id == P_END)
+	else if (((t_token*)anal->lexer->content)->id == P_NEWLINE
+		|| ((t_token*)anal->lexer->content)->id == P_END)
 	{
 		anal->job.type = ((t_token*)anal->lexer->content)->id;
 		anal->state = A_SEPARATOR;
