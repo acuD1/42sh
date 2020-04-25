@@ -23,7 +23,7 @@ static int32_t	get_opt_test(size_t argc, char **argv, int8_t diff)
 	i = 0;
 	if (argc > 2 + (size_t)diff && argv[2 + (size_t)diff])
 	{
-		while (i <= NB_TESTBLT)
+		while (i < NB_TESTBLT)
 		{
 			if (ft_strcmp(op[i], argv[((i <= Z_UNATEST) ? 1 : 2) + diff]) == 0)
 				return ((int32_t)i);
