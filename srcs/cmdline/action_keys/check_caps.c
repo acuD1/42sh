@@ -107,7 +107,7 @@ u_int8_t		check_caps(const char *buff, t_read *term)
 	ak_clipboard(term, buff, &value);
 	if (value == CTRL_D)
 		return (ctrl_delete(term));
-	if (value == TAB_KEY)
+	if (value == TAB_KEY && (term->x_index == term->width))
 		tab_key(term, &value);
 	else if (ft_is_print(*buff))
 		insert_in_buffer(buff, term);
