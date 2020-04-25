@@ -21,7 +21,7 @@ static void		erase_line(t_core *shell)
 		goto_prompt(&shell->term);
 		ft_strdel(&shell->term.buffer);
 		ft_strdel(&shell->term.tmp_buff);
-		shell->term.buffer = ft_memalloc(BUFF_SIZE);
+		shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 	}
 	else if (shell->term.status == CMD_SUBPROMPT)
 	{
@@ -31,7 +31,7 @@ static void		erase_line(t_core *shell)
 		shell->term.buffer = ft_strdup(shell->term.tmp_buff);
 		save_history(&shell->term);
 		ft_strdel(&shell->term.buffer);
-		shell->term.buffer = ft_memalloc(BUFF_SIZE);
+		shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 		shell->term.status = CMD_PROMPT;
 		ft_strdel(&shell->term.prompt);
 		get_prompt_value(shell, "PS1");
