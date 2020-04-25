@@ -66,6 +66,7 @@ int8_t		launch_blt(t_core *shell, t_process *process)
 			process->status = call_builtin(shell, process, blt);
 		process->completed = TRUE;
 		shell->status = process->status;
+		process->status *= 256;
 		close_fds(process->redir_list);
 		return (SUCCESS);
 	}
