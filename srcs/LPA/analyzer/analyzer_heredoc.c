@@ -80,8 +80,8 @@ t_analyzer			*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 		anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
 	else
 		anal = load_heredoc_noimode(anal, shell);
-	if (!shell->heredoc)
-		return (exit_lpa(anal, shell));
+	//if (!shell->heredoc)
+	//	return (exit_lpa(anal, shell));
 	anal->state = A_WORD;
 	shell->term.flag = FALSE;
 	shell->term.status = CMD_DONE;
