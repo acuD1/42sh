@@ -16,12 +16,17 @@ static ssize_t	exit_subprompt_prio(t_core *shell, char *str)
 {
 	ft_strdel(&shell->sub.keys);
 	shell->sub.state = SP_END;
+	if (shell->term.flag == FALSE)
+	{
+		ft_strdel(&str);
+		return (0);
+	}
 	ft_strdel(&shell->term.buffer);
 	shell->term.buffer = ft_strdup(str);
 	save_history(&shell->term);
 	ft_strdel(&shell->term.buffer);
 	ft_strdel(&str);
-	shell->term.buffer = ft_memalloc(BUFF_SIZE);
+	shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 	return (0);
 }
 

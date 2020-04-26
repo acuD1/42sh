@@ -66,7 +66,7 @@ void		reboot_or_end_machine(t_core *shell, t_subprompt *sub)
 		open_machine_subprompt(shell, sub);
 		sub->escaped = 0;
 	}
-	else if (sub->keys != NULL)
+	else if (shell->term.status == CMD_SUBPROMPT || sub->keys != NULL)
 		open_machine_subprompt(shell, sub);
 	else
 		sub->state = SP_END;
