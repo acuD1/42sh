@@ -99,6 +99,8 @@ char			*load_heredoc(t_core *shell, const char *key)
 		if (shell->term.status == CMD_PROMPT)
 			return (NULL);
 	}
+	if (shell->term.tmp_buff == NULL)
+		return (value = ft_strdup(key));	
 	value = stock_value(shell);
 	return (value);
 }
