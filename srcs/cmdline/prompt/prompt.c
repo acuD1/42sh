@@ -97,8 +97,6 @@ int8_t			init_prompt(t_core *shell)
 			|| (!*shell->term.prompt && shell->term.buffer))
 			break ;
 	}
-	check_subprompt(shell);
-	check_expansions(&shell->term);
 	shell->term.status = CMD_DONE;
 	return (SUCCESS);
 }
