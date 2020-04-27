@@ -44,11 +44,10 @@ static void		init_parser(t_parser *parser, t_core *shell)
 	init_word_graph(parser->graph);
 }
 
-static u_int8_t	parser_error(char *data, t_core *shell)
+static u_int8_t	parser_error(char *data)
 {
 	ft_dprintf(STDERR_FILENO, "42sh: syntax error near unexpected token `%s'\n",
 		data);
-	shell->subpts = 1;
 	return (FALSE);
 }
 
@@ -69,7 +68,7 @@ u_int8_t		parser(t_lst *lexer, t_core *shell)
 	while (tok_lst)
 	{
 		if (!parser_graph(&p, ((t_token*)tok_lst->content)->id))
-			return (parser_error(((t_token*)tok_lst->content)->data, shell));
+			return (parser_error(((t_token*)tok_lst->content)->data));
 		tok_lst = tok_lst->next;
 	}
 	return (TRUE);

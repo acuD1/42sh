@@ -36,16 +36,21 @@ static u_int8_t		lex_n_parse(t_core *shell, t_lst *old, char *old_buffer)
 
 static u_int8_t		ouverture_du_subpts(t_core *shell, char *old_buffer)
 {
+	char			*saved;
+
+	saved = NULL;
 	set_termconfig(shell);
 	subprompt_loader(shell);
 	if (sub_prompt_error(&shell->term, '\0') == TRUE)
 	{
+		saved = ft_strdup(shell->term.buffer);
 		ft_strdel(&shell->term.buffer);
 		shell->term.buffer = ft_strdup(old_buffer);
 		save_history(&shell->term);
 		ft_strdel(&shell->term.buffer);
 		ft_strdel(&old_buffer);
-		shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
+		shell->term.buffer = ft_strdup(saved);
+		ft_strdel(&saved);
 		shell->term.status = CMD_DONE;
 		shell->subpts = 1;
 		reset_config(shell);

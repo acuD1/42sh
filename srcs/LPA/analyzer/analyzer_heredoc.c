@@ -69,7 +69,7 @@ static t_analyzer	*load_heredoc_noimode(t_analyzer *anal, t_core *shell)
 		anal->redir.heredoc = ft_strjoinf(anal->redir.heredoc, "\n", 1);
 	}
 	ft_strdel(&line);
-	shell->heredoc = 1;
+	shell->heredoc = 0;
 	return (anal);
 }
 
@@ -80,7 +80,7 @@ t_analyzer			*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 		anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
 	else
 		anal = load_heredoc_noimode(anal, shell);
-	if (!shell->heredoc)
+	if (shell->heredoc)
 		return (exit_lpa(anal, shell));
 	anal->state = A_WORD;
 	shell->term.flag = FALSE;
