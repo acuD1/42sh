@@ -81,17 +81,19 @@ size_t			get_word_size_ntype(size_t i, char *str)
 	if (!str || !str[i])
 		return (0);
 	index = i;
-	while (str[index++])
+	while (str[index])
 	{
 		if (check_backslash_nbr(str, (ssize_t*)&index))
 		{
 			f = 1;
+			index++;
 			continue ;
 		}
 		check_all_quotes(str, &index);
 		if (!f && ft_strchr(CHAR_INTERRUPT, str[index]))
 			break ;
 		f = 0;
+		index++;
 	}
 	return (index);
 }
