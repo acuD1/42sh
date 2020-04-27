@@ -46,6 +46,12 @@ void	load_i_mode(t_core *shell)
 	{
 		if (init_prompt(shell) != SUCCESS)
 			return ;
+		if (check_expansions(&shell->term) == FAILURE)
+		{
+			reset_config(shell);
+			free_prompt(shell);
+			continue ;
+		}
 		reset_config(shell);
 		lexer_parser_analyzer(shell);
 		do_job_notification(shell, shell->launched_jobs, TRUE);
