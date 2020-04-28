@@ -24,10 +24,7 @@ static ssize_t	exit_subprompt_prio(t_core *shell, char *str)
 	save_history(&shell->term);
 	ft_strdel(&shell->term.buffer);
 	ft_strdel(&str);
-	if (shell->term.flag == TRUE)
-		shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
-	else
-		shell->term.buffer = ft_strdup(saved);
+	shell->term.buffer = ft_strdup(saved);
 	ft_strdel(&saved);
 	return (0);
 }
@@ -114,5 +111,7 @@ ssize_t			check_subprompt(t_core *shell)
 	while (shell->sub.state != SP_END)
 		shell->sub.state = shell->sub.tu[shell->sub.state](shell, &shell->sub);
 	ft_strdel(&(shell->sub.keys));
+	if (shell->term.status == 3)
+		check_subprompt(shell);
 	return (TRUE);
 }
