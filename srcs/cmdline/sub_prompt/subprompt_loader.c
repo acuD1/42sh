@@ -20,6 +20,6 @@ void	subprompt_loader(t_core *shell)
 		shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 		display_subprompt(&shell->term);
 		if (read_multiline(&shell->term) == FALSE)
-			return ;
+			break ;
 	}
 }
