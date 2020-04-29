@@ -53,7 +53,10 @@ u_int8_t		read_multiline(t_read *term)
 		if (check_caps(buff, term) == TRUE)
 			ft_bzero(buff, READ_SIZE + 1);
 		else
+		{
+			signal(SIGINT, sigint_handler);
 			return (FALSE);
+		}
 	}
 	signal(SIGINT, sigint_handler);
 	return (TRUE);
