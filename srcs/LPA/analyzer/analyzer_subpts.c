@@ -21,7 +21,7 @@ static u_int8_t		lex_n_parse(t_core *shell, t_lst *old, char *old_buffer)
 	prev = old;
 	new = lexer(shell->term.buffer);
 	shell->term.buffer = ft_strjoinf(old_buffer, shell->term.buffer, 3);
-	if (parser(new, shell) == FALSE)
+	if (parser(new) == FALSE)
 	{
 		ft_freetokenlist(&new);
 		return (FALSE);
@@ -52,7 +52,6 @@ static u_int8_t		ouverture_du_subpts(t_core *shell, char *old_buffer)
 		shell->term.buffer = ft_strdup(saved);
 		ft_strdel(&saved);
 		shell->term.status = CMD_DONE;
-		shell->subpts = 1;
 		reset_config(shell);
 		return (2);
 	}
@@ -86,10 +85,9 @@ static t_analyzer	*open_subpt(t_analyzer *anal, t_core *shell)
 	u_int8_t	state;
 
 	state = FALSE;
-	shell->term.subpts = 1;
 	while (state == FALSE)
 	{
-		if (shell->subpts)
+		if (shell->ctrl_c)
 			return (exit_lpa(anal, shell));
 		if ((state = analyzer_subpts(shell, anal->lexer)) == FALSE)
 			continue ;
@@ -98,7 +96,6 @@ static t_analyzer	*open_subpt(t_analyzer *anal, t_core *shell)
 		else
 			break ;
 	}
-	shell->term.subpts = 0;
 	return (anal);
 }
 

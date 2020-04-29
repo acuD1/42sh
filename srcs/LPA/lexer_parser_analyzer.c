@@ -73,15 +73,11 @@ void		lexer_parser_analyzer(t_core *shell)
 	t_lst	*lxr_tok;
 
 	lxr_tok = lexer(shell->term.buffer);
-	shell->heredoc = 0;
-	shell->subpts = 0;
 	if (lxr_tok == NULL)
 		return ;
-	if (parser(lxr_tok, shell) == TRUE)
+	if (parser(lxr_tok) == TRUE)
 		analyzer(shell, lxr_tok);
 	else
 		shell->status = 2;
-	if (shell->heredoc || shell->subpts)
-		lexer_parser_analyzer(shell);
 	ft_freetokenlist(&lxr_tok);
 }

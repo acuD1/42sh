@@ -46,9 +46,7 @@ u_int8_t	check_backslash(t_read *term, char *quote)
 enum e_subp	backslash_subprompt(t_core *shell, t_subprompt *sub)
 {
 	if (check_backslash_nbr((char*)shell->term.buffer, &sub->index))
-	{
 		sub->escaped = 1;
-	}
 	sub->state = SP_START;
 	return (sub->state);
 }

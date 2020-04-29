@@ -80,7 +80,6 @@ typedef struct				s_read
 	size_t					ac;
 	int32_t					search;
 	u_int8_t				sub_prompt;
-	u_int8_t				subpts;
 	u_int8_t				status;
 	u_int8_t				flag;
 	char					pad[1];
@@ -120,7 +119,7 @@ struct						s_core
 	pid_t					pgid;
 	int32_t					status;
 	int32_t					heredoc;
-	int32_t					subpts;
+	int32_t					ctrl_c;
 	int32_t					subst_error;
 	int32_t					terminal;
 	int8_t					is_interactive;

@@ -32,11 +32,9 @@ u_int8_t		graph(enum e_pstate *c, enum e_pstate n, enum e_pstate ps[])
 	return (0);
 }
 
-static void		init_parser(t_parser *parser, t_core *shell)
+static void		init_parser(t_parser *parser)
 {
-	shell->subpts = 0;
 	parser->state = P_START;
-	parser->f = 4;
 	init_start_graph(parser->graph);
 	init_redirect_graph(parser->graph);
 	init_process_graph(parser->graph);
@@ -56,7 +54,7 @@ static u_int8_t	parser_graph(t_parser *parser, enum e_pstate id)
 	return (graph(&parser->state, id, parser->graph[parser->state].good_type));
 }
 
-u_int8_t		parser(t_lst *lexer, t_core *shell)
+u_int8_t		parser(t_lst *lexer)
 {
 	t_parser	p;
 	t_lst		*tok_lst;
@@ -64,7 +62,7 @@ u_int8_t		parser(t_lst *lexer, t_core *shell)
 	if (!lexer)
 		return (FALSE);
 	tok_lst = lexer;
-	init_parser(&p, shell);
+	init_parser(&p);
 	while (tok_lst)
 	{
 		if (!parser_graph(&p, ((t_token*)tok_lst->content)->id))

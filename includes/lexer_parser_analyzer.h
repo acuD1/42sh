@@ -55,7 +55,7 @@ t_analyzer	*add_process(t_analyzer *anal, t_core *shell);
 **	PARSER
 */
 
-u_int8_t	parser(t_lst *lexer, t_core *shell);
+u_int8_t	parser(t_lst *lexer);
 u_int8_t	graph(enum e_pstate *c, enum e_pstate n, enum e_pstate ps[]);
 void		init_start_graph(t_graph *graph);
 void		init_word_graph(t_graph *graph);

@@ -21,15 +21,13 @@ void	init_cmd_line(t_core *shell, t_read *term)
 	term->history_index = NULL;
 	term->shell = shell;
 	term->flag = 0;
-	term->sub_prompt = 0;
+	term->sub_prompt = FALSE;
 	term->search = 0;
 	term->buffer = NULL;
 	term->tmp_buff = NULL;
 	term->cmd = NULL;
 	term->prompt = NULL;
-	term->sub_prompt = FALSE;
 	term->cpy = NULL;
-	term->subpts = 0;
 	if (get_size(term) != SUCCESS)
 		quit_shell(shell, EXIT_FAILURE, TRUE);
 	shell->term.history = term->history;

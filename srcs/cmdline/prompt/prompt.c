@@ -46,7 +46,7 @@ void			display_prompt(t_read *term)
 	term->y = 0;
 	term->x_index = term->x;
 	term->width = term->x;
-	term->sub_prompt = 0;
+	term->sub_prompt = FALSE;
 	ft_dprintf(STDERR_FILENO, "%s%s%s%s", C_BOLD, C_Y, term->prompt, C_X);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 }
@@ -81,6 +81,7 @@ int8_t			init_prompt(t_core *shell)
 	char	buff[READ_SIZE + 1];
 
 	shell->term.status = CMD_PROMPT;
+	shell->ctrl_c = 0;
 	ft_bzero(buff, READ_SIZE + 1);
 	shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 	set_termconfig(shell);

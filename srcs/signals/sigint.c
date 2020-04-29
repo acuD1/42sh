@@ -25,16 +25,13 @@ static void		erase_line(t_core *shell)
 	}
 	else if (shell->term.status == CMD_SUBPROMPT)
 	{
-		shell->heredoc = 1;
-		shell->subpts = 1;
+		shell->ctrl_c = 1;
 		ft_strdel(&shell->term.buffer);
 		shell->term.buffer = ft_strdup(shell->term.tmp_buff);
 		save_history(&shell->term);
 		ft_strdel(&shell->term.buffer);
 		shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 		shell->term.status = CMD_PROMPT;
-		ft_strdel(&shell->term.prompt);
-		get_prompt_value(shell, "PS1");
 		ft_strdel(&shell->sub.keys);
 		ft_strdel(&(shell->term.tmp_buff));
 		shell->job_list = NULL;
