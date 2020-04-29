@@ -25,7 +25,7 @@ static u_int8_t	check_key(t_core *shell, const char *key)
 {
 	if (read_multiline(&shell->term) == FALSE)
 	{
-		if (shell->term.flag == TRUE)
+		if (shell->term.status == CMD_DONE)
 			return (heredoc_error(key));
 		if (ft_strcmp(shell->term.buffer, key))
 		{

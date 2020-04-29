@@ -87,7 +87,7 @@ void			display_subprompt(t_read *term)
 
 u_int8_t		sub_prompt_error(t_read *term, char sb)
 {
-	if (term->flag == TRUE)
+	if (term->status == CMD_DONE)
 	{
 		ft_dprintf(STDERR_FILENO,
 			"42sh: unexpected EOF while looking for matching `%c'\n", sb);
@@ -96,7 +96,7 @@ u_int8_t		sub_prompt_error(t_read *term, char sb)
 		term->status = CMD_DONE;
 		return (TRUE);
 	}
-	if (term->status != CMD_SUBPROMPT)
+	if (term->status == CMD_PROMPT)
 	{
 		term->status = CMD_DONE;
 		return (TRUE);

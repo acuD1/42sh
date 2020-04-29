@@ -81,7 +81,7 @@ static u_int8_t	ctrl_delete(t_read *term)
 	{
 		if (!*term->buffer)
 		{
-			term->flag = TRUE;
+			term->status = CMD_DONE;
 			return (FALSE);
 		}
 	}
