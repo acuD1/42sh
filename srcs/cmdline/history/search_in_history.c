@@ -12,6 +12,7 @@
 
 #include "sh42.h"
 #include <unistd.h>
+#include <signal.h>
 
 void			goto_reverse(t_read *term, const char *buff_tmp)
 {
@@ -92,7 +93,8 @@ static void		research_in_history(t_read *term)
 	history = term->history;
 	goto_reverse(term, "");
 	ft_putstr_fd(term->buffer, STDERR_FILENO);
-	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+	sigint_special_handler();
+	while (read(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		if (!term->tmp_buff)
 			return ;
@@ -106,6 +108,7 @@ static void		research_in_history(t_read *term)
 		walking_history(term->tmp_buff, term, &history);
 		ft_bzero(buff, READ_SIZE + 1);
 	}
+	signal(SIGINT, sigint_handler);
 }
 
 void			research_mode(t_read *term)
