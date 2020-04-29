@@ -24,7 +24,7 @@ u_int8_t		is_tab(const char *d_name, t_read *term)
 	char		buff[READ_SIZE + 1];
 
 	ft_bzero(buff, READ_SIZE + 1);
-	if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+	if (read(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		value = get_mask(buff);
 		if (value == TAB_KEY)

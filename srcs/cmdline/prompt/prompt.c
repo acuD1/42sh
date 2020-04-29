@@ -87,7 +87,7 @@ int8_t			init_prompt(t_core *shell)
 	set_termconfig(shell);
 	get_prompt_value(shell, "PS1");
 	display_prompt(&shell->term);
-	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+	while (read(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		shell->term.search = 0;
 		if (end_of_file(shell, buff) == TRUE)

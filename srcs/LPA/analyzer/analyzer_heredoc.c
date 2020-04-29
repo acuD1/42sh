@@ -77,7 +77,11 @@ t_analyzer			*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 {
 	anal->redir.op[1] = heredoc_inhib(((t_token*)anal->lexer->content)->data);
 	if (shell->is_interactive)
+	{
+		shell->term.sub_prompt = TRUE;
 		anal->redir.heredoc = load_heredoc(shell, anal->redir.op[1]);
+		shell->term.sub_prompt = FALSE;
+	}
 	else
 		anal = load_heredoc_noimode(anal, shell);
 	if (shell->heredoc)

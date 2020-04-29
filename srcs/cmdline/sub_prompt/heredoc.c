@@ -56,7 +56,6 @@ u_int8_t		read_multiline(t_read *term)
 			return (FALSE);
 	}
 	signal(SIGINT, sigint_handler);
-	//SI CTRL+C on sort du read et on arrive ici avec term.status = CMD_PROMPT. GL HF maintenant.
 	return (TRUE);
 }
 

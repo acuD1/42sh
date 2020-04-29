@@ -107,7 +107,7 @@ void			load_selection(t_read *term, const char *buff, u_int64_t value)
 	else if (value == SELECT_RIGHT)
 		select_on_right(term, &copy);
 	ft_bzero((void *)buff, READ_SIZE + 1);
-	while (xread(STDIN_FILENO, (char*)buff, READ_SIZE) > 0)
+	while (read(STDIN_FILENO, (char*)buff, READ_SIZE) > 0)
 	{
 		value = get_mask(buff);
 		copy = ak_selection(term, value, copy);

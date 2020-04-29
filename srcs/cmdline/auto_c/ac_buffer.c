@@ -30,7 +30,7 @@ u_int8_t		read_again
 	if (path && is_dir(path) == TRUE)
 		ft_strcat(name, "/");
 	insert_str_in_buffer(name, term);
-	if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+	if (read(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		value = get_mask(buff);
 		if (value == TAB_KEY)

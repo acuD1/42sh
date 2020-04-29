@@ -51,7 +51,7 @@ static u_int8_t	is_completion(t_read *term)
 
 	value = 0;
 	ft_bzero(buff, READ_SIZE + 1);
-	if (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+	if (read(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		value = get_mask(buff);
 		if (value == TAB_KEY || value == 0x909000000000000)
