@@ -12,6 +12,7 @@
 
 #include "sh42.h"
 #include <unistd.h>
+#include <signal.h>
 
 static u_int8_t	heredoc_error(const char *key)
 {
@@ -46,13 +47,16 @@ u_int8_t		read_multiline(t_read *term)
 	char	buff[READ_SIZE + 1];
 
 	ft_bzero(buff, READ_SIZE + 1);
-	while (xread(STDIN_FILENO, buff, READ_SIZE) > 0)
+	sigint_special_handler();
+	while (read(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		if (check_caps(buff, term) == TRUE)
 			ft_bzero(buff, READ_SIZE + 1);
 		else
 			return (FALSE);
 	}
+	signal(SIGINT, sigint_handler);
+	//SI CTRL+C on sort du read et on arrive ici avec term.status = CMD_PROMPT. GL HF maintenant.
 	return (TRUE);
 }
 

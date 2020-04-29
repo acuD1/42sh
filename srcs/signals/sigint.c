@@ -35,7 +35,6 @@ static void		erase_line(t_core *shell)
 		shell->term.status = CMD_PROMPT;
 		ft_strdel(&shell->term.prompt);
 		get_prompt_value(shell, "PS1");
-		display_prompt(&(shell->term));
 		ft_strdel(&shell->sub.keys);
 		ft_strdel(&(shell->term.tmp_buff));
 		shell->job_list = NULL;

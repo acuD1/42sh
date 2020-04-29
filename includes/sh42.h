@@ -228,6 +228,7 @@ int8_t		write_heredoc(t_redir *ptr);
 
 void		sigint_handler(int sig_num);
 void		init_signals(void);
+void		sigint_special_handler(void);
 
 /*
 **	===========================================================================

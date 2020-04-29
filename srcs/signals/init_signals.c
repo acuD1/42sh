@@ -70,6 +70,15 @@ static void	sigh_winch(int signum)
 **	USR2
 */
 
+void	sigint_special_handler(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = sigint_handler;
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+}
+
 void		init_signals(void)
 {
 	static int	signals[27] = {SIGHUP, SIGINT, SIGQUIT, SIGILL, SIGTRAP
