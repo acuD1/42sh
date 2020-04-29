@@ -98,7 +98,7 @@ u_int8_t		sub_prompt_error(t_read *term, char sb)
 	}
 	if (term->status != CMD_SUBPROMPT)
 	{
-		term->status = 3;
+		term->status = CMD_DONE;
 		return (TRUE);
 	}
 	return (FALSE);

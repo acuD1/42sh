@@ -111,10 +111,5 @@ ssize_t			check_subprompt(t_core *shell)
 	while (shell->sub.state != SP_END)
 		shell->sub.state = shell->sub.tu[shell->sub.state](shell, &shell->sub);
 	ft_strdel(&(shell->sub.keys));
-	if (shell->term.status == 3)
-	{
-		shell->term.status = CMD_SUBPROMPT;
-		check_subprompt(shell);
-	}
 	return (TRUE);
 }
