@@ -33,6 +33,7 @@ static void		erase_line(t_core *shell)
 		shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 		shell->term.status = CMD_PROMPT;
 		ft_strdel(&shell->sub.keys);
+		ft_strdel(&shell->term.prompt);
 		ft_strdel(&(shell->term.tmp_buff));
 		shell->job_list = NULL;
 	}

@@ -76,6 +76,7 @@ void	sigint_special_handler(void)
 
 	sa.sa_handler = sigint_handler;
 	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 }
 
