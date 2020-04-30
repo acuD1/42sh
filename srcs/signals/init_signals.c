@@ -74,6 +74,7 @@ void	sigint_special_handler(void)
 {
 	struct sigaction	sa;
 
+	ft_bzero(&sa, sizeof(sa));
 	sa.sa_handler = sigint_handler;
 	sa.sa_flags = 0;
 	sigaction(SIGINT, &sa, NULL);
