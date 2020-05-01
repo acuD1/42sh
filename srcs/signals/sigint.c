@@ -14,7 +14,7 @@
 #include <signal.h>
 #include <unistd.h>
 
-static void		erase_line(t_core *shell)
+static void	erase_line(t_core *shell)
 {
 	if (shell->term.status == CMD_PROMPT)
 	{
@@ -39,7 +39,7 @@ static void		erase_line(t_core *shell)
 	}
 }
 
-void			sigint_handler(int signum)
+void		sigint_handler(int signum)
 {
 	t_core	*shell;
 

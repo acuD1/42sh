@@ -56,14 +56,16 @@ static void		walking_history
 	goto_reverse(term, buff_tmp);
 }
 
-static int8_t	insert_in_search(t_read *term, int64_t *i, const char buff[])
+static int8_t	insert_in_search(t_read *term, const char buff[])
 {
 	u_int64_t	value;
+	int64_t		i;
 
+	i = -1;
 	value = get_mask(buff);
 	if (ft_is_print(*buff))
 	{
-		term->tmp_buff[++(*i)] = *buff;
+		term->tmp_buff[++i] = *buff;
 		if (term->search == SEARCH_FAILURE)
 			goto_reverse(term, term->tmp_buff);
 		else
@@ -71,10 +73,10 @@ static int8_t	insert_in_search(t_read *term, int64_t *i, const char buff[])
 	}
 	else if (value == BS_KEY && *term->tmp_buff)
 	{
-		term->tmp_buff[*i] = 0;
-		if (*i <= -1)
+		term->tmp_buff[i] = 0;
+		if (i <= -1)
 			return (SUCCESS);
-		(*i)--;
+		i--;
 	}
 	else if (value != CTRL_R && value != BS_KEY)
 		return (FAILURE);
@@ -84,10 +86,8 @@ static int8_t	insert_in_search(t_read *term, int64_t *i, const char buff[])
 static void		research_in_history(t_read *term)
 {
 	char		buff[READ_SIZE + 1];
-	int64_t		i;
 	t_lst		*history;
 
-	i = -1;
 	term->tmp_buff = ft_memalloc(BUFF_SIZE + 1);
 	ft_bzero(buff, READ_SIZE + 1);
 	history = term->history;
@@ -98,7 +98,7 @@ static void		research_in_history(t_read *term)
 	{
 		if (!term->tmp_buff)
 			return ;
-		if (insert_in_search(term, &i, buff) == FAILURE)
+		if (insert_in_search(term, buff) == FAILURE)
 		{
 			ft_strdel(&term->tmp_buff);
 			signal(SIGINT, sigint_handler);

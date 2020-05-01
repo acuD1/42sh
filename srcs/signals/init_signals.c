@@ -70,7 +70,7 @@ static void	sigh_winch(int signum)
 **	USR2
 */
 
-void	sigint_special_handler(void)
+void		sigint_special_handler(void)
 {
 	struct sigaction	sa;
 
