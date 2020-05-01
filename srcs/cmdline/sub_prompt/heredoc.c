@@ -84,9 +84,6 @@ static char		*stock_value(t_core *shell)
 
 char			*load_heredoc(t_core *shell, const char *key)
 {
-	char	*value;
-
-	value = NULL;
 	set_termconfig(shell);
 	shell->heredoc = 0;
 	shell->term.buffer = ft_strjoinf(shell->term.buffer, NEW_LINE, 1);
@@ -107,7 +104,6 @@ char			*load_heredoc(t_core *shell, const char *key)
 			return (NULL);
 	}
 	if (shell->term.tmp_buff == NULL)
-		return (value = ft_strdup(key));
-	value = stock_value(shell);
-	return (value);
+		return (ft_strdup(key));
+	return (stock_value(shell));
 }
