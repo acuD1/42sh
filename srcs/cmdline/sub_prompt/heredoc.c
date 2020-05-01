@@ -48,7 +48,7 @@ u_int8_t		read_multiline(t_read *term)
 
 	ft_bzero(buff, READ_SIZE + 1);
 	sigint_special_handler();
-	while (term->status == CMD_SUBPROMPT 
+	while (term->status == CMD_SUBPROMPT
 			&& read(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		if (check_caps(buff, term) == TRUE)
@@ -107,7 +107,7 @@ char			*load_heredoc(t_core *shell, const char *key)
 			return (NULL);
 	}
 	if (shell->term.tmp_buff == NULL)
-		return (value = ft_strdup(key));	
+		return (value = ft_strdup(key));
 	value = stock_value(shell);
 	return (value);
 }

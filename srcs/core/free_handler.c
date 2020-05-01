@@ -32,7 +32,6 @@ void		free_prompt(t_core *shell)
 {
 	ft_strdel(&shell->term.buffer);
 	ft_freejoblist(&shell->job_list);
-	//ft_freejoblist(&shell->launched_jobs);
 }
 
 static void	free_history(t_read *term)

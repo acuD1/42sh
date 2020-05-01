@@ -33,7 +33,7 @@ endif
 
 # Color
 
-RESET_C 			=	\033[m
+RESET_C				=	\033[m
 B_C					=	\033[0;34m
 Y_C					=	\033[0;33m
 G_C					=	\033[0;32m
@@ -336,24 +336,23 @@ HDR					+=	shared_libft.h
 
 # Objects
 
-OBJ 				=	$(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
-
-LIB 				=	$(L_PATH)$(LNAME) -ltermcap
+OBJ					=	$(patsubst $(S_PATH)%.c, $(O_PATH)%.o, $(SRC))
+LIB					=	$(L_PATH)$(LNAME) -ltermcap
 vpath %.h $(H_PATH)
 
 # Variables
 
 DEBUG				=
-CFLAGS				= -Wall -Wextra -Werror
+CFLAGS				=	-Wall -Wextra -Werror
 ifeq ($(DEBUG), g)
-	CFLAGS = -g
+	CFLAGS			=	-g
 else ifeq ($(DEBUG), fsanitize)
-	CFLAGS = -fsanitize=address -g3
+	CFLAGS			=	-fsanitize=address -g3
 else ifeq ($(DEBUG), hard)
-	CFLAGS += -Wall -Weverything -fsanitize=address,undefined -Wno-cast-qual
-	CFLAGS += -Wno-missing-noreturn -Wno-disabled-macro-expansion
+	CFLAGS			+=	-Wall -Weverything -fsanitize=address,undefined -Wno-cast-qual
+	CFLAGS			+=	-Wno-missing-noreturn -Wno-disabled-macro-expansion
 else ifeq ($(DEBUG), dev)
-	CFLAGS =
+	CFLAGS			=
 endif
 CC					=	clang $(CFLAGS)
 IFLAGS				+=	$(addprefix -I, $(H_PATH))
@@ -395,9 +394,9 @@ all: libm $(BUILD) $(NAME)
 # Compilation core
 
 ifneq ("$(wildcard $(L_PATH)$(LNAME))","")
-TEST = shared_libft/shared_libft.a
+TEST				=	shared_libft/shared_libft.a
 else
-TEST =
+TEST				=
 endif
 
 $(NAME): $(OBJ) $(BUILD_FILE) $(TEST)

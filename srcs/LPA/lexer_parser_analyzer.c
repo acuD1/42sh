@@ -80,5 +80,4 @@ void		lexer_parser_analyzer(t_core *shell)
 	else
 		shell->status = 2;
 	ft_freetokenlist(&lxr_tok);
-	ft_strdel(&shell->term.prompt);
 }
