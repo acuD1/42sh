@@ -38,7 +38,7 @@ ssize_t			open_machine_subprompt(t_core *shell, t_subprompt *sub)
 	ft_strdel(&shell->term.prompt);
 	get_prompt_value(shell, "PS2");
 	shell->term.status = CMD_SUBPROMPT;
-	if (sub->keys && (sub->keys[0] == '\"' || sub->keys[0] == '\''))
+	if (sub->keys)
 		shell->term.buffer = ft_strjoinf(shell->term.buffer, NEW_LINE, 1);
 	if (!sub->keys)
 	{
