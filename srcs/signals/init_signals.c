@@ -55,7 +55,7 @@ static void	sigh_winch(int signum)
 	else
 		goto_prompt(&shell->term);
 	ft_strdel(&shell->term.buffer);
-	shell->term.buffer = ft_memalloc(BUFF_SIZE);
+	shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 	insert_str_in_buffer(tmp, &shell->term);
 	ft_strdel(&tmp);
 }
