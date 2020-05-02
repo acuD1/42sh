@@ -47,9 +47,8 @@ static void	sigh_winch(int signum)
 	if (get_size(&(shell->term)) != SUCCESS || update_termsize(shell))
 		quit_shell(shell, EXIT_SUCCESS, FALSE);
 	clr_screen(&shell->term);
-	if (shell->term.search == 29)
-		goto_reverse(&shell->term, shell->term.tmp_buff);
-	else if (shell->term.search == 22)
+	if (shell->term.search == SEARCH_SUCCESS
+								|| shell->term.search == SEARCH_FAILURE)
 		goto_reverse(&shell->term, shell->term.tmp_buff);
 }
 
