@@ -40,24 +40,17 @@ static void	sig_exit(int signum)
 static void	sigh_winch(int signum)
 {
 	t_core	*shell;
-	char	*tmp;
 
 	(void)signum;
 	shell = get_core(NULL);
-	tmp = ft_strdup(shell->term.buffer);
 	fflush(stdout);
 	if (get_size(&(shell->term)) != SUCCESS || update_termsize(shell))
 		quit_shell(shell, EXIT_SUCCESS, FALSE);
+	clr_screen(&shell->term);
 	if (shell->term.search == 29)
 		goto_reverse(&shell->term, shell->term.tmp_buff);
 	else if (shell->term.search == 22)
 		goto_reverse(&shell->term, shell->term.tmp_buff);
-	else
-		goto_prompt(&shell->term);
-	ft_strdel(&shell->term.buffer);
-	shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
-	insert_str_in_buffer(tmp, &shell->term);
-	ft_strdel(&tmp);
 }
 
 /*
