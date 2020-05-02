@@ -26,21 +26,21 @@ int8_t	increment_shlvl(t_core *shell)
 	char	*shlvl;
 	t_db	*db;
 
-	db = NULL;
+	value = 0;
 	if (shell && (db = get_or_create_db(
 		shell, "SHLVL", EXPORT_VAR | INTERNAL_VAR)) != NULL)
 	{
-		if (ft_atol(db->value, &value) != SUCCESS)
+		if (db->value && ft_atol(db->value, &value) != SUCCESS)
 			new_value = 0;
-		else if (value < 0 || value > 999)
-			new_value = -1;
+		if (value < 0)
+			new_value = 0;
 		else
-			new_value = ((value & 8000000000000000) >> 32) + value & 0xFFF;
-		if (value > 999)
+			new_value = value + 1;
+		if (new_value > 999)
 			ft_dprintf(STDERR_FILENO
 			, "42sh: warning: shell level (%lli) too high, resetting to 1\n"
-			, value);
-		shlvl = (value == 999) ? ft_strnew(0) : ft_itoa(new_value + 1);
+			, new_value);
+		shlvl = ft_itoa((new_value >= 999) ? 1 : new_value);
 		if (shlvl && modify_db(db, shlvl, 0))
 			return (SUCCESS);
 		ft_strdel(&shlvl);
