@@ -61,15 +61,12 @@ static u_int8_t	ctrl_delete(t_read *term)
 
 static int8_t	return_key(t_read *term)
 {
-	if (*term->prompt || (!*term->prompt && *term->buffer))
+	if (term->x_index < term->width)
 	{
-		if (term->x_index < term->width)
-		{
-			goto_prompt(term);
-			ft_dprintf(STDERR_FILENO, "%s", term->buffer);
-		}
-		ft_dprintf(STDERR_FILENO, "\n");
+		goto_prompt(term);
+		ft_dprintf(STDERR_FILENO, "%s", term->buffer);
 	}
+	ft_dprintf(STDERR_FILENO, "\n");
 	return (FALSE);
 }
 
