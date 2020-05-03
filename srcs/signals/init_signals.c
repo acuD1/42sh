@@ -43,7 +43,6 @@ static void	sigh_winch(int signum)
 
 	(void)signum;
 	shell = get_core(NULL);
-	fflush(stdout);
 	if (get_size(&(shell->term)) != SUCCESS || update_termsize(shell))
 		quit_shell(shell, EXIT_SUCCESS, FALSE);
 	clr_screen(&shell->term);
@@ -66,9 +65,9 @@ void		sigint_special_handler(void)
 {
 	struct sigaction	sa;
 
+	ft_bzero(&sa, sizeof(struct sigaction));
 	sa.sa_handler = sigint_handler;
 	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
 	sigaction(SIGINT, &sa, NULL);
 }
 

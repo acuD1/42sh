@@ -73,27 +73,27 @@ static void		check_all_quotes(char *str, size_t *index)
 
 size_t			get_word_size_ntype(size_t i, char *str)
 {
-	size_t	index;
-	size_t	f;
+	size_t	index[3];
 
-	index = 0;
-	f = 0;
 	if (!str || !str[i])
 		return (0);
-	index = i;
-	while (str[index])
+	index[0] = i;
+	index[2] = ft_strlen(str);
+	while (index[0] < index[2] && str[index[0]])
 	{
-		if (check_backslash_nbr(str, (ssize_t*)&index))
+		index[1] = 0;
+		if (check_backslash_nbr(str, (ssize_t*)&index[0]))
 		{
-			f = 1;
-			index++;
+			index[1] = 1;
+			if (index[0] >= index[2])
+				break ;
+			index[0]++;
 			continue ;
 		}
-		check_all_quotes(str, &index);
-		if (!f && ft_strchr(CHAR_INTERRUPT, str[index]))
+		check_all_quotes(str, &index[0]);
+		if (!index[1] && ft_strchr(CHAR_INTERRUPT, str[index[0]]))
 			break ;
-		f = 0;
-		index++;
+		index[0]++;
 	}
-	return (index);
+	return (index[0]);
 }
