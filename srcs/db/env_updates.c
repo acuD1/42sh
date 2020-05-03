@@ -35,7 +35,7 @@ int8_t	increment_shlvl(t_core *shell)
 		if (value < 0)
 			new_value = 0;
 		else
-			new_value = value + 1;
+			new_value = (int32_t)value + 1;
 		if (new_value > 999)
 			ft_dprintf(STDERR_FILENO
 			, "42sh: warning: shell level (%lli) too high, resetting to 1\n"
