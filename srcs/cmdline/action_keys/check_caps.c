@@ -13,36 +13,6 @@
 #include "sh42.h"
 #include <unistd.h>
 
-/*
-**	Combination of Keys :
-**	CTRL + L to clear the screen
-**	CTRL + A && HOME key to move the cursor to the beginning of input
-**	CTRL + E && END key to move move the cursor to the end of input
-**	CTRL + N to clear from the cursor to the end of input
-**	CTRL + B to jump one word backward
-**	CTRL + F to jump one word forward
-*/
-
-static void		check_keys_comb(t_read *term, u_int64_t value)
-{
-	ssize_t	i;
-
-	i = term->width - term->x_index;
-	if (value == CTRL_L)
-		clr_screen(term);
-	else if (value == CTRL_A || value == HOME)
-		while (term->x_index > term->prompt_len)
-			move_left(term);
-	else if (value == CTRL_E || value == END_LE)
-		while (term->x_index < term->width)
-			move_right(term);
-	else if (value == CTRL_N)
-		while (i--)
-			del_key(term);
-	else
-		jump_words(term, value);
-}
-
 static u_int8_t	cursor_motion(t_read *term, u_int64_t value)
 {
 	if (value == ARROW_UP)
@@ -89,6 +59,20 @@ static u_int8_t	ctrl_delete(t_read *term)
 	return (TRUE);
 }
 
+static int8_t	return_key(t_read *term)
+{
+	if (*term->prompt || (!*term->prompt && *term->buffer))
+	{
+		if (term->x_index < term->width)
+		{
+			goto_prompt(term);
+			ft_dprintf(STDERR_FILENO, "%s", term->buffer);
+		}
+		ft_dprintf(STDERR_FILENO, "\n");
+	}
+	return (FALSE);
+}
+
 /*
 **		Interpret and insert char in bufffer
 **		CTRL+R to launch history research
@@ -116,11 +100,7 @@ u_int8_t		check_caps(const char *buff, t_read *term)
 	if (cursor_motion(term, value))
 		return (TRUE);
 	if (value == RETURN_KEY)
-	{
-		if (*term->prompt || (!*term->prompt && *term->buffer))
-			ft_dprintf(STDERR_FILENO, "\n");
-		return (FALSE);
-	}
+		return (return_key(term));
 	check_keys_comb(term, value);
 	return (TRUE);
 }

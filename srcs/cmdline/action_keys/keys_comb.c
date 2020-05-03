@@ -71,7 +71,7 @@ static void		jump_forward(t_read *term)
 **			CTRL+B => to jump one word backward
 */
 
-void			jump_words(t_read *term, u_int64_t value)
+static void		jump_words(t_read *term, u_int64_t value)
 {
 	if (value == CTRL_B)
 		jump_backward(term);
@@ -79,4 +79,34 @@ void			jump_words(t_read *term, u_int64_t value)
 		jump_forward(term);
 	else if (value == MOVE_UP || value == MOVE_DOWN)
 		move_in_column(value, term);
+}
+
+/*
+**	Combination of Keys :
+**	CTRL + L to clear the screen
+**	CTRL + A && HOME key to move the cursor to the beginning of input
+**	CTRL + E && END key to move move the cursor to the end of input
+**	CTRL + N to clear from the cursor to the end of input
+**	CTRL + B to jump one word backward
+**	CTRL + F to jump one word forward
+*/
+
+void			check_keys_comb(t_read *term, u_int64_t value)
+{
+	ssize_t	i;
+
+	i = term->width - term->x_index;
+	if (value == CTRL_L)
+		clr_screen(term);
+	else if (value == CTRL_A || value == HOME)
+		while (term->x_index > term->prompt_len)
+			move_left(term);
+	else if (value == CTRL_E || value == END_LE)
+		while (term->x_index < term->width)
+			move_right(term);
+	else if (value == CTRL_N)
+		while (i--)
+			del_key(term);
+	else
+		jump_words(term, value);
 }

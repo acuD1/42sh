@@ -51,6 +51,7 @@ void		subprompt_loader(t_core *shell);
 */
 
 u_int8_t	check_caps(const char *buff, t_read *term);
+void		check_keys_comb(t_read *term, u_int64_t value);
 void		insert_in_buffer(const char *buf, t_read *term);
 void		insert_char_in_buffer
 				(const char buf, t_read *term, ssize_t buf_index);
@@ -64,7 +65,6 @@ void		move_right(t_read *term);
 void		move_left(t_read *term);
 void		move_key_up(t_read *term);
 void		move_key_down(t_read *term);
-void		jump_words(t_read *term, u_int64_t value);
 void		move_in_column(u_int64_t value, t_read *term);
 
 /*
