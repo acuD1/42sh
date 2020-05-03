@@ -59,7 +59,7 @@ static u_int8_t	ctrl_delete(t_read *term)
 	return (TRUE);
 }
 
-static int8_t	return_key(t_read *term)
+static u_int8_t	return_key(t_read *term)
 {
 	if (term->x_index < term->width)
 	{

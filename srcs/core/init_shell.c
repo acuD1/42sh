@@ -30,7 +30,6 @@ static void	init_shell_pgid(t_core *shell)
 
 int8_t		init_shell(t_core *shell, char **av, char **environ)
 {
-	shell->build = (struct s_build){DATE, BUILDP + 1, BUILDR, BUILDV};
 	shell->hash.size = HASH_SIZE;
 	shell->terminal = STDIN_FILENO;
 	shell->ctrl_c = 0;

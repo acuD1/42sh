@@ -59,6 +59,7 @@ void		get_opt(int ac, char **av, t_core *shell)
 {
 	if (ac < 2)
 		return ;
+	shell->build = (struct s_build){DATE, BUILDP + 1, BUILDR, BUILDV};
 	shell->opt = ft_get_options(ac, av, SHELL_OPT);
 	if (shell->opt & (1ULL << 63))
 	{
