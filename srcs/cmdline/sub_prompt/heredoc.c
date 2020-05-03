@@ -93,7 +93,7 @@ char			*load_heredoc(t_core *shell, const char *key)
 	while (TRUE && shell->term.status == CMD_SUBPROMPT)
 	{
 		ft_strdel(&shell->term.buffer);
-		shell->term.buffer = ft_memalloc(BUFF_SIZE);
+		shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 		display_subprompt(&shell->term);
 		if (check_key(shell, key) == FALSE)
 			continue ;
