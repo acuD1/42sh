@@ -80,8 +80,6 @@ int8_t			init_termcaps(t_read *term)
 		return (FAILURE);
 	}
 	if (get_size(term) != SUCCESS)
-	{
 		return (FAILURE);
-	}
 	return (SUCCESS);
 }

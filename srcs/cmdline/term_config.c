@@ -43,13 +43,13 @@ void	init_cmd_line(t_core *shell, t_read *term)
 
 int8_t	init_config(t_core *shell)
 {
-	if (init_termcaps(&(shell->term)) == FAILURE)
-		quit_shell(shell, EXIT_FAILURE, FALSE);
 	if (tcgetattr(STDIN_FILENO, &(shell->old_t)) == FAILURE)
 	{
 		ft_dprintf(STDERR_FILENO, "42sh: tcgetattr error\n");
 		quit_shell(shell, EXIT_FAILURE, FALSE);
 	}
+	if (init_termcaps(&(shell->term)) == FAILURE)
+		quit_shell(shell, EXIT_FAILURE, FALSE);
 	shell->new_t = shell->old_t;
 	shell->new_t.c_lflag &= (size_t)~(ICANON | ECHO);
 	shell->new_t.c_cc[VMIN] = 1;
