@@ -16,9 +16,10 @@ void	dir_backward(char *path)
 {
 	size_t	i;
 
-	i = ft_strlen(path) - 1;
+	i = ft_strlen(path);
 	if (i <= 0)
 		return ;
+	i--;
 	path[i] = 0;
 	while (i > 0 && path[i] != '/')
 	{

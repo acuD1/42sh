@@ -34,9 +34,9 @@ static int8_t	export
 	len = ft_strclen(arg, '=');
 	if (!(str = ft_strsub(arg, 0, len)))
 		return (FAILURE);
-	if (ft_strequ(str, "PATH=") == TRUE)
+	if (ft_strncmp(arg, "PATH=", 5) == 0)
 		free_hash_map(&shell->hash);
-	if (check_invalid_identifiers(str, "=") || ft_isdigit(arg[0]) != 0)
+	if (check_invalid_identifiers(str, "_") || ft_isdigit(arg[0]) != 0)
 	{
 		*ret = 1;
 		ft_dprintf(STDERR_FILENO
