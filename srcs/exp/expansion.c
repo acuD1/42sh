@@ -26,7 +26,7 @@ static void	expansion_assign(t_core *shell, t_process *process)
 	{
 		if (((t_db*)lst->content)->value)
 		{
-			res = inhibiteurs_expansion(((t_db*)lst->content)->value, shell);
+			res = inhibiteurs_expansion(((t_db*)lst->content)->value, shell, 0);
 			if (!process->av)
 				add_assign_env(shell, ((t_db*)lst->content)->key,
 					ft_strdup(res));
@@ -47,7 +47,7 @@ static void	filename_heredoc_exp(t_core *shell, t_redir *redir)
 	if (!redir || !redir->op[1])
 		return ;
 	if (redir->type != 8 && redir->type != 7
-		&& (res = inhibiteurs_expansion(redir->op[1], shell)))
+		&& (res = inhibiteurs_expansion(redir->op[1], shell, 0)))
 	{
 		if (!*res)
 		{
@@ -60,7 +60,7 @@ static void	filename_heredoc_exp(t_core *shell, t_redir *redir)
 		ft_strdel(&res);
 	}
 	if (shell->is_interactive && redir->heredoc
-		&& (res = inhibiteurs_expansion(redir->heredoc, shell)))
+		&& (res = inhibiteurs_expansion(redir->heredoc, shell, 1)))
 	{
 		ft_strdel(&(redir->heredoc));
 		redir->heredoc = ft_strdup(res);
@@ -93,10 +93,10 @@ void		expansion(t_core *shell, t_process *process)
 		expansion_assign(shell, process);
 	if (process->redir_list)
 		expansion_redir(shell, process);
-	if (!process->av)
-	{
-		process->status = 0;
-		shell->status = (!shell->status) ? 0 : 1;
-		process->completed = TRUE;
-	}
+	// if (!process->av)
+	// {
+	// 	process->status = 0;
+	// 	shell->status = (!shell->status) ? 0 : 1;
+	// 	process->completed = TRUE;
+	// }
 }

@@ -17,7 +17,7 @@ static char		*apply_exp_tok(t_core *shell, char *data, char *tmp, char ***t)
 	char		*res;
 
 	res = NULL;
-	res = inhibiteurs_expansion(data, shell);
+	res = inhibiteurs_expansion(data, shell, 0);
 	if (shell->subst_error)
 	{
 		ft_strdel(&tmp);

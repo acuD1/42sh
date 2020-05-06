@@ -116,6 +116,7 @@ t_expansion	*init_expansion_inhibiteurs(t_expansion *exp)
 	exp->biteurs[E_WORD] = word_biteurs;
 	exp->biteurs[E_QUOTES] = quotes_biteurs;
 	exp->biteurs[E_DISCARD] = discard_biteurs;
+	exp->heredoc = 0;
 	exp->erience = 0;
 	return (exp);
 }

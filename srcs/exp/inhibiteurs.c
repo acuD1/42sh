@@ -23,7 +23,7 @@ void	update_underscore_value(char *tmp, t_core *shell, t_process *process)
 	ft_strdel(&tmp);
 }
 
-char	*inhibiteurs_expansion(char *data, t_core *shell)
+char	*inhibiteurs_expansion(char *data, t_core *shell, size_t flag)
 {
 	t_expansion		*exp;
 	char			*resultat;
@@ -34,6 +34,7 @@ char	*inhibiteurs_expansion(char *data, t_core *shell)
 	resultat = NULL;
 	shell->subst_error = 0;
 	exp = init_expansion_inhibiteurs(exp);
+	exp->heredoc = flag;
 	while (exp->st != E_END)
 		exp = exp->biteurs[exp->st](data, shell, exp);
 	resultat = ft_strdup(exp->res);

@@ -263,8 +263,8 @@ struct						s_expansion
 	enum e_estate			quotus;
 	size_t					erience;
 	size_t					index;
+	size_t					heredoc;
 	u_int32_t				discarded;
-	char					pad[4];
 };
 
 typedef struct				s_exp_token

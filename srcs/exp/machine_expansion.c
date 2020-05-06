@@ -16,19 +16,28 @@
 static u_int8_t	check_tilde_path_exp
 	(char *expandu, const char *str, size_t i)
 {
-	char			*tmp;
+	char			*tmp[2];
 
-	tmp = NULL;
+	tmp[0] = NULL;
+	tmp[1] = NULL;
 	if (!expandu || !str || str[0] != '~')
 		return (0);
-	tmp = ft_strsub(str, 0, i);
-	tmp = ft_strjoinf(tmp, expandu, 1);
-	if (is_a_dir(tmp) == EISDIR)
+	tmp[1] = ft_strsub(str, i + 1 , ft_strlen(str) - i - 1);
+	tmp[0] = ft_strsub(str, 0, i);
+	if (tmp[1][0] == '/' && !*tmp[0])
 	{
-		ft_strdel(&tmp);
+		ft_strdel(&tmp[1]);
+		ft_strdel(&tmp[1]);
 		return (1);
 	}
-	ft_strdel(&tmp);
+	tmp[0] = ft_strjoinf(tmp[0], expandu, 1);
+	tmp[0] = ft_strjoinf(tmp[0], tmp[1], 3);
+	if (is_a_dir(tmp[0]) == EISDIR)
+	{
+		ft_strdel(&tmp[0]);
+		return (1);
+	}
+	ft_strdel(&tmp[0]);
 	return (0);
 }
 
@@ -100,13 +109,14 @@ t_expansion		*start_biteurs(char *data, t_core *shell, t_expansion *exp)
 	else if (!exp->discarded && quotes_condition(data[exp->index], exp->quotus)
 		&& (data[exp->index] == '\'' || data[exp->index] == '\"'))
 		exp->st = E_QUOTES;
-	else if ((!exp->discarded && exp->quotus != E_QUOTE)
-		&& ((data[exp->index] == '$' || data[exp->index] == '~'
-			|| data[exp->index] == '`')))
+	else if (!exp->discarded && (exp->quotus != E_QUOTE || exp->heredoc)
+		&& data[exp->index] == '$')
+		exp->st = E_EXP;
+	else if (!exp->discarded && !exp->heredoc
+		&& exp->quotus != E_QUOTE && data[exp->index] == '~')
 		exp->st = E_EXP;
 	else
 		exp->st = E_WORD;
 	exp->discarded = 0;
-	(void)shell;
 	return (exp);
 }
