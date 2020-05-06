@@ -315,6 +315,7 @@ SRC					+=	$(S_PATH)$(MISC)is_a_dir.c
 SRC					+=	$(S_PATH)$(MISC)output.c
 SRC					+=	$(S_PATH)$(MISC)quit_shell.c
 SRC					+=	$(S_PATH)$(MISC)recall.c
+SRC					+=	$(S_PATH)$(MISC)free_process_link.c
 
 SRC					+=	$(S_PATH)$(SIGNALS)init_signals.c
 SRC					+=	$(S_PATH)$(SIGNALS)sigint.c

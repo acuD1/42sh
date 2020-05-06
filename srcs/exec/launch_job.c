@@ -53,20 +53,19 @@ static void	condition_fulfilled(t_lst *process)
 	}
 }
 
-static void	free_process_link(t_lst *ptr)
+static void	free_pipe(t_job *job)
 {
-	if (ptr && ptr->content)
+	t_lst	*ptr;
+	t_lst	*next;
+
+	ptr = job->process_list;
+	while (((t_process*)ptr->content)->type == P_PIPE)
 	{
-		ft_free_redirlist((t_lst **)&(((t_process *)ptr->content)->redir_list));
-		free_db((((t_process *)ptr->content)->assign_list));
-		ft_freetokenlist(&(((t_process *)ptr->content)->tok_list));
-		ft_tabdel(&(((t_process *)ptr->content)->av));
-		ft_tabdel(&(((t_process *)ptr->content)->envp));
-		ft_strdel(&(((t_process *)ptr->content)->bin));
-		ft_strdel(&(((t_process *)ptr->content)->command));
-		free(ptr->content);
-		free(ptr);
+		next = ptr->next;
+		free_process_link(ptr);
+		ptr = next;
 	}
+	job->process_list = ptr;
 }
 
 static void	clear_process(t_job *job, t_lst **ptr)
@@ -74,10 +73,11 @@ static void	clear_process(t_job *job, t_lst **ptr)
 	t_lst	*prev;
 
 	prev = job->process_list;
-	if ((*ptr)->next &&
-		(((t_process*)(*ptr)->content)->completed == TRUE
+	if ((*ptr)->next && (((t_process*)(*ptr)->content)->completed == TRUE
 		|| ((t_process*)(*ptr)->content)->stopped == TRUE))
 	{
+		if (((t_process*)(*ptr)->content)->pipe[0] != STDIN_FILENO)
+			free_pipe(job);
 		if (job->process_list == *ptr)
 			job->process_list = (*ptr)->next;
 		else
