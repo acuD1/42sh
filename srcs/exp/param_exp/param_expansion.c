@@ -57,10 +57,12 @@ char				*format_supplementaires(char *str, t_core *shell)
 static u_int32_t	check_param_exp(char *str, size_t *i, t_core *shell)
 {
 	if ((str[*i] == '\\' && str[*i + 1] && str[*i + 1] != '\n')
-		|| (str[*i] == '\n'))
+		|| (str[*i] == '\n') || (str[*i] == '$' && str[*i - 1]
+		&& (str[*i - 1] != ':' && str[*i - 1] != '+' && str[*i - 1] != '-'
+		&& str[*i - 1] != '?')))
 	{
 		ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
-		shell->status = 1;
+		shell->status = 2;
 		shell->subst_error = 1;
 		return (0);
 	}

@@ -20,7 +20,8 @@ char	*error_moar_format_third(char **tablo, char *data, t_core *shell)
 (error token is \"%s\")\n", tablo[0], data, data);
 	ft_tabfree(tablo);
 	ft_strdel(&data);
-	shell->status = 1;
+	(void)shell;
+	shell->status = 2;
 	shell->subst_error = 1;
 	return (NULL);
 }
@@ -31,7 +32,7 @@ char	*error_moar_format_bis(char *data, t_core *shell)
 		"42sh: %s  syntax error: operand expected\
 (error token is \":\")\n", data);
 	ft_strdel(&data);
-	shell->status = 1;
+	shell->status = 2;
 	shell->subst_error = 1;
 	return (NULL);
 }
@@ -41,7 +42,7 @@ char	*one_moar_error(char **tablo, char *data, t_core *shell)
 	ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", tablo[0]);
 	ft_tabfree(tablo);
 	ft_strdel(&data);
-	shell->status = 1;
+	shell->status = 2;
 	shell->subst_error = 1;
 	return (NULL);
 }
@@ -54,7 +55,7 @@ char	*error_moar_format_param(char **tablo, char *data, t_core *shell)
 		+ ft_strlen(tablo[1]) + ft_strlen(tablo[2]) + 2]);
 	ft_tabfree(tablo);
 	ft_strdel(&data);
-	shell->status = 1;
+	shell->status = 2;
 	shell->subst_error = 1;
 	return (NULL);
 }

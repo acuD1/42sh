@@ -13,7 +13,7 @@
 #include "sh42.h"
 #include <unistd.h>
 
-static void	expansion_assign(t_core *shell, t_process *process)
+void		expansion_assign(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
 	char	*res;
@@ -53,7 +53,7 @@ static void	filename_heredoc_exp(t_core *shell, t_redir *redir)
 		{
 			ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n",
 				redir->op[1]);
-			shell->status = 1;
+			shell->status = 2;
 		}
 		ft_strdel(&(redir->op[1]));
 		redir->op[1] = ft_strdup(res);
@@ -68,24 +68,26 @@ static void	filename_heredoc_exp(t_core *shell, t_redir *redir)
 	}
 }
 
-static void	expansion_redir(t_core *shell, t_process *process)
+size_t		expansion_redir(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
 
 	if (!process->redir_list || !shell)
-		return ;
+		return (1);
 	lst = process->redir_list;
 	while (lst)
 	{
 		filename_heredoc_exp(shell, ((t_redir*)lst->content));
 		lst = lst->next;
 	}
+	return ((shell->status) ? 1 : 0);
 }
 
 void		expansion(t_core *shell, t_process *process)
 {
 	if (!process || !shell)
 		return ;
+	shell->status = 0;
 	process->envp = set_envp(shell);
 	if (process->tok_list)
 		expansion_tok(shell, process);
@@ -93,10 +95,13 @@ void		expansion(t_core *shell, t_process *process)
 		expansion_assign(shell, process);
 	if (process->redir_list)
 		expansion_redir(shell, process);
-	// if (!process->av)
-	// {
-	// 	process->status = 0;
-	// 	shell->status = (!shell->status) ? 0 : 1;
-	// 	process->completed = TRUE;
-	// }
+	if (shell->status)
+	{
+		if (shell->status != 2)
+			shell->status = 0;
+		else
+			shell->status = 1;
+		process->status = 256;
+		process->completed = TRUE;
+	}
 }

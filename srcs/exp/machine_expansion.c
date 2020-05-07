@@ -106,7 +106,8 @@ t_expansion		*start_biteurs(char *data, t_core *shell, t_expansion *exp)
 		exp->st = E_END;
 	else if (exp->quotus != E_QUOTE && data[exp->index] == '\\')
 		exp->st = E_DISCARD;
-	else if (!exp->discarded && quotes_condition(data[exp->index], exp->quotus)
+	else if (!exp->discarded && !exp->heredoc
+		&& quotes_condition(data[exp->index], exp->quotus)
 		&& (data[exp->index] == '\'' || data[exp->index] == '\"'))
 		exp->st = E_QUOTES;
 	else if (!exp->discarded && (exp->quotus != E_QUOTE || exp->heredoc)

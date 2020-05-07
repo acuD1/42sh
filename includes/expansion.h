@@ -56,7 +56,7 @@ t_expansion		*word_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*start_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*quotes_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*discard_biteurs(char *dt, t_core *shell, t_expansion *exp);
-void			expansion_tok(t_core *shell, t_process *process);
+size_t			expansion_tok(t_core *shell, t_process *process);
 
 /*
 **	PARAM_EXPANSION

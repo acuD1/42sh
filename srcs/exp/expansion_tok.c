@@ -23,7 +23,7 @@ static char		*apply_exp_tok(t_core *shell, char *data, char *tmp, char ***t)
 		ft_strdel(&tmp);
 		ft_tabdel(&*t);
 		ft_strdel(&res);
-		shell->status = 1;
+		shell->status = 2;
 		return (NULL);
 	}
 	if (*res)
@@ -39,7 +39,7 @@ static char		*apply_exp_tok(t_core *shell, char *data, char *tmp, char ***t)
 	return (tmp);
 }
 
-void			expansion_tok(t_core *shell, t_process *process)
+size_t			expansion_tok(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
 	char	*tmp;
@@ -54,4 +54,5 @@ void			expansion_tok(t_core *shell, t_process *process)
 		lst = lst->next;
 	}
 	update_underscore_value(tmp, shell, process);
+	return ((shell->status) ? 1 : 0);
 }

@@ -37,22 +37,23 @@ static void	format_value(char **tablo, t_core *shell, char *value)
 
 char		*questionmark_format(char **tablo, t_core *shell)
 {
-	char *value;
+	char	*value;
 
-	if ((value = check_env_key(tablo[0], shell)))
+	value = check_env_key(tablo[0], shell);
+	if (value && *value != '\0')
 	{
-		if (*value == '\0')
-			ft_dprintf(STDERR_FILENO,
-				"42sh: %s parameter null or not set\n", tablo[0]);
-		else
-		{
-			ft_tabfree(tablo);
-			return (ft_strdup(value));
-		}
+		ft_tabfree(tablo);
+		return (ft_strdup(value));
 	}
+	else if (!tablo[1][1] && (!value || !*value))
+		ft_dprintf(STDERR_FILENO,
+			"42sh : %s parameter null or not set\n", tablo[0]);
 	else
+	{
+		printf("[%s]\n", tablo[1]);
 		format_value(tablo, shell, value);
-	shell->status = 1;
+	}
+	shell->status = 2;
 	ft_tabfree(tablo);
 	return (NULL);
 }
@@ -67,7 +68,7 @@ char		*length_format(char *str, t_core *shell)
 	{
 		ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
 		ft_strdel(&str);
-		shell->status = 1;
+		shell->status = 2;
 		shell->subst_error = 1;
 		return (NULL);
 	}
