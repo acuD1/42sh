@@ -60,6 +60,18 @@ char	*egal_format(char **tablo, t_core *shell)
 	return (ft_strdup(value));
 }
 
+char	*cas_offset(char *resultat, char **tablo)
+{
+	size_t nb;
+
+	nb = 0;
+	nb = ft_atoi(tablo[1]);
+	if (nb && nb < ft_strlen(resultat))
+		return (ft_strsub(resultat, nb, ft_strlen(resultat) - nb));
+	ft_tabfree(tablo);
+	return (NULL);
+}
+
 char	*underniercaspourlaroute(char **tablo, t_core *shell)
 {
 	char	*value;
@@ -69,10 +81,11 @@ char	*underniercaspourlaroute(char **tablo, t_core *shell)
 	word = NULL;
 	if ((value = check_env_key(tablo[0], shell)))
 	{
-		if (tablo[1][0] == '$')
-			word = exp_param(tablo[1], shell);
-		else if (tablo[1][0] == '~')
-			word = exp_tilde(tablo[1], shell);
+		printf("%s\n", tablo[1]);
+		if (ft_strisdigit(tablo[1]))
+			return (cas_offset(value, tablo));
+		else if (tablo[1][0] == '$' && tablo[1][1])
+			word = check_env_key(&tablo[1][1], shell);
 		else
 			word = check_env_key(tablo[1], shell);
 		if (!word || !*word)
@@ -95,11 +108,13 @@ char	*moar_format_plz(char *data, t_core *shell)
 
 	tablo = NULL;
 	tablen = 0;
-	if (data[ft_strlen(data) - 1] == ':')
-		return (error_moar_format_bis(data, shell));
+	// if (data[ft_strlen(data) - 1] == ':')
+		// return (error_moar_format_bis(data, shell));
 	if ((tablo = ft_strsplit(data, ":")))
 	{
 		tablen = ft_tablen(tablo);
+		if (tablen == 1)
+			return (one_moar_error(tablo, data, shell));
 		if (tablen > 3)
 			return (error_moar_format_param(tablo, data, shell));
 		else if ((tablen == 3)

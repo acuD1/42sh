@@ -62,7 +62,7 @@ enum e_subp		start_subprompt(t_core *shell, t_subprompt *sub)
 	if (!shell->term.buffer[sub->index])
 		reboot_or_end_machine(shell, sub);
 	else if (shell->term.buffer[sub->index] == '}'
-		&& !sub->escaped && sub->keys && sub->keys[0] == '}')
+		&& !sub->quoted && !sub->escaped && sub->keys && sub->keys[0] == '}')
 		del_keys_subprompt_and_move(sub, '}');
 	else if (sub->keys && sub->keys[0] == '\"' && sub->keys[1] == '}'
 		&& shell->term.buffer[sub->index] == '\"'

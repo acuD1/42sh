@@ -38,7 +38,9 @@ static size_t	loop_till_next_subprompt(const char *str, size_t i)
 	{
 		if (check_backslash_nbr((char*)str, (ssize_t*)&i))
 			continue ;
-		if (str[i] == '$' && str[i + 1] && str[i + 1] == '{')
+		if (str[i] == '\'' && f[0])
+			i = loop_till_quote(str, i , '\'');
+		else if (str[i] == '$' && str[i + 1] && str[i + 1] == '{')
 			f[0]++;
 		else if (str[i] == '}' && f[0] && (!f[1] || f[0] > f[1]))
 			f[0]--;

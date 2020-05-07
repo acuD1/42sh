@@ -86,7 +86,7 @@ static t_lst	*word_lexer(t_lexer *lexer, t_lst *lexer_token)
 		return (NULL);
 	ft_lstappend(&lexer_token, ft_lstnew(
 				fetch_token(&lexer->token, P_WORD, str), sizeof(t_token)));
-	free(str);
+	ft_strdel(&str);
 	lexer->ntok++;
 	lexer->buf_pos = i;
 	return (lexer_token);

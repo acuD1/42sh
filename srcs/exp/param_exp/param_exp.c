@@ -49,10 +49,7 @@ char		*questionmark_format(char **tablo, t_core *shell)
 		ft_dprintf(STDERR_FILENO,
 			"42sh : %s parameter null or not set\n", tablo[0]);
 	else
-	{
-		printf("[%s]\n", tablo[1]);
 		format_value(tablo, shell, value);
-	}
 	shell->status = 2;
 	ft_tabfree(tablo);
 	return (NULL);
