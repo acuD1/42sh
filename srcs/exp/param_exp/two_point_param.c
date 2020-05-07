@@ -60,45 +60,60 @@ char	*egal_format(char **tablo, t_core *shell)
 	return (ft_strdup(value));
 }
 
-char	*cas_offset(char *resultat, char **tablo)
+char	*cas_offset(char *resultat, char *offset)
 {
 	size_t nb;
+	char *res;
 
 	nb = 0;
-	nb = ft_atoi(tablo[1]);
+	res = NULL;
+	nb = ft_atoi(offset);
 	if (nb && nb < ft_strlen(resultat))
-		return (ft_strsub(resultat, nb, ft_strlen(resultat) - nb));
-	ft_tabfree(tablo);
+	{
+		res = ft_strsub(resultat, nb, ft_strlen(resultat) - nb);
+		return (res);
+	}
 	return (NULL);
+}
+
+char	*cas_offset_relou(char *value, char **tablo, t_core *shell)
+{
+	char *tmp;
+	char *res;
+
+	tmp = NULL;
+	res = NULL;
+	if (tablo[1][0])
+	if (tablo[1][0] == '$')
+		tmp = check_env_key(&tablo[1][1], shell); // ou tout restart mais bon ca peut boucler relou
+	else
+		tmp = check_env_key(tablo[1], shell);
+	if (!tmp || !*tmp)
+		res = ft_strdup(value);
+	else if (tmp && ft_strisdigit(tmp))
+		res = cas_offset(value, tmp);
+	else
+		return (error_moar_format_third(tablo, tmp, shell));
+	ft_tabfree(tablo);
+	return (res);
 }
 
 char	*underniercaspourlaroute(char **tablo, t_core *shell)
 {
 	char	*value;
-	char	*word;
+	char	*res;
 
 	value = NULL;
-	word = NULL;
+	res = NULL;
 	if ((value = check_env_key(tablo[0], shell)))
 	{
-		printf("%s\n", tablo[1]);
-		if (ft_strisdigit(tablo[1]))
-			return (cas_offset(value, tablo));
-		else if (tablo[1][0] == '$' && tablo[1][1])
-			word = check_env_key(&tablo[1][1], shell);
+		if (!ft_strisdigit(tablo[1]))
+			return (cas_offset_relou(value, tablo, shell));
 		else
-			word = check_env_key(tablo[1], shell);
-		if (!word || !*word)
-		{
-			ft_tabfree(tablo);
-			ft_strdel(&word);
-			return (ft_strdup(value));
-		}
-		else
-			return (error_moar_format_third(tablo, word, shell));
+			res = cas_offset(value, tablo[1]);
 	}
 	ft_tabfree(tablo);
-	return (NULL);
+	return (res);
 }
 
 char	*moar_format_plz(char *data, t_core *shell)

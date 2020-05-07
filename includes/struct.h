@@ -256,7 +256,7 @@ typedef struct				s_exp_size
 
 struct						s_expansion
 {
-	t_exp					sionat[9];
+	t_exp					sionat[3];
 	t_inhi					biteurs[5];
 	char					*res;
 	enum e_estate			st;
