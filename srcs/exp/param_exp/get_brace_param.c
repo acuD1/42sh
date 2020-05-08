@@ -12,7 +12,7 @@
 
 #include "sh42.h"
 
-static u_int8_t check_special_param(char c)
+static u_int8_t		check_special_param(char c)
 {
 	if (c == '?' || c == '$' || c == '!'
 	|| c == '-' || c == '@' || c == '*')
@@ -20,14 +20,14 @@ static u_int8_t check_special_param(char c)
 	return (0);
 }
 
-static u_int8_t delim_brace_param(char c)
+static u_int8_t		delim_brace_param(char c)
 {
 	if (c == '}' || c == ':' || c == '#' || c == '%')
 		return (1);
 	return (0);
 }
 
-static u_int8_t 	is_braceexp_valid(char *str, char *tmp, int *i, int *index)
+static u_int8_t		is_braceexp_valid(char *str, char *tmp, int *i, int *index)
 {
 	if (!(str[*i] == '#' || str[*i] == '_' || ft_isalpha(str[*i])
 		|| check_special_param(str[*i])))
@@ -49,7 +49,7 @@ static u_int8_t 	is_braceexp_valid(char *str, char *tmp, int *i, int *index)
 	return (1);
 }
 
-static u_int8_t check_n_fill_braceexp(char *str, char *tmp, int *i, int *index)
+static u_int8_t		check_n_fill(char *str, char *tmp, int *i, int *index)
 {
 	while (!delim_brace_param(str[*i]))
 	{
@@ -82,7 +82,7 @@ char				*get_brace_param(char *str, t_core *shell)
 	tmp = ft_strnew(len);
 	if (!is_braceexp_valid(str, tmp, &i, &index))
 		return (error_brace_param(str, shell, tmp));
-	if (!check_n_fill_braceexp(str, tmp, &i, &index))
+	if (!check_n_fill(str, tmp, &i, &index))
 		return (error_brace_param(str, shell, tmp));
 	if (str[i] == ':' && str[i + 1] && !check_format_bracket(str[i + 1]))
 		return (error_brace_param(str, shell, tmp));
@@ -92,6 +92,6 @@ char				*get_brace_param(char *str, t_core *shell)
 		index++;
 		i++;
 	}
-	tmp[index + 1] ='\0';
+	tmp[index + 1] = '\0';
 	return (format_supplementaires(tmp, shell));
 }

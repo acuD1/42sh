@@ -13,7 +13,7 @@
 #include "sh42.h"
 #include <unistd.h>
 
-char	*one_moar_error(char **tablo, char *data, t_core *shell)
+char		*one_moar_error(char **tablo, char *data, t_core *shell)
 {
 	ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", tablo[0]);
 	ft_tabfree(tablo);
@@ -23,7 +23,7 @@ char	*one_moar_error(char **tablo, char *data, t_core *shell)
 	return (NULL);
 }
 
-char *error_brace_param(char *str, t_core *shell, char *tmp)
+char		*error_brace_param(char *str, t_core *shell, char *tmp)
 {
 	ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
 	shell->status = 2;

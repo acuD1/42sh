@@ -28,7 +28,8 @@ char			*exp_get_tildem(const char *string, size_t len);
 /*
 **	EXPANSION_INHIBITEUR
 */
-void			update_underscore_value(char *tmp, t_core *shell, t_process *process);
+void			update_underscore_value
+					(char *tmp, t_core *shell, t_process *process);
 char			*inhibiteurs_expansion(char *data, t_core *shell, size_t flag);
 char			*no_exp(const char *data, t_core *shell);
 char			*exp_math(const char *data, t_core *shell);

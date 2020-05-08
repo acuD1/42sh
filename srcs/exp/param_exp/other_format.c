@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*  other_format.c                                      :+:      :+:    :+:   */
+/*   other_format.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -45,7 +45,7 @@ char		*questionmark_format(char **tablo, t_core *shell)
 	return (NULL);
 }
 
-char	*dash_format(char **tablo, t_core *shell)
+char		*dash_format(char **tablo, t_core *shell)
 {
 	char	*value;
 	size_t	i;
@@ -93,7 +93,7 @@ char		*length_format(char *str, t_core *shell)
 	return (ft_strdup("0"));
 }
 
-char	*plus_format(char **tablo, t_core *shell)
+char		*plus_format(char **tablo, t_core *shell)
 {
 	char	*value;
 
