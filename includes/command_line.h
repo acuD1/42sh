@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 17:28:53 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/08 02:11:52 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define COMMAND_LINE_H
 
 /*
-**		Configuration
+**		CONFIGURATION
 */
 
 int8_t		init_termcaps(t_read *term);
@@ -24,33 +24,19 @@ int8_t		reset_config(t_core *shell);
 int8_t		get_size(t_read *term);
 
 /*
-**		Prompt/Subprompt
+**		PROMPT
 */
-char		*add_keys_subprompt(char c, char *str);
-char		*del_keys_subprompt(char c, char *str);
-ssize_t		check_quote_priority(char *str, t_subprompt *sub);
-enum e_subp	quote_subprompt(t_core *shell, t_subprompt *sub);
-ssize_t		check_dbquote_priority(t_core *shell, t_subprompt *sub);
-enum e_subp	dbquote_subprompt(t_core *shell, t_subprompt *sub);
-ssize_t		open_machine_subprompt(t_core *shell, t_subprompt *sub);
-enum e_subp	backslash_subprompt(t_core *shell, t_subprompt *sub);
-void		reboot_or_end_machine(t_core *shell, t_subprompt *sub);
-enum e_subp	braceparam_subprompt(t_core *shell, t_subprompt *sub);
-void		del_keys_subprompt_and_move(t_subprompt *sub, char quote);
-enum e_subp	start_subprompt(t_core *shell, t_subprompt *sub);
+
 int8_t		init_prompt(t_core *shell);
 void		display_prompt(t_read *term);
-void		display_subprompt(t_read *term);
 void		goto_prompt(t_read *term);
 void		get_prompt_value(t_core *shell, const char *key);
-u_int8_t	sub_prompt_error(t_read *term, char sb);
-void		subprompt_loader(t_core *shell);
 
 /*
-**		Check Caps and Interpret
+**		CHECK CAPS AND INTERPRET
 */
 
-u_int8_t	check_caps(const char *buff, t_read *term);
+u_int8_t	check_caps(const char *buff, t_core *shell);
 void		check_keys_comb(t_read *term, u_int64_t value);
 void		insert_in_buffer(const char *buf, t_read *term);
 void		insert_char_in_buffer
@@ -58,7 +44,7 @@ void		insert_char_in_buffer
 void		insert_str_in_buffer(const char *d_name, t_read *term);
 
 /*
-**		Cursor Motion
+**		ACTION KEYS
 */
 
 void		move_right(t_read *term);
@@ -66,17 +52,13 @@ void		move_left(t_read *term);
 void		move_key_up(t_read *term);
 void		move_key_down(t_read *term);
 void		move_in_column(u_int64_t value, t_read *term);
-
-/*
-**		Delete Keys
-*/
-
 void		del_key(t_read *term);
 void		bs_key(t_read *term);
 void		clr_screen(t_read *term);
+int8_t		tab_key(t_core *shell);
 
 /*
-**		History
+**		HISTORY
 */
 
 int8_t		init_history(t_core *shell);
@@ -93,35 +75,50 @@ char		*get_home_value(t_core *shell);
 void		goto_reverse(t_read *term, const char *buff_tmp);
 
 /*
-**		Subprompt/Multiline
+**		SUBPROMPT/MULTILINE
 */
 
+void		display_subprompt(t_read *term);
 ssize_t		check_subprompt(t_core *shell);
 u_int8_t	check_backslash(t_read *term, char *quote);
 u_int8_t	check_backslash_nbr(char *str, ssize_t *index);
 u_int8_t	charset_count(t_read *term, char charset, size_t i);
 u_int8_t	quotes_is_matching(t_read *term, char *quote);
 void		load_subprompt(char quote, t_read *term);
-u_int8_t	read_multiline(t_read *term);
+u_int8_t	read_multiline(t_core *shell);
+char		*add_keys_subprompt(char c, char *str);
+char		*del_keys_subprompt(char c, char *str);
+ssize_t		check_quote_priority(char *str, t_subprompt *sub);
+enum e_subp	quote_subprompt(t_core *shell, t_subprompt *sub);
+ssize_t		check_dbquote_priority(t_core *shell, t_subprompt *sub);
+enum e_subp	dbquote_subprompt(t_core *shell, t_subprompt *sub);
+ssize_t		open_machine_subprompt(t_core *shell, t_subprompt *sub);
+enum e_subp	backslash_subprompt(t_core *shell, t_subprompt *sub);
+void		reboot_or_end_machine(t_core *shell, t_subprompt *sub);
+enum e_subp	braceparam_subprompt(t_core *shell, t_subprompt *sub);
+void		del_keys_subprompt_and_move(t_subprompt *sub, char quote);
+enum e_subp	start_subprompt(t_core *shell, t_subprompt *sub);
 char		*load_heredoc(t_core *shell, const char *key);
+u_int8_t	sub_prompt_error(t_read *term, char sb);
+void		subprompt_loader(t_core *shell);
 
 /*
-**		Auto completion
+**		AUTO COMPLETION
 */
 
-void		auto_complete_mode(t_read *term);
-void		read_directories(const char *to_find, t_read *term);
-void		to_complete_bin(const char *to_find, t_read *term);
-void		to_complete_buffer(const char *to_find, t_read *term);
-void		display_current_directory(t_read *term, const char *dir);
-void		delete_last_cmd(const char *d_name, t_read *term);
-void		parse_env(char **prev_b, const char *to_find, t_read *term);
+size_t		get_max_len(size_t len, size_t new_len);
+int8_t		auto_complete_mode(char *input, t_core *shell, char **completion);
 char		**split_path(t_core *shell, const char *str);
-u_int8_t	read_again
-				(char **prev_b, const char *path, char *name, t_read *term);
+char		*ac_parse_input(char *input, enum e_ac_type type);
+char		*ac_tilde(char *input, t_core *shell);
+void		ac_file(char *input, t_auto_comp *ac, t_core *shell);
+void		ac_binary(char *input, t_auto_comp *ac, t_core *shell);
+void		ac_variable(char *input, t_auto_comp *ac, t_core *shell);
+void		display_ac_lst(t_auto_comp *ac);
+char		*get_dir_path(t_auto_comp *ac, char *input, char **path);
 
 /*
-**		Utils/Tools
+**		TOOLS
 */
 
 int			my_outc(int c);
@@ -129,20 +126,12 @@ ssize_t		get_width_last_line(t_read *term);
 ssize_t		get_width_current_line(t_read *term);
 u_int64_t	get_mask(const char *buff);
 u_int8_t	is_dot(const char *d_name);
-u_int8_t	is_tab(const char *d_name, t_read *term);
 u_int8_t	is_dir(const char *dir);
-void		split_cmd(char **to_find, t_read *term);
 void		free_lst(t_lst *lst);
-
-/*
-**		Functions safe
-*/
-
 void		xtputs(char *str, int i, int (*f)(int));
-ssize_t		xread(int fd, char *buff, size_t size);
 
 /*
-**		Clipboard action keys
+**		CLIPBOARD
 */
 
 void		ak_clipboard(t_read *term, const char *buff, u_int64_t *value);

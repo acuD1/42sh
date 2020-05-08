@@ -6,12 +6,21 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 17:33:33 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/08 14:44:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <unistd.h>
+#include <term.h>
+
+void		xtputs(char *str, int i, int (*f)(int))
+{
+	t_core	*shell;
+
+	shell = get_core(NULL);
+	tputs(str, i, f);
+}
 
 int			my_outc(int c)
 {

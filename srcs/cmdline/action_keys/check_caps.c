@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:52:27 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/07 14:34:36 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@ static u_int8_t	cursor_motion(t_read *term, u_int64_t value)
 	else
 		return (FALSE);
 	return (TRUE);
-}
-
-static void		tab_key(t_read *term, u_int64_t *value)
-{
-	auto_complete_mode(term);
-	*value = get_mask(term->ac_tmp);
-	if (term->ac_tmp && ft_is_print(*term->ac_tmp))
-		insert_in_buffer(term->ac_tmp, term);
-	ft_strdel(&term->ac_tmp);
 }
 
 /*
@@ -80,24 +71,24 @@ static u_int8_t	return_key(t_read *term)
 **		Backspace/Delete keys to delete character in input
 */
 
-u_int8_t		check_caps(const char *buff, t_read *term)
+u_int8_t		check_caps(const char *buff, t_core *shell)
 {
 	u_int64_t	value;
 
 	value = get_mask(buff);
-	ak_clipboard(term, buff, &value);
+	ak_clipboard(&shell->term, buff, &value);
 	if (value == CTRL_D)
-		return (ctrl_delete(term));
-	if (value == TAB_KEY && (term->x_index == term->width))
-		tab_key(term, &value);
-	else if (ft_is_print(*buff))
-		insert_in_buffer(buff, term);
-	if (value == CTRL_R && term->sub_prompt == FALSE)
-		research_mode(term);
-	if (cursor_motion(term, value))
+		return (ctrl_delete(&shell->term));
+	if (ft_is_print(*buff))
+		insert_in_buffer(buff, &shell->term);
+	if (value == TAB_KEY)
+		tab_key(shell);
+	if (value == CTRL_R && shell->term.sub_prompt == FALSE)
+		research_mode(&shell->term);
+	if (cursor_motion(&shell->term, value))
 		return (TRUE);
 	if (value == RETURN_KEY)
-		return (return_key(term));
-	check_keys_comb(term, value);
+		return (return_key(&shell->term));
+	check_keys_comb(&shell->term, value);
 	return (TRUE);
 }

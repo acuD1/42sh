@@ -6,7 +6,7 @@
 /*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 13:27:32 by arsciand          #+#    #+#             */
-/*   Updated: 2020/03/08 14:44:05 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/05/07 15:13:53 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void		free_lst(t_lst *lst)
 {
 	t_lst	*tmp;
 
-	tmp = lst;
 	while (lst)
 	{
 		free(lst->content);

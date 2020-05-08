@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 15:28:30 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/11 00:39:54 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/08 00:16:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,18 @@ enum	e_unary
 	LT_BINTEST,
 	LE_BINTEST,
 	NB_TESTBLT
+};
+
+/*
+**	AUTO COMPLETION
+*/
+
+enum	e_ac_type
+{
+	AC_FILE,
+	AC_BINARY,
+	AC_VARIABLE,
+	AC_BRACKET,
 };
 
 #endif

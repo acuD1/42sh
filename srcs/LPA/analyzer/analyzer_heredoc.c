@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 13:13:54 by guvillat          #+#    #+#             */
-/*   Updated: 2020/04/23 16:59:09 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/08 00:23:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ t_analyzer			*heredoc_analyzer(t_analyzer *anal, t_core *shell)
 	if (shell->ctrl_c)
 		return (exit_lpa(anal, shell));
 	anal->state = A_WORD;
-	shell->term.flag = FALSE;
 	shell->term.status = CMD_DONE;
 	return (anal = redir_analyze(anal, shell));
 }

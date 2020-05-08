@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:54:38 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/08 00:22:41 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@ void	init_cmd_line(t_core *shell, t_read *term)
 	term->history = NULL;
 	term->history_index = NULL;
 	term->shell = shell;
-	term->flag = 0;
 	term->sub_prompt = FALSE;
 	term->search = 0;
 	term->buffer = NULL;
 	term->tmp_buff = NULL;
-	term->cmd = NULL;
 	term->prompt = NULL;
 	term->cpy = NULL;
 	if (get_size(term) != SUCCESS)
@@ -85,6 +83,5 @@ int8_t	reset_config(t_core *shell)
 	}
 	ft_strdel(&shell->term.tmp_buff);
 	ft_strdel(&shell->term.prompt);
-	shell->term.cmd = NULL;
 	return (SUCCESS);
 }

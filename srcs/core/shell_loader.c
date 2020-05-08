@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/04/23 16:55:09 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/07 14:54:16 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ void	load_i_mode(t_core *shell)
 	while (1)
 	{
 		if (init_prompt(shell) != SUCCESS)
+		{
+			auto_complete_mode(NULL, shell, NULL);
 			return ;
+		}
 		check_subprompt(shell);
 		if (check_expansions(&shell->term) == FAILURE)
 		{
