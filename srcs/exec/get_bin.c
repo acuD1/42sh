@@ -105,10 +105,10 @@ int8_t			get_bin(t_core *shell, t_process *process)
 		process->bin = ft_strdup(process->av[0]);
 		return (SUCCESS);
 	}
-	if (locate_hash(shell, process) == SUCCESS)
+	if (!shell->opt && locate_hash(shell, process) == SUCCESS)
 		return (SUCCESS);
 	ret = get_bin_path(shell, process);
-	if (!process->blt)
+	if (!shell->opt && !process->blt)
 		hash_dispatcher(shell, process, H_EXEC);
 	if (ret == 1)
 		return (FAILURE);
