@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 17:19:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/08 19:58:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ char		*ac_tilde(char *input, t_core *shell);
 void		ac_file(char *input, t_auto_comp *ac, t_core *shell);
 void		ac_binary(char *input, t_auto_comp *ac, t_core *shell);
 void		ac_variable(char *input, t_auto_comp *ac, t_core *shell);
+void		ac_add_content(t_auto_comp *ac, char *path, char *d_name);
+char		*ac_parse_input(char *input, enum e_ac_type type);
 void		display_ac_lst(t_auto_comp *ac);
 char		*get_dir_path(t_auto_comp *ac, char *input, char **path);
 

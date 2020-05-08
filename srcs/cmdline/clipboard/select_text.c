@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 18:33:55 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/11 11:07:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/08 18:57:22 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void		deselect_all(t_read *term)
 	insert_str_in_buffer(tmp, term);
 	while (pos--)
 		move_left(term);
+	ft_strdel(&tmp);
 }
 
 static t_cmd	ak_selection(t_read *term, u_int64_t value, t_cmd copy)

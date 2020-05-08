@@ -6,27 +6,12 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:32:18 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 17:20:17 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/08 20:05:15 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <dirent.h>
-
-static void		ac_add_content(t_auto_comp *ac, char *path, char *d_name)
-{
-	char		*tmp;
-
-	tmp = NULL;
-	if (is_dir(path))
-		tmp = ft_strjoin(d_name, "/");
-	else
-		tmp = ft_strjoin(d_name, " ");
-	ft_lstappend(&ac->lst, ft_lstnew(tmp, sizeof(char) * (ft_strlen(tmp) + 1)));
-	ac->lst_size++;
-	ac->max_len = get_max_len(ac->max_len, ft_strlen(tmp));
-	ft_strdel(&tmp);
-}
 
 static void		fill_file_lst(char *path, char *cmd, DIR *dir, t_auto_comp *ac)
 {
@@ -96,28 +81,41 @@ static int8_t	filenames_cmp(char *input, char *path)
 	return (FAILURE);
 }
 
-void			ac_file(char *input, t_auto_comp *ac, t_core *shell)
+static void		check_dir(char *input, char *cmd, char *path, t_auto_comp *ac)
 {
-	char	*path;
-	char	*cmd;
 	DIR		*dir;
+	t_core	*shell;
 
-	(void)shell;
-	path = NULL;
-	ac->ws_col = (size_t)shell->term.ws_col;
-	cmd = get_dir_path(ac, input, &path);
+	shell = get_core(NULL);
 	if (filenames_cmp(input, path) != SUCCESS && (dir = opendir(cmd)) != NULL)
 	{
 		ft_strdel(&path);
 		path = ft_strdup(cmd);
-		if (!ft_strchr(input, ' '))
+		if (!ft_strchr(shell->term.buffer, ' '))
 			fill_dir_lst(path, cmd, dir, ac);
 		else
 			fill_file_lst(path, cmd, dir, ac);
 	}
 	else if ((dir = opendir(path)) != NULL)
-		fill_file_lst(path, cmd, dir, ac);
+	{
+		if (!ft_strchr(shell->term.buffer, ' '))
+			fill_dir_lst(path, cmd, dir, ac);
+		else
+			fill_file_lst(path, cmd, dir, ac);
+	}
 	closedir(dir);
+}
+
+void			ac_file(char *input, t_auto_comp *ac, t_core *shell)
+{
+	char	*path;
+	char	*cmd;
+
+	(void)shell;
+	path = NULL;
+	ac->ws_col = (size_t)shell->term.ws_col;
+	cmd = get_dir_path(ac, input, &path);
+	check_dir(input, cmd, path, ac);
 	ft_strdel(&path);
 	ft_strdel(&cmd);
 }

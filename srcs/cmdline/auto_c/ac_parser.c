@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:22:02 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/07 22:08:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/08 18:36:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static char		*parse_variable(char *input, ssize_t len)
 
 static char		*parse_file(char *input, ssize_t len)
 {
+	if (!ft_strchr(input, ' '))
+		return (input);
 	while (len > 0)
 	{
 		if (input[len] == ' ' || input[len] == '\t'
