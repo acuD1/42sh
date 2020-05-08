@@ -18,7 +18,7 @@ static char		*parse_path(char *input)
 	ssize_t		len;
 
 	path = ft_strdup(input);
-	len = ft_strlen(input) - 1;
+	len = (ssize_t)ft_strlen(input) - 1;
 	while (len > 0 && path[len])
 	{
 		if (path[len - 1] == '/')

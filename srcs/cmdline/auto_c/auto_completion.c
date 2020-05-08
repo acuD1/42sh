@@ -59,7 +59,7 @@ static char		*get_output(char **input, t_core *shell,
 	return (NULL);
 }
 
-int8_t			display_last_output(t_auto_comp *ac, char *input, char **output)
+static int8_t	display_last_output(t_auto_comp *ac, char *input, char **output)
 {
 	ft_strdel(output);
 	if (ac->lst_size == TRUE)

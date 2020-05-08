@@ -53,7 +53,7 @@ char			*ac_parse_input(char *input, enum e_ac_type type)
 {
 	ssize_t		input_len;
 
-	input_len = ft_strlen(input);
+	input_len = (ssize_t)ft_strlen(input);
 	if (type == AC_BINARY)
 		return (parse_binary(input, input_len));
 	if (type == AC_FILE)

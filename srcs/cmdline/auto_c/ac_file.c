@@ -36,7 +36,7 @@ static void		fill_file_lst(char *path, char *cmd, DIR *dir, t_auto_comp *ac)
 
 	tmp = NULL;
 	ac->lst_size = 0;
-	len = ft_strlen(cmd);
+	len = (ssize_t)ft_strlen(cmd);
 	while ((data = readdir(dir)) != NULL)
 	{
 		if (is_dot(data->d_name) && (len > 0 && cmd[len - 1] != '.'))
@@ -57,7 +57,7 @@ static void		fill_dir_lst(char *path, char *cmd, DIR *dir, t_auto_comp *ac)
 
 	tmp = NULL;
 	ac->lst_size = 0;
-	len = ft_strlen(cmd);
+	len = (ssize_t)ft_strlen(cmd);
 	while ((data = readdir(dir)) != NULL)
 	{
 		if (is_dot(data->d_name) && (len > 0 && cmd[len - 1] != '.'))
@@ -70,13 +70,13 @@ static void		fill_dir_lst(char *path, char *cmd, DIR *dir, t_auto_comp *ac)
 	}
 }
 
-static u_int8_t	filenames_cmp(char *input, char *path)
+static int8_t	filenames_cmp(char *input, char *path)
 {
 	struct dirent	*data;
 	DIR				*dir;
 	ssize_t			len;
 
-	len = ft_strlen(input);
+	len = (ssize_t)ft_strlen(input);
 	if (len > 0 && input[len - 1] == '/')
 		return (FAILURE);
 	if ((dir = opendir(path)) != NULL)
@@ -104,7 +104,7 @@ void			ac_file(char *input, t_auto_comp *ac, t_core *shell)
 
 	(void)shell;
 	path = NULL;
-	ac->ws_col = shell->term.ws_col;
+	ac->ws_col = (size_t)shell->term.ws_col;
 	cmd = get_dir_path(ac, input, &path);
 	if (filenames_cmp(input, path) != SUCCESS && (dir = opendir(cmd)) != NULL)
 	{

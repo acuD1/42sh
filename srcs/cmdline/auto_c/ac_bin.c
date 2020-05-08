@@ -68,7 +68,7 @@ void			ac_binary(char *input, t_auto_comp *ac, t_core *shell)
 {
 	char			**path;
 
-	ac->ws_col = shell->term.ws_col;
+	ac->ws_col = (size_t)shell->term.ws_col;
 	path = split_path(shell, "PATH");
 	fill_bin_lst(input, ac, path);
 	ft_tabfree(path);

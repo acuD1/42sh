@@ -38,7 +38,7 @@ void		ac_variable(char *input, t_auto_comp *ac, t_core *shell)
 
 	env = shell->env;
 	input_len = ft_strlen(input);
-	ac->ws_col = shell->term.ws_col;
+	ac->ws_col = (size_t)shell->term.ws_col;
 	while (env != NULL)
 	{
 		if ((!*input || ft_isstart(((t_db *)(env->content))->key, input))

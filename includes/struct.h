@@ -78,7 +78,7 @@ typedef struct				s_read
 	int32_t					search;
 	u_int8_t				sub_prompt;
 	u_int8_t				status;
-	char					pad[1];
+	char					pad[2];
 }							t_read;
 
 typedef struct s_subprompt	t_subprompt;
@@ -121,7 +121,7 @@ struct						s_core
 	int8_t					is_interactive;
 	int8_t					notified;
 	int8_t					ac_flag;
-	char					pad[6];
+	char					pad[5];
 };
 
 /*
@@ -291,8 +291,9 @@ typedef void				(t_ac_fct)(char *, t_auto_comp *, t_core *);
 typedef struct				s_auto_comp
 {
 	t_lst					*lst;
-	size_t					lst_size;
 	enum e_ac_type			type;
+	char					pad[4];
+	size_t					lst_size;
 	size_t					x;
 	size_t					max_len;
 	size_t					ws_col;
