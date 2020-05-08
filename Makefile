@@ -250,11 +250,12 @@ SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_exp.c
 SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_param_cmds_exp.c
 SRC					+=	$(S_PATH)$(LEXER_EXP)lexer_tilde_math_exp.c
 
-SRC					+=	$(S_PATH)$(PARAM_EXP)two_point_param.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)get_brace_param.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)launch_param.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)other_format.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)param_exp_tools.c
 SRC					+=	$(S_PATH)$(PARAM_EXP)prefix_suffixe_format.c
-SRC					+=	$(S_PATH)$(PARAM_EXP)param_exp.c
-SRC					+=	$(S_PATH)$(PARAM_EXP)error_param_format.c
-SRC					+=	$(S_PATH)$(PARAM_EXP)param_expansion.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)two_point_param.c
 
 SRC					+=	$(S_PATH)$(EXPANSIONS)assign_envp_tools.c
 SRC					+=	$(S_PATH)$(EXPANSIONS)machine_expansion.c

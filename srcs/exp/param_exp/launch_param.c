@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   param_expansion.c                                  :+:      :+:    :+:   */
+/*   launch_param.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -34,11 +34,6 @@ char				*format_supplementaires(char *str, t_core *shell)
 	size_t	i;
 
 	i = 0;
-	if (str[0] == ':' || str[0] == '%')
-	{
-		ft_strdel(&str);
-		return (NULL);
-	}
 	if (str[i] == '#')
 		return (length_format(str, shell));
 	while (str[i])
@@ -52,42 +47,6 @@ char				*format_supplementaires(char *str, t_core *shell)
 		i++;
 	}
 	return (simple_format(str, shell));
-}
-
-static u_int32_t	check_param_exp(char *str, size_t *i, t_core *shell)
-{
-	if ((str[*i] == '\\' && str[*i + 1] && str[*i + 1] != '\n')
-		|| (str[*i] == '\n') || (str[*i] == '$' && str[*i - 1]
-		&& (str[*i - 1] != ':' && str[*i - 1] != '+' && str[*i - 1] != '-'
-		&& str[*i - 1] != '?' && str[*i - 1] != '=')))
-	{
-		ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
-		shell->status = 2;
-		shell->subst_error = 1;
-		return (0);
-	}
-	return (1);
-}
-
-char				*get_brace_param(char *str, t_core *shell)
-{
-	size_t		i;
-	u_int32_t	count;
-	char		*tmp;
-
-	i = 1;
-	count = 0;
-	tmp = NULL;
-	while (str[i++])
-	{
-		if (!check_param_exp(str, &i, shell))
-			break ;
-		if (!check_brackets_inbracket(&count, str[i]))
-			break ;
-	}
-	if (!(tmp = ft_strsub(str, 2, i - 2)))
-		return (NULL);
-	return (format_supplementaires(tmp, shell));
 }
 
 char				*exp_param(const char *data, t_core *shell)

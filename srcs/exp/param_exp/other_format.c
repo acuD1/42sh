@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   param_exp.c                                        :+:      :+:    :+:   */
+/*  other_format.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,16 +12,6 @@
 
 #include "sh42.h"
 #include <unistd.h>
-
-char		*check_env_key(char *key, t_core *shell)
-{
-	t_db	*db;
-
-	db = search_db(shell->env, key);
-	if (db)
-		return (db->value);
-	return (NULL);
-}
 
 static void	format_value(char **tablo, t_core *shell, char *value)
 {
@@ -55,6 +45,31 @@ char		*questionmark_format(char **tablo, t_core *shell)
 	return (NULL);
 }
 
+char	*dash_format(char **tablo, t_core *shell)
+{
+	char	*value;
+	size_t	i;
+
+	i = 1;
+	value = NULL;
+	if ((value = check_env_key(tablo[0], shell)))
+	{
+		ft_tabfree(tablo);
+		return (ft_strdup(value));
+	}
+	if (tablo[1])
+	{
+		if (tablo[1][1] == '$')
+			value = exp_param(&tablo[1][1], shell);
+		else if (tablo[1][1] == '~')
+			value = exp_tilde(&tablo[1][1], shell);
+		else
+			value = ft_strdup(&tablo[1][1]);
+	}
+	ft_tabfree(tablo);
+	return (value);
+}
+
 char		*length_format(char *str, t_core *shell)
 {
 	t_db	*db_tmp;
@@ -78,30 +93,22 @@ char		*length_format(char *str, t_core *shell)
 	return (ft_strdup("0"));
 }
 
-char		*double_two_point_param(char **tablo, t_core *shell)
+char	*plus_format(char **tablo, t_core *shell)
 {
-	int		flag[3];
-	char	*tmp[2];
+	char	*value;
 
-	flag[0] = 0;
-	flag[1] = 0;
-	flag[2] = 0;
-	tmp[0] = NULL;
-	tmp[1] = check_env_key(tablo[0], shell);
-	if (tmp[1])
+	value = NULL;
+	if ((check_env_key(tablo[0], shell)))
 	{
-		flag[1] = (int)ft_strlen(tmp[1]) - 1;
-		if ((flag[2] = ft_atoi(tablo[2])) < 0 || flag[2] >= flag[1])
-			flag[2] = flag[1];
-		if ((flag[0] = ft_atoi(tablo[1])) < 0 || flag[0] >= flag[1])
-		{
-			ft_tabfree(tablo);
-			return (NULL);
-		}
-		if (!(tmp[0] = ft_strsub(tmp[1], (unsigned int)flag[0]
-			, (size_t)flag[2])))
-			return (NULL);
+		if (tablo[1][1] == '$')
+			value = exp_param(&tablo[1][1], shell);
+		else if (tablo[1][1] == '~')
+			value = exp_tilde(&tablo[1][1], shell);
+		else
+			value = ft_strdup(&tablo[1][1]);
+		ft_tabfree(tablo);
+		return (value);
 	}
 	ft_tabfree(tablo);
-	return (tmp[0]);
+	return (NULL);
 }

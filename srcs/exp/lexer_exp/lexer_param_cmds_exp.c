@@ -12,46 +12,10 @@
 
 #include "sh42.h"
 
-u_int8_t		check_brackets_inbracket(u_int32_t *count, char c)
-{
-	u_int8_t dbq;
-
-	dbq = 0;
-	if (c == '$' )
-		*count += 1;
-	if (c == '}')
-	{
-		if (*count)
-			*count -= 1;
-		else
-			return (0);
-	}
-	return (1);
-}
-
 char			*exp_get_bracket(const char *string, size_t len)
 {
-	char		*str;
-	size_t		index;
-	u_int32_t	count;
-
-	index = 0;
-	count = 0;
-	str = NULL;
-	if (!ft_strncmp(string, "${", len))
-	{
-		index = len;
-		while (string[index])
-		{
-			index++;
-		}
-		index++;
-		if (!(str = ft_strsub(string, 0, index)))
-			return (NULL);
-		printf("%s\n", str);
-		return (str);
-	}
-	return (NULL);
+	(void)len;
+	return (ft_strdup(string));
 }
 
 static size_t	get_index_expan(const char *str)
