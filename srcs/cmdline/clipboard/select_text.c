@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 18:33:55 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 18:57:22 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/08 20:22:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void		select_on_left(t_read *term, t_cmd *copy)
 	}
 	else
 		copy->last -= 1;
-	write(STDERR_FILENO, &term->buffer[x], 1);
+	write(STDOUT_FILENO, &term->buffer[x], 1);
 	xtputs(term->tcaps[SELECT_OFF], 1, my_outc);
 	if (term->x != (term->ws_col - 1))
 	{
@@ -48,7 +48,7 @@ static void		select_on_right(t_read *term, t_cmd *copy)
 	}
 	else
 		copy->first += 1;
-	write(STDERR_FILENO, &term->buffer[x], 1);
+	write(STDOUT_FILENO, &term->buffer[x], 1);
 	xtputs(term->tcaps[SELECT_OFF], 1, my_outc);
 	term->x += 1;
 	term->x_index += 1;

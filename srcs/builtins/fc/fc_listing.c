@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:11:54 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:50:38 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/08 20:47:51 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int8_t		listing_mode(t_lst *w, char **av, u_int64_t opt)
 	if (get_range(av, &cmd) == FALSE)
 		return (fc_error(opt, 0));
 	get_entries(w, &cmd, opt);
-	cmd.fd = STDERR_FILENO;
+	cmd.fd = STDIN_FILENO;
 	sort_print_cmd(cmd, w, opt);
 	return (TRUE);
 }

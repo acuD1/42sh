@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:50:43 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/08 20:48:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int8_t			select_specifier(t_core *shell, char **av)
 
 	pat = NULL;
 	rep = NULL;
-	cmd.fd = STDERR_FILENO;
+	cmd.fd = STDIN_FILENO;
 	if (shell->term.history == NULL)
 		return (fc_error(0, 0));
 	get_pat_and_rep(av, &pat, &rep);
