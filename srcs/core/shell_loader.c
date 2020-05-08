@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/05/07 14:54:16 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/08 21:01:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ void	load_noi_mode(t_core *shell)
 			}
 			i++;
 		}
-		lexer_parser_analyzer(shell);
-		task_master(shell);
+		if (ft_str_isprint(shell->term.buffer))
+		{
+			lexer_parser_analyzer(shell);
+			task_master(shell);
+		}
 		ft_bzero(shell->term.buffer, ft_strlen(shell->term.buffer));
 		free_prompt(shell);
 	}
