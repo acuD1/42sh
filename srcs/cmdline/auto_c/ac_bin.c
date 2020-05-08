@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 00:30:23 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/08 15:00:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,6 @@ void			ac_binary(char *input, t_auto_comp *ac, t_core *shell)
 	fill_bin_lst(input, ac, path);
 	ft_tabfree(path);
 	add_builtin_lst(ac, input);
+	if (ac->lst_size == 0)
+		ac_file(input, ac, shell);
 }
