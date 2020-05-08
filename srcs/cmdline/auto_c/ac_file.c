@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:32:18 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 01:27:16 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/08 17:20:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void		fill_dir_lst(char *path, char *cmd, DIR *dir, t_auto_comp *ac)
 			continue ;
 		else
 			tmp = ft_strjoin(path, data->d_name);
-		if (ft_isstart(tmp, cmd) && is_dir(tmp))
+		if (ft_isstart(tmp, cmd) && (is_dir(tmp) || is_exec(tmp)))
 			ac_add_content(ac, tmp, data->d_name);
 		ft_strdel(&tmp);
 	}

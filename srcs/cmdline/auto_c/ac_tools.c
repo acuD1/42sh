@@ -6,12 +6,26 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 00:43:59 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/08 17:19:00 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <sys/stat.h>
+
+u_int8_t	is_exec(char *path)
+{
+	struct stat		tmp;
+
+	if (access(path, F_OK) == FAILURE)
+		return (FALSE);
+	if (stat(path, &tmp) == SUCCESS)
+	{
+		if (S_ISREG(tmp.st_mode) && access(path, X_OK) == SUCCESS)
+			return (TRUE);
+	}
+	return (FALSE);
+}
 
 u_int8_t	is_dir(const char *dir)
 {

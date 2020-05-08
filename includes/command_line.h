@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 02:11:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/08 17:19:28 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void		subprompt_loader(t_core *shell);
 
 size_t		get_max_len(size_t len, size_t new_len);
 int8_t		auto_complete_mode(char *input, t_core *shell, char **completion);
+u_int8_t	is_exec(char *path);
 char		**split_path(t_core *shell, const char *str);
 char		*ac_parse_input(char *input, enum e_ac_type type);
 char		*ac_tilde(char *input, t_core *shell);
