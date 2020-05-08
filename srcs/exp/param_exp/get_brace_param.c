@@ -73,25 +73,18 @@ char				*get_brace_param(char *str, t_core *shell)
 {
 	int			i;
 	int			index;
-	int			len;
 	char		*tmp;
 
 	i = 2;
 	index = 0;
-	len = ft_strlen(str);
-	tmp = ft_strnew(len);
+	tmp = ft_strnew(ft_strlen(str));
 	if (!is_braceexp_valid(str, tmp, &i, &index))
 		return (error_brace_param(str, shell, tmp));
 	if (!check_n_fill(str, tmp, &i, &index))
 		return (error_brace_param(str, shell, tmp));
 	if (str[i] == ':' && str[i + 1] && !check_format_bracket(str[i + 1]))
 		return (error_brace_param(str, shell, tmp));
-	while (i < len - 1)
-	{
-		tmp[index] = str[i];
-		index++;
-		i++;
-	}
-	tmp[index + 1] = '\0';
+	fill_thereste(str, tmp, &index, &i);
+	tmp[index] = '\0';
 	return (format_supplementaires(tmp, shell));
 }

@@ -18,7 +18,7 @@ static void	format_value(char **tablo, t_core *shell, char *value)
 	if (tablo[1][1] == '$')
 		value = exp_param(&tablo[1][1], shell);
 	else if (tablo[1][1] == '~')
-		value = exp_tilde(&tablo[1][1], shell);
+		value = tilde_param_exp(tablo[1], shell);
 	else
 		value = ft_strdup(&tablo[1][1]);
 	ft_dprintf(STDERR_FILENO, "42sh: %s: %s\n", tablo[0], value);
@@ -32,7 +32,8 @@ char		*questionmark_format(char **tablo, t_core *shell)
 	value = check_env_key(tablo[0], shell);
 	if (value && *value != '\0')
 	{
-		ft_tabfree(tablo);
+		ft_strdel(&tablo[0]);
+		ft_strdel(&tablo[1]);
 		return (ft_strdup(value));
 	}
 	else if (!tablo[1][1] && (!value || !*value))
@@ -41,20 +42,20 @@ char		*questionmark_format(char **tablo, t_core *shell)
 	else
 		format_value(tablo, shell, value);
 	shell->status = 2;
-	ft_tabfree(tablo);
+	ft_strdel(&tablo[0]);
+	ft_strdel(&tablo[1]);
 	return (NULL);
 }
 
 char		*dash_format(char **tablo, t_core *shell)
 {
 	char	*value;
-	size_t	i;
 
-	i = 1;
 	value = NULL;
 	if ((value = check_env_key(tablo[0], shell)))
 	{
-		ft_tabfree(tablo);
+		ft_strdel(&tablo[0]);
+		ft_strdel(&tablo[1]);
 		return (ft_strdup(value));
 	}
 	if (tablo[1])
@@ -62,11 +63,12 @@ char		*dash_format(char **tablo, t_core *shell)
 		if (tablo[1][1] == '$')
 			value = exp_param(&tablo[1][1], shell);
 		else if (tablo[1][1] == '~')
-			value = exp_tilde(&tablo[1][1], shell);
+			value = tilde_param_exp(tablo[1], shell);
 		else
 			value = ft_strdup(&tablo[1][1]);
 	}
-	ft_tabfree(tablo);
+	ft_strdel(&tablo[0]);
+	ft_strdel(&tablo[1]);
 	return (value);
 }
 
@@ -103,12 +105,14 @@ char		*plus_format(char **tablo, t_core *shell)
 		if (tablo[1][1] == '$')
 			value = exp_param(&tablo[1][1], shell);
 		else if (tablo[1][1] == '~')
-			value = exp_tilde(&tablo[1][1], shell);
+			value = tilde_param_exp(tablo[1], shell);
 		else
 			value = ft_strdup(&tablo[1][1]);
-		ft_tabfree(tablo);
+		ft_strdel(&tablo[0]);
+		ft_strdel(&tablo[1]);
 		return (value);
 	}
-	ft_tabfree(tablo);
+	ft_strdel(&tablo[0]);
+	ft_strdel(&tablo[1]);
 	return (NULL);
 }

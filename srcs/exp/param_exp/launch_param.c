@@ -13,6 +13,22 @@
 #include "sh42.h"
 #include <unistd.h>
 
+char				*tilde_param_exp(char *tablo, t_core *shell)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	tmp = exp_tilde(&tablo[1], shell);
+	if (!check_tilde_path_exp(tmp, tablo, 1))
+	{
+		if (tablo[1] == '~' && (tablo[2] == '-' || tablo[2] == '+'))
+			tmp = ft_strjoinf(tmp, &tablo[3], 1);
+		else
+			tmp = ft_strjoinf(tmp, &tablo[2], 1);
+	}
+	return (tmp);
+}
+
 char				*simple_format(char *str, t_core *shell)
 {
 	t_db	*db_tmp;

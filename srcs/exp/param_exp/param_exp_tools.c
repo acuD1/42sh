@@ -16,8 +16,9 @@
 char		*one_moar_error(char **tablo, char *data, t_core *shell)
 {
 	ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", tablo[0]);
-	ft_tabfree(tablo);
 	ft_strdel(&data);
+	ft_strdel(&tablo[0]);
+	ft_strdel(&tablo[1]);
 	shell->status = 2;
 	shell->subst_error = 1;
 	return (NULL);
@@ -47,4 +48,23 @@ u_int32_t	check_format_bracket(char c)
 	if (c == '?' || c == '=' || c == '-' || c == '+')
 		return (1);
 	return (0);
+}
+
+void		fill_thereste(char *str, char *tmp, int *index, int *i)
+{
+	size_t	count;
+
+	count = 1;
+	while (str[*i])
+	{
+		if (str[*i] == '}')
+			count--;
+		else if (str[*i] == '$' && str[*i + 1] && str[*i + 1] == '{')
+			count++;
+		if (!count)
+			break ;
+		tmp[*index] = str[*i];
+		*index += 1;
+		*i += 1;
+	}
 }

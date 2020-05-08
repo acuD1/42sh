@@ -13,7 +13,7 @@
 #include <errno.h>
 #include "sh42.h"
 
-static u_int8_t	check_tilde_path_exp
+u_int8_t		check_tilde_path_exp
 	(char *expandu, const char *str, size_t i)
 {
 	char			*tmp[2];
@@ -24,9 +24,9 @@ static u_int8_t	check_tilde_path_exp
 		return (0);
 	tmp[1] = ft_strsub(str, i + 1, ft_strlen(str) - i - 1);
 	tmp[0] = ft_strsub(str, 0, i);
-	if (tmp[1][0] == '/' && !*tmp[0])
+	if ((tmp[1][0] == '/' || tmp[1][0] == ':') && !*tmp[0])
 	{
-		ft_strdel(&tmp[1]);
+		ft_strdel(&tmp[0]);
 		ft_strdel(&tmp[1]);
 		return (1);
 	}

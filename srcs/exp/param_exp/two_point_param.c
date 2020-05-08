@@ -28,15 +28,12 @@ char	*get_two_point_param_exp(char **tablo, t_core *shell)
 char	*egal_format(char **tablo, t_core *shell)
 {
 	char	*value;
-	char	*word;
-	size_t	i;
 
-	i = 1;
-	word = NULL;
 	value = NULL;
 	if ((value = check_env_key(tablo[0], shell)))
 	{
-		ft_tabfree(tablo);
+		ft_strdel(&tablo[0]);
+		ft_strdel(&tablo[1]);
 		return (ft_strdup(value));
 	}
 	if (tablo[1])
@@ -44,24 +41,29 @@ char	*egal_format(char **tablo, t_core *shell)
 		if (tablo[1][1] == '$')
 			value = exp_param(&tablo[1][1], shell);
 		else if (tablo[1][1] == '~')
-			value = exp_tilde(&tablo[1][1], shell);
+			value = tilde_param_exp(tablo[1], shell);
 		else
 			value = ft_strdup(&tablo[1][1]);
 		add_assign_env(shell, tablo[0], value);
 	}
-	ft_tabfree(tablo);
+	ft_strdel(&tablo[0]);
+	ft_strdel(&tablo[1]);
 	return (ft_strdup(value));
 }
 
 char	*moar_format_plz(char *data, t_core *shell)
 {
-	char	**tablo;
+	char	*tablo[2];
+	size_t	i;
 
-	tablo = NULL;
-	if ((tablo = ft_strsplit(data, ":")))
-	{
-		ft_strdel(&data);
-		return (get_two_point_param_exp(tablo, shell));
-	}
-	return (one_moar_error(tablo, data, shell));
+	i = 0;
+	tablo[0] = NULL;
+	tablo[1] = NULL;
+	while (data[i] != ':')
+		i++;
+	tablo[0] = ft_strsub(data, 0, i);
+	i++;
+	tablo[1] = ft_strsub(data, i, ft_strlen(data) - i);
+	ft_strdel(&data);
+	return (get_two_point_param_exp(tablo, shell));
 }

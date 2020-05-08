@@ -51,6 +51,7 @@ t_expansion		*start_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*quotes_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*discard_biteurs(char *dt, t_core *shell, t_expansion *exp);
 size_t			expansion_tok(t_core *shell, t_process *process);
+u_int8_t		check_tilde_path_exp(char *expandu, const char *str, size_t i);
 
 /*
 **	PARAM_EXPANSION
@@ -73,5 +74,6 @@ char			*one_moar_error(char **tablo, char *data, t_core *shell);
 char			*error_brace_param(char *str, t_core *shell, char *tmp);
 char			*check_env_key(char *key, t_core *shell);
 u_int32_t		check_format_bracket(char c);
-
+void			fill_thereste(char *str, char *tmp, int *index, int *i);
+char			*tilde_param_exp(char *tablo, t_core *shell);
 #endif
