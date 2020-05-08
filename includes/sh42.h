@@ -120,6 +120,7 @@ void		hash_error(t_hash *hash);
 **	===========================================================================
 */
 
+void		free_process_link(t_lst *ptr);
 int			get_signal(int status);
 t_core		*get_core(t_core *core);
 int8_t		get_canonical_path
