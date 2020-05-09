@@ -102,6 +102,7 @@ void		expansion(t_core *shell, t_process *process)
 		else
 			shell->status = 1;
 		process->status = 256;
-		process->completed = TRUE;
+		if (!process->av)
+			process->completed = TRUE;
 	}
 }
