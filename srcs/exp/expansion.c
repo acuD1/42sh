@@ -87,7 +87,7 @@ void		expansion(t_core *shell, t_process *process)
 {
 	if (!process || !shell)
 		return ;
-	shell->status = 0;
+	// shell->status = 0;
 	process->envp = set_envp(shell);
 	if (process->tok_list)
 		expansion_tok(shell, process);
@@ -97,12 +97,13 @@ void		expansion(t_core *shell, t_process *process)
 		expansion_redir(shell, process);
 	if (shell->status)
 	{
-		if (shell->status != 2)
-			shell->status = 0;
-		else
-			shell->status = 1;
-		process->status = 256;
-		if (!process->av)
-			process->completed = TRUE;
+		printf("%d\n", shell->status);
+		// if (shell->status != 2)
+		// 	shell->status = 0;
+		// else
+		// 	shell->status = 1;
+		// process->status = 256;
+		// if (!process->av)
+		// 	process->completed = TRUE;
 	}
 }
