@@ -153,4 +153,16 @@
 # define CHAR_INTERRUPT 		" \t<>|;&\n"
 # define OPERATORS				"&|;><"
 
+/*
+**	SIGNAL COMPATIBILITY (LINUX - MACOS)
+*/
+
+# ifndef SIGEMT
+#  define SIGEMT 0
+# endif
+
+# ifndef SIGINFO
+#  define SIGINFO 0
+# endif
+
 #endif

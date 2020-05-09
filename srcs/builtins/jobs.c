@@ -22,16 +22,15 @@ static void	print_longjob(t_job *job)
 	while (ptr != NULL)
 	{
 		process = ((t_process *)ptr->content);
-		dprintf(2, "%d\n", get_signal(process->status));
 		if (ptr == job->process_list)
 			ft_printf("[%d]%c %d %-23.*s %s\n", job->jobc_id, job->jobc_last
 			, process->pid
-			, ft_strlen(signal_msg(get_signal(process->status))) - 1
-			, signal_msg(get_signal(process->status)), process->command);
+			, ft_strlen(signal_msg(process->status)) - 1
+			, signal_msg(process->status), process->command);
 		else
 			ft_printf("     %d %-24.*s%s\n", process->pid
-			, ft_strlen(signal_msg(get_signal(process->status))) - 1
-			, signal_msg(get_signal(process->status)), process->command);
+			, ft_strlen(signal_msg(process->status)) - 1
+			, signal_msg(process->status), process->command);
 		ptr = ptr->next;
 	}
 }

@@ -13,15 +13,33 @@
 #include "sh42.h"
 #include <sys/wait.h>
 
-int		get_signal(int status)
+static int	signal_comp(int signum)
+{
+	static int	sig_comp[32] = {0, SIGHUP, SIGINT, SIGQUIT, SIGILL, SIGTRAP
+								, SIGABRT, SIGEMT, SIGFPE, SIGKILL, SIGBUS
+								, SIGSEGV, SIGSYS, SIGPIPE, SIGALRM, SIGTERM
+								, SIGURG, SIGSTOP, SIGTSTP, SIGCONT, SIGCHLD
+								, SIGTTIN, SIGTTOU, SIGIO, SIGXCPU, SIGXFSZ
+								, SIGVTALRM, SIGPROF, SIGWINCH, SIGINFO
+								, SIGUSR1, SIGUSR1};
+	int	i;
+
+	i = 0;
+	while (i++ < 32)
+		if (signum == sig_comp[i])
+			return (i);
+	return (0);
+}
+
+int			get_signal(int status)
 {
 	if (WIFSTOPPED(status))
 	{
-		return (WSTOPSIG(status));
+		return (signal_comp(WSTOPSIG(status)));
 	}
 	else if (WIFSIGNALED(status))
 	{
-		return (WTERMSIG(status));
+		return (signal_comp(WTERMSIG(status)));
 	}
 	return (0);
 }

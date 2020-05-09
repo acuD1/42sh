@@ -20,7 +20,7 @@ void		reset_signals(void)
 	int		i;
 
 	i = 0;
-	while (i++ < SIGUSR2)
+	while (++i < 32)
 		signal(i, SIG_DFL);
 }
 
