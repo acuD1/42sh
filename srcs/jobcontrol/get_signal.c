@@ -22,7 +22,7 @@ static int	signal_comp(int signum)
 								, SIGTTIN, SIGTTOU, SIGIO, SIGXCPU, SIGXFSZ
 								, SIGVTALRM, SIGPROF, SIGWINCH, SIGINFO
 								, SIGUSR1, SIGUSR1};
-	int	i;
+	int			i;
 
 	i = 0;
 	while (i++ < 32)

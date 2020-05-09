@@ -54,6 +54,8 @@ void		free_shell(t_core *shell)
 	free_prompt(shell);
 	free_history(&shell->term);
 	free_hash_map(&shell->hash);
+	ft_freejoblist(&shell->job_list);
+	ft_freejoblist(&shell->launched_jobs);
 }
 
 void		free_lst(t_lst *lst)
