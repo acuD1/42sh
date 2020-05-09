@@ -32,7 +32,7 @@ int8_t	increment_shlvl(t_core *shell)
 	{
 		if (db->value && ft_atol(db->value, &value) != SUCCESS)
 			new_value = 0;
-		if (value < 0)
+		if (value < 0 || value > 2147483647)
 			new_value = 0;
 		else
 			new_value = (int32_t)value + 1;
