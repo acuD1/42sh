@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/05/08 02:14:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/09 17:17:06 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct				s_cd
 
 typedef struct				s_read
 {
-	t_core					*shell;
 	t_lst					*history;
 	t_lst					*history_index;
 	char					*prompt;
@@ -76,6 +75,7 @@ typedef struct				s_read
 	ssize_t					ws_col;
 	ssize_t					ws_li;
 	int32_t					search;
+	int32_t					ctrl_c;
 	u_int8_t				sub_prompt;
 	u_int8_t				status;
 	char					pad[2];

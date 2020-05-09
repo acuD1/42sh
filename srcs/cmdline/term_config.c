@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 15:10:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 00:22:41 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/09 17:16:40 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	init_cmd_line(t_core *shell, t_read *term)
 {
 	term->history = NULL;
 	term->history_index = NULL;
-	term->shell = shell;
 	term->sub_prompt = FALSE;
 	term->search = 0;
+	term->ctrl_c = 0;
 	term->buffer = NULL;
 	term->tmp_buff = NULL;
 	term->prompt = NULL;

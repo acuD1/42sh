@@ -6,11 +6,12 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 16:12:41 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 02:02:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/09 17:23:34 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <signal.h>
 
 static int8_t	display_confirmed(t_auto_comp *ac)
 {
@@ -19,7 +20,12 @@ static int8_t	display_confirmed(t_auto_comp *ac)
 	ft_bzero(buff, 2);
 	ft_dprintf(STDERR_FILENO,
 		"Display all %d possibilities ? (y or n)", ac->lst_size);
-	read(STDIN_FILENO, buff, 1);
+	sigint_special_handler();
+	if (read(STDIN_FILENO, buff, 1) == FAILURE)
+	{
+		signal(SIGINT, sigint_handler);
+		return (FAILURE);
+	}
 	if (!ft_strequ(buff, "y"))
 		return (FAILURE);
 	ft_putchar_fd('\n', STDERR_FILENO);

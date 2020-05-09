@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/05/09 15:38:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/09 17:28:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@
 # define FC_ERR3				"42sh: fc: no command found\n"
 # define FC_USAGE1				"fc: usage: fc [-e ename] [-lnr] [first] [last]"
 # define FC_USAGE2				" or fc -s [pat=rep] [command]\n"
-# define FC_ERR_FILE			"42sh: fc: failed to open or create file:" 
+# define FC_ERR_FILE			"42sh: fc: failed to open or create file:"
 # define FC_OPT					"elnrs0123456789"
 # define HASH_USAGE				"hash [-rl] [-p pathname] [-dt] [name ...]"
 # define HASH_OPT				"lrpdt"
