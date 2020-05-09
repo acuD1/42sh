@@ -13,18 +13,6 @@
 #include "sh42.h"
 #include <unistd.h>
 
-static void	format_value(char **tablo, t_core *shell, char *value)
-{
-	if (tablo[1][1] == '$')
-		value = exp_param(&tablo[1][1], shell);
-	else if (tablo[1][1] == '~')
-		value = tilde_param_exp(tablo[1], shell);
-	else
-		value = ft_strdup(&tablo[1][1]);
-	ft_dprintf(STDERR_FILENO, "42sh: %s: %s\n", tablo[0], value);
-	ft_strdel(&value);
-}
-
 char		*questionmark_format(char **tablo, t_core *shell)
 {
 	char	*value;
@@ -40,7 +28,12 @@ char		*questionmark_format(char **tablo, t_core *shell)
 		ft_dprintf(STDERR_FILENO,
 			"42sh : %s parameter null or not set\n", tablo[0]);
 	else
-		format_value(tablo, shell, value);
+	{
+		if (tablo[1])
+			value = inhibiteurs_expansion(&tablo[1][1], shell, 0);
+		ft_dprintf(STDERR_FILENO, "42sh: %s: %s\n", tablo[0], value);
+		ft_strdel(&value);
+	}
 	shell->status = 2;
 	ft_strdel(&tablo[0]);
 	ft_strdel(&tablo[1]);
@@ -59,14 +52,7 @@ char		*dash_format(char **tablo, t_core *shell)
 		return (ft_strdup(value));
 	}
 	if (tablo[1])
-	{
-		if (tablo[1][1] == '$')
-			value = exp_param(&tablo[1][1], shell);
-		else if (tablo[1][1] == '~')
-			value = tilde_param_exp(tablo[1], shell);
-		else
-			value = ft_strdup(&tablo[1][1]);
-	}
+		value = inhibiteurs_expansion(&tablo[1][1], shell, 0);
 	ft_strdel(&tablo[0]);
 	ft_strdel(&tablo[1]);
 	return (value);
@@ -102,12 +88,8 @@ char		*plus_format(char **tablo, t_core *shell)
 	value = NULL;
 	if ((check_env_key(tablo[0], shell)))
 	{
-		if (tablo[1][1] == '$')
-			value = exp_param(&tablo[1][1], shell);
-		else if (tablo[1][1] == '~')
-			value = tilde_param_exp(tablo[1], shell);
-		else
-			value = ft_strdup(&tablo[1][1]);
+		if (tablo[1])
+			value = inhibiteurs_expansion(&tablo[1][1], shell, 0);
 		ft_strdel(&tablo[0]);
 		ft_strdel(&tablo[1]);
 		return (value);
@@ -115,4 +97,25 @@ char		*plus_format(char **tablo, t_core *shell)
 	ft_strdel(&tablo[0]);
 	ft_strdel(&tablo[1]);
 	return (NULL);
+}
+
+char		*egal_format(char **tablo, t_core *shell)
+{
+	char	*value;
+
+	value = NULL;
+	if ((value = check_env_key(tablo[0], shell)))
+	{
+		ft_strdel(&tablo[0]);
+		ft_strdel(&tablo[1]);
+		return (ft_strdup(value));
+	}
+	if (tablo[1])
+	{
+		value = inhibiteurs_expansion(&tablo[1][1], shell, 0);
+		add_assign_env(shell, tablo[0], value);
+	}
+	ft_strdel(&tablo[0]);
+	ft_strdel(&tablo[1]);
+	return (ft_strdup(value));
 }

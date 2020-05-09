@@ -12,10 +12,17 @@
 
 #include "sh42.h"
 
-char			*exp_get_bracket(const char *string, size_t len)
+char			*exp_get_bracket(const char *s, size_t len)
 {
-	(void)len;
-	return (ft_strdup(string));
+	char		*str;
+	size_t		i;
+
+	str = NULL;
+	i = len;
+	i = get_word_size_ntype(0, (char*)s);
+	if (!(str = ft_strsub(s, 0, i)))
+		return (NULL);
+	return (str);
 }
 
 static size_t	get_index_expan(const char *str)

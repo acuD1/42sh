@@ -65,6 +65,31 @@ char				*format_supplementaires(char *str, t_core *shell)
 	return (simple_format(str, shell));
 }
 
+char				*moar_format_plz(char *data, t_core *shell)
+{
+	char	*tablo[2];
+	size_t	i;
+
+	i = 0;
+	tablo[0] = NULL;
+	tablo[1] = NULL;
+	while (data[i] != ':')
+		i++;
+	tablo[0] = ft_strsub(data, 0, i);
+	i++;
+	tablo[1] = ft_strsub(data, i, ft_strlen(data) - i);
+	ft_strdel(&data);
+	if (tablo[1][0] == '-')
+		return (dash_format(tablo, shell));
+	else if (tablo[1][0] == '+')
+		return (plus_format(tablo, shell));
+	else if (tablo[1][0] == '=')
+		return (egal_format(tablo, shell));
+	else if (tablo[1][0] == '?')
+		return (questionmark_format(tablo, shell));
+	return (NULL);
+}
+
 char				*exp_param(const char *data, t_core *shell)
 {
 	if (data[0] == '$' && data[1] == '{')

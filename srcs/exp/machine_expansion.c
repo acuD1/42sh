@@ -22,8 +22,10 @@ u_int8_t		check_tilde_path_exp
 	tmp[1] = NULL;
 	if (!expandu || !str || str[0] != '~')
 		return (0);
-	tmp[1] = ft_strsub(str, i + 1, ft_strlen(str) - i - 1);
 	tmp[0] = ft_strsub(str, 0, i);
+	i = (str[i] == '~' && str[i + 1]
+		&& (str[i + 1] == '-' || str[i + 1] == '+')) ? i + 2 : i + 1;
+	tmp[1] = ft_strsub(str, i, ft_strlen(str) - i);
 	if ((tmp[1][0] == '/' || tmp[1][0] == ':') && !*tmp[0])
 	{
 		ft_strdel(&tmp[0]);

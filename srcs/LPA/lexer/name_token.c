@@ -27,6 +27,24 @@ static size_t	loop_till_quote(const char *str, size_t index, char quote)
 	return (index);
 }
 
+static u_int8_t	exit_condi(const char *str, size_t i, size_t *db, size_t *br)
+{
+	if (str[i] == '$' && str[i + 1] && str[i + 1] == '{')
+		*db += 1;
+	else if (str[i] == '}' && *db && (!*br || *db > *br))
+		*db -= 1;
+	else if (str[i] == '\"')
+	{
+		if (!*br || *db > *br)
+			*br += 1;
+		else
+			*br -= 1;
+	}
+	if (!*br && !*db)
+		return (0);
+	return (1);
+}
+
 static size_t	loop_till_next_subprompt(const char *str, size_t i)
 {
 	size_t	f[2];
@@ -38,15 +56,9 @@ static size_t	loop_till_next_subprompt(const char *str, size_t i)
 	{
 		if (check_backslash_nbr((char*)str, (ssize_t*)&i))
 			continue ;
-		if (str[i] == '\'' && f[0])
+		if (str[i] == '\'' && f[0] > f[1])
 			i = loop_till_quote(str, i, '\'');
-		else if (str[i] == '$' && str[i + 1] && str[i + 1] == '{')
-			f[0]++;
-		else if (str[i] == '}' && f[0] && (!f[1] || f[0] > f[1]))
-			f[0]--;
-		else if (str[i] == '\"')
-			f[1] = (!f[1] || f[0] > f[1]) ? f[1]++ : f[1]--;
-		if (!f[1] && !f[0])
+		if (!exit_condi(str, i, &f[0], &f[1]))
 			break ;
 		i++;
 	}

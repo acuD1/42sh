@@ -52,16 +52,9 @@ u_int32_t	check_format_bracket(char c)
 
 void		fill_thereste(char *str, char *tmp, int *index, int *i)
 {
-	size_t	count;
-
-	count = 1;
 	while (str[*i])
 	{
-		if (str[*i] == '}')
-			count--;
-		else if (str[*i] == '$' && str[*i + 1] && str[*i + 1] == '{')
-			count++;
-		if (!count)
+		if (!str[*i + 1])
 			break ;
 		tmp[*index] = str[*i];
 		*index += 1;
