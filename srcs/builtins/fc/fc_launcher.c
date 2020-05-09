@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/19 17:44:14 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/08 14:31:55 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/05/09 11:38:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,5 @@ int8_t			fc_launch_editor(t_core *shell, char **argv)
 		del_job(&job_ptr);
 	else
 		ft_lstappend(&(shell->launched_jobs), job_ptr);
-	return (SUCCESS);
+	return (shell->status == 127 ? FAILURE : SUCCESS);
 }

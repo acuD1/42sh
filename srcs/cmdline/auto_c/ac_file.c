@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 16:32:18 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 20:05:15 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/09 15:27:40 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ static void		check_dir(char *input, char *cmd, char *path, t_auto_comp *ac)
 		else
 			fill_file_lst(path, cmd, dir, ac);
 	}
+	ft_strdel(&path);
 	closedir(dir);
 }
 
@@ -116,6 +117,5 @@ void			ac_file(char *input, t_auto_comp *ac, t_core *shell)
 	ac->ws_col = (size_t)shell->term.ws_col;
 	cmd = get_dir_path(ac, input, &path);
 	check_dir(input, cmd, path, ac);
-	ft_strdel(&path);
 	ft_strdel(&cmd);
 }

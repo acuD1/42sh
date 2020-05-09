@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:43:01 by arsciand          #+#    #+#             */
-/*   Updated: 2020/05/07 12:24:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/09 15:38:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@
 */
 
 # define SHELL_OPT				"vhc"
-# define FC_OPT					"elnrs0123456789"
 # define MAX_PATH				4096
 # define ACCESS_MAX_PATH		1024
 
@@ -105,7 +104,6 @@
 # define CTRL_B					0x0200000000000000
 # define CTRL_F					0x0600000000000000
 # define CTRL_D					0x0400000000000000
-# define CTRL_W					0x1700000000000000
 # define MOVE_UP				0x1b5b313b32410000
 # define MOVE_DOWN				0x1b5b313b32420000
 # define SELECT_LEFT			0x1b5b313b36440000
@@ -120,6 +118,13 @@
 
 # define HASH_SIZE				256
 # define MAX_LOAD_F				0.75
+# define FC_ERR1				"42sh: fc: history specification out of range\n"
+# define FC_ERR2				"42sh: fc: -e: option requires an argument\n"
+# define FC_ERR3				"42sh: fc: no command found\n"
+# define FC_USAGE1				"fc: usage: fc [-e ename] [-lnr] [first] [last]"
+# define FC_USAGE2				" or fc -s [pat=rep] [command]\n"
+# define FC_ERR_FILE			"42sh: fc: failed to open or create file:" 
+# define FC_OPT					"elnrs0123456789"
 # define HASH_USAGE				"hash [-rl] [-p pathname] [-dt] [name ...]"
 # define HASH_OPT				"lrpdt"
 # define CD_USAGE				"cd [-L|-P] [dir]"

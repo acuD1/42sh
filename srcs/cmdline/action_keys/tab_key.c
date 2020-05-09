@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 12:40:04 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 01:59:44 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/09 15:23:51 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static void		display_prompt_and_buffer(t_read *term)
 	x_index = term->x_index;
 	buffer = ft_strdup(term->buffer);
 	ft_putchar_fd('\n', STDERR_FILENO);
-	display_prompt(term);
+	if (term->status == CMD_SUBPROMPT)
+		display_subprompt(term);
+	else
+		display_prompt(term);
 	ft_strdel(&term->buffer);
 	term->buffer = ft_memalloc(BUFF_SIZE + 1);
 	insert_str_in_buffer(buffer, term);
