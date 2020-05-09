@@ -53,7 +53,7 @@ static void	filename_heredoc_exp(t_core *shell, t_redir *redir)
 		{
 			ft_dprintf(STDERR_FILENO, "42sh: %s :ambiguous redirect\n",
 				redir->op[1]);
-			shell->status = 2;
+			shell->status = 1;
 		}
 		ft_strdel(&(redir->op[1]));
 		redir->op[1] = ft_strdup(res);
@@ -80,30 +80,28 @@ size_t		expansion_redir(t_core *shell, t_process *process)
 		filename_heredoc_exp(shell, ((t_redir*)lst->content));
 		lst = lst->next;
 	}
-	return ((shell->status) ? 1 : 0);
+	return (shell->status);
 }
 
 void		expansion(t_core *shell, t_process *process)
 {
+	int ret;
+
 	if (!process || !shell)
 		return ;
-	// shell->status = 0;
+	ret =0;
 	process->envp = set_envp(shell);
 	if (process->tok_list)
-		expansion_tok(shell, process);
+		ret = expansion_tok(shell, process);
 	if (process->assign_list)
 		expansion_assign(shell, process);
 	if (process->redir_list)
-		expansion_redir(shell, process);
-	if (shell->status)
+		ret = expansion_redir(shell, process);
+	if (ret)
 	{
-		printf("%d\n", shell->status);
-		// if (shell->status != 2)
-		// 	shell->status = 0;
-		// else
-		// 	shell->status = 1;
-		// process->status = 256;
-		// if (!process->av)
-		// 	process->completed = TRUE;
-	}
+		process->status = 256;
+		if (!process->av)
+			process->completed = TRUE;
+	}	
+		
 }

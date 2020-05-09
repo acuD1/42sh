@@ -19,7 +19,6 @@ char		*one_moar_error(char **tablo, char *data, t_core *shell)
 	ft_strdel(&data);
 	ft_strdel(&tablo[0]);
 	ft_strdel(&tablo[1]);
-	shell->status = 2;
 	shell->subst_error = 1;
 	return (NULL);
 }
@@ -27,7 +26,6 @@ char		*one_moar_error(char **tablo, char *data, t_core *shell)
 char		*error_brace_param(char *str, t_core *shell, char *tmp)
 {
 	ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
-	shell->status = 2;
 	shell->subst_error = 1;
 	ft_strdel(&tmp);
 	return (NULL);
