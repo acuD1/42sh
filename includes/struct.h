@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 21:52:21 by arsciand          #+#    #+#             */
-/*   Updated: 2020/04/23 16:49:54 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/09 17:17:06 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,12 @@ typedef struct				s_cd
 
 typedef struct				s_read
 {
-	t_core					*shell;
 	t_lst					*history;
 	t_lst					*history_index;
-	char					**cmd;
 	char					*prompt;
 	char					*tcaps[CAPS_NBR];
 	char					*buffer;
 	char					*tmp_buff;
-	char					*ac_tmp;
 	char					*cpy;
 	ssize_t					prompt_len;
 	ssize_t					x_index;
@@ -77,12 +74,11 @@ typedef struct				s_read
 	ssize_t					width;
 	ssize_t					ws_col;
 	ssize_t					ws_li;
-	size_t					ac;
 	int32_t					search;
+	int32_t					ctrl_c;
 	u_int8_t				sub_prompt;
 	u_int8_t				status;
-	u_int8_t				flag;
-	char					pad[1];
+	char					pad[6];
 }							t_read;
 
 typedef struct s_subprompt	t_subprompt;
@@ -124,7 +120,8 @@ struct						s_core
 	int32_t					terminal;
 	int8_t					is_interactive;
 	int8_t					notified;
-	char					pad[6];
+	int8_t					ac_flag;
+	char					pad[5];
 };
 
 /*
@@ -282,5 +279,24 @@ typedef struct				s_lex_exp
 	char					pad[4];
 	size_t					len;
 }							t_lex_exp;
+
+/*
+**	AUTO COMPLETION
+*/
+
+typedef struct s_auto_comp	t_auto_comp;
+enum e_ac_type				ac_check_type(char *input);
+typedef void				(t_ac_fct)(char *, t_auto_comp *, t_core *);
+
+typedef struct				s_auto_comp
+{
+	t_lst					*lst;
+	enum e_ac_type			type;
+	char					pad[4];
+	size_t					lst_size;
+	size_t					x;
+	size_t					max_len;
+	size_t					ws_col;
+}							t_auto_comp;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 11:47:05 by guvillat          #+#    #+#             */
-/*   Updated: 2020/04/25 13:04:09 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/08 00:23:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static u_int8_t		analyzer_subpts(t_core *shell, t_lst *old)
 	shell->term.sub_prompt = TRUE;
 	ft_strdel(&shell->term.prompt);
 	get_prompt_value(shell, "PS2");
-	shell->term.flag = FALSE;
 	shell->term.status = CMD_SUBPROMPT;
 	old_buffer = ft_strdup(shell->term.buffer);
 	if (ouverture_du_subpts(shell, old_buffer) == 2)

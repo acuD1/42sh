@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:11:54 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:50:38 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/09 16:05:08 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,11 @@ u_int8_t	get_range(char **av, t_cmd *cmd)
 	if ((cmd->ac = ft_tablen(av)) == 2 && ft_tabchr(av, "-l"))
 		return (TRUE);
 	skip_options(&av);
+	if (!(*(av + 1)))
+		return (TRUE);
 	if (ft_tabchr(av, "-e"))
 		av++;
-	while (*av && av++)
+	while (*av != NULL && av++)
 	{
 		if (ft_isnum(*av) == FALSE)
 			return (FALSE);
@@ -84,7 +86,7 @@ u_int8_t	get_range(char **av, t_cmd *cmd)
 			break ;
 		}
 	}
-	if (*(av + 1))
+	if (*av && *(av + 1))
 		cmd->last = ft_atoi(*(av + 1));
 	return (TRUE);
 }
@@ -97,7 +99,7 @@ int8_t		listing_mode(t_lst *w, char **av, u_int64_t opt)
 	if (get_range(av, &cmd) == FALSE)
 		return (fc_error(opt, 0));
 	get_entries(w, &cmd, opt);
-	cmd.fd = STDERR_FILENO;
+	cmd.fd = STDIN_FILENO;
 	sort_print_cmd(cmd, w, opt);
 	return (TRUE);
 }

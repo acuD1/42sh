@@ -6,11 +6,60 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/17 11:50:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/08 17:19:00 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <sys/stat.h>
+
+u_int8_t	is_exec(char *path)
+{
+	struct stat		tmp;
+
+	if (access(path, F_OK) == FAILURE)
+		return (FALSE);
+	if (stat(path, &tmp) == SUCCESS)
+	{
+		if (S_ISREG(tmp.st_mode) && access(path, X_OK) == SUCCESS)
+			return (TRUE);
+	}
+	return (FALSE);
+}
+
+u_int8_t	is_dir(const char *dir)
+{
+	struct stat	buf;
+	char		*tmp;
+
+	if (!*dir || !dir)
+		return (FALSE);
+	if (!ft_isstart(dir, "/"))
+		tmp = ft_strjoin("./", dir);
+	else
+		tmp = ft_strdup(dir);
+	if (lstat(dir, &buf) == FAILURE)
+	{
+		ft_strdel(&tmp);
+		return (FALSE);
+	}
+	if (S_ISDIR(buf.st_mode) && !is_dot(dir))
+	{
+		ft_strdel(&tmp);
+		return (TRUE);
+	}
+	ft_strdel(&tmp);
+	return (FALSE);
+}
+
+u_int8_t	is_dot(const char *d_name)
+{
+	if (!ft_strcmp(d_name, "."))
+		return (TRUE);
+	else if (!ft_strcmp(d_name, ".."))
+		return (TRUE);
+	return (FALSE);
+}
 
 /*
 **		Split all bin/sbin directories in an array
@@ -35,28 +84,9 @@ char		**split_path(t_core *shell, const char *str)
 	return (array);
 }
 
-void		split_cmd(char **to_find, t_read *term)
+size_t		get_max_len(size_t len, size_t new_len)
 {
-	size_t	i;
-
-	i = 0;
-	term->ac = 0;
-	while (ft_isblank(term->buffer[i]))
-	{
-		i++;
-		continue ;
-	}
-	if (term->buffer[i] == '\0')
-	{
-		*to_find = ft_strnew(0);
-		term->cmd = ft_memalloc(BUFF_SIZE + 1);
-		return ;
-	}
-	if ((term->cmd = ft_strsplit(term->buffer, SPACE)) == NULL)
-		return ;
-	term->ac = ft_tablen(term->cmd);
-	if (term->buffer[ft_strlen(term->buffer) - 1] == ' ')
-		term->ac += 1;
-	if (!(*to_find = ft_strdup(term->cmd[ft_tablen(term->cmd) - 1])))
-		return ;
+	if (len >= new_len)
+		return (len);
+	return (new_len);
 }

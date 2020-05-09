@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:53:27 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/08 20:46:16 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void			goto_reverse(t_read *term, const char *buff_tmp)
 	xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
 	if (term->search == SEARCH_SUCCESS)
-		ft_dprintf(STDERR_FILENO, "(reverse-i-search)`%s': ", buff_tmp);
+		ft_dprintf(STDOUT_FILENO, "(reverse-i-search)`%s': ", buff_tmp);
 	else if (term->search == SEARCH_FAILURE)
-		ft_dprintf(STDERR_FILENO, "(failed reverse-i-search)`%s': ", buff_tmp);
+		ft_dprintf(STDOUT_FILENO, "(failed reverse-i-search)`%s': ", buff_tmp);
 }
 
 static void		walking_history
@@ -92,7 +92,7 @@ static void		research_in_history(t_read *term)
 	ft_bzero(buff, READ_SIZE + 1);
 	history = term->history;
 	goto_reverse(term, "");
-	ft_putstr_fd(term->buffer, STDERR_FILENO);
+	ft_putstr_fd(term->buffer, STDOUT_FILENO);
 	sigint_special_handler();
 	while (read(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{

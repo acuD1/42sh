@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 19:30:58 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:50:51 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/09 16:05:42 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,41 +16,30 @@
 int8_t			fc_error(u_int64_t opt, int err_num)
 {
 	if (err_num == 0)
-		ft_dprintf(2, "42sh: fc: history specification out of range\n");
+		ft_dprintf(STDERR_FILENO, FC_ERR1);
 	else if (err_num == 1)
+	{
 		print_usage("fc", opt % 128,
-"fc: usage: fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]");
+			"fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]");
+	}
 	else if (err_num == 2)
 	{
-		ft_dprintf(2, "42sh: fc: -e: option requires an argument\n");
-		ft_dprintf(STDERR_FILENO, "fc: usage: fc [-e ename] \
-			[-lnr] [first] [last] or fc -s [pat=rep] [command]\n");
+		ft_dprintf(STDERR_FILENO, FC_ERR2);
+		ft_dprintf(STDERR_FILENO, "%s%s", FC_USAGE1, FC_USAGE2);
 	}
 	else if (err_num == 3)
-		ft_dprintf(STDERR_FILENO, "42sh: fc: no command found\n");
+		ft_dprintf(STDERR_FILENO, FC_ERR3);
 	else
-		ft_dprintf(STDERR_FILENO,
-				"42sh: fc: failed to open or create file: %s\n", FC_TMP_FILE);
+		ft_dprintf(STDERR_FILENO, "%s %s\n", FC_ERR_FILE, FC_TMP_FILE);
 	return (FAILURE);
 }
 
-static int8_t	fc_options(char **av, u_int64_t *opt)
+static int8_t	no_options(char **av)
 {
-	if (*opt & (1ULL << 4))
-	{
-		while (*av)
-		{
-			if (ft_strequ(*av, "-e") && *(av + 1) == NULL)
-				return (FALSE);
-			if (ft_strequ(*av, "-s"))
-			{
-				*opt = 0;
-				*opt |= (1ULL << 18);
-			}
-			(av)++;
-		}
-	}
-	return (TRUE);
+	skip_options(&av);
+	if (!ft_strcmp("fc", *av))
+		return (TRUE);
+	return (FALSE);
 }
 
 /*
@@ -69,13 +58,11 @@ int8_t			builtin_fc(t_core *shell, t_process *process)
 	opt = ft_get_options((int)ft_tablen(process->av), process->av, FC_OPT);
 	if (opt & (1ULL << 63))
 		return (fc_error(opt, 1));
-	if (fc_options(process->av, &opt) == FALSE)
-		return (fc_error(opt, 2));
-	if (opt & (1ULL << 18))
+	if (opt & (1ULL << 4) || no_options(process->av))
+		return (edit_mode(shell, process, opt));
+	else if (opt & (1ULL << 18))
 		return (select_specifier(shell, process->av));
 	else if (opt & (1ULL << 11))
 		listing_mode(w, process->av, opt);
-	else
-		return (edit_mode(shell, process, opt));
 	return (SUCCESS);
 }

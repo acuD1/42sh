@@ -180,7 +180,6 @@ SRC					+=	$(S_PATH)$(CMDLINE)term_config.c
 
 SRC					+=	$(S_PATH)$(CMDLINE_UTILS)get_var_value.c
 SRC					+=	$(S_PATH)$(CMDLINE_UTILS)utils.c
-SRC					+=	$(S_PATH)$(CMDLINE_UTILS)xfunctions.c
 
 SRC					+=	$(S_PATH)$(AK)check_caps.c
 SRC					+=	$(S_PATH)$(AK)del_keys.c
@@ -188,17 +187,21 @@ SRC					+=	$(S_PATH)$(AK)insert_in_buffer.c
 SRC					+=	$(S_PATH)$(AK)keys_comb.c
 SRC					+=	$(S_PATH)$(AK)move_cursor.c
 SRC					+=	$(S_PATH)$(AK)move_in_column.c
+SRC					+=	$(S_PATH)$(AK)tab_key.c
 
 SRC					+=	$(S_PATH)$(CLIPBOARD)select_text.c
 SRC					+=	$(S_PATH)$(CLIPBOARD)ak_clipboard.c
 
-SRC					+=	$(S_PATH)$(AC)ac_bin.c
-SRC					+=	$(S_PATH)$(AC)ac_buffer.c
-SRC					+=	$(S_PATH)$(AC)ac_current_dir.c
-SRC					+=	$(S_PATH)$(AC)ac_directories.c
-SRC					+=	$(S_PATH)$(AC)ac_tools.c
-SRC					+=	$(S_PATH)$(AC)ac_var.c
 SRC					+=	$(S_PATH)$(AC)auto_completion.c
+SRC					+=	$(S_PATH)$(AC)ac_check_type.c
+SRC					+=	$(S_PATH)$(AC)ac_display.c
+SRC					+=	$(S_PATH)$(AC)ac_get_dir.c
+SRC					+=	$(S_PATH)$(AC)ac_bin.c
+SRC					+=	$(S_PATH)$(AC)ac_file.c
+SRC					+=	$(S_PATH)$(AC)ac_var.c
+SRC					+=	$(S_PATH)$(AC)ac_parser.c
+SRC					+=	$(S_PATH)$(AC)ac_tilde.c
+SRC					+=	$(S_PATH)$(AC)ac_tools.c
 
 SRC					+=	$(S_PATH)$(HISTORY)save_history.c
 SRC					+=	$(S_PATH)$(HISTORY)search_in_history.c

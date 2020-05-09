@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:37:09 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:52:32 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/08 20:21:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void		del_key(t_read *term)
 		y = term->y;
 		w = term->width - 1;
 		clear_all_lines(term);
-		ft_putstr_fd(term->buffer, STDERR_FILENO);
+		ft_putstr_fd(term->buffer, STDOUT_FILENO);
 		term->x = x;
 		term->x_index = i;
 		term->y = y;

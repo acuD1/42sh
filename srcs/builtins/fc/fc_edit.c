@@ -6,19 +6,18 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:50:30 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/09 15:54:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <fcntl.h>
-#include <unistd.h>
 
 static int8_t	fc_exec_cmd(t_core *shell, t_cmd cmd)
 {
 	while (ft_getnextline(cmd.fd, &shell->term.buffer) > 0)
 	{
-		ft_dprintf(STDERR_FILENO, "%s\n", shell->term.buffer);
+		ft_dprintf(STDIN_FILENO, "%s\n", shell->term.buffer);
 		lexer_parser_analyzer(shell);
 		do_job_notification(shell, shell->launched_jobs, TRUE);
 		task_master(shell);
@@ -62,15 +61,22 @@ static char		*get_editor(char **av, u_int64_t opt)
 	char		*editor;
 
 	editor = NULL;
-	skip_options(&av);
-	if (!*(av + 1) || (ft_isnum(*(av + 1)) && !(opt & (1ULL << 4))))
-		editor = ft_strdup("ed ");
-	else if (opt & (1ULL << 4))
+	if (!opt)
+		return (ft_strdup("ed "));
+	else if (opt & (1ULL << 4) && ft_tablen(av) == 2)
+		return (NULL);
+	av++;
+	if (ft_strequ(*av, "-e") == TRUE && *(av + 1) == NULL)
 	{
-		editor = ft_strjoin(*(av + 1), " ");
-		if (!ft_strequ(editor, "vim ") && !ft_strequ(editor, "emacs "))
-			ft_strdel(&editor);
+		return (NULL);
 	}
+	if (ft_strequ(*av, "-e") == TRUE)
+	{
+		(av)++;
+		editor = ft_strjoin(*av, " ");
+	}
+	else
+		editor = ft_strjoin(*av + 2, " ");
 	return (editor);
 }
 
@@ -108,6 +114,6 @@ int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 	get_edit_entries(shell->term.history, &cmd);
 	sort_print_cmd(cmd, shell->term.history, opt);
 	if ((cmd.editor = get_editor(process->av, opt)) == NULL)
-		return (fc_error(opt, 0));
+		return (fc_error(opt, 2));
 	return (fc_editor(shell, cmd));
 }

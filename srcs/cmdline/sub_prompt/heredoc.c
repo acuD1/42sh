@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 21:58:29 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:53:58 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/06 11:03:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static u_int8_t	heredoc_error(const char *key)
 
 static u_int8_t	check_key(t_core *shell, const char *key)
 {
-	if (read_multiline(&shell->term) == FALSE)
+	if (read_multiline(shell) == FALSE)
 	{
 		if (shell->term.status == CMD_DONE)
 			return (heredoc_error(key));
@@ -42,16 +42,16 @@ static u_int8_t	check_key(t_core *shell, const char *key)
 	return (FALSE);
 }
 
-u_int8_t		read_multiline(t_read *term)
+u_int8_t		read_multiline(t_core *shell)
 {
 	char	buff[READ_SIZE + 1];
 
 	ft_bzero(buff, READ_SIZE + 1);
 	sigint_special_handler();
-	while (term->status == CMD_SUBPROMPT
+	while (shell->term.status == CMD_SUBPROMPT
 			&& read(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
-		if (check_caps(buff, term) == TRUE)
+		if (check_caps(buff, shell) == TRUE)
 			ft_bzero(buff, READ_SIZE + 1);
 		else
 		{

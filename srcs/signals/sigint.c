@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:45:16 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/04/23 17:01:22 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/09 17:20:30 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	erase_line(t_core *shell)
 {
 	if (shell->term.status == CMD_PROMPT)
 	{
+		shell->term.ctrl_c = 1;
 		goto_prompt(&shell->term);
 		ft_strdel(&shell->term.buffer);
 		ft_strdel(&shell->term.tmp_buff);

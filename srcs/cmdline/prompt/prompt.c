@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 17:47:24 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/09 17:25:58 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static int8_t	end_of_file(t_core *shell, const char *buff)
 {
 	if (!*(shell->term).buffer && get_mask(buff) == CTRL_D)
 	{
+		shell->ac_flag = FAILURE;
+		auto_complete_mode(NULL, shell, NULL);
 		ft_putstr_fd("exit\n", STDERR_FILENO);
 		if (are_jobs_done(shell, shell->launched_jobs) != TRUE)
 		{
@@ -82,6 +84,7 @@ int8_t			init_prompt(t_core *shell)
 
 	shell->term.status = CMD_PROMPT;
 	shell->ctrl_c = 0;
+	shell->term.ctrl_c = 0;
 	ft_bzero(buff, READ_SIZE + 1);
 	shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 	set_termconfig(shell);
@@ -92,12 +95,14 @@ int8_t			init_prompt(t_core *shell)
 		shell->term.search = 0;
 		if (end_of_file(shell, buff) == TRUE)
 			return (FAILURE);
-		if (check_caps(buff, &shell->term) == TRUE)
+		if (check_caps(buff, shell) == TRUE)
 			ft_bzero(buff, READ_SIZE + 1);
 		else if (*shell->term.prompt
 			|| (!*shell->term.prompt && shell->term.buffer))
 			break ;
 	}
+	shell->ac_flag = FAILURE;
+	auto_complete_mode(NULL, shell, NULL);
 	shell->term.status = CMD_DONE;
 	return (SUCCESS);
 }
