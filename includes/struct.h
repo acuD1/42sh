@@ -253,13 +253,14 @@ typedef struct				s_exp_size
 
 struct						s_expansion
 {
-	t_exp					sionat[9];
+	t_exp					sionat[3];
 	t_inhi					biteurs[5];
 	char					*res;
 	enum e_estate			st;
 	enum e_estate			quotus;
 	size_t					erience;
 	size_t					index;
+	size_t					heredoc;
 	u_int32_t				discarded;
 	char					pad[4];
 };
@@ -288,7 +289,7 @@ typedef struct s_auto_comp	t_auto_comp;
 enum e_ac_type				ac_check_type(char *input);
 typedef void				(t_ac_fct)(char *, t_auto_comp *, t_core *);
 
-typedef struct				s_auto_comp
+struct						s_auto_comp
 {
 	t_lst					*lst;
 	enum e_ac_type			type;
@@ -297,6 +298,6 @@ typedef struct				s_auto_comp
 	size_t					x;
 	size_t					max_len;
 	size_t					ws_col;
-}							t_auto_comp;
+};
 
 #endif

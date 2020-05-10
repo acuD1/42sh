@@ -13,22 +13,33 @@
 #include <errno.h>
 #include "sh42.h"
 
-static u_int8_t	check_tilde_path_exp
+u_int8_t		check_tilde_path_exp
 	(char *expandu, const char *str, size_t i)
 {
-	char			*tmp;
+	char			*tmp[2];
 
-	tmp = NULL;
+	tmp[0] = NULL;
+	tmp[1] = NULL;
 	if (!expandu || !str || str[0] != '~')
 		return (0);
-	tmp = ft_strsub(str, 0, i);
-	tmp = ft_strjoinf(tmp, expandu, 1);
-	if (is_a_dir(tmp) == EISDIR)
+	tmp[0] = ft_strsub(str, 0, i);
+	i = (str[i] == '~' && str[i + 1]
+		&& (str[i + 1] == '-' || str[i + 1] == '+')) ? i + 2 : i + 1;
+	tmp[1] = ft_strsub(str, (unsigned int)i, ft_strlen(str) - i);
+	if ((tmp[1][0] == '/' || tmp[1][0] == ':') && !*tmp[0])
 	{
-		ft_strdel(&tmp);
+		ft_strdel(&tmp[0]);
+		ft_strdel(&tmp[1]);
 		return (1);
 	}
-	ft_strdel(&tmp);
+	tmp[0] = ft_strjoinf(tmp[0], expandu, 1);
+	tmp[0] = ft_strjoinf(tmp[0], tmp[1], 3);
+	if (is_a_dir(tmp[0]) == EISDIR)
+	{
+		ft_strdel(&tmp[0]);
+		return (1);
+	}
+	ft_strdel(&tmp[0]);
 	return (0);
 }
 
@@ -97,16 +108,18 @@ t_expansion		*start_biteurs(char *data, t_core *shell, t_expansion *exp)
 		exp->st = E_END;
 	else if (exp->quotus != E_QUOTE && data[exp->index] == '\\')
 		exp->st = E_DISCARD;
-	else if (!exp->discarded && quotes_condition(data[exp->index], exp->quotus)
+	else if (!exp->discarded && !exp->heredoc
+		&& quotes_condition(data[exp->index], exp->quotus)
 		&& (data[exp->index] == '\'' || data[exp->index] == '\"'))
 		exp->st = E_QUOTES;
-	else if ((!exp->discarded && exp->quotus != E_QUOTE)
-		&& ((data[exp->index] == '$' || data[exp->index] == '~'
-			|| data[exp->index] == '`')))
+	else if (!exp->discarded && (exp->quotus != E_QUOTE || exp->heredoc)
+		&& data[exp->index] == '$')
+		exp->st = E_EXP;
+	else if (!exp->discarded && !exp->heredoc
+		&& exp->quotus != E_QUOTE && data[exp->index] == '~')
 		exp->st = E_EXP;
 	else
 		exp->st = E_WORD;
 	exp->discarded = 0;
-	(void)shell;
 	return (exp);
 }

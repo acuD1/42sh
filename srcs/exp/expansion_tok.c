@@ -17,7 +17,7 @@ static char		*apply_exp_tok(t_core *shell, char *data, char *tmp, char ***t)
 	char		*res;
 
 	res = NULL;
-	res = inhibiteurs_expansion(data, shell);
+	res = inhibiteurs_expansion(data, shell, 0);
 	if (shell->subst_error)
 	{
 		ft_strdel(&tmp);
@@ -46,6 +46,7 @@ void			expansion_tok(t_core *shell, t_process *process)
 
 	tmp = NULL;
 	lst = process->tok_list;
+	shell->subst_error = 0;
 	while (lst)
 	{
 		if (((t_token*)lst->content)->data)

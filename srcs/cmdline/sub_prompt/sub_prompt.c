@@ -34,7 +34,7 @@ enum e_subp	quote_subprompt(t_core *shell, t_subprompt *sub)
 {
 	if (check_quote_priority(shell->term.buffer, sub))
 	{
-		if (!sub->keys)
+		if (!sub->keys || sub->keys[0] == '}')
 		{
 			sub->keys = add_keys_subprompt('\'', sub->keys);
 			sub->quoted = 1;

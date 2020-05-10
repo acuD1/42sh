@@ -38,7 +38,7 @@ static int8_t	check_filepath(t_process *process)
 		ft_perror(process->av[0], NULL, EISDIR);
 	else
 		return (0);
-	return ((ret == 127) ? 127 : 126);
+	return ((ret == 127 || ret == 2) ? 127 : 126);
 }
 
 void			call_bin(t_core *shell, t_process *process)
