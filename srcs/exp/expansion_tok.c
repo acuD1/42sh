@@ -39,7 +39,7 @@ static char		*apply_exp_tok(t_core *shell, char *data, char *tmp, char ***t)
 	return (tmp);
 }
 
-size_t			expansion_tok(t_core *shell, t_process *process)
+void			expansion_tok(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
 	char	*tmp;
@@ -55,5 +55,4 @@ size_t			expansion_tok(t_core *shell, t_process *process)
 		lst = lst->next;
 	}
 	update_underscore_value(tmp, shell, process);
-	return (shell->status);
 }

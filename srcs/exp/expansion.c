@@ -69,12 +69,12 @@ static void	filename_heredoc_exp(t_core *shell, t_redir *redir)
 	}
 }
 
-size_t		expansion_redir(t_core *shell, t_process *process)
+void		expansion_redir(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
 
 	if (!process->redir_list || !shell)
-		return (1);
+		return ;
 	shell->subst_error = 0;
 	lst = process->redir_list;
 	while (lst)
@@ -82,7 +82,6 @@ size_t		expansion_redir(t_core *shell, t_process *process)
 		filename_heredoc_exp(shell, ((t_redir*)lst->content));
 		lst = lst->next;
 	}
-	return (shell->status);
 }
 
 void		expansion(t_core *shell, t_process *process)

@@ -50,7 +50,7 @@ t_expansion		*word_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*start_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*quotes_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*discard_biteurs(char *dt, t_core *shell, t_expansion *exp);
-size_t			expansion_tok(t_core *shell, t_process *process);
+void			expansion_tok(t_core *shell, t_process *process);
 u_int8_t		check_tilde_path_exp(char *expandu, const char *str, size_t i);
 
 /*
