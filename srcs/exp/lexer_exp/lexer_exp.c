@@ -12,45 +12,15 @@
 
 #include "sh42.h"
 
-char			*exp_get_bquote(const char *string, size_t len)
-{
-	size_t	i;
-	char	*str;
-
-	i = 0;
-	str = NULL;
-	if (!ft_strncmp(string, "`", len))
-	{
-		i++;
-		while (string[i])
-		{
-			if (string[i] == '`')
-			{
-				i++;
-				break ;
-			}
-			i++;
-		}
-		if (!(str = ft_strsub(string, 0, i)))
-			return (NULL);
-		return (str);
-	}
-	return (NULL);
-}
-
 static char		*new_exp(const char *string, enum e_estate id)
 {
 	size_t				i;
 	char				*new;
-	static t_lex_exp	lex_pex[9] = {
-		{exp_get_bquote, E_BQUOTE, "", 1},
+	static t_lex_exp	lex_pex[5] = {
 		{exp_get_tildep, E_TILDEP, "", 2},
 		{exp_get_tildem, E_TILDEM, "", 2},
 		{exp_get_tilde, E_TILDE, "", 1},
-		{exp_get_dbparen, E_DBPARENT, "", 3},
-		{exp_get_paren, E_PARENT, "", 2},
 		{exp_get_bracket, E_BRACKET, "", 2},
-		{exp_get_hook, E_HOOK, "", 2},
 		{exp_get_dollar, E_DOLLAR, "", 1},
 	};
 
@@ -69,15 +39,11 @@ static char		*new_exp(const char *string, enum e_estate id)
 enum e_estate	find_expansion(const char *str)
 {
 	size_t				i;
-	const t_exp_token	exp[10] = {
-		{"`", E_BQUOTE, "", 1},
+	const t_exp_token	exp[6] = {
 		{"~+", E_TILDEP, "", 2},
 		{"~-", E_TILDEM, "", 2},
 		{"~", E_TILDE, "", 1},
-		{"$((", E_DBPARENT, "", 3},
-		{"$(", E_PARENT, "", 2},
 		{"${", E_BRACKET, "", 2},
-		{"$[", E_HOOK, "", 2},
 		{"$", E_DOLLAR, "", 1},
 		{NULL, NB_EXPANSION_STATE, "", 0}
 	};

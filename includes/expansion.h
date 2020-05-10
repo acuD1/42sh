@@ -17,23 +17,17 @@
 **	LEXER_EXPANSION
 */
 
-u_int8_t		check_brackets_inbracket(u_int32_t *count, char c);
 enum e_estate	find_expansion(const char *str);
 char			*get_expansion(const char *string, enum e_estate state);
-char			*exp_get_bquote(const char *string, size_t len);
-char			*exp_get_paren(const char *string, size_t len);
 char			*exp_get_bracket(const char *string, size_t len);
 char			*exp_get_dollar(const char *string, size_t len);
 char			*exp_get_tilde(const char *string, size_t len);
 char			*exp_get_tildep(const char *string, size_t len);
 char			*exp_get_tildem(const char *string, size_t len);
-char			*exp_get_hook(const char *string, size_t len);
-char			*exp_get_dbparen(const char *string, size_t len);
 
 /*
 **	EXPANSION_INHIBITEUR
 */
-
 void			update_underscore_value
 					(char *tmp, t_core *shell, t_process *process);
 char			*inhibiteurs_expansion(char *data, t_core *shell, size_t flag);
@@ -57,6 +51,7 @@ t_expansion		*start_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*quotes_biteurs(char *data, t_core *shell, t_expansion *exp);
 t_expansion		*discard_biteurs(char *dt, t_core *shell, t_expansion *exp);
 void			expansion_tok(t_core *shell, t_process *process);
+u_int8_t		check_tilde_path_exp(char *expandu, const char *str, size_t i);
 
 /*
 **	PARAM_EXPANSION
@@ -68,21 +63,17 @@ char			*simple_format(char *str, t_core *shell);
 char			*format_supplementaires(char *str, t_core *shell);
 char			*questionmark_format(char **tablo, t_core *shell);
 char			*length_format(char *str, t_core *shell);
-char			*double_two_point_param(char **tablo, t_core *shell);
 char			*dash_format(char **tablo, t_core *shell);
 char			*plus_format(char **tablo, t_core *shell);
 char			*egal_format(char **tablo, t_core *shell);
-char			*underniercaspourlaroute(char **tablo, t_core *shell);
 char			*moar_format_plz(char *data, t_core *shell);
-char			*get_two_point_param_exp(char **tablo, t_core *shell);
 char			*get_brace_param(char *str, t_core *shell);
 char			*exp_param(const char *data, t_core *shell);
 char			*check_env_key(char *key, t_core *shell);
-char			*error_moar_format_third
-	(char **tablo, char *data, t_core *shell);
-char			*error_moar_format_bis(char *data, t_core *shell);
-char			*error_moar_format_param
-	(char **tablo, char *data, t_core *shell);
 char			*one_moar_error(char **tablo, char *data, t_core *shell);
-
+char			*error_brace_param(char *str, t_core *shell, char *tmp);
+char			*check_env_key(char *key, t_core *shell);
+u_int32_t		check_format_bracket(char c);
+void			fill_thereste(char *str, char *tmp, int *index, int *i);
+char			*tilde_param_exp(char *tablo, t_core *shell);
 #endif

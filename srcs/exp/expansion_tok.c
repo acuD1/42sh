@@ -46,6 +46,7 @@ void			expansion_tok(t_core *shell, t_process *process)
 
 	tmp = NULL;
 	lst = process->tok_list;
+	shell->subst_error = 0;
 	while (lst)
 	{
 		if (((t_token*)lst->content)->data)

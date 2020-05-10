@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   param_expansion.c                                  :+:      :+:    :+:   */
+/*   launch_param.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,6 +12,22 @@
 
 #include "sh42.h"
 #include <unistd.h>
+
+char				*tilde_param_exp(char *tablo, t_core *shell)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	tmp = exp_tilde(&tablo[1], shell);
+	if (!check_tilde_path_exp(tmp, tablo, 1))
+	{
+		if (tablo[1] == '~' && (tablo[2] == '-' || tablo[2] == '+'))
+			tmp = ft_strjoinf(tmp, &tablo[3], 1);
+		else
+			tmp = ft_strjoinf(tmp, &tablo[2], 1);
+	}
+	return (tmp);
+}
 
 char				*simple_format(char *str, t_core *shell)
 {
@@ -24,7 +40,6 @@ char				*simple_format(char *str, t_core *shell)
 		ft_strdel(&str);
 		return (ft_strdup(db_tmp->value));
 	}
-	shell->status = 1;
 	ft_strdel(&str);
 	return (NULL);
 }
@@ -34,11 +49,6 @@ char				*format_supplementaires(char *str, t_core *shell)
 	size_t	i;
 
 	i = 0;
-	if (str[0] == ':' || str[0] == '%')
-	{
-		ft_strdel(&str);
-		return (NULL);
-	}
 	if (str[i] == '#')
 		return (length_format(str, shell));
 	while (str[i])
@@ -54,38 +64,29 @@ char				*format_supplementaires(char *str, t_core *shell)
 	return (simple_format(str, shell));
 }
 
-static u_int32_t	check_param_exp(char *str, size_t *i, t_core *shell)
+char				*moar_format_plz(char *data, t_core *shell)
 {
-	if ((str[*i] == '\\' && str[*i + 1] && str[*i + 1] != '\n')
-		|| (str[*i] == '\n'))
-	{
-		ft_dprintf(STDERR_FILENO, "42sh: %s : bad substitution\n", str);
-		shell->status = 1;
-		shell->subst_error = 1;
-		return (0);
-	}
-	return (1);
-}
+	char	*tablo[2];
+	size_t	i;
 
-char				*get_brace_param(char *str, t_core *shell)
-{
-	size_t		i;
-	u_int32_t	count;
-	char		*tmp;
-
-	i = 1;
-	count = 0;
-	tmp = NULL;
-	while (str[i++])
-	{
-		if (!check_param_exp(str, &i, shell))
-			break ;
-		if (!check_brackets_inbracket(&count, str[i]))
-			break ;
-	}
-	if (!(tmp = ft_strsub(str, 2, i - 2)))
-		return (NULL);
-	return (format_supplementaires(tmp, shell));
+	i = 0;
+	tablo[0] = NULL;
+	tablo[1] = NULL;
+	while (data[i] != ':')
+		i++;
+	tablo[0] = ft_strsub(data, 0, i);
+	i++;
+	tablo[1] = ft_strsub(data, i, ft_strlen(data) - i);
+	ft_strdel(&data);
+	if (tablo[1][0] == '-')
+		return (dash_format(tablo, shell));
+	else if (tablo[1][0] == '+')
+		return (plus_format(tablo, shell));
+	else if (tablo[1][0] == '=')
+		return (egal_format(tablo, shell));
+	else if (tablo[1][0] == '?')
+		return (questionmark_format(tablo, shell));
+	return (NULL);
 }
 
 char				*exp_param(const char *data, t_core *shell)

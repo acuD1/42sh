@@ -13,7 +13,7 @@
 #include "sh42.h"
 #include <unistd.h>
 
-static void	expansion_assign(t_core *shell, t_process *process)
+void		expansion_assign(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
 	char	*res;
@@ -21,6 +21,7 @@ static void	expansion_assign(t_core *shell, t_process *process)
 	if (!process->assign_list || !shell)
 		return ;
 	res = NULL;
+	shell->subst_error = 0;
 	lst = process->assign_list;
 	while (lst)
 	{
@@ -68,12 +69,13 @@ static void	filename_heredoc_exp(t_core *shell, t_redir *redir)
 	}
 }
 
-static void	expansion_redir(t_core *shell, t_process *process)
+void		expansion_redir(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
 
 	if (!process->redir_list || !shell)
 		return ;
+	shell->subst_error = 0;
 	lst = process->redir_list;
 	while (lst)
 	{
@@ -93,10 +95,9 @@ void		expansion(t_core *shell, t_process *process)
 		expansion_assign(shell, process);
 	if (process->redir_list)
 		expansion_redir(shell, process);
-	// if (!process->av)
-	// {
-	// 	process->status = 0;
-	// 	shell->status = (!shell->status) ? 0 : 1;
-	// 	process->completed = TRUE;
-	// }
+	if (!process->av && !process->redir_list)
+	{
+		process->status = 0;
+		process->completed = TRUE;
+	}
 }

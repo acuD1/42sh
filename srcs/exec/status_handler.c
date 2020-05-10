@@ -39,6 +39,8 @@ void	status_handler(t_core *shell, t_process *process)
 	int		status;
 	char	*msg;
 
+	status = 0;
+	msg = NULL;
 	if (WIFSIGNALED(process->status))
 	{
 		status = WTERMSIG(process->status);

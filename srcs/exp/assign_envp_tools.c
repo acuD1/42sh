@@ -70,26 +70,10 @@ char		**add_underscore_envp(char **envp, char *data)
 
 u_int8_t	is_expansion(enum e_estate id)
 {
-	if (id == E_TILDEP)
+	if (id == E_TILDEP || id == E_TILDEM || id == E_TILDE)
 		return (1);
-	else if (id == E_TILDEM)
+	else if (id == E_DOLLAR || id == E_BRACKET)
 		return (2);
-	else if (id == E_TILDE)
-		return (3);
-	else if (id == E_DBPARENT)
-		return (4);
-	else if (id == E_PARENT || id == E_BQUOTE)
-		return (5);
-	else if (id == E_BRACKET)
-		return (6);
-	else if (id == E_HOOK)
-		return (7);
-	else if (id == E_DOLLAR)
-		return (8);
-	else if (id == E_DBQUOTE)
-		return (9);
-	else if (id == E_QUOTE)
-		return (0);
 	return (0);
 }
 
@@ -104,13 +88,7 @@ t_expansion	*init_expansion_inhibiteurs(t_expansion *exp)
 	exp->quotus = NB_EXPANSION_STATE;
 	exp->sionat[0] = no_exp;
 	exp->sionat[1] = exp_tilde;
-	exp->sionat[2] = exp_tilde;
-	exp->sionat[3] = exp_tilde;
-	exp->sionat[4] = exp_math;
-	exp->sionat[5] = exp_cmd_subs;
-	exp->sionat[6] = exp_param;
-	exp->sionat[7] = exp_math;
-	exp->sionat[8] = exp_param;
+	exp->sionat[2] = exp_param;
 	exp->biteurs[E_START] = start_biteurs;
 	exp->biteurs[E_EXP] = exp_biteurs;
 	exp->biteurs[E_WORD] = word_biteurs;

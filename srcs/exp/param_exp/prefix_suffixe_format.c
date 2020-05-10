@@ -37,18 +37,14 @@ char		*suffix_format(char *data, t_core *shell)
 	str[0] = check_env_key(tablo[0], shell);
 	if (str[0] && *str[0])
 	{
-		if (!tablo[1])
-			str[2] = ft_strdup(str[0]);
-		else if (tablo[1] && tablo[1][0] == '$')
+		if (tablo[1])
 		{
-			str[1] = exp_param(tablo[1], shell);
+			str[1] = inhibiteurs_expansion(tablo[1], shell, 0);
 			str[2] = smallest_suffix_param(str[0], str[1]);
 			ft_strdel(&str[1]);
 		}
-		else if (tablo[1][0] == '~')
-			str[0] = exp_tilde(&tablo[1][1], shell);
 		else
-			str[2] = smallest_suffix_param(str[0], tablo[1]);
+			str[2] = ft_strdup(str[0]);
 	}
 	ft_tabfree(tablo);
 	ft_strdel(&data);
@@ -79,18 +75,14 @@ char		*prefix_format(char *data, t_core *shell)
 	str[0] = check_env_key(tablo[0], shell);
 	if (str[0] && *str[0])
 	{
-		if (!tablo[1])
-			str[2] = ft_strdup(str[0]);
-		else if (tablo[1] && tablo[1][0] == '$')
+		if (tablo[1])
 		{
-			str[1] = exp_param(tablo[1], shell);
+			str[1] = inhibiteurs_expansion(tablo[1], shell, 0);
 			str[2] = smallest_prefix_param(str[0], str[1]);
 			ft_strdel(&str[1]);
 		}
-		else if (tablo[1][0] == '~')
-			str[0] = exp_tilde(&tablo[1][1], shell);
 		else
-			str[2] = smallest_prefix_param(str[0], tablo[1]);
+			str[2] = ft_strdup(str[0]);
 	}
 	ft_strdel(&data);
 	ft_tabfree(tablo);

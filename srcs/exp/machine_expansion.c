@@ -13,7 +13,7 @@
 #include <errno.h>
 #include "sh42.h"
 
-static u_int8_t	check_tilde_path_exp
+u_int8_t		check_tilde_path_exp
 	(char *expandu, const char *str, size_t i)
 {
 	char			*tmp[2];
@@ -22,11 +22,13 @@ static u_int8_t	check_tilde_path_exp
 	tmp[1] = NULL;
 	if (!expandu || !str || str[0] != '~')
 		return (0);
-	tmp[1] = ft_strsub(str, i + 1 , ft_strlen(str) - i - 1);
 	tmp[0] = ft_strsub(str, 0, i);
-	if (tmp[1][0] == '/' && !*tmp[0])
+	i = (str[i] == '~' && str[i + 1]
+		&& (str[i + 1] == '-' || str[i + 1] == '+')) ? i + 2 : i + 1;
+	tmp[1] = ft_strsub(str, i, ft_strlen(str) - i);
+	if ((tmp[1][0] == '/' || tmp[1][0] == ':') && !*tmp[0])
 	{
-		ft_strdel(&tmp[1]);
+		ft_strdel(&tmp[0]);
 		ft_strdel(&tmp[1]);
 		return (1);
 	}
@@ -106,7 +108,8 @@ t_expansion		*start_biteurs(char *data, t_core *shell, t_expansion *exp)
 		exp->st = E_END;
 	else if (exp->quotus != E_QUOTE && data[exp->index] == '\\')
 		exp->st = E_DISCARD;
-	else if (!exp->discarded && quotes_condition(data[exp->index], exp->quotus)
+	else if (!exp->discarded && !exp->heredoc
+		&& quotes_condition(data[exp->index], exp->quotus)
 		&& (data[exp->index] == '\'' || data[exp->index] == '\"'))
 		exp->st = E_QUOTES;
 	else if (!exp->discarded && (exp->quotus != E_QUOTE || exp->heredoc)
