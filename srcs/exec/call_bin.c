@@ -38,7 +38,6 @@ static int8_t	check_filepath(t_process *process)
 		ft_perror(process->av[0], NULL, EISDIR);
 	else
 		return (0);
-	printf("%d\n", ret);
 	return ((ret == 127 || ret == 2) ? 127 : 126);
 }
 
