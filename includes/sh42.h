@@ -138,6 +138,7 @@ void		dir_backward(char *path);
 int8_t		dir_forward(char *path);
 int8_t		dir_write(const char *rel, char *abs);
 int8_t		check_filename_length(const char *str);
+void		print_n(t_read *term);
 
 /*
 **	===========================================================================

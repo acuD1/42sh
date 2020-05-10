@@ -99,7 +99,7 @@ static void		research_in_history(t_read *term)
 		walking_history(term->tmp_buff, term, &history);
 		ft_bzero(buff, READ_SIZE + 1);
 	}
-	(term->ctrl_c == FALSE) ? ft_putchar_fd('\n', STDERR_FILENO) : 0;
+	print_n(term);
 }
 
 void			research_mode(t_read *term)

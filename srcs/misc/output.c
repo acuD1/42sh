@@ -13,6 +13,12 @@
 #include "sh42.h"
 #include <unistd.h>
 
+void	print_n(t_read *term)
+{
+	if (term->ctrl_c == FALSE)
+		ft_putchar_fd('\n', STDERR_FILENO);
+}
+
 void	version(t_core *shell)
 {
 	ft_dprintf(STDOUT_FILENO,
