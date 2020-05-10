@@ -76,7 +76,7 @@ char				*moar_format_plz(char *data, t_core *shell)
 		i++;
 	tablo[0] = ft_strsub(data, 0, i);
 	i++;
-	tablo[1] = ft_strsub(data, i, ft_strlen(data) - i);
+	tablo[1] = ft_strsub(data, (unsigned int)i, ft_strlen(data) - i);
 	ft_strdel(&data);
 	if (tablo[1][0] == '-')
 		return (dash_format(tablo, shell));

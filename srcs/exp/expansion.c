@@ -13,7 +13,7 @@
 #include "sh42.h"
 #include <unistd.h>
 
-void		expansion_assign(t_core *shell, t_process *process)
+static void	expansion_assign(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
 	char	*res;
@@ -69,7 +69,7 @@ static void	filename_heredoc_exp(t_core *shell, t_redir *redir)
 	}
 }
 
-void		expansion_redir(t_core *shell, t_process *process)
+static void	expansion_redir(t_core *shell, t_process *process)
 {
 	t_lst	*lst;
 
