@@ -17,7 +17,7 @@ void	dir_backward(char *path)
 	size_t	i;
 
 	i = ft_strlen(path);
-	if (i <= 0)
+	if (i <= 1)
 		return ;
 	i--;
 	path[i] = 0;
