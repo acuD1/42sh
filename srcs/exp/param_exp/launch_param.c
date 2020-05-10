@@ -40,7 +40,6 @@ char				*simple_format(char *str, t_core *shell)
 		ft_strdel(&str);
 		return (ft_strdup(db_tmp->value));
 	}
-	shell->status = 0;
 	ft_strdel(&str);
 	return (NULL);
 }

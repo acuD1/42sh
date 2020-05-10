@@ -34,7 +34,7 @@ char		*questionmark_format(char **tablo, t_core *shell)
 		ft_dprintf(STDERR_FILENO, "42sh: %s: %s\n", tablo[0], value);
 		ft_strdel(&value);
 	}
-	shell->status = 1;
+	shell->subst_error = 1;
 	ft_strdel(&tablo[0]);
 	ft_strdel(&tablo[1]);
 	return (NULL);

@@ -121,6 +121,7 @@ struct						s_core
 	int32_t					heredoc;
 	int32_t					ctrl_c;
 	int32_t					subst_error;
+	int32_t					exp_error;
 	int32_t					terminal;
 	int8_t					is_interactive;
 	int8_t					notified;

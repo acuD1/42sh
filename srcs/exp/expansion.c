@@ -21,6 +21,7 @@ void		expansion_assign(t_core *shell, t_process *process)
 	if (!process->assign_list || !shell)
 		return ;
 	res = NULL;
+	shell->subst_error = 0;
 	lst = process->assign_list;
 	while (lst)
 	{
@@ -74,6 +75,7 @@ size_t		expansion_redir(t_core *shell, t_process *process)
 
 	if (!process->redir_list || !shell)
 		return (1);
+	shell->subst_error = 0;
 	lst = process->redir_list;
 	while (lst)
 	{
@@ -85,23 +87,18 @@ size_t		expansion_redir(t_core *shell, t_process *process)
 
 void		expansion(t_core *shell, t_process *process)
 {
-	int ret;
-
 	if (!process || !shell)
 		return ;
-	ret =0;
 	process->envp = set_envp(shell);
 	if (process->tok_list)
-		ret = expansion_tok(shell, process);
+		expansion_tok(shell, process);
 	if (process->assign_list)
 		expansion_assign(shell, process);
 	if (process->redir_list)
-		ret = expansion_redir(shell, process);
-	if (ret)
+		expansion_redir(shell, process);
+	if (!process->av && !process->redir_list)
 	{
-		process->status = 256;
-		if (!process->av)
-			process->completed = TRUE;
-	}	
-		
+		process->status = 0;
+		process->completed = TRUE;
+	}
 }
