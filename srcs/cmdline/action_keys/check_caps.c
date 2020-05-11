@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 20:51:29 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/11 15:41:39 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,17 @@ static u_int8_t	ctrl_delete(t_read *term)
 	return (TRUE);
 }
 
+static u_int8_t	return_key(t_read *term)
+{
+	if (term->x_index < term->width)
+	{
+		goto_prompt(term);
+		ft_dprintf(STDOUT_FILENO, "%s", term->buffer);
+	}
+	ft_dprintf(STDERR_FILENO, "\n");
+	return (FALSE);
+}
+
 /*
 **		Interpret and insert char in bufffer
 **		CTRL+R to launch history research
@@ -77,10 +88,7 @@ u_int8_t		check_caps(const char *buff, t_core *shell)
 	if (cursor_motion(&shell->term, value))
 		return (TRUE);
 	if (value == RETURN_KEY)
-	{
-		ft_dprintf(STDERR_FILENO, "\n");
-		return (FALSE);
-	}
+		return (return_key(&shell->term));
 	check_keys_comb(&shell->term, value);
 	return (TRUE);
 }
