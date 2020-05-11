@@ -23,7 +23,9 @@ void	load_noi_mode(t_core *shell)
 		i = 0;
 		while (shell->term.buffer[i])
 		{
-			if (shell->term.buffer[i] < 0)
+			if (!((shell->term.buffer[i] > 31 && shell->term.buffer[i] < 127)
+				|| shell->term.buffer[i] != '\t'
+				|| shell->term.buffer[i] != '\n'))
 			{
 				ft_dprintf(STDERR_FILENO,
 					"42sh: syntax error: invalid token\n");
@@ -31,11 +33,8 @@ void	load_noi_mode(t_core *shell)
 			}
 			i++;
 		}
-		if (ft_str_isprint(shell->term.buffer))
-		{
-			lexer_parser_analyzer(shell);
-			task_master(shell);
-		}
+		lexer_parser_analyzer(shell);
+		task_master(shell);
 		ft_bzero(shell->term.buffer, ft_strlen(shell->term.buffer));
 		free_prompt(shell);
 	}
