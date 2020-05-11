@@ -97,7 +97,8 @@ int8_t			get_bin(t_core *shell, t_process *process)
 		return (SUCCESS);
 	}
 	if ((process->av[0][0] == '.'
-		&& (process->av[0][1] == '/' || process->av[0][1] == '.'))
+		&& (process->av[0][1] == '/'
+			|| (process->av[0][1] == '.' && process->av[0][2])))
 		|| (process->av[0][0] == '/'))
 	{
 		process->bin = ft_strdup(process->av[0]);
