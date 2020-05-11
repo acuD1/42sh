@@ -68,6 +68,7 @@ void		init_ionumber_graph(t_graph *graph);
 */
 
 size_t		get_word_size_ntype(size_t i, char *str);
+size_t		loop_till_next_subprompt(const char *str, size_t i);
 t_lst		*lexer(char *line);
 t_lst		*start_lexer(t_lexer *lexer, t_lst *lexer_token);
 t_lst		*end_lexer(t_lexer *lexer, t_lst *lexer_token);

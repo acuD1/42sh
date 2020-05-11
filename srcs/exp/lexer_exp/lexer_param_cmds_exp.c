@@ -19,8 +19,8 @@ char			*exp_get_bracket(const char *s, size_t len)
 
 	str = NULL;
 	i = len;
-	i = get_word_size_ntype(0, (char*)s);
-	if (!(str = ft_strsub(s, 0, i)))
+	i = loop_till_next_subprompt(s, 0);
+	if (!(str = ft_strsub(s, 0, i + 1)))
 		return (NULL);
 	return (str);
 }

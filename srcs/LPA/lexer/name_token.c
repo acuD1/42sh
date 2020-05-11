@@ -45,7 +45,7 @@ static u_int8_t	exit_condi(const char *str, size_t i, size_t *db, size_t *br)
 	return (1);
 }
 
-static size_t	loop_till_next_subprompt(const char *str, size_t i)
+size_t			loop_till_next_subprompt(const char *str, size_t i)
 {
 	size_t	f[2];
 
