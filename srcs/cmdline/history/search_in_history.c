@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/09 21:51:22 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/11 14:44:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ static void		research_in_history(t_read *term)
 		walking_history(term->tmp_buff, term, &history);
 		ft_bzero(buff, READ_SIZE + 1);
 	}
-	print_n(term);
 }
 
 void			research_mode(t_read *term)
@@ -121,8 +120,7 @@ void			research_mode(t_read *term)
 		term->tmp_buff = ft_strdup(saved);
 		ft_strdel(&saved);
 	}
-	if (term->ctrl_c == FALSE)
-		display_prompt(term);
+	print_n(term);
 	tmp = ft_strdup(term->buffer);
 	ft_strdel(&term->buffer);
 	term->buffer = ft_memalloc(BUFF_SIZE + 1);
