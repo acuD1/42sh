@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/12 12:03:40 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/12 12:24:07 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ static int8_t	display_last_output(t_auto_comp *ac, char *input, char **output)
 		return (SUCCESS);
 	}
 	ft_strdel(&input);
-	if (display_ac_lst(ac) == FAILURE)
-		return (FAILURE);
+	display_ac_lst(ac);
 	if (ac->lst_size == 0)
 		return (FAILURE);
 	return (SUCCESS);

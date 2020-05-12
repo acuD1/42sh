@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 16:12:41 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/12 12:05:15 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/12 12:24:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int8_t	display_confirmed(t_auto_comp *ac)
 	return (SUCCESS);
 }
 
-int8_t			display_ac_lst(t_auto_comp *ac)
+void			display_ac_lst(t_auto_comp *ac)
 {
 	size_t		elem_line;
 	size_t		nb;
@@ -41,13 +41,13 @@ int8_t			display_ac_lst(t_auto_comp *ac)
 
 	nb = 1;
 	if (!ac->lst)
-		return (FAILURE);
+		return ;
 	elem_line = ac->ws_col / ac->max_len;
 	ft_lstsort(&ac->lst, ft_lstcmp);
 	head = ac->lst;
 	ft_putchar_fd('\n', STDERR_FILENO);
 	if (ac->lst_size > 100 && display_confirmed(ac) == FAILURE)
-		return (FAILURE);
+		return ;
 	while (ac->lst)
 	{
 		if (elem_line != 0 && nb == elem_line)
@@ -60,5 +60,4 @@ int8_t			display_ac_lst(t_auto_comp *ac)
 		nb++;
 	}
 	ac->lst = head;
-	return (SUCCESS);
 }
