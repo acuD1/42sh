@@ -15,17 +15,21 @@
 
 ssize_t		check_quote_priority(char *str, t_subprompt *sub)
 {
+	ssize_t	i;
+
+	i = 0;
 	if (!str || str[sub->index] != '\'')
 		return (1);
 	sub->index++;
-	while (str[sub->index])
+	i = sub->index;
+	while (str[i])
 	{
-		if (str[sub->index] == '\'')
+		if (str[i] == '\'')
 		{
 			sub->index++;
 			return (0);
 		}
-		sub->index++;
+		i++;
 	}
 	return (1);
 }
@@ -50,21 +54,26 @@ enum e_subp	quote_subprompt(t_core *shell, t_subprompt *sub)
 
 ssize_t		check_dbquote_priority(t_core *shell, t_subprompt *sub)
 {
-	while (shell->term.buffer[++sub->index])
+	ssize_t	i;
+
+	sub->index++;
+	i = sub->index;
+	while (shell->term.buffer[i])
 	{
-		if (shell->term.buffer[sub->index] == '\\')
+		if (shell->term.buffer[i] == '\\')
 		{
-			sub->index++;
+			i++;
 			continue;
 		}
-		if (shell->term.buffer[sub->index] == '\"')
+		if (shell->term.buffer[i] == '\"')
 		{
 			sub->index++;
 			return (0);
 		}
-		if (shell->term.buffer[sub->index] == '$'
-			&& shell->term.buffer[sub->index + 1] == '{')
+		if (shell->term.buffer[i] == '$'
+			&& shell->term.buffer[i + 1] == '{')
 			return (1);
+		i++;
 	}
 	return (1);
 }
