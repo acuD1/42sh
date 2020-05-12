@@ -25,7 +25,6 @@
 **	DEBUG
 */
 
-# include <stdio.h>
 # include <setjmp.h>
 # include <unistd.h>
 # include <stdlib.h>
