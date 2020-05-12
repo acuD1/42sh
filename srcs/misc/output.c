@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:20:07 by arsciand          #+#    #+#             */
-/*   Updated: 2020/05/11 14:44:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/12 11:19:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	print_n(t_read *term)
 	if (term->ctrl_c == FALSE)
 	{
 		ft_putchar_fd('\n', STDERR_FILENO);
-		display_prompt(term);
+		if (term->sub_prompt == TRUE)
+			display_subprompt(term);
+		else
+			display_prompt(term);
 	}
 }
 

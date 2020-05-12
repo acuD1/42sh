@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 16:26:20 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/11 15:41:39 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/12 11:17:19 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ u_int8_t		check_caps(const char *buff, t_core *shell)
 		insert_in_buffer(buff, &shell->term);
 	if (value == TAB_KEY)
 		tab_key(shell);
-	if (value == CTRL_R && shell->term.sub_prompt == FALSE)
+	if (value == CTRL_R)
 		research_mode(&shell->term);
 	if (cursor_motion(&shell->term, value))
 		return (TRUE);
