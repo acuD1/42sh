@@ -93,7 +93,7 @@ int8_t			cd_oldpwd(t_core *shell)
 		ft_perror(db_oldpwd->value, "cd", errnum);
 		return (1);
 	}
-	if (shell->cd.no_symbolic == TRUE)
+	if (shell->cd.no_symbolic == TRUE && S_ISLNK(stat.st_mode) == TRUE)
 		return (rewrite_oldpwd(shell, db_oldpwd, pwd));
 	ft_dprintf(STDOUT_FILENO, "%s\n", db_oldpwd->value);
 	return (change_dir(shell, db_oldpwd->value));
