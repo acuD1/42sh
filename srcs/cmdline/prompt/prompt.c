@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/21 12:47:06 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/09 17:49:04 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/12 12:14:08 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ int8_t			init_prompt(t_core *shell)
 	char	buff[READ_SIZE + 1];
 
 	shell->term.status = CMD_PROMPT;
-	shell->ctrl_c = 0;
-	shell->term.ctrl_c = 0;
 	ft_bzero(buff, READ_SIZE + 1);
 	shell->term.buffer = ft_memalloc(BUFF_SIZE + 1);
 	set_termconfig(shell);
@@ -93,6 +91,7 @@ int8_t			init_prompt(t_core *shell)
 	while (read(STDIN_FILENO, buff, READ_SIZE) > 0)
 	{
 		shell->term.search = 0;
+		shell->term.ctrl_c = 0;
 		if (end_of_file(shell, buff) == TRUE)
 			return (FAILURE);
 		if (check_caps(buff, shell) == TRUE)

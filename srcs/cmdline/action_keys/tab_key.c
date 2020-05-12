@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 12:40:04 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/09 17:22:04 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/12 12:21:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		display_prompt_and_buffer(t_read *term)
 		ft_putchar_fd('\n', STDERR_FILENO);
 	if (term->status == CMD_SUBPROMPT)
 		display_subprompt(term);
-	else if (term->ctrl_c == FALSE)
+	else if (term->status == CMD_PROMPT && term->ctrl_c == FALSE)
 		display_prompt(term);
 	ft_strdel(&term->buffer);
 	term->buffer = ft_memalloc(BUFF_SIZE + 1);
