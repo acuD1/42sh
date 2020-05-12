@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/12 12:24:07 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/12 17:54:30 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static char		*add_last_output(t_auto_comp *ac, char *input)
 		return (NULL);
 	start = input + ac->x;
 	i = 0;
+	if (start[ft_strlen(start) - 1] == '/')
+		return (ft_strdup(output));
 	while (output[i] != '\0')
 	{
 		if (start[i] != output[i])
