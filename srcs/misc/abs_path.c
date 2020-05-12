@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <sys/stat.h>
 #include <unistd.h>
 
 /*
@@ -32,6 +33,24 @@ static int8_t	path_resolver(char *rel, char *abs)
 	return (SUCCESS);
 }
 
+static void		abs_handler(t_core *shell, char *abs, char *pwd)
+{
+	struct stat stat;
+	t_db		*env_db;
+
+	env_db = NULL;
+	if (shell && shell->env
+		&& (env_db = search_db(shell->env, "PWD")) != NULL)
+		lstat(env_db->value, &stat);
+	if ((shell && shell->cd.pwd_error >= TRUE))
+		ft_strcpy(abs, pwd);
+	else if (env_db && S_ISLNK(stat.st_mode) == TRUE
+		&& shell->cd.no_symbolic == FALSE)
+		ft_strcpy(abs, env_db->value);
+	else
+		getcwd(abs, MAX_PATH);
+}
+
 int8_t			get_canonical_path
 	(t_core *shell, const char *path, char *abs, char *pwd)
 {
@@ -42,12 +61,7 @@ int8_t			get_canonical_path
 	if (path[0] == '/')
 		abs[0] = '/';
 	else
-	{
-		if (shell && shell->cd.pwd_error >= TRUE)
-			ft_strcpy(abs, pwd);
-		else
-			getcwd(abs, MAX_PATH);
-	}
+		abs_handler(shell, abs, pwd);
 	ft_strcpy(rel, path);
 	if (path_resolver(rel, abs) != SUCCESS)
 		return (FAILURE);
