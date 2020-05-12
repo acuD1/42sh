@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:22:47 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/04/23 16:50:19 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/12 11:14:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int8_t	check_n_args(size_t i, size_t argc)
 {
 	if ((argc - i) >= 2)
 	{
-		dprintf(STDERR_FILENO, "42sh: cd: too many arguments\n");
+		ft_dprintf(STDERR_FILENO, "42sh: cd: too many arguments\n");
 		return (FAILURE);
 	}
 	return (SUCCESS);
