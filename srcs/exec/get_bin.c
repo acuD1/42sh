@@ -25,7 +25,7 @@ static int8_t	check_filepath(const char *filepath)
 	return (SUCCESS);
 }
 
-static int8_t	format_path(const char *path, t_process *process)
+static int8_t	format_path(const char *path, t_process *process, char **tpath)
 {
 	char	*tmp;
 	size_t	i;
@@ -34,51 +34,54 @@ static int8_t	format_path(const char *path, t_process *process)
 	tmp = NULL;
 	if (i > 0 && path[i - 1] == '/')
 	{
-		if ((process->bin = ft_strjoin(path, process->av[0])) == NULL)
+		if ((*tpath = ft_strjoin(path, process->av[0])) == NULL)
 			return (FAILURE);
 		return (SUCCESS);
 	}
 	if (!(tmp = ft_strjoin("/", process->av[0])))
 		return (FAILURE);
-	process->bin = ft_strjoin(path, tmp);
+	*tpath = ft_strjoin(path, tmp);
 	ft_strdel(&tmp);
-	return ((process->bin == NULL) ? FAILURE : SUCCESS);
+	return ((*tpath == NULL) ? FAILURE : SUCCESS);
 }
 
-static int8_t	valid_path(t_process *process, char ***splt_path)
+static int8_t	valid_path(t_process *process, char ***splt_path, char **path)
 {
-	if (check_filepath(process->bin) == SUCCESS)
+	if (access(*path, F_OK) == 0)
 	{
-		ft_tabdel(splt_path);
-		return (SUCCESS);
+		ft_strdel(&(process->bin));
+		process->bin = ft_strdup(*path);
+		if (check_filepath(process->bin) == SUCCESS)
+		{
+			ft_strdel(path);
+			ft_tabdel(splt_path);
+			return (SUCCESS);
+		}
 	}
-	if (access(process->bin, F_OK) != 0)
-		ft_strdel(&process->bin);
+	ft_strdel(path);
 	return (FAILURE);
 }
 
-int8_t			get_bin_path(t_core *shell, t_process *process)
+int8_t			get_bin_path(t_core *shell, t_process *ptr)
 {
 	char	**split_path;
+	char	*path;
 	t_db	*db;
 	ssize_t	i;
 
 	i = -1;
+	path = NULL;
 	if ((db = search_db(shell->env, "PATH")) == NULL)
-	{
-		return (process->blt || ((process->bin = ft_strdup(process->av[0]))
-			== NULL ? FAILURE : SUCCESS));
-	}
+		return (ptr->blt || !(ptr->bin = ft_strdup(ptr->av[0])) ? -1 : 0);
 	if (!(split_path = ft_strsplit(db->value, ":")))
 		return (FAILURE);
 	while (split_path[++i] != NULL)
 	{
-		ft_strdel(&(process->bin));
 		if (access(split_path[i], X_OK | F_OK) == 0)
 		{
-			if (format_path(split_path[i], process) != SUCCESS)
+			if (format_path(split_path[i], ptr, &path) != SUCCESS)
 				return (FAILURE);
-			if (valid_path(process, &split_path) == SUCCESS)
+			if (path && valid_path(ptr, &split_path, &path) == SUCCESS)
 				return (SUCCESS);
 		}
 	}
