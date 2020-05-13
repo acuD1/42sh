@@ -67,7 +67,7 @@ ssize_t		check_dbquote_priority(t_core *shell, t_subprompt *sub)
 		}
 		if (shell->term.buffer[i] == '\"')
 		{
-			sub->index++;
+			sub->index = i + 1;
 			return (0);
 		}
 		if (shell->term.buffer[i] == '$'
