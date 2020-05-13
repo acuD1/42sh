@@ -33,34 +33,16 @@ static int8_t	display_confirmed(t_auto_comp *ac)
 	return (SUCCESS);
 }
 
-static void		print_ac_lst(size_t elem_line, size_t *nb, t_auto_comp *ac)
-{
-	if (elem_line != 1)
-	{
-		if (*nb == elem_line)
-		{
-			ft_putchar_fd('\n', STDERR_FILENO);
-			*nb = 0;
-		}
-		ft_dprintf(STDERR_FILENO, "%-*s", ac->max_len + 1, ac->lst->content);
-		*nb += 1;
-	}
-	else
-		ft_dprintf(STDERR_FILENO, "%s\n", ac->lst->content);
-}
-
 void			display_ac_lst(t_auto_comp *ac)
 {
 	size_t		elem_line;
 	size_t		nb;
 	t_lst		*head;
 
+	nb = 1;
 	if (!ac->lst)
 		return ;
 	elem_line = ac->ws_col / ac->max_len;
-	if (!elem_line)
-		elem_line = 1;
-	nb = 0;
 	ft_lstsort(&ac->lst, ft_lstcmp);
 	head = ac->lst;
 	ft_putchar_fd('\n', STDERR_FILENO);
@@ -68,8 +50,14 @@ void			display_ac_lst(t_auto_comp *ac)
 		return ;
 	while (ac->lst)
 	{
-		print_ac_lst(elem_line, &nb, ac);
+		if (elem_line != 0 && nb == elem_line)
+		{
+			ft_putchar_fd('\n', STDERR_FILENO);
+			nb = 1;
+		}
+		ft_dprintf(STDERR_FILENO, "%-*s", ac->max_len + 1, ac->lst->content);
 		ac->lst = ac->lst->next;
+		nb++;
 	}
 	ac->lst = head;
 }
