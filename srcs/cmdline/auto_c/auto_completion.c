@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/12 17:54:30 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/13 17:55:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,17 @@ static char		*add_last_output(t_auto_comp *ac, char *input)
 	return (NULL);
 }
 
+static int8_t		complete_slash(char *output)
+{
+	if (is_dir(output) && output[ft_strlen(output) - 1] != '/')
+	{
+		ft_strdel(&output);
+		output = ft_strdup("/");
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
 static char		*get_output(char **input, t_core *shell,
 							t_auto_comp *ac, char **output)
 {
@@ -57,6 +68,8 @@ static char		*get_output(char **input, t_core *shell,
 	*output = ac_tilde(*output, shell);
 	tmp = ft_strsub(*input, 0, ft_strlen(*input) - (ft_strlen(*input) - ac->x));
 	*input = ft_strjoinf(tmp, *output, 1);
+	if (complete_slash(*output) == TRUE)
+		return (*output);
 	get_output[ac->type](*output, ac, shell);
 	return (NULL);
 }
