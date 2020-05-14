@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/14 18:34:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/14 18:35:36 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ ssize_t		get_width_current_line(t_read *term)
 	width = 0;
 	x = term->x;
 	buff_index = term->x_index - (ssize_t)term->prompt_len;
-	while (buff_index > 0 && buff_index < (ssize_t)ft_strlen(term->buffer))
+	while (buff_index >= 0 && buff_index < (ssize_t)ft_strlen(term->buffer))
 	{
 		if (term->buffer[buff_index] == '\n' || x == (term->ws_col - 1))
 			break ;
