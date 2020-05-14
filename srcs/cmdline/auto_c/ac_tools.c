@@ -6,12 +6,22 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 17:19:00 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/14 17:11:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <sys/stat.h>
+
+u_int8_t	last_is_slash(char *str)
+{
+	size_t		i;
+
+	i = ft_strlen(str);
+	if (str[i - 1] != '/')
+		return (FALSE);
+	return (TRUE);
+}
 
 u_int8_t	is_exec(char *path)
 {
@@ -59,29 +69,6 @@ u_int8_t	is_dot(const char *d_name)
 	else if (!ft_strcmp(d_name, ".."))
 		return (TRUE);
 	return (FALSE);
-}
-
-/*
-**		Split all bin/sbin directories in an array
-*/
-
-char		**split_path(t_core *shell, const char *str)
-{
-	char	**array;
-	t_lst	*env;
-
-	env = shell->env;
-	array = NULL;
-	while (env)
-	{
-		if (!ft_strcmp(str, ((t_db*)(env->content))->key))
-		{
-			array = ft_strsplit(((t_db*)(env->content))->value, ":");
-			break ;
-		}
-		env = env->next;
-	}
-	return (array);
 }
 
 size_t		get_max_len(size_t len, size_t new_len)

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 17:07:08 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:54:04 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/13 19:32:49 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ ssize_t		check_quote_priority(char *str, t_subprompt *sub)
 	{
 		if (str[i] == '\'')
 		{
-			sub->index++;
+			sub->index = i + 1;
 			return (0);
 		}
 		i++;

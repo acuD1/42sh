@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 19:13:21 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 20:02:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/14 16:48:44 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char		*ac_tilde(char *input, t_core *shell)
 	char	*tmp;
 
 	tmp = NULL;
+	if (!input)
+		return (NULL);
 	if ((db = search_db(shell->env, "HOME")) == NULL)
 		return (tmp = ft_strdup(input));
 	while (ft_isblank(*input))

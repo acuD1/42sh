@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/13 17:55:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/14 17:14:06 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ static char		*add_last_output(t_auto_comp *ac, char *input)
 	return (NULL);
 }
 
-static int8_t		complete_slash(char *output)
+static int8_t	complete_slash(char **output)
 {
-	if (is_dir(output) && output[ft_strlen(output) - 1] != '/')
+	if (!*output)
+		return (FALSE);
+	if (is_dir(*output) && !last_is_slash(*output))
 	{
-		ft_strdel(&output);
-		output = ft_strdup("/");
+		ft_strdel(output);
+		*output = ft_strdup("/");
 		return (TRUE);
 	}
 	return (FALSE);
@@ -68,7 +70,7 @@ static char		*get_output(char **input, t_core *shell,
 	*output = ac_tilde(*output, shell);
 	tmp = ft_strsub(*input, 0, ft_strlen(*input) - (ft_strlen(*input) - ac->x));
 	*input = ft_strjoinf(tmp, *output, 1);
-	if (complete_slash(*output) == TRUE)
+	if (complete_slash(output) == TRUE)
 		return (*output);
 	get_output[ac->type](*output, ac, shell);
 	return (NULL);
@@ -102,7 +104,10 @@ int8_t			auto_complete_mode(char *input, t_core *shell, char **output)
 		return (SUCCESS);
 	saved = input;
 	if (get_output(&saved, shell, &ac, output) != NULL)
+	{
+		ft_strdel(&saved);
 		return (SUCCESS);
+	}
 	if (display_last_output(&ac, saved, output) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
