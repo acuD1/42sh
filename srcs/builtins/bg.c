@@ -13,45 +13,42 @@
 #include "sh42.h"
 #include <unistd.h>
 
-static int8_t	can_bg_run(t_core *shell, char **argv)
+static int	launch_bg_job(t_core *shell, char *job_name)
 {
-	size_t	argc;
+	t_job	*job;
 
-	argc = ft_tablen(argv);
-	if (!(shell->is_interactive))
-		ft_dprintf(STDERR_FILENO, "42sh: bg: no job control\n");
-	else if ((argc == 1 || (argc == 2 && ft_strcmp(argv[1], "--") == 0))
-		&& get_job(shell->launched_jobs, NULL) == NULL)
-		ft_dprintf(STDERR_FILENO, "42sh: bg: current: no such job\n");
-	else
-		return (SUCCESS);
-	return (FAILURE);
+	job = get_job(shell->launched_jobs, job_name);
+	if (!job)
+	{
+		ft_dprintf(STDERR_FILENO, "42sh: bg: %s: no such job\n"
+		, (job_name) ? job_name : "current");
+		return (1);
+	}
+	job->notified = FALSE;
+	continue_job(shell, job, FALSE);
+	return (0);
 }
 
 int8_t			builtin_bg(t_core *shell, t_process *process)
 {
-	t_job	*job;
 	size_t	i;
 
 	i = (process->av[1] && ft_strcmp(process->av[1], "--") == 0) ? 2 : 1;
-	if (can_bg_run(shell, process->av) != SUCCESS)
+	if (!(shell->is_interactive))
+	{
+		ft_dprintf(STDERR_FILENO, "42sh: bg: no job control\n");
 		return (1);
+	}
 	if (process->av[i] && process->av[i][0] == '-' && process->av[i][1] != 0)
 		ft_dprintf(STDERR_FILENO
-		, "42sh: bg: -%c: invalid option\nfb: usage: fb [jobspec]\n"
+		, "42sh: bg: -%c: invalid option\nbg: usage: bg [jobspec]\n"
 		, process->av[i][1]);
+	if (i == ft_tablen(process->av))
+		return (launch_bg_job(shell, NULL));
 	while (process->av[i])
 	{
-		job = get_job(shell->launched_jobs, process->av[i]);
-		if (!job)
-		{
-			ft_dprintf(STDERR_FILENO, "42sh: bg: %s: no such job\n"
-			, (process->av[i]) ? process->av[1] : "current");
+		if (launch_bg_job(shell, process->av[i]) != 0)
 			return (1);
-		}
-		job->notified = FALSE;
-		continue_job(shell, job, FALSE);
-		format_job_info(job);
 		i++;
 	}
 	return (SUCCESS);
