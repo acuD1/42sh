@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/28 20:31:06 by arsciand          #+#    #+#             */
-/*   Updated: 2020/04/23 17:00:11 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/16 17:17:26 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	free_lpa(t_analyzer *anal)
 
 t_analyzer	*exit_lpa(t_analyzer *anal, t_core *shell)
 {
+	shell->ctrl_c = 0;
 	free_lpa(anal);
 	if (anal->job.command)
 		ft_strdel(&anal->job.command);
