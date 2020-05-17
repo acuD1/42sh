@@ -26,6 +26,7 @@ static int	launch_bg_job(t_core *shell, char *job_name)
 	}
 	job->notified = FALSE;
 	continue_job(shell, job, FALSE);
+	ft_dprintf(STDERR_FILENO, "[%d] %s &\n", job->jobc_id, job->command);
 	return (0);
 }
 
