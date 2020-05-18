@@ -161,6 +161,7 @@ SRC					+=	$(S_PATH)$(FC)fc_launcher.c
 SRC					+=	$(S_PATH)$(FC)fc_listing.c
 SRC					+=	$(S_PATH)$(FC)fc_print.c
 SRC					+=	$(S_PATH)$(FC)fc_specifier.c
+SRC					+=	$(S_PATH)$(FC)fc_tools.c
 SRC					+=	$(S_PATH)$(FC)fc.c
 
 SRC					+=	$(S_PATH)$(HASH)hash_dispatcher.c

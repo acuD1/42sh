@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/08 20:48:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/18 14:06:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,32 @@ static void		replace_cmd_spe(t_core *shell, int32_t cmd)
 	}
 }
 
-static void		select_cmd_spe(t_core *shell, int32_t cmd)
+static int8_t	select_cmd_spe(t_core *shell, char *pat)
 {
 	int32_t		w_entries;
+	int32_t		digit;
 
+	digit = ft_atoi(pat);
 	w_entries = (int32_t)ft_lstlen(shell->term.history);
-	if (cmd < 0)
+	if (digit == 0 && ft_strisdigit(pat))
+		digit = 1;
+	else if (digit <= 0)
 	{
-		if ((cmd * (-1)) > w_entries)
-			cmd = 1;
+		if (!ft_isdigit(*pat))
+		{
+			if ((digit = search_pattern(shell, pat, 0)) == FAILURE)
+				if ((digit = search_pattern(shell, pat, 1)) == FAILURE)
+					return (FAILURE);
+		}
+		else if ((digit * (-1)) > w_entries)
+			digit = 1;
 		else
-			cmd = w_entries + cmd;
-		replace_cmd_spe(shell, cmd);
+			digit = w_entries + digit;
+		replace_cmd_spe(shell, digit);
 	}
-	else if (cmd == 0)
-		cmd = 1;
 	else
-		replace_cmd_spe(shell, cmd);
+		replace_cmd_spe(shell, digit);
+	return (SUCCESS);
 }
 
 /*
@@ -110,15 +119,16 @@ int8_t			select_specifier(t_core *shell, char **av)
 	get_pat_and_rep(av, &pat, &rep);
 	ft_strdel(&shell->term.buffer);
 	shell->term.buffer = ft_strdup(shell->term.history->content);
-	if (ft_tablen(av) > 2 && ft_isdigit(*pat) && rep == NULL)
-		select_cmd_spe(shell, ft_atoi(pat));
+	if (ft_tablen(av) > 2 && rep == NULL)
+	{
+		if (select_cmd_spe(shell, pat) == FAILURE)
+			return (fc_error(0, 3));
+	}
 	else
 		while (replace_pattern(shell, pat, rep) == SUCCESS)
 			;
 	ft_strdel(&pat);
-	ft_dprintf(cmd.fd, "%s\n", shell->term.buffer);
-	lexer_parser_analyzer(shell);
-	do_job_notification(shell, shell->launched_jobs, TRUE);
-	task_master(shell);
+	ft_strdel(&rep);
+	print_and_exec(shell, cmd.fd);
 	return (SUCCESS);
 }
