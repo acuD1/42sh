@@ -268,5 +268,6 @@ void		free_job(t_lst **job_list, t_lst *job);
 void		rebuild_job_command(t_job *job);
 char		*get_short_command(t_process *process);
 void		split_job(t_core *shell, t_job *job);
+char		*get_last_stop_status(t_job *job);
 
 #endif

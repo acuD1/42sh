@@ -47,8 +47,9 @@ static void	print_job(t_job *job, u_int64_t opt, const char *name)
 	else if (opt & (1ULL << 11))
 		print_longjob(job);
 	else
-		ft_printf("[%d]%c  %s\t\t%s\n", job->jobc_id, job->jobc_last
-		, (job_is_stopped(job)) ? "Stopped" : "Done", job->command);
+		ft_printf("[%d]%c  %.*s\t\t%s\n", job->jobc_id, job->jobc_last
+		, ft_strlen(get_last_stop_status(job)) - 1
+		, get_last_stop_status(job), job->command);
 }
 
 int8_t		builtin_jobs(t_core *shell, t_process *process)

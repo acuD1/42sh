@@ -31,16 +31,15 @@ void		update_status(t_core *shell)
 
 void		format_job_info(t_job *job)
 {
-	char		*msg;
+	char	*msg;
 
-	msg = "Stopped\n";
 	if (job_is_completed(job))
 	{
 		msg = signal_msg(0);
 	}
-	else if (job->type == P_AND)
+	else
 	{
-		msg = "Running\n";
+		msg = get_last_stop_status(job);
 	}
 	ft_dprintf(STDERR_FILENO, "[%i]%c  %.*s\t\t%s\n", job->jobc_id
 	, job->jobc_last, ft_strlen(msg) - 1, msg, job->command);
