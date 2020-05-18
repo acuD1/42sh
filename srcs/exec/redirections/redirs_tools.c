@@ -79,6 +79,7 @@ int8_t	write_heredoc(t_redir *ptr)
 	if ((fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT
 					, S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR)) < 0)
 		return (FAILURE);
+	ft_strdel(&(ptr->op[1]));
 	ptr->op[1] = ft_strdup(filename);
 	ft_putstr_fd(ptr->heredoc, fd);
 	close(fd);

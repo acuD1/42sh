@@ -282,6 +282,7 @@ SRC					+=	$(S_PATH)$(JOBC)notifications.c
 SRC					+=	$(S_PATH)$(JOBC)wait_job.c
 SRC					+=	$(S_PATH)$(JOBC)are_jobs_done.c
 SRC					+=	$(S_PATH)$(JOBC)rebuild_job_command.c
+SRC					+=	$(S_PATH)$(JOBC)get_last_stop_status.c
 SRC					+=	$(S_PATH)$(JOBC)split_job.c
 
 SRC					+=	$(S_PATH)$(LPA)lexer_parser_analyzer.c

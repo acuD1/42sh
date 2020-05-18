@@ -61,7 +61,6 @@ int8_t			builtin_pwd(t_core *shell, t_process *process)
 		&& (errnum = pwd_check_path(db->value)) != SUCCESS)
 	{
 		shell->cd.pwd_error = TRUE;
-		ft_dprintf(STDERR_FILENO, "|%d| %s %s", errnum, PWD_ERR, GETCWD_ERR);
 		if (errnum == EACCES)
 			ft_putstr_fd(" Permission denied\n", STDERR_FILENO);
 		else
