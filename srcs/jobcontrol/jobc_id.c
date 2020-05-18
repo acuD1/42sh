@@ -69,6 +69,7 @@ int			update_jobs(t_lst *jobs)
 		c = (c < job->jobc_id) ? job->jobc_id : c;
 		plus = (job->jobc_last == '+') ? job->jobc_id : plus;
 		less = (job->jobc_last == '-') ? job->jobc_id : less;
+		job->jobc_last = ' ';
 		ptr = ptr->next;
 	}
 	if (c > 0 && plus == 0)
