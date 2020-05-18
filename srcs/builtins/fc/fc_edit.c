@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/18 20:16:37 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/18 23:39:18 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,15 @@ static char		*get_editor(char **av, u_int64_t opt)
 	else if (opt & (1ULL << 4) && ft_tablen(av) == 2)
 		return (NULL);
 	av++;
-	if (ft_strequ(*av, "-e") == TRUE && *(av + 1) == NULL)
-	{
+	if (*(av + 1) == NULL)
 		return (NULL);
-	}
 	if (ft_strequ(*av, "-e") == TRUE)
 	{
 		(av)++;
 		editor = ft_strjoin(*av, " ");
 	}
 	else
-		editor = ft_strjoin(*av + 2, " ");
+		editor = ft_strjoin(*(av + 1), " ");
 	return (editor);
 }
 
