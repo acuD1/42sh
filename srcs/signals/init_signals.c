@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 18:59:53 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/05/14 18:25:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/17 22:08:24 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,6 @@ static void	sigh_winch(int signum)
 	shell = get_core(NULL);
 	if (get_size(&(shell->term)) != SUCCESS || update_termsize(shell))
 		quit_shell(shell, EXIT_SUCCESS, FALSE);
-	if (shell->term.ws_col > shell->term.prompt_len)
-		clr_screen(&shell->term);
-	if (shell->term.search == SEARCH_SUCCESS
-								|| shell->term.search == SEARCH_FAILURE)
-		goto_reverse(&shell->term, shell->term.tmp_buff);
 }
 
 /*
