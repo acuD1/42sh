@@ -24,6 +24,7 @@ char			*exp_get_dollar(const char *string, size_t len);
 char			*exp_get_tilde(const char *string, size_t len);
 char			*exp_get_tildep(const char *string, size_t len);
 char			*exp_get_tildem(const char *string, size_t len);
+size_t			get_index_expan(const char *str);
 
 /*
 **	EXPANSION_INHIBITEUR
@@ -76,4 +77,6 @@ char			*check_env_key(char *key, t_core *shell);
 u_int32_t		check_format_bracket(char c);
 void			fill_thereste(char *str, char *tmp, int *index, int *i);
 char			*tilde_param_exp(char *tablo, t_core *shell);
+int				is_pos_vars(char c);
+char			*pos_vars_format(char *str, t_core *shell);
 #endif

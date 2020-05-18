@@ -25,7 +25,7 @@ char			*exp_get_bracket(const char *s, size_t len)
 	return (str);
 }
 
-static size_t	get_index_expan(const char *str)
+size_t			get_index_expan(const char *str)
 {
 	size_t	i;
 
@@ -35,8 +35,8 @@ static size_t	get_index_expan(const char *str)
 	while (str[i])
 	{
 		if (str[1] == '?' || str[1] == '$'
-			|| str[1] == '!' || str[1] == '-'
-			|| str[1] == '@' || str[1] == '*')
+			|| str[1] == '!' || str[1] == '-' || str[1] == '#'
+			|| str[1] == '@' || str[1] == '*' || ft_isdigit(str[1]))
 		{
 			i++;
 			break ;

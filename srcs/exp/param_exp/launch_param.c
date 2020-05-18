@@ -32,16 +32,15 @@ char				*tilde_param_exp(char *tablo, t_core *shell)
 char				*simple_format(char *str, t_core *shell)
 {
 	t_db	*db_tmp;
+	char	*res;
 
 	db_tmp = NULL;
+	res = NULL;
 	if (!(ft_strchr(str, '$') && str[0] != '$')
 			&& (db_tmp = search_db(shell->env, str)))
-	{
-		ft_strdel(&str);
-		return (ft_strdup(db_tmp->value));
-	}
+		res = ft_strdup(db_tmp->value);
 	ft_strdel(&str);
-	return (NULL);
+	return (res);
 }
 
 char				*format_supplementaires(char *str, t_core *shell)
@@ -89,11 +88,13 @@ char				*moar_format_plz(char *data, t_core *shell)
 	return (NULL);
 }
 
-char				*exp_param(const char *data, t_core *shell)
+char				*exp_param(const char *str, t_core *shell)
 {
-	if (data[0] == '$' && data[1] == '{')
-		return (get_brace_param((char*)data, shell));
-	if (data[0] == '$' && data[1])
-		return (simple_format(ft_strsub(data, 1, ft_strlen(data) - 1), shell));
+	if (str[0] == '$' && str[1] == '{')
+		return (get_brace_param((char*)str, shell));
+	else if (str[0] == '$' && str[1] && is_pos_vars(str[1]))
+		return (pos_vars_format(ft_strsub(str, 1, 1), shell));
+	else if (str[0] == '$' && str[1])
+		return (simple_format(ft_strsub(str, 1, get_index_expan(str)), shell));
 	return (NULL);
 }

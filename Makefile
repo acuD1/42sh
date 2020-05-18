@@ -257,6 +257,7 @@ SRC					+=	$(S_PATH)$(PARAM_EXP)get_brace_param.c
 SRC					+=	$(S_PATH)$(PARAM_EXP)launch_param.c
 SRC					+=	$(S_PATH)$(PARAM_EXP)other_format.c
 SRC					+=	$(S_PATH)$(PARAM_EXP)param_exp_tools.c
+SRC					+=	$(S_PATH)$(PARAM_EXP)pos_vars.c
 SRC					+=	$(S_PATH)$(PARAM_EXP)prefix_suffixe_format.c
 
 SRC					+=	$(S_PATH)$(EXPANSIONS)assign_envp_tools.c
