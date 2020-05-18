@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/18 14:06:24 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/18 19:50:02 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,8 @@ static int8_t	select_cmd_spe(t_core *shell, char *pat)
 	{
 		if (!ft_isdigit(*pat))
 		{
-			if ((digit = search_pattern(shell, pat, 0)) == FAILURE)
-				if ((digit = search_pattern(shell, pat, 1)) == FAILURE)
-					return (FAILURE);
+			if ((digit = check_pattern(pat)) == FAILURE)
+				return (FAILURE);
 		}
 		else if ((digit * (-1)) > w_entries)
 			digit = 1;
@@ -128,7 +127,6 @@ int8_t			select_specifier(t_core *shell, char **av)
 		while (replace_pattern(shell, pat, rep) == SUCCESS)
 			;
 	ft_strdel(&pat);
-	ft_strdel(&rep);
 	print_and_exec(shell, cmd.fd);
 	return (SUCCESS);
 }

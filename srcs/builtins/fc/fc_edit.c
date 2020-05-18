@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/09 15:54:33 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/18 20:16:37 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ static void		get_edit_entries(t_lst *w, t_cmd *cmd)
 	else if (cmd->ac == 4)
 		cmd->last = cmd->first;
 	if (cmd->first <= 0)
-		cmd->first = w_entries + cmd->first + 1;
+		cmd->first = w_entries + cmd->first;
 	if (cmd->last <= 0)
-		cmd->last = w_entries + cmd->last + 1;
+		cmd->last = w_entries + cmd->last;
 }
 
 int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
@@ -110,6 +110,7 @@ int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 		return (fc_error(opt, 4));
 	if (!shell->term.history)
 		return (fc_error(opt, 0));
+	cmd.ac = ft_tablen(process->av);
 	get_range(process->av, &cmd);
 	get_edit_entries(shell->term.history, &cmd);
 	sort_print_cmd(cmd, shell->term.history, opt);
