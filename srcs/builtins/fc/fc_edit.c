@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/18 23:39:18 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/18 23:44:29 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 	if (!shell->term.history)
 		return (fc_error(opt, 0));
 	cmd.ac = ft_tablen(process->av);
-	get_range(process->av, &cmd);
+	get_range(process->av, &cmd, opt);
 	get_edit_entries(shell->term.history, &cmd);
 	sort_print_cmd(cmd, shell->term.history, opt);
 	if ((cmd.editor = get_editor(process->av, opt)) == NULL)

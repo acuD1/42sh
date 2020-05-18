@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:11:54 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/18 20:16:20 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/18 23:45:44 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,13 @@ void		skip_options(char ***av)
 	(*av)--;
 }
 
-int8_t		get_range(char **av, t_cmd *cmd)
+int8_t		get_range(char **av, t_cmd *cmd, u_int64_t opt)
 {
 	if (*av == NULL)
 		return (TRUE);
 	skip_options(&av);
-	if (ft_tabchr(av, "-e"))
+	if ((opt & (1ULL << 4) && opt & (1ULL << 17))
+		|| opt & (1ULL << 4))
 		av++;
 	if (!(*(av + 1)) || !*av)
 		return (TRUE);
@@ -100,7 +101,7 @@ int8_t		listing_mode(t_lst *w, char **av, u_int64_t opt)
 
 	ft_bzero(&cmd, sizeof(t_cmd));
 	cmd.ac = ft_tablen(av);
-	if (cmd.ac != 2 && get_range(av, &cmd) == FAILURE)
+	if (cmd.ac != 2 && get_range(av, &cmd, opt) == FAILURE)
 		return (fc_error(opt, 0));
 	get_entries(w, &cmd, opt);
 	cmd.fd = STDIN_FILENO;

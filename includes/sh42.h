@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/05/18 16:07:09 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/18 23:45:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int8_t		edit_mode(t_core *shell, t_process *process, u_int64_t opt);
 int8_t		listing_mode(t_lst *w, char **av, u_int64_t opt);
 int8_t		select_specifier(t_core *shell, char **av);
 int8_t		fc_error(u_int64_t opt, int err_num);
-int8_t		get_range(char **av, t_cmd *cmd);
+int8_t		get_range(char **av, t_cmd *cmd, u_int64_t opt);
 void		get_entries(t_lst *w, t_cmd *cmd, u_int64_t opt);
 void		print_list(t_lst *w, t_cmd cmd, u_int64_t opt);
 void		print_reverse(t_lst *w, t_cmd cmd, u_int64_t opt);
