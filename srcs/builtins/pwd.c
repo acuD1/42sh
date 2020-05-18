@@ -53,6 +53,7 @@ int8_t			builtin_pwd(t_core *shell, t_process *process)
 	int8_t		errnum;
 
 	ft_bzero(pwd, MAX_PATH + 1);
+	ft_bzero(&stat, sizeof(stat));
 	ac = ft_tablen(process->av);
 	db = get_or_create_db(shell, "PWD", EXPORT_VAR | INTERNAL_VAR);
 	lstat(db->value, &stat);
