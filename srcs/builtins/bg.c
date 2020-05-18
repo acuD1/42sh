@@ -30,7 +30,7 @@ static int	launch_bg_job(t_core *shell, char *job_name)
 	return (0);
 }
 
-int8_t			builtin_bg(t_core *shell, t_process *process)
+int8_t		builtin_bg(t_core *shell, t_process *process)
 {
 	size_t	i;
 
