@@ -81,6 +81,8 @@ enum	e_pstate
 {
 	P_NEWLINE,
 	P_ANDIF,
+	P_ANDDGREAT,
+	P_ANDGREAT,
 	P_AND,
 	P_ORIF,
 	P_PIPE,

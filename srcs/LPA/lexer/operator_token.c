@@ -17,6 +17,8 @@ static const t_token	g_ope[] =
 {
 	{"\n", P_NEWLINE, "", 1},
 	{"&&", P_ANDIF, "", 2},
+	{"&>>", P_ANDDGREAT, "", 3},
+	{"&>", P_ANDGREAT, "", 2},
 	{"&", P_AND, "", 1},
 	{"||", P_ORIF, "", 2},
 	{"|", P_PIPE, "", 1},

@@ -28,6 +28,8 @@ void	init_assign_analyze(t_anal analyze)
 	analyze[A_ASSIGN][P_DGREAT] = redirect_analyze;
 	analyze[A_ASSIGN][P_GREAT] = redirect_analyze;
 	analyze[A_ASSIGN][P_GREATAND] = redirect_analyze;
+	analyze[A_ASSIGN][P_ANDGREAT] = redirect_analyze;
+	analyze[A_ASSIGN][P_ANDDGREAT] = redirect_analyze;
 	analyze[A_ASSIGN][P_ASSIGN] = assign_analyze;
 	analyze[A_ASSIGN][P_WORD] = cmd_analyze;
 	analyze[A_ASSIGN][P_END] = end_analyze;
@@ -42,6 +44,8 @@ void	init_ionumber_analyze(t_anal analyze)
 	analyze[A_IONUMBER][P_GREATAND] = redirect_analyze;
 	analyze[A_IONUMBER][P_LESSAND] = redirect_analyze;
 	analyze[A_IONUMBER][P_GREAT] = redirect_analyze;
+	analyze[A_IONUMBER][P_ANDDGREAT] = redirect_analyze;
+	analyze[A_IONUMBER][P_ANDGREAT] = redirect_analyze;
 	analyze[A_IONUMBER][P_WORD] = cmd_analyze;
 	analyze[A_IONUMBER][P_END] = end_analyze;
 }
@@ -56,6 +60,8 @@ void	init_redirect_analyze(t_anal analyze)
 	analyze[A_REDIRECT][P_GREATAND] = redirect_analyze;
 	analyze[A_REDIRECT][P_LESSAND] = redirect_analyze;
 	analyze[A_REDIRECT][P_GREAT] = redirect_analyze;
+	analyze[A_REDIRECT][P_ANDGREAT] = redirect_analyze;
+	analyze[A_REDIRECT][P_ANDDGREAT] = redirect_analyze;
 	analyze[A_REDIRECT][P_IONUMBER] = ionbr_analyze;
 	analyze[A_REDIRECT][P_ASSIGN] = assign_analyze;
 	analyze[A_REDIRECT][P_WORD] = cmd_analyze;
@@ -76,6 +82,8 @@ void	init_end_analyze(t_anal analyze)
 	analyze[A_END][P_DGREAT] = redirect_analyze;
 	analyze[A_END][P_GREATAND] = redirect_analyze;
 	analyze[A_END][P_GREAT] = redirect_analyze;
+	analyze[A_END][P_ANDGREAT] = redirect_analyze;
+	analyze[A_END][P_ANDDGREAT] = redirect_analyze;
 	analyze[A_END][P_WORD] = cmd_analyze;
 	analyze[A_END][P_IONUMBER] = ionbr_analyze;
 	analyze[A_END][P_ASSIGN] = assign_analyze;
@@ -92,6 +100,8 @@ void	init_separator_analyze(t_anal analyze)
 	analyze[A_SEPARATOR][P_LESS] = redirect_analyze;
 	analyze[A_SEPARATOR][P_LESSAND] = redirect_analyze;
 	analyze[A_SEPARATOR][P_DGREAT] = redirect_analyze;
+	analyze[A_SEPARATOR][P_ANDGREAT] = redirect_analyze;
+	analyze[A_SEPARATOR][P_ANDDGREAT] = redirect_analyze;
 	analyze[A_SEPARATOR][P_DLESS] = redirect_analyze;
 	analyze[A_SEPARATOR][P_DLESSDASH] = redirect_analyze;
 	analyze[A_SEPARATOR][P_SEMICOLON] = separator_analyze;

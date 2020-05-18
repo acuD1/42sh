@@ -48,7 +48,17 @@ t_analyzer	*redirect_analyze(t_analyzer *anal, t_core *shell)
 	if ((((t_token*)anal->lexer->content)->id == P_DLESS && anal->lexer->next
 		&& ((t_token*)anal->lexer->next->content)->id == P_LESS))
 		return (anal = load_heredoc_fromline(anal, shell));
-	anal->redir.type = ((t_token*)anal->lexer->content)->id;
+	else if (((t_token*)anal->lexer->content)->id == P_ANDGREAT
+		|| ((t_token*)anal->lexer->content)->id == P_ANDDGREAT)
+	{
+		anal->redir.op[0] = ft_strdup("&");
+		if (((t_token*)anal->lexer->content)->id == P_ANDGREAT)
+			anal->redir.type = P_GREAT;
+		else
+			anal->redir.type = P_DGREAT;
+	}
+	else
+		anal->redir.type = ((t_token*)anal->lexer->content)->id;
 	anal->state = A_REDIRECT;
 	return (anal);
 }

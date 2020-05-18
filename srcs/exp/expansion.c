@@ -47,7 +47,7 @@ static void	filename_heredoc_exp(t_core *shell, t_redir *redir)
 	res = NULL;
 	if (!redir || !redir->op[1])
 		return ;
-	if (redir->type != 8 && redir->type != 7
+	if (redir->type != P_DLESS && redir->type != P_DLESSDASH
 		&& (res = inhibiteurs_expansion(redir->op[1], shell, 0)))
 	{
 		if (!*res)
