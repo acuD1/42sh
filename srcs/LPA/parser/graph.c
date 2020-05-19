@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 14:47:16 by guvillat          #+#    #+#             */
-/*   Updated: 2020/03/03 19:03:29 by guvillat         ###   ########.fr       */
+/*   Updated: 2020/05/19 16:33:33 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	init_redirect_graph(t_graph *graph)
 	graph[P_DLESSDASH].good_type = heredoc;
 	graph[P_ANDDGREAT].good_type = tab_good_type;
 	graph[P_ANDGREAT].good_type = tab_good_type;
-
 }
 
 void	init_process_graph(t_graph *graph)

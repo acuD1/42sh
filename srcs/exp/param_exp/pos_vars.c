@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pos_vars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/14 16:16:26 by guvillat          #+#    #+#             */
-/*   Updated: 2020/04/23 16:56:58 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/19 16:26:54 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char		*pos_vars_format(char *str, t_core *shell)
 		return (NULL);
 	}
 	if (str[0] == '#')
-		res = ft_itoa(ft_lstlen(shell->pos_vars));
+		res = ft_itoa((int32_t)ft_lstlen(shell->pos_vars));
 	else if (str[0] == '@' || str[0] == '*')
 		res = concat_pos_vars(shell);
 	else if (!(ft_strchr(str, '$') && str[0] != '$')
