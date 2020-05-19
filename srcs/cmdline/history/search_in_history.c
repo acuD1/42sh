@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/11 14:44:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/19 15:09:47 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void			goto_reverse(t_read *term, const char *buff_tmp)
 {
+	display_prompt(term);
 	xtputs(term->tcaps[RESTORE_CR], 1, my_outc);
 	xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
 	xtputs(term->tcaps[CLR_LINES], 1, my_outc);

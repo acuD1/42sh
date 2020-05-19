@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/18 19:50:02 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/19 14:59:01 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,12 @@
 
 static void		get_pat_and_rep(char **av, char **pat, char **rep)
 {
-	char		*str;
-
-	str = NULL;
 	if (av == NULL || ft_tablen(av) == 2)
 		return ;
 	skip_options(&av);
 	av++;
-	str = ft_strdup(*av);
-	(*pat) = str;
-	if ((*rep = ft_strchr(str, '=')) == NULL)
+	(*pat) = ft_strdup(*av);
+	if ((*rep = ft_strchr(*pat, '=')) == NULL)
 		return ;
 	**rep = '\0';
 	(*rep)++;
