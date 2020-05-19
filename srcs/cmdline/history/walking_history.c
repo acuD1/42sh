@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 15:49:49 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/19 15:55:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/19 16:39:44 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void		walking_history(const char *buff_tmp, t_read *term, t_lst **history)
 		{
 			term->search = SEARCH_SUCCESS;
 			goto_reverse(term, buff_tmp);
-			xtputs(term->tcaps[SAVE_CR], 1, my_outc);
 			ft_strdel(&term->buffer);
 			term->buffer = ft_memalloc(BUFF_SIZE + 1);
 			insert_str_in_buffer((*history)->content, term);

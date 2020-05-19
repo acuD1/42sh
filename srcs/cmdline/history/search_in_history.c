@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/19 15:47:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/19 16:40:55 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int8_t	insert_in_search(t_read *term, const char buff[], int *i)
 			goto_reverse(term, term->tmp_buff);
 		else
 			goto_reverse(term, term->tmp_buff);
-		xtputs(term->tcaps[SAVE_CR], 1, my_outc);
 	}
 	else if (value == BS_KEY && *term->tmp_buff)
 	{
@@ -49,7 +48,6 @@ static void		research_in_history(t_read *term)
 	term->tmp_buff = ft_memalloc(BUFF_SIZE + 1);
 	ft_bzero(buff, READ_SIZE + 1);
 	history = term->history;
-	xtputs(term->tcaps[SAVE_CR], 1, my_outc);
 	goto_reverse(term, "");
 	ft_putstr_fd(term->buffer, STDOUT_FILENO);
 	sigint_special_handler();
@@ -75,6 +73,7 @@ void			research_mode(t_read *term)
 	saved = NULL;
 	tmp = NULL;
 	term->search = SEARCH_SUCCESS;
+	xtputs(term->tcaps[SAVE_CR], 1, my_outc);
 	if (term->tmp_buff)
 	{
 		saved = ft_strdup(term->tmp_buff);
