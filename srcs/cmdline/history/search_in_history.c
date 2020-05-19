@@ -6,51 +6,12 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/19 15:22:49 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/19 15:47:03 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-#include <unistd.h>
 #include <signal.h>
-
-void			goto_reverse(t_read *term, const char *buff_tmp)
-{
-	display_prompt(term);
-	xtputs(term->tcaps[RESTORE_CR], 1, my_outc);
-	xtputs(term->tcaps[LEFT_MARGIN], 1, my_outc);
-	xtputs(term->tcaps[CLR_LINES], 1, my_outc);
-	if (term->search == SEARCH_SUCCESS)
-		ft_dprintf(STDOUT_FILENO, "(reverse-i-search)`%s': ", buff_tmp);
-	else if (term->search == SEARCH_FAILURE)
-	{
-		ft_dprintf(STDOUT_FILENO, "(failed reverse-i-search)`%s': ", buff_tmp);
-		if (term->buffer)
-			ft_putstr_fd(term->buffer, STDERR_FILENO);
-	}
-}
-
-static void		walking_history
-	(const char *buff_tmp, t_read *term, t_lst **history)
-{
-	while (*history && (*history)->next && *buff_tmp)
-	{
-		if (ft_strstr((*history)->content, buff_tmp))
-		{
-			term->search = SEARCH_SUCCESS;
-			goto_reverse(term, buff_tmp);
-			xtputs(term->tcaps[SAVE_CR], 1, my_outc);
-			ft_strdel(&term->buffer);
-			term->buffer = ft_memalloc(BUFF_SIZE + 1);
-			insert_str_in_buffer((*history)->content, term);
-			*history = (*history)->next;
-			return ;
-		}
-		*history = (*history)->next;
-	}
-	term->search = SEARCH_FAILURE;
-	goto_reverse(term, buff_tmp);
-}
 
 static int8_t	insert_in_search(t_read *term, const char buff[], int *i)
 {
