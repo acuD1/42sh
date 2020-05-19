@@ -48,7 +48,10 @@ char		*pos_vars_format(char *str, t_core *shell)
 	db_tmp = NULL;
 	res = NULL;
 	if (!shell->pos_vars)
+	{
+		ft_strdel(&str);
 		return (NULL);
+	}
 	if (str[0] == '#')
 		res = ft_itoa(ft_lstlen(shell->pos_vars));
 	else if (str[0] == '@' || str[0] == '*')
