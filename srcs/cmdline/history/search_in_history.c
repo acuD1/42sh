@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 18:53:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/19 15:09:47 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/19 15:16:44 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void			goto_reverse(t_read *term, const char *buff_tmp)
 		ft_dprintf(STDOUT_FILENO, "(reverse-i-search)`%s': ", buff_tmp);
 	else if (term->search == SEARCH_FAILURE)
 		ft_dprintf(STDOUT_FILENO, "(failed reverse-i-search)`%s': ", buff_tmp);
+	if (term->buffer)
+		ft_putstr_fd(term->buffer, STDERR_FILENO);
 }
 
 static void		walking_history
