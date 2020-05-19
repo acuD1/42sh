@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/19 14:34:15 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/19 14:42:58 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char		*cmd_saved(t_read *term, ssize_t i)
 	return (tmp);
 }
 
-static int8_t	check_valid_specifier(t_read *term, ssize_t i)
+static int8_t	check_negative_specifier(t_read *term, ssize_t i)
 {
 	while (term->buffer[i])
 	{
@@ -53,7 +53,7 @@ static int64_t	get_index(t_read *term, ssize_t i,
 
 	if (term->buffer[i + 1] == '-')
 	{
-		if (check_valid_specifier(term, i + 2) == FAILURE)
+		if (check_negative_specifier(term, i + 2) == FAILURE)
 		{
 			i = -1;
 			return (i);
