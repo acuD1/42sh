@@ -6,11 +6,25 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 15:49:49 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/19 15:49:50 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/19 15:55:25 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+static void	replace_cursor(t_read *term, const char buff_tmp)
+{
+	ssize_t		i;
+
+	i = (ssize_t)ft_strlen(term->buffer) - 1;
+	while (i >= 0)
+	{
+		xtputs(term->tcaps[KEY_LEFT], 1, my_outc);
+		if (term->buffer[i] == buff_tmp)
+			break ;
+		i--;
+	}
+}
 
 void		goto_reverse(t_read *term, const char *buff_tmp)
 {
@@ -24,21 +38,10 @@ void		goto_reverse(t_read *term, const char *buff_tmp)
 	{
 		ft_dprintf(STDOUT_FILENO, "(failed reverse-i-search)`%s': ", buff_tmp);
 		if (term->buffer)
+		{
 			ft_putstr_fd(term->buffer, STDERR_FILENO);
-	}
-}
-
-static void	replace_cursor(t_read *term, const char buff_tmp)
-{
-	ssize_t		i;
-
-	i = (ssize_t)ft_strlen(term->buffer) - 1;
-	while (i >= 0)
-	{
-		xtputs(term->tcaps[KEY_LEFT], 1, my_outc);
-		if (term->buffer[i] == buff_tmp)
-			break ;
-		i--;
+			replace_cursor(term, *buff_tmp);
+		}
 	}
 }
 
