@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 17:43:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/02/29 18:02:48 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/16 17:42:34 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void			get_prompt_value(t_core *shell, const char *key)
 	t_db	*db;
 
 	db = NULL;
-	if ((db = search_db(shell->env, key)) == NULL)
+	if (key == NULL || (db = search_db(shell->env, key)) == NULL)
 	{
 		shell->term.prompt = ft_strnew(0);
 		return ;

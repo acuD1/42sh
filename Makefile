@@ -161,6 +161,7 @@ SRC					+=	$(S_PATH)$(FC)fc_launcher.c
 SRC					+=	$(S_PATH)$(FC)fc_listing.c
 SRC					+=	$(S_PATH)$(FC)fc_print.c
 SRC					+=	$(S_PATH)$(FC)fc_specifier.c
+SRC					+=	$(S_PATH)$(FC)fc_tools.c
 SRC					+=	$(S_PATH)$(FC)fc.c
 
 SRC					+=	$(S_PATH)$(HASH)hash_dispatcher.c
@@ -205,6 +206,7 @@ SRC					+=	$(S_PATH)$(AC)ac_tools.c
 
 SRC					+=	$(S_PATH)$(HISTORY)save_history.c
 SRC					+=	$(S_PATH)$(HISTORY)search_in_history.c
+SRC					+=	$(S_PATH)$(HISTORY)walking_history.c
 
 SRC					+=	$(S_PATH)$(HST_EXP)check_hst_exp.c
 SRC					+=	$(S_PATH)$(HST_EXP)history_expansions.c

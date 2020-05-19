@@ -6,12 +6,18 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 17:20:07 by arsciand          #+#    #+#             */
-/*   Updated: 2020/05/12 12:18:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/16 17:12:34 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 #include <unistd.h>
+
+int		my_outc(int c)
+{
+	write(0, &c, 1);
+	return (SUCCESS);
+}
 
 void	print_n(t_read *term)
 {

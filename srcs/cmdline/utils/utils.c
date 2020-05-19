@@ -6,15 +6,14 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 18:13:27 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/14 18:35:36 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/16 17:14:43 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
-#include <unistd.h>
 #include <term.h>
 
-void		xtputs(char *str, int i, int (*f)(int))
+void			xtputs(char *str, int i, int (*f)(int))
 {
 	t_core	*shell;
 
@@ -22,37 +21,51 @@ void		xtputs(char *str, int i, int (*f)(int))
 	tputs(str, i, f);
 }
 
-int			my_outc(int c)
+static ssize_t	get_width(ssize_t buff_i, ssize_t w, ssize_t y, t_read *term)
 {
-	write(0, &c, 1);
-	return (SUCCESS);
+	if (buff_i == -1)
+	{
+		w += term->prompt_len;
+		if ((w - (term->ws_col * y)) >= term->ws_col)
+			y++;
+	}
+	if (y == 0)
+		y = 1;
+	if (w >= term->ws_col)
+		w = w - (term->ws_col * y);
+	return (w);
 }
 
-ssize_t		get_width_last_line(t_read *term)
+ssize_t			get_width_last_line(t_read *term)
 {
 	ssize_t	buff_index;
 	ssize_t	w;
+	ssize_t	y;
+	ssize_t	i;
 
 	w = 0;
+	i = 0;
+	y = 0;
 	buff_index = term->x_index - (ssize_t)term->prompt_len;
 	if ((buff_index > 0) && term->buffer[buff_index - 1] == '\n')
 		buff_index--;
 	else
 		return (term->ws_col - 1);
-	while (buff_index-- > 0)
+	while (buff_index-- > 0 && term->buffer[buff_index] != '\n')
 	{
-		if (term->buffer[buff_index] == '\n')
-			break ;
+		if (i >= term->ws_col)
+		{
+			y++;
+			i = -1;
+		}
+		i++;
 		w++;
 	}
-	if ((w + ((term->y == 2) ? term->prompt_len : 0)) > term->ws_col)
-		w = (w + ((term->y == 2) ? term->prompt_len : 0)) % term->ws_col;
-	else if (term->y == 1)
-		w += term->prompt_len;
+	w = get_width(buff_index, w, y, term);
 	return (w);
 }
 
-ssize_t		get_width_current_line(t_read *term)
+ssize_t			get_width_current_line(t_read *term)
 {
 	ssize_t	buff_index;
 	ssize_t	width;
@@ -73,7 +86,7 @@ ssize_t		get_width_current_line(t_read *term)
 	return (width);
 }
 
-u_int64_t	get_mask(const char *buff)
+u_int64_t		get_mask(const char *buff)
 {
 	u_int16_t	i;
 	u_int16_t	shift;

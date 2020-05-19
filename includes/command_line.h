@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/04 14:09:42 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/14 17:05:57 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/19 15:50:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int64_t		call_word(t_read *term, ssize_t i);
 int64_t		last_cmd_back(t_read *term, ssize_t i);
 char		*get_home_value(t_core *shell);
 void		goto_reverse(t_read *term, const char *buff_tmp);
+void		walking_history(const char *buff, t_read *term, t_lst **history);
 
 /*
 **		SUBPROMPT/MULTILINE

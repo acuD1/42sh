@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:11:54 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/09 16:05:08 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/18 23:45:44 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void		get_entries(t_lst *w, t_cmd *cmd, u_int64_t opt)
 
 	w_entries = (int32_t)ft_lstlen(w);
 	if (cmd->first <= 0)
-		cmd->first = w_entries + cmd->first + 1;
+		cmd->first = w_entries + cmd->first;
 	if (cmd->last <= 0)
-		cmd->last = w_entries + cmd->last + 1;
+		cmd->last = w_entries + cmd->last;
 	if ((opt & (1ULL << 11)) && cmd->ac == 2)
 	{
 		cmd->first = w_entries - 15;
@@ -67,27 +67,31 @@ void		skip_options(char ***av)
 	(*av)--;
 }
 
-u_int8_t	get_range(char **av, t_cmd *cmd)
+int8_t		get_range(char **av, t_cmd *cmd, u_int64_t opt)
 {
-	if ((cmd->ac = ft_tablen(av)) == 2 && ft_tabchr(av, "-l"))
+	if (*av == NULL)
 		return (TRUE);
 	skip_options(&av);
-	if (!(*(av + 1)))
-		return (TRUE);
-	if (ft_tabchr(av, "-e"))
+	if ((opt & (1ULL << 4) && opt & (1ULL << 17))
+		|| opt & (1ULL << 4))
 		av++;
-	while (*av != NULL && av++)
+	if (!(*(av + 1)) || !*av)
+		return (TRUE);
+	av++;
+	if (*av && ft_isnum(*av) == FALSE)
 	{
-		if (ft_isnum(*av) == FALSE)
-			return (FALSE);
-		else
-		{
-			cmd->first = ft_atoi(*av);
-			break ;
-		}
+		if ((cmd->first = check_pattern(*av)) == FAILURE)
+			return (FAILURE);
 	}
-	if (*av && *(av + 1))
+	else if (*av)
+		cmd->first = ft_atoi(*av);
+	if (*(av + 1) && ft_isnum(*(av + 1)))
 		cmd->last = ft_atoi(*(av + 1));
+	else if (*(av + 1))
+	{
+		if ((cmd->last = check_pattern(*(av + 1))) == FAILURE)
+			return (FAILURE);
+	}
 	return (TRUE);
 }
 
@@ -96,7 +100,8 @@ int8_t		listing_mode(t_lst *w, char **av, u_int64_t opt)
 	t_cmd		cmd;
 
 	ft_bzero(&cmd, sizeof(t_cmd));
-	if (get_range(av, &cmd) == FALSE)
+	cmd.ac = ft_tablen(av);
+	if (cmd.ac != 2 && get_range(av, &cmd, opt) == FAILURE)
 		return (fc_error(opt, 0));
 	get_entries(w, &cmd, opt);
 	cmd.fd = STDIN_FILENO;

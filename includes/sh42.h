@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/05/09 11:21:03 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/18 23:45:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,12 +189,15 @@ int8_t		edit_mode(t_core *shell, t_process *process, u_int64_t opt);
 int8_t		listing_mode(t_lst *w, char **av, u_int64_t opt);
 int8_t		select_specifier(t_core *shell, char **av);
 int8_t		fc_error(u_int64_t opt, int err_num);
-u_int8_t	get_range(char **av, t_cmd *cmd);
+int8_t		get_range(char **av, t_cmd *cmd, u_int64_t opt);
 void		get_entries(t_lst *w, t_cmd *cmd, u_int64_t opt);
 void		print_list(t_lst *w, t_cmd cmd, u_int64_t opt);
 void		print_reverse(t_lst *w, t_cmd cmd, u_int64_t opt);
 void		skip_options(char ***av);
 void		sort_print_cmd(t_cmd cmd, t_lst *w, u_int64_t opt);
+void		print_and_exec(t_core *shell, int fd);
+int32_t		check_pattern(char *pat);
+int32_t		search_pattern(char *pat, int8_t i);
 int8_t		fc_launch_editor(t_core *shell, char **av);
 int8_t		cd_update_pwd(t_core *shell, const char *pwd, const char *path);
 int8_t		cd_check_path(const char *path);

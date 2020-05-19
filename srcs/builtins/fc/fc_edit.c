@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/09 15:54:33 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/18 23:44:29 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,15 @@ static char		*get_editor(char **av, u_int64_t opt)
 	else if (opt & (1ULL << 4) && ft_tablen(av) == 2)
 		return (NULL);
 	av++;
-	if (ft_strequ(*av, "-e") == TRUE && *(av + 1) == NULL)
-	{
+	if (*(av + 1) == NULL)
 		return (NULL);
-	}
 	if (ft_strequ(*av, "-e") == TRUE)
 	{
 		(av)++;
 		editor = ft_strjoin(*av, " ");
 	}
 	else
-		editor = ft_strjoin(*av + 2, " ");
+		editor = ft_strjoin(*(av + 1), " ");
 	return (editor);
 }
 
@@ -95,9 +93,9 @@ static void		get_edit_entries(t_lst *w, t_cmd *cmd)
 	else if (cmd->ac == 4)
 		cmd->last = cmd->first;
 	if (cmd->first <= 0)
-		cmd->first = w_entries + cmd->first + 1;
+		cmd->first = w_entries + cmd->first;
 	if (cmd->last <= 0)
-		cmd->last = w_entries + cmd->last + 1;
+		cmd->last = w_entries + cmd->last;
 }
 
 int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
@@ -110,7 +108,8 @@ int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 		return (fc_error(opt, 4));
 	if (!shell->term.history)
 		return (fc_error(opt, 0));
-	get_range(process->av, &cmd);
+	cmd.ac = ft_tablen(process->av);
+	get_range(process->av, &cmd, opt);
 	get_edit_entries(shell->term.history, &cmd);
 	sort_print_cmd(cmd, shell->term.history, opt);
 	if ((cmd.editor = get_editor(process->av, opt)) == NULL)
