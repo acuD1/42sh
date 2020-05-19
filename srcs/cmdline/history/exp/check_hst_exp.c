@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/19 14:00:16 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/19 14:34:15 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,39 +46,36 @@ static int8_t	check_valid_specifier(t_read *term, ssize_t i)
 	return (SUCCESS);
 }
 
-static void		find_expansions(t_read *term, ssize_t i)
+static int64_t	get_index(t_read *term, ssize_t i,
+								int64_t (*fct)(t_read *, ssize_t))
 {
-	char	*tmp;
+	char		*tmp;
 
-	tmp = NULL;
-	if (term->buffer[i + 1] == '!')
-		i = last_cmd_back(term, i);
-	else if (ft_isdigit(term->buffer[i + 1]))
-	{
-		tmp = cmd_saved(term, i);
-		if ((i = call_number(term, i)) < 0)
-			ft_dprintf(STDERR_FILENO, "42sh: %s: event not found\n", tmp);
-		ft_strdel(&tmp);
-	}
-	else if (ft_isalpha(term->buffer[i + 1]))
-	{
-		tmp = cmd_saved(term, i);
-		if ((i = call_word(term, i)) < 0)
-			ft_dprintf(STDERR_FILENO, "42sh: %s: event not found\n", tmp);
-		ft_strdel(&tmp);
-	}
-	else if (term->buffer[i + 1] == '-' && ft_isdigit(term->buffer[i + 2]))
+	if (term->buffer[i + 1] == '-')
 	{
 		if (check_valid_specifier(term, i + 2) == FAILURE)
 		{
-			i = -2;
-			return ;
+			i = -1;
+			return (i);
 		}
-		tmp = cmd_saved(term, i);
-		if ((i = callback_number(term, i)) < 0)
-			ft_dprintf(STDERR_FILENO, "42sh: %s: event not found\n", tmp);
-		ft_strdel(&tmp);
 	}
+	tmp = cmd_saved(term, i);
+	if ((i = (*fct)(term, i)) < 0)
+		ft_dprintf(STDERR_FILENO, "42sh: %s: event not found\n", tmp);
+	ft_strdel(&tmp);
+	return (i);
+}
+
+static void		find_expansions(t_read *term, ssize_t *i)
+{
+	if (term->buffer[*i + 1] == '!')
+		*i = get_index(term, *i, &last_cmd_back);
+	else if (ft_isdigit(term->buffer[*i + 1]))
+		*i = get_index(term, *i, &call_number);
+	else if (ft_isalpha(term->buffer[*i + 1]))
+		*i = get_index(term, *i, &call_word);
+	else if (term->buffer[*i + 1] == '-' && ft_isdigit(term->buffer[*i + 2]))
+		*i = get_index(term, *i, &callback_number);
 }
 
 int8_t			check_expansions(t_read *term)
@@ -93,7 +90,7 @@ int8_t			check_expansions(t_read *term)
 	while (i < (ssize_t)ft_strlen(term->buffer) && term->buffer[i])
 	{
 		if (term->buffer[i] == '!')
-			find_expansions(term, i);
+			find_expansions(term, &i);
 		if (i < 0)
 		{
 			ft_strdel(&term->buffer);
