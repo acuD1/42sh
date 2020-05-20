@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loader.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 11:58:29 by arsciand          #+#    #+#             */
-/*   Updated: 2020/05/08 21:01:38 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/20 14:23:22 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	load_noi_mode(t_core *shell)
 		i = 0;
 		while (shell->term.buffer[i])
 		{
-			if (!((shell->term.buffer[i] > 31 && shell->term.buffer[i] < 127)
-				|| shell->term.buffer[i] != '\t'
+			if ((shell->term.buffer[i] < 32 || shell->term.buffer[i] > 126)
+				&& (shell->term.buffer[i] != '\t'
 				|| shell->term.buffer[i] != '\n'))
 			{
 				ft_dprintf(STDERR_FILENO,
