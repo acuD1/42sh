@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/18 23:44:29 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/20 14:06:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,16 @@ static int8_t	fc_editor(t_core *shell, t_cmd cmd)
 	return (SUCCESS);
 }
 
-static char		*get_editor(char **av, u_int64_t opt)
+static char		*get_editor(t_core *shell, char **av, u_int64_t opt)
 {
 	char		*editor;
 
 	editor = NULL;
 	if (!opt)
-		return (ft_strdup("ed "));
+	{
+		get_edit_value(shell, "FCEDIT", &editor);
+		return (editor);
+	}
 	else if (opt & (1ULL << 4) && ft_tablen(av) == 2)
 		return (NULL);
 	av++;
@@ -112,7 +115,7 @@ int8_t			edit_mode(t_core *shell, t_process *process, u_int64_t opt)
 	get_range(process->av, &cmd, opt);
 	get_edit_entries(shell->term.history, &cmd);
 	sort_print_cmd(cmd, shell->term.history, opt);
-	if ((cmd.editor = get_editor(process->av, opt)) == NULL)
+	if ((cmd.editor = get_editor(shell, process->av, opt)) == NULL)
 		return (fc_error(opt, 2));
 	return (fc_editor(shell, cmd));
 }

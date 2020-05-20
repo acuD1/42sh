@@ -6,11 +6,22 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 14:02:13 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/18 20:18:29 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/20 14:06:46 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+void		get_edit_value(t_core *shell, const char *key, char **editor)
+{
+	t_db	*db;
+
+	db = NULL;
+	if (key == NULL || (db = search_db(shell->env, key)) == NULL)
+		*editor = ft_strdup("ed ");
+	else
+		*editor = ft_strjoin(db->value, SPACE);
+}
 
 void		print_and_exec(t_core *shell, int fd)
 {
