@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/15 16:40:51 by arsciand          #+#    #+#             */
-/*   Updated: 2020/05/18 23:45:32 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/20 14:05:38 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ void		print_reverse(t_lst *w, t_cmd cmd, u_int64_t opt);
 void		skip_options(char ***av);
 void		sort_print_cmd(t_cmd cmd, t_lst *w, u_int64_t opt);
 void		print_and_exec(t_core *shell, int fd);
+void		get_edit_value(t_core *shell, const char *key, char **editor);
 int32_t		check_pattern(char *pat);
 int32_t		search_pattern(char *pat, int8_t i);
 int8_t		fc_launch_editor(t_core *shell, char **av);
