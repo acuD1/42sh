@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/04/23 16:44:07 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/21 13:35:17 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	check_tmp_buffer(t_read *term)
 	goto_prompt(term);
 	ft_strdel(&term->buffer);
 	term->buffer = ft_memalloc(BUFF_SIZE + 1);
-	if (term->tmp_buff && ft_strlen(term->tmp_buff) > 0)
+	if (term->tmp_buff)
 	{
 		insert_str_in_buffer(term->tmp_buff, term);
 		ft_strdel(&(term->tmp_buff));
