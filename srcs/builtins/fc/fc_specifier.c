@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/19 14:59:01 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/21 09:07:56 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 
 static void		get_pat_and_rep(char **av, char **pat, char **rep)
 {
+	char		*tmp;
+
+	tmp = NULL;
 	if (av == NULL || ft_tablen(av) == 2)
 		return ;
 	skip_options(&av);
 	av++;
-	(*pat) = ft_strdup(*av);
+	tmp = ft_strdup(*av);
+	*pat = tmp;
 	if ((*rep = ft_strchr(*pat, '=')) == NULL)
 		return ;
 	**rep = '\0';
@@ -78,7 +82,7 @@ static int8_t	select_cmd_spe(t_core *shell, char *pat)
 		digit = 1;
 	else if (digit <= 0)
 	{
-		if (!ft_isdigit(*pat))
+		if (!ft_isnum(pat))
 		{
 			if ((digit = check_pattern(pat)) == FAILURE)
 				return (FAILURE);
@@ -86,7 +90,7 @@ static int8_t	select_cmd_spe(t_core *shell, char *pat)
 		else if ((digit * (-1)) > w_entries)
 			digit = 1;
 		else
-			digit = w_entries + digit;
+			digit = w_entries + digit + 1;
 		replace_cmd_spe(shell, digit);
 	}
 	else
@@ -102,27 +106,28 @@ static int8_t	select_cmd_spe(t_core *shell, char *pat)
 
 int8_t			select_specifier(t_core *shell, char **av)
 {
-	t_cmd		cmd;
 	char		*pat;
 	char		*rep;
 
 	pat = NULL;
 	rep = NULL;
-	cmd.fd = STDIN_FILENO;
 	if (shell->term.history == NULL)
 		return (fc_error(0, 0));
-	get_pat_and_rep(av, &pat, &rep);
 	ft_strdel(&shell->term.buffer);
 	shell->term.buffer = ft_strdup(shell->term.history->content);
+	get_pat_and_rep(av, &pat, &rep);
 	if (ft_tablen(av) > 2 && rep == NULL)
 	{
 		if (select_cmd_spe(shell, pat) == FAILURE)
+		{
+			ft_strdel(&pat);
 			return (fc_error(0, 3));
+		}
 	}
 	else
 		while (replace_pattern(shell, pat, rep) == SUCCESS)
 			;
 	ft_strdel(&pat);
-	print_and_exec(shell, cmd.fd);
+	print_and_exec(shell, STDIN_FILENO);
 	return (SUCCESS);
 }

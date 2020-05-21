@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/27 15:06:02 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/12 20:12:17 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/20 20:37:15 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,12 @@ void	print_list(t_lst *w, t_cmd cmd, u_int64_t opt)
 		w = w->prev;
 		i++;
 	}
+}
+
+void	print_and_exec(t_core *shell, int fd)
+{
+	ft_dprintf(fd, "%s\n", shell->term.buffer);
+	lexer_parser_analyzer(shell);
+	do_job_notification(shell, shell->launched_jobs, TRUE);
+	task_master(shell);
 }

@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/18 14:02:13 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/20 14:23:25 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/21 09:07:09 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,6 @@ void		get_edit_value(t_core *shell, const char *key, char **editor)
 		*editor = ft_strdup("ed ");
 	else
 		*editor = ft_strjoin(db->value, SPACE);
-}
-
-void		print_and_exec(t_core *shell, int fd)
-{
-	ft_dprintf(fd, "%s\n", shell->term.buffer);
-	lexer_parser_analyzer(shell);
-	do_job_notification(shell, shell->launched_jobs, TRUE);
-	task_master(shell);
 }
 
 int32_t		search_pattern(char *pat, int8_t i)
@@ -57,9 +49,7 @@ int32_t		check_pattern(char *pat)
 	if ((digit = search_pattern(pat, 0)) == FAILURE)
 	{
 		if ((digit = search_pattern(pat, 1)) == FAILURE)
-		{
 			return (FAILURE);
-		}
 	}
 	return (digit);
 }
