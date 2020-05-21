@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 17:18:15 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/20 14:06:31 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/21 12:47:15 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static char		*get_editor(t_core *shell, char **av, u_int64_t opt)
 	char		*editor;
 
 	editor = NULL;
-	if (!opt)
+	if (!opt || ft_isnum(*(av + 1)))
 	{
 		get_edit_value(shell, "FCEDIT", &editor);
 		return (editor);

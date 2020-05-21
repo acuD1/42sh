@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:11:54 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/18 23:45:44 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/21 12:35:11 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,14 @@ void		get_entries(t_lst *w, t_cmd *cmd, u_int64_t opt)
 	int32_t		w_entries;
 
 	w_entries = (int32_t)ft_lstlen(w);
+	if (cmd->first > 0 && cmd->first > w_entries)
+		cmd->first = w_entries;
+	if (cmd->first < 0)
+	{
+		cmd->first++;
+		if ((cmd->first * (-1)) > w_entries)
+			cmd->first = 1;
+	}
 	if (cmd->first <= 0)
 		cmd->first = w_entries + cmd->first;
 	if (cmd->last <= 0)
