@@ -13,29 +13,30 @@
 #include "sh42.h"
 #include <unistd.h>
 
-static void	expansion_assign(t_core *shell, t_process *process)
+static void	expansion_assign(t_core *shell, t_process *pro)
 {
 	t_lst	*lst;
 	char	*res;
 
-	if (!process->assign_list || !shell)
+	if (!pro->assign_list || !shell)
 		return ;
 	res = NULL;
 	shell->subst_error = 0;
-	lst = process->assign_list;
+	lst = pro->assign_list;
 	while (lst)
 	{
-		if (((t_db*)lst->content)->value)
-		{
-			res = inhibiteurs_expansion(((t_db*)lst->content)->value, shell, 0);
-			if (!process->av)
-				add_assign_env(shell, ((t_db*)lst->content)->key,
-					ft_strdup(res));
-			else
-				add_assign_envp(((t_db*)lst->content)->key,
-					ft_strdup(res), &process->envp);
-			ft_strdel(&res);
-		}
+		if (!ft_strcmp(((t_db*)lst->content)->key, "PATH"))
+			free_hash_map(&shell->hash);
+		res = inhibiteurs_expansion(((t_db*)lst->content)->value, shell, 0);
+		if (!pro->av || (pro->av[0] && (!ft_strcmp(pro->av[0], "export")
+			|| !ft_strcmp(pro->av[0], "exit") || !ft_strcmp(pro->av[0], "set")
+			|| !ft_strcmp(pro->av[0], "unset"))))
+			add_assign_env(shell, ((t_db*)lst->content)->key,
+				ft_strdup(res));
+		else
+			add_assign_envp(((t_db*)lst->content)->key,
+				ft_strdup(res), &pro->envp);
+		ft_strdel(&res);
 		lst = lst->next;
 	}
 }
