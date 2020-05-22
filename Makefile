@@ -5,7 +5,7 @@ define MSG
 #                                                         :::      ::::::::    #
 #    Makefile for 42sh                                  :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By arsciand fcatusse guvillat                  +#+  +:+       +#+         #
+#    By arsciand fcatusse guvillat mpivet-p         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #                                                      #+#    #+#              #
 #                                                     ###   ########.fr        #
@@ -389,7 +389,7 @@ make:
 	echo "#                                                         :::      ::::::::    #"
 	echo "#    Makefile for 42sh                                  :+:      :+:    :+:    #"
 	echo "#                                                     +:+ +:+         +:+      #"
-	echo "#    By arsciand fcatusse guvillat                  +#+  +:+       +#+         #"
+	echo "#    By arsciand fcatusse guvillat mpivet-p         +#+  +:+       +#+         #"
 	echo "#                                                 +#+#+#+#+#+   +#+            #"
 	echo "#                                                      #+#    #+#              #"
 	echo "#                                                     ###   ########.fr        #"
