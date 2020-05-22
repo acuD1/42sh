@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   check_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 03:57:59 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/02 02:52:28 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 21:11:11 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
 
-int		check_invalid_identifiers(char *arg, char *exceptions)
+int8_t	check_invalid_identifiers(const char *arg, const char *exceptions)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (!(arg[0]))
 		return (FAILURE);
 	while (arg[i])
 	{
-		if (ft_isalnum(arg[i]) != SUCCESS && ft_strchr(exceptions, arg[i]) == NULL)
+		if (ft_isalnum(arg[i]) != SUCCESS
+			&& ft_strchr(exceptions, arg[i]) == NULL)
 			return (FAILURE);
 		i++;
 	}

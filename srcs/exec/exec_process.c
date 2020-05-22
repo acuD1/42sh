@@ -3,62 +3,81 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/21 14:14:57 by arsciand          #+#    #+#             */
-/*   Updated: 2019/08/02 14:35:37 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/05/09 11:20:59 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+#include <unistd.h>
+#include <sys/wait.h>
 
 /*
 **	exec_process takes for parameter t_lst *env for now because we can set
 **	a temporary environnement if we use the env builtin.
 */
 
-void		exec_process(t_core *shell, t_lst *env)
+static int8_t	job_part_completed(t_job *job, t_process *process)
 {
-	char	**envp; // envp formated for excve
-	pid_t	child;	// child pid after fork
-	int		status;	// status for waitpid
+	t_lst *ptr;
 
-	envp = NULL;
-
-	/* get_bin check if is a local binary or find the binary in PATH or hash table*/
-	shell->bin = get_bin(shell, env);
-
-	/*
-	**	Several check are listed here, such as :
-	**	- if the binary exist in PATH from get_bin
-	**	- if the binary have exec permission
-	**	- if the binary can be forked
-	*/
-	if (shell->bin == NULL)
-		return (exec_handler(shell, BIN_ERROR));
-	if (access(shell->bin, X_OK) == FAILURE)
-		return (exec_handler(shell, PERM_ERROR));
-	if ((child = fork()) < 0)
-		return (exec_handler(shell, FORK_ERROR));
-
-	/*
-	**	set_envp format a table of environement for execve.
-	**	like : PATH=/usr/bin
-	*/
-	envp = set_envp(shell);
-
-	/* binary is executed here by execve */
-	if (child == 0 && execve(shell->bin, shell->tokens, envp) < 0)
+	ptr = job->process_list;
+	while (ptr != NULL && ptr->content != process)
 	{
-		ft_tabdel(&envp);
-		return (exec_handler(shell, EXEC_ERROR));
+		if (((t_process *)ptr->content)->completed != TRUE)
+			return (FALSE);
+		ptr = ptr->next;
 	}
+	return (TRUE);
+}
 
-	/* We're checking the waitpid status here */
+static void		control_process
+	(t_core *shell, t_job *job, t_process *process)
+{
+	if (process->pgid == -1)
+		job->pgid = process->pid;
+	process->pgid = job->pgid;
+	if (setpgid(process->pid, process->pgid) != SUCCESS)
+		print_and_quit(shell, "42sh: setpgid error (1)\n");
+	if (process->stopped != TRUE && process->type != P_PIPE)
+	{
+		if (tcsetpgrp(shell->terminal, process->pgid) != SUCCESS)
+			print_and_quit(shell, "42sh: tcsetpgrp error (1)\n");
+		if (process->pipe[0] != STDIN_FILENO)
+			wait_for_job(shell, shell->job_list, job);
+		else
+			wait_for_process(shell, job, process);
+		if (tcsetpgrp(shell->terminal, shell->pgid) != SUCCESS)
+			print_and_quit(shell, "42sh: tcsetpgrp error (2)\n");
+	}
 	else
-	{
-		waitpid(child, &status, WCONTINUED);
-		/* waitpid_status_handler(shell); Segv catcher not set yet */
-	}
-	ft_tabdel(&envp);
+		process->stopped = FALSE;
+}
+
+static void		clear_fds(t_process *process)
+{
+	if (process->pipe[1] != STDOUT_FILENO)
+		close(process->pipe[1]);
+	if (process->pipe[0] != STDIN_FILENO)
+		close(process->pipe[0]);
+}
+
+void			exec_process(t_core *shell, t_job *job, t_process *process)
+{
+	if (job_part_completed(job, process))
+		job->pgid = -1;
+	process->pgid = job->pgid;
+	if (process->av)
+		get_bin(shell, process);
+	if ((process->pid = fork()) == 0)
+		launch_process(shell, process);
+	else if (process->pid < 0)
+		print_and_quit(shell, "42sh: fork failure\n");
+	clear_fds(process);
+	if (shell->is_interactive == TRUE)
+		control_process(shell, job, process);
+	else if (process->type != P_PIPE)
+		wait_for_process(shell, job, process);
 }

@@ -2,6 +2,7 @@
 
 **/42sh
 **/build/42sh*
+*.build
 
 # Dir
 **/build
@@ -90,11 +91,20 @@ tags
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+.vscode/extensions.json
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+.42sh_history
+truc
+test
+
+### DEBUG ###
+srcs/debug.c
+truc
+test
+loop

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_updates.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:56:37 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/04 08:31:28 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/08 17:16:02 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 /*
  **	Create IFS set variable (Input Field Separator)
- */
+*/
 
 int8_t	update_ifs(t_core *shell)
 {
@@ -24,7 +24,7 @@ int8_t	update_ifs(t_core *shell)
 
 	db = NULL;
 	value = NULL;
-	if (shell != NULL && (db = get_or_create_db(shell, "IFS", INTERNAL_VAR)) != NULL)
+	if (shell && (db = get_or_create_db(shell, "IFS", INTERNAL_VAR)) != NULL)
 	{
 		value = ft_strdup("' \t\n'");
 		if (value && modify_db(db, value, 0) != NULL)
@@ -41,33 +41,34 @@ int8_t	update_ifs(t_core *shell)
 
 int8_t	create_term(t_core *shell)
 {
-	if (shell != NULL && search_db(shell->env, "TERM") == NULL)
+	if (!shell)
+		return (FAILURE);
+	if (search_db(shell->env, "TERM") == NULL)
 	{
 		if (ft_lstappend(&(shell->env), ft_lstnew(
 				fetch_db(&(shell->db), "TERM=dumb", INTERNAL_VAR)
 				, sizeof(t_db))) != NULL)
 			return (SUCCESS);
 	}
-	return (FAILURE);
+	return (SUCCESS);
 }
 
 /*
- **	Create LINES and COLUMNS (set variables) with the terminal width and height
- **		- Should be updated each time SIGWINCH is captured
- */
+**	Create LINES and COLUMNS (set variables) with the terminal width and height
+**		- Should be updated each time SIGWINCH is captured
+*/
 
 int8_t	update_termsize(t_core *shell)
 {
-	struct winsize	ws;
 	t_db			*db;
 	char			*value;
 
 	db = NULL;
 	value = NULL;
-	ioctl(STDIN_FILENO, TIOCGWINSZ, &ws);
 	if (shell && (db = get_or_create_db(shell, "LINES", INTERNAL_VAR)) != NULL)
 	{
-		if (!(value = ft_itoa(ws.ws_row)) || modify_db(db, value, 0) == NULL)
+		if (!(value = ft_itoa((int32_t)shell->term.ws_li))
+				|| modify_db(db, value, 0) == NULL)
 		{
 			ft_strdel(&value);
 			return (FAILURE);
@@ -75,7 +76,8 @@ int8_t	update_termsize(t_core *shell)
 	}
 	if (shell && (db = get_or_create_db(shell, "COLUMNS", INTERNAL_VAR)))
 	{
-		if (!(value = ft_itoa(ws.ws_col)) || modify_db(db, value, 0) == NULL)
+		if (!(value = ft_itoa((int32_t)shell->term.ws_col))
+				|| modify_db(db, value, 0) == NULL)
 		{
 			ft_strdel(&value);
 			return (FAILURE);

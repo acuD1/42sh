@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   db_tools.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpivet-p <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mpivet-p <mpivet-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 18:21:41 by mpivet-p          #+#    #+#             */
-/*   Updated: 2019/10/04 07:44:26 by mpivet-p         ###   ########.fr       */
+/*   Updated: 2020/03/05 00:24:05 by mpivet-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@
 **	new_type takes a 8 bits int (0 if you don't want to modify it)
 */
 
-t_db	*modify_db(t_db	*db, char *new_value, u_int8_t new_type)
+t_db	*modify_db(t_db *db, char *new_value, u_int8_t new_type)
 {
-	if (db && new_value != NULL)
+	if (db && new_value)
 	{
 		ft_strdel(&(db->value));
 		db->value = new_value;
 	}
 	if (db && new_type != 0)
 	{
-		db->type = new_type;
+		db->type |= new_type;
 	}
 	if (!db)
 		ft_strdel(&new_value);
@@ -39,7 +39,7 @@ t_db	*modify_db(t_db	*db, char *new_value, u_int8_t new_type)
 **	to the t_db or create it if not existing. (variant of search_db function)
 */
 
-t_db	*get_or_create_db(t_core *shell, char *key, u_int8_t var_type)
+t_db	*get_or_create_db(t_core *shell, const char *key, u_int8_t var_type)
 {
 	t_db	*db;
 
@@ -58,7 +58,7 @@ t_db	*get_or_create_db(t_core *shell, char *key, u_int8_t var_type)
 **	to the t_db or NULL ifnot existing
 */
 
-t_db	*search_db(t_lst *env, char *key)
+t_db	*search_db(t_lst *env, const char *key)
 {
 	t_db	*db;
 
@@ -77,7 +77,7 @@ t_db	*search_db(t_lst *env, char *key)
 **	Delete the variable corresponding to the key
 */
 
-int8_t	del_db(t_core *shell, char *key)
+int8_t	del_db(t_core *shell, const char *key)
 {
 	t_lst	*prev;
 	t_lst	*env;
@@ -91,9 +91,6 @@ int8_t	del_db(t_core *shell, char *key)
 	}
 	if (env != NULL)
 	{
-		/*
-		**	linking the previous link (or shell->env pointer) to the next link
-		*/
 		prev->next = env->next;
 		if (prev == env)
 			shell->env = env->next;
@@ -103,5 +100,20 @@ int8_t	del_db(t_core *shell, char *key)
 		ft_memdel((void**)&env);
 		return (SUCCESS);
 	}
+	return (FAILURE);
+}
+
+int8_t	edit_var
+	(t_core *shell, const char *name, char *value, u_int8_t var_type)
+{
+	t_db	*db;
+
+	db = NULL;
+	if (shell && (db = get_or_create_db(shell, name, var_type)) != NULL)
+	{
+		if (value && modify_db(db, value, var_type) != NULL)
+			return (SUCCESS);
+	}
+	ft_strdel(&value);
 	return (FAILURE);
 }
