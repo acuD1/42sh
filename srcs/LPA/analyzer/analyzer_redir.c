@@ -24,6 +24,7 @@ void		init_redir(t_redir *new)
 t_analyzer	*redir_wanalyze(t_analyzer *anal, t_core *shell)
 {
 	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
+	anal->process.command = fill_cmd_job(anal->lexer, anal->process.command);
 	if (anal->redir.type == P_DLESS || anal->redir.type == P_DLESSDASH)
 		return (heredoc_analyzer(anal, shell));
 	else
@@ -45,6 +46,7 @@ t_analyzer	*redirect_analyze(t_analyzer *anal, t_core *shell)
 {
 	(void)shell;
 	anal->job.command = fill_cmd_job(anal->lexer, anal->job.command);
+	anal->process.command = fill_cmd_job(anal->lexer, anal->process.command);
 	if ((((t_token*)anal->lexer->content)->id == P_DLESS && anal->lexer->next
 		&& ((t_token*)anal->lexer->next->content)->id == P_LESS))
 		return (anal = load_heredoc_fromline(anal, shell));
