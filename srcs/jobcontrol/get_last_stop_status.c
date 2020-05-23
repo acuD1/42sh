@@ -16,7 +16,7 @@
 static char	*get_short_status(int status)
 {
 	static char	*msg[4] = {"Stopped(SIGSTOP)\n", "Stopped(SIGTSTP)\n"
-		, "Stopped(SIGTTIN)\n", "Stopped(SIGTTOU)"};
+		, "Stopped(SIGTTIN)\n", "Stopped(SIGTTOU)\n"};
 
 	status = WSTOPSIG(status);
 	if (status == SIGSTOP)

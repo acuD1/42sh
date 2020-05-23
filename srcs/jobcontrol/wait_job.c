@@ -70,7 +70,8 @@ void			wait_for_process(t_core *shell, t_job *job, t_process *process)
 
 	pid = waitpid(process->pid, &status, WUNTRACED);
 	mark_process_status(shell, shell->job_list, pid, status);
-	if (WIFSIGNALED(status) || WIFSTOPPED(status))
+	if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		|| WIFSTOPPED(status))
 		write(2, "\n", 1);
 	if (shell->is_interactive && WIFSTOPPED(status)
 			&& !process_is_last(job)
