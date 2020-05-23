@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:11:54 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/21 12:35:11 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/22 15:45:00 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		skip_options(char ***av)
 	{
 		if (ft_isstart(**av, "-l") || ft_isstart(**av, "-r")
 				|| ft_isstart(**av, "-n") || ft_isstart(**av, "-s")
-				|| ft_isstart(**av, "-e"))
+				|| ft_isstart(**av, "-e") || ft_isstart(**av, "--"))
 			continue ;
 		else
 			break ;

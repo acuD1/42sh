@@ -36,6 +36,8 @@ int8_t	builtin_fg(t_core *shell, t_process *process)
 		return (1);
 	}
 	ft_printf("%s\n", job->command);
+	job->notified = FALSE;
 	continue_job(shell, job, TRUE);
+	do_job_notification(shell, shell->launched_jobs, FALSE);
 	return (SUCCESS);
 }

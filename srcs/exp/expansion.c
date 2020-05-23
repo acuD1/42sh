@@ -25,12 +25,12 @@ static void	expansion_assign(t_core *shell, t_process *pro)
 	lst = pro->assign_list;
 	while (lst)
 	{
-		if (!ft_strcmp(((t_db*)lst->content)->key, "PATH"))
+		if (!ft_strncmp(((t_db*)lst->content)->key, "PATH", 4))
 			free_hash_map(&shell->hash);
 		res = inhibiteurs_expansion(((t_db*)lst->content)->value, shell, 0);
 		if (!pro->av || (pro->av[0] && (!ft_strcmp(pro->av[0], "export")
-			|| !ft_strcmp(pro->av[0], "exit") || !ft_strcmp(pro->av[0], "set")
-			|| !ft_strcmp(pro->av[0], "unset"))))
+			|| !ft_strcmp(pro->av[0], "unset") || !ft_strcmp(pro->av[0], "set")
+			|| !ft_strcmp(pro->av[0], "exit"))))
 			add_assign_env(shell, ((t_db*)lst->content)->key,
 				ft_strdup(res));
 		else

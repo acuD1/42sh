@@ -23,9 +23,8 @@ void	load_noi_mode(t_core *shell)
 		i = 0;
 		while (shell->term.buffer[i])
 		{
-			if ((shell->term.buffer[i] < 32 || shell->term.buffer[i] > 126)
-				&& (shell->term.buffer[i] != '\t'
-				|| shell->term.buffer[i] != '\n'))
+			if (!ft_isblank(shell->term.buffer[i])
+				&& !ft_is_print(shell->term.buffer[i]))
 			{
 				ft_dprintf(STDERR_FILENO,
 					"42sh: syntax error: invalid token\n");

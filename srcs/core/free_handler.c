@@ -51,6 +51,7 @@ static void	free_history(t_read *term)
 void		free_shell(t_core *shell)
 {
 	free_db(shell->env);
+	free_db(shell->pos_vars);
 	free_prompt(shell);
 	free_history(&shell->term);
 	free_hash_map(&shell->hash);

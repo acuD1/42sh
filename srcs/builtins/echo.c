@@ -20,19 +20,20 @@ int8_t	builtin_echo(t_core *shell, t_process *process)
 
 	(void)shell;
 	i = 1;
+	if (write(STDOUT_FILENO, NULL, 0) < 0)
+	{
+		ft_dprintf(STDERR_FILENO
+		, "42sh: echo: write error: Bad file descriptor\n");
+		return (1);
+	}
 	argc = ft_tablen(process->av);
 	while (i < argc)
 	{
-		if (write(STDOUT_FILENO, process->av[i], ft_strlen(process->av[i])) < 0)
-		{
-			ft_dprintf(STDERR_FILENO
-			, "42sh: echo: write error: Bad file descriptor\n");
-			return (1);
-		}
+		write(STDOUT_FILENO, process->av[i], ft_strlen(process->av[i]));
 		i++;
 		if (i < argc)
-			write(1, " ", 1);
+			write(STDOUT_FILENO, " ", 1);
 	}
-	write(1, "\n", 1);
+	write(STDOUT_FILENO, "\n", 1);
 	return (SUCCESS);
 }

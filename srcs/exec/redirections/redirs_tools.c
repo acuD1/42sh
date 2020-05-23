@@ -25,7 +25,6 @@ int8_t	dup_output(int fd, t_redir *ptr)
 	{
 		ptr->dup_fd[1] = dup(ptr->io_num[1]);
 		dup2(tmp, ptr->io_num[1]);
-		close(tmp);
 		if (ptr->dup_fd[1] < 0)
 			return (FAILURE);
 	}

@@ -15,22 +15,25 @@
 
 static void	print_longjob(t_job *job)
 {
+	static char	running[] = "Running\n";
 	t_process	*process;
+	char		*msg;
 	t_lst		*ptr;
 
 	ptr = job->process_list;
 	while (ptr != NULL)
 	{
 		process = ((t_process *)ptr->content);
+		msg = job_is_stopped(job) ? signal_msg(process->status) : running;
 		if (ptr == job->process_list)
 			ft_printf("[%d]%c %d %-23.*s %s\n", job->jobc_id, job->jobc_last
 			, process->pid
-			, ft_strlen(signal_msg(process->status)) - 1
-			, signal_msg(process->status), process->command);
+			, ft_strlen(msg) - 1
+			, msg, process->command);
 		else
 			ft_printf("     %d %-24.*s%s\n", process->pid
-			, ft_strlen(signal_msg(process->status)) - 1
-			, signal_msg(process->status), process->command);
+			, ft_strlen(msg) - 1
+			, msg, process->command);
 		ptr = ptr->next;
 	}
 }
@@ -46,6 +49,10 @@ static void	print_job(t_job *job, u_int64_t opt, const char *name)
 		ft_printf("%d\n", job->pgid);
 	else if (opt & (1ULL << 11))
 		print_longjob(job);
+	else if (!job_is_stopped(job))
+		ft_printf("[%d]%c  %.*s\t\t%s\n", job->jobc_id, job->jobc_last
+		, ft_strlen("Running")
+		, "Running", job->command);
 	else
 		ft_printf("[%d]%c  %.*s\t\t%s\n", job->jobc_id, job->jobc_last
 		, ft_strlen(get_last_stop_status(job)) - 1
