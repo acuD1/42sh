@@ -57,7 +57,7 @@
 */
 
 # define CREDIT					"arsciand, fcatusse, mpivet-p and guvillat\n"
-# define PS1					"'42sh-0.1$ '"
+# define PS1					"'42sh-1.0$ '"
 # define PS2					"'> '"
 # define BUFF_SIZE				4096
 # define READ_SIZE				8
