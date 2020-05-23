@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/20 17:50:06 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/04/23 16:52:07 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/23 19:40:01 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ static int32_t	get_opt_test(size_t argc, char **argv, int8_t diff)
 static void		parse_testblt_handler
 	(char **argv, int8_t diff, int64_t num, u_int8_t status)
 {
+	num = atol(argv[1] + diff);
 	if (status ^ TEST_INT_EXP)
 		ft_dprintf(2, "42sh: test: %s: integer expression expected\n"
-			, (ft_atol(argv[1 + diff], &num) != SUCCESS)
+			, num != SUCCESS
 			? argv[1 + diff] : argv[3 + diff]);
 	else if (status ^ TEST_ARG)
 		ft_dprintf(STDERR_FILENO, "42sh: test: too many arguments\n");
@@ -57,7 +58,7 @@ static int8_t	parse_testblt
 
 	num = 0;
 	if ((*opt = get_opt_test(argc, argv, diff)) > DIFF_BINTEST
-	&& ((argc > 2 + (size_t)diff && ft_atol(argv[1 + diff], &num) != SUCCESS)
+	&& ((argc > 2 + (size_t)diff && (num = atol(argv[1 + diff])) != SUCCESS)
 		|| (argc > 3 + (size_t)diff
 		&& ft_atol(argv[3 + diff], &num) != SUCCESS)))
 	{
@@ -90,8 +91,11 @@ static int8_t	comp_tests(const char *s1, const char *s2, int32_t opt)
 		return (((ft_strcmp(s1, s2) == 0)
 		? 1 : 0) ^ (int8_t)(DIFF_BINTEST - opt));
 	}
-	ft_atol(s1, &n1);
-	ft_atol(s2, &n2);
+	ft_dprintf(STDERR_FILENO, "s1 = |%s| , s2 = |%s|\n", s1, s2);
+	n1 = atol(s1);
+	ft_dprintf(STDERR_FILENO, "?\n");
+	n2 = atol(s2);
+	ft_dprintf(STDERR_FILENO, "?\n");
 	if (opt == EQ_BINTEST || opt == NE_BINTEST)
 		return ((n1 == n2) ^ (int8_t)(NE_BINTEST - opt));
 	if (opt == GE_BINTEST || opt == LT_BINTEST)
@@ -105,12 +109,13 @@ int8_t			builtin_test(t_core *shell, t_process *process)
 {
 	int32_t	opt;
 	size_t	argc;
-	int8_t	diff;
+	int	diff;
 
 	(void)shell;
 	argc = ft_tablen(process->av);
 	diff = (argc > 1 && process->av[1]
-	&& ft_strcmp(process->av[1], "!") == 0) ? 1 : 0;
+		&& ft_strcmp(process->av[1], "!") == 0) ? 1 : 0;
+	ft_dprintf(STDERR_FILENO, "DIFF= |%d|\n", diff);
 	if (argc < 3 + (size_t)diff)
 	{
 		return (((argc < 2 + (size_t)diff
@@ -121,6 +126,13 @@ int8_t			builtin_test(t_core *shell, t_process *process)
 		return (path_tests(process->av[2 + diff], opt) ^ diff);
 	if (opt != FAILURE)
 	{
+		if (!process->av[3 + diff])
+		{
+			ft_dprintf(STDERR_FILENO,
+				"BREF REVOIR LE PARSING ERREUR ET AJOUTER LA PROTECTION\n42sh: test: %s: unary operator expected\n", process->av[1 + diff]);
+			return (0);
+		}
+		ft_dprintf(STDERR_FILENO, "s2?????? = |%s|\n", process->av[3 + diff]);
 		return (comp_tests(process->av[1 + diff]
 			, process->av[3 + diff], opt) ^ diff);
 	}
