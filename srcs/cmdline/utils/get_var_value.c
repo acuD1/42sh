@@ -6,11 +6,27 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 17:43:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/16 17:42:34 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/24 16:40:52 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+ssize_t			get_history_value(char *var)
+{
+	t_core		*shell;
+	t_db		*db;
+	ssize_t		hist_value;
+
+	shell = get_core(NULL);
+	db = NULL;
+	hist_value = 0;
+	if ((db = search_db(shell->env, var)) == NULL)
+		return (HIST_SIZE);
+	else
+		hist_value = ft_atoi(db->value);
+	return (hist_value);
+}
 
 void			get_prompt_value(t_core *shell, const char *key)
 {

@@ -6,11 +6,21 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/11 04:02:43 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/03/09 19:04:39 by arsciand         ###   ########.fr       */
+/*   Updated: 2020/05/24 17:49:15 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh42.h"
+
+ssize_t		check_exp_error(t_lst *w, ssize_t n)
+{
+	if (!w)
+		return (FAILURE);
+	if (n > (ssize_t)ft_lstlen(w) || n > get_history_value("HISTSIZE")
+		|| n < 0)
+		return (FAILURE);
+	return (n);
+}
 
 static void	replace_buffer(t_read *term, char *begin, char *end, char *content)
 {
