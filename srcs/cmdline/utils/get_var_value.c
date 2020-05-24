@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 17:43:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/24 16:40:52 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/24 18:32:27 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ ssize_t			get_history_value(char *var)
 	if ((db = search_db(shell->env, var)) == NULL)
 		return (HIST_SIZE);
 	else
-		hist_value = ft_atoi(db->value);
+	{
+		if (ft_atol(db->value, &hist_value) == FAILURE)
+			return (HIST_SIZE);
+	}
 	return (hist_value);
 }
 
