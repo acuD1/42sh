@@ -6,7 +6,7 @@
 /*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 12:40:04 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/28 15:06:14 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/28 15:24:46 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ int8_t			tab_key(t_core *shell)
 		ft_strdel(&output);
 	}
 	else
-	{
 		display_prompt_and_buffer(&shell->term);
-		ft_strdel(&str);
-	}
+	ft_strdel(&str);
 	return (SUCCESS);
 }

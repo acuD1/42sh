@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 13:06:10 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/28 15:06:28 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/28 16:06:29 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ static char		*get_output(char **input, t_core *shell,
 	tmp = ft_strsub(*input, 0, ft_strlen(*input) - (ft_strlen(*input) - ac->x));
 	*input = ft_strjoinf(tmp, *output, 1);
 	if (complete_slash(output) == TRUE)
+	{
+		ft_strdel(input);
 		return (*output);
+	}
 	get_output[ac->type](*output, ac, shell);
 	return (NULL);
 }
@@ -104,10 +107,7 @@ int8_t			auto_complete_mode(char *input, t_core *shell, char **output)
 		return (SUCCESS);
 	saved = input;
 	if (get_output(&saved, shell, &ac, output) != NULL)
-	{
-		ft_strdel(&saved);
 		return (SUCCESS);
-	}
 	if (display_last_output(&ac, saved, output) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
