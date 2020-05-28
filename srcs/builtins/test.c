@@ -56,7 +56,8 @@ static int8_t	parse_testblt
 	int64_t	num;
 
 	num = 0;
-	if ((*opt = get_opt_test(argc, argv, diff)) > DIFF_BINTEST
+	*opt = get_opt_test(argc, argv, diff);
+	if (*opt > DIFF_BINTEST
 	&& ((argc > 2 + (size_t)diff && ft_atol(argv[1 + diff], &num) != SUCCESS)
 		|| (argc > 3 + (size_t)diff
 		&& ft_atol(argv[3 + diff], &num) != SUCCESS)))
@@ -116,7 +117,8 @@ int8_t			builtin_test(t_core *shell, t_process *process)
 		return (((argc < 2 + (size_t)diff
 			|| process->av[1 + diff][0] == 0) ? 1 : 0) ^ diff);
 	}
-	parse_testblt(argc, process->av, diff, &opt);
+	if (parse_testblt(argc, process->av, diff, &opt))
+		return (2);
 	if (opt <= Z_UNATEST && opt != FAILURE)
 		return (path_tests(process->av[2 + diff], opt) ^ diff);
 	if (opt != FAILURE)
