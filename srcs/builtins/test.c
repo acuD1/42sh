@@ -13,7 +13,7 @@
 #include "sh42.h"
 #include <unistd.h>
 
-static int32_t	get_opt_test(size_t argc, char **argv, int8_t diff)
+static int32_t	get_opt_test(char *str)
 {
 	static char	*op[NB_TESTBLT] = {"-b", "-c", "-d", "-e", "-f", "-g", "-L"
 		, "-p", "-r", "-S", "-s", "-u", "-w", "-x", "-z", "=", "!=", "-eq"
@@ -21,14 +21,11 @@ static int32_t	get_opt_test(size_t argc, char **argv, int8_t diff)
 	size_t		i;
 
 	i = 0;
-	if (argc > 2 + (size_t)diff && argv[2 + (size_t)diff])
+	while (i < NB_TESTBLT)
 	{
-		while (i < NB_TESTBLT)
-		{
-			if (ft_strcmp(op[i], argv[((i <= Z_UNATEST) ? 1 : 2) + diff]) == 0)
-				return ((int32_t)i);
-			i++;
-		}
+		if (ft_strcmp(op[i], str) == 0)
+			return ((int32_t)i);
+		i++;
 	}
 	return (FAILURE);
 }
@@ -36,16 +33,16 @@ static int32_t	get_opt_test(size_t argc, char **argv, int8_t diff)
 static void		parse_testblt_handler
 	(char **argv, int8_t diff, int64_t num, u_int8_t status)
 {
-	if (status ^ TEST_INT_EXP)
+	if (status == TEST_INT_EXP)
 		ft_dprintf(2, "42sh: test: %s: integer expression expected\n"
 			, (ft_atol(argv[1 + diff], &num) != SUCCESS)
 			? argv[1 + diff] : argv[3 + diff]);
-	else if (status ^ TEST_ARG)
+	else if (status == TEST_ARG)
 		ft_dprintf(STDERR_FILENO, "42sh: test: too many arguments\n");
-	else if (status ^ TEST_BIN)
+	else if (status == TEST_BIN)
 		ft_dprintf(STDERR_FILENO, "42sh: test: %s: %s operator expected\n"
 			, argv[1 + diff], "binary");
-	else if (status ^ TEST_UNA)
+	else if (status == TEST_UNA)
 		ft_dprintf(STDERR_FILENO, "42sh: test: %s: %s operator expected\n"
 			, argv[1 + diff], "unary");
 }
@@ -56,29 +53,26 @@ static int8_t	parse_testblt
 	int64_t	num;
 
 	num = 0;
-	*opt = get_opt_test(argc, argv, diff);
-	if (*opt > DIFF_BINTEST
-	&& ((argc > 2 + (size_t)diff && ft_atol(argv[1 + diff], &num) != SUCCESS)
-		|| (argc > 3 + (size_t)diff
-		&& ft_atol(argv[3 + diff], &num) != SUCCESS)))
-	{
-		parse_testblt_handler(argv, diff, num, TEST_INT_EXP);
-		return (FAILURE);
-	}
-	if ((argc > 4 + (size_t)diff && *opt > Z_UNATEST)
-		|| (argc > 3 + (size_t)diff && *opt <= Z_UNATEST && *opt >= 0))
-	{
+	if ((int)argc > 4 + diff)
 		parse_testblt_handler(argv, diff, num, TEST_ARG);
-		return (FAILURE);
-	}
-	if (*opt < 0 || (*opt > Z_UNATEST && argc < 4 + (size_t)diff)
-		|| (*opt <= Z_UNATEST && *opt >= 0 && argc > 3 + (size_t)diff))
+	else if ((int)argc == 4 + diff)
 	{
-		parse_testblt_handler(argv, diff, num,
-			(*opt <= Z_UNATEST) ? TEST_BIN : TEST_UNA);
-		return (FAILURE);
+		if ((*opt = get_opt_test(argv[2 + diff])) == FAILURE
+		|| *opt <= Z_UNATEST)
+			parse_testblt_handler(argv, diff, num, TEST_BIN);
+		else if (*opt >= EQ_BINTEST && *opt <= LE_BINTEST
+		&& (ft_atol(argv[1 + diff], &num) != SUCCESS
+			|| ft_atol(argv[3 + diff], &num) != SUCCESS))
+			parse_testblt_handler(argv, diff, num, TEST_INT_EXP);
+		else
+			return (SUCCESS);
 	}
-	return (SUCCESS);
+	else if ((int)argc == 3 + diff
+	&& (*opt = get_opt_test(argv[1 + diff])) == FAILURE)
+		parse_testblt_handler(argv, diff, num, TEST_UNA);
+	else
+		return (SUCCESS);
+	return (FAILURE);
 }
 
 static int8_t	comp_tests(const char *s1, const char *s2, int32_t opt)
@@ -117,14 +111,10 @@ int8_t			builtin_test(t_core *shell, t_process *process)
 		return (((argc < 2 + (size_t)diff
 			|| process->av[1 + diff][0] == 0) ? 1 : 0) ^ diff);
 	}
-	if (parse_testblt(argc, process->av, diff, &opt))
+	if (parse_testblt(argc, process->av, diff, &opt) == FAILURE)
 		return (2);
 	if (opt <= Z_UNATEST && opt != FAILURE)
 		return (path_tests(process->av[2 + diff], opt) ^ diff);
-	if (opt != FAILURE)
-	{
-		return (comp_tests(process->av[1 + diff]
+	return (comp_tests(process->av[1 + diff]
 			, process->av[3 + diff], opt) ^ diff);
-	}
-	return (2);
 }
