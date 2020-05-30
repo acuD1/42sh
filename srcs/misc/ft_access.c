@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 00:18:54 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/04/23 17:01:06 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/30 18:08:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int8_t			ft_access(const char *path, u_int8_t mode)
 	size_t	depth;
 	int8_t	ret;
 
-	depth = -1;
+	depth = 0;
 	if (access(path, mode) == 0)
 		return (SUCCESS);
 	ft_bzero(buffer, MAX_PATH + 1);
@@ -77,7 +77,7 @@ int8_t			ft_access(const char *path, u_int8_t mode)
 		return (ENAMETOOLONG);
 	path_len = ft_strlen(buffer);
 	ft_bzero(prev, MAX_PATH + 1);
-	while (dir_depth(path, buffer, ++depth) <= path_len)
+	while (dir_depth(path, buffer, ++depth) <= path_len + 1)
 	{
 		if ((ret = (int8_t)access_file(buffer, prev, F_OK | X_OK)) != SUCCESS)
 		{
