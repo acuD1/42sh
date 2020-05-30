@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/10 15:13:52 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/14 17:11:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/29 11:46:32 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,16 @@ u_int8_t	last_is_slash(char *str)
 
 	i = ft_strlen(str);
 	if (str[i - 1] != '/')
+	{
+		if (str[i - 1] == '.')
+		{
+			if (i >= 2 && str[i - 2] == '.')
+				return (FALSE);
+			else
+				return (TRUE);
+		}
 		return (FALSE);
+	}
 	return (TRUE);
 }
 

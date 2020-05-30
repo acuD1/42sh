@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 14:36:33 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/06 11:06:34 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/24 16:41:33 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int8_t	history_writer(t_lst *hst, int fd)
 	ssize_t	i;
 
 	i = 0;
-	while (hst->next && ++i < HIST_SIZE)
+	while (hst->next && ++i < get_history_value("HISTFILESIZE"))
 		hst = hst->next;
 	while (hst)
 	{
