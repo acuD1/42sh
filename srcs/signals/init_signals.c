@@ -69,7 +69,7 @@ void		init_signals(void)
 		, SIG_IGN, sig_handler, sig_handler, sig_handler, sig_handler
 		, sig_handler, sig_handler, sig_handler, sig_exit, sig_handler
 		, sig_handler, sig_handler, sig_handler, sig_exit, SIG_DFL, SIG_IGN
-		, SIG_DFL, SIG_DFL, sig_handler, sig_handler, sig_handler, sig_handler
+		, SIG_IGN, SIG_DFL, sig_handler, sig_handler, sig_handler, sig_handler
 		, sigh_winch, sig_handler, sig_handler};
 	size_t		i;
 
