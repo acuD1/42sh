@@ -85,6 +85,8 @@ static int8_t	comp_tests(const char *s1, const char *s2, int32_t opt)
 		return (((ft_strcmp(s1, s2) == 0)
 		? 1 : 0) ^ (int8_t)(DIFF_BINTEST - opt));
 	}
+	if (!s1 || !s2)
+		return (1);
 	ft_atol(s1, &n1);
 	ft_atol(s2, &n2);
 	if (opt == EQ_BINTEST || opt == NE_BINTEST)
