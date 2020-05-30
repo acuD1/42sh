@@ -23,7 +23,8 @@ static void	sig_handler(int signum)
 	shell = get_core(NULL);
 	if (signum == SIGTSTP)
 		return ;
-	reset_config(shell);
+	if (tcgetpgrp(shell->terminal) == getpgrp())
+		reset_config(shell);
 	pid = getpid();
 	signal(signum, SIG_DFL);
 	kill(pid, signum);
@@ -34,7 +35,7 @@ static void	sig_exit(int signum)
 	t_core	*shell;
 
 	shell = get_core(NULL);
-	quit_shell(shell, 141, (signum == SIGPIPE) ? FALSE : TRUE);
+	quit_shell(shell, 128 + signum, (signum == SIGPIPE) ? FALSE : TRUE);
 }
 
 static void	sigh_winch(int signum)
@@ -46,16 +47,6 @@ static void	sigh_winch(int signum)
 	if (get_size(&(shell->term)) != SUCCESS || update_termsize(shell))
 		quit_shell(shell, EXIT_SUCCESS, FALSE);
 }
-
-/*
-**	HUP INT
-**	QUIT ILL TRAP ABRT EMT
-**	FPE KILL(NULL)BUS SEGV SYS PIPE
-**	ALRM TERM URG STOP(NL) TSTP CONT
-**	CHLD TTIN TTOU IO XCPU XFSZ
-**	VTALRM PROF WINCH INFO USR1
-**	USR2
-*/
 
 void		sigint_special_handler(void)
 {
@@ -78,7 +69,7 @@ void		init_signals(void)
 		, SIG_IGN, sig_handler, sig_handler, sig_handler, sig_handler
 		, sig_handler, sig_handler, sig_handler, sig_exit, sig_handler
 		, sig_handler, sig_handler, sig_handler, sig_exit, SIG_DFL, SIG_IGN
-		, SIG_IGN, SIG_DFL, sig_handler, sig_handler, sig_handler, sig_handler
+		, SIG_DFL, SIG_DFL, sig_handler, sig_handler, sig_handler, sig_handler
 		, sigh_winch, sig_handler, sig_handler};
 	size_t		i;
 

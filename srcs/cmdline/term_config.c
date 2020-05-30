@@ -54,7 +54,7 @@ int8_t	init_config(t_core *shell)
 	shell->new_t.c_cc[VTIME] = 0;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->new_t)) == FAILURE)
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr error\n");
+//		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr error\n");
 		quit_shell(shell, EXIT_FAILURE, FALSE);
 	}
 	return (SUCCESS);
@@ -64,7 +64,7 @@ void	set_termconfig(t_core *shell)
 {
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->new_t)) == FAILURE)
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
+//		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
 		quit_shell(shell, 1, FALSE);
 	}
 }
@@ -78,7 +78,7 @@ int8_t	reset_config(t_core *shell)
 {
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &(shell->old_t)) == FAILURE)
 	{
-		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
+//		ft_dprintf(STDERR_FILENO, "42sh: tcsetattr failure\n");
 		return (FAILURE);
 	}
 	ft_strdel(&shell->term.tmp_buff);
