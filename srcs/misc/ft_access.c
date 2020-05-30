@@ -65,8 +65,7 @@ int8_t			ft_access(const char *path, u_int8_t mode)
 	size_t	depth;
 	int8_t	ret;
 
-	depth = 0;
-	path_len = 0;
+	depth = -1;
 	if (access(path, mode) == 0)
 		return (SUCCESS);
 	ft_bzero(buffer, MAX_PATH + 1);
@@ -76,14 +75,13 @@ int8_t			ft_access(const char *path, u_int8_t mode)
 		return (ENAMETOOLONG);
 	path_len = ft_strlen(buffer);
 	ft_bzero(prev, MAX_PATH + 1);
-	while (dir_depth(path, buffer, depth) <= path_len)
+	while (dir_depth(path, buffer, ++depth) <= path_len)
 	{
 		if ((ret = (int8_t)access_file(buffer, prev, F_OK | X_OK)) != SUCCESS)
 		{
 			ft_bzero(buffer, MAX_PATH + 1);
 			return (ret);
 		}
-		depth++;
 	}
 	return ((int8_t)access_file(buffer, prev, mode));
 }
