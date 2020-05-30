@@ -18,10 +18,12 @@
 static u_int8_t	access_file(const char *path, char *prev, u_int32_t mode)
 {
 	struct stat	file;
+	size_t		len;
 
 	if (stat(path, &file) < 0)
 	{
-		if (ft_strlen(path) - ft_strlen(prev) == 1)
+		if ((len = ft_strlen(path)) - ft_strlen(prev) == 1
+		&& path[len - 1] == '/')
 			return (ENOTDIR);
 		return (ENOENT);
 	}
