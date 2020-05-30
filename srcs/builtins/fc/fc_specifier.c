@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 19:05:56 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/21 09:07:56 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/30 18:57:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,6 @@ int8_t			select_specifier(t_core *shell, char **av)
 		while (replace_pattern(shell, pat, rep) == SUCCESS)
 			;
 	ft_strdel(&pat);
-	print_and_exec(shell, STDIN_FILENO);
+	print_and_exec(shell, STDERR_FILENO);
 	return (SUCCESS);
 }
