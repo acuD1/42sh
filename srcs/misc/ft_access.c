@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/15 00:18:54 by mpivet-p          #+#    #+#             */
-/*   Updated: 2020/04/23 17:01:06 by user42           ###   ########.fr       */
+/*   Updated: 2020/05/30 18:08:31 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,23 @@
 #include <errno.h>
 #include <unistd.h>
 
-static u_int8_t	access_file(const char *path, unsigned int mode)
+static u_int8_t	access_file(const char *path, char *prev, u_int32_t mode)
 {
 	struct stat	file;
+	size_t		len;
 
 	if (stat(path, &file) < 0)
 	{
+		if ((len = ft_strlen(path)) - ft_strlen(prev) == 1
+		&& path[len - 1] == '/')
+			return (ENOTDIR);
 		return (ENOENT);
 	}
 	if (file.st_mode & ((mode & 07) << 6))
+	{
+		ft_strcpy(prev, path);
 		return (SUCCESS);
+	}
 	return (EACCES);
 }
 
@@ -55,12 +62,12 @@ static size_t	dir_depth(const char *path, char *buffer, size_t depth)
 int8_t			ft_access(const char *path, u_int8_t mode)
 {
 	char	buffer[MAX_PATH + 1];
+	char	prev[MAX_PATH + 1];
 	size_t	path_len;
 	size_t	depth;
 	int8_t	ret;
 
 	depth = 0;
-	path_len = 0;
 	if (access(path, mode) == 0)
 		return (SUCCESS);
 	ft_bzero(buffer, MAX_PATH + 1);
@@ -69,14 +76,14 @@ int8_t			ft_access(const char *path, u_int8_t mode)
 			|| get_canonical_path(NULL, path, buffer, NULL) != SUCCESS)
 		return (ENAMETOOLONG);
 	path_len = ft_strlen(buffer);
-	while (dir_depth(path, buffer, depth) < path_len)
+	ft_bzero(prev, MAX_PATH + 1);
+	while (dir_depth(path, buffer, ++depth) <= path_len + 1)
 	{
-		if ((ret = (int8_t)access_file(buffer, F_OK | X_OK)) != SUCCESS)
+		if ((ret = (int8_t)access_file(buffer, prev, F_OK | X_OK)) != SUCCESS)
 		{
-			ft_bzero(buffer, MAX_PATH);
+			ft_bzero(buffer, MAX_PATH + 1);
 			return (ret);
 		}
-		depth++;
 	}
-	return ((int8_t)access_file(buffer, mode));
+	return ((int8_t)access_file(buffer, prev, mode));
 }

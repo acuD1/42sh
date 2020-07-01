@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/19 13:17:16 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/24 18:24:05 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int64_t	call_word(t_read *term, ssize_t i)
 		j++;
 	}
 	word[j + 1] = '\0';
-	if (!w || n > (ssize_t)ft_lstlen(w) || n > HIST_SIZE)
+	if (check_exp_error(w, n) == FAILURE)
 		return (FAILURE);
 	while (w->next && ft_isstart((char *)w->content, word) == FALSE)
 		w = w->next;
@@ -66,16 +66,14 @@ int64_t	callback_number(t_read *term, ssize_t i)
 		n++;
 		j++;
 	}
-	n = ft_atoi(nb);
-	if (!w || n > (ssize_t)ft_lstlen(w) || n > HIST_SIZE || n < 0)
+	ft_atol(nb, &n);
+	if (check_exp_error(w, n) == FAILURE)
 		return (FAILURE);
 	while (w && n != 0 && --n)
-	{
 		if (w->next)
 			w = w->next;
-	}
-	insert_content(j + 3, i, term, (char *)w->content);
-	return (i + j + 1);
+	insert_content(j + 2, i, term, (char *)w->content);
+	return (i + j - 1);
 }
 
 /*
@@ -99,16 +97,16 @@ int64_t	call_number(t_read *term, ssize_t i)
 		n++;
 		j++;
 	}
-	n = ft_atoi(nb);
-	if (!w || n > (ssize_t)ft_lstlen(w) || n > HIST_SIZE || n < 0)
+	ft_atol(nb, &n);
+	if (check_exp_error(w, n) == FAILURE)
 		return (FAILURE);
 	while (w->next)
 		w = w->next;
 	while (w && n != 0 && --n)
 		if (w->prev)
 			w = w->prev;
-	insert_content(j + 2, i, term, (char *)w->content);
-	return (i + j + 1);
+	insert_content(j + 1, i, term, (char *)w->content);
+	return (i + j);
 }
 
 /*
@@ -122,7 +120,8 @@ int64_t	last_cmd_back(t_read *term, ssize_t i)
 
 	len = 0;
 	w = term->history;
-	if (!term->history || ft_strlen(term->buffer) > BUFF_SIZE)
+	if (!term->history || ft_strlen(term->buffer) > BUFF_SIZE
+		|| get_history_value("HISTSIZE") <= 0)
 		return (FAILURE);
 	if (w && w->content)
 		insert_content(2, i, term, (char *)w->content);

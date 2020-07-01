@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:03:03 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/19 14:42:58 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/24 18:26:55 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char		*cmd_saved(t_read *term, ssize_t i)
 
 static int8_t	check_negative_specifier(t_read *term, ssize_t i)
 {
-	while (term->buffer[i])
+	while (term->buffer[i] && term->buffer[i] != '!')
 	{
 		if (term->buffer[i - 1] == '-' && term->buffer[i] == '0')
 		{
@@ -51,6 +51,7 @@ static int64_t	get_index(t_read *term, ssize_t i,
 {
 	char		*tmp;
 
+	tmp = NULL;
 	if (term->buffer[i + 1] == '-')
 	{
 		if (check_negative_specifier(term, i + 2) == FAILURE)
@@ -58,6 +59,11 @@ static int64_t	get_index(t_read *term, ssize_t i,
 			i = -1;
 			return (i);
 		}
+	}
+	else if (term->buffer[i + 1] == '0')
+	{
+		ft_dprintf(STDERR_FILENO, "42sh: !0: event not found\n");
+		return (FAILURE);
 	}
 	tmp = cmd_saved(term, i);
 	if ((i = (*fct)(term, i)) < 0)

@@ -13,7 +13,7 @@
 #include "sh42.h"
 #include <unistd.h>
 
-static void	print_longjob(t_job *job)
+static void		print_longjob(t_job *job)
 {
 	static char	running[] = "Running\n";
 	t_process	*process;
@@ -38,7 +38,7 @@ static void	print_longjob(t_job *job)
 	}
 }
 
-static void	print_job(t_job *job, u_int64_t opt, const char *name)
+static void		print_job(t_job *job, u_int64_t opt, const char *name)
 {
 	if (!job)
 	{
@@ -59,7 +59,13 @@ static void	print_job(t_job *job, u_int64_t opt, const char *name)
 		, get_last_stop_status(job), job->command);
 }
 
-int8_t		builtin_jobs(t_core *shell, t_process *process)
+static int8_t	jobs_invalid_opt(u_int64_t opt)
+{
+	print_usage("42sh: jobs", opt & 0xFF, "jobs [-lp] [jobspec ...]");
+	return (2);
+}
+
+int8_t			builtin_jobs(t_core *shell, t_process *process)
 {
 	t_lst		*job_list;
 	t_job		*job;
@@ -73,7 +79,7 @@ int8_t		builtin_jobs(t_core *shell, t_process *process)
 	if (shell->launched_jobs)
 		update_status(shell);
 	if ((opt = ft_get_options((int)argc, process->av, "lp")) & (1ULL << 63))
-		print_usage("42sh: jobs", opt & 0xFF, "jobs [-lp] [jobspec ...]");
+		return(jobs_invalid_opt(opt));
 	while (i == argc && job_list)
 	{
 		print_job(job_list->content, opt, NULL);

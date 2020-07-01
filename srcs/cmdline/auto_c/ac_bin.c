@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 17:26:51 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/12 11:14:13 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/05/30 18:10:13 by fcatusse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 static void		add_builtin_lst(t_auto_comp *ac, const char *cmd)
 {
-	static char	*blt_names[14] = {"set", "unset", "export", "exit", "cd"
-	, "echo", "pwd", "type", "fg", "jobs", "bg", "hash", "fc", "test"};
+	static char	*blt_names[14] = {"set ", "unset ", "export ", "exit ", "cd "
+	, "echo ", "pwd ", "type ", "fg ", "jobs ", "bg ", "hash ", "fc ", "test "};
 	size_t		i;
 
 	i = 0;
@@ -37,10 +37,12 @@ static void		add_builtin_lst(t_auto_comp *ac, const char *cmd)
 static void		fill_bin_lst(char *input, t_auto_comp *ac, char **path)
 {
 	struct dirent	*data;
+	char			*tmp;
 	DIR				*dir;
 	ssize_t			i;
 
 	i = -1;
+	tmp = NULL;
 	while (path[++i] && is_dir(path[i]))
 	{
 		dir = opendir(path[i]);
@@ -49,10 +51,12 @@ static void		fill_bin_lst(char *input, t_auto_comp *ac, char **path)
 			if ((!*input || ft_isstart(data->d_name, input))
 			&& is_a_blt(data->d_name) == -1 && !ft_isstart(data->d_name, "."))
 			{
-				ft_lstappend(&ac->lst, ft_lstnew(data->d_name,
-							sizeof(char) * (ft_strlen(data->d_name) + 1)));
+				tmp = ft_strjoin(data->d_name, " ");
+				ft_lstappend(&ac->lst, ft_lstnew(tmp,
+						sizeof(char) * (ft_strlen(tmp) + 1)));
 				ac->lst_size++;
-				ac->max_len = get_max_len(ac->max_len, ft_strlen(data->d_name));
+				ac->max_len = get_max_len(ac->max_len, ft_strlen(tmp));
+				ft_strdel(&tmp);
 			}
 		}
 		closedir(dir);
