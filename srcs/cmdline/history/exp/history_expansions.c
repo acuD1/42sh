@@ -6,7 +6,7 @@
 /*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 13:59:34 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/24 18:24:05 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/07/09 18:19:58 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int64_t	callback_number(t_read *term, ssize_t i)
 		n++;
 		j++;
 	}
-	ft_atol(nb, &n);
+	ft_atol(nb, (int64_t *)&n);
 	if (check_exp_error(w, n) == FAILURE)
 		return (FAILURE);
 	while (w && n != 0 && --n)
@@ -97,7 +97,7 @@ int64_t	call_number(t_read *term, ssize_t i)
 		n++;
 		j++;
 	}
-	ft_atol(nb, &n);
+	ft_atol(nb, (int64_t *)&n);
 	if (check_exp_error(w, n) == FAILURE)
 		return (FAILURE);
 	while (w->next)

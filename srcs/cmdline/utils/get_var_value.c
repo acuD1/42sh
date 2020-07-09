@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_var_value.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcatusse <fcatusse@student.42.fr>          +#+  +:+       +#+        */
+/*   By: arsciand <arsciand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 17:43:26 by fcatusse          #+#    #+#             */
-/*   Updated: 2020/05/24 18:32:27 by fcatusse         ###   ########.fr       */
+/*   Updated: 2020/07/09 18:18:43 by arsciand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ ssize_t			get_history_value(char *var)
 		return (HIST_SIZE);
 	else
 	{
-		if (ft_atol(db->value, &hist_value) == FAILURE)
+		if (ft_atol(db->value, (int64_t *)&hist_value) == FAILURE)
 			return (HIST_SIZE);
 	}
 	return (hist_value);
