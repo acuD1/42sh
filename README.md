@@ -79,6 +79,19 @@ This is a list of all builtins available in 42sh. Builtins options are POSIX com
 
 The execution receives a linked list of jobs (created in the LPA), each link contains a linked list of processes.
 
+We define jobs as following:
+*  One or more processes
+*  Delimited by `;`, `&` or `\n`
+*  Can be stopped by `pressing cltr + z`
+*  Can be put in **background** with `bg` or `&` (example: 'ls -lR / &') or in **foreground** with `fg`
+
+And processes:
+*  One or more redirections and/or one assignation and/or one program/builtin call
+*  Delimited by `;`, `&`, `||`, `&&`, `|` or newline
+*  Can be part of a condition or piped in another process
+
+
+***
 
 ## Shell command language
 
