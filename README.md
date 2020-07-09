@@ -75,6 +75,11 @@ This is a list of all builtins available in 42sh. Builtins options are POSIX com
 
 ***
 
+## Execution and Job Control
+
+The execution receives a linked list of jobs (created in the LPA), each link contains a linked list of processes.
+
+
 ## Shell command language
 
 ...
