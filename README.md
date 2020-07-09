@@ -81,3 +81,8 @@ This is a list of all builtins available in 42sh. Builtins options are POSIX com
 
 ***
 
+TO DO :
+- Hash map explanation + Flow chart
+- LPA doc
+- Jobs
+-
