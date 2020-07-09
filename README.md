@@ -5,6 +5,8 @@ Documentation in progress ...
 
 This is our final branch project at 42 School, an UNIX shell with several POSIX builtins.
 
+---
+
 ## Getting started
 
 ```
@@ -12,6 +14,7 @@ $ git submodule update && git submodule init
 $ make
 $ ./42sh
 ```
+***
 
 ## Help
 
@@ -19,3 +22,62 @@ $ ./42sh
 make help
 ./42sh -h
 ```
+
+***
+
+## Command line editing
+
+1.  Clipboard
+    -   Copy : ```CTRL + K```
+    -   Paste : ```CTRL + P```
+    -   Cut : ```CTRL + X```
+
+2.  Selection mode
+    -   Right : ```CTRL + SHIFT + RIGHT ARROW```
+    -   Left : ```CTRL + SHIFT + LEFT ARROW```
+
+3.  Move in line
+    -    Start : ```HOME``` or ```CTRL + A```
+    -    End : ```END``` or ```CTRL + E```
+
+4.  Clear end of line : ```CTRL + N```
+
+5.  Move word
+    -    Forward : ```CTRL + F```
+    -    Backward : ```CTRL + B```
+
+6.  Clear screen : ```CTRL + L```
+
+7.  Move cursor in column
+    -    Up : ```SHIFT + ARROW UP```
+    -    Down : ```SHIFT + ARROW DOWN```
+
+***
+
+## Builtins
+
+This is a list of all builtins available in 42sh. Builtins options are POSIX compliant. See man for futher informations.
+
+*  ```bg```
+*  ```cd [-PL]```
+*  ```echo```
+*  ```exit```
+*  ```export```
+*  ```fc [-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]```
+*  ```fg```
+*  ```hash [-rl] [-p pathname] [-dt] [name ...]```
+*  ```jobs [-lp]```
+*  ```pwd [-PL]```
+*  ```set```
+*  ```test [-bcdefgLprSsuwxz=!=eqnegeltlw]```
+*  ```type```
+*  ```unset```
+
+***
+
+## Shell command language
+
+...
+
+***
+
